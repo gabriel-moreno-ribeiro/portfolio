@@ -1,0 +1,60 @@
+.navbar {
+  background-color: $grey;
+  padding: 12px 36px;
+  border-radius: 36px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 12px;
+  overflow: hidden;
+  width: fit-content;
+  min-width: 180px;
+
+  .heading {
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .menu-icon {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+
+    .line {
+      width: 20px;
+      height: 2.5px;
+      background-color: $black;
+      position: absolute;
+      transform-origin: center;
+    }
+  }
+
+  .links {
+    margin-left: auto;
+    display: flex;
+    gap: 12px;
+
+    a {
+      text-decoration: none;
+      color: $black;
+      font-size: 16px;
+      font-weight: 500;
+      transition: all 0.3s;
+      padding: 2px;
+
+      &.hidden {
+        display: none;
+      }
+      &:hover {
+        background-color: $white;
+        padding: 2px 20px;
+        border-radius: 24px;
+      }
+    }
+  }
+}

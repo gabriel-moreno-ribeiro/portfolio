@@ -1,10 +1,13 @@
+import { ReactLenis } from "lenis/react";
 import Home from "./pages/Home";
 
 function App() {
   return (
-    <div className="app">
-      <Home />
-    </div>
+    <ReactLenis root>
+      <div className="app">
+        <Home />
+      </div>
+    </ReactLenis>
   );
 }
 

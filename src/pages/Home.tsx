@@ -1,8 +1,13 @@
+import Navbar from "../components/Navbar/Navbar";
+
 function Home() {
   return (
-    <div>
-      <h1 className="heading">Hi</h1>
-    </div>
+    <>
+      <div className="home-wrapper">
+        <Navbar />
+      </div>
+      {/* Footer */}
+    </>
   );
 }
 
