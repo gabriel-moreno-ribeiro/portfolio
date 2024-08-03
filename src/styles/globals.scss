@@ -40,6 +40,7 @@ body {
   gap: 24px;
   max-width: 1400px;
   margin: 0 auto;
+  width: 100%;
 }
 
 html.lenis {
@@ -60,4 +61,8 @@ html.lenis {
 
 .lenis.lenis-scrolling iframe {
   pointer-events: none;
+}
+
+.black {
+  color: $black;
 }

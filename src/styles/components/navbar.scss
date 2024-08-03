@@ -1,5 +1,5 @@
 .navbar {
-  background-color: $grey;
+  background-color: rgb(242, 242, 242, 0.8);
   padding: 12px 36px;
   border-radius: 36px;
   display: flex;
@@ -9,6 +9,11 @@
   overflow: hidden;
   width: auto;
   min-width: 175px;
+  position: fixed;
+  top: 16px;
+  z-index: 1000;
+  backdrop-filter: blur(10px); /* Apply blur effect */
+  -webkit-backdrop-filter: blur(10px); /* Apply blur effect for Safari */
 
   .heading {
     font-size: 18px;
