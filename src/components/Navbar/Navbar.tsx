@@ -28,7 +28,7 @@ function Navbar() {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       animate={{
-        width: isHovered ? "700px" : "fit-content",
+        width: isHovered ? "700px" : "auto",
       }}
       transition={{
         type: "spring",
