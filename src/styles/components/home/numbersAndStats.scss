@@ -15,13 +15,11 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: var(--white);
 }
 
 .center-text {
   text-align: center;
 }
-
 .text-p {
   font-size: 24px;
   color: var(--black);
@@ -31,6 +29,49 @@
 
   .orange {
     color: var(--primary-orange);
+  }
+
+  .gradient-orange {
+    background: linear-gradient(270deg, #ff6b6b, #ff922b, #fcc419, #ff6b6b);
+  }
+
+  .gradient-pink {
+    background: linear-gradient(
+      270deg,
+      #ff6b6b,
+      #f06595,
+      #845ef7,
+      #f06595,
+      #ff6b6b
+    );
+  }
+
+  .gradient-purple {
+    background: linear-gradient(270deg, #845ef7, #5c7cfa, #845ef7);
+  }
+
+  .gradient-blue {
+    background: linear-gradient(270deg, #5c7cfa, #339af0, #5c7cfa);
+  }
+
+  .gradient-text {
+    font-weight: bold;
+    background-size: 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradient-animation 5s ease infinite;
+  }
+
+  @keyframes gradient-animation {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
   }
 }
 

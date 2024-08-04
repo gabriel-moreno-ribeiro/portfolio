@@ -13,10 +13,10 @@ const NumbersAndStats = () => {
   }, [isInView, controls]);
 
   const textArr = [
-    "30+ Freelance Clients",
-    "300+ Tickets & Features",
-    "5,000+ App Downloads",
-    "100,000+ Youtube Views",
+    `<span class="gradient-text gradient-orange"> 30+ </span> Freelance Clients`,
+    `<span class="gradient-text gradient-pink"> 300+ </span> Tickets & Features`,
+    `<span class="gradient-text gradient-purple"> 5,000+ </span> App Downloads`,
+    `<span class="gradient-text gradient-blue"> 100,000+ </span> Youtube Views`,
   ];
 
   return (
@@ -32,7 +32,7 @@ const NumbersAndStats = () => {
         }}
       >
         <div className="center-text">
-          <p className="text-p">Some of my stats</p>
+          {/* <p className="text-p">Some of my stats</p> */}
         </div>
         {textArr.map((text, i) => (
           <motion.div
@@ -40,7 +40,7 @@ const NumbersAndStats = () => {
             key={i}
             variants={textVariants(i * 100)}
           >
-            <p className="text-p">{text}</p>
+            <p className="text-p" dangerouslySetInnerHTML={{ __html: text }} />
           </motion.div>
         ))}
       </motion.div>
