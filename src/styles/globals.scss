@@ -29,10 +29,10 @@ body {
   min-height: 300vh;
   color: var(--black);
   background-color: var(--white);
-  // overflow-x: hidden;
-  // overflow-y: auto;
   scroll-behavior: smooth;
   transition: background-color 0.5s, color 0.5s;
+
+  min-height: 800vh;
 
   h1,
   h2,
