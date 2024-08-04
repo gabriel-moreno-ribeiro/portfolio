@@ -1,0 +1,45 @@
+.numbers-and-stats-wrapper {
+  position: relative;
+  height: 230vh;
+  padding: 72px 0px;
+  width: 100%;
+}
+
+.numbers-and-stats {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  height: calc(100vh - 64px);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: var(--white);
+}
+
+.center-text {
+  text-align: center;
+}
+
+.text-p {
+  font-size: 24px;
+  color: var(--black);
+  text-align: center;
+  font-weight: 600;
+  margin-bottom: 20px;
+
+  .orange {
+    color: var(--primary-orange);
+  }
+}
+
+.text-section {
+  margin-top: 36px;
+  opacity: 0;
+
+  .text-p {
+    font-size: 48px;
+    font-weight: 700;
+  }
+}

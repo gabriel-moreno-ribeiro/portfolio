@@ -107,7 +107,10 @@ const Skills: React.FC = () => {
 
   return (
     <div className="skills-container" ref={ref}>
-      <p className="main-text">Always Building, Always Growing</p>
+      <p className="main-text">
+        Always Building, <br />
+        Always Growing
+      </p>
       {icons.map((icon, i) => (
         <motion.img
           src={icon}

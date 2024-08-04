@@ -6,11 +6,11 @@
   justify-content: center;
   height: calc(100vh - 64px);
   position: relative;
-  overflow: hidden; /* Ensure icons don't overflow */
+  overflow: hidden;
 
   .main-text {
     font-size: 24px;
-    color: black; // Assuming $black is defined in a variables file, replace if needed
+    color: var(--black);
     text-align: center;
     font-weight: 600;
     margin-bottom: 20px;

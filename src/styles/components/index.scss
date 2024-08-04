@@ -1,6 +1,3 @@
-@import "./navbar.scss";
-@import "./canvas.scss";
-@import "./hero.scss";
-@import "./commonButton.scss";
-@import "./workCarousel.scss";
-@import "./skills.scss";
+@import "./shared/index.scss";
+@import "./navbar/index.scss";
+@import "./home/index.scss";

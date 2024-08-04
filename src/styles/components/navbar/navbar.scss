@@ -1,5 +1,5 @@
 .navbar {
-  background-color: rgb(242, 242, 242, 0.8);
+  background-color: rgba($grey, 0.8);
   padding: 12px 36px;
   border-radius: 36px;
   display: flex;
@@ -12,8 +12,8 @@
   position: fixed;
   top: 16px;
   z-index: 1000;
-  backdrop-filter: blur(10px); /* Apply blur effect */
-  -webkit-backdrop-filter: blur(10px); /* Apply blur effect for Safari */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 
   .heading {
     font-size: 18px;
@@ -34,7 +34,7 @@
     .line {
       width: 20px;
       height: 2.5px;
-      background-color: $black;
+      background-color: var(--black);
       position: absolute;
       transform-origin: center;
     }
@@ -47,7 +47,7 @@
 
     a {
       text-decoration: none;
-      color: $black;
+      color: var(--black);
       font-size: 16px;
       font-weight: 500;
       transition: all 0.3s;
@@ -57,10 +57,17 @@
         display: none;
       }
       &:hover {
-        background-color: $white;
+        background-color: var(--white);
         padding: 2px 20px;
         border-radius: 24px;
       }
     }
+  }
+}
+
+[data-theme="dark"] {
+  .navbar {
+    background-color: rgba($black, 0.8);
+    border: 2px solid $white;
   }
 }
