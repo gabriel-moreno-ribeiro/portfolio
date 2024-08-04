@@ -69,5 +69,14 @@
   .navbar {
     background-color: rgba($black, 0.8);
     border: 2px solid $white;
+
+    .links {
+      a {
+        &:hover {
+          background-color: var(--grey);
+          color: $black;
+        }
+      }
+    }
   }
 }

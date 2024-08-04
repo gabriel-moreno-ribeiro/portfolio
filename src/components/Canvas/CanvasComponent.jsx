@@ -1,6 +1,7 @@
 import { OrbitControls, useGLTF } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useEffect, useRef, useState } from "react";
+import { useThemeStore } from "../../store/themeStore";
 
 function Model(props) {
   const { nodes, materials } = useGLTF("assets/3d/cute_robot.glb");
@@ -68,18 +69,17 @@ function Model(props) {
   );
 }
 
-
-
 useGLTF.preload("assets/3d/cute_robot.glb");
 
 export default function CanvasComponent() {
+  const { darkMode } = useThemeStore();
   return (
     <Canvas
       camera={{ position: [0.4, 1.17, 11.35], fov: 25 }}
-     className="robot-canvas"
+      className="robot-canvas"
     >
-      <ambientLight intensity={1} />
-      <directionalLight position={[10, 10, 10]} intensity={2} />
+      <ambientLight intensity={darkMode ? 0 : 1} />
+      <directionalLight position={[10, 10, 10]} intensity={darkMode ? 0 : 2} />
       <Model />
       <OrbitControls enableZoom={false} />
     </Canvas>

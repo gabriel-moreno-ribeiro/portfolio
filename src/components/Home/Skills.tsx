@@ -1,33 +1,64 @@
 import { motion, Transition, useAnimation, useInView } from "framer-motion";
-import React, { useEffect, useRef } from "react";
-import icon1 from "../../assets/skills/icon1.png";
-import icon10 from "../../assets/skills/icon10.png";
-import icon11 from "../../assets/skills/icon11.png";
-import icon12 from "../../assets/skills/icon12.png";
-import icon13 from "../../assets/skills/icon13.png";
-import icon2 from "../../assets/skills/icon2.png";
-import icon3 from "../../assets/skills/icon3.png";
-import icon4 from "../../assets/skills/icon4.png";
-import icon5 from "../../assets/skills/icon5.png";
-import icon6 from "../../assets/skills/icon6.png";
-import icon7 from "../../assets/skills/icon7.png";
-import icon8 from "../../assets/skills/icon8.png";
-import icon9 from "../../assets/skills/icon9.png";
+import React, { useEffect, useMemo, useRef } from "react";
+import l_icon1 from "../../assets/skills/light/icon1.png";
+import l_icon10 from "../../assets/skills/light/icon10.png";
+import l_icon11 from "../../assets/skills/light/icon11.png";
+import l_icon12 from "../../assets/skills/light/icon12.png";
+import l_icon13 from "../../assets/skills/light/icon13.png";
+import l_icon2 from "../../assets/skills/light/icon2.png";
+import l_icon3 from "../../assets/skills/light/icon3.png";
+import l_icon4 from "../../assets/skills/light/icon4.png";
+import l_icon5 from "../../assets/skills/light/icon5.png";
+import l_icon6 from "../../assets/skills/light/icon6.png";
+import l_icon7 from "../../assets/skills/light/icon7.png";
+import l_icon8 from "../../assets/skills/light/icon8.png";
+import l_icon9 from "../../assets/skills/light/icon9.png";
 
-const icons = [
-  icon1,
-  icon2,
-  icon3,
-  icon4,
-  icon5,
-  icon6,
-  icon7,
-  icon8,
-  icon9,
-  icon10,
-  icon11,
-  icon12,
-  icon13,
+import d_icon1 from "../../assets/skills/dark/icon1.png";
+import d_icon10 from "../../assets/skills/dark/icon10.png";
+import d_icon11 from "../../assets/skills/dark/icon11.png";
+import d_icon12 from "../../assets/skills/dark/icon12.png";
+import d_icon13 from "../../assets/skills/dark/icon13.png";
+import d_icon2 from "../../assets/skills/dark/icon2.png";
+import d_icon3 from "../../assets/skills/dark/icon3.png";
+import d_icon4 from "../../assets/skills/dark/icon4.png";
+import d_icon5 from "../../assets/skills/dark/icon5.png";
+import d_icon6 from "../../assets/skills/dark/icon6.png";
+import d_icon7 from "../../assets/skills/dark/icon7.png";
+import d_icon8 from "../../assets/skills/dark/icon8.png";
+import d_icon9 from "../../assets/skills/dark/icon9.png";
+import { useThemeStore } from "../../store/themeStore";
+
+const lightIcons = [
+  l_icon1,
+  l_icon2,
+  l_icon3,
+  l_icon4,
+  l_icon5,
+  l_icon6,
+  l_icon7,
+  l_icon8,
+  l_icon9,
+  l_icon10,
+  l_icon11,
+  l_icon12,
+  l_icon13,
+];
+
+const darkIcons = [
+  d_icon1,
+  d_icon2,
+  d_icon3,
+  d_icon4,
+  d_icon5,
+  d_icon6,
+  d_icon7,
+  d_icon8,
+  d_icon9,
+  d_icon10,
+  d_icon11,
+  d_icon12,
+  d_icon13,
 ];
 
 const initialPosition = {
@@ -89,6 +120,7 @@ const bubbleVariants: Transition = {
 };
 
 const Skills: React.FC = () => {
+  const { darkMode } = useThemeStore();
   const controls = useAnimation();
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, {
@@ -104,6 +136,10 @@ const Skills: React.FC = () => {
         });
     }
   }, [controls, inView]);
+
+  const icons = useMemo(() => {
+    return darkMode ? darkIcons : lightIcons;
+  }, [darkMode]);
 
   return (
     <div className="skills-container" ref={ref}>
