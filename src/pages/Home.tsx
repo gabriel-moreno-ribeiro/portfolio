@@ -1,4 +1,6 @@
 import Hero from "../components/Home/Hero";
+import Skills from "../components/Home/Skills";
+import WorkCarousel from "../components/Home/WorkCarousel";
 import Navbar from "../components/Navbar/Navbar";
 function Home() {
   return (
@@ -6,6 +8,8 @@ function Home() {
       <div className="home-wrapper">
         <Navbar />
         <Hero />
+        <Skills />
+        <WorkCarousel />
       </div>
       {/* Footer */}
     </>
