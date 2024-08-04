@@ -69,14 +69,14 @@ const bubbleVariants: Transition = {
   oscillate: (i: number) => ({
     y: [
       finalPositions[i].y,
-      finalPositions[i].y + randomInRange(-5, 5),
-      finalPositions[i].y + randomInRange(-5, 5),
+      finalPositions[i].y + randomInRange(-10, 10),
+      finalPositions[i].y + randomInRange(-10, 10),
       finalPositions[i].y,
     ],
     x: [
       finalPositions[i].x,
-      finalPositions[i].x + randomInRange(-5, 5),
-      finalPositions[i].x + randomInRange(-5, 5),
+      finalPositions[i].x + randomInRange(-10, 10),
+      finalPositions[i].x + randomInRange(-10, 10),
       finalPositions[i].x,
     ],
     transition: {
