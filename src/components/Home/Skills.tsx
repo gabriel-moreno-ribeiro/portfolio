@@ -125,6 +125,7 @@ const Skills: React.FC = () => {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, {
     margin: "0px 0px -200px 0px",
+    once: true,
   });
 
   useEffect(() => {
@@ -145,7 +146,7 @@ const Skills: React.FC = () => {
     <div className="skills-container" ref={ref}>
       <p className="main-text">
         Always Building, <br />
-        Always Growing
+        Always Growing.
       </p>
       {icons.map((icon, i) => (
         <motion.img
