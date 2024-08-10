@@ -1,0 +1,35 @@
+.mac-buttons-flex {
+  width: fit-content;
+  margin-right: auto;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 6px;
+
+  .mac-button {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    .icon {
+      font-size: 10px;
+
+      &.expand-icon {
+        transform: rotate(-45deg);
+      }
+    }
+  }
+
+  &:hover {
+    .mac-button {
+      .icon {
+        color: $black;
+      }
+    }
+  }
+}

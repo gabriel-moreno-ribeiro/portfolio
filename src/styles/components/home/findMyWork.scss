@@ -13,4 +13,17 @@
     font-weight: 600;
     margin-bottom: 20px;
   }
+
+  .work-content {
+    padding: 36px 0px;
+    display: flex;
+    overflow-x: auto;
+    flex-direction: row;
+    justify-content: flex-start;
+    justify-content: center;
+    gap: 24px;
+    width: 100%;
+    max-width: 100%;
+    flex-wrap: wrap;
+  }
 }
