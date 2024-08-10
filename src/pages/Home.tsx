@@ -1,6 +1,6 @@
+import FindMyWork from "../components/Home/FindMyWork";
 import Hero from "../components/Home/Hero";
 import Skills from "../components/Home/Skills";
-import VerticalSkills from "../components/Home/VerticalSkills";
 import Navbar from "../components/Navbar/Navbar";
 function Home() {
   return (
@@ -9,9 +9,10 @@ function Home() {
         <Navbar />
         <Hero />
         <Skills />
-        <VerticalSkills />
-        {/* <NumbersAndStats />
-        <WorkCarousel /> */}
+        <FindMyWork />
+        {/* <VerticalSkills /> */}
+        {/* <NumbersAndStats /> */}
+        {/* <WorkCarousel /> */}
       </div>
       {/* Footer */}
     </>
