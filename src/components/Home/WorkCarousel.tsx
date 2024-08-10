@@ -13,8 +13,23 @@ import img7 from "../../assets/work-carousel/img7.png";
 const images = [img1, img2, img3, img4, img5, img6, img7];
 
 const WorkCarousel = () => {
+  const mouseEnterAndExit = (enter: boolean) => {
+    const customMouse = document.querySelector(".custom-mouse") as HTMLElement;
+    if (customMouse) {
+      if (enter) {
+        customMouse.style.backgroundColor = "var(--white)";
+      } else {
+        customMouse.style.backgroundColor = "var(--black)";
+      }
+    }
+  };
+
   return (
-    <div className="work-carousel">
+    <div
+      className="work-carousel"
+      onMouseEnter={() => mouseEnterAndExit(true)}
+      onMouseLeave={() => mouseEnterAndExit(false)}
+    >
       <div className="carousel-container">
         <h1 className="heading">
           Currently Working At
