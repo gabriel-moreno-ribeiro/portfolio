@@ -1,4 +1,3 @@
-import { ReactLenis } from "lenis/react";
 import { useEffect } from "react";
 import DarkModeButton from "./components/Shared/DarkModeButton";
 import Home from "./pages/Home";
@@ -15,12 +14,12 @@ function App() {
   }, [darkMode]);
 
   return (
-    <ReactLenis root>
-      <div className="app">
-        <Home />
-        <DarkModeButton />
-      </div>
-    </ReactLenis>
+    // <ReactLenis root>
+    <div className="app">
+      <Home />
+      <DarkModeButton />
+    </div>
+    // </ReactLenis>
   );
 }
 

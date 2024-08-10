@@ -1,17 +1,37 @@
 import { AnimatePresence, motion } from "framer-motion";
-import React, { useEffect, useState } from "react";
-import { FiGithub } from "react-icons/fi";
+import { useEffect, useState } from "react";
+import { FiGithub, FiPlayCircle } from "react-icons/fi";
 import MacButtons from "./MacButtons";
 
-const WorkCard: React.FC = () => {
+interface WorkCardInterface {
+  data: {
+    cardData: {
+      title: string;
+      imgUrl: string;
+      url: {
+        githubUrl?: string;
+        youtubeUrl?: string;
+      } | null;
+    };
+    modalData: {
+      title: string;
+      desc: string;
+      infoHeading: string;
+      infoArr: string[];
+    };
+  };
+}
+
+const WorkCard = ({ data }: WorkCardInterface) => {
+  const { cardData, modalData } = data;
   const [isOpen, setIsOpen] = useState(false);
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(true);
   const [isMinimized, setIsMinimized] = useState(false);
 
   const toggleModal = () => {
     setIsOpen((prev) => {
       if (!prev) {
-        setIsExpanded(false);
+        setIsExpanded(true);
         setIsMinimized(false);
       }
       return !prev;
@@ -19,7 +39,7 @@ const WorkCard: React.FC = () => {
   };
 
   const handleExpand = () => {
-    setIsExpanded(!isExpanded);
+    setIsExpanded((prev) => !prev);
   };
 
   const handleMinimize = () => {
@@ -45,20 +65,31 @@ const WorkCard: React.FC = () => {
 
   return (
     <div className="card-modal-component">
-      <motion.div
-        className="main-card"
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-      >
+      <motion.div className="main-card" whileTap={{ scale: 0.95 }}>
         <motion.img
-          src="https://i.ibb.co/xX3CnB1/Screenshot-2021-12-09-at-2-22-01-PM.png"
+          src={cardData.imgUrl}
           alt="card"
           className="card-img"
           onClick={toggleModal}
         />
         <div className="card-heading-flex">
-          <h2 className="heading">Bare Molecules.</h2>
-          <FiGithub className="icon" />
+          <h2 className="heading">{cardData.title}</h2>
+          {cardData.url && (
+            <>
+              {cardData.url.githubUrl && (
+                <FiGithub
+                  className="icon"
+                  onClick={() => window.open(cardData.url?.githubUrl)}
+                />
+              )}
+              {cardData.url.youtubeUrl && (
+                <FiPlayCircle
+                  className="icon"
+                  onClick={() => window.open(cardData.url?.youtubeUrl)}
+                />
+              )}
+            </>
+          )}
         </div>
       </motion.div>
 
@@ -72,11 +103,11 @@ const WorkCard: React.FC = () => {
           >
             <motion.div
               className="modal-content"
-              initial={{ width: "400px", opacity: 0 }}
+              initial={{ width: "800px", opacity: 0 }}
               animate={
                 isMinimized
                   ? {
-                      width: "50px",
+                      width: "500px",
                       opacity: 0,
                       x: 300,
                       y: 300,
@@ -106,17 +137,17 @@ const WorkCard: React.FC = () => {
                       },
                     }
               }
-              exit={{ width: "500px", opacity: 0 }}
+              exit={{ width: "800px", opacity: 0 }}
             >
               <MacButtons
                 onClose={handleClose}
                 onMinimise={handleMinimize}
                 onExpand={handleExpand}
               />
-              <h2 className="heading">More Information</h2>
-              <p className="desc">
-                This is additional information shown in the modal.
-              </p>
+              <h2 className="heading">{modalData.title}</h2>
+              <p className="desc">{modalData.desc}</p>
+              <h2 className="heading-2">{modalData.infoHeading}</h2>
+              <p className="desc">{modalData.infoArr.join(", ")}</p>
             </motion.div>
           </motion.div>
         )}
