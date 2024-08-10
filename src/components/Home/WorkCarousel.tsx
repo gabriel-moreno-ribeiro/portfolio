@@ -3,13 +3,13 @@ import "swiper/css/effect-cards";
 import { EffectCards } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-import img1 from "../../assets/work-carousel/img1.png";
-import img2 from "../../assets/work-carousel/img2.png";
-import img3 from "../../assets/work-carousel/img3.png";
-import img4 from "../../assets/work-carousel/img4.png";
-import img5 from "../../assets/work-carousel/img5.png";
-import img6 from "../../assets/work-carousel/img6.png";
-import img7 from "../../assets/work-carousel/img7.png";
+import img1 from "../../assets/work-carousel/img1.webp";
+import img2 from "../../assets/work-carousel/img2.webp";
+import img3 from "../../assets/work-carousel/img3.webp";
+import img4 from "../../assets/work-carousel/img4.webp";
+import img5 from "../../assets/work-carousel/img5.webp";
+import img6 from "../../assets/work-carousel/img6.webp";
+import img7 from "../../assets/work-carousel/img7.webp";
 const images = [img1, img2, img3, img4, img5, img6, img7];
 
 const WorkCarousel = () => {

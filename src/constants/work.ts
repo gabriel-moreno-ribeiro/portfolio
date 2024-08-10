@@ -1,29 +1,29 @@
-import aiForMessaging from "../assets/work-tab/personal/ai-for-messaging.png";
-import anonimo from "../assets/work-tab/personal/anonimo.png";
-import boldBot from "../assets/work-tab/personal/bold-bot.png";
-import boldStore from "../assets/work-tab/personal/bold.png";
-import infinite from "../assets/work-tab/personal/infinite-rider.png";
+import aiForMessaging from "../assets/work-tab/personal/ai-for-messaging.webp";
+import anonimo from "../assets/work-tab/personal/anonimo.webp";
+import boldBot from "../assets/work-tab/personal/bold-bot.webp";
+import boldStore from "../assets/work-tab/personal/bold.webp";
+import infinite from "../assets/work-tab/personal/infinite-rider.webp";
 
-import airbnb from "../assets/work-tab/youtube/airbnb.png";
-import calc from "../assets/work-tab/youtube/calc.png";
+import airbnb from "../assets/work-tab/youtube/airbnb.webp";
+import calc from "../assets/work-tab/youtube/calc.webp";
 import crypto from "../assets/work-tab/youtube/crypto.jpg";
-import finance from "../assets/work-tab/youtube/finance.png";
-import flappy from "../assets/work-tab/youtube/flappy.png";
-import git from "../assets/work-tab/youtube/git.png";
-import insta from "../assets/work-tab/youtube/insta.png";
-import mario from "../assets/work-tab/youtube/mario.png";
-import pacman from "../assets/work-tab/youtube/pacman.png";
+import finance from "../assets/work-tab/youtube/finance.webp";
+import flappy from "../assets/work-tab/youtube/flappy.webp";
+import git from "../assets/work-tab/youtube/git.webp";
+import insta from "../assets/work-tab/youtube/insta.webp";
+import mario from "../assets/work-tab/youtube/mario.webp";
+import pacman from "../assets/work-tab/youtube/pacman.webp";
 import podcast from "../assets/work-tab/youtube/podcast.jpg";
 import portfolio from "../assets/work-tab/youtube/portfolio.jpg";
-import quiz from "../assets/work-tab/youtube/quiz.png";
-import react from "../assets/work-tab/youtube/react.png";
-import snake from "../assets/work-tab/youtube/snake.png";
-import spotify from "../assets/work-tab/youtube/spotify.png";
-import tictac from "../assets/work-tab/youtube/tictac.png";
-import twitter from "../assets/work-tab/youtube/twitter.png";
+import quiz from "../assets/work-tab/youtube/quiz.webp";
+import react from "../assets/work-tab/youtube/react.webp";
+import snake from "../assets/work-tab/youtube/snake.webp";
+import spotify from "../assets/work-tab/youtube/spotify.webp";
+import tictac from "../assets/work-tab/youtube/tictac.webp";
+import twitter from "../assets/work-tab/youtube/twitter.webp";
 
-import things18 from "../assets/work-tab/books/18-things.png";
-import lockdownWars from "../assets/work-tab/books/lockdown-wars.png";
+import things18 from "../assets/work-tab/books/18-things.webp";
+import lockdownWars from "../assets/work-tab/books/lockdown-wars.webp";
 
 export const work = [
   [
