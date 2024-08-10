@@ -1,13 +1,13 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useMemo, useState } from "react";
-import d_appstore from "../../assets/numbers/dark/appstore.png";
-import d_jira from "../../assets/numbers/dark/jira.png";
-import d_safari from "../../assets/numbers/dark/safari.png";
-import d_youtube from "../../assets/numbers/dark/youtube.png";
-import l_appstore from "../../assets/numbers/light/appstore.png";
-import l_jira from "../../assets/numbers/light/jira.png";
-import l_safari from "../../assets/numbers/light/safari.png";
-import l_youtube from "../../assets/numbers/light/youtube.png";
+import d_appstore from "../../assets/numbers/dark/appstore.webp";
+import d_jira from "../../assets/numbers/dark/jira.webp";
+import d_safari from "../../assets/numbers/dark/safari.webp";
+import d_youtube from "../../assets/numbers/dark/youtube.webp";
+import l_appstore from "../../assets/numbers/light/appstore.webp";
+import l_jira from "../../assets/numbers/light/jira.webp";
+import l_safari from "../../assets/numbers/light/safari.webp";
+import l_youtube from "../../assets/numbers/light/youtube.webp";
 import { useThemeStore } from "../../store/themeStore";
 import NumberStatsCard from "./NumberStatsCard";
 
