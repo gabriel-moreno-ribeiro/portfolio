@@ -22,6 +22,9 @@ import spotify from "../assets/work-tab/youtube/spotify.png";
 import tictac from "../assets/work-tab/youtube/tictac.png";
 import twitter from "../assets/work-tab/youtube/twitter.png";
 
+import things18 from "../assets/work-tab/books/18-things.png";
+import lockdownWars from "../assets/work-tab/books/lockdown-wars.png";
+
 export const work = [
   [
     {
@@ -118,7 +121,6 @@ export const work = [
       },
     },
   ],
-  [],
   [
     {
       cardData: {
@@ -373,6 +375,33 @@ export const work = [
         desc: "A portfolio website made using React.",
         infoHeading: "Technologies Used",
         infoArr: ["HTML", "CSS", "Javascript"],
+      },
+    },
+  ],
+  [
+    {
+      cardData: {
+        title: "Books Published",
+        imgUrl: things18,
+        url: null,
+      },
+      modalData: {
+        title: "Books I have Published",
+        desc: "I have published 18 books on Amazon Kindle. The books are on various topics like programming, self help, and fiction.",
+        infoHeading: "Books",
+      },
+    },
+
+    {
+      cardData: {
+        title: "Podcast",
+        imgUrl: lockdownWars,
+        url: null,
+      },
+      modalData: {
+        title: "Lockdown Wars Podcast",
+        desc: "I have published 18 books on Amazon Kindle. The books are on various topics like programming, self help, and fiction.",
+        infoHeading: "Books",
       },
     },
   ],

@@ -16,8 +16,8 @@ interface WorkCardInterface {
     modalData: {
       title: string;
       desc: string;
-      infoHeading: string;
-      infoArr: string[];
+      infoHeading?: string;
+      infoArr?: string[];
     };
   };
 }
@@ -147,7 +147,7 @@ const WorkCard = ({ data }: WorkCardInterface) => {
               <h2 className="heading">{modalData.title}</h2>
               <p className="desc">{modalData.desc}</p>
               <h2 className="heading-2">{modalData.infoHeading}</h2>
-              <p className="desc">{modalData.infoArr.join(", ")}</p>
+              <p className="desc">{modalData.infoArr?.join(", ")}</p>
             </motion.div>
           </motion.div>
         )}

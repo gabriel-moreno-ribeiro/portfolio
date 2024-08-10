@@ -4,13 +4,13 @@ import Tabs from "./Tabs";
 import WorkCard from "./WorkCard";
 
 function FindMyWork() {
-  const tabs = ["Personal", "Professional", "Youtube", "Books"];
+  const tabs = ["Personal", "Youtube", "Books"];
   const [activeTab, setActiveTab] = useState<number>(0);
   return (
     <div className="find-my-work" data-lenis-prevent>
       <h1 className="heading">Find My Work</h1>
       <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
-      <div className="work-content">
+      <div className="work-content" id="work-content-scroll-div">
         {work[activeTab]?.map((data, i) => (
           <WorkCard key={i} data={data} />
         ))}

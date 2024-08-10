@@ -12,7 +12,13 @@ const Tabs = ({ tabs, activeTab, setActiveTab }: TabsInterface) => {
         <div
           key={index}
           className={`${"tab"} ${activeTab === index ? "active" : ""}`}
-          onClick={() => setActiveTab(index)}
+          onClick={() => {
+            setActiveTab(index);
+            document.getElementById("work-content-scroll-div")?.scrollTo({
+              left: 0,
+              behavior: "smooth",
+            });
+          }}
         >
           {tab}
           {activeTab === index && (
