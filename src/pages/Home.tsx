@@ -11,9 +11,10 @@ function Home() {
         <Navbar />
         <Hero />
         <Skills />
+        <NumbersAndStats />
         <FindMyWork />
         {/* <VerticalSkills /> */}
-        <NumbersAndStats />
+
         <WorkCarousel />
       </div>
       {/* Footer */}

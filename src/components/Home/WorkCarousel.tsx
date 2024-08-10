@@ -1,6 +1,6 @@
 import "swiper/css";
 import "swiper/css/effect-cards";
-import { EffectCards } from "swiper/modules";
+import { Autoplay, EffectCards } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import img1 from "../../assets/work-carousel/img1.webp";
@@ -49,8 +49,12 @@ const WorkCarousel = () => {
           <Swiper
             effect={"cards"}
             grabCursor={true}
-            modules={[EffectCards]}
+            modules={[EffectCards, Autoplay]}
             className="mySwiper"
+            autoplay={{
+              delay: 3000,
+            }}
+            loop={true}
           >
             {images.map((image, index) => (
               <SwiperSlide key={`${image}-${index}`}>
