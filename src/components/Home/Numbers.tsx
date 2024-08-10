@@ -1,56 +1,96 @@
-import { motion, useAnimation, useInView } from "framer-motion";
-import { useEffect, useRef } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useMemo, useState } from "react";
+import d_appstore from "../../assets/numbers/dark/appstore.png";
+import d_jira from "../../assets/numbers/dark/jira.png";
+import d_safari from "../../assets/numbers/dark/safari.png";
+import d_youtube from "../../assets/numbers/dark/youtube.png";
+import l_appstore from "../../assets/numbers/light/appstore.png";
+import l_jira from "../../assets/numbers/light/jira.png";
+import l_safari from "../../assets/numbers/light/safari.png";
+import l_youtube from "../../assets/numbers/light/youtube.png";
+import { useThemeStore } from "../../store/themeStore";
+import NumberStatsCard from "./NumberStatsCard";
 
 const NumbersAndStats = () => {
-  const controls = useAnimation();
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: false });
+  const [index, setIndex] = useState(0);
+  const { darkMode } = useThemeStore();
+
+  const dataArray = useMemo(() => {
+    if (!darkMode) {
+      return [
+        {
+          imgUrl: l_safari,
+          text: `<span class="orange"> 30+ </span>Freelance Clients`,
+        },
+        {
+          imgUrl: l_jira,
+          text: `<span class="orange"> 300+ </span>Tickets & Features`,
+        },
+        {
+          imgUrl: l_appstore,
+          text: `<span class="orange"> 5,000+ </span>App Downloads`,
+        },
+        {
+          imgUrl: l_youtube,
+          text: `<span class="orange"> 100,000+ </span>Youtube Views`,
+        },
+      ];
+    }
+    return [
+      {
+        imgUrl: d_safari,
+        text: `<span class="orange"> 30+ </span>Freelance Clients`,
+      },
+      {
+        imgUrl: d_jira,
+        text: `<span class="orange"> 300+ </span>Tickets & Features`,
+      },
+      {
+        imgUrl: d_appstore,
+        text: `<span class="orange"> 5,000+ </span>App Downloads`,
+      },
+      {
+        imgUrl: d_youtube,
+        text: `<span class="orange"> 100,000+ </span>Youtube Views`,
+      },
+    ];
+  }, [darkMode]);
 
   useEffect(() => {
-    if (isInView) {
-      controls.start("visible");
-    }
-  }, [isInView, controls]);
+    const interval = setInterval(() => {
+      setIndex((prevIndex) => (prevIndex + 1) % dataArray.length);
+    }, 2000);
 
-  const textArr = [
-    `<span class="gradient-text gradient-orange"> 30+ </span> Freelance Clients`,
-    `<span class="gradient-text gradient-pink"> 300+ </span> Tickets & Features`,
-    `<span class="gradient-text gradient-purple"> 5,000+ </span> App Downloads`,
-    `<span class="gradient-text gradient-blue"> 100,000+ </span> Youtube Views`,
-  ];
+    return () => clearInterval(interval);
+  }, []);
 
   return (
-    <div className="numbers-and-stats-wrapper">
-      <motion.div
-        className="numbers-and-stats"
-        ref={ref}
-        initial="hidden"
-        animate={controls}
-        variants={{
-          hidden: { opacity: 0 },
-          visible: { opacity: 1, transition: { duration: 1 } },
-        }}
-      >
-        <div className="center-text">
-          {/* <p className="text-p">Some of my stats</p> */}
-        </div>
-        {textArr.map((text, i) => (
-          <motion.div
-            className="text-section"
-            key={i}
-            variants={textVariants(i * 100)}
-          >
-            <p className="text-p" dangerouslySetInnerHTML={{ __html: text }} />
-          </motion.div>
-        ))}
+    <div className="numbers-and-stats">
+      <div className="center-text">
+        <p className="text-p">Some Of My Interesting Stats</p>
+      </div>
+      <motion.div className="card-container">
+        <AnimatePresence initial={false}>
+          <NumberStatsCard
+            key={index}
+            frontCard={true}
+            exitX={250}
+            imgSrc={dataArray[index].imgUrl}
+          />
+          <NumberStatsCard key={index + 1} frontCard={false} exitX={-250} />
+        </AnimatePresence>
       </motion.div>
+      <motion.div
+        key={index}
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -10 }}
+        transition={{ duration: 0.3 }}
+        className="card-text"
+        dangerouslySetInnerHTML={{ __html: dataArray[index].text }}
+      />
     </div>
   );
 };
-
-const textVariants = (delay: number) => ({
-  hidden: { opacity: 0, y: 300 },
-  visible: { opacity: 1, y: 0, transition: { delay: delay / 80, duration: 1 } },
-});
 
 export default NumbersAndStats;
