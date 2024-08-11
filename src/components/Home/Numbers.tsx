@@ -1,10 +1,7 @@
-import {
-  AnimatePresence,
-  motion,
-  useAnimation,
-  useInView,
-} from "framer-motion";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useLayoutEffect, useMemo, useRef, useState } from "react";
 import d_appstore from "../../assets/numbers/dark/appstore.webp";
 import d_jira from "../../assets/numbers/dark/jira.webp";
 import d_safari from "../../assets/numbers/dark/safari.webp";
@@ -16,12 +13,12 @@ import l_youtube from "../../assets/numbers/light/youtube.webp";
 import { useThemeStore } from "../../store/themeStore";
 import NumberStatsCard from "./NumberStatsCard";
 
+gsap.registerPlugin(ScrollTrigger);
+
 const NumbersAndStats = () => {
   const [index, setIndex] = useState(0);
   const { darkMode } = useThemeStore();
-  const controls = useAnimation();
-  const ref = useRef(null);
-  const inView = useInView(ref, { margin: "0px 0px 200px 0px", once: true });
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const dataArray = useMemo(() => {
     if (!darkMode) {
@@ -64,32 +61,32 @@ const NumbersAndStats = () => {
     ];
   }, [darkMode]);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setIndex((prevIndex) => (prevIndex + 1) % dataArray.length);
-    }, 2000);
+  useLayoutEffect(() => {
+    if (!containerRef.current) return;
 
-    return () => clearInterval(interval);
+    const containerHeight = containerRef.current.clientHeight / 1.5;
+    const scrollStep = containerHeight / dataArray.length;
+
+    dataArray.forEach((_, index) => {
+      if (!containerRef.current) return;
+
+      ScrollTrigger.create({
+        trigger: containerRef.current,
+        start: `top+=${index * scrollStep}px top`,
+        end: `top+=${index * scrollStep}px top`,
+        onEnter: () => setIndex(index),
+        onEnterBack: () => setIndex(index),
+        markers: false, // Set to true if you want to debug the scroll points
+      });
+    });
+
+    return () => {
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+    };
   }, [dataArray]);
 
-  useEffect(() => {
-    if (inView) {
-      controls.start({
-        scale: 1,
-        opacity: 1,
-        y: 0,
-        transition: { duration: 0.5 },
-      });
-    }
-  }, [controls, inView]);
-
   return (
-    <motion.div
-      ref={ref}
-      initial={{ scale: 0, opacity: 0, y: 150 }}
-      animate={controls}
-      className="numbers-and-stats"
-    >
+    <motion.div ref={containerRef} className="numbers-and-stats">
       <div className="center-text">
         <p className="text-p">Some Of My Interesting Stats</p>
       </div>
