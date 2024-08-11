@@ -5,6 +5,7 @@ import NumbersAndStats from "../components/Home/Numbers";
 import Skills from "../components/Home/Skills";
 import WorkCarousel from "../components/Home/WorkCarousel";
 import Navbar from "../components/Navbar/Navbar";
+import Footer from "../components/Shared/Footer";
 function Home() {
   return (
     <>
@@ -15,11 +16,9 @@ function Home() {
         <NumbersAndStats />
         <HorizontalSkillsWrapper />
         <FindMyWork />
-        {/* <VerticalSkills /> */}
-
         <WorkCarousel />
+        <Footer />
       </div>
-      {/* Footer */}
     </>
   );
 }

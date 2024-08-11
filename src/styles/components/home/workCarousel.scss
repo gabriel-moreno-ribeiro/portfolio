@@ -1,12 +1,11 @@
 .work-carousel {
-  width: 100vw;
+  width: 100%;
   height: auto;
   display: flex;
   justify-content: center;
   align-items: center;
 
   .carousel-container {
-    margin: 0px 16px;
     padding: 36px 16px;
     padding-bottom: 0px;
     background-color: var(--black);

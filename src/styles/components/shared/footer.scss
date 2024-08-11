@@ -1,0 +1,29 @@
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--black);
+  color: var(--white);
+  padding: 20px 24px;
+  border-radius: 100px;
+  width: 100%;
+  margin-top: -16px;
+
+  .left-heading {
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .right-icons {
+    display: flex;
+    gap: 16px;
+    justify-content: flex-end;
+    align-items: center;
+
+    .icon {
+      font-size: 24px;
+      color: var(--white);
+      cursor: pointer;
+    }
+  }
+}
