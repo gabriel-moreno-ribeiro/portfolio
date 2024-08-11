@@ -32,6 +32,7 @@
     "**/*.ts",
     "**/*.tsx",
     "src/components/Canvas/Canvas.jsx",
+    "src/components/Canvas/BallCanvas.jsx",
   ],
   "exclude": [
     "node_modules"

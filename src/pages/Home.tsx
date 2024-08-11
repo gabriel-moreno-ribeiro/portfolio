@@ -1,3 +1,4 @@
+import CarCanvas from "../components/Canvas/BallCanvas";
 import FindMyWork from "../components/Home/FindMyWork";
 import Hero from "../components/Home/Hero";
 import HorizontalSkillsWrapper from "../components/Home/HorizontalSkillsWrapper";
@@ -18,6 +19,7 @@ function Home() {
         <HorizontalSkillsWrapper />
         <WorkCarousel />
         <Footer />
+        <CarCanvas />
       </div>
     </>
   );
