@@ -19,6 +19,7 @@ function App() {
 
   useEffect(() => {
     if (!isMobile) {
+      if (sessionStorage.getItem("showedToast")) return;
       setTimeout(() => {
         toast("Just for fun, try pressing Ctrl + K!", {
           position: "bottom-right",
@@ -30,6 +31,7 @@ function App() {
           progress: undefined,
           theme: darkMode ? "light" : "dark",
         });
+        sessionStorage.setItem("showedToast", "true");
       }, 3000);
     }
   }, [isMobile]);
