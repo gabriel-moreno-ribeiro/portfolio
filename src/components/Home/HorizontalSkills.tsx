@@ -1,6 +1,6 @@
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { forwardRef, useEffect } from "react";
+import { forwardRef, useLayoutEffect } from "react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -8,7 +8,7 @@ const HorizontalSkills = forwardRef<
   HTMLDivElement,
   { icons: string[]; reverse?: boolean }
 >(({ icons, reverse }, ref) => {
-  useEffect(() => {
+  useLayoutEffect(() => {
     const container = ref as React.MutableRefObject<HTMLDivElement | null>;
 
     if (container.current) {
