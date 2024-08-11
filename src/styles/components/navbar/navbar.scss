@@ -11,7 +11,7 @@
   min-width: 175px;
   position: fixed;
   top: 16px;
-  z-index: 1000;
+  z-index: 9999;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 
@@ -73,9 +73,10 @@
 
     .links {
       p {
+        color: $text-grey;
         &:hover {
-          background-color: var(--grey);
-          color: $black;
+          background-color: #1e1e1e;
+          color: $white;
         }
       }
     }
