@@ -104,3 +104,13 @@ img {
   user-drag: none;
   -webkit-touch-callout: none;
 }
+
+@media screen and (max-width: 600px) {
+  body {
+    cursor: unset;
+  }
+
+  .home-wrapper {
+    gap: 24px;
+  }
+}

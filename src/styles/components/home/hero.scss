@@ -58,3 +58,57 @@
     }
   }
 }
+
+@media screen and (max-width: 600px) {
+  .hero-section {
+    margin-top: 48px;
+
+    .heading-section {
+      max-width: 100%;
+      gap: 20px;
+
+      .heading {
+        font-size: 32px;
+        font-weight: 600px;
+        text-align: center;
+        line-height: 42px;
+      }
+      .desc {
+        color: var(--text-grey);
+        font-size: 18px;
+        text-align: center;
+        font-weight: 400;
+      }
+
+      .btn-flex {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 16px;
+
+        .icon-link {
+          padding: 4px;
+          font-size: 24px;
+        }
+
+        .icon-arrow {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background-color: var(--grey);
+          color: $black;
+          border-radius: 50%;
+          padding: 4px;
+          font-size: 24px;
+        }
+      }
+
+      .bottom-text {
+        color: var(--text-grey);
+        text-align: center;
+        margin-top: 24px;
+      }
+    }
+  }
+}

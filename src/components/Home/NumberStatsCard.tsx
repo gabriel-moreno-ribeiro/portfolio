@@ -1,5 +1,6 @@
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import React from "react";
+import useIsMobile from "../../hooks/useIsMobile";
 
 interface CardProps {
   frontCard: boolean;
@@ -8,6 +9,7 @@ interface CardProps {
 }
 
 const NumberStatsCard: React.FC<CardProps> = ({ frontCard, exitX, imgSrc }) => {
+  const isMobile = useIsMobile();
   const x = useMotionValue(0);
   const scale = useTransform(x, [-150, 0, 150], [0.5, 1, 0.5]);
   const rotate = useTransform(x, [-150, 0, 150], [-45, 0, 45], {
@@ -20,8 +22,8 @@ const NumberStatsCard: React.FC<CardProps> = ({ frontCard, exitX, imgSrc }) => {
   };
 
   const variantsBackCard = {
-    initial: { scale: 0, y: 105, opacity: 0 },
-    animate: { scale: 0.75, y: 30, opacity: 0.5 },
+    initial: { scale: 0, y: isMobile ? 80 : 105, opacity: 0 },
+    animate: { scale: 0.75, y: isMobile ? 20 : 30, opacity: 0.5 },
   };
 
   return (

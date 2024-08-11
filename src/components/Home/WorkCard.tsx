@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { FiGithub, FiPlayCircle } from "react-icons/fi";
 import ReactPlayer from "react-player/youtube";
+import useIsMobile from "../../hooks/useIsMobile";
 import MacButtons from "./MacButtons";
 
 interface WorkCardInterface {
@@ -28,6 +29,7 @@ const WorkCard = ({ data }: WorkCardInterface) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(true);
   const [isMinimized, setIsMinimized] = useState(false);
+  const isMobile = useIsMobile();
 
   const toggleModal = () => {
     setIsOpen((prev) => {
@@ -104,11 +106,11 @@ const WorkCard = ({ data }: WorkCardInterface) => {
           >
             <motion.div
               className="modal-content"
-              initial={{ width: "800px", opacity: 0 }}
+              initial={{ width: isMobile ? "400px" : "800px", opacity: 0 }}
               animate={
                 isMinimized
                   ? {
-                      width: "500px",
+                      width: isMobile ? "300px" : "500px",
                       opacity: 0,
                       x: 300,
                       y: 300,
@@ -120,7 +122,7 @@ const WorkCard = ({ data }: WorkCardInterface) => {
                     }
                   : isExpanded
                   ? {
-                      width: "800px",
+                      width: isMobile ? "400px" : "800px",
                       opacity: 1,
                       transition: {
                         type: "spring",
@@ -129,7 +131,7 @@ const WorkCard = ({ data }: WorkCardInterface) => {
                       },
                     }
                   : {
-                      width: "500px",
+                      width: isMobile ? "300px" : "500px",
                       opacity: 1,
                       transition: {
                         type: "spring",

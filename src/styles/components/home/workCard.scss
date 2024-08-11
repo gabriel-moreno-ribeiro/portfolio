@@ -28,12 +28,6 @@
       object-fit: cover;
       border-radius: 14px;
       cursor: pointer;
-      // filter: grayscale(1);
-
-      // &:hover {
-      //   filter: grayscale(0);
-      //   transition: all 0.3s;
-      // }
     }
 
     .card-heading-flex {
@@ -116,6 +110,53 @@
 
     .modal-overlay {
       background-color: rgba($color: #0000, $alpha: 0.95);
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .card-modal-component {
+    .main-card {
+      min-width: 300px;
+      padding: 10px;
+      gap: 10px;
+      border-radius: 12px;
+
+      .card-img {
+        width: 300px;
+        height: 160px;
+        border-radius: 12px;
+      }
+
+      .card-heading-flex {
+        gap: 6px;
+        .heading {
+          font-size: 14px;
+        }
+
+        .icon {
+          font-size: 16px;
+        }
+      }
+    }
+
+    .modal-overlay {
+      .modal-content {
+        padding: 10px 16px;
+        gap: 12px;
+        padding-bottom: 18px;
+
+        .heading,
+        .heading-2 {
+          font-size: 18px;
+        }
+
+        .desc {
+          width: 100%;
+          font-size: 14px;
+          max-width: 300px;
+        }
+      }
     }
   }
 }

@@ -25,9 +25,22 @@
     width: 100%;
     max-width: 100%;
 
-    // dont show scrollbar
     &::-webkit-scrollbar {
       display: none;
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .find-my-work {
+    .heading {
+      font-size: 20px;
+      margin-bottom: 16px;
+    }
+
+    .work-content {
+      padding: 24px 0px;
+      gap: 18px;
     }
   }
 }
