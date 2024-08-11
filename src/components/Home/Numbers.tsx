@@ -1,5 +1,10 @@
-import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useMemo, useState } from "react";
+import {
+  AnimatePresence,
+  motion,
+  useAnimation,
+  useInView,
+} from "framer-motion";
+import { useEffect, useMemo, useRef, useState } from "react";
 import d_appstore from "../../assets/numbers/dark/appstore.webp";
 import d_jira from "../../assets/numbers/dark/jira.webp";
 import d_safari from "../../assets/numbers/dark/safari.webp";
@@ -14,6 +19,9 @@ import NumberStatsCard from "./NumberStatsCard";
 const NumbersAndStats = () => {
   const [index, setIndex] = useState(0);
   const { darkMode } = useThemeStore();
+  const controls = useAnimation();
+  const ref = useRef(null);
+  const inView = useInView(ref, { margin: "0px 0px -100px 0px", once: true });
 
   const dataArray = useMemo(() => {
     if (!darkMode) {
@@ -62,10 +70,26 @@ const NumbersAndStats = () => {
     }, 2000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [dataArray]);
+
+  useEffect(() => {
+    if (inView) {
+      controls.start({
+        scale: 1,
+        opacity: 1,
+        y: 0,
+        transition: { duration: 0.5 },
+      });
+    }
+  }, [controls, inView]);
 
   return (
-    <div className="numbers-and-stats">
+    <motion.div
+      ref={ref}
+      initial={{ scale: 0, opacity: 0, y: 150 }}
+      animate={controls}
+      className="numbers-and-stats"
+    >
       <div className="center-text">
         <p className="text-p">Some Of My Interesting Stats</p>
       </div>
@@ -89,7 +113,7 @@ const NumbersAndStats = () => {
         className="card-text"
         dangerouslySetInnerHTML={{ __html: dataArray[index].text }}
       />
-    </div>
+    </motion.div>
   );
 };
 
