@@ -50,7 +50,7 @@ const HorizontalSkills = forwardRef<
       // Cleanup ScrollTrigger instances on component unmount
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
-  }, [reverse, ref]);
+  }, [reverse, ref, icons]);
 
   return (
     <div
