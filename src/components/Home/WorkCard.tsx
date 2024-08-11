@@ -178,12 +178,23 @@ const WorkCard = ({ data }: WorkCardInterface) => {
               />
               <h2 className="heading">{modalData.title}</h2>
               {cardData.url?.youtubeUrl && (
-                <ReactPlayer
-                  url={cardData.url.youtubeUrl}
-                  controls
-                  width="100%"
-                  height={isExpanded ? 400 : 300}
-                />
+                <>
+                  {isMobile ? (
+                    <ReactPlayer
+                      url={cardData.url.youtubeUrl}
+                      controls
+                      width="100%"
+                      height={isExpanded ? 200 : 150}
+                    />
+                  ) : (
+                    <ReactPlayer
+                      url={cardData.url.youtubeUrl}
+                      controls
+                      width="100%"
+                      height={isExpanded ? 400 : 300}
+                    />
+                  )}
+                </>
               )}
               <p
                 className="desc"
