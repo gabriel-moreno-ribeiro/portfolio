@@ -70,9 +70,10 @@
   .numbers-and-stats {
     gap: 24px;
     margin: 24px 0px;
-    height: 100vh;
-    top: 10vh;
-    padding-top: 20vh;
+    height: auto;
+    position: unset;
+    top: unset;
+
     .center-text {
       .text-p {
         font-size: 20px;
