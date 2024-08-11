@@ -1,0 +1,29 @@
+.horizontal-skills-parent {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  margin: 64px 0px;
+
+  .horizontal-skills-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    overflow: hidden; // Disable manual scrolling
+    gap: 0px 24px;
+    position: relative;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    .icon {
+      min-width: 120px;
+      height: 120px;
+      flex-shrink: 0;
+    }
+  }
+}
