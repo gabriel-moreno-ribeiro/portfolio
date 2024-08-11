@@ -78,7 +78,7 @@ export default function CanvasComponent() {
       camera={{ position: [0.4, 1.17, 11.35], fov: 25 }}
       className="robot-canvas"
     >
-      <ambientLight intensity={darkMode ? 0 : 1} />
+      <ambientLight intensity={darkMode ? 0.25 : 1} />
       <directionalLight position={[10, 10, 10]} intensity={darkMode ? 0 : 2} />
       <Model />
       <OrbitControls enableZoom={false} />

@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import { FiArrowRight, FiLink } from "react-icons/fi";
 import ScrambleAnimation from "react-scrambled-text/dist/src/ScrambleAnimation";
 import useIsMobile from "../../hooks/useIsMobile";
@@ -6,8 +7,24 @@ import { scrollToComponent } from "../../utils/scrollToComponent";
 import CanvasComponent from "../Canvas/CanvasComponent";
 import CommonButton from "../Shared/CommonButton";
 
+const bottomTexts = [
+  `Avi is also an instructor at a leading YC EdTech platform, having taught MERN Stack to over <span class="black"> 100,000+ </span> students.`,
+  `Avi is a graduate from <span class="black"> IIIT Delhi </span> and has done his <span class="black"> Btech (CS) </span> in 2024.`,
+  `Avi also has interests in <span class="black"> Algo Trading, UI Designing and Product Designing. </span>`,
+];
+
 function Hero() {
   const isMobile = useIsMobile();
+  const [currentTextIndex, setCurrentTextIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTextIndex((prevIndex) => (prevIndex + 1) % bottomTexts.length);
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [bottomTexts.length]);
+
   return (
     <div className="hero-section">
       <CanvasComponent />
@@ -61,14 +78,14 @@ function Hero() {
           />
         </motion.div>
         <motion.p
+          key={currentTextIndex}
           className="bottom-text"
-          initial={{ opacity: 0, y: 25 }}
+          initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1, duration: 0.25 }}
-        >
-          Avi is also an instructor at a leading YC EdTech platform, having
-          taught over <span className="black">100,000+</span> students.
-        </motion.p>
+          exit={{ opacity: 0, y: -10 }}
+          transition={{ duration: 0.5 }}
+          dangerouslySetInnerHTML={{ __html: bottomTexts[currentTextIndex] }}
+        />
       </div>
     </div>
   );
