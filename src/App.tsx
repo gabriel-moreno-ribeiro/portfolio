@@ -22,7 +22,7 @@ function App() {
       setTimeout(() => {
         toast("Just for fun, try pressing Ctrl + K!", {
           position: "bottom-right",
-          autoClose: false,
+          autoClose: 1000 * 10,
           hideProgressBar: true,
           closeOnClick: true,
           pauseOnHover: true,
