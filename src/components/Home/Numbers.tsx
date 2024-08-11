@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import d_appstore from "../../assets/numbers/dark/appstore.webp";
 import d_jira from "../../assets/numbers/dark/jira.webp";
 import d_safari from "../../assets/numbers/dark/safari.webp";
@@ -66,37 +66,37 @@ const NumbersAndStats = () => {
 
   // Use setInterval on mobile devices
   useEffect(() => {
-    if (isMobile) {
-      const interval = setInterval(() => {
-        setIndex((prevIndex) => (prevIndex + 1) % dataArray.length);
-      }, 2000);
+    // if (isMobile) {
+    const interval = setInterval(() => {
+      setIndex((prevIndex) => (prevIndex + 1) % dataArray.length);
+    }, 2000);
 
-      return () => clearInterval(interval);
-    }
-  }, [isMobile, dataArray.length]);
+    return () => clearInterval(interval);
+    // }
+  }, [dataArray.length]);
 
   // Use GSAP ScrollTrigger on non-mobile devices
-  useLayoutEffect(() => {
-    if (isMobile || !containerRef.current) return;
+  // useLayoutEffect(() => {
+  //   if (isMobile || !containerRef.current) return;
 
-    const containerHeight = containerRef.current.clientHeight / 1.5;
-    const scrollStep = containerHeight / dataArray.length;
+  //   const containerHeight = containerRef.current.clientHeight / 1.5;
+  //   const scrollStep = containerHeight / dataArray.length;
 
-    dataArray.forEach((_, index) => {
-      ScrollTrigger.create({
-        trigger: containerRef.current,
-        start: `top+=${index * scrollStep}px top`,
-        end: `top+=${(index + 1) * scrollStep}px top`,
-        onEnter: () => setIndex(index),
-        onEnterBack: () => setIndex(index),
-        markers: false, // Set to true if you want to debug the scroll points
-      });
-    });
+  //   dataArray.forEach((_, index) => {
+  //     ScrollTrigger.create({
+  //       trigger: containerRef.current,
+  //       start: `top+=${index * scrollStep}px top`,
+  //       end: `top+=${(index + 1) * scrollStep}px top`,
+  //       onEnter: () => setIndex(index),
+  //       onEnterBack: () => setIndex(index),
+  //       markers: false, // Set to true if you want to debug the scroll points
+  //     });
+  //   });
 
-    return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-    };
-  }, [isMobile, dataArray]);
+  //   return () => {
+  //     ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+  //   };
+  // }, [isMobile, dataArray]);
 
   return (
     <motion.div ref={containerRef} className="numbers-and-stats">
