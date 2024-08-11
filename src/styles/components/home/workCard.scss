@@ -116,15 +116,20 @@
 
 @media screen and (max-width: 600px) {
   .card-modal-component {
+    width: 100%;
+    padding: 0px 16px;
     .main-card {
       min-width: 300px;
+      width: 100%;
       padding: 10px;
       gap: 10px;
       border-radius: 12px;
 
       .card-img {
-        width: 300px;
-        height: 160px;
+        width: 100%;
+        min-width: 300px;
+        height: 100%;
+        min-height: 160px;
         border-radius: 12px;
       }
 
