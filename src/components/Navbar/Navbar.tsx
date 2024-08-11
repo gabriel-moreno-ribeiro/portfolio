@@ -6,12 +6,12 @@ function Navbar() {
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const links = [
     {
-      name: "Work.",
-      href: "#work",
-    },
-    {
       name: "Skills.",
       href: "#skills",
+    },
+    {
+      name: "Work.",
+      href: "#work",
     },
     {
       name: "LinkedIn.",

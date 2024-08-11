@@ -365,7 +365,7 @@ export const work = [
   [
     {
       cardData: {
-        title: "Books Published",
+        title: "Books I Have Published.",
         imgUrl: things18,
         url: null,
       },
@@ -378,7 +378,7 @@ export const work = [
 
     {
       cardData: {
-        title: "Podcast",
+        title: "My Podcast - Lockdown Wars.",
         imgUrl: lockdownWars,
         url: null,
       },
