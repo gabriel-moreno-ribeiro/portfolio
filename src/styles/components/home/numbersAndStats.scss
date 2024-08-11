@@ -1,11 +1,12 @@
 .numbers-and-stats {
-  height: 60vh;
+  height: auto;
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 48px;
+  margin: 64px 0px;
 
   .center-text {
     text-align: center;

@@ -24,7 +24,7 @@ $border-grey: #e7e7e7;
 html,
 body {
   margin: 0px;
-  padding: 0px;
+
   font-family: "Poppins", sans-serif;
   color: var(--black);
   background-color: var(--white);
@@ -43,8 +43,11 @@ body {
   }
 }
 
-.home-wrapper {
+body {
   padding: 16px;
+}
+
+.home-wrapper {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

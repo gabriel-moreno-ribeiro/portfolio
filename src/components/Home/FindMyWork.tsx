@@ -7,7 +7,7 @@ function FindMyWork() {
   const tabs = ["Personal", "Youtube", "Books"];
   const [activeTab, setActiveTab] = useState<number>(0);
   return (
-    <div className="find-my-work" data-lenis-prevent>
+    <div className="find-my-work" data-lenis-prevent id="work">
       <h1 className="heading">Find My Work</h1>
       <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
       <div className="work-content" id="work-content-scroll-div">

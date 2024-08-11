@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { FiGithub, FiPlayCircle } from "react-icons/fi";
+import ReactPlayer from "react-player/youtube";
 import MacButtons from "./MacButtons";
 
 interface WorkCardInterface {
@@ -145,6 +146,14 @@ const WorkCard = ({ data }: WorkCardInterface) => {
                 onExpand={handleExpand}
               />
               <h2 className="heading">{modalData.title}</h2>
+              {cardData.url?.youtubeUrl && (
+                <ReactPlayer
+                  url={cardData.url.youtubeUrl}
+                  controls
+                  width="100%"
+                  height={isExpanded ? 400 : 300}
+                />
+              )}
               <p className="desc">{modalData.desc}</p>
               <h2 className="heading-2">{modalData.infoHeading}</h2>
               <p className="desc">{modalData.infoArr?.join(", ")}</p>

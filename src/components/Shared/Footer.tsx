@@ -45,22 +45,24 @@ function Footer() {
   ];
 
   return (
-    <div
-      className="footer"
-      onMouseEnter={() => mouseEnterAndExit(true)}
-      onMouseLeave={() => mouseEnterAndExit(false)}
-    >
-      <div className="left-heading">Avi Vashishta.</div>
-      <div className="right-icons">
-        {socialLinks.map((link, index) => (
-          <div
-            key={index}
-            onClick={() => window.open(link.url, "_blank")}
-            style={{ cursor: "pointer" }}
-          >
-            {link.icon}
-          </div>
-        ))}
+    <div className="footer-wrapper">
+      <div
+        className="footer"
+        onMouseEnter={() => mouseEnterAndExit(true)}
+        onMouseLeave={() => mouseEnterAndExit(false)}
+      >
+        <div className="left-heading">Avi Vashishta.</div>
+        <div className="right-icons">
+          {socialLinks.map((link, index) => (
+            <div
+              key={index}
+              onClick={() => window.open(link.url, "_blank")}
+              style={{ cursor: "pointer" }}
+            >
+              {link.icon}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

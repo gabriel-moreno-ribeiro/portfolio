@@ -13,9 +13,9 @@ function Home() {
         <Navbar />
         <Hero />
         <Skills />
+        <FindMyWork />
         <NumbersAndStats />
         <HorizontalSkillsWrapper />
-        <FindMyWork />
         <WorkCarousel />
         <Footer />
       </div>

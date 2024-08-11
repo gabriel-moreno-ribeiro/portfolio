@@ -143,7 +143,7 @@ const Skills: React.FC = () => {
   }, [darkMode]);
 
   return (
-    <div className="skills-container" ref={ref}>
+    <div className="skills-container" ref={ref} id="skills">
       <p className="main-text">
         Always Building, <br />
         Always Growing.
