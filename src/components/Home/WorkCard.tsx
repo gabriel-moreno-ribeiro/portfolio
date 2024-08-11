@@ -104,8 +104,10 @@ const WorkCard = ({ data }: WorkCardInterface) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            onClick={toggleModal}
           >
             <motion.div
+              onClick={(e) => e.stopPropagation()}
               className="modal-content"
               initial={{ width: isMobile ? "400px" : "800px", opacity: 0 }}
               animate={
