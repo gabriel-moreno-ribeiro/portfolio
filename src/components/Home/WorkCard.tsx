@@ -68,12 +68,13 @@ const WorkCard = ({ data }: WorkCardInterface) => {
 
   return (
     <div className="card-modal-component">
-      <motion.div className="main-card" whileTap={{ scale: 0.95 }}>
+      <motion.div className="main-card">
         <motion.img
           src={cardData.imgUrl}
           alt="card"
           className="card-img"
           onClick={toggleModal}
+          whileTap={{ scale: 0.95 }}
         />
         <div className="card-heading-flex">
           <h2 className="heading">{cardData.title}</h2>
@@ -146,6 +147,7 @@ const WorkCard = ({ data }: WorkCardInterface) => {
                 onClose={handleClose}
                 onMinimise={handleMinimize}
                 onExpand={handleExpand}
+                isExpanded={isExpanded}
               />
               <h2 className="heading">{modalData.title}</h2>
               {cardData.url?.youtubeUrl && (

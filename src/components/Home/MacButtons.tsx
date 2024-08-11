@@ -1,13 +1,19 @@
 import { FaMinus, FaPlus } from "react-icons/fa6";
-import { RiExpandUpDownFill } from "react-icons/ri";
+import { RiContractLeftRightFill, RiExpandUpDownFill } from "react-icons/ri";
 
 interface PropsInterface {
   onClose: () => void;
   onExpand: () => void;
   onMinimise: () => void;
+  isExpanded: boolean;
 }
 
-function MacButtons({ onClose, onExpand, onMinimise }: PropsInterface) {
+function MacButtons({
+  onClose,
+  onExpand,
+  onMinimise,
+  isExpanded,
+}: PropsInterface) {
   const buttons = [
     {
       color: "#FF6057",
@@ -19,11 +25,17 @@ function MacButtons({ onClose, onExpand, onMinimise }: PropsInterface) {
     },
     {
       color: "#2ED158",
-      icon: (
+      icon: isExpanded ? (
+        <RiContractLeftRightFill
+          className="icon expand-icon"
+          onClick={onExpand}
+        />
+      ) : (
         <RiExpandUpDownFill className="icon expand-icon" onClick={onExpand} />
       ),
     },
   ];
+
   return (
     <div className="mac-buttons-flex">
       {buttons.map((button, index) => (
