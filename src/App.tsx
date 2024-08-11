@@ -20,7 +20,7 @@ function App() {
   useEffect(() => {
     if (!isMobile) {
       setTimeout(() => {
-        toast("Just for fun try pressing Ctrl + Enter!", {
+        toast("Just for fun, try pressing Ctrl + K!", {
           position: "bottom-right",
           autoClose: false,
           hideProgressBar: true,

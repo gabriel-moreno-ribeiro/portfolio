@@ -57,7 +57,7 @@ function BallComponent() {
     }
 
     const handleKeyDown = (event) => {
-      if (event.ctrlKey && event.code === "Enter") {
+      if (event.ctrlKey && event.code === "KeyK") {
         setShowCarCanvas(true);
       } else if (event.code === "Escape" && showCarCanvas) {
         setShowCarCanvas(false);
