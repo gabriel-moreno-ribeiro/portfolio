@@ -82,3 +82,41 @@
     }
   }
 }
+
+@media screen and (max-width: 600px) {
+  .navbar {
+    padding: 12px 24px;
+    gap: 12px;
+
+    .heading {
+      font-size: 16px;
+    }
+
+    .links {
+      margin-right: auto;
+      display: flex;
+      gap: 12px;
+
+      p {
+        font-size: 14px;
+      }
+    }
+  }
+
+  [data-theme="dark"] {
+    .navbar {
+      background-color: rgba($black, 0.8);
+      border: 2px solid $white;
+
+      .links {
+        p {
+          color: $white;
+          &:hover {
+            background-color: #1e1e1e;
+            color: $white;
+          }
+        }
+      }
+    }
+  }
+}

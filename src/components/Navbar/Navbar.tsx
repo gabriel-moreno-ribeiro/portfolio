@@ -1,9 +1,11 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import useIsMobile from "../../hooks/useIsMobile";
 import { scrollToComponent } from "../../utils/scrollToComponent";
 import MenuIcon from "./MenuIcon";
 
 function Navbar() {
+  const isMobile = useIsMobile();
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const links = [
     {
@@ -24,22 +26,32 @@ function Navbar() {
       href: "https://github.com/AVIVASHISHTA29",
     },
   ];
+  const expandedWidth = useMemo(
+    () => (isMobile ? "300px" : "700px"),
+    [isMobile]
+  );
+
   return (
     <motion.div
       className="navbar"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      onClick={() => setIsHovered(!isHovered)}
       animate={{
-        width: isHovered ? "700px" : "auto",
+        width: isHovered ? expandedWidth : "auto",
       }}
       transition={{
         type: "spring",
-        stiffness: 100,
+        stiffness: isMobile ? 200 : 100,
         damping: 15,
       }}
     >
       <MenuIcon isHovered={isHovered} setIsHovered={setIsHovered} />
-      <h1 className="heading">Avi Vashishta.</h1>
+      {!isMobile ? (
+        <h1 className="heading">Avi Vashishta.</h1>
+      ) : isMobile && !isHovered ? (
+        <h1 className="heading">Avi Vashishta.</h1>
+      ) : null}
       <motion.div
         className={`links`}
         initial={{ opacity: 0 }}
