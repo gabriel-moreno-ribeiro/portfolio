@@ -1,17 +1,29 @@
+import { useCallback } from "react";
 import { FaGithub, FaInstagram, FaLinkedinIn } from "react-icons/fa6";
 import { MdOutlineContactPage } from "react-icons/md";
+import { useThemeStore } from "../../store/themeStore";
 
 function Footer() {
-  const mouseEnterAndExit = (enter: boolean) => {
-    const customMouse = document.querySelector(".custom-mouse") as HTMLElement;
-    if (customMouse) {
-      if (enter) {
-        customMouse.style.backgroundColor = "var(--white)";
-      } else {
-        customMouse.style.backgroundColor = "var(--black)";
+  const { darkMode } = useThemeStore();
+  const mouseEnterAndExit = useCallback(
+    (enter: boolean) => {
+      const customMouse = document.querySelector(
+        ".custom-mouse"
+      ) as HTMLElement;
+      if (customMouse) {
+        if (enter) {
+          customMouse.style.backgroundColor = darkMode
+            ? "var(--black)"
+            : "var(--white)";
+        } else {
+          customMouse.style.backgroundColor = darkMode
+            ? "var(--black)"
+            : "var(--black)";
+        }
       }
-    }
-  };
+    },
+    [darkMode]
+  );
 
   const socialLinks = [
     {

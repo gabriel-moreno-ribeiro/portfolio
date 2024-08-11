@@ -4,7 +4,7 @@
   align-items: center;
   background-color: var(--black);
   color: var(--white);
-  padding: 20px 24px;
+  padding: 12px 24px;
   border-radius: 100px;
   width: 100%;
   margin-top: -16px;
@@ -20,10 +20,27 @@
     justify-content: flex-end;
     align-items: center;
 
+    div {
+      height: 24px;
+    }
+
     .icon {
+      margin: 0px;
       font-size: 24px;
       color: var(--white);
       cursor: pointer;
+    }
+  }
+}
+
+[data-theme="dark"] {
+  .footer {
+    background-color: var(--white);
+    border: 2px solid var(--black);
+
+    .left-heading,
+    .icon {
+      color: var(--black);
     }
   }
 }

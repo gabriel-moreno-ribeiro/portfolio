@@ -3,6 +3,7 @@ import "swiper/css/effect-cards";
 import { Autoplay, EffectCards } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
+import { useCallback } from "react";
 import img1 from "../../assets/work-carousel/img1.webp";
 import img2 from "../../assets/work-carousel/img2.webp";
 import img3 from "../../assets/work-carousel/img3.webp";
@@ -10,19 +11,30 @@ import img4 from "../../assets/work-carousel/img4.webp";
 import img5 from "../../assets/work-carousel/img5.webp";
 import img6 from "../../assets/work-carousel/img6.webp";
 import img7 from "../../assets/work-carousel/img7.webp";
+import { useThemeStore } from "../../store/themeStore";
 const images = [img1, img2, img3, img4, img5, img6, img7];
 
 const WorkCarousel = () => {
-  const mouseEnterAndExit = (enter: boolean) => {
-    const customMouse = document.querySelector(".custom-mouse") as HTMLElement;
-    if (customMouse) {
-      if (enter) {
-        customMouse.style.backgroundColor = "var(--white)";
-      } else {
-        customMouse.style.backgroundColor = "var(--black)";
+  const { darkMode } = useThemeStore();
+  const mouseEnterAndExit = useCallback(
+    (enter: boolean) => {
+      const customMouse = document.querySelector(
+        ".custom-mouse"
+      ) as HTMLElement;
+      if (customMouse) {
+        if (enter) {
+          customMouse.style.backgroundColor = darkMode
+            ? "var(--black)"
+            : "var(--white)";
+        } else {
+          customMouse.style.backgroundColor = darkMode
+            ? "var(--black)"
+            : "var(--black)";
+        }
       }
-    }
-  };
+    },
+    [darkMode]
+  );
 
   return (
     <div
