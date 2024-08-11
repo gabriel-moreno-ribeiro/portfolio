@@ -62,7 +62,7 @@ const NumbersAndStats = () => {
   }, [darkMode]);
 
   // Detect if the user is on a mobile device
-  const isMobile = window.innerWidth <= 768;
+  // const isMobile = window.innerWidth <= 768;
 
   // Use setInterval on mobile devices
   useEffect(() => {
@@ -73,7 +73,7 @@ const NumbersAndStats = () => {
 
     return () => clearInterval(interval);
     // }
-  }, [dataArray.length]);
+  }, [dataArray]);
 
   // Use GSAP ScrollTrigger on non-mobile devices
   // useLayoutEffect(() => {
