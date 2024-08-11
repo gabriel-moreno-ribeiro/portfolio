@@ -1,21 +1,34 @@
 import { motion } from "framer-motion";
 import { FiArrowRight, FiLink } from "react-icons/fi";
+import ScrambleAnimation from "react-scrambled-text/dist/src/ScrambleAnimation";
+import useIsMobile from "../../hooks/useIsMobile";
 import { scrollToComponent } from "../../utils/scrollToComponent";
 import CanvasComponent from "../Canvas/CanvasComponent";
 import CommonButton from "../Shared/CommonButton";
+
 function Hero() {
+  const isMobile = useIsMobile();
   return (
     <div className="hero-section">
       <CanvasComponent />
       <div className="heading-section">
-        <motion.h1
+        <motion.div
           className="heading"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.25, duration: 0.5 }}
         >
-          Fullstack Web and App Developer.
-        </motion.h1>
+          <ScrambleAnimation
+            style={{
+              fontSize: isMobile ? "32px" : "56px",
+            }}
+            texts={["Fullstack", "App", "Game", "Web"]}
+            speed={100}
+            pauseDuration={1000}
+            start={true}
+          />
+          <h1 className="heading">Developer.</h1>
+        </motion.div>
         <motion.p
           className="desc"
           initial={{ opacity: 0, y: 25 }}
