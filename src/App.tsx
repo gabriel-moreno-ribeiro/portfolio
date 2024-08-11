@@ -22,7 +22,7 @@ function App() {
       setTimeout(() => {
         toast("Just for fun try pressing Ctrl + Enter!", {
           position: "bottom-right",
-          autoClose: 3000,
+          autoClose: false,
           hideProgressBar: true,
           closeOnClick: true,
           pauseOnHover: true,
