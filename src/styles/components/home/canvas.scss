@@ -32,12 +32,22 @@
       font-weight: 500;
       color: $black;
       text-align: right;
+      line-height: 48px;
     }
 
     .small-desc {
       font-size: 24px;
       font-weight: 400;
       color: $black;
+    }
+
+    code {
+      background-color: rgba(0, 0, 0, 0.6);
+      color: $white;
+      padding: 4px;
+      border-radius: 4px;
+      font-weight: 500;
+      font-size: 22px;
     }
   }
 }

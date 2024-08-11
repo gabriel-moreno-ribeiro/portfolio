@@ -32,10 +32,14 @@ function CarCanvas() {
           opacity: 1, y: 50, 
         }}
       >
-        <h1 className="heading">Avi Vashishta.</h1>
+        {/* <h1 className="heading">Avi Vashishta.</h1> */}
+         <p className="desc">
+          Use  <code>Arrow Keys</code> to control BB-8.
+        </p>
         <p className="desc">
           Press <code>Esc</code> to close the window.
         </p>
+        
         <p className="small-desc"></p>
       </div>
     </div>
