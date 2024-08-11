@@ -62,3 +62,16 @@
     }
   }
 }
+
+[data-theme="dark"] {
+  .work-carousel {
+    .carousel-container {
+      background-color: #1e1e1e;
+      .heading,
+      .desc,
+      a {
+        color: var(--black);
+      }
+    }
+  }
+}

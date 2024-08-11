@@ -13,9 +13,10 @@ function Home() {
         <Hero />
         <Skills />
         <NumbersAndStats />
+        <HorizontalSkillsWrapper />
         <FindMyWork />
         {/* <VerticalSkills /> */}
-        <HorizontalSkillsWrapper />
+
         <WorkCarousel />
       </div>
       {/* Footer */}

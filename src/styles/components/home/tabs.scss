@@ -33,3 +33,17 @@
   border-radius: 25px;
   z-index: -1;
 }
+
+[data-theme="dark"] {
+  .tabs {
+    background-color: var(--white);
+    border: 2px solid var(--black);
+
+    .tab {
+    }
+
+    .active-tab-indicator {
+      background-color: #1e1e1e;
+    }
+  }
+}
