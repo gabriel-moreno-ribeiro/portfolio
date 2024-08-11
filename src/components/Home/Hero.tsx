@@ -21,6 +21,7 @@ function Hero() {
           <ScrambleAnimation
             style={{
               fontSize: isMobile ? "32px" : "56px",
+              color: "var(--black)",
             }}
             texts={["Fullstack", "App", "Game", "Web"]}
             speed={100}
