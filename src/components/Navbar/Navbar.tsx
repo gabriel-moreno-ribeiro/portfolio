@@ -34,8 +34,8 @@ function Navbar() {
   return (
     <motion.div
       className="navbar"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      onMouseEnter={!isMobile ? () => setIsHovered(true) : undefined}
+      onMouseLeave={!isMobile ? () => setIsHovered(false) : undefined}
       onClick={() => setIsHovered(!isHovered)}
       animate={{
         width: isHovered ? expandedWidth : "auto",

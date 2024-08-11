@@ -109,9 +109,13 @@ img {
   -webkit-touch-callout: none;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 800px) {
   body {
-    cursor: unset;
+    cursor: default !important;
+  }
+
+  .custom-mouse {
+    display: none !important;
   }
 
   .home-wrapper {
