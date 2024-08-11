@@ -1,5 +1,10 @@
-import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import {
+  AnimatePresence,
+  motion,
+  useAnimation,
+  useInView,
+} from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 import { FiGithub, FiPlayCircle } from "react-icons/fi";
 import ReactPlayer from "react-player/youtube";
 import useIsMobile from "../../hooks/useIsMobile";
@@ -30,6 +35,20 @@ const WorkCard = ({ data }: WorkCardInterface) => {
   const [isExpanded, setIsExpanded] = useState(true);
   const [isMinimized, setIsMinimized] = useState(false);
   const isMobile = useIsMobile();
+  const controls = useAnimation();
+  const ref = useRef(null);
+  const inView = useInView(ref, { margin: "0px 0px 200px 0px", once: true });
+
+  useEffect(() => {
+    if (inView) {
+      controls.start({
+        scale: 1,
+        opacity: 1,
+        y: 0,
+        transition: { duration: 0.5 },
+      });
+    }
+  }, [controls, inView]);
 
   const toggleModal = () => {
     setIsOpen((prev) => {
@@ -68,7 +87,13 @@ const WorkCard = ({ data }: WorkCardInterface) => {
 
   return (
     <div className="card-modal-component">
-      <motion.div className="main-card">
+      <motion.div
+        className="main-card"
+        initial={{ scale: 0.99, opacity: 0, y: 100 }}
+        animate={controls}
+        transition={{ duration: 0.5 }}
+        ref={ref}
+      >
         <motion.img
           src={cardData.imgUrl}
           alt="card"

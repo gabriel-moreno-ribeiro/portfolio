@@ -17,9 +17,10 @@
   .work-content {
     padding: 36px 0px;
     display: flex;
-    overflow-x: auto;
+    // overflow-x: auto;
+    flex-wrap: wrap;
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
     gap: 24px;
     width: 100%;
