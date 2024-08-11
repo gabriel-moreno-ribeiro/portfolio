@@ -27,6 +27,7 @@ import d_icon6 from "../../assets/skills/dark/icon6.webp";
 import d_icon7 from "../../assets/skills/dark/icon7.webp";
 import d_icon8 from "../../assets/skills/dark/icon8.webp";
 import d_icon9 from "../../assets/skills/dark/icon9.webp";
+import useIsMobile from "../../hooks/useIsMobile";
 import { useThemeStore } from "../../store/themeStore";
 
 const lightIcons = [
@@ -66,7 +67,7 @@ const initialPosition = {
   y: 0,
 };
 
-const finalPositions = [
+const deskstopFinalPositions = [
   { x: -500, y: 0 },
   { x: 650, y: 100 },
   { x: 600, y: -50 },
@@ -82,44 +83,27 @@ const finalPositions = [
   { x: -250, y: 250 },
 ];
 
+const mobileFinalPositions = [
+  { x: -100, y: 120 },
+  { x: 150, y: 110 },
+  { x: 120, y: -150 },
+  { x: -120, y: -275 },
+  { x: 0, y: 325 },
+  { x: 10, y: -280 },
+  { x: -100, y: -150 },
+  { x: 5, y: 150 },
+  { x: -150, y: 300 },
+  { x: 150, y: 380 },
+  { x: 125, y: -360 },
+  { x: -150, y: -370 },
+  { x: 100, y: 250 },
+];
+
 const randomInRange = (min: number, max: number) =>
   Math.random() * (max - min) + min;
 
-const bubbleVariants: Transition = {
-  initial: { scale: 0 },
-  animate: (i: number) => ({
-    scale: [0, 1.5, 1],
-    x: [initialPosition.x, finalPositions[i].x],
-    y: [initialPosition.y, finalPositions[i].y],
-    transition: {
-      delay: i * 0.075,
-      duration: 0.5,
-      ease: "easeInOut",
-    },
-  }),
-  oscillate: (i: number) => ({
-    y: [
-      finalPositions[i].y,
-      finalPositions[i].y + randomInRange(-10, 10),
-      finalPositions[i].y + randomInRange(-10, 10),
-      finalPositions[i].y,
-    ],
-    x: [
-      finalPositions[i].x,
-      finalPositions[i].x + randomInRange(-10, 10),
-      finalPositions[i].x + randomInRange(-10, 10),
-      finalPositions[i].x,
-    ],
-    transition: {
-      duration: 2,
-      ease: "easeInOut",
-      repeat: Infinity,
-      repeatType: "mirror",
-    },
-  }),
-};
-
 const Skills: React.FC = () => {
+  const isMobile = useIsMobile();
   const { darkMode } = useThemeStore();
   const controls = useAnimation();
   const ref = useRef<HTMLDivElement>(null);
@@ -127,6 +111,45 @@ const Skills: React.FC = () => {
     margin: "0px 0px -200px 0px",
     once: true,
   });
+
+  const finalPositions = useMemo(
+    () => (isMobile ? mobileFinalPositions : deskstopFinalPositions),
+    [isMobile]
+  );
+
+  const bubbleVariants: Transition = {
+    initial: { scale: 0 },
+    animate: (i: number) => ({
+      scale: [0, 1.5, 1],
+      x: [initialPosition.x, finalPositions[i].x],
+      y: [initialPosition.y, finalPositions[i].y],
+      transition: {
+        delay: i * 0.075,
+        duration: 0.5,
+        ease: "easeInOut",
+      },
+    }),
+    oscillate: (i: number) => ({
+      y: [
+        finalPositions[i].y,
+        finalPositions[i].y + randomInRange(-10, 10),
+        finalPositions[i].y + randomInRange(-10, 10),
+        finalPositions[i].y,
+      ],
+      x: [
+        finalPositions[i].x,
+        finalPositions[i].x + randomInRange(-10, 10),
+        finalPositions[i].x + randomInRange(-10, 10),
+        finalPositions[i].x,
+      ],
+      transition: {
+        duration: 2,
+        ease: "easeInOut",
+        repeat: Infinity,
+        repeatType: "mirror",
+      },
+    }),
+  };
 
   useEffect(() => {
     if (inView) {

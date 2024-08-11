@@ -26,3 +26,12 @@
     height: 80px;
   }
 }
+
+@media screen and (max-width: 600px) {
+  .skills-container {
+    .bubble {
+      width: 60px;
+      height: 60px;
+    }
+  }
+}
