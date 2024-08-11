@@ -154,7 +154,10 @@ const WorkCard = ({ data }: WorkCardInterface) => {
                   height={isExpanded ? 400 : 300}
                 />
               )}
-              <p className="desc">{modalData.desc}</p>
+              <p
+                className="desc"
+                dangerouslySetInnerHTML={{ __html: modalData.desc }}
+              />
               <h2 className="heading-2">{modalData.infoHeading}</h2>
               <p className="desc">{modalData.infoArr?.join(", ")}</p>
             </motion.div>

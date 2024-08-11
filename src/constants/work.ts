@@ -132,7 +132,7 @@ export const work = [
       },
       modalData: {
         title: "Crypto Currency Price Tracker",
-        desc: "Track crypto currencies through Coin gecko api in real time. Visit the dashboard to do so! Technologies Used: React JS, JavaScript, MUI, Chart JS, Framer Motion.",
+        desc: "Track crypto currencies through Coin gecko api in real time. Visit the dashboard to do so! <br/>Technologies Used: React JS, JavaScript, MUI, Chart JS, Framer Motion.",
         infoHeading: "11,000+ Views",
       },
     },
@@ -147,7 +147,7 @@ export const work = [
       },
       modalData: {
         title: "Tic Tac Toe Using JavaScript",
-        desc: "A tic tac toe game made using JavaScript. You can play with your friends or with the computer. Technologies Used: HTML, CSS, Javascript.",
+        desc: "A tic tac toe game made using JavaScript. You can play with your friends or with the computer.<br/> Technologies Used: HTML, CSS, Javascript.",
         infoHeading: "1,000 Views",
       },
     },
@@ -161,7 +161,7 @@ export const work = [
       },
       modalData: {
         title: "Airbnb Clone with React",
-        desc: "An Airbnb clone made using React. Technologies Used: HTML, CSS, Javascript.",
+        desc: "An Airbnb clone made using React. <br/>Technologies Used: HTML, CSS, Javascript.",
         infoHeading: "21,000+ Views",
       },
     },
@@ -175,7 +175,7 @@ export const work = [
       },
       modalData: {
         title: "Podcast Platform Like Spotify",
-        desc: "A podcast platform like Spotify where you can listen to your favorite podcasts. You can also create your own podcasts and upload them. Technologies Used: React JS, JavaScript, MUI, Firebase, Redux.",
+        desc: "A podcast platform like Spotify where you can listen to your favorite podcasts. You can also create your own podcasts and upload them.<br/> Technologies Used: React JS, JavaScript, MUI, Firebase, Redux.",
         infoHeading: "1,300+ Views",
       },
     },
@@ -189,7 +189,7 @@ export const work = [
       },
       modalData: {
         title: "Personal Finance Tracker",
-        desc: "A personal finance tracker where you can track your income and expenses. You can also set a budget and see how much you have spent. Technologies Used: React JS, JavaScript, Ant Design, Firebase, Redux.",
+        desc: "A personal finance tracker where you can track your income and expenses. You can also set a budget and see how much you have spent. <br/>Technologies Used: React JS, JavaScript, Ant Design, Firebase, Redux.",
         infoHeading: "9,900+ Views",
       },
     },
@@ -203,7 +203,7 @@ export const work = [
       },
       modalData: {
         title: "Pacman Using JavaScript",
-        desc: "A pacman game made using JavaScript. You can play the game and try to eat all the food without getting caught by the ghosts. Technologies Used: HTML, CSS, Javascript.",
+        desc: "A pacman game made using JavaScript. You can play the game and try to eat all the food without getting caught by the ghosts. <br/>Technologies Used: HTML, CSS, Javascript.",
         infoHeading: "1,000 Views",
       },
     },
@@ -217,7 +217,7 @@ export const work = [
       },
       modalData: {
         title: "Mario Using JavaScript",
-        desc: "A mario game made using JavaScript. You can play the game and try to reach the flag without getting caught by the enemies. Technologies Used: HTML, CSS, Javascript.",
+        desc: "A mario game made using JavaScript. You can play the game and try to reach the flag without getting caught by the enemies. <br/>Technologies Used: HTML, CSS, Javascript.",
         infoHeading: "6,000+ Views",
       },
     },
@@ -231,7 +231,7 @@ export const work = [
       },
       modalData: {
         title: "Calculator Using JavaScript",
-        desc: "A calculator made using JavaScript. You can perform basic arithmetic operations using this calculator. Technologies Used: HTML, CSS, Javascript.",
+        desc: "A calculator made using JavaScript. You can perform basic arithmetic operations using this calculator. <br/>Technologies Used: HTML, CSS, Javascript.",
         infoHeading: "6,000+ Views",
       },
     },
@@ -245,7 +245,7 @@ export const work = [
       },
       modalData: {
         title: "Quiz App Using JavaScript",
-        desc: "A quiz app made using JavaScript. You can play the quiz and test your knowledge. Technologies Used: HTML, CSS, Javascript.",
+        desc: "A quiz app made using JavaScript. You can play the quiz and test your knowledge. <br/>Technologies Used: HTML, CSS, Javascript.",
         infoHeading: "4,500+ Views",
       },
     },
@@ -259,7 +259,7 @@ export const work = [
       },
       modalData: {
         title: "Snake Game Using JavaScript",
-        desc: "A snake game made using JavaScript. You can play the game and try to eat the food without hitting the walls or yourself. Technologies Used: HTML, CSS, Javascript.",
+        desc: "A snake game made using JavaScript. You can play the game and try to eat the food without hitting the walls or yourself. <br/>Technologies Used: HTML, CSS, Javascript.",
         infoHeading: "3,500+ Views",
       },
     },
@@ -273,7 +273,7 @@ export const work = [
       },
       modalData: {
         title: "Spotify Clone",
-        desc: "A spotify clone made using HTML and CSS. Technologies Used: HTML, CSS, Javascript.",
+        desc: "A spotify clone made using HTML and CSS. <br/>Technologies Used: HTML, CSS, Javascript.",
         infoHeading: "10,000+ Views",
       },
     },
@@ -287,7 +287,7 @@ export const work = [
       },
       modalData: {
         title: "Twitter Clone with HTML",
-        desc: "A Twitter clone made using HTML. Technologies Used: HTML, CSS, Javascript.",
+        desc: "A Twitter clone made using HTML. <br/>Technologies Used: HTML, CSS, Javascript.",
         infoHeading: "9,000 Views",
       },
     },
@@ -301,7 +301,7 @@ export const work = [
       },
       modalData: {
         title: "Fundamentals Of React",
-        desc: "A tutorial on the fundamentals of React. Technologies Used: HTML, CSS, Javascript.",
+        desc: "A tutorial on the fundamentals of React. <br/>Technologies Used: HTML, CSS, Javascript.",
         infoHeading: "8,000+ Views",
       },
     },
@@ -315,7 +315,7 @@ export const work = [
       },
       modalData: {
         title: "Instagram Clone",
-        desc: "A Instagram clone made using HTML and CSS. Technologies Used: HTML, CSS, Javascript.",
+        desc: "A Instagram clone made using HTML and CSS. <br/>Technologies Used: HTML, CSS, Javascript.",
         infoHeading: "7,000+ Views",
       },
     },
@@ -329,7 +329,7 @@ export const work = [
       },
       modalData: {
         title: "Learn Git and Github",
-        desc: "A tutorial on how to use Git and Github. Technologies Used: HTML, CSS, Javascript.",
+        desc: "A tutorial on how to use Git and Github. <br/>Technologies Used: HTML, CSS, Javascript.",
         infoHeading: "4,000 Views",
       },
     },
@@ -343,7 +343,7 @@ export const work = [
       },
       modalData: {
         title: "Flappy Birds with JS",
-        desc: "A flappy birds game made using JavaScript. Technologies Used: HTML, CSS, Javascript.",
+        desc: "A flappy birds game made using JavaScript. <br/>Technologies Used: HTML, CSS, Javascript.",
         infoHeading: "1,000 Views",
       },
     },
@@ -357,7 +357,7 @@ export const work = [
       },
       modalData: {
         title: "Portfolio in React",
-        desc: "A portfolio website made using React. Technologies Used: HTML, CSS, Javascript.",
+        desc: "A portfolio website made using React. <br/>Technologies Used: HTML, CSS, Javascript.",
         infoHeading: "1,000+ Views",
       },
     },
@@ -371,7 +371,7 @@ export const work = [
       },
       modalData: {
         title: "Books I have Published",
-        desc: "I have published 18 books on Amazon Kindle. The books are on various topics like programming, self help, and fiction.",
+        desc: "I have published 2 books on Amazon. One is a self help book called Realis Reality (written when I was 16) and the other is called 18 things I have learned at 18 - which is about life lessons from an 18 year old.",
         infoHeading: "Books",
       },
     },
@@ -384,8 +384,8 @@ export const work = [
       },
       modalData: {
         title: "Lockdown Wars Podcast",
-        desc: "I have published 18 books on Amazon Kindle. The books are on various topics like programming, self help, and fiction.",
-        infoHeading: "Books",
+        desc: "A podcast started by me and my friends during the lockdown to help people fight boredom. Instead of it being about us, the podcast was about people coming on the platform and showing their talent",
+        infoHeading: "With Over 100,000+ Streams in 2 months",
       },
     },
   ],
