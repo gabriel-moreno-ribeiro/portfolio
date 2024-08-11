@@ -3,18 +3,18 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { Suspense, useEffect } from "react";
 import useCanvasStore from "../../store/showCarStore";
 import { Ball } from "../Home/Ball";
-function CarCanvas() {
+function CarCanvas({ setShowCarCanvas }) {
   const CameraPosition = () => {
     useFrame((state) => {
-    console.log('Camera position:', state.camera.position);
+      console.log("Camera position:", state.camera.position);
     });
     return <></>;
-  }
+  };
   return (
     <div className="car-canvas">
       <Canvas
         camera={{
-          position: [-0.34,  0.24,  0.51],
+          position: [-0.34, 0.24, 0.51],
           fov: 50,
         }}
       >
@@ -26,20 +26,23 @@ function CarCanvas() {
         </Suspense>
         {/* <CameraPosition/> */}
       </Canvas>
-      <div className="ball-text"
-        initial={{ opacity: 0 ,y:50}}
+      <div
+        className="ball-text"
+        initial={{ opacity: 0, y: 50 }}
         animate={{
-          opacity: 1, y: 50, 
+          opacity: 1,
+          y: 50,
         }}
       >
         {/* <h1 className="heading">Avi Vashishta.</h1> */}
-         <p className="desc">
-          Use  <code>Arrow Keys</code> to control BB-8.
+        <p className="desc">
+          Use <code>Arrow Keys</code> to control BB-8.
         </p>
         <p className="desc">
-          Press <code>Esc</code> to close the window.
+          Press <code onClick={() => setShowCarCanvas(false)}>Esc</code> to
+          close the window.
         </p>
-        
+
         <p className="small-desc"></p>
       </div>
     </div>
@@ -57,9 +60,12 @@ function BallComponent() {
     }
 
     const handleKeyDown = (event) => {
-      if (event.ctrlKey && event.code === "KeyK") {
+      if (event.ctrlKey && event.code === "KeyK" && !showCarCanvas) {
         setShowCarCanvas(true);
-      } else if (event.code === "Escape" && showCarCanvas) {
+      } else if (
+        (event.code === "Escape" && showCarCanvas) ||
+        (event.ctrlKey && event.code === "KeyK" && showCarCanvas)
+      ) {
         setShowCarCanvas(false);
       }
     };
@@ -69,7 +75,9 @@ function BallComponent() {
     };
   }, [showCarCanvas]);
 
-  return <>{showCarCanvas && <CarCanvas />}</>;
+  return (
+    <>{showCarCanvas && <CarCanvas setShowCarCanvas={setShowCarCanvas} />}</>
+  );
 }
 
 export default BallComponent;
