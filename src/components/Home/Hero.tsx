@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { FiArrowRight, FiLink } from "react-icons/fi";
+import { scrollToComponent } from "../../utils/scrollToComponent";
 import CanvasComponent from "../Canvas/CanvasComponent";
 import CommonButton from "../Shared/CommonButton";
 function Hero() {
@@ -35,12 +36,14 @@ function Hero() {
             text="Connect"
             Icon={<FiLink className="icon-link" />}
             iconPosition="right"
+            onClick={() => window.open("https://linkedin.com/in/avivashishta")}
           />
           <CommonButton
             text="See Work"
             variant="outline"
             Icon={<FiArrowRight className="icon-arrow" />}
             iconPosition="right"
+            onClick={() => scrollToComponent("work")}
           />
         </motion.div>
         <motion.p

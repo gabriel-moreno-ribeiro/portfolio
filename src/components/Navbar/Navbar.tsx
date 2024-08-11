@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { scrollToComponent } from "../../utils/scrollToComponent";
 import MenuIcon from "./MenuIcon";
 
 function Navbar() {
@@ -8,6 +9,7 @@ function Navbar() {
     {
       name: "Skills.",
       href: "#skills",
+      top: 40,
     },
     {
       name: "Work.",
@@ -48,13 +50,19 @@ function Navbar() {
         transition={{ delay: isHovered ? 0.3 : 0, duration: 0.3 }}
       >
         {links.map((link, i) => (
-          <a
-            href={link.href}
+          <p
+            onClick={() => {
+              if (link.href.includes("#")) {
+                scrollToComponent(link.href.split("#")[1], link.top);
+              } else {
+                window.open(link.href, "_blank");
+              }
+            }}
             key={`link-${i}`}
             className={!isHovered ? "hidden" : ""}
           >
             {link.name}
-          </a>
+          </p>
         ))}
       </motion.div>
     </motion.div>
