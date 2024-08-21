@@ -8,7 +8,9 @@ function FindMyWork() {
   const [activeTab, setActiveTab] = useState<number>(0);
   return (
     <div className="find-my-work" data-lenis-prevent id="work">
-      <h1 className="heading">Find My Work</h1>
+      <h1 className="heading" data-color-inverted={"true"}>
+        Find My Work
+      </h1>
       <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
       <div className="work-content" id="work-content-scroll-div">
         {work[activeTab]?.map((data, i) => (

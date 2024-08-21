@@ -100,6 +100,7 @@ const WorkCard = ({ data }: WorkCardInterface) => {
           className="card-img"
           onClick={toggleModal}
           whileTap={{ scale: 0.95 }}
+          data-click-me={"true"}
         />
         <div className="card-heading-flex">
           <h2 className="heading">{cardData.title}</h2>

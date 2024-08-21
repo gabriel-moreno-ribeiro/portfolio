@@ -14,6 +14,7 @@ const DarkModeButton: React.FC = () => {
       whileTap={{ scale: 0.9 }}
       onClick={toggleDarkMode}
       className="toggle-button"
+      data-color-inverted={"true"}
     >
       {darkMode ? <IoSunnyOutline /> : <IoMoonOutline />}
     </motion.button>

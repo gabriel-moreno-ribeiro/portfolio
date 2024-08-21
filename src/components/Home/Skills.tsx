@@ -167,7 +167,7 @@ const Skills: React.FC = () => {
 
   return (
     <div className="skills-container" ref={ref} id="skills">
-      <p className="main-text">
+      <p className="main-text" data-color-inverted={"true"}>
         Always Building, <br />
         Always Growing.
       </p>
