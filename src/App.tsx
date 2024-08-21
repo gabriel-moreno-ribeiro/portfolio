@@ -3,6 +3,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CustomMouse from "./components/Shared/CustomMouse";
 import DarkModeButton from "./components/Shared/DarkModeButton";
+import HorizontalScroller from "./components/Shared/HorizontalScroller";
 import useIsMobile from "./hooks/useIsMobile";
 import Home from "./pages/Home";
 import { useThemeStore } from "./store/themeStore";
@@ -10,6 +11,7 @@ import { useThemeStore } from "./store/themeStore";
 function App() {
   const { darkMode } = useThemeStore();
   const isMobile = useIsMobile();
+
   useEffect(() => {
     document.documentElement.setAttribute(
       "data-theme",
@@ -39,6 +41,7 @@ function App() {
   return (
     // <ReactLenis root>
     <div className="app">
+      <HorizontalScroller />
       <Home />
       <DarkModeButton />
       <CustomMouse />
