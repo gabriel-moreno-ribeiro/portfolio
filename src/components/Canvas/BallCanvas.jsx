@@ -60,11 +60,12 @@ function BallComponent() {
     }
 
     const handleKeyDown = (event) => {
-      if (event.ctrlKey && event.code === "KeyK" && !showCarCanvas) {
+      if ((event.ctrlKey && event.code === "KeyK" && !showCarCanvas) || (event.metaKey && event.code === "KeyK" && !showCarCanvas)) {
         setShowCarCanvas(true);
       } else if (
         (event.code === "Escape" && showCarCanvas) ||
-        (event.ctrlKey && event.code === "KeyK" && showCarCanvas)
+        (event.ctrlKey && event.code === "KeyK" && showCarCanvas) ||
+        (event.metaKey && event.code === "KeyK" && showCarCanvas)
       ) {
         setShowCarCanvas(false);
       }
