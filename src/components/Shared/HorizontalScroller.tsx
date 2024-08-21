@@ -1,12 +1,12 @@
-import { motion, useScroll } from "framer-motion";
+import { motion, useScroll, useSpring } from "framer-motion";
 function HorizontalScroller() {
   const { scrollYProgress } = useScroll();
-  return (
-    <motion.div
-      className="horizontal-scroller"
-      style={{ scaleX: scrollYProgress }}
-    />
-  );
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
+  });
+  return <motion.div className="horizontal-scroller" style={{ scaleX }} />;
 }
 
 export default HorizontalScroller;
