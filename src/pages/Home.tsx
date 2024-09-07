@@ -4,7 +4,7 @@ import Hero from "../components/Home/Hero";
 import HorizontalSkillsWrapper from "../components/Home/HorizontalSkillsWrapper";
 import NumbersAndStats from "../components/Home/Numbers";
 import Skills from "../components/Home/Skills";
-import WorkCarousel from "../components/Home/WorkCarousel";
+import WorkExperience from "../components/Home/WorkExperience";
 import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Shared/Footer";
 function Home() {
@@ -17,7 +17,8 @@ function Home() {
         <FindMyWork />
         <NumbersAndStats />
         <HorizontalSkillsWrapper />
-        <WorkCarousel />
+        {/* <WorkCarousel /> */}
+        <WorkExperience />
         <Footer />
         <CarCanvas />
       </div>

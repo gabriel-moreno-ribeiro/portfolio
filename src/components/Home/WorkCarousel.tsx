@@ -1,9 +1,10 @@
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useCallback } from "react";
 import "swiper/css";
 import "swiper/css/effect-cards";
 import { Autoplay, EffectCards } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-
-import { useCallback } from "react";
 import img1 from "../../assets/work-carousel/img1.webp";
 import img2 from "../../assets/work-carousel/img2.webp";
 import img3 from "../../assets/work-carousel/img3.webp";
@@ -12,10 +13,14 @@ import img5 from "../../assets/work-carousel/img5.webp";
 import img6 from "../../assets/work-carousel/img6.webp";
 import img7 from "../../assets/work-carousel/img7.webp";
 import { useThemeStore } from "../../store/themeStore";
+
+gsap.registerPlugin(ScrollTrigger);
+
 const images = [img1, img2, img3, img4, img5, img6, img7];
 
 const WorkCarousel = () => {
   const { darkMode } = useThemeStore();
+
   const mouseEnterAndExit = useCallback(
     (enter: boolean) => {
       const customMouse = document.querySelector(
@@ -65,6 +70,7 @@ const WorkCarousel = () => {
             className="mySwiper"
             autoplay={{
               delay: 3000,
+              disableOnInteraction: false,
             }}
             loop={true}
           >
@@ -73,8 +79,9 @@ const WorkCarousel = () => {
                 <img
                   alt="work-carousel"
                   src={image}
-                  className="carousel-image"
+                  className="carousel-image  swiper-lazy"
                 />
+                <div className="swiper-lazy-preloader"></div>
               </SwiperSlide>
             ))}
           </Swiper>

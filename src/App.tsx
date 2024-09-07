@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import CustomMouse from "./components/Shared/CustomMouse";
 import DarkModeButton from "./components/Shared/DarkModeButton";
 import HorizontalScroller from "./components/Shared/HorizontalScroller";
 import useIsMobile from "./hooks/useIsMobile";
@@ -44,7 +43,7 @@ function App() {
       <HorizontalScroller />
       <Home />
       <DarkModeButton />
-      <CustomMouse />
+      {/* <CustomMouse /> */}
       <ToastContainer />
     </div>
     // </ReactLenis>
