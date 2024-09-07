@@ -102,6 +102,38 @@ function CustomMouse() {
       });
     });
 
+    const dragMeElements = document.querySelectorAll("[data-drag-me]");
+    dragMeElements.forEach((element) => {
+      const el = element as HTMLElement;
+
+      el.addEventListener("mouseenter", () => {
+        const customMouse = document.querySelector(
+          ".custom-mouse"
+        ) as HTMLElement;
+        if (customMouse) {
+          customMouse.style.width = "50px";
+          customMouse.style.height = "50px";
+          customMouse.style.backgroundColor = "var(--black)";
+          customMouse.style.backdropFilter = "blur(10px)";
+          customMouse.style.opacity = !darkMode ? "0.8" : "0.25";
+        }
+      });
+
+      el.addEventListener("mouseleave", () => {
+        const customMouse = document.querySelector(
+          ".custom-mouse"
+        ) as HTMLElement;
+        if (customMouse) {
+          customMouse.style.width = "10px";
+          customMouse.style.height = "10px";
+          customMouse.innerHTML = "";
+          customMouse.style.backgroundColor = "";
+          customMouse.style.backdropFilter = "unset";
+          customMouse.style.opacity = "1";
+        }
+      });
+    });
+
     return () => {
       document.removeEventListener("mousemove", mouseMove);
       document.removeEventListener("mousedown", mouseDown);

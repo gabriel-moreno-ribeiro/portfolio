@@ -77,6 +77,7 @@ export default function CanvasComponent() {
     <Canvas
       camera={{ position: [0.4, 1.17, 11.35], fov: 25 }}
       className={`robot-canvas`}
+      data-drag-me={true}
     >
       <ambientLight intensity={darkMode ? 0.25 : 1} />
       <directionalLight position={[10, 10, 10]} intensity={darkMode ? 0 : 2} />
