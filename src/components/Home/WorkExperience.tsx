@@ -30,7 +30,7 @@ const workExperience = [
       "Served as a freelance developer, engaging in projects involving <span class='black'>Facebook (Meta) APIs.</span> Collaborated in building a web application for creators and brand marketing, utilizing technologies such as <span class='black'>Next.js and Django.</span>",
   },
   {
-    title: "Mobile Intern",
+    title: "Mobile App Intern",
     company: "Fitzura",
     date: "Jan 2022 - March 2022 (3 Months)",
     description:
@@ -82,7 +82,8 @@ const WorkExperience = () => {
   return (
     <div className="work-experience-main-wrapper" ref={containerRef}>
       <h1 className="fixed-heading">
-        <span className="orange">Destructuring </span>My Work Experience.
+        <span className="orange">Destructuring </span>
+        <span data-color-inverted={"true"}>My Work Experience.</span>
       </h1>
       <div className="left-column">
         <PartsAssemblingCanvas />
