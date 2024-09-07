@@ -45,20 +45,19 @@ const WorkExperience = () => {
   const isMobile = useMediaQuery("(max-width: 600px)");
 
   useEffect(() => {
-    if (isMobile) return;
     const sections = gsap.utils.toArray(".work-experience-section");
 
     sections.forEach((section: any) => {
       gsap.fromTo(
         section,
-        { opacity: 0, y: 100 },
+        { opacity: 0, y: isMobile ? 100 : 100 },
         {
           opacity: 1,
           y: 0,
           overwrite: "auto",
           scrollTrigger: {
             trigger: section,
-            start: "top+=20 center+=200",
+            start: isMobile ? "top-=200 center+=500" : "top+=20 center+=200",
             end: "bottom center",
             scrub: 0.3,
           },
