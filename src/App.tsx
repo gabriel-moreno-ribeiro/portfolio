@@ -1,3 +1,4 @@
+import { initializeAnalytics, initializeRecording } from "avi-analytics-sdk";
 import { useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -7,10 +8,18 @@ import HorizontalScroller from "./components/Shared/HorizontalScroller";
 import useIsMobile from "./hooks/useIsMobile";
 import Home from "./pages/Home";
 import { useThemeStore } from "./store/themeStore";
-
 function App() {
   const { darkMode } = useThemeStore();
   const isMobile = useIsMobile();
+
+  useEffect(() => {
+    initializeAnalytics({
+      apiKey: "29EAB42FEE431D2C5756D55F31A52",
+    });
+    initializeRecording({
+      apiKey: "29EAB42FEE431D2C5756D55F31A52",
+    });
+  }, []);
 
   useEffect(() => {
     document.documentElement.setAttribute(
