@@ -1,4 +1,4 @@
-import { initializeAnalytics, initializeRecording } from "avi-analytics-sdk";
+import { initializeAnalytics } from "avi-analytics-sdk";
 import { useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -16,9 +16,31 @@ function App() {
     initializeAnalytics({
       apiKey: "29EAB42FEE431D2C5756D55F31A52",
     });
-    initializeRecording({
-      apiKey: "29EAB42FEE431D2C5756D55F31A52",
-    });
+    fetch("https://jsonplaceholder.typicode.com/posts/1")
+      .then((res) => res.json())
+      .then((data) => console.log(data));
+
+    /* updating title of product with id 1 */
+    fetch(
+      "https://dummyjson.com/products?limit=10&skip=-sakisuaxsa&select=title,price",
+      {
+        method: "PUT" /* or PATCH */,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          price: "iPhone Galaxy +1",
+        }),
+      }
+    )
+      .then((res) => res.json())
+      .then(console.log);
+
+    fetch("https://dummyjson.com/products/add", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: null,
+    })
+      .then((res) => res.json())
+      .then(console.log);
   }, []);
 
   useEffect(() => {
