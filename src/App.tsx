@@ -14,7 +14,7 @@ function App() {
 
   useEffect(() => {
     initializeAnalytics({
-      apiKey: "29EAB42FEE431D2C5756D55F31A52",
+      apiKey: "aba66723-638a-43bb-963d-58ad97960a5c",
     });
     fetch("https://jsonplaceholder.typicode.com/posts/1")
       .then((res) => res.json())
