@@ -5,6 +5,7 @@ interface HandsfreeState {
   chipsActive: boolean;
   hasSeenIntro: boolean;
   showIntroModal: boolean;
+  showGestureTutorial: boolean;
   cameraPermission: "prompt" | "granted" | "denied";
   modelLoadProgress: number;
   isSecondary: boolean;
@@ -12,6 +13,7 @@ interface HandsfreeState {
   setChipsActive: (active: boolean) => void;
   setHasSeenIntro: (seen: boolean) => void;
   setShowIntroModal: (show: boolean) => void;
+  setShowGestureTutorial: (show: boolean) => void;
   setCameraPermission: (perm: "prompt" | "granted" | "denied") => void;
   setModelLoadProgress: (progress: number) => void;
   setIsSecondary: (secondary: boolean) => void;
@@ -28,6 +30,7 @@ export const useHandsfreeStore = create<HandsfreeState>((set) => ({
     isSecondaryWindow ||
     localStorage.getItem("handsfree-intro-seen") === "true",
   showIntroModal: false,
+  showGestureTutorial: false,
   cameraPermission: "prompt",
   modelLoadProgress: 0,
   isSecondary: isSecondaryWindow,
@@ -38,6 +41,7 @@ export const useHandsfreeStore = create<HandsfreeState>((set) => ({
     set({ hasSeenIntro: seen });
   },
   setShowIntroModal: (show) => set({ showIntroModal: show }),
+  setShowGestureTutorial: (show) => set({ showGestureTutorial: show }),
   setCameraPermission: (perm) => set({ cameraPermission: perm }),
   setModelLoadProgress: (progress) => set({ modelLoadProgress: progress }),
   setIsSecondary: (secondary) => set({ isSecondary: secondary }),

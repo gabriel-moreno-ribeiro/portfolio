@@ -3,6 +3,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CameraFeedback from "./components/Shared/CameraFeedback";
 import CustomMouse from "./components/Shared/CustomMouse";
+import GestureTutorial from "./components/Shared/GestureTutorial";
 import HandCursor from "./components/Shared/HandCursor";
 import DarkModeButton from "./components/Shared/DarkModeButton";
 import HandsfreeButton from "./components/Shared/HandsfreeButton";
@@ -73,6 +74,7 @@ function App() {
       <HandsfreeButton />
       <DarkModeButton />
       <HandsfreeIntroModal />
+      <GestureTutorial />
       <CameraFeedback />
       <HandCursor />
       <CustomMouse />
