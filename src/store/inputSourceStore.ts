@@ -7,6 +7,7 @@ export interface HandPosition {
   confidence: number;
   spread: number; // 0 = pinched, 1 = fully open
   isPinching: boolean; // thumb-index pinch gesture active
+  isScrolling: boolean; // two-finger scroll gesture active
 }
 
 interface InputSourceState {
