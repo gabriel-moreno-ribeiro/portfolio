@@ -7,7 +7,6 @@ import HandCursor from "./components/Shared/HandCursor";
 import DarkModeButton from "./components/Shared/DarkModeButton";
 import HandsfreeButton from "./components/Shared/HandsfreeButton";
 import HandsfreeIntroModal from "./components/Shared/HandsfreeIntroModal";
-import HandsfreeScrollController from "./components/Shared/HandsfreeScrollController";
 import HorizontalScroller from "./components/Shared/HorizontalScroller";
 import { useHandsfreeCamera } from "./hooks/useHandsfreeCamera";
 import useIsMobile from "./hooks/useIsMobile";
@@ -75,7 +74,6 @@ function App() {
       <DarkModeButton />
       <HandsfreeIntroModal />
       <CameraFeedback />
-      <HandsfreeScrollController />
       <HandCursor />
       <CustomMouse />
       <ToastContainer />

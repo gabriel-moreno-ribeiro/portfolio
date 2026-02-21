@@ -6,6 +6,7 @@ export interface HandPosition {
   fingers: number;
   confidence: number;
   spread: number; // 0 = pinched, 1 = fully open
+  isPinching: boolean; // thumb-index pinch gesture active
 }
 
 interface InputSourceState {

@@ -29,6 +29,7 @@ import d_icon8 from "../../assets/skills/dark/icon8.webp";
 import d_icon9 from "../../assets/skills/dark/icon9.webp";
 import useIsMobile from "../../hooks/useIsMobile";
 import { broadcastChipTransfer } from "../../providers/WindowBridgeProvider";
+import { useHandsfreeStore } from "../../store/handsfreeStore";
 import { useInputSourceStore } from "../../store/inputSourceStore";
 import { useThemeStore } from "../../store/themeStore";
 import { useWindowBridgeStore } from "../../store/windowBridgeStore";
@@ -107,8 +108,8 @@ const randomInRange = (min: number, max: number) =>
 
 // Spring physics constants for hand tracking mode
 const ATTRACTION_STRENGTH = 0.08;
-const REPULSION_STRENGTH = 4000;
-const ORBIT_RADIUS_MIN = 30; // pinched
+const REPULSION_STRENGTH_MAX = 4000;
+const ORBIT_RADIUS_MIN = 0; // pinched → all chips collapse to cursor center
 const ORBIT_RADIUS_MAX = 200; // spread open
 const DAMPING_FACTOR = 0.85;
 
@@ -217,8 +218,9 @@ const Skills: React.FC = () => {
 
     const tick = () => {
       const { handPositions, inputSource } = useInputSourceStore.getState();
+      const { chipsActive } = useHandsfreeStore.getState();
 
-      if (inputSource !== "camera" || handPositions.length === 0) {
+      if (inputSource !== "camera" || !chipsActive || handPositions.length === 0) {
         handsfreeRafRef.current = requestAnimationFrame(tick);
         return;
       }
@@ -252,10 +254,13 @@ const Skills: React.FC = () => {
         const handIdx = i < splitIndex ? 0 : 1;
         const target = handTargets[Math.min(handIdx, handTargets.length - 1)];
 
-        // Compute orbit radius from hand spread: pinch = tight cluster, open = wide
+        // Compute orbit radius from hand spread: pinch = collapse to center, open = wide
+        const spreadVal = target.spread ?? 0.5;
         const orbitRadius =
-          ORBIT_RADIUS_MIN +
-          (target.spread ?? 0.5) * (ORBIT_RADIUS_MAX - ORBIT_RADIUS_MIN);
+          ORBIT_RADIUS_MIN + spreadVal * (ORBIT_RADIUS_MAX - ORBIT_RADIUS_MIN);
+
+        // Scale repulsion with spread — when pinched, chips can overlap freely
+        const repulsionStrength = REPULSION_STRENGTH_MAX * spreadVal;
 
         // Compute orbit target (spread chips around hand in a circle)
         const chipsForThisHand =
@@ -267,24 +272,27 @@ const Skills: React.FC = () => {
         const orbitX = target.x + Math.cos(angle) * orbitRadius;
         const orbitY = target.y + Math.sin(angle) * orbitRadius;
 
-        // Attraction toward orbit point
+        // Attraction toward orbit point (stronger when pinched for snappy collapse)
+        const attractionStr = spreadVal < 0.15 ? ATTRACTION_STRENGTH * 2.5 : ATTRACTION_STRENGTH;
         const dx = orbitX - chip.x;
         const dy = orbitY - chip.y;
-        chip.vx += dx * ATTRACTION_STRENGTH;
-        chip.vy += dy * ATTRACTION_STRENGTH;
+        chip.vx += dx * attractionStr;
+        chip.vy += dy * attractionStr;
 
-        // Repulsion from other chips
-        for (let j = 0; j < numChips; j++) {
-          if (i === j) continue;
-          const other = states[j];
-          const rx = chip.x - other.x;
-          const ry = chip.y - other.y;
-          const distSq = rx * rx + ry * ry;
-          if (distSq < 1) continue;
-          const force = REPULSION_STRENGTH / distSq;
-          const dist = Math.sqrt(distSq);
-          chip.vx += (rx / dist) * force;
-          chip.vy += (ry / dist) * force;
+        // Repulsion from other chips (scales down with spread)
+        if (repulsionStrength > 10) {
+          for (let j = 0; j < numChips; j++) {
+            if (i === j) continue;
+            const other = states[j];
+            const rx = chip.x - other.x;
+            const ry = chip.y - other.y;
+            const distSq = rx * rx + ry * ry;
+            if (distSq < 1) continue;
+            const force = repulsionStrength / distSq;
+            const dist = Math.sqrt(distSq);
+            chip.vx += (rx / dist) * force;
+            chip.vy += (ry / dist) * force;
+          }
         }
 
         // Apply damping and update position
@@ -365,47 +373,57 @@ const Skills: React.FC = () => {
     }
   }, [controls, inView]);
 
-  // Subscribe to input source changes for handsfree physics
+  // Subscribe to input source + chipsActive changes for handsfree physics
   useEffect(() => {
-    const unsub = useInputSourceStore.subscribe((state, prevState) => {
-      if (!hasEnteredView.current) return;
+    const shouldRunPhysics = () => {
+      const { inputSource } = useInputSourceStore.getState();
+      const { chipsActive } = useHandsfreeStore.getState();
+      return inputSource === "camera" && chipsActive;
+    };
 
-      if (
-        state.inputSource === "camera" &&
-        prevState.inputSource !== "camera"
-      ) {
-        // Switching to camera: stop framer motion oscillation, start physics
-        initChipStates();
-        startHandsfreePhysics();
-      } else if (
-        state.inputSource !== "camera" &&
-        prevState.inputSource === "camera"
-      ) {
-        // Switching back to mouse: stop physics, restore framer-motion control
-        stopHandsfreePhysics();
-        hiddenChips.current.clear();
-        chipRefs.current.forEach((el) => {
-          if (el) {
-            el.style.translate = "";
-            el.style.transform = "";
-            el.style.opacity = "";
-          }
-        });
-        controls.start((i) => bubbleVariants.oscillate(i));
+    const enterPhysics = () => {
+      if (!hasEnteredView.current) return;
+      initChipStates();
+      startHandsfreePhysics();
+    };
+
+    const exitPhysics = () => {
+      stopHandsfreePhysics();
+      hiddenChips.current.clear();
+      chipRefs.current.forEach((el) => {
+        if (el) {
+          el.style.translate = "";
+          el.style.transform = "";
+          el.style.opacity = "";
+        }
+      });
+      controls.start((i) => bubbleVariants.oscillate(i));
+    };
+
+    const unsub1 = useInputSourceStore.subscribe((state, prevState) => {
+      if (!hasEnteredView.current) return;
+      if (state.inputSource !== prevState.inputSource) {
+        if (shouldRunPhysics()) enterPhysics();
+        else exitPhysics();
       }
     });
 
-    // If already in camera mode when chips enter view
-    if (
-      hasEnteredView.current &&
-      useInputSourceStore.getState().inputSource === "camera"
-    ) {
-      initChipStates();
-      startHandsfreePhysics();
+    const unsub2 = useHandsfreeStore.subscribe((state, prevState) => {
+      if (!hasEnteredView.current) return;
+      if (state.chipsActive !== prevState.chipsActive) {
+        if (shouldRunPhysics()) enterPhysics();
+        else exitPhysics();
+      }
+    });
+
+    // If already in physics mode when chips enter view
+    if (hasEnteredView.current && shouldRunPhysics()) {
+      enterPhysics();
     }
 
     return () => {
-      unsub();
+      unsub1();
+      unsub2();
       stopHandsfreePhysics();
     };
   }, [controls, initChipStates, startHandsfreePhysics, stopHandsfreePhysics]);

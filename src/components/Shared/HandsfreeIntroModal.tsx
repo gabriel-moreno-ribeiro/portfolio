@@ -69,12 +69,12 @@ const HandsfreeIntroModal: React.FC = () => {
                 <span>Move your head to control the robot</span>
               </div>
               <div className="feature">
-                <span className="feature-icon">✋</span>
-                <span>Raise your hand to attract skill chips</span>
+                <span className="feature-icon">👌</span>
+                <span>Pinch to click, pinch + drag to scroll</span>
               </div>
               <div className="feature">
-                <span className="feature-icon">✌️</span>
-                <span>Two-finger gesture to scroll the page</span>
+                <span className="feature-icon">✋</span>
+                <span>Activate chips mode to play with skill icons</span>
               </div>
             </div>
             <p className="desc subtle">

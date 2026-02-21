@@ -47,6 +47,13 @@ const HandCursor: React.FC = () => {
           dot.style.width = `${size}px`;
           dot.style.height = `${size}px`;
           dot.style.opacity = h.fingers <= 2 ? "0.4" : "0.8";
+          // Visual feedback for pinch: fill the circle
+          dot.style.background = h.isPinching
+            ? "rgba(240, 115, 45, 0.5)"
+            : "rgba(240, 115, 45, 0.15)";
+          dot.style.borderColor = h.isPinching
+            ? "rgba(240, 115, 45, 1)"
+            : "rgba(240, 115, 45, 0.8)";
         } else {
           dot.style.display = "none";
         }

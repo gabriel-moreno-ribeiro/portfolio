@@ -130,6 +130,100 @@ function measureSpread(landmarks: any[]): number {
 let latestFaceLandmarks: any[] | null = null;
 let latestHandLandmarks: any[][] | null = null;
 
+// ── Pinch gesture state ──
+const PINCH_THRESHOLD = 0.07; // normalized thumb-index distance to trigger pinch
+const PINCH_RELEASE_THRESHOLD = 0.10; // hysteresis for release
+const SCROLL_DRAG_THRESHOLD = 20; // px of drag before it's a scroll (not click)
+const SCROLL_SPEED = 5; // multiplier for scroll velocity
+
+interface PinchState {
+  isPinching: boolean;
+  startScreenY: number;
+  lastScreenY: number;
+  totalDragY: number;
+  hasFiredClick: boolean;
+}
+
+const pinchStates: PinchState[] = [
+  { isPinching: false, startScreenY: 0, lastScreenY: 0, totalDragY: 0, hasFiredClick: false },
+  { isPinching: false, startScreenY: 0, lastScreenY: 0, totalDragY: 0, hasFiredClick: false },
+];
+
+function detectPinch(landmarks: any[]): boolean {
+  const thumbTip = landmarks[4];
+  const indexTip = landmarks[8];
+  return Math.hypot(thumbTip.x - indexTip.x, thumbTip.y - indexTip.y) < PINCH_THRESHOLD;
+}
+
+function isPinchReleased(landmarks: any[]): boolean {
+  const thumbTip = landmarks[4];
+  const indexTip = landmarks[8];
+  return Math.hypot(thumbTip.x - indexTip.x, thumbTip.y - indexTip.y) > PINCH_RELEASE_THRESHOLD;
+}
+
+function dispatchClick(screenX: number, screenY: number) {
+  const el = document.elementFromPoint(screenX, screenY);
+  if (!el) return;
+
+  // Move the real pointer over the element first (for :hover, tooltips)
+  el.dispatchEvent(
+    new MouseEvent("mouseover", { bubbles: true, clientX: screenX, clientY: screenY })
+  );
+
+  // Full click sequence: pointerdown → mousedown → pointerup → mouseup → click
+  const shared = { bubbles: true, cancelable: true, clientX: screenX, clientY: screenY };
+  el.dispatchEvent(new PointerEvent("pointerdown", { ...shared, pointerId: 1, pointerType: "mouse" }));
+  el.dispatchEvent(new MouseEvent("mousedown", shared));
+  el.dispatchEvent(new PointerEvent("pointerup", { ...shared, pointerId: 1, pointerType: "mouse" }));
+  el.dispatchEvent(new MouseEvent("mouseup", shared));
+  el.dispatchEvent(new MouseEvent("click", shared));
+}
+
+function processPinchGesture(
+  landmarks: any[],
+  handIdx: number,
+  screenX: number,
+  screenY: number
+): boolean {
+  const state = pinchStates[handIdx];
+  const pinching = detectPinch(landmarks);
+  const released = isPinchReleased(landmarks);
+
+  if (!state.isPinching && pinching) {
+    // Pinch started
+    state.isPinching = true;
+    state.startScreenY = screenY;
+    state.lastScreenY = screenY;
+    state.totalDragY = 0;
+    state.hasFiredClick = false;
+    return true;
+  }
+
+  if (state.isPinching && released) {
+    // Pinch released — fire click if it wasn't a drag
+    if (!state.hasFiredClick && Math.abs(state.totalDragY) < SCROLL_DRAG_THRESHOLD) {
+      dispatchClick(screenX, screenY);
+    }
+    state.isPinching = false;
+    return false;
+  }
+
+  if (state.isPinching) {
+    // Still pinching — check for drag → scroll
+    const deltaY = screenY - state.lastScreenY;
+    state.totalDragY += Math.abs(deltaY);
+    state.lastScreenY = screenY;
+
+    if (state.totalDragY > SCROLL_DRAG_THRESHOLD) {
+      window.scrollBy({ top: deltaY * SCROLL_SPEED, behavior: "instant" });
+      state.hasFiredClick = true; // prevent click on release
+    }
+    return true;
+  }
+
+  return false;
+}
+
 function processFrame() {
   if (!videoEl || videoEl.readyState < 2) {
     rafId = requestAnimationFrame(processFrame);
@@ -176,12 +270,23 @@ function processFrame() {
             const confidence =
               handResult.handedness?.[idx]?.[0]?.score ?? 0.5;
 
+            // Convert to screen coords for pinch gesture processing
+            const screenX = (1 - palm.x) * window.innerWidth;
+            const screenY = palm.y * window.innerHeight;
+            const isPinching = processPinchGesture(
+              landmarks,
+              idx,
+              screenX,
+              screenY
+            );
+
             return {
               x: -(palm.x * 2 - 1),
               y: palm.y * 2 - 1,
               fingers,
               confidence,
               spread,
+              isPinching,
             };
           }
         );
@@ -190,6 +295,9 @@ function processFrame() {
       } else {
         store.setHandPositions([]);
         latestHandLandmarks = null;
+        // Reset pinch states when hands disappear
+        pinchStates[0].isPinching = false;
+        pinchStates[1].isPinching = false;
       }
     } catch {
       // Skip frame on error
@@ -258,6 +366,8 @@ export function stopCameraInput() {
 
   latestFaceLandmarks = null;
   latestHandLandmarks = null;
+  pinchStates[0].isPinching = false;
+  pinchStates[1].isPinching = false;
 
   const inputStore = useInputSourceStore.getState();
   inputStore.setInputSource("mouse");
