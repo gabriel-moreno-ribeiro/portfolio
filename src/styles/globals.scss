@@ -78,8 +78,8 @@ body {
     background-size: cover;
     background-position: top center;
     background-repeat: no-repeat;
-    mask-image: linear-gradient(to bottom, black 0%, transparent 50%);
-    -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 50%);
+    mask-image: linear-gradient(to bottom, black 0%, rgba(0,0,0,0.6) 25%, rgba(0,0,0,0.2) 50%, transparent 75%);
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, rgba(0,0,0,0.6) 25%, rgba(0,0,0,0.2) 50%, transparent 75%);
     z-index: 0;
     pointer-events: none;
   }
@@ -99,8 +99,8 @@ body {
     background-repeat: repeat;
     background-size: 300px 300px;
     mix-blend-mode: multiply;
-    mask-image: linear-gradient(to bottom, black 0%, transparent 50%);
-    -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 50%);
+    mask-image: linear-gradient(to bottom, black 0%, rgba(0,0,0,0.6) 25%, rgba(0,0,0,0.2) 50%, transparent 75%);
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, rgba(0,0,0,0.6) 25%, rgba(0,0,0,0.2) 50%, transparent 75%);
   }
 }
 
