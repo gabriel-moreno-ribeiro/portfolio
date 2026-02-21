@@ -31,6 +31,14 @@ function Navbar() {
     [isMobile]
   );
 
+  const handleLinkClick = (link: { href: string; top?: number }) => {
+    if (link.href.includes("#")) {
+      scrollToComponent(link.href.split("#")[1], link.top);
+    } else {
+      window.open(link.href, "_blank");
+    }
+  };
+
   return (
     <motion.div
       className="navbar"
@@ -40,27 +48,18 @@ function Navbar() {
       animate={{
         width: isHovered ? expandedWidth : "auto",
       }}
-      transition={
-        isHovered
-          ? { type: "spring", stiffness: isMobile ? 300 : 180, damping: 12 }
-          : { type: "tween", duration: 0.4, ease: "easeInOut" }
-      }
+      transition={{
+        type: "spring",
+        stiffness: isMobile ? 200 : 100,
+        damping: 15,
+      }}
     >
       <MenuIcon isHovered={isHovered} setIsHovered={setIsHovered} />
-      <motion.h1
-        className="heading"
-        style={{ textAlign: "center" }}
-        animate={{
-          flexGrow: isHovered ? 0 : 1,
-        }}
-        transition={
-          isHovered
-            ? { type: "spring", stiffness: isMobile ? 300 : 180, damping: 12 }
-            : { type: "tween", duration: 0.4, ease: "easeInOut" }
-        }
-      >
-        Avi Vashishta.
-      </motion.h1>
+      {!isMobile ? (
+        <h1 className="heading">Avi Vashishta.</h1>
+      ) : isMobile && !isHovered ? (
+        <h1 className="heading">Avi Vashishta.</h1>
+      ) : null}
       <motion.div
         className={`links`}
         initial={{ opacity: 0 }}
@@ -72,13 +71,7 @@ function Navbar() {
       >
         {links.map((link, i) => (
           <p
-            onClick={() => {
-              if (link.href.includes("#")) {
-                scrollToComponent(link.href.split("#")[1], link.top);
-              } else {
-                window.open(link.href, "_blank");
-              }
-            }}
+            onClick={() => handleLinkClick(link)}
             key={`link-${i}`}
             className={!isHovered ? "hidden" : ""}
           >
