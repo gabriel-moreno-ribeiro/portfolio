@@ -1,12 +1,14 @@
 import { motion } from "motion/react";
 import React from "react";
-import { FiVideo, FiVideoOff } from "react-icons/fi";
+import { FiVideo, FiVideoOff, FiX } from "react-icons/fi";
+import useIsMobile from "../../hooks/useIsMobile";
 import { useHandsfreeStore } from "../../store/handsfreeStore";
 
 const supportsCamera =
   typeof navigator !== "undefined" && !!navigator.mediaDevices?.getUserMedia;
 
 const HandsfreeButton: React.FC = () => {
+  const isMobile = useIsMobile();
   const {
     isEnabled,
     hasSeenIntro,
@@ -31,6 +33,12 @@ const HandsfreeButton: React.FC = () => {
     }
   };
 
+  const icon = isEnabled
+    ? isMobile
+      ? <FiX />
+      : <FiVideo />
+    : <FiVideoOff />;
+
   return (
     <motion.button
       initial={{ scale: 0 }}
@@ -42,7 +50,7 @@ const HandsfreeButton: React.FC = () => {
       data-color-inverted={"true"}
       title={isEnabled ? "Disable camera" : "Enable camera"}
     >
-      {isEnabled ? <FiVideo /> : <FiVideoOff />}
+      {icon}
     </motion.button>
   );
 };
