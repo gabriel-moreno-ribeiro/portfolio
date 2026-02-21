@@ -42,6 +42,7 @@ function Hero() {
           <ScrambleText
             style={{
               fontSize: isMobile ? "32px" : "56px",
+              fontWeight: 600,
               color: "var(--black)",
             }}
             texts={["Fullstack", "App", "Game", "Web"]}
