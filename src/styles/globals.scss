@@ -38,6 +38,7 @@ $border-grey: #e7e7e7;
 html,
 body {
   margin: 0px;
+  overflow-x: clip;
 
   font-family: "DM Sans", sans-serif;
   color: var(--black);

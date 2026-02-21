@@ -82,24 +82,53 @@ function extractHeadPoseFromLandmarks(
 }
 
 function countExtendedFingers(landmarks: any[]): number {
-  // Tip landmark indices for each finger: thumb(4), index(8), middle(12), ring(16), pinky(20)
-  // PIP joint indices: thumb(3), index(6), middle(10), ring(14), pinky(18)
+  // Tip indices: thumb(4), index(8), middle(12), ring(16), pinky(20)
+  // MCP joints (more stable than PIP): thumb(2), index(5), middle(9), ring(13), pinky(17)
   const tips = [4, 8, 12, 16, 20];
-  const pips = [3, 6, 10, 14, 18];
+  const mcps = [2, 5, 9, 13, 17];
 
   let count = 0;
   for (let i = 0; i < 5; i++) {
     const tip = landmarks[tips[i]];
-    const pip = landmarks[pips[i]];
-    // For thumb, check x distance; for others, check y (tip above pip = extended)
+    const mcp = landmarks[mcps[i]];
     if (i === 0) {
-      if (Math.abs(tip.x - pip.x) > 0.04) count++;
+      // Thumb: compare distance from tip to MCP in x
+      if (Math.abs(tip.x - mcp.x) > 0.06) count++;
     } else {
-      if (tip.y < pip.y) count++;
+      // Other fingers: tip must be significantly above MCP (lower y = higher on screen)
+      if (mcp.y - tip.y > 0.03) count++;
     }
   }
   return count;
 }
+
+function measureSpread(landmarks: any[]): number {
+  // Measure how open the hand is: distance between thumb tip and pinky tip
+  // normalized by palm size (wrist to middle MCP)
+  const thumbTip = landmarks[4];
+  const pinkyTip = landmarks[20];
+  const wrist = landmarks[0];
+  const middleMcp = landmarks[9];
+
+  const palmSize = Math.hypot(
+    middleMcp.x - wrist.x,
+    middleMcp.y - wrist.y
+  );
+  if (palmSize < 0.01) return 0.5;
+
+  const fingerSpan = Math.hypot(
+    thumbTip.x - pinkyTip.x,
+    thumbTip.y - pinkyTip.y
+  );
+
+  // Normalize: pinched ≈ 0.3 palm size, fully open ≈ 1.5 palm size
+  const normalized = (fingerSpan / palmSize - 0.3) / 1.2;
+  return Math.max(0, Math.min(1, normalized));
+}
+
+// Raw landmarks for ML overlay drawing
+let latestFaceLandmarks: any[] | null = null;
+let latestHandLandmarks: any[][] | null = null;
 
 function processFrame() {
   if (!videoEl || videoEl.readyState < 2) {
@@ -121,6 +150,7 @@ function processFrame() {
         faceResult.faceLandmarks &&
         faceResult.faceLandmarks.length > 0
       ) {
+        latestFaceLandmarks = faceResult.faceLandmarks[0];
         const pose = extractHeadPoseFromLandmarks(faceResult.faceLandmarks[0]);
         store.setHeadPosition(pose);
       }
@@ -137,41 +167,29 @@ function processFrame() {
         performance.now()
       );
       if (handResult.landmarks && handResult.landmarks.length > 0) {
+        latestHandLandmarks = handResult.landmarks;
         const hands = handResult.landmarks.map(
           (landmarks: any[], idx: number) => {
-            // Landmark 9 = middle finger MCP = approximate palm center
             const palm = landmarks[9];
             const fingers = countExtendedFingers(landmarks);
+            const spread = measureSpread(landmarks);
             const confidence =
               handResult.handedness?.[idx]?.[0]?.score ?? 0.5;
 
             return {
-              // Mirror X since camera is mirrored, map to -1..1
               x: -(palm.x * 2 - 1),
               y: palm.y * 2 - 1,
               fingers,
               confidence,
+              spread,
             };
           }
         );
 
         store.setHandPositions(hands);
-
-        // Detect scroll gesture: exactly 2 fingers extended on any hand
-        const scrollHand = hands.find(
-          (h: { fingers: number; confidence: number }) =>
-            h.fingers === 2 && h.confidence > 0.5
-        );
-        if (scrollHand) {
-          // Use absolute Y position as scroll speed: above center = scroll up, below = scroll down
-          // scrollHand.y is -1..1, use it directly as speed signal
-          store.setScrollIntent(scrollHand.y);
-        } else {
-          store.setScrollIntent(0);
-        }
       } else {
         store.setHandPositions([]);
-        store.setScrollIntent(0);
+        latestHandLandmarks = null;
       }
     } catch {
       // Skip frame on error
@@ -238,14 +256,24 @@ export function stopCameraInput() {
   handLandmarker?.close();
   handLandmarker = null;
 
+  latestFaceLandmarks = null;
+  latestHandLandmarks = null;
+
   const inputStore = useInputSourceStore.getState();
   inputStore.setInputSource("mouse");
   inputStore.setHandPositions([]);
-  inputStore.setScrollIntent(0);
 
   useHandsfreeStore.getState().setModelLoadProgress(0);
 }
 
 export function getVideoElement(): HTMLVideoElement | null {
   return videoEl;
+}
+
+export function getFaceLandmarks(): any[] | null {
+  return latestFaceLandmarks;
+}
+
+export function getHandLandmarks(): any[][] | null {
+  return latestHandLandmarks;
 }
