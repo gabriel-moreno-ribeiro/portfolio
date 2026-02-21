@@ -1,3 +1,4 @@
+import { useHandsfreeStore } from "../store/handsfreeStore";
 import {
   useWindowBridgeStore,
   type WindowInfo,
@@ -73,6 +74,7 @@ function handleMessage(
     type: string;
     window?: WindowInfo;
     chip?: TransferringChip;
+    chipsActive?: boolean;
   }>
 ) {
   const { type } = event.data;
@@ -80,6 +82,11 @@ function handleMessage(
   if (type === "heartbeat" && event.data.window) {
     remoteWindows.set(event.data.window.id, event.data.window);
     detectAdjacency();
+    // Sync chipsActive to secondary windows from primary
+    const handsfree = useHandsfreeStore.getState();
+    if (handsfree.isSecondary && event.data.chipsActive !== undefined) {
+      handsfree.setChipsActive(event.data.chipsActive);
+    }
   }
 
   if (type === "chip-transfer" && event.data.chip) {
@@ -101,9 +108,14 @@ export function startWindowBridge() {
   channel = new BroadcastChannel(CHANNEL_NAME);
   channel.addEventListener("message", handleMessage);
 
-  // Start heartbeat
+  // Start heartbeat — include handsfree state so secondary windows can sync
   heartbeatTimer = setInterval(() => {
-    channel?.postMessage({ type: "heartbeat", window: getMyWindowInfo() });
+    const { chipsActive } = useHandsfreeStore.getState();
+    channel?.postMessage({
+      type: "heartbeat",
+      window: getMyWindowInfo(),
+      chipsActive,
+    });
     detectAdjacency();
   }, HEARTBEAT_INTERVAL);
 
