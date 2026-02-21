@@ -497,57 +497,7 @@ const Skills: React.FC = () => {
           key={`icon-${i}`}
         />
       ))}
-      <AnimatePresence>
-        {isEnabled && !isMobile && (
-          <motion.div
-            className="chips-focus-controls"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
-            style={{
-              position: "absolute",
-              bottom: 24,
-              left: "50%",
-              transform: "translateX(-50%)",
-              display: "flex",
-              gap: 12,
-              zIndex: 10,
-            }}
-          >
-            <motion.button
-              className={`chips-focus-button ${chipsActive ? "active" : ""}`}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => setChipsActive(!chipsActive)}
-            >
-              <FiGrid />
-              {chipsActive ? "Exit Focus Mode" : "Focus Mode"}
-            </motion.button>
-            {chipsActive && (
-              <motion.button
-                className="chips-focus-button"
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                exit={{ scale: 0 }}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => {
-                  const url = new URL(window.location.href);
-                  url.searchParams.set("secondary", "true");
-                  window.open(
-                    url.toString(),
-                    "_blank",
-                    "width=800,height=900,left=100,top=100"
-                  );
-                }}
-              >
-                <FiExternalLink />
-                Open Window
-              </motion.button>
-            )}
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Focus mode / Open Window buttons hidden */}
     </div>
   );
 };
