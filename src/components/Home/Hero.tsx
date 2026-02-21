@@ -1,10 +1,10 @@
 import { motion } from "motion/react";
 import { lazy, Suspense, useEffect, useState } from "react";
 import { FiArrowRight, FiLink } from "react-icons/fi";
-import ScrambleAnimation from "react-scrambled-text/dist/src/ScrambleAnimation";
 import useIsMobile from "../../hooks/useIsMobile";
 import { scrollToComponent } from "../../utils/scrollToComponent";
 import CommonButton from "../Shared/CommonButton";
+import ScrambleText from "../Shared/ScrambleText";
 
 const CanvasComponent = lazy(() => import("../Canvas/CanvasComponent"));
 
@@ -39,7 +39,7 @@ function Hero() {
           transition={{ delay: 0.25, duration: 0.5 }}
           data-color-inverted={"true"}
         >
-          <ScrambleAnimation
+          <ScrambleText
             style={{
               fontSize: isMobile ? "32px" : "56px",
               color: "var(--black)",
@@ -47,7 +47,6 @@ function Hero() {
             texts={["Fullstack", "App", "Game", "Web"]}
             speed={100}
             pauseDuration={1000}
-            start={true}
           />
           <h1 className="heading">Developer.</h1>
         </motion.div>
