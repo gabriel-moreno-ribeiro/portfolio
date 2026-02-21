@@ -1,5 +1,5 @@
 import { motion, useAnimation, useInView } from "motion/react";
-import React, { useCallback, useEffect, useMemo, useRef } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import l_icon1 from "../../assets/skills/light/icon1.webp";
 import l_icon10 from "../../assets/skills/light/icon10.webp";
 import l_icon11 from "../../assets/skills/light/icon11.webp";
@@ -108,7 +108,8 @@ const randomInRange = (min: number, max: number) =>
 // Spring physics constants for hand tracking mode
 const ATTRACTION_STRENGTH = 0.08;
 const REPULSION_STRENGTH = 4000;
-const ORBIT_RADIUS = 120;
+const ORBIT_RADIUS_MIN = 30; // pinched
+const ORBIT_RADIUS_MAX = 200; // spread open
 const DAMPING_FACTOR = 0.85;
 
 interface ChipState {
@@ -135,10 +136,25 @@ const Skills: React.FC = () => {
   const hasEnteredView = useRef(false);
   const hiddenChips = useRef<Set<number>>(new Set());
 
-  const finalPositions = useMemo(
-    () => (isMobile ? mobileFinalPositions : deskstopFinalPositions),
-    [isMobile]
+  // Scale chip positions to viewport width for true edge-to-edge
+  const [vpWidth, setVpWidth] = useState(
+    typeof window !== "undefined" ? window.innerWidth : 1400
   );
+  useEffect(() => {
+    const onResize = () => setVpWidth(window.innerWidth);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  const finalPositions = useMemo(() => {
+    if (isMobile) return mobileFinalPositions;
+    // Scale so chips reach near viewport edges (designed for 1400px)
+    const scale = Math.max(1, vpWidth / 1400);
+    return deskstopFinalPositions.map((p) => ({
+      x: p.x * scale,
+      y: p.y,
+    }));
+  }, [isMobile, vpWidth]);
 
   const bubbleVariants = {
     initial: { scale: 0 },
@@ -221,6 +237,7 @@ const Skills: React.FC = () => {
       const handTargets = handPositions.map((h) => ({
         x: h.x * centerX,
         y: h.y * centerY,
+        spread: h.spread,
       }));
 
       const states = chipStates.current;
@@ -235,6 +252,11 @@ const Skills: React.FC = () => {
         const handIdx = i < splitIndex ? 0 : 1;
         const target = handTargets[Math.min(handIdx, handTargets.length - 1)];
 
+        // Compute orbit radius from hand spread: pinch = tight cluster, open = wide
+        const orbitRadius =
+          ORBIT_RADIUS_MIN +
+          (target.spread ?? 0.5) * (ORBIT_RADIUS_MAX - ORBIT_RADIUS_MIN);
+
         // Compute orbit target (spread chips around hand in a circle)
         const chipsForThisHand =
           handIdx === 0 ? splitIndex : numChips - splitIndex;
@@ -242,8 +264,8 @@ const Skills: React.FC = () => {
         const angle =
           ((2 * Math.PI) / chipsForThisHand) * idxInGroup +
           performance.now() * 0.0003;
-        const orbitX = target.x + Math.cos(angle) * ORBIT_RADIUS;
-        const orbitY = target.y + Math.sin(angle) * ORBIT_RADIUS;
+        const orbitX = target.x + Math.cos(angle) * orbitRadius;
+        const orbitY = target.y + Math.sin(angle) * orbitRadius;
 
         // Attraction toward orbit point
         const dx = orbitX - chip.x;
