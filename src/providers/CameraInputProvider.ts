@@ -125,20 +125,16 @@ const PINCH_THRESHOLD = 0.07; // normalized thumb-index distance to trigger pinc
 const PINCH_RELEASE_THRESHOLD = 0.10; // hysteresis for release
 const PINCH_COOLDOWN_MS = 300;
 
-const CLICK_MAX_DRAG = 15; // px — pinch-release below this = click, above = drag only
-
 interface PinchState {
   isPinching: boolean;
   pinchFrames: number;
   releaseFrames: number;
   lastClickTime: number;
-  startX: number;
-  startY: number;
 }
 
 const pinchStates: PinchState[] = [
-  { isPinching: false, pinchFrames: 0, releaseFrames: 0, lastClickTime: 0, startX: 0, startY: 0 },
-  { isPinching: false, pinchFrames: 0, releaseFrames: 0, lastClickTime: 0, startX: 0, startY: 0 },
+  { isPinching: false, pinchFrames: 0, releaseFrames: 0, lastClickTime: 0 },
+  { isPinching: false, pinchFrames: 0, releaseFrames: 0, lastClickTime: 0 },
 ];
 
 function detectPinch(landmarks: any[]): boolean {
@@ -153,7 +149,7 @@ function isPinchReleased(landmarks: any[]): boolean {
   return Math.hypot(thumbTip.x - indexTip.x, thumbTip.y - indexTip.y) > PINCH_RELEASE_THRESHOLD;
 }
 
-function dispatchDown(screenX: number, screenY: number) {
+function dispatchClick(screenX: number, screenY: number) {
   const el = document.elementFromPoint(screenX, screenY);
   if (!el) return;
   el.dispatchEvent(
@@ -162,25 +158,9 @@ function dispatchDown(screenX: number, screenY: number) {
   const shared = { bubbles: true, cancelable: true, clientX: screenX, clientY: screenY };
   el.dispatchEvent(new PointerEvent("pointerdown", { ...shared, pointerId: 1, pointerType: "mouse" }));
   el.dispatchEvent(new MouseEvent("mousedown", shared));
-}
-
-function dispatchMove(screenX: number, screenY: number) {
-  const el = document.elementFromPoint(screenX, screenY);
-  if (!el) return;
-  el.dispatchEvent(
-    new MouseEvent("mousemove", { bubbles: true, cancelable: true, clientX: screenX, clientY: screenY })
-  );
-}
-
-function dispatchUp(screenX: number, screenY: number, includeClick: boolean) {
-  const el = document.elementFromPoint(screenX, screenY);
-  if (!el) return;
-  const shared = { bubbles: true, cancelable: true, clientX: screenX, clientY: screenY };
   el.dispatchEvent(new PointerEvent("pointerup", { ...shared, pointerId: 1, pointerType: "mouse" }));
   el.dispatchEvent(new MouseEvent("mouseup", shared));
-  if (includeClick) {
-    el.dispatchEvent(new MouseEvent("click", shared));
-  }
+  el.dispatchEvent(new MouseEvent("click", shared));
 }
 
 function processPinchGesture(
@@ -202,27 +182,17 @@ function processPinchGesture(
     state.pinchFrames = 0;
   }
 
-  // Enter pinch → mousedown (start of click or drag)
+  // Enter pinch
   if (!state.isPinching && state.pinchFrames >= GESTURE_DEBOUNCE_FRAMES) {
     const now = performance.now();
     if (now - state.lastClickTime < PINCH_COOLDOWN_MS) return false;
     state.isPinching = true;
-    state.startX = screenX;
-    state.startY = screenY;
-    dispatchDown(screenX, screenY);
     return true;
   }
 
-  // While pinching → mousemove (enables drag/select)
-  if (state.isPinching && state.releaseFrames < GESTURE_DEBOUNCE_FRAMES) {
-    dispatchMove(screenX, screenY);
-    return true;
-  }
-
-  // Release → mouseup, and click only if barely moved (tap vs drag)
+  // Release → click at current cursor position
   if (state.isPinching && state.releaseFrames >= GESTURE_DEBOUNCE_FRAMES) {
-    const dragDist = Math.hypot(screenX - state.startX, screenY - state.startY);
-    dispatchUp(screenX, screenY, dragDist < CLICK_MAX_DRAG);
+    dispatchClick(screenX, screenY);
     state.isPinching = false;
     state.lastClickTime = performance.now();
     return false;
@@ -448,9 +418,8 @@ function processFrame() {
       } else {
         store.setHandPositions([]);
         latestHandLandmarks = null;
-        // Release any active pinch-drag before resetting
+        // Reset gesture states when hands disappear
         for (const ps of pinchStates) {
-          if (ps.isPinching) dispatchUp(ps.startX, ps.startY, false);
           ps.isPinching = false;
           ps.pinchFrames = 0;
           ps.releaseFrames = 0;
