@@ -5,7 +5,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: var(--black);
+  background: linear-gradient(135deg, var(--black) 0%, #2a1a0a 100%);
   color: var(--white);
   padding: 12px 24px;
   border-radius: 100px;
@@ -37,7 +37,7 @@
 
 [data-theme="dark"] {
   .footer {
-    background-color: var(--white);
+    background: linear-gradient(135deg, #1a1025 0%, #2a1530 100%);
     border: 2px solid var(--black);
 
     .left-heading,
