@@ -100,6 +100,12 @@ Full audit and modernization of the portfolio project. Migrated from Create Reac
 | @react-three/drei | 9.109.2 | **10.7.7** |
 | three | 0.167.1 | **0.170.x** |
 
+### Replaced react-scrambled-text with custom component
+- `react-scrambled-text` bundled its own React 18 copy, causing "Invalid hook call" errors with React 19
+- Created `src/components/Shared/ScrambleText.tsx` - a lightweight ~60-line custom implementation
+- Updated `Hero.tsx` to use the new component (same props API: `texts`, `speed`, `pauseDuration`, `style`)
+- Removed `react-scrambled-text` package
+
 ### Other upgrades
 | Package | Before | After |
 |---------|--------|-------|
