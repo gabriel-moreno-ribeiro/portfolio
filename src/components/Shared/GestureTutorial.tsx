@@ -10,8 +10,8 @@ const gestures = [
   },
   {
     icon: "👌",
-    title: "Pinch to Click",
-    desc: "Touch thumb + index finger to click on elements",
+    title: "Pinch & Drag",
+    desc: "Pinch to click, hold and move to drag/select",
   },
   {
     icon: "✌️",
@@ -21,7 +21,7 @@ const gestures = [
   {
     icon: "🖐",
     title: "Open Hand",
-    desc: "Show your palm — the cursor follows your hand",
+    desc: "Show your palm to move the cursor around the page",
   },
 ];
 

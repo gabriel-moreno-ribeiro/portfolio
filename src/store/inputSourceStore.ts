@@ -5,7 +5,6 @@ export interface HandPosition {
   y: number;
   fingers: number;
   confidence: number;
-  spread: number; // 0 = pinched, 1 = fully open
   isPinching: boolean; // thumb-index pinch gesture active
   isScrolling: boolean; // two-finger scroll gesture active
 }
