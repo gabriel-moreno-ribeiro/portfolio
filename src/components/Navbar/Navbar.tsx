@@ -40,18 +40,27 @@ function Navbar() {
       animate={{
         width: isHovered ? expandedWidth : "auto",
       }}
-      transition={{
-        type: "spring",
-        stiffness: isMobile ? 200 : 100,
-        damping: 15,
-      }}
+      transition={
+        isHovered
+          ? { type: "spring", stiffness: isMobile ? 300 : 180, damping: 12 }
+          : { type: "tween", duration: 0.4, ease: "easeInOut" }
+      }
     >
       <MenuIcon isHovered={isHovered} setIsHovered={setIsHovered} />
-      {!isMobile ? (
-        <h1 className="heading">Avi Vashishta.</h1>
-      ) : isMobile && !isHovered ? (
-        <h1 className="heading">Avi Vashishta.</h1>
-      ) : null}
+      <motion.h1
+        className="heading"
+        style={{ textAlign: "center" }}
+        animate={{
+          flexGrow: isHovered ? 0 : 1,
+        }}
+        transition={
+          isHovered
+            ? { type: "spring", stiffness: isMobile ? 300 : 180, damping: 12 }
+            : { type: "tween", duration: 0.4, ease: "easeInOut" }
+        }
+      >
+        Avi Vashishta.
+      </motion.h1>
       <motion.div
         className={`links`}
         initial={{ opacity: 0 }}
