@@ -3,6 +3,13 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
   plugins: [react()],
+  css: {
+    preprocessorOptions: {
+      scss: {
+        silenceDeprecations: ["import", "global-builtin", "color-functions"],
+      },
+    },
+  },
   server: {
     port: 3000,
     open: true,
