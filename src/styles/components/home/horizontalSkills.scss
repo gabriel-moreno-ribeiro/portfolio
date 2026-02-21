@@ -15,6 +15,20 @@
     overflow: hidden; // Disable manual scrolling
     gap: 0px 24px;
     position: relative;
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      black 15%,
+      black 85%,
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      black 15%,
+      black 85%,
+      transparent 100%
+    );
 
     &::-webkit-scrollbar {
       display: none;
