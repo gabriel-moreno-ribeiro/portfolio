@@ -13,7 +13,6 @@ const HandsfreeButton: React.FC = () => {
     isEnabled,
     hasSeenIntro,
     setEnabled,
-    setChipsActive,
     setShowIntroModal,
     setShowGestureTutorial,
   } = useHandsfreeStore();
@@ -27,7 +26,6 @@ const HandsfreeButton: React.FC = () => {
     }
     if (isEnabled) {
       setEnabled(false);
-      setChipsActive(false);
     } else {
       setEnabled(true);
       // Show gesture tutorial every time camera is enabled

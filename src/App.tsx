@@ -16,25 +16,16 @@ import {
   startMouseInputProvider,
   stopMouseInputProvider,
 } from "./providers/MouseInputProvider";
-import {
-  startWindowBridge,
-  stopWindowBridge,
-} from "./providers/WindowBridgeProvider";
 import { useThemeStore } from "./store/themeStore";
-import { useWindowBridgeStore } from "./store/windowBridgeStore";
 
 function App() {
   const { darkMode } = useThemeStore();
   const isMobile = useIsMobile();
 
-  const glowEdge = useWindowBridgeStore((s) => s.glowEdge);
-
   useEffect(() => {
     startMouseInputProvider();
-    startWindowBridge();
     return () => {
       stopMouseInputProvider();
-      stopWindowBridge();
     };
   }, []);
 
@@ -68,7 +59,6 @@ function App() {
 
   return (
     <div className="app">
-      {glowEdge && <div className={`window-glow window-glow--${glowEdge}`} />}
       <HorizontalScroller />
       <Home />
       <HandsfreeButton />

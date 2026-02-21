@@ -2,7 +2,6 @@ import { create } from "zustand";
 
 interface HandsfreeState {
   isEnabled: boolean;
-  chipsActive: boolean;
   hasSeenIntro: boolean;
   showIntroModal: boolean;
   showGestureTutorial: boolean;
@@ -10,7 +9,6 @@ interface HandsfreeState {
   modelLoadProgress: number;
   isSecondary: boolean;
   setEnabled: (enabled: boolean) => void;
-  setChipsActive: (active: boolean) => void;
   setHasSeenIntro: (seen: boolean) => void;
   setShowIntroModal: (show: boolean) => void;
   setShowGestureTutorial: (show: boolean) => void;
@@ -25,7 +23,6 @@ const isSecondaryWindow =
 
 export const useHandsfreeStore = create<HandsfreeState>((set) => ({
   isEnabled: false,
-  chipsActive: false,
   hasSeenIntro:
     isSecondaryWindow ||
     localStorage.getItem("handsfree-intro-seen") === "true",
@@ -35,7 +32,6 @@ export const useHandsfreeStore = create<HandsfreeState>((set) => ({
   modelLoadProgress: 0,
   isSecondary: isSecondaryWindow,
   setEnabled: (enabled) => set({ isEnabled: enabled }),
-  setChipsActive: (active) => set({ chipsActive: active }),
   setHasSeenIntro: (seen) => {
     localStorage.setItem("handsfree-intro-seen", String(seen));
     set({ hasSeenIntro: seen });

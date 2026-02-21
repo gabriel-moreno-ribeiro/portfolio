@@ -38,8 +38,7 @@ const HandCursor: React.FC = () => {
           // Convert -1..1 to screen coordinates
           const screenX = ((h.x + 1) / 2) * window.innerWidth;
           const screenY = ((h.y + 1) / 2) * window.innerHeight;
-          // Size based on spread: pinched = small, open = large
-          const size = 24 + h.spread * 32;
+          const size = 32;
 
           dot.style.display = "block";
           dot.style.left = `${screenX}px`;

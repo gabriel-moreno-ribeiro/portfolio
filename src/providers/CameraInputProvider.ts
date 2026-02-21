@@ -98,49 +98,23 @@ function countExtendedFingers(landmarks: any[]): number {
   return count;
 }
 
-function measureSpread(landmarks: any[]): number {
-  // Measure how open the hand is: distance between thumb tip and pinky tip
-  // normalized by palm size (wrist to middle MCP)
-  const thumbTip = landmarks[4];
-  const pinkyTip = landmarks[20];
-  const wrist = landmarks[0];
-  const middleMcp = landmarks[9];
-
-  const palmSize = Math.hypot(
-    middleMcp.x - wrist.x,
-    middleMcp.y - wrist.y
-  );
-  if (palmSize < 0.01) return 0.5;
-
-  const fingerSpan = Math.hypot(
-    thumbTip.x - pinkyTip.x,
-    thumbTip.y - pinkyTip.y
-  );
-
-  // Normalize: pinched ≈ 0.3 palm size, fully open ≈ 1.5 palm size
-  const normalized = (fingerSpan / palmSize - 0.3) / 1.2;
-  return Math.max(0, Math.min(1, normalized));
-}
-
 // Raw landmarks for ML overlay drawing
 let latestFaceLandmarks: any[] | null = null;
 let latestHandLandmarks: any[][] | null = null;
 
 // ── Position smoothing (EMA) ──
 const POSITION_SMOOTHING = 0.35;
-const SPREAD_SMOOTHING = 0.3;
 const SCROLL_Y_SMOOTHING = 0.4;
 
 interface SmoothedHand {
   x: number;
   y: number;
-  spread: number;
   initialized: boolean;
 }
 
 const smoothedHands: SmoothedHand[] = [
-  { x: 0, y: 0, spread: 0.5, initialized: false },
-  { x: 0, y: 0, spread: 0.5, initialized: false },
+  { x: 0, y: 0, initialized: false },
+  { x: 0, y: 0, initialized: false },
 ];
 
 // ── Gesture debounce ──
@@ -151,19 +125,20 @@ const PINCH_THRESHOLD = 0.07; // normalized thumb-index distance to trigger pinc
 const PINCH_RELEASE_THRESHOLD = 0.10; // hysteresis for release
 const PINCH_COOLDOWN_MS = 300;
 
+const CLICK_MAX_DRAG = 15; // px — pinch-release below this = click, above = drag only
+
 interface PinchState {
   isPinching: boolean;
-  hasFiredClick: boolean;
   pinchFrames: number;
   releaseFrames: number;
   lastClickTime: number;
-  targetX: number; // smoothed screen position locked during pinch
-  targetY: number;
+  startX: number;
+  startY: number;
 }
 
 const pinchStates: PinchState[] = [
-  { isPinching: false, hasFiredClick: false, pinchFrames: 0, releaseFrames: 0, lastClickTime: 0, targetX: 0, targetY: 0 },
-  { isPinching: false, hasFiredClick: false, pinchFrames: 0, releaseFrames: 0, lastClickTime: 0, targetX: 0, targetY: 0 },
+  { isPinching: false, pinchFrames: 0, releaseFrames: 0, lastClickTime: 0, startX: 0, startY: 0 },
+  { isPinching: false, pinchFrames: 0, releaseFrames: 0, lastClickTime: 0, startX: 0, startY: 0 },
 ];
 
 function detectPinch(landmarks: any[]): boolean {
@@ -178,20 +153,34 @@ function isPinchReleased(landmarks: any[]): boolean {
   return Math.hypot(thumbTip.x - indexTip.x, thumbTip.y - indexTip.y) > PINCH_RELEASE_THRESHOLD;
 }
 
-function dispatchClick(screenX: number, screenY: number) {
+function dispatchDown(screenX: number, screenY: number) {
   const el = document.elementFromPoint(screenX, screenY);
   if (!el) return;
-
   el.dispatchEvent(
     new MouseEvent("mouseover", { bubbles: true, clientX: screenX, clientY: screenY })
   );
-
   const shared = { bubbles: true, cancelable: true, clientX: screenX, clientY: screenY };
   el.dispatchEvent(new PointerEvent("pointerdown", { ...shared, pointerId: 1, pointerType: "mouse" }));
   el.dispatchEvent(new MouseEvent("mousedown", shared));
+}
+
+function dispatchMove(screenX: number, screenY: number) {
+  const el = document.elementFromPoint(screenX, screenY);
+  if (!el) return;
+  el.dispatchEvent(
+    new MouseEvent("mousemove", { bubbles: true, cancelable: true, clientX: screenX, clientY: screenY })
+  );
+}
+
+function dispatchUp(screenX: number, screenY: number, includeClick: boolean) {
+  const el = document.elementFromPoint(screenX, screenY);
+  if (!el) return;
+  const shared = { bubbles: true, cancelable: true, clientX: screenX, clientY: screenY };
   el.dispatchEvent(new PointerEvent("pointerup", { ...shared, pointerId: 1, pointerType: "mouse" }));
   el.dispatchEvent(new MouseEvent("mouseup", shared));
-  el.dispatchEvent(new MouseEvent("click", shared));
+  if (includeClick) {
+    el.dispatchEvent(new MouseEvent("click", shared));
+  }
 }
 
 function processPinchGesture(
@@ -213,32 +202,29 @@ function processPinchGesture(
     state.pinchFrames = 0;
   }
 
+  // Enter pinch → mousedown (start of click or drag)
   if (!state.isPinching && state.pinchFrames >= GESTURE_DEBOUNCE_FRAMES) {
-    // Check cooldown from last click
     const now = performance.now();
     if (now - state.lastClickTime < PINCH_COOLDOWN_MS) return false;
     state.isPinching = true;
-    state.hasFiredClick = false;
-    // Lock click target to current smoothed cursor position
-    state.targetX = screenX;
-    state.targetY = screenY;
+    state.startX = screenX;
+    state.startY = screenY;
+    dispatchDown(screenX, screenY);
     return true;
   }
 
-  if (state.isPinching && !state.hasFiredClick) {
-    // Track cursor while holding pinch (user may drift)
-    state.targetX = screenX;
-    state.targetY = screenY;
+  // While pinching → mousemove (enables drag/select)
+  if (state.isPinching && state.releaseFrames < GESTURE_DEBOUNCE_FRAMES) {
+    dispatchMove(screenX, screenY);
+    return true;
   }
 
+  // Release → mouseup, and click only if barely moved (tap vs drag)
   if (state.isPinching && state.releaseFrames >= GESTURE_DEBOUNCE_FRAMES) {
-    // Pinch released → click at the position tracked during pinch
-    if (!state.hasFiredClick) {
-      dispatchClick(state.targetX, state.targetY);
-      state.hasFiredClick = true;
-      state.lastClickTime = performance.now();
-    }
+    const dragDist = Math.hypot(screenX - state.startX, screenY - state.startY);
+    dispatchUp(screenX, screenY, dragDist < CLICK_MAX_DRAG);
     state.isPinching = false;
+    state.lastClickTime = performance.now();
     return false;
   }
 
@@ -417,7 +403,6 @@ function processFrame() {
             if (idx > 1) return null; // max 2 hands
             const palm = landmarks[9];
             const fingers = countExtendedFingers(landmarks);
-            const rawSpread = measureSpread(landmarks);
             const confidence =
               handResult.handedness?.[idx]?.[0]?.score ?? 0.5;
 
@@ -430,12 +415,10 @@ function processFrame() {
             if (!sh.initialized) {
               sh.x = rawX;
               sh.y = rawY;
-              sh.spread = rawSpread;
               sh.initialized = true;
             } else {
               sh.x += (rawX - sh.x) * POSITION_SMOOTHING;
               sh.y += (rawY - sh.y) * POSITION_SMOOTHING;
-              sh.spread += (rawSpread - sh.spread) * SPREAD_SMOOTHING;
             }
 
             // Screen coords from smoothed position
@@ -446,7 +429,7 @@ function processFrame() {
             const isScrolling =
               idx === 0 && processTwoFingerScroll(landmarks, screenY);
 
-            // Pinch-to-click (skip if currently scrolling)
+            // Pinch-and-drag (skip if currently scrolling)
             const isPinching =
               !isScrolling && processPinchGesture(landmarks, idx, screenX, screenY);
 
@@ -455,7 +438,6 @@ function processFrame() {
               y: sh.y,
               fingers,
               confidence,
-              spread: sh.spread,
               isPinching,
               isScrolling,
             };
@@ -466,13 +448,13 @@ function processFrame() {
       } else {
         store.setHandPositions([]);
         latestHandLandmarks = null;
-        // Reset all gesture + smoothing state when hands disappear
-        pinchStates[0].isPinching = false;
-        pinchStates[0].pinchFrames = 0;
-        pinchStates[0].releaseFrames = 0;
-        pinchStates[1].isPinching = false;
-        pinchStates[1].pinchFrames = 0;
-        pinchStates[1].releaseFrames = 0;
+        // Release any active pinch-drag before resetting
+        for (const ps of pinchStates) {
+          if (ps.isPinching) dispatchUp(ps.startX, ps.startY, false);
+          ps.isPinching = false;
+          ps.pinchFrames = 0;
+          ps.releaseFrames = 0;
+        }
         smoothedHands[0].initialized = false;
         smoothedHands[1].initialized = false;
         scrollState.enterFrames = 0;
@@ -551,16 +533,13 @@ export function stopCameraInput() {
 
   latestFaceLandmarks = null;
   latestHandLandmarks = null;
-  pinchStates[0].isPinching = false;
-  pinchStates[0].pinchFrames = 0;
-  pinchStates[0].releaseFrames = 0;
-  pinchStates[0].lastClickTime = 0;
-  pinchStates[1].isPinching = false;
-  pinchStates[1].pinchFrames = 0;
-  pinchStates[1].releaseFrames = 0;
-  pinchStates[1].lastClickTime = 0;
-  smoothedHands[0].initialized = false;
-  smoothedHands[1].initialized = false;
+  for (const ps of pinchStates) {
+    ps.isPinching = false;
+    ps.pinchFrames = 0;
+    ps.releaseFrames = 0;
+    ps.lastClickTime = 0;
+  }
+  for (const sh of smoothedHands) sh.initialized = false;
   scrollState.isScrolling = false;
   scrollState.velocity = 0;
   scrollState.enterFrames = 0;
