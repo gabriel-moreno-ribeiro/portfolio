@@ -41,7 +41,8 @@
   }
 
   .links {
-    margin-left: auto;
+    position: absolute;
+    right: 36px;
     display: flex;
     gap: 12px;
 

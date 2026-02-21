@@ -33,13 +33,26 @@ function Footer() {
       animate={{
         width: isHovered ? expandedWidth : "auto",
       }}
-      transition={{
-        type: "spring",
-        stiffness: isMobile ? 200 : 100,
-        damping: 15,
-      }}
+      transition={
+        isHovered
+          ? { type: "spring", stiffness: isMobile ? 300 : 180, damping: 12 }
+          : { type: "tween", duration: 0.4, ease: "easeInOut" }
+      }
     >
-      <h1 className="heading">Footer.</h1>
+      <motion.h1
+        className="heading"
+        style={{ textAlign: "center" }}
+        animate={{
+          flexGrow: isHovered ? 0 : 1,
+        }}
+        transition={
+          isHovered
+            ? { type: "spring", stiffness: isMobile ? 300 : 180, damping: 12 }
+            : { type: "tween", duration: 0.4, ease: "easeInOut" }
+        }
+      >
+        Footer.
+      </motion.h1>
       <motion.div
         className="links"
         initial={{ opacity: 0 }}
