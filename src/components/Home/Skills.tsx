@@ -185,6 +185,17 @@ const Skills: React.FC = () => {
   const startHandsfreePhysics = useCallback(() => {
     if (handsfreeRafRef.current !== null) return;
 
+    // Zero out framer-motion's cached x/y so it doesn't fight our DOM writes.
+    // Then use the separate CSS `translate` property which won't conflict.
+    controls.stop();
+    for (let i = 0; i < finalPositions.length; i++) {
+      const el = chipRefs.current[i];
+      if (el) {
+        // Clear framer-motion's transform by setting it to none, use translate instead
+        el.style.transform = "none";
+      }
+    }
+
     const tick = () => {
       const { handPositions, inputSource } = useInputSourceStore.getState();
 
@@ -257,10 +268,10 @@ const Skills: React.FC = () => {
         chip.x += chip.vx;
         chip.y += chip.vy;
 
-        // Apply position directly to DOM (bypass React for perf)
+        // Use CSS `translate` property (separate from framer-motion's `transform`)
         const el = chipRefs.current[i];
         if (el) {
-          el.style.transform = `translate(${chip.x}px, ${chip.y}px)`;
+          el.style.translate = `${chip.x}px ${chip.y}px`;
         }
       }
 
@@ -268,7 +279,7 @@ const Skills: React.FC = () => {
     };
 
     handsfreeRafRef.current = requestAnimationFrame(tick);
-  }, []);
+  }, [controls, finalPositions]);
 
   const stopHandsfreePhysics = useCallback(() => {
     if (handsfreeRafRef.current !== null) {
@@ -292,34 +303,37 @@ const Skills: React.FC = () => {
 
   // Subscribe to input source changes for handsfree physics
   useEffect(() => {
-    if (!hasEnteredView.current) return;
-
     const unsub = useInputSourceStore.subscribe((state, prevState) => {
+      if (!hasEnteredView.current) return;
+
       if (
         state.inputSource === "camera" &&
         prevState.inputSource !== "camera"
       ) {
         // Switching to camera: stop framer motion oscillation, start physics
-        controls.stop();
         initChipStates();
         startHandsfreePhysics();
       } else if (
         state.inputSource !== "camera" &&
         prevState.inputSource === "camera"
       ) {
-        // Switching back to mouse: stop physics, restart oscillation
+        // Switching back to mouse: stop physics, restore framer-motion control
         stopHandsfreePhysics();
-        // Reset transforms applied by physics loop
         chipRefs.current.forEach((el) => {
-          if (el) el.style.transform = "";
+          if (el) {
+            el.style.translate = "";
+            el.style.transform = "";
+          }
         });
         controls.start((i) => bubbleVariants.oscillate(i));
       }
     });
 
-    // If already in camera mode when component mounts
-    if (useInputSourceStore.getState().inputSource === "camera") {
-      controls.stop();
+    // If already in camera mode when chips enter view
+    if (
+      hasEnteredView.current &&
+      useInputSourceStore.getState().inputSource === "camera"
+    ) {
       initChipStates();
       startHandsfreePhysics();
     }
