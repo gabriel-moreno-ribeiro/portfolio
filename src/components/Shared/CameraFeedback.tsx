@@ -5,10 +5,13 @@ import {
   getFaceLandmarks,
   getHandLandmarks,
 } from "../../providers/CameraInputProvider";
+import useIsMobile from "../../hooks/useIsMobile";
 import { useHandsfreeStore } from "../../store/handsfreeStore";
 
 const PREVIEW_W = 200;
 const PREVIEW_H = 150;
+const MOBILE_PREVIEW_W = 120;
+const MOBILE_PREVIEW_H = 90;
 
 // MediaPipe hand connections (pairs of landmark indices)
 const HAND_CONNECTIONS = [
@@ -30,7 +33,7 @@ const LEFT_EYE = [362, 382, 381, 380, 374, 373, 390, 249, 263, 466, 388, 387, 38
 const RIGHT_EYE = [33, 7, 163, 144, 145, 153, 154, 155, 133, 173, 157, 158, 159, 160, 161, 246, 33];
 const LIPS_OUTER = [61, 146, 91, 181, 84, 17, 314, 405, 321, 375, 291, 409, 270, 269, 267, 0, 37, 39, 40, 185, 61];
 
-function drawFaceMesh(ctx: CanvasRenderingContext2D, landmarks: any[]) {
+function drawFaceMesh(ctx: CanvasRenderingContext2D, landmarks: any[], w: number, h: number) {
   ctx.strokeStyle = "rgba(240, 115, 45, 0.5)";
   ctx.lineWidth = 1;
 
@@ -39,8 +42,8 @@ function drawFaceMesh(ctx: CanvasRenderingContext2D, landmarks: any[]) {
     for (let i = 0; i < indices.length; i++) {
       const lm = landmarks[indices[i]];
       // Mirror X for camera preview
-      const x = (1 - lm.x) * PREVIEW_W;
-      const y = lm.y * PREVIEW_H;
+      const x = (1 - lm.x) * w;
+      const y = lm.y * h;
       if (i === 0) ctx.moveTo(x, y);
       else ctx.lineTo(x, y);
     }
@@ -57,8 +60,8 @@ function drawFaceMesh(ctx: CanvasRenderingContext2D, landmarks: any[]) {
   const keyPoints = [4, 1, 33, 263, 61, 291, 10, 152]; // nose, eyes, mouth, forehead, chin
   for (const idx of keyPoints) {
     const lm = landmarks[idx];
-    const x = (1 - lm.x) * PREVIEW_W;
-    const y = lm.y * PREVIEW_H;
+    const x = (1 - lm.x) * w;
+    const y = lm.y * h;
     ctx.beginPath();
     ctx.arc(x, y, 2, 0, Math.PI * 2);
     ctx.fill();
@@ -67,13 +70,15 @@ function drawFaceMesh(ctx: CanvasRenderingContext2D, landmarks: any[]) {
 
 function drawHandSkeleton(
   ctx: CanvasRenderingContext2D,
-  handsLandmarks: any[][]
+  handsLandmarks: any[][],
+  w: number,
+  h: number
 ) {
   const colors = ["rgba(45, 200, 115, 0.8)", "rgba(45, 115, 240, 0.8)"];
 
-  for (let h = 0; h < handsLandmarks.length; h++) {
-    const landmarks = handsLandmarks[h];
-    const color = colors[h % 2];
+  for (let hi = 0; hi < handsLandmarks.length; hi++) {
+    const landmarks = handsLandmarks[hi];
+    const color = colors[hi % 2];
 
     // Draw connections
     ctx.strokeStyle = color;
@@ -82,8 +87,8 @@ function drawHandSkeleton(
       const lmA = landmarks[a];
       const lmB = landmarks[b];
       ctx.beginPath();
-      ctx.moveTo((1 - lmA.x) * PREVIEW_W, lmA.y * PREVIEW_H);
-      ctx.lineTo((1 - lmB.x) * PREVIEW_W, lmB.y * PREVIEW_H);
+      ctx.moveTo((1 - lmA.x) * w, lmA.y * h);
+      ctx.lineTo((1 - lmB.x) * w, lmB.y * h);
       ctx.stroke();
     }
 
@@ -91,15 +96,19 @@ function drawHandSkeleton(
     ctx.fillStyle = color;
     for (const lm of landmarks) {
       ctx.beginPath();
-      ctx.arc((1 - lm.x) * PREVIEW_W, lm.y * PREVIEW_H, 3, 0, Math.PI * 2);
+      ctx.arc((1 - lm.x) * w, lm.y * h, 3, 0, Math.PI * 2);
       ctx.fill();
     }
   }
 }
 
 const CameraFeedback: React.FC = () => {
+  const isMobile = useIsMobile();
   const isEnabled = useHandsfreeStore((s) => s.isEnabled);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  const pw = isMobile ? MOBILE_PREVIEW_W : PREVIEW_W;
+  const ph = isMobile ? MOBILE_PREVIEW_H : PREVIEW_H;
 
   useEffect(() => {
     if (!isEnabled) return;
@@ -112,19 +121,19 @@ const CameraFeedback: React.FC = () => {
         // Draw mirrored video
         ctx.save();
         ctx.scale(-1, 1);
-        ctx.drawImage(video, -PREVIEW_W, 0, PREVIEW_W, PREVIEW_H);
+        ctx.drawImage(video, -pw, 0, pw, ph);
         ctx.restore();
 
         // Draw face mesh overlay
         const faceLandmarks = getFaceLandmarks();
         if (faceLandmarks && faceLandmarks.length > 0) {
-          drawFaceMesh(ctx, faceLandmarks);
+          drawFaceMesh(ctx, faceLandmarks, pw, ph);
         }
 
         // Draw hand skeleton overlay
         const handLandmarks = getHandLandmarks();
         if (handLandmarks && handLandmarks.length > 0) {
-          drawHandSkeleton(ctx, handLandmarks);
+          drawHandSkeleton(ctx, handLandmarks, pw, ph);
         }
       }
       rafId = requestAnimationFrame(draw);
@@ -138,7 +147,14 @@ const CameraFeedback: React.FC = () => {
       clearTimeout(startTimer);
       cancelAnimationFrame(rafId);
     };
-  }, [isEnabled]);
+  }, [isEnabled, pw, ph]);
+
+  // On mobile: position above the handsfree button (bottom-left)
+  // Button is at bottom: calc(0dvh + 24px), left: 16px, ~50px tall
+  // Camera sits just above it
+  const positionStyle = isMobile
+    ? { bottom: "calc(0dvh + 82px)", left: 16 }
+    : { bottom: 16, left: 16 };
 
   return (
     <AnimatePresence>
@@ -150,11 +166,10 @@ const CameraFeedback: React.FC = () => {
           exit={{ opacity: 0, scale: 0.8 }}
           style={{
             position: "fixed",
-            bottom: 16,
-            left: 16,
-            width: PREVIEW_W,
-            height: PREVIEW_H,
-            borderRadius: 12,
+            ...positionStyle,
+            width: pw,
+            height: ph,
+            borderRadius: isMobile ? 10 : 12,
             overflow: "hidden",
             zIndex: 9997,
             boxShadow: "0 4px 16px rgba(0,0,0,0.3)",
@@ -163,8 +178,8 @@ const CameraFeedback: React.FC = () => {
         >
           <canvas
             ref={canvasRef}
-            width={PREVIEW_W}
-            height={PREVIEW_H}
+            width={pw}
+            height={ph}
             style={{ width: "100%", height: "100%", display: "block" }}
           />
         </motion.div>
