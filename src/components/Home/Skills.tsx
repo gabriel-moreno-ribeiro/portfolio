@@ -28,8 +28,10 @@ import d_icon7 from "../../assets/skills/dark/icon7.webp";
 import d_icon8 from "../../assets/skills/dark/icon8.webp";
 import d_icon9 from "../../assets/skills/dark/icon9.webp";
 import useIsMobile from "../../hooks/useIsMobile";
+import { broadcastChipTransfer } from "../../providers/WindowBridgeProvider";
 import { useInputSourceStore } from "../../store/inputSourceStore";
 import { useThemeStore } from "../../store/themeStore";
+import { useWindowBridgeStore } from "../../store/windowBridgeStore";
 
 const lightIcons = [
   l_icon1,
@@ -131,6 +133,7 @@ const Skills: React.FC = () => {
   const chipStates = useRef<ChipState[]>([]);
   const handsfreeRafRef = useRef<number | null>(null);
   const hasEnteredView = useRef(false);
+  const hiddenChips = useRef<Set<number>>(new Set());
 
   const finalPositions = useMemo(
     () => (isMobile ? mobileFinalPositions : deskstopFinalPositions),
@@ -271,7 +274,46 @@ const Skills: React.FC = () => {
         // Use CSS `translate` property (separate from framer-motion's `transform`)
         const el = chipRefs.current[i];
         if (el) {
-          el.style.translate = `${chip.x}px ${chip.y}px`;
+          if (hiddenChips.current.has(i)) {
+            el.style.opacity = "0";
+          } else {
+            el.style.opacity = "1";
+            el.style.translate = `${chip.x}px ${chip.y}px`;
+          }
+        }
+
+        // Check if chip is near viewport edge for multi-window transfer
+        const { glowEdge, adjacentWindows, windowId } =
+          useWindowBridgeStore.getState();
+        if (
+          glowEdge &&
+          adjacentWindows.size > 0 &&
+          !hiddenChips.current.has(i)
+        ) {
+          const chipScreenX = centerX + chip.x;
+          const edgeThreshold = 60;
+          const atRightEdge =
+            glowEdge === "right" &&
+            chipScreenX > rect.width - edgeThreshold &&
+            chip.vx > 2;
+          const atLeftEdge =
+            glowEdge === "left" &&
+            chipScreenX < edgeThreshold &&
+            chip.vx < -2;
+
+          if (atRightEdge || atLeftEdge) {
+            const normalizedY = (centerY + chip.y) / rect.height;
+            broadcastChipTransfer({
+              chipIndex: i,
+              iconSrc: icons[i],
+              velocityX: chip.vx,
+              velocityY: chip.vy,
+              entryY: normalizedY,
+              fromWindowId: windowId,
+            });
+            hiddenChips.current.add(i);
+            if (el) el.style.opacity = "0";
+          }
         }
       }
 
@@ -319,10 +361,12 @@ const Skills: React.FC = () => {
       ) {
         // Switching back to mouse: stop physics, restore framer-motion control
         stopHandsfreePhysics();
+        hiddenChips.current.clear();
         chipRefs.current.forEach((el) => {
           if (el) {
             el.style.translate = "";
             el.style.transform = "";
+            el.style.opacity = "";
           }
         });
         controls.start((i) => bubbleVariants.oscillate(i));
@@ -347,6 +391,47 @@ const Skills: React.FC = () => {
   const icons = useMemo(() => {
     return darkMode ? darkIcons : lightIcons;
   }, [darkMode]);
+
+  // Keep an up-to-date ref of icons for the physics loop
+  const iconsRef = useRef(icons);
+  iconsRef.current = icons;
+
+  // Handle incoming chips from other windows
+  useEffect(() => {
+    const unsub = useWindowBridgeStore.subscribe((state, prev) => {
+      if (state.incomingChips.length <= prev.incomingChips.length) return;
+
+      const newest = state.incomingChips[state.incomingChips.length - 1];
+      if (!newest) return;
+
+      // Find a hidden chip slot to reuse, or the matching index
+      let targetIdx = newest.chipIndex;
+      if (targetIdx >= chipStates.current.length) {
+        targetIdx = chipStates.current.length - 1;
+      }
+
+      // Unhide the chip and set its position at the entry edge
+      hiddenChips.current.delete(targetIdx);
+      const containerEl = ref.current;
+      if (containerEl) {
+        const rect = containerEl.getBoundingClientRect();
+        const entryX =
+          newest.velocityX > 0 ? -rect.width / 2 + 40 : rect.width / 2 - 40;
+        const entryYPx = newest.entryY * rect.height - rect.height / 2;
+
+        if (chipStates.current[targetIdx]) {
+          chipStates.current[targetIdx].x = entryX;
+          chipStates.current[targetIdx].y = entryYPx;
+          chipStates.current[targetIdx].vx = newest.velocityX;
+          chipStates.current[targetIdx].vy = newest.velocityY;
+        }
+      }
+
+      useWindowBridgeStore.getState().clearIncomingChip(newest.chipIndex);
+    });
+
+    return unsub;
+  }, []);
 
   return (
     <div className="skills-container" ref={ref} id="skills">

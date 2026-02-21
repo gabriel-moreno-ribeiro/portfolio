@@ -160,6 +160,31 @@ img {
   -webkit-touch-callout: none;
 }
 
+.window-glow {
+  position: fixed;
+  top: 0;
+  width: 6px;
+  height: 100vh;
+  z-index: 10000;
+  pointer-events: none;
+  box-shadow: 0 0 20px 8px rgba($primary-orange, 0.5);
+  background: rgba($primary-orange, 0.4);
+  animation: glow-pulse 2s ease-in-out infinite;
+
+  &--left {
+    left: 0;
+  }
+
+  &--right {
+    right: 0;
+  }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
 @media screen and (max-width: 800px) {
   body {
     cursor: default !important;
