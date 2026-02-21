@@ -1,16 +1,32 @@
 import { useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import CameraFeedback from "./components/Shared/CameraFeedback";
 import CustomMouse from "./components/Shared/CustomMouse";
 import DarkModeButton from "./components/Shared/DarkModeButton";
+import HandsfreeButton from "./components/Shared/HandsfreeButton";
+import HandsfreeIntroModal from "./components/Shared/HandsfreeIntroModal";
+import HandsfreeScrollController from "./components/Shared/HandsfreeScrollController";
 import HorizontalScroller from "./components/Shared/HorizontalScroller";
+import { useHandsfreeCamera } from "./hooks/useHandsfreeCamera";
 import useIsMobile from "./hooks/useIsMobile";
 import Home from "./pages/Home";
+import {
+  startMouseInputProvider,
+  stopMouseInputProvider,
+} from "./providers/MouseInputProvider";
 import { useThemeStore } from "./store/themeStore";
 
 function App() {
   const { darkMode } = useThemeStore();
   const isMobile = useIsMobile();
+
+  useEffect(() => {
+    startMouseInputProvider();
+    return () => stopMouseInputProvider();
+  }, []);
+
+  useHandsfreeCamera();
 
   useEffect(() => {
     document.documentElement.setAttribute(
@@ -42,7 +58,11 @@ function App() {
     <div className="app">
       <HorizontalScroller />
       <Home />
+      <HandsfreeButton />
       <DarkModeButton />
+      <HandsfreeIntroModal />
+      <CameraFeedback />
+      <HandsfreeScrollController />
       <CustomMouse />
       <ToastContainer />
     </div>
