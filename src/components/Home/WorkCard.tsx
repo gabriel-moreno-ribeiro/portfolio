@@ -3,11 +3,12 @@ import {
   motion,
   useAnimation,
   useInView,
-} from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+} from "motion/react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { FiGithub, FiPlayCircle } from "react-icons/fi";
-import ReactPlayer from "react-player/youtube";
 import useIsMobile from "../../hooks/useIsMobile";
+
+const ReactPlayer = lazy(() => import("react-player/youtube"));
 import MacButtons from "./MacButtons";
 
 interface WorkCardInterface {
@@ -83,6 +84,7 @@ const WorkCard = ({ data }: WorkCardInterface) => {
       }
     };
     window.addEventListener("keydown", handleEsc);
+    return () => window.removeEventListener("keydown", handleEsc);
   }, []);
 
   return (
@@ -179,23 +181,14 @@ const WorkCard = ({ data }: WorkCardInterface) => {
               />
               <h2 className="heading">{modalData.title}</h2>
               {cardData.url?.youtubeUrl && (
-                <>
-                  {isMobile ? (
-                    <ReactPlayer
-                      url={cardData.url.youtubeUrl}
-                      controls
-                      width="100%"
-                      height={isExpanded ? 200 : 150}
-                    />
-                  ) : (
-                    <ReactPlayer
-                      url={cardData.url.youtubeUrl}
-                      controls
-                      width="100%"
-                      height={isExpanded ? 400 : 300}
-                    />
-                  )}
-                </>
+                <Suspense fallback={null}>
+                  <ReactPlayer
+                    url={cardData.url.youtubeUrl}
+                    controls
+                    width="100%"
+                    height={isMobile ? (isExpanded ? 200 : 150) : (isExpanded ? 400 : 300)}
+                  />
+                </Suspense>
               )}
               <p
                 className="desc"

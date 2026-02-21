@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useThemeStore } from "../../store/themeStore";
 
 function Model(props) {
-  const { nodes, materials } = useGLTF("assets/3d/cute_robot.glb");
+  const { nodes, materials } = useGLTF("/assets/3d/cute_robot.glb");
   const group = useRef();
 
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -69,7 +69,7 @@ function Model(props) {
   );
 }
 
-useGLTF.preload("assets/3d/cute_robot.glb");
+useGLTF.preload("/assets/3d/cute_robot.glb");
 
 export default function CanvasComponent() {
   const { darkMode } = useThemeStore();

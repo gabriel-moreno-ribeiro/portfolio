@@ -7,7 +7,7 @@ function FindMyWork() {
   const tabs = ["Personal", "Projects", "Published"];
   const [activeTab, setActiveTab] = useState<number>(0);
   return (
-    <div className="find-my-work" data-lenis-prevent id="work">
+    <div className="find-my-work" id="work">
       <h1 className="heading" data-color-inverted={"true"}>
         Find My Work
       </h1>

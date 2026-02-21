@@ -8,15 +8,6 @@ const getInitialTheme = () => {
     return JSON.parse(savedTheme);
   }
 
-  // Check system settings
-  // const prefersDarkMode =
-  //   window.matchMedia &&
-  //   window.matchMedia("(prefers-color-scheme: dark)").matches;
-  // if (prefersDarkMode) {
-  //   return true;
-  // }
-
-  // Default to light mode
   return false;
 };
 

@@ -1,15 +1,9 @@
 import { OrbitControls } from "@react-three/drei";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas } from "@react-three/fiber";
 import { Suspense, useEffect } from "react";
 import useCanvasStore from "../../store/showCarStore";
-import { Ball } from "../Home/Ball";
+import { Ball } from "./Ball";
 function CarCanvas({ setShowCarCanvas }) {
-  const CameraPosition = () => {
-    useFrame((state) => {
-      console.log("Camera position:", state.camera.position);
-    });
-    return <></>;
-  };
   return (
     <div className="car-canvas">
       <Canvas
@@ -24,17 +18,8 @@ function CarCanvas({ setShowCarCanvas }) {
         <Suspense>
           <Ball />
         </Suspense>
-        {/* <CameraPosition/> */}
       </Canvas>
-      <div
-        className="ball-text"
-        initial={{ opacity: 0, y: 50 }}
-        animate={{
-          opacity: 1,
-          y: 50,
-        }}
-      >
-        {/* <h1 className="heading">Avi Vashishta.</h1> */}
+      <div className="ball-text">
         <p className="desc">
           Use <code>Arrow Keys</code> to control BB-8.
         </p>
@@ -42,8 +27,6 @@ function CarCanvas({ setShowCarCanvas }) {
           Press <code onClick={() => setShowCarCanvas(false)}>Esc</code> to
           close the window.
         </p>
-
-        <p className="small-desc"></p>
       </div>
     </div>
   );

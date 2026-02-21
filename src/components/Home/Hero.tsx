@@ -1,11 +1,12 @@
-import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { motion } from "motion/react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { FiArrowRight, FiLink } from "react-icons/fi";
 import ScrambleAnimation from "react-scrambled-text/dist/src/ScrambleAnimation";
 import useIsMobile from "../../hooks/useIsMobile";
 import { scrollToComponent } from "../../utils/scrollToComponent";
-import CanvasComponent from "../Canvas/CanvasComponent";
 import CommonButton from "../Shared/CommonButton";
+
+const CanvasComponent = lazy(() => import("../Canvas/CanvasComponent"));
 
 const bottomTexts = [
   `Avi is also an instructor at a leading YC EdTech platform, having taught MERN Stack to over <span class="black"> 100,000+ </span> students.`,
@@ -23,11 +24,13 @@ function Hero() {
     }, 3000);
 
     return () => clearInterval(interval);
-  }, [bottomTexts.length]);
+  }, []);
 
   return (
     <div className="hero-section">
-      <CanvasComponent />
+      <Suspense fallback={null}>
+        <CanvasComponent />
+      </Suspense>
       <div className="heading-section">
         <motion.div
           className="heading"
