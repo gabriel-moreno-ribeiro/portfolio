@@ -1,14 +1,12 @@
 import { motion } from "motion/react";
 import React from "react";
 import { FiVideo, FiVideoOff } from "react-icons/fi";
-import useIsMobile from "../../hooks/useIsMobile";
 import { useHandsfreeStore } from "../../store/handsfreeStore";
 
 const supportsCamera =
   typeof navigator !== "undefined" && !!navigator.mediaDevices?.getUserMedia;
 
 const HandsfreeButton: React.FC = () => {
-  const isMobile = useIsMobile();
   const {
     isEnabled,
     hasSeenIntro,
@@ -17,7 +15,7 @@ const HandsfreeButton: React.FC = () => {
     setShowGestureTutorial,
   } = useHandsfreeStore();
 
-  if (isMobile || !supportsCamera) return null;
+  if (!supportsCamera) return null;
 
   const handleCameraClick = () => {
     if (!hasSeenIntro) {

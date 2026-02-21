@@ -40,6 +40,9 @@
 
 @media screen and (max-width: 600px) {
   .handsfree-button {
-    display: none;
+    top: unset;
+    right: unset;
+    bottom: calc(0dvh + 24px);
+    left: 16px;
   }
 }
