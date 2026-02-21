@@ -204,6 +204,50 @@ portfolio-2024/
     └── CHANGES.md           (this file)
 ```
 
-## Styles
+---
 
-All SCSS files and styling remain completely untouched. No visual changes were made. The SCSS import chain works identically under Vite.
+## Phase 7: 2026 Visual Redesign
+
+### Global Foundation
+- **Font:** Added Instrument Serif (regular + italic) via Google Fonts for headings
+- **CSS Variables:** New gradient palette - `--gradient-start`, `--gradient-mid`, `--gradient-end`, `--gradient-accent`, `--font-serif`
+- **Background:** Replaced flat background with warm radial gradient blobs (peach/orange) on off-white base
+- **Noise Texture:** Added SVG noise overlay on `body::before` with feTurbulence filter (opacity 0.035)
+- **Dark Mode:** Gradient palette shifts to deep navy/purple (`#0a0a1a`, `#1a1025`, `#2a1530`)
+- **Headings:** Global `h1, h2, h3` set to Instrument Serif with `font-weight: 400`
+
+### Typography System
+- **Hero:** ScrambleText uses Instrument Serif italic in primary orange, heading uses serif at 64px/36px mobile
+- **Navbar:** Brand heading uses Instrument Serif at 20px
+- **Section headings:** All section heading weights updated from 600/700 → 400 to suit serif typography
+- **Work Experience:** Job titles use serif weight 400, durations use 600
+
+### Section-Specific Backgrounds
+- **Hero:** Painted gradient blob behind hero content (900x650px radial gradient, blurred 90px, opacity 0.45)
+- **Numbers & Stats:** Gradient halo behind card cluster (600x400px radial gradient, blurred 80px)
+- **Work Experience:** Gradient blob positioned right side (700x500px, blurred 100px, opacity 0.35)
+- Removed old commented-out sticky positioning code from numbersAndStats.scss
+
+### Component Accent Updates
+- **Buttons:** Primary button hover reveals warm gradient (peach → orange), outline hover uses dark gradient
+- **Tabs:** Added backdrop-filter blur, active indicator uses gradient with subtle warm box-shadow
+- **Work Cards:** Frosted glass effect (backdrop-filter blur 12px, semi-transparent background), warm orange box-shadow on hover with subtle lift
+- **Horizontal Scroller:** Changed from solid black to orange-to-peach gradient bar
+- **Footer:** Changed from solid background to warm dark gradient (light mode) and deep navy gradient (dark mode), heading uses serif font
+
+### Files Modified
+| File | Changes |
+|------|---------|
+| `src/styles/globals.scss` | Font import, CSS vars, gradient bg, noise overlay, serif h1-h3 |
+| `src/styles/components/home/hero.scss` | Gradient blob, serif heading, font-weight 400 |
+| `src/styles/components/home/skills.scss` | Heading font-weight 600 → 400 |
+| `src/styles/components/home/numbersAndStats.scss` | Gradient halo, heading font-weight 400, removed commented code |
+| `src/styles/components/home/findMyWork.scss` | Heading font-weight 600 → 400 |
+| `src/styles/components/home/workExperience.scss` | Gradient blob, heading/job-title font-weight 400 |
+| `src/styles/components/home/tabs.scss` | Backdrop blur, gradient active indicator |
+| `src/styles/components/home/workCard.scss` | Frosted glass, warm shadows, dark mode update |
+| `src/styles/components/navbar/navbar.scss` | Serif brand heading |
+| `src/styles/components/shared/footer.scss` | Gradient background, serif heading |
+| `src/styles/components/shared/commonButton.scss` | Gradient hover fills |
+| `src/styles/components/shared/horizontalScroller.scss` | Gradient bar |
+| `src/components/Home/Hero.tsx` | Italic serif style on ScrambleText |
