@@ -47,13 +47,23 @@ const HandCursor: React.FC = () => {
           dot.style.width = `${size}px`;
           dot.style.height = `${size}px`;
           dot.style.opacity = h.fingers <= 2 ? "0.4" : "0.8";
-          // Visual feedback for pinch: fill the circle
-          dot.style.background = h.isPinching
-            ? "rgba(240, 115, 45, 0.5)"
-            : "rgba(240, 115, 45, 0.15)";
-          dot.style.borderColor = h.isPinching
-            ? "rgba(240, 115, 45, 1)"
-            : "rgba(240, 115, 45, 0.8)";
+          // Visual feedback for gesture state
+          if (h.isScrolling) {
+            // Scrolling: blue tint, elongated
+            dot.style.background = "rgba(45, 140, 240, 0.35)";
+            dot.style.borderColor = "rgba(45, 140, 240, 0.9)";
+            dot.style.borderRadius = "8px";
+          } else if (h.isPinching) {
+            // Pinching: filled orange
+            dot.style.background = "rgba(240, 115, 45, 0.5)";
+            dot.style.borderColor = "rgba(240, 115, 45, 1)";
+            dot.style.borderRadius = "50%";
+          } else {
+            // Default: hollow orange ring
+            dot.style.background = "rgba(240, 115, 45, 0.15)";
+            dot.style.borderColor = "rgba(240, 115, 45, 0.8)";
+            dot.style.borderRadius = "50%";
+          }
         } else {
           dot.style.display = "none";
         }

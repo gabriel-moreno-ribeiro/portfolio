@@ -7,25 +7,21 @@ const gestures = [
     icon: "👤",
     title: "Head Tracking",
     desc: "Move your head to control the robot cursor",
-    visual: "↕ ↔",
   },
   {
     icon: "👌",
     title: "Pinch to Click",
     desc: "Touch thumb + index finger to click on elements",
-    visual: "tap",
   },
   {
-    icon: "👌↕",
-    title: "Pinch + Drag",
-    desc: "Pinch and move your hand up/down to scroll",
-    visual: "scroll",
+    icon: "✌️",
+    title: "Two-Finger Scroll",
+    desc: "Hold up 2 fingers and swipe up/down to scroll — with momentum!",
   },
   {
     icon: "🖐",
     title: "Open Hand",
     desc: "Show your palm — the cursor follows your hand",
-    visual: "move",
   },
 ];
 
