@@ -1,5 +1,5 @@
 import { motion, useAnimation, useInView } from "motion/react";
-import React, { useEffect, useMemo, useRef } from "react";
+import React, { useCallback, useEffect, useMemo, useRef } from "react";
 import l_icon1 from "../../assets/skills/light/icon1.webp";
 import l_icon10 from "../../assets/skills/light/icon10.webp";
 import l_icon11 from "../../assets/skills/light/icon11.webp";
@@ -28,6 +28,7 @@ import d_icon7 from "../../assets/skills/dark/icon7.webp";
 import d_icon8 from "../../assets/skills/dark/icon8.webp";
 import d_icon9 from "../../assets/skills/dark/icon9.webp";
 import useIsMobile from "../../hooks/useIsMobile";
+import { useInputSourceStore } from "../../store/inputSourceStore";
 import { useThemeStore } from "../../store/themeStore";
 
 const lightIcons = [
@@ -102,6 +103,19 @@ const mobileFinalPositions = [
 const randomInRange = (min: number, max: number) =>
   Math.random() * (max - min) + min;
 
+// Spring physics constants for hand tracking mode
+const ATTRACTION_STRENGTH = 0.08;
+const REPULSION_STRENGTH = 4000;
+const ORBIT_RADIUS = 120;
+const DAMPING_FACTOR = 0.85;
+
+interface ChipState {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+}
+
 const Skills: React.FC = () => {
   const isMobile = useIsMobile();
   const { darkMode } = useThemeStore();
@@ -111,6 +125,12 @@ const Skills: React.FC = () => {
     margin: "0px 0px -200px 0px",
     once: true,
   });
+
+  // Refs for handsfree chip physics
+  const chipRefs = useRef<(HTMLImageElement | null)[]>([]);
+  const chipStates = useRef<ChipState[]>([]);
+  const handsfreeRafRef = useRef<number | null>(null);
+  const hasEnteredView = useRef(false);
 
   const finalPositions = useMemo(
     () => (isMobile ? mobileFinalPositions : deskstopFinalPositions),
@@ -151,8 +171,117 @@ const Skills: React.FC = () => {
     }),
   };
 
+  // Initialize chip states from final positions
+  const initChipStates = useCallback(() => {
+    chipStates.current = finalPositions.map((pos) => ({
+      x: pos.x,
+      y: pos.y,
+      vx: 0,
+      vy: 0,
+    }));
+  }, [finalPositions]);
+
+  // Start/stop handsfree chip physics loop
+  const startHandsfreePhysics = useCallback(() => {
+    if (handsfreeRafRef.current !== null) return;
+
+    const tick = () => {
+      const { handPositions, inputSource } = useInputSourceStore.getState();
+
+      if (inputSource !== "camera" || handPositions.length === 0) {
+        handsfreeRafRef.current = requestAnimationFrame(tick);
+        return;
+      }
+
+      const containerEl = ref.current;
+      if (!containerEl) {
+        handsfreeRafRef.current = requestAnimationFrame(tick);
+        return;
+      }
+
+      const rect = containerEl.getBoundingClientRect();
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+
+      // Convert hand NDC positions (-1..1) to pixel positions relative to container center
+      const handTargets = handPositions.map((h) => ({
+        x: h.x * centerX,
+        y: h.y * centerY,
+      }));
+
+      const states = chipStates.current;
+      const numChips = states.length;
+
+      // Split chips between hands: 1 hand → all, 2 hands → 7/6 split
+      const splitIndex =
+        handTargets.length > 1 ? Math.ceil(numChips / 2) : numChips;
+
+      for (let i = 0; i < numChips; i++) {
+        const chip = states[i];
+        const handIdx = i < splitIndex ? 0 : 1;
+        const target = handTargets[Math.min(handIdx, handTargets.length - 1)];
+
+        // Compute orbit target (spread chips around hand in a circle)
+        const chipsForThisHand =
+          handIdx === 0 ? splitIndex : numChips - splitIndex;
+        const idxInGroup = handIdx === 0 ? i : i - splitIndex;
+        const angle =
+          ((2 * Math.PI) / chipsForThisHand) * idxInGroup +
+          performance.now() * 0.0003;
+        const orbitX = target.x + Math.cos(angle) * ORBIT_RADIUS;
+        const orbitY = target.y + Math.sin(angle) * ORBIT_RADIUS;
+
+        // Attraction toward orbit point
+        const dx = orbitX - chip.x;
+        const dy = orbitY - chip.y;
+        chip.vx += dx * ATTRACTION_STRENGTH;
+        chip.vy += dy * ATTRACTION_STRENGTH;
+
+        // Repulsion from other chips
+        for (let j = 0; j < numChips; j++) {
+          if (i === j) continue;
+          const other = states[j];
+          const rx = chip.x - other.x;
+          const ry = chip.y - other.y;
+          const distSq = rx * rx + ry * ry;
+          if (distSq < 1) continue;
+          const force = REPULSION_STRENGTH / distSq;
+          const dist = Math.sqrt(distSq);
+          chip.vx += (rx / dist) * force;
+          chip.vy += (ry / dist) * force;
+        }
+
+        // Apply damping and update position
+        chip.vx *= DAMPING_FACTOR;
+        chip.vy *= DAMPING_FACTOR;
+        chip.x += chip.vx;
+        chip.y += chip.vy;
+
+        // Apply position directly to DOM (bypass React for perf)
+        const el = chipRefs.current[i];
+        if (el) {
+          el.style.transform = `translate(${chip.x}px, ${chip.y}px)`;
+        }
+      }
+
+      handsfreeRafRef.current = requestAnimationFrame(tick);
+    };
+
+    handsfreeRafRef.current = requestAnimationFrame(tick);
+  }, []);
+
+  const stopHandsfreePhysics = useCallback(() => {
+    if (handsfreeRafRef.current !== null) {
+      cancelAnimationFrame(handsfreeRafRef.current);
+      handsfreeRafRef.current = null;
+    }
+  }, []);
+
+  // Standard entrance + oscillation animation
   useEffect(() => {
-    if (inView) {
+    if (inView && !hasEnteredView.current) {
+      hasEnteredView.current = true;
+      initChipStates();
       controls
         .start((i) => bubbleVariants.animate(i))
         .then(() => {
@@ -160,6 +289,46 @@ const Skills: React.FC = () => {
         });
     }
   }, [controls, inView]);
+
+  // Subscribe to input source changes for handsfree physics
+  useEffect(() => {
+    if (!hasEnteredView.current) return;
+
+    const unsub = useInputSourceStore.subscribe((state, prevState) => {
+      if (
+        state.inputSource === "camera" &&
+        prevState.inputSource !== "camera"
+      ) {
+        // Switching to camera: stop framer motion oscillation, start physics
+        controls.stop();
+        initChipStates();
+        startHandsfreePhysics();
+      } else if (
+        state.inputSource !== "camera" &&
+        prevState.inputSource === "camera"
+      ) {
+        // Switching back to mouse: stop physics, restart oscillation
+        stopHandsfreePhysics();
+        // Reset transforms applied by physics loop
+        chipRefs.current.forEach((el) => {
+          if (el) el.style.transform = "";
+        });
+        controls.start((i) => bubbleVariants.oscillate(i));
+      }
+    });
+
+    // If already in camera mode when component mounts
+    if (useInputSourceStore.getState().inputSource === "camera") {
+      controls.stop();
+      initChipStates();
+      startHandsfreePhysics();
+    }
+
+    return () => {
+      unsub();
+      stopHandsfreePhysics();
+    };
+  }, [controls, initChipStates, startHandsfreePhysics, stopHandsfreePhysics]);
 
   const icons = useMemo(() => {
     return darkMode ? darkIcons : lightIcons;
@@ -173,6 +342,9 @@ const Skills: React.FC = () => {
       </p>
       {icons.map((icon, i) => (
         <motion.img
+          ref={(el) => {
+            chipRefs.current[i] = el;
+          }}
           src={icon}
           className="bubble"
           custom={i}

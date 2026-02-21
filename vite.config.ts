@@ -24,6 +24,7 @@ export default defineConfig({
           "react-three": ["@react-three/fiber", "@react-three/drei"],
           motion: ["motion"],
           gsap: ["gsap"],
+          mediapipe: ["@mediapipe/tasks-vision"],
         },
       },
     },

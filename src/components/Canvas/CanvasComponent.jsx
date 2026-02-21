@@ -1,34 +1,19 @@
 import { OrbitControls, useGLTF } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
+import { useInputSourceStore } from "../../store/inputSourceStore";
 import { useThemeStore } from "../../store/themeStore";
 
 function Model(props) {
   const { nodes, materials } = useGLTF("/assets/3d/cute_robot.glb");
   const group = useRef();
 
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-
-  useEffect(() => {
-    const handleMouseMove = (event) => {
-      setMousePosition({
-        x: (event.clientX / window.innerWidth) * 2 - 1,
-        y: (event.clientY / window.innerHeight) * 2 - 1,
-      });
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-    };
-  }, []);
-
   useFrame(() => {
+    const { headPosition } = useInputSourceStore.getState();
     group.current.rotation.y +=
-      (mousePosition.x * 0.4 - group.current.rotation.y) * 0.2;
+      (headPosition.x * 0.4 - group.current.rotation.y) * 0.2;
     group.current.rotation.x +=
-      (mousePosition.y * 0.4 - group.current.rotation.x) * 0.2;
+      (headPosition.y * 0.4 - group.current.rotation.x) * 0.2;
   });
 
   return (
