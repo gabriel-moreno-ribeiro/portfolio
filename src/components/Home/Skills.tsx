@@ -1,4 +1,4 @@
-import { motion, Transition, useAnimation, useInView } from "framer-motion";
+import { motion, useAnimation, useInView } from "motion/react";
 import React, { useEffect, useMemo, useRef } from "react";
 import l_icon1 from "../../assets/skills/light/icon1.webp";
 import l_icon10 from "../../assets/skills/light/icon10.webp";
@@ -117,7 +117,7 @@ const Skills: React.FC = () => {
     [isMobile]
   );
 
-  const bubbleVariants: Transition = {
+  const bubbleVariants = {
     initial: { scale: 0 },
     animate: (i: number) => ({
       scale: [0, 1.5, 1],
@@ -126,7 +126,7 @@ const Skills: React.FC = () => {
       transition: {
         delay: i * 0.075,
         duration: 0.5,
-        ease: "easeInOut",
+        ease: "easeInOut" as const,
       },
     }),
     oscillate: (i: number) => ({
@@ -144,9 +144,9 @@ const Skills: React.FC = () => {
       ],
       transition: {
         duration: 2,
-        ease: "easeInOut",
+        ease: "easeInOut" as const,
         repeat: Infinity,
-        repeatType: "mirror",
+        repeatType: "mirror" as const,
       },
     }),
   };

@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import React from "react";
 import { IoMoonOutline, IoSunnyOutline } from "react-icons/io5";
 import { useThemeStore } from "../../store/themeStore";

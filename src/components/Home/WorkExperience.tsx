@@ -1,9 +1,12 @@
-import useMediaQuery from "@mui/material/useMediaQuery";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useEffect, useRef } from "react";
+import { lazy, Suspense, useEffect, useRef } from "react";
+import useIsMobile from "../../hooks/useIsMobile";
 import { useThemeStore } from "../../store/themeStore";
-import PartsAssemblingCanvas from "../Canvas/PartsAssemblingCanvas";
+
+const PartsAssemblingCanvas = lazy(
+  () => import("../Canvas/PartsAssemblingCanvas")
+);
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -42,7 +45,7 @@ const WorkExperience = () => {
   const textRef = useRef(null);
   const containerRef = useRef(null);
   const { darkMode } = useThemeStore();
-  const isMobile = useMediaQuery("(max-width: 600px)");
+  const isMobile = useIsMobile(600);
 
   useEffect(() => {
     const sections = gsap.utils.toArray(".work-experience-section");
@@ -86,7 +89,9 @@ const WorkExperience = () => {
         <span data-color-inverted={"true"}>My Work Experience.</span>
       </h1>
       <div className="left-column">
-        <PartsAssemblingCanvas />
+        <Suspense fallback={null}>
+          <PartsAssemblingCanvas />
+        </Suspense>
       </div>
       <div className="right-column" ref={textRef}>
         {workExperience.map((exp, index) => (
