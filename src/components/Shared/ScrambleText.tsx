@@ -17,7 +17,7 @@ function ScrambleText({
 }: ScrambleTextProps) {
   const [display, setDisplay] = useState(texts[0]);
   const indexRef = useRef(0);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
+  const timeoutRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   const scrambleTo = useCallback(
     (target: string) => {
