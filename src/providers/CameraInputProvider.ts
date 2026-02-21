@@ -58,8 +58,9 @@ function extractHeadPose(matrix: Float32Array): { x: number; y: number } {
   const pitch = Math.asin(-matrix[4]);
 
   // Normalize to roughly -1..1 range (head typically rotates +-30 deg)
-  const normalizedX = Math.max(-1, Math.min(1, yaw / (Math.PI / 6)));
-  const normalizedY = Math.max(-1, Math.min(1, pitch / (Math.PI / 6)));
+  // Negate both: X is mirrored by camera, Y convention is inverted
+  const normalizedX = Math.max(-1, Math.min(1, -yaw / (Math.PI / 6)));
+  const normalizedY = Math.max(-1, Math.min(1, -pitch / (Math.PI / 6)));
 
   return { x: normalizedX, y: normalizedY };
 }
@@ -147,12 +148,9 @@ function processFrame() {
             h.fingers === 2 && h.confidence > 0.5
         );
         if (scrollHand) {
-          // Use Y position change as scroll intent
-          const prevHands = store.handPositions;
-          if (prevHands.length > 0) {
-            const delta = (scrollHand.y - prevHands[0].y) * 30;
-            store.setScrollIntent(delta);
-          }
+          // Use absolute Y position as scroll speed: above center = scroll up, below = scroll down
+          // scrollHand.y is -1..1, use it directly as speed signal
+          store.setScrollIntent(scrollHand.y);
         } else {
           store.setScrollIntent(0);
         }
