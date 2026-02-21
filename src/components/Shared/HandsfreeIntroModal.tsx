@@ -18,6 +18,8 @@ const HandsfreeIntroModal: React.FC = () => {
     setShowIntroModal(false);
   };
 
+  const { setShowGestureTutorial } = useHandsfreeStore();
+
   const handleEnable = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ video: true });
@@ -26,6 +28,8 @@ const HandsfreeIntroModal: React.FC = () => {
       setHasSeenIntro(true);
       setShowIntroModal(false);
       setEnabled(true);
+      // Show gesture tutorial after a short delay for camera to initialize
+      setTimeout(() => setShowGestureTutorial(true), 1500);
     } catch {
       setCameraPermission("denied");
     }
