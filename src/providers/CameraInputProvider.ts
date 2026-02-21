@@ -31,7 +31,7 @@ async function loadModels(
     },
     runningMode: "VIDEO",
     outputFaceBlendshapes: false,
-    outputFacialTransformationMatrixes: true,
+    outputFacialTransformationMatrixes: false,
     numFaces: 1,
   });
 
@@ -50,17 +50,33 @@ async function loadModels(
   onProgress(100);
 }
 
-function extractHeadPose(matrix: Float32Array): { x: number; y: number } {
-  // The transformation matrix is 4x4 column-major.
-  // We extract yaw and pitch from the rotation sub-matrix.
-  // matrix[0..3] = column 0, matrix[4..7] = column 1, etc.
-  const yaw = Math.atan2(matrix[8], matrix[0]);
-  const pitch = Math.asin(-matrix[4]);
+function extractHeadPoseFromLandmarks(
+  landmarks: { x: number; y: number; z: number }[]
+): { x: number; y: number } {
+  // Use face landmarks directly — more reliable than matrix decomposition.
+  // Nose tip (4) relative to face center (midpoint of eyes) gives yaw/pitch.
+  const nose = landmarks[4];
+  const leftEye = landmarks[263]; // left eye outer corner
+  const rightEye = landmarks[33]; // right eye outer corner
+  const forehead = landmarks[10];
+  const chin = landmarks[152];
 
-  // Normalize to roughly -1..1 range (head typically rotates +-30 deg)
-  // Negate both: X is mirrored by camera, Y convention is inverted
-  const normalizedX = Math.max(-1, Math.min(1, -yaw / (Math.PI / 6)));
-  const normalizedY = Math.max(-1, Math.min(1, -pitch / (Math.PI / 6)));
+  // Face center from eyes
+  const faceCenterX = (leftEye.x + rightEye.x) / 2;
+  const faceCenterY = (forehead.y + chin.y) / 2;
+
+  // Face dimensions for normalization
+  const faceWidth = Math.abs(leftEye.x - rightEye.x);
+  const faceHeight = Math.abs(chin.y - forehead.y);
+
+  // Nose offset from face center, normalized by face size
+  // Multiply by sensitivity factor (~3) to get -1..1 from typical head turns
+  const rawYaw = (nose.x - faceCenterX) / (faceWidth || 0.1);
+  const rawPitch = (nose.y - faceCenterY) / (faceHeight || 0.1);
+
+  // Negate X for camera mirror, keep Y (nose below center = looking down = positive)
+  const normalizedX = Math.max(-1, Math.min(1, -rawYaw * 3));
+  const normalizedY = Math.max(-1, Math.min(1, rawPitch * 3));
 
   return { x: normalizedX, y: normalizedY };
 }
@@ -102,11 +118,10 @@ function processFrame() {
         performance.now()
       );
       if (
-        faceResult.facialTransformationMatrixes &&
-        faceResult.facialTransformationMatrixes.length > 0
+        faceResult.faceLandmarks &&
+        faceResult.faceLandmarks.length > 0
       ) {
-        const matrix = faceResult.facialTransformationMatrixes[0].data;
-        const pose = extractHeadPose(matrix);
+        const pose = extractHeadPoseFromLandmarks(faceResult.faceLandmarks[0]);
         store.setHeadPosition(pose);
       }
     } catch {
