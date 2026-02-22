@@ -6,14 +6,14 @@ interface TerminalHeaderProps {
 }
 
 function TerminalHeader({ onClose }: TerminalHeaderProps) {
-  const { currentDirectory, clearOutput } = useTerminalStore();
+  const { currentDirectory } = useTerminalStore();
 
   return (
     <div className="terminal-header">
       <MacButtons
         onClose={onClose || (() => {})}
         onExpand={() => {}}
-        onMinimise={() => clearOutput()}
+        onMinimise={() => {}}
         isExpanded={false}
       />
       <span className="terminal-title">avi@portfolio:{currentDirectory}</span>
