@@ -9,6 +9,7 @@ import {
   commandRegistry,
   getFileSystem,
   parseInput,
+  streamAiResponse,
   CommandContext,
 } from "../../constants/terminal/commands";
 import TerminalHeader from "./TerminalHeader";
@@ -38,6 +39,8 @@ function Terminal({ onClose }: TerminalProps) {
   const fitAddonRef = useRef<FitAddon | null>(null);
   const lineBufferRef = useRef("");
   const busyRef = useRef(false);
+  const chatModeRef = useRef(false);
+  const chatHistoryRef = useRef<{ role: string; content: string }[]>([]);
   const [isExpanded, setIsExpanded] = useState(false);
 
   const {
@@ -65,6 +68,9 @@ function Terminal({ onClose }: TerminalProps) {
   historyIndexRef.current = historyIndex;
 
   const getPrompt = useCallback(() => {
+    if (chatModeRef.current) {
+      return `\x1b[36myou>\x1b[0m `;
+    }
     return `\x1b[32mavi@portfolio:${currentDirRef.current}$\x1b[0m `;
   }, []);
 
@@ -73,6 +79,71 @@ function Terminal({ onClose }: TerminalProps) {
     if (!term) return;
     term.write(getPrompt());
   }, [getPrompt]);
+
+  const enterChatMode = useCallback(() => {
+    const term = xtermRef.current;
+    if (!term) return;
+    chatModeRef.current = true;
+    chatHistoryRef.current = [];
+    term.writeln("");
+    term.writeln("\x1b[1;35m--- AI Chat Mode ---\x1b[0m");
+    term.writeln(`\x1b[90mChat with an AI that knows about Avi.`);
+    term.writeln(`Type your message and press Enter.`);
+    term.writeln(`Type \x1b[33mexit\x1b[90m or press \x1b[33mCtrl+C\x1b[90m to leave.\x1b[0m`);
+    term.writeln("");
+    writePrompt();
+  }, [writePrompt]);
+
+  const exitChatMode = useCallback(() => {
+    const term = xtermRef.current;
+    if (!term) return;
+    chatModeRef.current = false;
+    chatHistoryRef.current = [];
+    term.writeln("\x1b[1;35m--- Exited AI Chat ---\x1b[0m");
+    term.writeln("");
+    writePrompt();
+  }, [writePrompt]);
+
+  const handleChatMessage = useCallback(
+    async (message: string) => {
+      const term = xtermRef.current;
+      if (!term) return;
+
+      if (message.toLowerCase() === "exit" || message.toLowerCase() === "quit") {
+        exitChatMode();
+        return;
+      }
+
+      if (!message.trim()) {
+        writePrompt();
+        return;
+      }
+
+      chatHistoryRef.current.push({ role: "user", content: message });
+
+      busyRef.current = true;
+      const fullResponse = await streamAiResponse(
+        {
+          write: (text: string) => term.write(text),
+          writeln: (text: string) => term.writeln(text),
+          setAiLoading,
+        },
+        chatHistoryRef.current
+      );
+
+      if (fullResponse) {
+        chatHistoryRef.current.push({ role: "assistant", content: fullResponse });
+        // Keep history manageable - last 20 messages
+        if (chatHistoryRef.current.length > 20) {
+          chatHistoryRef.current = chatHistoryRef.current.slice(-20);
+        }
+      }
+
+      busyRef.current = false;
+      writePrompt();
+    },
+    [exitChatMode, writePrompt, setAiLoading]
+  );
 
   const executeCommand = useCallback(
     async (raw: string) => {
@@ -103,10 +174,12 @@ function Terminal({ onClose }: TerminalProps) {
         currentDirectory: currentDirRef.current,
         setDirectory,
         writeln: (text: string) => term.writeln(text),
+        write: (text: string) => term.write(text),
         clearTerminal: () => term.clear(),
         toggleTheme: toggleDarkMode,
         setMatrixActive,
         setAiLoading,
+        enterChatMode,
         fileSystem: getFileSystem(),
         rawInput: trimmed,
       };
@@ -119,7 +192,7 @@ function Terminal({ onClose }: TerminalProps) {
         writePrompt();
       }
     },
-    [addToHistory, setDirectory, toggleDarkMode, setMatrixActive, setAiLoading, writePrompt]
+    [addToHistory, setDirectory, toggleDarkMode, setMatrixActive, setAiLoading, writePrompt, enterChatMode]
   );
 
   useEffect(() => {
@@ -192,7 +265,11 @@ function Terminal({ onClose }: TerminalProps) {
           term.write("\r\n");
           const cmd = lineBufferRef.current;
           lineBufferRef.current = "";
-          executeCommand(cmd);
+          if (chatModeRef.current) {
+            handleChatMessage(cmd);
+          } else {
+            executeCommand(cmd);
+          }
           break;
         }
         case "\x7f": {
@@ -259,7 +336,11 @@ function Terminal({ onClose }: TerminalProps) {
           // Ctrl+C
           lineBufferRef.current = "";
           term.write("^C\r\n");
-          writePrompt();
+          if (chatModeRef.current) {
+            exitChatMode();
+          } else {
+            writePrompt();
+          }
           break;
         }
         default: {

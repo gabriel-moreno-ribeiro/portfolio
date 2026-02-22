@@ -1,7 +1,7 @@
 import react from "@vitejs/plugin-react";
 import { defineConfig, type Plugin } from "vite";
 
-// Local dev mock for /api/chat (Vercel serverless functions only run in production)
+// Local dev mock for /api/chat - simulates SSE streaming
 function apiMockPlugin(): Plugin {
   return {
     name: "api-mock",
@@ -13,15 +13,28 @@ function apiMockPlugin(): Plugin {
           return;
         }
         let body = "";
-        req.on("data", (chunk) => (body += chunk));
+        req.on("data", (chunk: string) => (body += chunk));
         req.on("end", () => {
-          res.setHeader("Content-Type", "application/json");
-          res.end(
-            JSON.stringify({
-              reply:
-                "AI chat is available in production. Deploy to Vercel with OPENAI_API_KEY to enable it.",
-            })
-          );
+          res.setHeader("Content-Type", "text/event-stream");
+          res.setHeader("Cache-Control", "no-cache");
+          res.setHeader("Connection", "keep-alive");
+
+          const words =
+            "AI chat works in production. Deploy to Vercel with OPENAI_API_KEY to enable real responses.".split(
+              " "
+            );
+          let i = 0;
+          const interval = setInterval(() => {
+            if (i < words.length) {
+              const content = (i === 0 ? "" : " ") + words[i];
+              res.write(`data: ${JSON.stringify({ content })}\n\n`);
+              i++;
+            } else {
+              res.write("data: [DONE]\n\n");
+              res.end();
+              clearInterval(interval);
+            }
+          }, 50);
         });
       });
     },

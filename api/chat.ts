@@ -30,12 +30,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const { message } = req.body;
-  if (!message || typeof message !== "string") {
-    return res.status(400).json({ error: "Message is required" });
+  const { messages } = req.body;
+  if (!messages || !Array.isArray(messages) || messages.length === 0) {
+    return res.status(400).json({ error: "Messages array is required" });
   }
 
-  if (message.length > 500) {
+  const lastMsg = messages[messages.length - 1]?.content;
+  if (typeof lastMsg === "string" && lastMsg.length > 500) {
     return res
       .status(400)
       .json({ error: "Message too long. Keep it under 500 characters." });
@@ -59,10 +60,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         model: "gpt-4o-mini",
         messages: [
           { role: "system", content: SYSTEM_PROMPT },
-          { role: "user", content: message },
+          ...messages,
         ],
         max_tokens: 300,
         temperature: 0.7,
+        stream: true,
       }),
     });
 
@@ -70,12 +72,47 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(502).json({ error: "AI service returned an error." });
     }
 
-    const data = await response.json();
-    const reply =
-      data.choices?.[0]?.message?.content ||
-      "Sorry, I could not process that.";
+    // Stream SSE back to the client
+    res.setHeader("Content-Type", "text/event-stream");
+    res.setHeader("Cache-Control", "no-cache");
+    res.setHeader("Connection", "keep-alive");
 
-    return res.status(200).json({ reply });
+    const reader = response.body?.getReader();
+    if (!reader) {
+      return res.status(502).json({ error: "No response body" });
+    }
+
+    const decoder = new TextDecoder();
+    let done = false;
+
+    while (!done) {
+      const { value, done: readerDone } = await reader.read();
+      done = readerDone;
+      if (value) {
+        const chunk = decoder.decode(value, { stream: true });
+        const lines = chunk.split("\n");
+        for (const line of lines) {
+          if (line.startsWith("data: ")) {
+            const data = line.slice(6);
+            if (data === "[DONE]") {
+              res.write("data: [DONE]\n\n");
+            } else {
+              try {
+                const parsed = JSON.parse(data);
+                const content = parsed.choices?.[0]?.delta?.content;
+                if (content) {
+                  res.write(`data: ${JSON.stringify({ content })}\n\n`);
+                }
+              } catch {
+                // skip malformed chunks
+              }
+            }
+          }
+        }
+      }
+    }
+
+    res.end();
   } catch {
     return res.status(500).json({ error: "AI service unavailable." });
   }
