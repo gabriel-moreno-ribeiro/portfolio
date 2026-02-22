@@ -18,6 +18,9 @@ interface TerminalProps {
   onClose?: () => void;
 }
 
+const DEFAULT_ROWS = 24;
+const EXPANDED_ROWS = 36;
+
 const BOOT_LINES = [
   "Portfolio OS v2.0.26 [Avi Vashishta Edition]",
   "Loading modules... done.",
@@ -124,6 +127,7 @@ function Terminal({ onClose }: TerminalProps) {
 
     const term = new XTerminal({
       cursorBlink: true,
+      rows: DEFAULT_ROWS,
       fontSize: 14,
       fontFamily: '"SF Mono", "Fira Code", "Cascadia Code", Consolas, monospace',
       theme: {
@@ -156,15 +160,6 @@ function Terminal({ onClose }: TerminalProps) {
     const fitAddon = new FitAddon();
     term.loadAddon(fitAddon);
     term.open(termRef.current);
-
-    // Small delay to ensure container is sized
-    setTimeout(() => {
-      try {
-        fitAddon.fit();
-      } catch {
-        // ignore fit errors during mount
-      }
-    }, 50);
 
     xtermRef.current = term;
     fitAddonRef.current = fitAddon;
@@ -215,7 +210,6 @@ function Terminal({ onClose }: TerminalProps) {
           const idx = historyIndexRef.current;
           const newIdx = idx === -1 ? history.length - 1 : Math.max(0, idx - 1);
           setHistoryIndex(newIdx);
-          // Clear current line
           const clearLen = lineBufferRef.current.length;
           term.write("\b \b".repeat(clearLen));
           lineBufferRef.current = history[newIdx] || "";
@@ -279,15 +273,23 @@ function Terminal({ onClose }: TerminalProps) {
       }
     });
 
-    // Resize handler
+    // Resize handler - only fit columns, keep rows fixed
     const handleResize = () => {
+      const term = xtermRef.current;
+      if (!term || !fitAddon) return;
       try {
-        fitAddon.fit();
+        const dims = fitAddon.proposeDimensions();
+        if (dims) {
+          term.resize(dims.cols, term.rows);
+        }
       } catch {
         // ignore
       }
     };
     window.addEventListener("resize", handleResize);
+
+    // Initial column fit
+    setTimeout(handleResize, 50);
 
     return () => {
       window.removeEventListener("resize", handleResize);
@@ -298,18 +300,22 @@ function Terminal({ onClose }: TerminalProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Re-fit when expanded state changes or on mount
+  // Resize rows + columns when expand state changes
   useEffect(() => {
+    const term = xtermRef.current;
     const fitAddon = fitAddonRef.current;
-    if (fitAddon) {
-      setTimeout(() => {
-        try {
-          fitAddon.fit();
-        } catch {
-          // ignore
-        }
-      }, 60);
-    }
+    if (!term || !fitAddon) return;
+
+    const targetRows = isExpanded ? EXPANDED_ROWS : DEFAULT_ROWS;
+    setTimeout(() => {
+      try {
+        const dims = fitAddon.proposeDimensions();
+        const cols = dims ? dims.cols : term.cols;
+        term.resize(cols, targetRows);
+      } catch {
+        // ignore
+      }
+    }, 60);
   }, [isExpanded]);
 
   return (

@@ -14,14 +14,6 @@ $terminal-text: #cdd6f4;
 
   &.terminal-expanded {
     max-width: 100%;
-
-    .terminal-body {
-      min-height: 600px;
-    }
-
-    .xterm-container {
-      height: 600px;
-    }
   }
 }
 
@@ -44,18 +36,19 @@ $terminal-text: #cdd6f4;
 .terminal-body {
   background: #1e1e2e;
   position: relative;
-  min-height: 500px;
-  transition: min-height 0.3s ease;
 }
 
 .xterm-container {
   width: 100%;
-  height: 500px;
   padding: 8px;
-  transition: height 0.3s ease;
 
   .xterm {
     height: 100%;
+  }
+
+  // xterm renders a canvas - match its viewport precisely
+  .xterm-screen {
+    width: 100% !important;
   }
 }
 
@@ -108,24 +101,9 @@ $terminal-text: #cdd6f4;
   .terminal-window {
     margin: 12px 0;
     border-radius: 8px;
-
-    &.terminal-expanded {
-      .terminal-body {
-        min-height: 400px;
-      }
-
-      .xterm-container {
-        height: 400px;
-      }
-    }
-  }
-
-  .terminal-body {
-    min-height: 350px;
   }
 
   .xterm-container {
-    height: 350px;
     padding: 4px;
   }
 
