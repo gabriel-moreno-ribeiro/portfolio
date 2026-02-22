@@ -28,7 +28,6 @@ import d_icon7 from "../../assets/skills/dark/icon7.webp";
 import d_icon8 from "../../assets/skills/dark/icon8.webp";
 import d_icon9 from "../../assets/skills/dark/icon9.webp";
 import useIsMobile from "../../hooks/useIsMobile";
-import { useHandsfreeStore } from "../../store/handsfreeStore";
 import { useThemeStore } from "../../store/themeStore";
 import SkillsCanvas from "./SkillsCanvas";
 
@@ -99,7 +98,6 @@ const mobileFinalPositions = [
 const Skills: React.FC = () => {
   const isMobile = useIsMobile();
   const { darkMode } = useThemeStore();
-  const isSecondary = useHandsfreeStore((s) => s.isSecondary);
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, {
     margin: "0px 0px -200px 0px",
@@ -140,7 +138,6 @@ const Skills: React.FC = () => {
         finalPositions={finalPositions}
         isMobile={isMobile}
         triggerEntrance={inView}
-        isSecondary={isSecondary}
       />
     </div>
   );

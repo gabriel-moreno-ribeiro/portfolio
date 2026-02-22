@@ -1,0 +1,214 @@
+$terminal-bg: #1e1e2e;
+$terminal-text: #cdd6f4;
+$terminal-green: #a6e3a1;
+$terminal-red: #f38ba8;
+$terminal-yellow: #f9e2af;
+$terminal-blue: #89b4fa;
+$terminal-header-bg: #313244;
+$terminal-cursor-color: #cdd6f4;
+
+.terminal-window {
+  width: 100%;
+  max-width: 900px;
+  margin: 24px auto;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  font-family: "SF Mono", "Fira Code", "Cascadia Code", "Consolas", monospace;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.terminal-header {
+  background: $terminal-header-bg;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  user-select: none;
+
+  .terminal-title {
+    color: rgba($terminal-text, 0.6);
+    font-size: 13px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.terminal-body {
+  background: $terminal-bg;
+  min-height: 400px;
+  max-height: 500px;
+  overflow-y: auto;
+  padding: 16px;
+  position: relative;
+  cursor: text;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba($terminal-text, 0.2);
+    border-radius: 3px;
+  }
+}
+
+.terminal-output {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.terminal-line {
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-word;
+
+  &--input {
+    .prompt {
+      color: $terminal-green;
+      margin-right: 8px;
+    }
+    .command-text {
+      color: $terminal-text;
+    }
+  }
+
+  &--output {
+    color: $terminal-text;
+  }
+
+  &--error {
+    color: $terminal-red;
+  }
+
+  &--system {
+    color: $terminal-yellow;
+    font-weight: 600;
+  }
+
+  .dir-name {
+    color: $terminal-blue;
+    font-weight: 600;
+  }
+}
+
+.terminal-input-line {
+  display: flex;
+  align-items: center;
+  margin-top: 4px;
+
+  .prompt {
+    color: $terminal-green;
+    font-size: 14px;
+    white-space: nowrap;
+    margin-right: 8px;
+  }
+
+  .terminal-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: $terminal-text;
+    font-family: inherit;
+    font-size: 14px;
+    caret-color: $terminal-cursor-color;
+    padding: 0;
+
+    &::placeholder {
+      color: rgba($terminal-text, 0.3);
+    }
+  }
+}
+
+// Boot sequence
+.boot-sequence {
+  .boot-line {
+    color: $terminal-yellow;
+    font-size: 14px;
+    line-height: 1.6;
+    white-space: pre-wrap;
+  }
+}
+
+// Matrix rain overlay
+.matrix-rain {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.95);
+
+  canvas {
+    width: 100%;
+    height: 100%;
+  }
+
+  .matrix-dismiss {
+    position: absolute;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba($terminal-green, 0.6);
+    font-size: 12px;
+    font-family: inherit;
+  }
+}
+
+// AI loading indicator
+.ai-loading {
+  color: $terminal-yellow;
+  font-size: 14px;
+
+  .dot-animation {
+    &::after {
+      content: "";
+      animation: dots 1.5s steps(4, end) infinite;
+    }
+  }
+}
+
+@keyframes dots {
+  0% {
+    content: "";
+  }
+  25% {
+    content: ".";
+  }
+  50% {
+    content: "..";
+  }
+  75% {
+    content: "...";
+  }
+}
+
+// Responsive
+@media screen and (max-width: 600px) {
+  .terminal-window {
+    margin: 12px 0;
+    border-radius: 8px;
+  }
+
+  .terminal-body {
+    min-height: 300px;
+    max-height: 400px;
+    padding: 12px;
+  }
+
+  .terminal-line,
+  .terminal-input-line .prompt,
+  .terminal-input-line .terminal-input {
+    font-size: 12px;
+  }
+
+  .terminal-header .terminal-title {
+    font-size: 11px;
+  }
+}

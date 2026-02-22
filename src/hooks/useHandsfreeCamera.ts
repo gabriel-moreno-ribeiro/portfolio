@@ -4,14 +4,15 @@ import {
   stopCameraInput,
 } from "../providers/CameraInputProvider";
 import { useHandsfreeStore } from "../store/handsfreeStore";
+import { useIsFollowing } from "../store/windowSyncStore";
 
 export function useHandsfreeCamera() {
   const isEnabled = useHandsfreeStore((s) => s.isEnabled);
-  const isSecondary = useHandsfreeStore((s) => s.isSecondary);
+  const isFollowing = useIsFollowing();
 
   useEffect(() => {
-    // Secondary windows get camera data via WindowSyncProvider
-    if (isSecondary || !isEnabled) {
+    // Following windows get camera data via WindowSyncProvider
+    if (isFollowing || !isEnabled) {
       stopCameraInput();
       return;
     }
@@ -28,5 +29,5 @@ export function useHandsfreeCamera() {
       cancelled = true;
       stopCameraInput();
     };
-  }, [isEnabled, isSecondary]);
+  }, [isEnabled, isFollowing]);
 }

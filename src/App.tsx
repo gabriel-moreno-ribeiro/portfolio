@@ -3,12 +3,14 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CameraFeedback from "./components/Shared/CameraFeedback";
 import CustomMouse from "./components/Shared/CustomMouse";
+import EdgeParticles from "./components/Shared/EdgeParticles";
 import GestureTutorial from "./components/Shared/GestureTutorial";
 import HandCursor from "./components/Shared/HandCursor";
 import DarkModeButton from "./components/Shared/DarkModeButton";
 import HandsfreeButton from "./components/Shared/HandsfreeButton";
 import HandsfreeIntroModal from "./components/Shared/HandsfreeIntroModal";
 import HorizontalScroller from "./components/Shared/HorizontalScroller";
+import SyncStatusIndicator from "./components/Shared/SyncStatusIndicator";
 import { useHandsfreeCamera } from "./hooks/useHandsfreeCamera";
 import useIsMobile from "./hooks/useIsMobile";
 import Home from "./pages/Home";
@@ -20,27 +22,20 @@ import {
   startWindowSync,
   stopWindowSync,
 } from "./providers/WindowSyncProvider";
-import { useHandsfreeStore } from "./store/handsfreeStore";
 import { useThemeStore } from "./store/themeStore";
 
 function App() {
   const { darkMode } = useThemeStore();
   const isMobile = useIsMobile();
-  const isSecondary = useHandsfreeStore((s) => s.isSecondary);
 
   useEffect(() => {
-    if (isSecondary) {
-      startWindowSync("follower");
-      return () => stopWindowSync();
-    } else {
-      startMouseInputProvider();
-      startWindowSync("leader");
-      return () => {
-        stopMouseInputProvider();
-        stopWindowSync();
-      };
-    }
-  }, [isSecondary]);
+    startMouseInputProvider();
+    startWindowSync();
+    return () => {
+      stopMouseInputProvider();
+      stopWindowSync();
+    };
+  }, []);
 
   useHandsfreeCamera();
 
@@ -81,6 +76,8 @@ function App() {
       <CameraFeedback />
       <HandCursor />
       <CustomMouse />
+      <SyncStatusIndicator />
+      <EdgeParticles />
       <ToastContainer />
     </div>
   );
