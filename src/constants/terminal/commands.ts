@@ -1,4 +1,3 @@
-import { OutputLine } from "../../store/terminalStore";
 import {
   DirectoryNode,
   FileSystemNode,
@@ -10,13 +9,20 @@ import { bio, contact, education, experience, skills } from "./portfolioData";
 import { cowsayTemplate, nameAscii, neofetchArt } from "./asciiArt";
 import { fortunes } from "./fortunes";
 
+// ANSI color helpers
+const green = (s: string) => `\x1b[32m${s}\x1b[0m`;
+const yellow = (s: string) => `\x1b[1;33m${s}\x1b[0m`;
+const red = (s: string) => `\x1b[31m${s}\x1b[0m`;
+const blue = (s: string) => `\x1b[34m${s}\x1b[0m`;
+const bold = (s: string) => `\x1b[1m${s}\x1b[0m`;
+
 export interface CommandContext {
   args: string[];
   flags: Record<string, string | boolean>;
   currentDirectory: string;
   setDirectory: (dir: string) => void;
-  addOutput: (lines: Omit<OutputLine, "id">[]) => void;
-  clearOutput: () => void;
+  writeln: (text: string) => void;
+  clearTerminal: () => void;
   toggleTheme: () => void;
   setMatrixActive: (active: boolean) => void;
   setAiLoading: (loading: boolean) => void;
@@ -30,26 +36,15 @@ interface CommandDefinition {
   execute: (ctx: CommandContext) => void | Promise<void>;
 }
 
-const out = (content: string): Omit<OutputLine, "id"> => ({
-  type: "output",
-  content,
-});
-const err = (content: string): Omit<OutputLine, "id"> => ({
-  type: "error",
-  content,
-});
-const sys = (content: string): Omit<OutputLine, "id"> => ({
-  type: "system",
-  content,
-});
-
 function treeNode(
   node: FileSystemNode,
   prefix: string,
   isLast: boolean
 ): string[] {
   const connector = isLast ? "└── " : "├── ";
-  const lines: string[] = [`${prefix}${connector}${node.name}${node.type === "directory" ? "/" : ""}`];
+  const name =
+    node.type === "directory" ? blue(node.name + "/") : node.name;
+  const lines: string[] = [`${prefix}${connector}${name}`];
   if (node.type === "directory") {
     const entries = Object.values(node.children);
     entries.forEach((child, i) => {
@@ -67,11 +62,11 @@ const commands: CommandDefinition[] = [
     description: "Show available commands",
     execute: (ctx) => {
       const grouped: Record<string, CommandDefinition[]> = {
-        "Portfolio": [],
+        Portfolio: [],
         "File System": [],
-        "Fun": [],
-        "Utility": [],
-        "AI": [],
+        Fun: [],
+        Utility: [],
+        AI: [],
       };
       const categoryMap: Record<string, string> = {
         about: "Portfolio", skills: "Portfolio", experience: "Portfolio",
@@ -88,31 +83,29 @@ const commands: CommandDefinition[] = [
         const cat = categoryMap[cmd.name] || "Utility";
         grouped[cat]?.push(cmd);
       }
-      const lines: Omit<OutputLine, "id">[] = [sys("Available Commands:")];
+      ctx.writeln(yellow("Available Commands:"));
       for (const [category, cmds] of Object.entries(grouped)) {
         if (cmds.length === 0) continue;
-        lines.push(out(""));
-        lines.push(sys(`  ${category}:`));
+        ctx.writeln("");
+        ctx.writeln(yellow(`  ${category}:`));
         for (const cmd of cmds) {
-          lines.push(out(`    ${cmd.name.padEnd(14)} ${cmd.description}`));
+          ctx.writeln(`    ${green(cmd.name.padEnd(14))} ${cmd.description}`);
         }
       }
-      lines.push(out(""));
-      lines.push(sys('Type "ai <message>" to chat with an AI that knows about Avi.'));
-      ctx.addOutput(lines);
+      ctx.writeln("");
+      ctx.writeln(yellow('Type "ai <message>" to chat with an AI that knows about Avi.'));
     },
   },
   {
     name: "clear",
     description: "Clear terminal",
-    execute: (ctx) => ctx.clearOutput(),
+    execute: (ctx) => ctx.clearTerminal(),
   },
   {
     name: "history",
     description: "Show command history",
     execute: (ctx) => {
-      // history is passed via rawInput context - we read from store externally
-      ctx.addOutput([sys("Command history is shown in-terminal. Use arrow keys to navigate.")]);
+      ctx.writeln(yellow("Use arrow keys (↑/↓) to navigate command history."));
     },
   },
 
@@ -121,44 +114,38 @@ const commands: CommandDefinition[] = [
     name: "about",
     description: "Display bio and about info",
     execute: (ctx) => {
-      ctx.addOutput([
-        sys(bio.name),
-        out(bio.title),
-        out(""),
-        out(bio.summary),
-        out(""),
-        out(`Interests: ${bio.interests.join(", ")}`),
-      ]);
+      ctx.writeln(yellow(bio.name));
+      ctx.writeln(bio.title);
+      ctx.writeln("");
+      ctx.writeln(bio.summary);
+      ctx.writeln("");
+      ctx.writeln(`Interests: ${bio.interests.join(", ")}`);
     },
   },
   {
     name: "skills",
     description: "List technical skills",
     execute: (ctx) => {
-      ctx.addOutput([
-        sys("Frontend:"),
-        out(`  ${skills.frontend.join(", ")}`),
-        out(""),
-        sys("Backend:"),
-        out(`  ${skills.backend.join(", ")}`),
-        out(""),
-        sys("Tools & Platforms:"),
-        out(`  ${skills.tools.join(", ")}`),
-      ]);
+      ctx.writeln(yellow("Frontend:"));
+      ctx.writeln(`  ${skills.frontend.join(", ")}`);
+      ctx.writeln("");
+      ctx.writeln(yellow("Backend:"));
+      ctx.writeln(`  ${skills.backend.join(", ")}`);
+      ctx.writeln("");
+      ctx.writeln(yellow("Tools & Platforms:"));
+      ctx.writeln(`  ${skills.tools.join(", ")}`);
     },
   },
   {
     name: "experience",
     description: "Show work experience",
     execute: (ctx) => {
-      const lines: Omit<OutputLine, "id">[] = [];
       for (const exp of experience) {
-        lines.push(sys(`${exp.title} @ ${exp.company}`));
-        lines.push(out(`  ${exp.date}`));
-        lines.push(out(`  ${exp.description}`));
-        lines.push(out(""));
+        ctx.writeln(yellow(`${exp.title} @ ${exp.company}`));
+        ctx.writeln(`  ${exp.date}`);
+        ctx.writeln(`  ${exp.description}`);
+        ctx.writeln("");
       }
-      ctx.addOutput(lines);
     },
   },
   {
@@ -170,84 +157,72 @@ const commands: CommandDefinition[] = [
       if (!projectsDir) return;
 
       const showCategory = (name: string, dir: DirectoryNode) => {
-        const lines: Omit<OutputLine, "id">[] = [sys(`  ${name}/`)];
+        ctx.writeln(yellow(`  ${name}/`));
         for (const child of Object.values(dir.children)) {
-          lines.push(out(`    ${child.name}`));
+          ctx.writeln(`    ${child.name}`);
         }
-        return lines;
       };
 
-      const lines: Omit<OutputLine, "id">[] = [sys("~/projects/")];
-
+      ctx.writeln(yellow("~/projects/"));
       if (ctx.flags.personal) {
-        lines.push(...showCategory("personal", projectsDir.children.personal as DirectoryNode));
+        showCategory("personal", projectsDir.children.personal as DirectoryNode);
       } else if (ctx.flags.youtube) {
-        lines.push(...showCategory("youtube", projectsDir.children.youtube as DirectoryNode));
+        showCategory("youtube", projectsDir.children.youtube as DirectoryNode);
       } else if (ctx.flags.published) {
-        lines.push(...showCategory("published", projectsDir.children.published as DirectoryNode));
+        showCategory("published", projectsDir.children.published as DirectoryNode);
       } else {
         for (const [name, child] of Object.entries(projectsDir.children)) {
-          if (child.type === "directory") {
-            lines.push(...showCategory(name, child));
-          }
+          if (child.type === "directory") showCategory(name, child);
         }
       }
-      ctx.addOutput(lines);
     },
   },
   {
     name: "contact",
     description: "Show contact info",
     execute: (ctx) => {
-      ctx.addOutput([
-        sys("Contact Information"),
-        out(`  Email:    ${contact.email}`),
-        out(`  LinkedIn: ${contact.linkedin}`),
-        out(`  GitHub:   ${contact.github}`),
-      ]);
+      ctx.writeln(yellow("Contact Information"));
+      ctx.writeln(`  Email:    ${contact.email}`);
+      ctx.writeln(`  LinkedIn: ${contact.linkedin}`);
+      ctx.writeln(`  GitHub:   ${contact.github}`);
     },
   },
   {
     name: "resume",
     description: "Open resume",
     execute: (ctx) => {
-      ctx.addOutput([sys("Opening resume..."), out("(Resume link would open in a new tab)")]);
+      ctx.writeln(yellow("Opening resume..."));
+      ctx.writeln("(Resume link would open in a new tab)");
     },
   },
   {
     name: "education",
     description: "Show education details",
     execute: (ctx) => {
-      ctx.addOutput([
-        sys("Education"),
-        out(`  ${education.degree}`),
-        out(`  ${education.university}`),
-        out(`  Graduated: ${education.year}`),
-      ]);
+      ctx.writeln(yellow("Education"));
+      ctx.writeln(`  ${education.degree}`);
+      ctx.writeln(`  ${education.university}`);
+      ctx.writeln(`  Graduated: ${education.year}`);
     },
   },
   {
     name: "socials",
     description: "Show social links",
     execute: (ctx) => {
-      ctx.addOutput([
-        sys("Social Links"),
-        out(`  LinkedIn:  ${contact.linkedin}`),
-        out(`  GitHub:    ${contact.github}`),
-        out(`  Email:     ${contact.email}`),
-      ]);
+      ctx.writeln(yellow("Social Links"));
+      ctx.writeln(`  LinkedIn:  ${contact.linkedin}`);
+      ctx.writeln(`  GitHub:    ${contact.github}`);
+      ctx.writeln(`  Email:     ${contact.email}`);
     },
   },
   {
     name: "whoami",
     description: "Who are you?",
     execute: (ctx) => {
-      ctx.addOutput([
-        out("visitor@avi-portfolio"),
-        out(""),
-        out("Welcome! You're exploring Avi Vashishta's portfolio terminal."),
-        out('Type "help" to see what you can do here.'),
-      ]);
+      ctx.writeln("visitor@avi-portfolio");
+      ctx.writeln("");
+      ctx.writeln("Welcome! You're exploring Avi Vashishta's portfolio terminal.");
+      ctx.writeln(`Type ${green('"help"')} to see what you can do here.`);
     },
   },
 
@@ -261,18 +236,18 @@ const commands: CommandDefinition[] = [
         : ctx.currentDirectory;
       const node = resolvePathToNode(ctx.fileSystem, target);
       if (!node || node.type !== "directory") {
-        ctx.addOutput([err(`ls: cannot access '${ctx.args[0] || "."}': No such directory`)]);
+        ctx.writeln(red(`ls: cannot access '${ctx.args[0] || "."}': No such directory`));
         return;
       }
       const entries = Object.entries(node.children).map(([name, child]) => {
-        if (child.type === "directory") return `${name}/`;
+        if (child.type === "directory") return blue(name + "/");
         return name;
       });
       if (entries.length === 0) {
-        ctx.addOutput([out("(empty directory)")]);
+        ctx.writeln("(empty directory)");
         return;
       }
-      ctx.addOutput(entries.map((e) => out(e)));
+      ctx.writeln(entries.join("  "));
     },
   },
   {
@@ -283,7 +258,7 @@ const commands: CommandDefinition[] = [
       const resolved = resolvePath(ctx.currentDirectory, target);
       const node = resolvePathToNode(ctx.fileSystem, resolved);
       if (!node || node.type !== "directory") {
-        ctx.addOutput([err(`cd: ${target}: No such directory`)]);
+        ctx.writeln(red(`cd: ${target}: No such directory`));
         return;
       }
       ctx.setDirectory(resolved);
@@ -295,27 +270,29 @@ const commands: CommandDefinition[] = [
     execute: (ctx) => {
       const fileName = ctx.args[0];
       if (!fileName) {
-        ctx.addOutput([err("cat: missing file operand")]);
+        ctx.writeln(red("cat: missing file operand"));
         return;
       }
       const resolved = resolvePath(ctx.currentDirectory, fileName);
       const node = resolvePathToNode(ctx.fileSystem, resolved);
       if (!node) {
-        ctx.addOutput([err(`cat: ${fileName}: No such file or directory`)]);
+        ctx.writeln(red(`cat: ${fileName}: No such file or directory`));
         return;
       }
       if (node.type === "directory") {
-        ctx.addOutput([err(`cat: ${fileName}: Is a directory`)]);
+        ctx.writeln(red(`cat: ${fileName}: Is a directory`));
         return;
       }
-      ctx.addOutput(node.content.split("\n").map((line) => out(line)));
+      for (const line of node.content.split("\n")) {
+        ctx.writeln(line);
+      }
     },
   },
   {
     name: "pwd",
     description: "Print working directory",
     execute: (ctx) => {
-      ctx.addOutput([out(ctx.currentDirectory)]);
+      ctx.writeln(ctx.currentDirectory);
     },
   },
   {
@@ -327,16 +304,15 @@ const commands: CommandDefinition[] = [
         : ctx.currentDirectory;
       const node = resolvePathToNode(ctx.fileSystem, target);
       if (!node || node.type !== "directory") {
-        ctx.addOutput([err(`tree: '${ctx.args[0] || "."}': Not a directory`)]);
+        ctx.writeln(red(`tree: '${ctx.args[0] || "."}': Not a directory`));
         return;
       }
-      const lines = [out(node.name + "/")];
+      ctx.writeln(blue(node.name + "/"));
       const entries = Object.values(node.children);
       entries.forEach((child, i) => {
         const treeLines = treeNode(child, "", i === entries.length - 1);
-        lines.push(...treeLines.map((l) => out(l)));
+        treeLines.forEach((l) => ctx.writeln(l));
       });
-      ctx.addOutput(lines);
     },
   },
 
@@ -347,28 +323,26 @@ const commands: CommandDefinition[] = [
     execute: (ctx) => {
       const artLines = neofetchArt.split("\n");
       const infoLines = [
-        "avi@portfolio",
+        bold("avi@portfolio"),
         "-----------------",
-        "OS: Portfolio OS v2.0.26",
-        "Host: avivashishta.com",
-        "Kernel: React 19 + Vite 7",
-        "Shell: TypeScript 5.7",
-        "DE: SCSS + Motion",
-        "WM: Zustand 5",
-        "Terminal: portfolio-term",
-        "CPU: BTech CS @ IIIT Delhi",
-        "GPU: Fullstack Developer",
-        "Memory: 2+ years SDE exp",
-        "Uptime: Since Oct 2022",
+        `${bold("OS:")} Portfolio OS v2.0.26`,
+        `${bold("Host:")} avivashishta.com`,
+        `${bold("Kernel:")} React 19 + Vite 7`,
+        `${bold("Shell:")} TypeScript 5.7`,
+        `${bold("DE:")} SCSS + Motion`,
+        `${bold("WM:")} Zustand 5`,
+        `${bold("Terminal:")} xterm.js`,
+        `${bold("CPU:")} BTech CS @ IIIT Delhi`,
+        `${bold("GPU:")} Fullstack Developer`,
+        `${bold("Memory:")} 2+ years SDE exp`,
+        `${bold("Uptime:")} Since Oct 2022`,
       ];
-      const maxArt = Math.max(artLines.length, infoLines.length);
-      const lines: Omit<OutputLine, "id">[] = [];
-      for (let i = 0; i < maxArt; i++) {
-        const art = (artLines[i] || "").padEnd(22);
+      const maxLines = Math.max(artLines.length, infoLines.length);
+      for (let i = 0; i < maxLines; i++) {
+        const art = green((artLines[i] || "").padEnd(22));
         const info = infoLines[i] || "";
-        lines.push(out(`${art}  ${info}`));
+        ctx.writeln(`${art}  ${info}`);
       }
-      ctx.addOutput(lines);
     },
   },
   {
@@ -376,21 +350,17 @@ const commands: CommandDefinition[] = [
     description: "Run with superuser privileges",
     execute: (ctx) => {
       if (ctx.args.join(" ").toLowerCase() === "hire-me") {
-        ctx.addOutput([
-          sys("=== PERMISSION GRANTED ==="),
-          out(""),
-          out("Excellent decision! Avi would love to hear from you."),
-          out(""),
-          out(`  Email:    ${contact.email}`),
-          out(`  LinkedIn: ${contact.linkedin}`),
-          out(""),
-          sys("Initiating hiring sequence... Done."),
-        ]);
+        ctx.writeln(yellow("=== PERMISSION GRANTED ==="));
+        ctx.writeln("");
+        ctx.writeln("Excellent decision! Avi would love to hear from you.");
+        ctx.writeln("");
+        ctx.writeln(`  Email:    ${green(contact.email)}`);
+        ctx.writeln(`  LinkedIn: ${green(contact.linkedin)}`);
+        ctx.writeln("");
+        ctx.writeln(yellow("Initiating hiring sequence... Done."));
       } else {
-        ctx.addOutput([
-          err(`sudo: ${ctx.args[0] || ""}: command not found`),
-          out('Did you mean: sudo hire-me?'),
-        ]);
+        ctx.writeln(red(`sudo: ${ctx.args[0] || ""}: command not found`));
+        ctx.writeln(`Did you mean: ${green("sudo hire-me")}?`);
       }
     },
   },
@@ -399,7 +369,7 @@ const commands: CommandDefinition[] = [
     description: "Enter the Matrix",
     execute: (ctx) => {
       ctx.setMatrixActive(true);
-      ctx.addOutput([sys("Entering the Matrix... (press any key to exit)")]);
+      ctx.writeln(yellow("Entering the Matrix... (press any key to exit)"));
     },
   },
   {
@@ -408,7 +378,9 @@ const commands: CommandDefinition[] = [
     execute: (ctx) => {
       const message = ctx.args.join(" ") || "Moo! Hire Avi!";
       const result = cowsayTemplate(message);
-      ctx.addOutput(result.split("\n").map((l) => out(l)));
+      for (const line of result.split("\n")) {
+        ctx.writeln(line);
+      }
     },
   },
   {
@@ -416,7 +388,9 @@ const commands: CommandDefinition[] = [
     description: "Random programming quote",
     execute: (ctx) => {
       const quote = fortunes[Math.floor(Math.random() * fortunes.length)];
-      ctx.addOutput([out(""), out(quote), out("")]);
+      ctx.writeln("");
+      ctx.writeln(quote);
+      ctx.writeln("");
     },
   },
   {
@@ -424,14 +398,16 @@ const commands: CommandDefinition[] = [
     description: "Toggle theme (dark/light)",
     execute: (ctx) => {
       ctx.toggleTheme();
-      ctx.addOutput([sys("Theme toggled.")]);
+      ctx.writeln(yellow("Theme toggled."));
     },
   },
   {
     name: "ascii",
     description: "ASCII art of name",
     execute: (ctx) => {
-      ctx.addOutput(nameAscii.split("\n").map((l) => out(l)));
+      for (const line of nameAscii.split("\n")) {
+        ctx.writeln(green(line));
+      }
     },
   },
 
@@ -442,11 +418,12 @@ const commands: CommandDefinition[] = [
     execute: async (ctx) => {
       const message = ctx.args.join(" ");
       if (!message) {
-        ctx.addOutput([err('Usage: ai <message>'), out('Example: ai tell me about Avi\'s experience')]);
+        ctx.writeln(red("Usage: ai <message>"));
+        ctx.writeln(`Example: ${green("ai tell me about Avi's experience")}`);
         return;
       }
       ctx.setAiLoading(true);
-      ctx.addOutput([sys("Thinking...")]);
+      ctx.writeln(yellow("Thinking..."));
       try {
         const res = await fetch("/api/chat", {
           method: "POST",
@@ -455,12 +432,14 @@ const commands: CommandDefinition[] = [
         });
         const data = await res.json();
         if (data.reply) {
-          ctx.addOutput(data.reply.split("\n").map((l: string) => out(`  ${l}`)));
+          for (const line of data.reply.split("\n")) {
+            ctx.writeln(`  ${line}`);
+          }
         } else {
-          ctx.addOutput([err("AI service returned an empty response.")]);
+          ctx.writeln(red("AI service returned an empty response."));
         }
       } catch {
-        ctx.addOutput([err("AI service is currently unavailable. Try again later.")]);
+        ctx.writeln(red("AI service is currently unavailable. Try again later."));
       } finally {
         ctx.setAiLoading(false);
       }

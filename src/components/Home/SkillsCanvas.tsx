@@ -19,10 +19,10 @@ interface IconState {
 
 // --- Physics constants ---
 
-const SPRING_K = 0.045;
-const DAMPING = 0.86;
-const TRAIL_LERP = 0.12;
-const TRAIL_SPACING = 8; // frames between each icon in the trail
+const SPRING_K = 0.08;
+const DAMPING = 0.82;
+const TRAIL_LERP = 0.20;
+const TRAIL_SPACING = 5; // frames between each icon in the trail
 const MOUSE_HISTORY_SIZE = 160;
 const ENTRANCE_DURATION = 500;
 const STAGGER = 75;
@@ -320,9 +320,9 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
             const fingers = inputState.handPositions[0].fingers;
             handFingersRef.current = fingers;
             handTrailLerpRef.current = isMobile
-              ? Math.max(0.06, 0.22 - fingers * 0.032)
+              ? Math.max(0.08, 0.28 - fingers * 0.04)
               : fingers <= 3
-                ? 0.22 - fingers * 0.05
+                ? 0.30 - fingers * 0.06
                 : TRAIL_LERP;
           }
         } else if (syncReturning) {
@@ -357,8 +357,8 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
 
           if (isMobile) {
             handTrailLerpRef.current = Math.max(
-              0.06,
-              0.22 - fingers * 0.032
+              0.08,
+              0.28 - fingers * 0.04
             );
             mouse.active = true;
             returningRef.current = false;
@@ -366,7 +366,7 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
               inputState.setSkillsCursorActive(true);
             if (inputState.isReturning) inputState.setIsReturning(false);
           } else if (fingers <= 3) {
-            handTrailLerpRef.current = 0.22 - fingers * 0.05;
+            handTrailLerpRef.current = 0.30 - fingers * 0.06;
             mouse.active = true;
             returningRef.current = false;
             if (!inputState.skillsCursorActive)

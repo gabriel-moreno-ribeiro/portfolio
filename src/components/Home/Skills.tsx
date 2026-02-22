@@ -100,7 +100,8 @@ const Skills: React.FC = () => {
   const { darkMode } = useThemeStore();
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, {
-    margin: "0px 0px -200px 0px",
+    margin: "0px 0px -40% 0px",
+    amount: 0.1,
     once: true,
   });
 
