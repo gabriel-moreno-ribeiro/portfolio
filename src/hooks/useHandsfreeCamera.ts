@@ -28,5 +28,5 @@ export function useHandsfreeCamera() {
       cancelled = true;
       stopCameraInput();
     };
-  }, [isEnabled]);
+  }, [isEnabled, isSecondary]);
 }
