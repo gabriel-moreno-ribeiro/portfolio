@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useRef } from "react";
+import { useInputSourceStore } from "../../store/inputSourceStore";
 
 // --- Types ---
 
@@ -113,6 +114,9 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
   // Trail state
   const mouseHistoryRef = useRef<Array<{ x: number; y: number }>>([]);
   const chainOrderRef = useRef<number[]>([]);
+  // Hand tracking: finger count drives magnet strength
+  const handFingersRef = useRef(5);
+  const handTrailLerpRef = useRef(TRAIL_LERP);
 
   const iconSize = isMobile ? 60 : 80;
 
@@ -256,6 +260,42 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
         }
       }
 
+      // --- Hand tracking: poll store each frame ---
+      const inputState = useInputSourceStore.getState();
+      if (inputState.inputSource === "camera" && inputState.handPositions.length > 0) {
+        const hand = inputState.handPositions[0];
+        const fingers = hand.fingers;
+        handFingersRef.current = fingers;
+
+        // Convert normalized (-1..1) to canvas center-relative coords
+        mouse.x = hand.x * (cssW / 2);
+        mouse.y = hand.y * (cssH / 2);
+
+        if (fingers <= 3) {
+          // Closed hand → attract mode
+          // Fewer fingers = tighter follow (0 fingers = 0.22, 3 fingers = 0.07)
+          handTrailLerpRef.current = 0.22 - fingers * 0.05;
+          mouse.active = true;
+          returningRef.current = false;
+        } else {
+          // Open hand (4-5 fingers) → release, spring back to rest
+          if (mouse.active || !returningRef.current) {
+            mouse.active = false;
+            returningRef.current = true;
+            chainOrderRef.current = [];
+            mouseHistoryRef.current = [];
+          }
+        }
+      } else if (inputState.inputSource === "camera" && inputState.handPositions.length === 0) {
+        // Hand disappeared — freeze icons in place
+        if (mouse.active) {
+          mouse.active = false;
+          chainOrderRef.current = [];
+          mouseHistoryRef.current = [];
+        }
+        handFingersRef.current = 5;
+      }
+
       // --- Idle phase: physics ---
       if (phase === "idle") {
         if (mouse.active && !returning) {
@@ -287,8 +327,12 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
 
             if (histIdx >= 0) {
               const target = mouseHistory[histIdx];
-              icon.x = lerp(icon.x, target.x, TRAIL_LERP);
-              icon.y = lerp(icon.y, target.y, TRAIL_LERP);
+              // In camera mode, finger count modulates lerp strength
+              const activeLerp = inputState.inputSource === "camera"
+                ? handTrailLerpRef.current
+                : TRAIL_LERP;
+              icon.x = lerp(icon.x, target.x, activeLerp);
+              icon.y = lerp(icon.y, target.y, activeLerp);
               // Kill velocity so spring doesn't interfere later
               icon.vx = 0;
               icon.vy = 0;
