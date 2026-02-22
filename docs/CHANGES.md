@@ -251,3 +251,188 @@ portfolio-2024/
 | `src/styles/components/shared/commonButton.scss` | Gradient hover fills |
 | `src/styles/components/shared/horizontalScroller.scss` | Gradient bar |
 | `src/components/Home/Hero.tsx` | Italic serif style on ScrambleText |
+
+---
+
+## Phase 8: Handsfree Mode — Camera Gesture Control System
+
+A full hands-free interaction system using MediaPipe for real-time hand and head tracking via the device camera. Users can navigate the portfolio, control the 3D robot, interact with skill icons, scroll, and click — all without touching the keyboard or mouse.
+
+### Architecture Overview
+
+```
+Camera Feed (getUserMedia)
+    │
+    ├─► MediaPipe Face Landmarker (478 landmarks, ~15fps)
+    │       └─► Head pose extraction → InputSourceStore.headPosition
+    │
+    └─► MediaPipe Hand Landmarker (21 landmarks × 2 hands, ~30fps)
+            ├─► Palm position (landmark #9) → EMA smoothing → normalized (-1..1)
+            ├─► Finger counting (rotation-invariant tip vs MCP distance)
+            ├─► Pinch-to-click gesture (thumb-index distance < 0.07)
+            ├─► Two-finger scroll gesture (index + middle extended, ring + pinky curled)
+            └─► All data → InputSourceStore.handPositions[]
+```
+
+### Gesture System
+
+#### 1. Hand Cursor Movement
+- **How:** Palm position (landmark #9) tracked in real-time
+- **Smoothing:** EMA filter (factor 0.35) eliminates landmark jitter
+- **Coordinate mapping:** Raw video coords (0-1) → normalized (-1..1) → screen pixels
+- **Visual feedback:** Orange ring cursor follows hand position (32px, z-index 9996)
+- **Supports up to 2 hands** simultaneously with independent cursors
+
+#### 2. Pinch-to-Click
+- **Trigger:** Thumb tip (#4) and index tip (#8) distance < 0.07 (normalized)
+- **Release:** Distance > 0.10 (hysteresis prevents flicker)
+- **Debounce:** 2 frames minimum to confirm gesture
+- **Cooldown:** 300ms between clicks
+- **Implementation:** Dispatches synthetic `PointerEvent` + `MouseEvent` at hand screen position via `document.elementFromPoint()`
+- **Visual:** Cursor fills solid orange when pinching
+
+#### 3. Two-Finger Scroll
+- **Gesture:** Index + middle fingers extended, ring + pinky curled (rotation-invariant detection)
+- **Entry debounce:** 8 consecutive frames (~270ms) — prevents accidental activation during fist↔palm transitions
+- **Exit debounce:** 2 frames — scroll stops quickly when gesture changes
+- **Tracking:** Direct Y-position tracking with EMA smoothing (factor 0.4), sensitivity 8px multiplier
+- **Momentum:** iOS-style coast after gesture ends — velocity decayed at 0.95/frame until < 0.5px threshold
+- **Visual:** Cursor becomes blue elongated rectangle during scroll
+
+#### 4. Head Tracking (3D Robot)
+- **Extraction:** Face landmarks → nose tip, eye centers, forehead, chin → yaw/pitch calculation
+- **Sensitivity:** 3× multiplier, clamped to -1..1
+- **Mapping:** Head position → robot Y/X rotation (±0.4 radians max, 20% damping per frame)
+- **Rate:** Processed every 2 frames (~15fps) to save CPU
+
+### Skills Canvas Integration
+
+The skill icon canvas (`SkillsCanvas.tsx`) reads hand position from the Zustand store each animation frame and drives the same trail/chain physics used by mouse input.
+
+#### Desktop Behavior
+| Fingers | Mode | Trail Tightness (lerp) |
+|---------|------|----------------------|
+| 0 (fist) | Attract | 0.22 — icons snap tight to hand |
+| 1 | Attract | 0.17 |
+| 2 | Attract | 0.12 |
+| 3 | Attract | 0.07 — loose trail |
+| 4-5 (open palm) | **Release** | Icons spring back to rest positions |
+
+#### Mobile Behavior
+| Fingers | Mode | Trail Tightness (lerp) |
+|---------|------|----------------------|
+| 0 (fist) | Attract | 0.22 — tightest |
+| 3 | Attract | 0.12 |
+| 5 (open palm) | Attract | 0.06 — loosest, gentle follow |
+| Hand removed | **Release** | Icons spring back to rest positions |
+
+On mobile, any visible hand attracts icons (open palm is the natural cursor gesture). Only removing the hand from view triggers release. On desktop, spreading all fingers triggers release.
+
+#### Trail/Chain Physics
+- Icons are sorted by distance to hand when attraction starts, forming a chain order
+- Hand positions are recorded into a history buffer (160 frames)
+- Each icon follows a different historical position (8 frames apart per rank) — creating a snake-like trail
+- Closest icon follows hand tightly, farthest lags behind
+
+### Camera Feed Preview
+
+- **Desktop:** 200×150px landscape preview (bottom-left corner)
+- **Mobile:** 90×120px portrait preview (above handsfree button) — matches front camera's natural orientation
+- **Rendering:** Cover-fit drawing crops video to preview aspect ratio without stretching, handles both portrait and landscape camera resolutions
+- **Overlays:**
+  - Face mesh: Orange contour lines (face oval, eyes, lips) with key point dots
+  - Hand skeleton: Green (hand 1) / blue (hand 2) joint connections and circles
+  - Landmark coordinates are transformed through the crop region for correct alignment
+
+### UI Components
+
+| Component | File | Purpose |
+|-----------|------|---------|
+| `HandsfreeButton` | `src/components/Shared/HandsfreeButton.tsx` | Toggle camera on/off. Desktop: top-right. Mobile: bottom-left |
+| `HandsfreeIntroModal` | `src/components/Shared/HandsfreeIntroModal.tsx` | First-use modal explaining gestures, handles permission request, shows model loading progress (0-100%) |
+| `GestureTutorial` | `src/components/Shared/GestureTutorial.tsx` | Overlay explaining 4 gestures (head, pinch, scroll, open hand). Auto-shows 1.5s after camera enable |
+| `HandCursor` | `src/components/Shared/HandCursor.tsx` | Visual cursor dots following hand positions. States: default (hollow ring), pinching (filled), scrolling (blue rect) |
+| `CameraFeedback` | `src/components/Shared/CameraFeedback.tsx` | Live camera preview with face mesh + hand skeleton overlay |
+
+### State Management
+
+**`InputSourceStore`** (Zustand) — real-time tracking data:
+```typescript
+{
+  headPosition: { x: number, y: number }     // normalized -1..1
+  handPositions: HandPosition[]               // up to 2 hands
+  inputSource: "mouse" | "camera"             // current mode
+}
+
+interface HandPosition {
+  x: number           // normalized -1..1
+  y: number           // normalized -1..1
+  fingers: number     // count of extended fingers (0-5)
+  confidence: number  // MediaPipe detection confidence
+  isPinching: boolean // thumb-index pinch active
+  isScrolling: boolean // two-finger scroll active
+}
+```
+
+**`HandsfreeStore`** (Zustand) — UI/lifecycle state:
+```typescript
+{
+  isEnabled: boolean              // camera active
+  hasSeenIntro: boolean           // localStorage-persisted
+  showIntroModal: boolean         // first-use modal visible
+  showGestureTutorial: boolean    // gesture help overlay
+  cameraPermission: "prompt" | "granted" | "denied"
+  modelLoadProgress: number       // 0-100 during init
+}
+```
+
+### Data Flow
+
+```
+User enables camera
+    → HandsfreeButton click
+    → startCameraInput() in CameraInputProvider.ts
+    → getUserMedia({ video: { 640×480, facingMode: "user" } })
+    → Load MediaPipe models (Face + Hand Landmarker, GPU delegate)
+    → Start processFrame() rAF loop
+    → Each frame:
+        Face landmarks → extractHeadPose → store.setHeadPosition()
+        Hand landmarks → palm position + EMA smooth
+                       → finger count (rotation-invariant)
+                       → pinch detection (with debounce + cooldown)
+                       → two-finger scroll (with 8-frame entry debounce + momentum)
+                       → store.setHandPositions()
+    → Consumers read from store:
+        CanvasComponent.jsx → headPosition → robot rotation
+        HandCursor.tsx → handPositions → cursor rendering
+        SkillsCanvas.tsx → handPositions → icon trail physics
+        CameraFeedback.tsx → raw landmarks → preview overlay
+```
+
+### Files
+
+| File | Role |
+|------|------|
+| `src/providers/CameraInputProvider.ts` | Core: MediaPipe init, video capture, frame processing, gesture detection, coordinate smoothing |
+| `src/providers/MouseInputProvider.ts` | Fallback: mouse tracking when camera disabled, writes normalized coords to same store |
+| `src/store/inputSourceStore.ts` | Shared state: head/hand positions, input source mode |
+| `src/store/handsfreeStore.ts` | UI state: enabled, permissions, modal visibility, load progress |
+| `src/hooks/useHandsfreeCamera.ts` | Lifecycle hook: manages camera start/stop based on `isEnabled` |
+| `src/components/Home/SkillsCanvas.tsx` | Canvas physics: polls hand positions each frame, drives trail/chain with finger-count-variable magnet |
+| `src/components/Shared/CameraFeedback.tsx` | Preview: cover-fit video drawing, portrait mobile layout, landmark overlay |
+| `src/components/Shared/HandCursor.tsx` | Visual: cursor dots with gesture state feedback |
+| `src/components/Shared/HandsfreeButton.tsx` | Toggle: camera enable/disable button |
+| `src/components/Shared/HandsfreeIntroModal.tsx` | Onboarding: permission request, loading progress |
+| `src/components/Shared/GestureTutorial.tsx` | Help: gesture explanation overlay |
+| `src/components/Canvas/CanvasComponent.jsx` | 3D: robot head tracks `headPosition` from store |
+
+### Performance
+
+- **Face detection:** Every 2 frames (~15fps at 30fps camera) — CPU savings
+- **Hand detection:** Every frame (~30fps) — responsive gestures
+- **Position smoothing:** EMA (0.35) reduces jitter without adding latency
+- **Scroll debounce:** 8-frame entry prevents false triggers during gesture transitions
+- **Momentum scroll:** Independent rAF loop, auto-stops at < 0.5px/frame
+- **Skills canvas:** All physics state in refs — zero React re-renders during animation
+- **Model loading:** Async with progress bar, GPU-delegated inference
+- **Video element:** Hidden off-screen (1×1px), used for inference only
