@@ -8,6 +8,25 @@
     <link rel="apple-touch-icon" href="/logo192.png" />
     <link rel="manifest" href="/manifest.json" />
     <title>Avi Vashishta.</title>
+    <script>
+      // Apply dark mode synchronously to prevent FOUC
+      try {
+        var saved = localStorage.getItem("darkMode");
+        if (saved === "true") {
+          document.documentElement.setAttribute("data-theme", "dark");
+        }
+      } catch (e) {}
+    </script>
+    <style>
+      /* Inline critical styles to prevent white flash */
+      html, body {
+        margin: 0;
+        background: #fff8f4;
+      }
+      html[data-theme="dark"], html[data-theme="dark"] body {
+        background: #0a0a1a;
+      }
+    </style>
     <meta
       name="description"
       content="A 22 year old young entrepreneur and a CS student at IIITD , who's also a self taught Web Designer/Developer, a Game Developer, an Author and an App Developer."
