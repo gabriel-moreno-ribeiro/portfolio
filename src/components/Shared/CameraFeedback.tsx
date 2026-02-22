@@ -10,8 +10,9 @@ import { useHandsfreeStore } from "../../store/handsfreeStore";
 
 const PREVIEW_W = 200;
 const PREVIEW_H = 150;
-const MOBILE_PREVIEW_W = 120;
-const MOBILE_PREVIEW_H = 90;
+// Mobile: portrait preview to match front camera's natural orientation
+const MOBILE_PREVIEW_W = 90;
+const MOBILE_PREVIEW_H = 120;
 
 // MediaPipe hand connections (pairs of landmark indices)
 const HAND_CONNECTIONS = [
@@ -33,17 +34,27 @@ const LEFT_EYE = [362, 382, 381, 380, 374, 373, 390, 249, 263, 466, 388, 387, 38
 const RIGHT_EYE = [33, 7, 163, 144, 145, 153, 154, 155, 133, 173, 157, 158, 159, 160, 161, 246, 33];
 const LIPS_OUTER = [61, 146, 91, 181, 84, 17, 314, 405, 321, 375, 291, 409, 270, 269, 267, 0, 37, 39, 40, 185, 61];
 
-function drawFaceMesh(ctx: CanvasRenderingContext2D, landmarks: any[], w: number, h: number) {
+function drawFaceMesh(
+  ctx: CanvasRenderingContext2D,
+  landmarks: any[],
+  w: number,
+  h: number,
+  lmX?: (rawX: number) => number,
+  lmY?: (rawY: number) => number
+) {
   ctx.strokeStyle = "rgba(240, 115, 45, 0.5)";
   ctx.lineWidth = 1;
+
+  // Default: simple mirror mapping. With cover-fit: use crop-aware transform.
+  const toX = lmX ? (raw: number) => w - lmX(raw) : (raw: number) => (1 - raw) * w;
+  const toY = lmY ? lmY : (raw: number) => raw * h;
 
   const drawPath = (indices: number[]) => {
     ctx.beginPath();
     for (let i = 0; i < indices.length; i++) {
       const lm = landmarks[indices[i]];
-      // Mirror X for camera preview
-      const x = (1 - lm.x) * w;
-      const y = lm.y * h;
+      const x = toX(lm.x);
+      const y = toY(lm.y);
       if (i === 0) ctx.moveTo(x, y);
       else ctx.lineTo(x, y);
     }
@@ -57,11 +68,11 @@ function drawFaceMesh(ctx: CanvasRenderingContext2D, landmarks: any[], w: number
 
   // Draw key points as small dots
   ctx.fillStyle = "rgba(240, 115, 45, 0.7)";
-  const keyPoints = [4, 1, 33, 263, 61, 291, 10, 152]; // nose, eyes, mouth, forehead, chin
+  const keyPoints = [4, 1, 33, 263, 61, 291, 10, 152];
   for (const idx of keyPoints) {
     const lm = landmarks[idx];
-    const x = (1 - lm.x) * w;
-    const y = lm.y * h;
+    const x = toX(lm.x);
+    const y = toY(lm.y);
     ctx.beginPath();
     ctx.arc(x, y, 2, 0, Math.PI * 2);
     ctx.fill();
@@ -72,9 +83,14 @@ function drawHandSkeleton(
   ctx: CanvasRenderingContext2D,
   handsLandmarks: any[][],
   w: number,
-  h: number
+  h: number,
+  lmX?: (rawX: number) => number,
+  lmY?: (rawY: number) => number
 ) {
   const colors = ["rgba(45, 200, 115, 0.8)", "rgba(45, 115, 240, 0.8)"];
+
+  const toX = lmX ? (raw: number) => w - lmX(raw) : (raw: number) => (1 - raw) * w;
+  const toY = lmY ? lmY : (raw: number) => raw * h;
 
   for (let hi = 0; hi < handsLandmarks.length; hi++) {
     const landmarks = handsLandmarks[hi];
@@ -87,8 +103,8 @@ function drawHandSkeleton(
       const lmA = landmarks[a];
       const lmB = landmarks[b];
       ctx.beginPath();
-      ctx.moveTo((1 - lmA.x) * w, lmA.y * h);
-      ctx.lineTo((1 - lmB.x) * w, lmB.y * h);
+      ctx.moveTo(toX(lmA.x), toY(lmA.y));
+      ctx.lineTo(toX(lmB.x), toY(lmB.y));
       ctx.stroke();
     }
 
@@ -96,7 +112,7 @@ function drawHandSkeleton(
     ctx.fillStyle = color;
     for (const lm of landmarks) {
       ctx.beginPath();
-      ctx.arc((1 - lm.x) * w, lm.y * h, 3, 0, Math.PI * 2);
+      ctx.arc(toX(lm.x), toY(lm.y), 3, 0, Math.PI * 2);
       ctx.fill();
     }
   }
@@ -118,22 +134,47 @@ const CameraFeedback: React.FC = () => {
       const video = getVideoElement();
       const ctx = canvasRef.current?.getContext("2d");
       if (video && ctx && canvasRef.current) {
-        // Draw mirrored video
+        const vw = video.videoWidth || 640;
+        const vh = video.videoHeight || 480;
+        const videoAspect = vw / vh;
+        const previewAspect = pw / ph;
+
+        // Cover-fit: crop source to match preview aspect ratio
+        let sx: number, sy: number, sw: number, sh: number;
+        if (videoAspect > previewAspect) {
+          // Video wider than preview — crop sides
+          sh = vh;
+          sw = vh * previewAspect;
+          sx = (vw - sw) / 2;
+          sy = 0;
+        } else {
+          // Video taller than preview (portrait camera) — crop top/bottom
+          sw = vw;
+          sh = vw / previewAspect;
+          sx = 0;
+          sy = (vh - sh) / 2;
+        }
+
+        // Draw mirrored video with cover-fit
         ctx.save();
         ctx.scale(-1, 1);
-        ctx.drawImage(video, -pw, 0, pw, ph);
+        ctx.drawImage(video, sx, sy, sw, sh, -pw, 0, pw, ph);
         ctx.restore();
+
+        // Landmark coordinate transform for cropped region
+        const lmX = (rawX: number) => ((rawX * vw - sx) / sw) * pw;
+        const lmY = (rawY: number) => ((rawY * vh - sy) / sh) * ph;
 
         // Draw face mesh overlay
         const faceLandmarks = getFaceLandmarks();
         if (faceLandmarks && faceLandmarks.length > 0) {
-          drawFaceMesh(ctx, faceLandmarks, pw, ph);
+          drawFaceMesh(ctx, faceLandmarks, pw, ph, lmX, lmY);
         }
 
         // Draw hand skeleton overlay
         const handLandmarks = getHandLandmarks();
         if (handLandmarks && handLandmarks.length > 0) {
-          drawHandSkeleton(ctx, handLandmarks, pw, ph);
+          drawHandSkeleton(ctx, handLandmarks, pw, ph, lmX, lmY);
         }
       }
       rafId = requestAnimationFrame(draw);
