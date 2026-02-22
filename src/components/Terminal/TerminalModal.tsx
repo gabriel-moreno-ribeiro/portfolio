@@ -7,6 +7,18 @@ function TerminalModal() {
 
   const close = useCallback(() => setIsOpen(false), []);
 
+  // Lock body scroll when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       // Cmd+J (Mac) or Ctrl+J (Windows/Linux)
