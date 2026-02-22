@@ -11,6 +11,7 @@ import HandsfreeButton from "./components/Shared/HandsfreeButton";
 import HandsfreeIntroModal from "./components/Shared/HandsfreeIntroModal";
 import HorizontalScroller from "./components/Shared/HorizontalScroller";
 import SyncStatusIndicator from "./components/Shared/SyncStatusIndicator";
+import TerminalModal from "./components/Terminal/TerminalModal";
 import { useHandsfreeCamera } from "./hooks/useHandsfreeCamera";
 import useIsMobile from "./hooks/useIsMobile";
 import Home from "./pages/Home";
@@ -78,6 +79,7 @@ function App() {
       <CustomMouse />
       <SyncStatusIndicator />
       <EdgeParticles />
+      <TerminalModal />
       <ToastContainer />
     </div>
   );
