@@ -4,8 +4,9 @@ export interface TabsInterface {
   tabs: string[];
   activeTab: number;
   setActiveTab: (index: number) => void;
+  badges?: Record<number, string>;
 }
-const Tabs = ({ tabs, activeTab, setActiveTab }: TabsInterface) => {
+const Tabs = ({ tabs, activeTab, setActiveTab, badges }: TabsInterface) => {
   return (
     <div className={"tabs"}>
       {tabs.map((tab, index) => (
@@ -21,6 +22,9 @@ const Tabs = ({ tabs, activeTab, setActiveTab }: TabsInterface) => {
           }}
         >
           {tab}
+          {badges?.[index] && (
+            <span className="tab-badge">{badges[index]}</span>
+          )}
           {activeTab === index && (
             <motion.div
               layoutId="active-tab-indicator"

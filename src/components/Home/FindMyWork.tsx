@@ -13,7 +13,7 @@ function FindMyWork() {
       <h1 className="heading" data-color-inverted={"true"}>
         Find My Work
       </h1>
-      <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
+      <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} badges={{ 3: "New" }} />
       {activeTab === 3 ? (
         <Suspense fallback={null}>
           <Terminal onClose={() => setActiveTab(0)} />

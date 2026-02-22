@@ -1,4 +1,4 @@
-import { useEffect, useRef, useCallback } from "react";
+import { useEffect, useRef, useCallback, useState } from "react";
 import { Terminal as XTerminal } from "@xterm/xterm";
 import { FitAddon } from "@xterm/addon-fit";
 import "@xterm/xterm/css/xterm.css";
@@ -35,6 +35,7 @@ function Terminal({ onClose }: TerminalProps) {
   const fitAddonRef = useRef<FitAddon | null>(null);
   const lineBufferRef = useRef("");
   const busyRef = useRef(false);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const {
     currentDirectory,
@@ -297,7 +298,7 @@ function Terminal({ onClose }: TerminalProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Re-fit when becoming visible (tab switch)
+  // Re-fit when expanded state changes or on mount
   useEffect(() => {
     const fitAddon = fitAddonRef.current;
     if (fitAddon) {
@@ -307,13 +308,17 @@ function Terminal({ onClose }: TerminalProps) {
         } catch {
           // ignore
         }
-      }, 50);
+      }, 60);
     }
-  }, []);
+  }, [isExpanded]);
 
   return (
-    <div className="terminal-window">
-      <TerminalHeader onClose={onClose} />
+    <div className={`terminal-window ${isExpanded ? "terminal-expanded" : ""}`}>
+      <TerminalHeader
+        onClose={onClose}
+        onExpand={() => setIsExpanded((v) => !v)}
+        isExpanded={isExpanded}
+      />
       <div className="terminal-body">
         <div ref={termRef} className="xterm-container" />
         {matrixActive && <MatrixRain />}
