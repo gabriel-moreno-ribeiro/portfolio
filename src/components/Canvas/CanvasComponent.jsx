@@ -1,12 +1,17 @@
 import { OrbitControls, useGLTF } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useInputSourceStore } from "../../store/inputSourceStore";
 import { useThemeStore } from "../../store/themeStore";
 
-function Model(props) {
+function Model({ onReady, ...props }) {
   const { nodes, materials } = useGLTF("/assets/3d/cute_robot.glb");
   const group = useRef();
+
+  useEffect(() => {
+    // Model is mounted = GLB is loaded and scene is ready
+    onReady?.();
+  }, []);
 
   useFrame(() => {
     const { headPosition } = useInputSourceStore.getState();
@@ -56,7 +61,7 @@ function Model(props) {
 
 useGLTF.preload("/assets/3d/cute_robot.glb");
 
-export default function CanvasComponent() {
+export default function CanvasComponent({ onReady }) {
   const { darkMode } = useThemeStore();
   return (
     <Canvas
@@ -68,7 +73,7 @@ export default function CanvasComponent() {
     >
       <ambientLight intensity={darkMode ? 0.25 : 1} />
       <directionalLight position={[10, 10, 10]} intensity={darkMode ? 0 : 2} />
-      <Model />
+      <Model onReady={onReady} />
       <OrbitControls enableZoom={false} />
     </Canvas>
   );

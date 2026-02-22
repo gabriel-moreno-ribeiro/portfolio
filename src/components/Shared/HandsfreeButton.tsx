@@ -41,8 +41,8 @@ const HandsfreeButton: React.FC = () => {
 
   return (
     <motion.button
-      initial={{ scale: 0 }}
-      animate={{ scale: 1, transition: { duration: 0.2 } }}
+      initial={{ opacity: 0, scale: 0 }}
+      animate={{ opacity: 1, scale: 1, transition: { delay: 0.6, duration: 0.3, ease: "easeOut" } }}
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.9 }}
       onClick={handleCameraClick}

@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef } from "react";
 import { useInputSourceStore } from "../../store/inputSourceStore";
+import { useWindowSyncStore } from "../../store/windowSyncStore";
 
 // --- Types ---
 
@@ -89,7 +90,6 @@ interface SkillsCanvasProps {
   finalPositions: Array<{ x: number; y: number }>;
   isMobile: boolean;
   triggerEntrance: boolean;
-  isSecondary: boolean;
 }
 
 const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
@@ -97,7 +97,6 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
   finalPositions,
   isMobile,
   triggerEntrance,
-  isSecondary,
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -119,8 +118,21 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
   // Hand tracking: finger count drives magnet strength
   const handFingersRef = useRef(5);
   const handTrailLerpRef = useRef(TRAIL_LERP);
+  // Track previous following-active state for clean transitions
+  const wasFollowingActiveRef = useRef(false);
 
   const iconSize = isMobile ? 60 : 80;
+
+  // Helper: check if this window is following another peer
+  const getFollowState = () => {
+    const sync = useWindowSyncStore.getState();
+    const isFollowing =
+      sync.activePeerId !== null && sync.activePeerId !== sync.myPeerId;
+    const activePeer = isFollowing
+      ? sync.connectedPeers.get(sync.activePeerId!) ?? null
+      : null;
+    return { isFollowing, activePeer };
+  };
 
   // Initialize icon state
   const initIcons = useCallback(() => {
@@ -225,7 +237,6 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
       const icons = iconsRef.current;
       const mouse = mouseRef.current;
       const phase = phaseRef.current;
-      const returning = returningRef.current;
       const mouseHistory = mouseHistoryRef.current;
       const chainOrder = chainOrderRef.current;
 
@@ -262,31 +273,44 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
         }
       }
 
-      // --- Secondary window: read synced state from store ---
+      // --- Input resolution phase ---
       const inputState = useInputSourceStore.getState();
+      const { isFollowing, activePeer } = getFollowState();
 
-      if (isSecondary && phase === "idle") {
+      if (isFollowing && activePeer && phase === "idle") {
+        // ====== FOLLOWER PATH ======
         const syncActive = inputState.skillsCursorActive;
         const syncReturning = inputState.isReturning;
 
         if (syncActive) {
-          // Pick cursor source: hand position for camera, headPosition for mouse
+          // Pick cursor source
           const hp =
             inputState.inputSource === "camera" &&
             inputState.handPositions.length > 0
               ? inputState.handPositions[0]
               : inputState.headPosition;
 
-          // Convert normalized (-1..1) to viewport pixels, then offset by one window width
-          const vpX = ((hp.x + 1) / 2) * window.innerWidth;
-          const vpY = ((hp.y + 1) / 2) * window.innerHeight;
+          // Absolute screen position of cursor in the active peer's window
+          const cursorScreenX =
+            activePeer.screenX +
+            ((hp.x + 1) / 2) * activePeer.innerWidth;
+          const cursorScreenY =
+            activePeer.screenY +
+            ((hp.y + 1) / 2) * activePeer.innerHeight;
+
+          // Convert to this window's viewport coords
+          const localVpX = cursorScreenX - window.screenX;
+          const localVpY = cursorScreenY - window.screenY;
+
+          // Convert to canvas center-relative coords
           const rect = containerRef.current?.getBoundingClientRect();
           if (rect) {
-            mouse.x = vpX - window.innerWidth - rect.left - rect.width / 2;
-            mouse.y = vpY - rect.top - rect.height / 2;
+            mouse.x = localVpX - rect.left - rect.width / 2;
+            mouse.y = localVpY - rect.top - rect.height / 2;
           }
           mouse.active = true;
           returningRef.current = false;
+          wasFollowingActiveRef.current = true;
 
           // Camera finger count for trail tightness
           if (
@@ -302,7 +326,8 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
                 : TRAIL_LERP;
           }
         } else if (syncReturning) {
-          if (mouse.active || !returningRef.current) {
+          if (wasFollowingActiveRef.current || !returningRef.current) {
+            wasFollowingActiveRef.current = false;
             mouse.active = false;
             returningRef.current = true;
             chainOrderRef.current = [];
@@ -310,61 +335,76 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
           }
         } else {
           // Cursor left canvas — freeze
+          if (mouse.active || wasFollowingActiveRef.current) {
+            wasFollowingActiveRef.current = false;
+            mouse.active = false;
+            chainOrderRef.current = [];
+            mouseHistoryRef.current = [];
+          }
+        }
+      } else if (!isFollowing) {
+        // ====== LOCAL INPUT PATH (camera hand tracking) ======
+        if (
+          inputState.inputSource === "camera" &&
+          inputState.handPositions.length > 0
+        ) {
+          const hand = inputState.handPositions[0];
+          const fingers = hand.fingers;
+          handFingersRef.current = fingers;
+
+          mouse.x = hand.x * (cssW / 2);
+          mouse.y = hand.y * (cssH / 2);
+
+          if (isMobile) {
+            handTrailLerpRef.current = Math.max(
+              0.06,
+              0.22 - fingers * 0.032
+            );
+            mouse.active = true;
+            returningRef.current = false;
+            if (!inputState.skillsCursorActive)
+              inputState.setSkillsCursorActive(true);
+            if (inputState.isReturning) inputState.setIsReturning(false);
+          } else if (fingers <= 3) {
+            handTrailLerpRef.current = 0.22 - fingers * 0.05;
+            mouse.active = true;
+            returningRef.current = false;
+            if (!inputState.skillsCursorActive)
+              inputState.setSkillsCursorActive(true);
+            if (inputState.isReturning) inputState.setIsReturning(false);
+          } else {
+            if (mouse.active || !returningRef.current) {
+              mouse.active = false;
+              returningRef.current = true;
+              chainOrderRef.current = [];
+              mouseHistoryRef.current = [];
+              if (inputState.skillsCursorActive)
+                inputState.setSkillsCursorActive(false);
+              if (!inputState.isReturning) inputState.setIsReturning(true);
+            }
+          }
+        } else if (
+          inputState.inputSource === "camera" &&
+          inputState.handPositions.length === 0
+        ) {
           if (mouse.active) {
             mouse.active = false;
+            if (isMobile) returningRef.current = true;
             chainOrderRef.current = [];
             mouseHistoryRef.current = [];
+            if (inputState.skillsCursorActive)
+              inputState.setSkillsCursorActive(false);
+            if (isMobile && !inputState.isReturning)
+              inputState.setIsReturning(true);
           }
+          handFingersRef.current = 5;
         }
-      }
-
-      // --- Leader: hand tracking poll + write state to store ---
-      if (!isSecondary && inputState.inputSource === "camera" && inputState.handPositions.length > 0) {
-        const hand = inputState.handPositions[0];
-        const fingers = hand.fingers;
-        handFingersRef.current = fingers;
-
-        // Convert normalized (-1..1) to canvas center-relative coords
-        mouse.x = hand.x * (cssW / 2);
-        mouse.y = hand.y * (cssH / 2);
-
-        if (isMobile) {
-          handTrailLerpRef.current = Math.max(0.06, 0.22 - fingers * 0.032);
-          mouse.active = true;
-          returningRef.current = false;
-          if (!inputState.skillsCursorActive) inputState.setSkillsCursorActive(true);
-          if (inputState.isReturning) inputState.setIsReturning(false);
-        } else if (fingers <= 3) {
-          handTrailLerpRef.current = 0.22 - fingers * 0.05;
-          mouse.active = true;
-          returningRef.current = false;
-          if (!inputState.skillsCursorActive) inputState.setSkillsCursorActive(true);
-          if (inputState.isReturning) inputState.setIsReturning(false);
-        } else {
-          if (mouse.active || !returningRef.current) {
-            mouse.active = false;
-            returningRef.current = true;
-            chainOrderRef.current = [];
-            mouseHistoryRef.current = [];
-            if (inputState.skillsCursorActive) inputState.setSkillsCursorActive(false);
-            if (!inputState.isReturning) inputState.setIsReturning(true);
-          }
-        }
-      } else if (!isSecondary && inputState.inputSource === "camera" && inputState.handPositions.length === 0) {
-        if (mouse.active) {
-          mouse.active = false;
-          if (isMobile) returningRef.current = true;
-          chainOrderRef.current = [];
-          mouseHistoryRef.current = [];
-          if (inputState.skillsCursorActive) inputState.setSkillsCursorActive(false);
-          if (isMobile && !inputState.isReturning) inputState.setIsReturning(true);
-        }
-        handFingersRef.current = 5;
       }
 
       // --- Idle phase: physics ---
+      // BUG FIX: read returningRef.current directly (not stale cached variable)
       if (phase === "idle") {
-        if (mouse.active && !returning) {
+        if (mouse.active && !returningRef.current) {
           // --- Trailing mode ---
 
           // Record mouse position into history
@@ -393,19 +433,17 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
 
             if (histIdx >= 0) {
               const target = mouseHistory[histIdx];
-              // In camera mode, finger count modulates lerp strength
-              const activeLerp = inputState.inputSource === "camera"
-                ? handTrailLerpRef.current
-                : TRAIL_LERP;
+              const activeLerp =
+                inputState.inputSource === "camera"
+                  ? handTrailLerpRef.current
+                  : TRAIL_LERP;
               icon.x = lerp(icon.x, target.x, activeLerp);
               icon.y = lerp(icon.y, target.y, activeLerp);
-              // Kill velocity so spring doesn't interfere later
               icon.vx = 0;
               icon.vy = 0;
             }
-            // Icons whose history slot isn't populated yet stay put
           }
-        } else if (returning) {
+        } else if (returningRef.current) {
           // --- Returning mode: spring back to rest ---
           for (const icon of icons) {
             const restDx = icon.restX - icon.x;
@@ -460,12 +498,14 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
 
     rafRef.current = requestAnimationFrame(loop);
     return () => cancelAnimationFrame(rafRef.current);
-  }, [iconSize, isMobile, isSecondary]);
+  }, [iconSize, isMobile]);
 
   // --- Event handlers ---
+  // Runtime store check: skip if following another peer
 
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
-    if (isSecondary) return;
+    const sync = useWindowSyncStore.getState();
+    if (sync.activePeerId && sync.activePeerId !== sync.myPeerId) return;
     const rect = containerRef.current?.getBoundingClientRect();
     if (rect) {
       mouseRef.current.x = e.clientX - rect.left - rect.width / 2;
@@ -476,19 +516,21 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
       if (!store.skillsCursorActive) store.setSkillsCursorActive(true);
       if (store.isReturning) store.setIsReturning(false);
     }
-  }, [isSecondary]);
+  }, []);
 
   const handleMouseLeave = useCallback(() => {
-    if (isSecondary) return;
+    const sync = useWindowSyncStore.getState();
+    if (sync.activePeerId && sync.activePeerId !== sync.myPeerId) return;
     mouseRef.current.active = false;
     chainOrderRef.current = [];
     mouseHistoryRef.current = [];
     const store = useInputSourceStore.getState();
     if (store.skillsCursorActive) store.setSkillsCursorActive(false);
-  }, [isSecondary]);
+  }, []);
 
   const handleClick = useCallback(() => {
-    if (isSecondary) return;
+    const sync = useWindowSyncStore.getState();
+    if (sync.activePeerId && sync.activePeerId !== sync.myPeerId) return;
     mouseRef.current.active = false;
     returningRef.current = true;
     chainOrderRef.current = [];
@@ -496,10 +538,11 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
     const store = useInputSourceStore.getState();
     if (store.skillsCursorActive) store.setSkillsCursorActive(false);
     if (!store.isReturning) store.setIsReturning(true);
-  }, [isSecondary]);
+  }, []);
 
   const handleTouchMove = useCallback((e: React.TouchEvent) => {
-    if (isSecondary) return;
+    const sync = useWindowSyncStore.getState();
+    if (sync.activePeerId && sync.activePeerId !== sync.myPeerId) return;
     const touch = e.touches[0];
     if (!touch) return;
     const rect = containerRef.current?.getBoundingClientRect();
@@ -512,10 +555,11 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
       if (!store.skillsCursorActive) store.setSkillsCursorActive(true);
       if (store.isReturning) store.setIsReturning(false);
     }
-  }, [isSecondary]);
+  }, []);
 
   const handleTouchEnd = useCallback(() => {
-    if (isSecondary) return;
+    const sync = useWindowSyncStore.getState();
+    if (sync.activePeerId && sync.activePeerId !== sync.myPeerId) return;
     mouseRef.current.active = false;
     returningRef.current = true;
     chainOrderRef.current = [];
@@ -523,7 +567,7 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
     const store = useInputSourceStore.getState();
     if (store.skillsCursorActive) store.setSkillsCursorActive(false);
     if (!store.isReturning) store.setIsReturning(true);
-  }, [isSecondary]);
+  }, []);
 
   return (
     <div

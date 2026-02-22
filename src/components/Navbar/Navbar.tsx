@@ -45,13 +45,18 @@ function Navbar() {
       onMouseEnter={!isMobile ? () => setIsHovered(true) : undefined}
       onMouseLeave={!isMobile ? () => setIsHovered(false) : undefined}
       onClick={() => setIsHovered(!isHovered)}
+      initial={{ opacity: 0 }}
       animate={{
+        opacity: 1,
         width: isHovered ? expandedWidth : "auto",
       }}
       transition={{
-        type: "spring",
-        stiffness: isMobile ? 200 : 100,
-        damping: 15,
+        opacity: { delay: 0.5, duration: 0.6, ease: "easeOut" },
+        width: {
+          type: "spring",
+          stiffness: isMobile ? 200 : 100,
+          damping: 15,
+        },
       }}
       style={{
         justifyContent: isHovered ? "flex-start" : "center",
