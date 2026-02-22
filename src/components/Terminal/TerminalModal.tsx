@@ -9,8 +9,8 @@ function TerminalModal() {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Cmd+T (Mac) or Ctrl+T (Windows/Linux)
-      if ((e.metaKey || e.ctrlKey) && e.key === "t") {
+      // Cmd+J (Mac) or Ctrl+J (Windows/Linux)
+      if ((e.metaKey || e.ctrlKey) && e.key === "j") {
         e.preventDefault();
         setIsOpen((v) => !v);
       }
