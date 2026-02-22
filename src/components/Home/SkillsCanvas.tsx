@@ -89,6 +89,7 @@ interface SkillsCanvasProps {
   finalPositions: Array<{ x: number; y: number }>;
   isMobile: boolean;
   triggerEntrance: boolean;
+  isSecondary: boolean;
 }
 
 const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
@@ -96,6 +97,7 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
   finalPositions,
   isMobile,
   triggerEntrance,
+  isSecondary,
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -260,9 +262,64 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
         }
       }
 
-      // --- Hand tracking: poll store each frame ---
+      // --- Secondary window: read synced state from store ---
       const inputState = useInputSourceStore.getState();
-      if (inputState.inputSource === "camera" && inputState.handPositions.length > 0) {
+
+      if (isSecondary && phase === "idle") {
+        const syncActive = inputState.skillsCursorActive;
+        const syncReturning = inputState.isReturning;
+
+        if (syncActive) {
+          // Pick cursor source: hand position for camera, headPosition for mouse
+          const hp =
+            inputState.inputSource === "camera" &&
+            inputState.handPositions.length > 0
+              ? inputState.handPositions[0]
+              : inputState.headPosition;
+
+          // Convert normalized (-1..1) to viewport pixels, then offset by one window width
+          const vpX = ((hp.x + 1) / 2) * window.innerWidth;
+          const vpY = ((hp.y + 1) / 2) * window.innerHeight;
+          const rect = containerRef.current?.getBoundingClientRect();
+          if (rect) {
+            mouse.x = vpX - window.innerWidth - rect.left - rect.width / 2;
+            mouse.y = vpY - rect.top - rect.height / 2;
+          }
+          mouse.active = true;
+          returningRef.current = false;
+
+          // Camera finger count for trail tightness
+          if (
+            inputState.inputSource === "camera" &&
+            inputState.handPositions.length > 0
+          ) {
+            const fingers = inputState.handPositions[0].fingers;
+            handFingersRef.current = fingers;
+            handTrailLerpRef.current = isMobile
+              ? Math.max(0.06, 0.22 - fingers * 0.032)
+              : fingers <= 3
+                ? 0.22 - fingers * 0.05
+                : TRAIL_LERP;
+          }
+        } else if (syncReturning) {
+          if (mouse.active || !returningRef.current) {
+            mouse.active = false;
+            returningRef.current = true;
+            chainOrderRef.current = [];
+            mouseHistoryRef.current = [];
+          }
+        } else {
+          // Cursor left canvas — freeze
+          if (mouse.active) {
+            mouse.active = false;
+            chainOrderRef.current = [];
+            mouseHistoryRef.current = [];
+          }
+        }
+      }
+
+      // --- Leader: hand tracking poll + write state to store ---
+      if (!isSecondary && inputState.inputSource === "camera" && inputState.handPositions.length > 0) {
         const hand = inputState.handPositions[0];
         const fingers = hand.fingers;
         handFingersRef.current = fingers;
@@ -272,33 +329,35 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
         mouse.y = hand.y * (cssH / 2);
 
         if (isMobile) {
-          // Mobile: any visible hand attracts, finger count modulates tightness
-          // 0 fingers = 0.22 (tightest), 5 fingers = 0.06 (loosest)
           handTrailLerpRef.current = Math.max(0.06, 0.22 - fingers * 0.032);
           mouse.active = true;
           returningRef.current = false;
+          inputState.setSkillsCursorActive(true);
+          inputState.setIsReturning(false);
         } else if (fingers <= 3) {
-          // Desktop: closed hand → attract mode
-          // Fewer fingers = tighter follow (0 fingers = 0.22, 3 fingers = 0.07)
           handTrailLerpRef.current = 0.22 - fingers * 0.05;
           mouse.active = true;
           returningRef.current = false;
+          inputState.setSkillsCursorActive(true);
+          inputState.setIsReturning(false);
         } else {
-          // Desktop: open hand (4-5 fingers) → release, spring back to rest
           if (mouse.active || !returningRef.current) {
             mouse.active = false;
             returningRef.current = true;
             chainOrderRef.current = [];
             mouseHistoryRef.current = [];
+            inputState.setSkillsCursorActive(false);
+            inputState.setIsReturning(true);
           }
         }
-      } else if (inputState.inputSource === "camera" && inputState.handPositions.length === 0) {
-        // Hand disappeared — on mobile return to rest, on desktop freeze in place
+      } else if (!isSecondary && inputState.inputSource === "camera" && inputState.handPositions.length === 0) {
         if (mouse.active) {
           mouse.active = false;
           if (isMobile) returningRef.current = true;
           chainOrderRef.current = [];
           mouseHistoryRef.current = [];
+          inputState.setSkillsCursorActive(false);
+          if (isMobile) inputState.setIsReturning(true);
         }
         handFingersRef.current = 5;
       }
@@ -401,37 +460,45 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
 
     rafRef.current = requestAnimationFrame(loop);
     return () => cancelAnimationFrame(rafRef.current);
-  }, [iconSize]);
+  }, [iconSize, isMobile, isSecondary]);
 
   // --- Event handlers ---
 
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
+    if (isSecondary) return;
     const rect = containerRef.current?.getBoundingClientRect();
     if (rect) {
       mouseRef.current.x = e.clientX - rect.left - rect.width / 2;
       mouseRef.current.y = e.clientY - rect.top - rect.height / 2;
       mouseRef.current.active = true;
-      // Cancel returning so icons can be attracted again
       returningRef.current = false;
+      const store = useInputSourceStore.getState();
+      store.setSkillsCursorActive(true);
+      store.setIsReturning(false);
     }
-  }, []);
+  }, [isSecondary]);
 
   const handleMouseLeave = useCallback(() => {
-    // Icons freeze in place — only click sends them back
+    if (isSecondary) return;
     mouseRef.current.active = false;
     chainOrderRef.current = [];
     mouseHistoryRef.current = [];
-  }, []);
+    useInputSourceStore.getState().setSkillsCursorActive(false);
+  }, [isSecondary]);
 
-  // Click → disperse back to rest positions
   const handleClick = useCallback(() => {
+    if (isSecondary) return;
     mouseRef.current.active = false;
     returningRef.current = true;
     chainOrderRef.current = [];
     mouseHistoryRef.current = [];
-  }, []);
+    const store = useInputSourceStore.getState();
+    store.setSkillsCursorActive(false);
+    store.setIsReturning(true);
+  }, [isSecondary]);
 
   const handleTouchMove = useCallback((e: React.TouchEvent) => {
+    if (isSecondary) return;
     const touch = e.touches[0];
     if (!touch) return;
     const rect = containerRef.current?.getBoundingClientRect();
@@ -440,16 +507,22 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
       mouseRef.current.y = touch.clientY - rect.top - rect.height / 2;
       mouseRef.current.active = true;
       returningRef.current = false;
+      const store = useInputSourceStore.getState();
+      store.setSkillsCursorActive(true);
+      store.setIsReturning(false);
     }
-  }, []);
+  }, [isSecondary]);
 
-  // Tap → disperse back
   const handleTouchEnd = useCallback(() => {
+    if (isSecondary) return;
     mouseRef.current.active = false;
     returningRef.current = true;
     chainOrderRef.current = [];
     mouseHistoryRef.current = [];
-  }, []);
+    const store = useInputSourceStore.getState();
+    store.setSkillsCursorActive(false);
+    store.setIsReturning(true);
+  }, [isSecondary]);
 
   return (
     <div

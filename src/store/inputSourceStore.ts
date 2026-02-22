@@ -14,10 +14,14 @@ interface InputSourceState {
   handPositions: HandPosition[];
   scrollIntent: number;
   inputSource: "mouse" | "camera";
+  skillsCursorActive: boolean;
+  isReturning: boolean;
   setHeadPosition: (pos: { x: number; y: number }) => void;
   setHandPositions: (hands: HandPosition[]) => void;
   setScrollIntent: (delta: number) => void;
   setInputSource: (source: "mouse" | "camera") => void;
+  setSkillsCursorActive: (active: boolean) => void;
+  setIsReturning: (returning: boolean) => void;
 }
 
 export const useInputSourceStore = create<InputSourceState>((set) => ({
@@ -25,8 +29,12 @@ export const useInputSourceStore = create<InputSourceState>((set) => ({
   handPositions: [],
   scrollIntent: 0,
   inputSource: "mouse",
+  skillsCursorActive: false,
+  isReturning: false,
   setHeadPosition: (pos) => set({ headPosition: pos }),
   setHandPositions: (hands) => set({ handPositions: hands }),
   setScrollIntent: (delta) => set({ scrollIntent: delta }),
   setInputSource: (source) => set({ inputSource: source }),
+  setSkillsCursorActive: (active) => set({ skillsCursorActive: active }),
+  setIsReturning: (returning) => set({ isReturning: returning }),
 }));

@@ -16,18 +16,31 @@ import {
   startMouseInputProvider,
   stopMouseInputProvider,
 } from "./providers/MouseInputProvider";
+import {
+  startWindowSync,
+  stopWindowSync,
+} from "./providers/WindowSyncProvider";
+import { useHandsfreeStore } from "./store/handsfreeStore";
 import { useThemeStore } from "./store/themeStore";
 
 function App() {
   const { darkMode } = useThemeStore();
   const isMobile = useIsMobile();
+  const isSecondary = useHandsfreeStore((s) => s.isSecondary);
 
   useEffect(() => {
-    startMouseInputProvider();
-    return () => {
-      stopMouseInputProvider();
-    };
-  }, []);
+    if (isSecondary) {
+      startWindowSync("follower");
+      return () => stopWindowSync();
+    } else {
+      startMouseInputProvider();
+      startWindowSync("leader");
+      return () => {
+        stopMouseInputProvider();
+        stopWindowSync();
+      };
+    }
+  }, [isSecondary]);
 
   useHandsfreeCamera();
 
