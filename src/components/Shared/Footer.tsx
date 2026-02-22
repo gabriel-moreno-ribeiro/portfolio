@@ -38,12 +38,28 @@ function Footer() {
         stiffness: isMobile ? 200 : 100,
         damping: 15,
       }}
+      style={{
+        justifyContent: isHovered ? "flex-start" : "center",
+      }}
     >
-      {!isMobile ? (
-        <h1 className="heading">Footer.</h1>
-      ) : isMobile && !isHovered ? (
-        <h1 className="heading">Footer.</h1>
-      ) : null}
+      {isMobile ? (
+        <motion.h1
+          className="heading"
+          layout
+          animate={{ opacity: isHovered ? 0 : 1 }}
+          transition={{ duration: 0.25 }}
+        >
+          Footer.
+        </motion.h1>
+      ) : (
+        <motion.h1
+          className="heading"
+          layout
+          transition={{ type: "spring", stiffness: 200, damping: 25 }}
+        >
+          Footer.
+        </motion.h1>
+      )}
       <motion.div
         className="links"
         initial={{ opacity: 0 }}

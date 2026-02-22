@@ -1,4 +1,4 @@
-import { motion, useAnimation, useInView } from "motion/react";
+import { useInView } from "motion/react";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import l_icon1 from "../../assets/skills/light/icon1.webp";
 import l_icon10 from "../../assets/skills/light/icon10.webp";
@@ -29,6 +29,7 @@ import d_icon8 from "../../assets/skills/dark/icon8.webp";
 import d_icon9 from "../../assets/skills/dark/icon9.webp";
 import useIsMobile from "../../hooks/useIsMobile";
 import { useThemeStore } from "../../store/themeStore";
+import SkillsCanvas from "./SkillsCanvas";
 
 const lightIcons = [
   l_icon1,
@@ -62,11 +63,6 @@ const darkIcons = [
   d_icon13,
 ];
 
-const initialPosition = {
-  x: 0,
-  y: 0,
-};
-
 const deskstopFinalPositions = [
   { x: -500, y: 0 },
   { x: 650, y: 100 },
@@ -99,22 +95,15 @@ const mobileFinalPositions = [
   { x: 100, y: 250 },
 ];
 
-const randomInRange = (min: number, max: number) =>
-  Math.random() * (max - min) + min;
-
 const Skills: React.FC = () => {
   const isMobile = useIsMobile();
   const { darkMode } = useThemeStore();
-  const controls = useAnimation();
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, {
     margin: "0px 0px -200px 0px",
     once: true,
   });
 
-  const hasEnteredView = useRef(false);
-
-  // Scale chip positions to viewport width for true edge-to-edge
   const [vpWidth, setVpWidth] = useState(
     typeof window !== "undefined" ? window.innerWidth : 1400
   );
@@ -126,7 +115,6 @@ const Skills: React.FC = () => {
 
   const finalPositions = useMemo(() => {
     if (isMobile) return mobileFinalPositions;
-    // Scale so chips reach near viewport edges (designed for 1400px)
     const scale = Math.max(1, vpWidth / 1400);
     return deskstopFinalPositions.map((p) => ({
       x: p.x * scale,
@@ -134,55 +122,10 @@ const Skills: React.FC = () => {
     }));
   }, [isMobile, vpWidth]);
 
-  const bubbleVariants = {
-    initial: { scale: 0 },
-    animate: (i: number) => ({
-      scale: [0, 1.5, 1],
-      x: [initialPosition.x, finalPositions[i].x],
-      y: [initialPosition.y, finalPositions[i].y],
-      transition: {
-        delay: i * 0.075,
-        duration: 0.5,
-        ease: "easeInOut" as const,
-      },
-    }),
-    oscillate: (i: number) => ({
-      y: [
-        finalPositions[i].y,
-        finalPositions[i].y + randomInRange(-10, 10),
-        finalPositions[i].y + randomInRange(-10, 10),
-        finalPositions[i].y,
-      ],
-      x: [
-        finalPositions[i].x,
-        finalPositions[i].x + randomInRange(-10, 10),
-        finalPositions[i].x + randomInRange(-10, 10),
-        finalPositions[i].x,
-      ],
-      transition: {
-        duration: 2,
-        ease: "easeInOut" as const,
-        repeat: Infinity,
-        repeatType: "mirror" as const,
-      },
-    }),
-  };
-
-  // Standard entrance + oscillation animation
-  useEffect(() => {
-    if (inView && !hasEnteredView.current) {
-      hasEnteredView.current = true;
-      controls
-        .start((i) => bubbleVariants.animate(i))
-        .then(() => {
-          controls.start((i) => bubbleVariants.oscillate(i));
-        });
-    }
-  }, [controls, inView]);
-
-  const icons = useMemo(() => {
-    return darkMode ? darkIcons : lightIcons;
-  }, [darkMode]);
+  const iconUrls = useMemo(
+    () => (darkMode ? darkIcons : lightIcons),
+    [darkMode]
+  );
 
   return (
     <div className="skills-container" ref={ref} id="skills">
@@ -190,17 +133,12 @@ const Skills: React.FC = () => {
         Always Building, <br />
         Always Growing.
       </p>
-      {icons.map((icon, i) => (
-        <motion.img
-          src={icon}
-          className="bubble"
-          custom={i}
-          initial="initial"
-          animate={controls}
-          variants={bubbleVariants as any}
-          key={`icon-${i}`}
-        />
-      ))}
+      <SkillsCanvas
+        iconUrls={iconUrls}
+        finalPositions={finalPositions}
+        isMobile={isMobile}
+        triggerEntrance={inView}
+      />
     </div>
   );
 };
