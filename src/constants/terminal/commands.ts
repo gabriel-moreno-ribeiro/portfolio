@@ -22,10 +22,12 @@ export interface CommandContext {
   currentDirectory: string;
   setDirectory: (dir: string) => void;
   writeln: (text: string) => void;
+  write: (text: string) => void;
   clearTerminal: () => void;
   toggleTheme: () => void;
   setMatrixActive: (active: boolean) => void;
   setAiLoading: (loading: boolean) => void;
+  enterChatMode: () => void;
   fileSystem: DirectoryNode;
   rawInput: string;
 }
@@ -414,43 +416,23 @@ const commands: CommandDefinition[] = [
   // === AI ===
   {
     name: "ai",
-    description: "Chat with AI about Avi",
+    description: "Enter AI chat mode (or: ai <message> for one-shot)",
     execute: async (ctx) => {
       const message = ctx.args.join(" ");
       if (!message) {
-        ctx.writeln(red("Usage: ai <message>"));
-        ctx.writeln(`Example: ${green("ai tell me about Avi's experience")}`);
+        // Enter persistent chat mode
+        ctx.enterChatMode();
         return;
       }
-      ctx.setAiLoading(true);
-      ctx.writeln(yellow("Thinking..."));
-      try {
-        const res = await fetch("/api/chat", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ message }),
-        });
-        const data = await res.json();
-        if (data.reply) {
-          for (const line of data.reply.split("\n")) {
-            ctx.writeln(`  ${line}`);
-          }
-        } else {
-          ctx.writeln(red("AI service returned an empty response."));
-        }
-      } catch {
-        ctx.writeln(red("AI service is currently unavailable. Try again later."));
-      } finally {
-        ctx.setAiLoading(false);
-      }
+      // One-shot: send a single message with streaming
+      await streamAiResponse(ctx, [{ role: "user", content: message }]);
     },
   },
   {
     name: "chat",
-    description: "Alias for ai command",
-    execute: async (ctx) => {
-      const aiCmd = commands.find((c) => c.name === "ai");
-      if (aiCmd) await aiCmd.execute(ctx);
+    description: "Enter AI chat mode",
+    execute: (ctx) => {
+      ctx.enterChatMode();
     },
   },
 ];
@@ -494,4 +476,82 @@ let cachedFS: ReturnType<typeof buildFileSystem> | null = null;
 export function getFileSystem() {
   if (!cachedFS) cachedFS = buildFileSystem();
   return cachedFS;
+}
+
+// Streaming AI response helper
+export async function streamAiResponse(
+  ctx: { write: (text: string) => void; writeln: (text: string) => void; setAiLoading: (v: boolean) => void },
+  messages: { role: string; content: string }[]
+): Promise<string> {
+  ctx.setAiLoading(true);
+  let fullResponse = "";
+
+  try {
+    const res = await fetch("/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ messages }),
+    });
+
+    if (!res.ok || !res.body) {
+      ctx.writeln(red("AI service returned an error."));
+      return "";
+    }
+
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+    let done = false;
+    let needsNewline = false;
+
+    // Write the AI prefix
+    ctx.write(`\x1b[35m`); // magenta for AI
+
+    while (!done) {
+      const { value, done: readerDone } = await reader.read();
+      done = readerDone;
+      if (value) {
+        const chunk = decoder.decode(value, { stream: true });
+        const lines = chunk.split("\n");
+        for (const line of lines) {
+          if (line.startsWith("data: ")) {
+            const data = line.slice(6);
+            if (data === "[DONE]") {
+              done = true;
+              break;
+            }
+            try {
+              const parsed = JSON.parse(data);
+              if (parsed.content) {
+                // Handle newlines in content
+                const parts = parsed.content.split("\n");
+                for (let i = 0; i < parts.length; i++) {
+                  if (i > 0) {
+                    ctx.write("\r\n");
+                    needsNewline = false;
+                  }
+                  if (parts[i]) {
+                    ctx.write(parts[i]);
+                    needsNewline = true;
+                  }
+                }
+                fullResponse += parsed.content;
+              }
+            } catch {
+              // skip
+            }
+          }
+        }
+      }
+    }
+
+    // Reset color and newline
+    ctx.write("\x1b[0m");
+    if (needsNewline) ctx.write("\r\n");
+  } catch {
+    ctx.writeln(red("AI service is currently unavailable."));
+  } finally {
+    ctx.setAiLoading(false);
+  }
+
+  return fullResponse;
 }
