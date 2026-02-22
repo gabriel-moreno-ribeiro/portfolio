@@ -332,22 +332,22 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
           handTrailLerpRef.current = Math.max(0.06, 0.22 - fingers * 0.032);
           mouse.active = true;
           returningRef.current = false;
-          inputState.setSkillsCursorActive(true);
-          inputState.setIsReturning(false);
+          if (!inputState.skillsCursorActive) inputState.setSkillsCursorActive(true);
+          if (inputState.isReturning) inputState.setIsReturning(false);
         } else if (fingers <= 3) {
           handTrailLerpRef.current = 0.22 - fingers * 0.05;
           mouse.active = true;
           returningRef.current = false;
-          inputState.setSkillsCursorActive(true);
-          inputState.setIsReturning(false);
+          if (!inputState.skillsCursorActive) inputState.setSkillsCursorActive(true);
+          if (inputState.isReturning) inputState.setIsReturning(false);
         } else {
           if (mouse.active || !returningRef.current) {
             mouse.active = false;
             returningRef.current = true;
             chainOrderRef.current = [];
             mouseHistoryRef.current = [];
-            inputState.setSkillsCursorActive(false);
-            inputState.setIsReturning(true);
+            if (inputState.skillsCursorActive) inputState.setSkillsCursorActive(false);
+            if (!inputState.isReturning) inputState.setIsReturning(true);
           }
         }
       } else if (!isSecondary && inputState.inputSource === "camera" && inputState.handPositions.length === 0) {
@@ -356,8 +356,8 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
           if (isMobile) returningRef.current = true;
           chainOrderRef.current = [];
           mouseHistoryRef.current = [];
-          inputState.setSkillsCursorActive(false);
-          if (isMobile) inputState.setIsReturning(true);
+          if (inputState.skillsCursorActive) inputState.setSkillsCursorActive(false);
+          if (isMobile && !inputState.isReturning) inputState.setIsReturning(true);
         }
         handFingersRef.current = 5;
       }
@@ -473,8 +473,8 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
       mouseRef.current.active = true;
       returningRef.current = false;
       const store = useInputSourceStore.getState();
-      store.setSkillsCursorActive(true);
-      store.setIsReturning(false);
+      if (!store.skillsCursorActive) store.setSkillsCursorActive(true);
+      if (store.isReturning) store.setIsReturning(false);
     }
   }, [isSecondary]);
 
@@ -483,7 +483,8 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
     mouseRef.current.active = false;
     chainOrderRef.current = [];
     mouseHistoryRef.current = [];
-    useInputSourceStore.getState().setSkillsCursorActive(false);
+    const store = useInputSourceStore.getState();
+    if (store.skillsCursorActive) store.setSkillsCursorActive(false);
   }, [isSecondary]);
 
   const handleClick = useCallback(() => {
@@ -493,8 +494,8 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
     chainOrderRef.current = [];
     mouseHistoryRef.current = [];
     const store = useInputSourceStore.getState();
-    store.setSkillsCursorActive(false);
-    store.setIsReturning(true);
+    if (store.skillsCursorActive) store.setSkillsCursorActive(false);
+    if (!store.isReturning) store.setIsReturning(true);
   }, [isSecondary]);
 
   const handleTouchMove = useCallback((e: React.TouchEvent) => {
@@ -508,8 +509,8 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
       mouseRef.current.active = true;
       returningRef.current = false;
       const store = useInputSourceStore.getState();
-      store.setSkillsCursorActive(true);
-      store.setIsReturning(false);
+      if (!store.skillsCursorActive) store.setSkillsCursorActive(true);
+      if (store.isReturning) store.setIsReturning(false);
     }
   }, [isSecondary]);
 
@@ -520,8 +521,8 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
     chainOrderRef.current = [];
     mouseHistoryRef.current = [];
     const store = useInputSourceStore.getState();
-    store.setSkillsCursorActive(false);
-    store.setIsReturning(true);
+    if (store.skillsCursorActive) store.setSkillsCursorActive(false);
+    if (!store.isReturning) store.setIsReturning(true);
   }, [isSecondary]);
 
   return (
