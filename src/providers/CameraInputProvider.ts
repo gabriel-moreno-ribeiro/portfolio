@@ -202,6 +202,7 @@ function processPinchGesture(
 }
 
 // ── Two-finger scroll with iOS-style momentum ──
+const SCROLL_ENTER_DEBOUNCE = 8; // frames the 2-finger pose must hold before scroll starts (~270ms)
 const SCROLL_SENSITIVITY = 8; // px multiplier for direct tracking
 const MOMENTUM_DECAY = 0.95; // per-frame velocity decay (lower = stops faster)
 const MOMENTUM_MIN = 0.5; // velocity threshold to stop coasting
@@ -288,7 +289,7 @@ function processTwoFingerScroll(
     scrollState.enterFrames = 0;
   }
 
-  if (!scrollState.isScrolling && scrollState.enterFrames >= GESTURE_DEBOUNCE_FRAMES) {
+  if (!scrollState.isScrolling && scrollState.enterFrames >= SCROLL_ENTER_DEBOUNCE) {
     // Gesture started — stop any existing momentum
     stopMomentumScroll();
     scrollState.isScrolling = true;
