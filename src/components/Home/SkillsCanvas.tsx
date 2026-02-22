@@ -17,10 +17,11 @@ interface IconState {
 
 // --- Physics constants ---
 
-const MAGNET_STRENGTH = 8;
-const MAGNET_RADIUS = 500;
-const SPRING_K = 0.04;
-const DAMPING = 0.88;
+const SPRING_K = 0.045;
+const DAMPING = 0.86;
+const TRAIL_LERP = 0.12;
+const TRAIL_SPACING = 8; // frames between each icon in the trail
+const MOUSE_HISTORY_SIZE = 160;
 const ENTRANCE_DURATION = 500;
 const STAGGER = 75;
 const OSCILLATION_INTERVAL = 2000;
@@ -101,12 +102,17 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
 
   const iconsRef = useRef<IconState[]>([]);
   const mouseRef = useRef({ x: 0, y: 0, active: false });
+  const returningRef = useRef(false);
   const phaseRef = useRef<"waiting" | "entering" | "idle">("waiting");
   const entranceStartRef = useRef(0);
   const oscillationTimerRef = useRef(0);
   const lastTimestampRef = useRef(0);
   const canvasSizeRef = useRef({ w: 0, h: 0, cssW: 0, cssH: 0 });
   const rafRef = useRef(0);
+
+  // Trail state
+  const mouseHistoryRef = useRef<Array<{ x: number; y: number }>>([]);
+  const chainOrderRef = useRef<number[]>([]);
 
   const iconSize = isMobile ? 60 : 80;
 
@@ -213,6 +219,9 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
       const icons = iconsRef.current;
       const mouse = mouseRef.current;
       const phase = phaseRef.current;
+      const returning = returningRef.current;
+      const mouseHistory = mouseHistoryRef.current;
+      const chainOrder = chainOrderRef.current;
 
       // --- Entrance phase ---
       if (phase === "entering") {
@@ -249,45 +258,57 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
 
       // --- Idle phase: physics ---
       if (phase === "idle") {
-        const SNAP_RADIUS = 60;
+        if (mouse.active && !returning) {
+          // --- Trailing mode ---
 
-        for (const icon of icons) {
-          if (mouse.active) {
-            const dx = mouse.x - icon.x;
-            const dy = mouse.y - icon.y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
+          // Record mouse position into history
+          mouseHistory.push({ x: mouse.x, y: mouse.y });
+          if (mouseHistory.length > MOUSE_HISTORY_SIZE) {
+            mouseHistory.shift();
+          }
 
-            if (dist < SNAP_RADIUS) {
-              // Close to cursor — lerp directly to avoid overshoot
-              icon.x = lerp(icon.x, mouse.x, 0.15);
-              icon.y = lerp(icon.y, mouse.y, 0.15);
-              icon.vx *= 0.3;
-              icon.vy *= 0.3;
-            } else if (dist < MAGNET_RADIUS) {
-              const normalised = 1 - dist / MAGNET_RADIUS;
-              const force = MAGNET_STRENGTH * normalised * normalised;
-              icon.vx += (dx / dist) * force;
-              icon.vy += (dy / dist) * force;
+          // Establish chain order on first attraction (sort by distance to cursor)
+          if (chainOrder.length === 0 && mouseHistory.length > 0) {
+            const sorted = icons
+              .map((icon, i) => ({
+                i,
+                dist: Math.hypot(icon.x - mouse.x, icon.y - mouse.y),
+              }))
+              .sort((a, b) => a.dist - b.dist)
+              .map((e) => e.i);
+            chainOrderRef.current.push(...sorted);
+          }
+
+          // Each icon in the chain follows a different point in the mouse history
+          for (let rank = 0; rank < chainOrder.length; rank++) {
+            const icon = icons[chainOrder[rank]];
+            const histIdx =
+              mouseHistory.length - 1 - rank * TRAIL_SPACING;
+
+            if (histIdx >= 0) {
+              const target = mouseHistory[histIdx];
+              icon.x = lerp(icon.x, target.x, TRAIL_LERP);
+              icon.y = lerp(icon.y, target.y, TRAIL_LERP);
+              // Kill velocity so spring doesn't interfere later
+              icon.vx = 0;
+              icon.vy = 0;
             }
-          } else {
-            // Spring back to rest position — active after click or mouse leave
+            // Icons whose history slot isn't populated yet stay put
+          }
+        } else if (returning) {
+          // --- Returning mode: spring back to rest ---
+          for (const icon of icons) {
             const restDx = icon.restX - icon.x;
             const restDy = icon.restY - icon.y;
             icon.vx += restDx * SPRING_K;
             icon.vy += restDy * SPRING_K;
+            icon.vx *= DAMPING;
+            icon.vy *= DAMPING;
+            icon.x += icon.vx;
+            icon.y += icon.vy;
           }
 
-          // Damping
-          icon.vx *= DAMPING;
-          icon.vy *= DAMPING;
-
-          // Integrate
-          icon.x += icon.vx;
-          icon.y += icon.vy;
-        }
-
-        // Gentle oscillation when at rest (no mouse, settled)
-        if (!mouse.active) {
+          // Gentle oscillation while returning
           oscillationTimerRef.current += dt;
           if (oscillationTimerRef.current > OSCILLATION_INTERVAL) {
             oscillationTimerRef.current = 0;
@@ -297,6 +318,7 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
             }
           }
         }
+        // else: frozen — no physics, icons stay where they are
       }
 
       // --- Draw ---
@@ -330,23 +352,32 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
     return () => cancelAnimationFrame(rafRef.current);
   }, [iconSize]);
 
-  // Mouse handlers
+  // --- Event handlers ---
+
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
     const rect = containerRef.current?.getBoundingClientRect();
     if (rect) {
       mouseRef.current.x = e.clientX - rect.left - rect.width / 2;
       mouseRef.current.y = e.clientY - rect.top - rect.height / 2;
       mouseRef.current.active = true;
+      // Cancel returning so icons can be attracted again
+      returningRef.current = false;
     }
   }, []);
 
   const handleMouseLeave = useCallback(() => {
+    // Icons freeze in place — only click sends them back
     mouseRef.current.active = false;
+    chainOrderRef.current = [];
+    mouseHistoryRef.current = [];
   }, []);
 
-  // Click → release icons back to rest
+  // Click → disperse back to rest positions
   const handleClick = useCallback(() => {
     mouseRef.current.active = false;
+    returningRef.current = true;
+    chainOrderRef.current = [];
+    mouseHistoryRef.current = [];
   }, []);
 
   const handleTouchMove = useCallback((e: React.TouchEvent) => {
@@ -357,12 +388,16 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
       mouseRef.current.x = touch.clientX - rect.left - rect.width / 2;
       mouseRef.current.y = touch.clientY - rect.top - rect.height / 2;
       mouseRef.current.active = true;
+      returningRef.current = false;
     }
   }, []);
 
-  // Tap → release icons back
+  // Tap → disperse back
   const handleTouchEnd = useCallback(() => {
     mouseRef.current.active = false;
+    returningRef.current = true;
+    chainOrderRef.current = [];
+    mouseHistoryRef.current = [];
   }, []);
 
   return (
