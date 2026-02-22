@@ -271,14 +271,20 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
         mouse.x = hand.x * (cssW / 2);
         mouse.y = hand.y * (cssH / 2);
 
-        if (fingers <= 3) {
-          // Closed hand → attract mode
+        if (isMobile) {
+          // Mobile: any visible hand attracts, finger count modulates tightness
+          // 0 fingers = 0.22 (tightest), 5 fingers = 0.06 (loosest)
+          handTrailLerpRef.current = Math.max(0.06, 0.22 - fingers * 0.032);
+          mouse.active = true;
+          returningRef.current = false;
+        } else if (fingers <= 3) {
+          // Desktop: closed hand → attract mode
           // Fewer fingers = tighter follow (0 fingers = 0.22, 3 fingers = 0.07)
           handTrailLerpRef.current = 0.22 - fingers * 0.05;
           mouse.active = true;
           returningRef.current = false;
         } else {
-          // Open hand (4-5 fingers) → release, spring back to rest
+          // Desktop: open hand (4-5 fingers) → release, spring back to rest
           if (mouse.active || !returningRef.current) {
             mouse.active = false;
             returningRef.current = true;
@@ -287,9 +293,10 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
           }
         }
       } else if (inputState.inputSource === "camera" && inputState.handPositions.length === 0) {
-        // Hand disappeared — freeze icons in place
+        // Hand disappeared — on mobile return to rest, on desktop freeze in place
         if (mouse.active) {
           mouse.active = false;
+          if (isMobile) returningRef.current = true;
           chainOrderRef.current = [];
           mouseHistoryRef.current = [];
         }
