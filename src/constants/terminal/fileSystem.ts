@@ -31,8 +31,9 @@ function buildProjectFiles(
   for (const project of projects) {
     const slug = slugify(project.modalData.title);
     const fileName = `${slug}.txt`;
-    const techLine = project.modalData.infoArr
-      ? `\nTechnologies: ${project.modalData.infoArr.join(", ")}`
+    const modalData = project.modalData as { title: string; desc: string; infoArr?: string[] };
+    const techLine = modalData.infoArr
+      ? `\nTechnologies: ${modalData.infoArr.join(", ")}`
       : "";
     const desc = project.modalData.desc.replace(/<[^>]*>/g, "");
     const links: string[] = [];
