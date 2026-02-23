@@ -6,7 +6,7 @@ export interface HandPosition {
   fingers: number;
   confidence: number;
   isPinching: boolean; // thumb-index pinch gesture active
-  isScrolling: boolean; // two-finger scroll gesture active
+  isScrolling: boolean; // pinch-drag scroll gesture active
 }
 
 interface InputSourceState {

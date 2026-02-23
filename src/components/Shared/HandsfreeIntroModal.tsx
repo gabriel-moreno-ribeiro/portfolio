@@ -74,7 +74,7 @@ const HandsfreeIntroModal: React.FC = () => {
               </div>
               <div className="feature">
                 <span className="feature-icon">👌</span>
-                <span>Pinch to click, two fingers to scroll</span>
+                <span>Pinch to click, pinch and drag to scroll</span>
               </div>
               <div className="feature">
                 <span className="feature-icon">✋</span>

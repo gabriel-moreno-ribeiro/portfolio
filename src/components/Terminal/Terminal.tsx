@@ -376,11 +376,42 @@ function Terminal({ onClose }: TerminalProps) {
     };
     window.addEventListener("resize", handleResize);
 
+    // Touch scrolling for mobile
+    let touchStartY = 0;
+    let touchAccum = 0;
+    const LINE_HEIGHT = 16;
+
+    const onTouchStart = (e: TouchEvent) => {
+      touchStartY = e.touches[0].clientY;
+      touchAccum = 0;
+    };
+    const onTouchMove = (e: TouchEvent) => {
+      e.preventDefault();
+      const deltaY = touchStartY - e.touches[0].clientY;
+      touchStartY = e.touches[0].clientY;
+      touchAccum += deltaY;
+      const lines = Math.trunc(touchAccum / LINE_HEIGHT);
+      if (lines !== 0) {
+        touchAccum -= lines * LINE_HEIGHT;
+        term.scrollLines(lines);
+      }
+    };
+
+    const container = termRef.current;
+    if (container) {
+      container.addEventListener("touchstart", onTouchStart, { passive: true });
+      container.addEventListener("touchmove", onTouchMove, { passive: false });
+    }
+
     // Initial column fit
     setTimeout(handleResize, 50);
 
     return () => {
       window.removeEventListener("resize", handleResize);
+      if (container) {
+        container.removeEventListener("touchstart", onTouchStart);
+        container.removeEventListener("touchmove", onTouchMove);
+      }
       term.dispose();
       xtermRef.current = null;
       fitAddonRef.current = null;
