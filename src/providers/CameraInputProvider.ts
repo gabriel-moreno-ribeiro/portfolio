@@ -103,7 +103,7 @@ let latestFaceLandmarks: any[] | null = null;
 let latestHandLandmarks: any[][] | null = null;
 
 // ── Position smoothing (EMA) ──
-const POSITION_SMOOTHING = 0.35;
+const POSITION_SMOOTHING = 0.45;
 const SCROLL_Y_SMOOTHING = 0.4;
 
 interface SmoothedHand {
