@@ -10,13 +10,13 @@ const gestures = [
   },
   {
     icon: "👌",
-    title: "Pinch & Drag",
-    desc: "Pinch to click, hold and move to drag/select",
+    title: "Pinch to Click",
+    desc: "Quick pinch and release to click on elements",
   },
   {
-    icon: "✌️",
-    title: "Two-Finger Scroll",
-    desc: "Hold up 2 fingers and swipe up/down to scroll — with momentum!",
+    icon: "👌",
+    title: "Pinch & Drag Scroll",
+    desc: "Pinch and drag up/down to scroll — with momentum!",
   },
   {
     icon: "🖐",
