@@ -4,10 +4,11 @@ import { useTerminalStore } from "../../store/terminalStore";
 interface TerminalHeaderProps {
   onClose?: () => void;
   onExpand?: () => void;
+  onMinimise?: () => void;
   isExpanded?: boolean;
 }
 
-function TerminalHeader({ onClose, onExpand, isExpanded }: TerminalHeaderProps) {
+function TerminalHeader({ onClose, onExpand, onMinimise, isExpanded }: TerminalHeaderProps) {
   const { currentDirectory } = useTerminalStore();
 
   return (
@@ -15,7 +16,7 @@ function TerminalHeader({ onClose, onExpand, isExpanded }: TerminalHeaderProps) 
       <MacButtons
         onClose={onClose || (() => {})}
         onExpand={onExpand || (() => {})}
-        onMinimise={() => {}}
+        onMinimise={onMinimise || (() => {})}
         isExpanded={isExpanded || false}
       />
       <span className="terminal-title">avi@portfolio:{currentDirectory}</span>
