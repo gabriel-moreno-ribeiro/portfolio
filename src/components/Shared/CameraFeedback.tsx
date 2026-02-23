@@ -190,12 +190,7 @@ const CameraFeedback: React.FC = () => {
     };
   }, [isEnabled, pw, ph]);
 
-  // On mobile: position above the handsfree button (bottom-left)
-  // Button is at bottom: calc(0dvh + 24px), left: 16px, ~50px tall
-  // Camera sits just above it
-  const positionStyle = isMobile
-    ? { bottom: "calc(0dvh + 82px)", left: 16 }
-    : { bottom: 16, left: 16 };
+  const positionStyle = { bottom: 16, left: 16 };
 
   return (
     <AnimatePresence>
