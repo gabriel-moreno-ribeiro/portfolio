@@ -40,9 +40,12 @@
 
 @media screen and (max-width: 600px) {
   .handsfree-button {
-    top: unset;
-    right: unset;
-    bottom: calc(0dvh + 24px);
-    left: 16px;
+    transition: opacity 0.2s ease, background-color 0.3s, color 0.3s;
+  }
+
+  body.nav-expanded .handsfree-button {
+    opacity: 0 !important;
+    pointer-events: none !important;
+    visibility: hidden;
   }
 }

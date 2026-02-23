@@ -289,7 +289,7 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
         mouse.x = hand.x * (cssW / 2);
         mouse.y = hand.y * (cssH / 2);
 
-        if (isMobile) {
+        if (isMobile && fingers <= 3) {
           handTrailLerpRef.current = Math.max(
             0.08,
             0.28 - fingers * 0.04
@@ -299,7 +299,7 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
           if (!inputState.skillsCursorActive)
             inputState.setSkillsCursorActive(true);
           if (inputState.isReturning) inputState.setIsReturning(false);
-        } else if (fingers <= 3) {
+        } else if (!isMobile && fingers <= 3) {
           handTrailLerpRef.current = 0.30 - fingers * 0.06;
           mouse.active = true;
           returningRef.current = false;
@@ -324,12 +324,12 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
       ) {
         if (mouse.active) {
           mouse.active = false;
-          if (isMobile) returningRef.current = true;
+          returningRef.current = true;
           chainOrderRef.current = [];
           mouseHistoryRef.current = [];
           if (inputState.skillsCursorActive)
             inputState.setSkillsCursorActive(false);
-          if (isMobile && !inputState.isReturning)
+          if (!inputState.isReturning)
             inputState.setIsReturning(true);
         }
         handFingersRef.current = 5;
