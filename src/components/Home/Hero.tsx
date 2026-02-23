@@ -1,18 +1,25 @@
-import { motion } from "motion/react";
-import { lazy, Suspense, useCallback, useEffect, useRef, useState } from "react";
-import { FiArrowRight, FiLink } from "react-icons/fi";
-import useIsMobile from "../../hooks/useIsMobile";
-import { scrollToComponent } from "../../utils/scrollToComponent";
-import CommonButton from "../Shared/CommonButton";
-import ScrambleText from "../Shared/ScrambleText";
+import { motion } from 'motion/react';
+import {
+  lazy,
+  Suspense,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
+import { FiArrowRight, FiLink } from 'react-icons/fi';
+import useIsMobile from '../../hooks/useIsMobile';
+import { scrollToComponent } from '../../utils/scrollToComponent';
+import CommonButton from '../Shared/CommonButton';
+import ScrambleText from '../Shared/ScrambleText';
 
-const CanvasComponent = lazy(() => import("../Canvas/CanvasComponent"));
+const CanvasComponent = lazy(() => import('../Canvas/CanvasComponent'));
 
 // Delay before content starts appearing (lets background settle first)
 const BG_SETTLE_DELAY = 0.7;
 
 const bottomTexts = [
-  `Avi is also an instructor at a leading YC EdTech platform, having taught MERN Stack to over <span class="black"> 100,000+ </span> students.`,
+  `Avi has also been an instructor at a leading YC EdTech platform, having taught MERN Stack to over <span class="black"> 100,000+ </span> students.`,
   `Avi is a graduate from <span class="black"> IIIT Delhi </span> and has done his <span class="black"> Btech (CS) </span> in 2024.`,
   `Avi also has interests in <span class="black"> Algo Trading, UI Designing and Product Designing. </span>`,
 ];
@@ -36,7 +43,10 @@ function Hero() {
 
   // Mark intro as done after all elements have faded in
   useEffect(() => {
-    const timer = setTimeout(() => setIntroDone(true), (BG_SETTLE_DELAY + 1.2) * 1000);
+    const timer = setTimeout(
+      () => setIntroDone(true),
+      (BG_SETTLE_DELAY + 1.2) * 1000,
+    );
     return () => clearTimeout(timer);
   }, []);
 
@@ -44,7 +54,7 @@ function Hero() {
   useEffect(() => {
     if (!introDone) return;
     const interval = setInterval(() => {
-      setCurrentTextIndex((prevIndex) => (prevIndex + 1) % bottomTexts.length);
+      setCurrentTextIndex(prevIndex => (prevIndex + 1) % bottomTexts.length);
     }, 3000);
 
     return () => clearInterval(interval);
@@ -53,9 +63,10 @@ function Hero() {
   return (
     <div className="hero-section">
       <motion.div
+        style={{ marginTop: '48px' }}
         initial={{ opacity: 0 }}
         animate={{ opacity: showRobot ? 1 : 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
+        transition={{ duration: 0.8, ease: 'easeOut' }}
       >
         <Suspense fallback={null}>
           <CanvasComponent onReady={handleRobotReady} />
@@ -66,17 +77,21 @@ function Hero() {
           className="heading"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: BG_SETTLE_DELAY, duration: 0.6, ease: "easeOut" }}
-          data-color-inverted={"true"}
+          transition={{
+            delay: BG_SETTLE_DELAY,
+            duration: 0.6,
+            ease: 'easeOut',
+          }}
+          data-color-inverted={'true'}
         >
           <ScrambleText
             style={{
-              fontSize: isMobile ? "36px" : "64px",
-              fontFamily: "var(--font-serif)",
-              fontStyle: "italic",
-              color: "var(--primary-orange)",
+              fontSize: isMobile ? '36px' : '64px',
+              fontFamily: 'var(--font-serif)',
+              fontStyle: 'italic',
+              color: 'var(--primary-orange)',
             }}
-            texts={["Fullstack", "App", "Game", "Web"]}
+            texts={['Fullstack', 'App', 'Game', 'Web']}
             speed={100}
             pauseDuration={1000}
           />
@@ -86,7 +101,11 @@ function Hero() {
           className="desc"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: BG_SETTLE_DELAY + 0.2, duration: 0.6, ease: "easeOut" }}
+          transition={{
+            delay: BG_SETTLE_DELAY + 0.2,
+            duration: 0.6,
+            ease: 'easeOut',
+          }}
         >
           Avi has a strong interest in Product Management and Entrepreneurship
           and is committed to delivering high-quality tech products that offer
@@ -96,20 +115,24 @@ function Hero() {
           className="btn-flex"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: BG_SETTLE_DELAY + 0.5, duration: 0.4, ease: "easeOut" }}
+          transition={{
+            delay: BG_SETTLE_DELAY + 0.5,
+            duration: 0.4,
+            ease: 'easeOut',
+          }}
         >
           <CommonButton
             text="Connect"
             Icon={<FiLink className="icon-link" />}
             iconPosition="right"
-            onClick={() => window.open("https://linkedin.com/in/avivashishta")}
+            onClick={() => window.open('https://linkedin.com/in/avivashishta')}
           />
           <CommonButton
             text="See Work"
             variant="outline"
             Icon={<FiArrowRight className="icon-arrow" />}
             iconPosition="right"
-            onClick={() => scrollToComponent("work")}
+            onClick={() => scrollToComponent('work')}
           />
         </motion.div>
         <motion.p
@@ -117,9 +140,10 @@ function Hero() {
           className="bottom-text"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={introDone
-            ? { duration: 0.5 }
-            : { delay: BG_SETTLE_DELAY + 0.7, duration: 0.6, ease: "easeOut" }
+          transition={
+            introDone
+              ? { duration: 0.5 }
+              : { delay: BG_SETTLE_DELAY + 0.7, duration: 0.6, ease: 'easeOut' }
           }
           dangerouslySetInnerHTML={{ __html: bottomTexts[currentTextIndex] }}
         />
