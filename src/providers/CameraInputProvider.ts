@@ -120,24 +120,82 @@ const smoothedHands: SmoothedHand[] = [
 // ── Gesture debounce ──
 const GESTURE_DEBOUNCE_FRAMES = 2;
 
-// ── Pinch-to-click gesture state ──
-const PINCH_THRESHOLD = 0.07; // normalized thumb-index distance to trigger pinch
-const PINCH_RELEASE_THRESHOLD = 0.10; // hysteresis for release
+// ── Scroll constants (used by pinch-drag scroll) ──
+const SCROLL_SENSITIVITY = 8; // px multiplier for direct tracking
+const MOMENTUM_DECAY = 0.95; // per-frame velocity decay (lower = stops faster)
+const MOMENTUM_MIN = 0.5; // velocity threshold to stop coasting
+const VELOCITY_SMOOTHING = 0.3; // EMA factor for velocity (0-1, lower = smoother)
+
+// Shared scroll state for momentum coasting after pinch release
+const scrollState = { velocity: 0 };
+let momentumRafId: number | null = null;
+
+function startMomentumScroll() {
+  if (momentumRafId !== null) return;
+
+  const coast = () => {
+    scrollState.velocity *= MOMENTUM_DECAY;
+
+    if (Math.abs(scrollState.velocity) < MOMENTUM_MIN) {
+      scrollState.velocity = 0;
+      momentumRafId = null;
+      return;
+    }
+
+    window.scrollBy({ top: scrollState.velocity, behavior: "instant" });
+    momentumRafId = requestAnimationFrame(coast);
+  };
+
+  momentumRafId = requestAnimationFrame(coast);
+}
+
+function stopMomentumScroll() {
+  if (momentumRafId !== null) {
+    cancelAnimationFrame(momentumRafId);
+    momentumRafId = null;
+  }
+}
+
+// ── Pinch gesture state (click + drag-to-scroll) ──
+const PINCH_THRESHOLD = 0.05; // normalized thumb-index distance to trigger pinch (stricter)
+const PINCH_RELEASE_THRESHOLD = 0.08; // hysteresis for release
 const PINCH_COOLDOWN_MS = 300;
+const PINCH_SCROLL_THRESHOLD = 15; // px of Y movement before pinch becomes scroll
 
 interface PinchState {
   isPinching: boolean;
+  isScrolling: boolean;
   pinchFrames: number;
   releaseFrames: number;
   lastClickTime: number;
+  // Scroll tracking (active during pinch hold)
+  startScreenY: number;
+  lastScreenY: number;
+  smoothedScreenY: number;
+  velocity: number;
 }
 
-const pinchStates: PinchState[] = [
-  { isPinching: false, pinchFrames: 0, releaseFrames: 0, lastClickTime: 0 },
-  { isPinching: false, pinchFrames: 0, releaseFrames: 0, lastClickTime: 0 },
-];
+const makePinchState = (): PinchState => ({
+  isPinching: false,
+  isScrolling: false,
+  pinchFrames: 0,
+  releaseFrames: 0,
+  lastClickTime: 0,
+  startScreenY: 0,
+  lastScreenY: 0,
+  smoothedScreenY: 0,
+  velocity: 0,
+});
+
+const pinchStates: PinchState[] = [makePinchState(), makePinchState()];
+
+function isFist(landmarks: any[]): boolean {
+  // Fist = 0-1 extended fingers (all curled, thumb may poke out)
+  return countExtendedFingers(landmarks) <= 1;
+}
 
 function detectPinch(landmarks: any[]): boolean {
+  if (isFist(landmarks)) return false; // suppress pinch during fist
   const thumbTip = landmarks[4];
   const indexTip = landmarks[8];
   return Math.hypot(thumbTip.x - indexTip.x, thumbTip.y - indexTip.y) < PINCH_THRESHOLD;
@@ -168,7 +226,7 @@ function processPinchGesture(
   handIdx: number,
   screenX: number,
   screenY: number
-): boolean {
+): { isPinching: boolean; isScrolling: boolean } {
   const state = pinchStates[handIdx];
   const pinching = detectPinch(landmarks);
   const released = isPinchReleased(landmarks);
@@ -185,150 +243,66 @@ function processPinchGesture(
   // Enter pinch
   if (!state.isPinching && state.pinchFrames >= GESTURE_DEBOUNCE_FRAMES) {
     const now = performance.now();
-    if (now - state.lastClickTime < PINCH_COOLDOWN_MS) return false;
+    if (now - state.lastClickTime < PINCH_COOLDOWN_MS)
+      return { isPinching: false, isScrolling: false };
     state.isPinching = true;
-    return true;
-  }
-
-  // Release → click at current cursor position
-  if (state.isPinching && state.releaseFrames >= GESTURE_DEBOUNCE_FRAMES) {
-    dispatchClick(screenX, screenY);
-    state.isPinching = false;
-    state.lastClickTime = performance.now();
-    return false;
-  }
-
-  return state.isPinching;
-}
-
-// ── Two-finger scroll with iOS-style momentum ──
-const SCROLL_ENTER_DEBOUNCE = 8; // frames the 2-finger pose must hold before scroll starts (~270ms)
-const SCROLL_SENSITIVITY = 8; // px multiplier for direct tracking
-const MOMENTUM_DECAY = 0.95; // per-frame velocity decay (lower = stops faster)
-const MOMENTUM_MIN = 0.5; // velocity threshold to stop coasting
-const VELOCITY_SMOOTHING = 0.3; // EMA factor for velocity (0-1, lower = smoother)
-
-interface ScrollState {
-  isScrolling: boolean;
-  lastScreenY: number;
-  smoothedScreenY: number;
-  velocity: number; // smoothed scroll velocity in px/frame
-  enterFrames: number;
-  exitFrames: number;
-}
-
-const scrollState: ScrollState = {
-  isScrolling: false,
-  lastScreenY: 0,
-  smoothedScreenY: 0,
-  velocity: 0,
-  enterFrames: 0,
-  exitFrames: 0,
-};
-
-let momentumRafId: number | null = null;
-
-// Rotation-invariant check: is fingertip further from wrist than its MCP?
-function isFingerExtended(landmarks: any[], tipIdx: number, mcpIdx: number): boolean {
-  const wrist = landmarks[0];
-  const tip = landmarks[tipIdx];
-  const mcp = landmarks[mcpIdx];
-  const tipDist = Math.hypot(tip.x - wrist.x, tip.y - wrist.y);
-  const mcpDist = Math.hypot(mcp.x - wrist.x, mcp.y - wrist.y);
-  return tipDist > mcpDist * 1.15;
-}
-
-function isTwoFingerGesture(landmarks: any[]): boolean {
-  // Index and middle extended, ring and pinky curled — works at any hand angle
-  const indexOut = isFingerExtended(landmarks, 8, 5);
-  const middleOut = isFingerExtended(landmarks, 12, 9);
-  const ringIn = !isFingerExtended(landmarks, 16, 13);
-  const pinkyIn = !isFingerExtended(landmarks, 20, 17);
-
-  return indexOut && middleOut && ringIn && pinkyIn;
-}
-
-function startMomentumScroll() {
-  if (momentumRafId !== null) return;
-
-  const coast = () => {
-    scrollState.velocity *= MOMENTUM_DECAY;
-
-    if (Math.abs(scrollState.velocity) < MOMENTUM_MIN) {
-      scrollState.velocity = 0;
-      momentumRafId = null;
-      return;
-    }
-
-    window.scrollBy({ top: scrollState.velocity, behavior: "instant" });
-    momentumRafId = requestAnimationFrame(coast);
-  };
-
-  momentumRafId = requestAnimationFrame(coast);
-}
-
-function stopMomentumScroll() {
-  if (momentumRafId !== null) {
-    cancelAnimationFrame(momentumRafId);
-    momentumRafId = null;
-  }
-}
-
-function processTwoFingerScroll(
-  landmarks: any[],
-  screenY: number
-): boolean {
-  const twoFingers = isTwoFingerGesture(landmarks);
-
-  // Count consecutive frames for debounce
-  if (twoFingers) {
-    scrollState.enterFrames++;
-    scrollState.exitFrames = 0;
-  } else {
-    scrollState.exitFrames++;
-    scrollState.enterFrames = 0;
-  }
-
-  if (!scrollState.isScrolling && scrollState.enterFrames >= SCROLL_ENTER_DEBOUNCE) {
-    // Gesture started — stop any existing momentum
+    state.isScrolling = false;
+    state.startScreenY = screenY;
+    state.lastScreenY = screenY;
+    state.smoothedScreenY = screenY;
+    state.velocity = 0;
     stopMomentumScroll();
-    scrollState.isScrolling = true;
-    scrollState.lastScreenY = screenY;
-    scrollState.smoothedScreenY = screenY;
-    scrollState.velocity = 0;
-    return true;
+    return { isPinching: true, isScrolling: false };
   }
 
-  if (scrollState.isScrolling && scrollState.exitFrames >= GESTURE_DEBOUNCE_FRAMES) {
-    // Gesture ended — kick off momentum coast
-    scrollState.isScrolling = false;
-    if (Math.abs(scrollState.velocity) > MOMENTUM_MIN) {
-      startMomentumScroll();
+  // While pinching: check for drag → scroll
+  if (state.isPinching && !state.isScrolling) {
+    const yDelta = Math.abs(screenY - state.startScreenY);
+    if (yDelta > PINCH_SCROLL_THRESHOLD) {
+      state.isScrolling = true;
+      state.lastScreenY = screenY;
+      state.smoothedScreenY = screenY;
     }
-    return false;
   }
 
-  if (scrollState.isScrolling) {
-    // Smooth the raw Y input to reduce jitter
-    scrollState.smoothedScreenY =
-      scrollState.smoothedScreenY * (1 - SCROLL_Y_SMOOTHING) +
+  // Active scroll during pinch
+  if (state.isPinching && state.isScrolling && state.releaseFrames === 0) {
+    state.smoothedScreenY =
+      state.smoothedScreenY * (1 - SCROLL_Y_SMOOTHING) +
       screenY * SCROLL_Y_SMOOTHING;
 
-    const smoothedDelta = scrollState.smoothedScreenY - scrollState.lastScreenY;
-    scrollState.lastScreenY = scrollState.smoothedScreenY;
+    const smoothedDelta = state.smoothedScreenY - state.lastScreenY;
+    state.lastScreenY = state.smoothedScreenY;
 
-    const scrollAmount = smoothedDelta * SCROLL_SENSITIVITY;
+    const scrollAmount = -smoothedDelta * SCROLL_SENSITIVITY; // inverted: drag down = scroll up (grab & pull)
 
-    // EMA smoothing on velocity for momentum calculation
-    scrollState.velocity =
-      scrollState.velocity * (1 - VELOCITY_SMOOTHING) +
+    state.velocity =
+      state.velocity * (1 - VELOCITY_SMOOTHING) +
       scrollAmount * VELOCITY_SMOOTHING;
 
     window.scrollBy({ top: scrollAmount, behavior: "instant" });
-    return true;
   }
 
-  return false;
+  // Release pinch
+  if (state.isPinching && state.releaseFrames >= GESTURE_DEBOUNCE_FRAMES) {
+    if (state.isScrolling) {
+      // Was scrolling → kick off momentum, no click
+      if (Math.abs(state.velocity) > MOMENTUM_MIN) {
+        scrollState.velocity = state.velocity;
+        startMomentumScroll();
+      }
+    } else {
+      // Was not scrolling → dispatch click
+      dispatchClick(screenX, screenY);
+    }
+    state.isPinching = false;
+    state.isScrolling = false;
+    state.lastClickTime = performance.now();
+    state.velocity = 0;
+    return { isPinching: false, isScrolling: false };
+  }
+
+  return { isPinching: state.isPinching, isScrolling: state.isScrolling };
 }
 
 function processFrame() {
@@ -396,21 +370,16 @@ function processFrame() {
             const screenX = ((sh.x + 1) / 2) * window.innerWidth;
             const screenY = ((sh.y + 1) / 2) * window.innerHeight;
 
-            // Two-finger scroll takes priority (only process on first hand)
-            const isScrolling =
-              idx === 0 && processTwoFingerScroll(landmarks, screenY);
-
-            // Pinch-and-drag (skip if currently scrolling)
-            const isPinching =
-              !isScrolling && processPinchGesture(landmarks, idx, screenX, screenY);
+            // Pinch gesture handles both click and drag-to-scroll
+            const pinchResult = processPinchGesture(landmarks, idx, screenX, screenY);
 
             return {
               x: sh.x,
               y: sh.y,
               fingers,
               confidence,
-              isPinching,
-              isScrolling,
+              isPinching: pinchResult.isPinching,
+              isScrolling: pinchResult.isScrolling,
             };
           }
         ).filter(Boolean) as any[];
@@ -421,20 +390,14 @@ function processFrame() {
         latestHandLandmarks = null;
         // Reset gesture states when hands disappear
         for (const ps of pinchStates) {
-          ps.isPinching = false;
-          ps.pinchFrames = 0;
-          ps.releaseFrames = 0;
+          if (ps.isScrolling && Math.abs(ps.velocity) > MOMENTUM_MIN) {
+            scrollState.velocity = ps.velocity;
+            startMomentumScroll();
+          }
+          Object.assign(ps, makePinchState());
         }
         smoothedHands[0].initialized = false;
         smoothedHands[1].initialized = false;
-        scrollState.enterFrames = 0;
-        scrollState.exitFrames = 0;
-        if (scrollState.isScrolling) {
-          scrollState.isScrolling = false;
-          if (Math.abs(scrollState.velocity) > MOMENTUM_MIN) {
-            startMomentumScroll();
-          }
-        }
       }
     } catch {
       // Skip frame on error
@@ -503,17 +466,11 @@ export function stopCameraInput() {
 
   latestFaceLandmarks = null;
   latestHandLandmarks = null;
-  for (const ps of pinchStates) {
-    ps.isPinching = false;
-    ps.pinchFrames = 0;
-    ps.releaseFrames = 0;
-    ps.lastClickTime = 0;
+  for (let i = 0; i < pinchStates.length; i++) {
+    pinchStates[i] = makePinchState();
   }
   for (const sh of smoothedHands) sh.initialized = false;
-  scrollState.isScrolling = false;
   scrollState.velocity = 0;
-  scrollState.enterFrames = 0;
-  scrollState.exitFrames = 0;
   stopMomentumScroll();
 
   const inputStore = useInputSourceStore.getState();
