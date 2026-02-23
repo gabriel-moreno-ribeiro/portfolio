@@ -1,41 +1,78 @@
-import { motion } from "motion/react";
-import { useMemo, useState } from "react";
-import useIsMobile from "../../hooks/useIsMobile";
-import { scrollToComponent } from "../../utils/scrollToComponent";
-import MenuIcon from "./MenuIcon";
+import { motion } from 'motion/react';
+import { useEffect, useMemo, useState } from 'react';
+import { FiVideoOff, FiX } from 'react-icons/fi';
+import { IoMoonOutline, IoSunnyOutline } from 'react-icons/io5';
+import useIsMobile from '../../hooks/useIsMobile';
+import { useHandsfreeStore } from '../../store/handsfreeStore';
+import { useThemeStore } from '../../store/themeStore';
+import { scrollToComponent } from '../../utils/scrollToComponent';
+import MenuIcon from './MenuIcon';
+
+const supportsCamera =
+  typeof navigator !== 'undefined' && !!navigator.mediaDevices?.getUserMedia;
 
 function Navbar() {
   const isMobile = useIsMobile();
   const [isHovered, setIsHovered] = useState<boolean>(false);
+
+  const { darkMode, toggleDarkMode } = useThemeStore();
+  const {
+    isEnabled: cameraEnabled,
+    hasSeenIntro,
+    setEnabled: setCameraEnabled,
+    setShowIntroModal,
+    setShowGestureTutorial,
+  } = useHandsfreeStore();
+
+  useEffect(() => {
+    if (isMobile) {
+      document.body.classList.toggle('nav-expanded', isHovered);
+    }
+    return () => {
+      document.body.classList.remove('nav-expanded');
+    };
+  }, [isHovered, isMobile]);
+
+  const handleCameraClick = () => {
+    if (!hasSeenIntro) {
+      setShowIntroModal(true);
+      return;
+    }
+    if (cameraEnabled) {
+      setCameraEnabled(false);
+    } else {
+      setCameraEnabled(true);
+      setTimeout(() => setShowGestureTutorial(true), 1500);
+    }
+  };
+
   const links = [
     {
-      name: "Skills.",
-      href: "#skills",
+      name: 'Skills.',
+      href: '#skills',
       top: 40,
     },
     {
-      name: "Work.",
-      href: "#work",
+      name: 'Work.',
+      href: '#work',
     },
     {
-      name: "LinkedIn.",
-      href: "https://linkedin.com/in/avivashishta",
+      name: 'LinkedIn.',
+      href: 'https://linkedin.com/in/avivashishta',
     },
     {
-      name: "Github.",
-      href: "https://github.com/AVIVASHISHTA29",
+      name: 'Github.',
+      href: 'https://github.com/AVIVASHISHTA29',
     },
   ];
-  const expandedWidth = useMemo(
-    () => (isMobile ? "300px" : "700px"),
-    [isMobile]
-  );
+  const collapsedWidth = isMobile ? '175px' : 'auto';
+  const expandedWidth = isMobile ? 'calc(100vw - 32px)' : '700px';
 
   const handleLinkClick = (link: { href: string; top?: number }) => {
-    if (link.href.includes("#")) {
-      scrollToComponent(link.href.split("#")[1], link.top);
+    if (link.href.includes('#')) {
+      scrollToComponent(link.href.split('#')[1], link.top);
     } else {
-      window.open(link.href, "_blank");
+      window.open(link.href, '_blank');
     }
   };
 
@@ -48,58 +85,88 @@ function Navbar() {
       initial={{ opacity: 0 }}
       animate={{
         opacity: 1,
-        width: isHovered ? expandedWidth : "auto",
+        width: isHovered ? expandedWidth : collapsedWidth,
       }}
       transition={{
-        opacity: { delay: 0.5, duration: 0.6, ease: "easeOut" },
-        width: {
-          type: "spring",
-          stiffness: isMobile ? 200 : 100,
-          damping: 15,
-        },
+        opacity: { delay: 0.5, duration: 0.6, ease: 'easeOut' },
+        width: isMobile
+          ? { duration: 0.35, ease: [0.25, 0.1, 0.25, 1] }
+          : { type: 'spring', stiffness: 100, damping: 15 },
       }}
       style={{
-        justifyContent: isHovered ? "flex-start" : "center",
+        justifyContent: isHovered ? 'flex-start' : 'center',
       }}
     >
       <MenuIcon isHovered={isHovered} setIsHovered={setIsHovered} />
       {isMobile ? (
-        <motion.h1
+        <h1
           className="heading"
-          layout
-          animate={{ opacity: isHovered ? 0 : 1 }}
-          transition={{ duration: 0.25 }}
+          style={{ visibility: isHovered ? 'hidden' : 'visible' }}
         >
           Avi Vashishta.
-        </motion.h1>
+        </h1>
       ) : (
         <motion.h1
           className="heading"
           layout
-          transition={{ type: "spring", stiffness: 200, damping: 25 }}
+          transition={{ type: 'spring', stiffness: 200, damping: 25 }}
         >
           Avi Vashishta.
         </motion.h1>
       )}
       <motion.div
-        className={`links`}
+        className="links"
         initial={{ opacity: 0 }}
-        animate={{
-          opacity: isHovered ? 1 : 0,
-          display: isHovered ? "flex" : "none",
+        animate={{ opacity: isHovered ? 1 : 0 }}
+        transition={{
+          delay: isHovered ? 0.15 : 0,
+          duration: 0.2,
         }}
-        transition={{ delay: isHovered ? 0.3 : 0, duration: 0.3 }}
+        style={{ pointerEvents: isHovered ? 'auto' : 'none' }}
       >
         {links.map((link, i) => (
           <p
             onClick={() => handleLinkClick(link)}
             key={`link-${i}`}
-            className={!isHovered ? "hidden" : ""}
           >
             {link.name}
           </p>
         ))}
       </motion.div>
+      {isMobile && (
+        <motion.div
+          className="navbar-toggles"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: isHovered ? 1 : 0 }}
+          transition={{
+            delay: isHovered ? 0.15 : 0,
+            duration: 0.2,
+          }}
+          style={{ pointerEvents: isHovered ? 'auto' : 'none' }}
+        >
+          {supportsCamera && (
+            <button
+              className={`navbar-toggle-btn ${cameraEnabled ? 'active' : ''}`}
+              onClick={e => {
+                e.stopPropagation();
+                handleCameraClick();
+              }}
+              title={cameraEnabled ? 'Disable camera' : 'Enable camera'}
+            >
+              {cameraEnabled ? <FiX /> : <FiVideoOff />}
+            </button>
+          )}
+          <button
+            className="navbar-toggle-btn"
+            onClick={e => {
+              e.stopPropagation();
+              toggleDarkMode();
+            }}
+          >
+            {darkMode ? <IoSunnyOutline /> : <IoMoonOutline />}
+          </button>
+        </motion.div>
+      )}
     </motion.div>
   );
 }

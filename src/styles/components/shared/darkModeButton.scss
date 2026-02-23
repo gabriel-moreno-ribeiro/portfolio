@@ -28,8 +28,12 @@
 
 @media screen and (max-width: 600px) {
   .toggle-button {
-    top: unset;
-    bottom: calc(0dvh + 24px);
-    right: 16px;
+    transition: opacity 0.2s ease, background-color 0.3s, color 0.3s;
+  }
+
+  body.nav-expanded .toggle-button {
+    opacity: 0 !important;
+    pointer-events: none !important;
+    visibility: hidden;
   }
 }
