@@ -336,7 +336,7 @@ const commands: CommandDefinition[] = [
         `${bold("Terminal:")} xterm.js`,
         `${bold("CPU:")} BTech CS @ IIIT Delhi`,
         `${bold("GPU:")} Fullstack Developer`,
-        `${bold("Memory:")} 2+ years SDE exp`,
+        `${bold("Memory:")} 3+ years SDE exp`,
         `${bold("Uptime:")} Since Oct 2022`,
       ];
       const maxLines = Math.max(artLines.length, infoLines.length);

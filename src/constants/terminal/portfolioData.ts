@@ -14,9 +14,23 @@ export const education = {
 
 export const experience = [
   {
+    title: "Software Engineer",
+    company: "Dock.us (YC 21)",
+    date: "March 2025 - Present",
+    description:
+      "Building features using the latest AI technologies on a Next.js, Node.js, GraphQL based tech stack with AWS SQS for messaging infrastructure.",
+  },
+  {
+    title: "Founding Engineer",
+    company: "Turgon AI",
+    date: "October 2024 - June 2025",
+    description:
+      "Led a cross-functional team to architect and deliver three AI-driven products. Reviewed and merged 500+ pull requests. Built a multi-tenant Next.js CMS controlling private club mobile apps globally with dynamic pages, real-time updates, and RBAC. Developed secure contactless check-ins using encrypted QR codes, a Fin-AI product with 99%+ accurate financial insights using Vercel AI SDK, LangChain, and Eleven Labs. Architected an AI-driven Expo mobile app using BFF architecture, digital wallet and ticketing system, and CI/CD pipelines with GitHub Actions.",
+  },
+  {
     title: "SDE",
     company: "AccioJob (YC 21)",
-    date: "October 2022 - Present",
+    date: "October 2022 - October 2024",
     description:
       "Managed over 300+ features and issues (highest in the team) across four product repositories. Developed AI products including AI-based tutoring, unique question generation, and proctoring services. Taught Frontend Web Development to over 90,000 students online.",
   },
