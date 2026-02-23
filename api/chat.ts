@@ -1,5 +1,26 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 
+const ALLOWED_ORIGINS = [
+  "https://www.avivashishta.com",
+  "https://avivashishta.com",
+];
+
+// Simple in-memory rate limiter: 10 requests per IP per minute
+const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
+const RATE_LIMIT = 10;
+const RATE_WINDOW_MS = 60 * 1000;
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const entry = rateLimitMap.get(ip);
+  if (!entry || now > entry.resetAt) {
+    rateLimitMap.set(ip, { count: 1, resetAt: now + RATE_WINDOW_MS });
+    return false;
+  }
+  entry.count++;
+  return entry.count > RATE_LIMIT;
+}
+
 const SYSTEM_PROMPT = `You are an AI assistant on Avi Vashishta's portfolio website. You represent Avi and answer questions about him in a helpful, friendly, slightly witty tone.
 
 About Avi:
@@ -29,6 +50,26 @@ Rules:
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
+  }
+
+  // Origin check — only allow requests from the portfolio site
+  const origin = req.headers.origin || req.headers.referer;
+  const isAllowed =
+    process.env.NODE_ENV === "development" ||
+    (origin && ALLOWED_ORIGINS.some((o) => origin.startsWith(o)));
+  if (!isAllowed) {
+    return res.status(403).json({ error: "Forbidden" });
+  }
+
+  // Rate limit by IP
+  const ip =
+    (req.headers["x-forwarded-for"] as string)?.split(",")[0]?.trim() ||
+    req.socket?.remoteAddress ||
+    "unknown";
+  if (isRateLimited(ip)) {
+    return res
+      .status(429)
+      .json({ error: "Too many requests. Try again in a minute." });
   }
 
   const { messages } = req.body;
