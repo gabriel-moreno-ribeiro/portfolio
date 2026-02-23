@@ -1,0 +1,108 @@
+# Avi Vashishta
+
+> Fullstack Developer | App Developer | Game Developer
+
+Website: https://www.avivashishta.com
+Email: avivashishta29@gmail.com
+LinkedIn: https://linkedin.com/in/avivashishta
+GitHub: https://github.com/AVIVASHISHTA29
+
+## About
+
+Avi Vashishta is a 22-year-old fullstack developer based in India with a BTech in Computer Science from IIIT Delhi (Indraprastha Institute of Information Technology, Delhi), graduated 2024. He has a strong interest in Product Management and Entrepreneurship and is committed to delivering high-quality tech products with exceptional user experience. He has taught MERN Stack to over 100,000+ students as an instructor at a leading YC-backed EdTech platform.
+
+Interests: Algo Trading, UI Design, Product Design, Entrepreneurship.
+
+## Work Experience
+
+### Software Engineer — Dock.us (YC 2021)
+March 2025 – Present
+Building features using the latest AI technologies on a Next.js, Node.js, GraphQL based tech stack with AWS SQS for messaging infrastructure.
+
+### Founding Engineer — Turgon AI
+October 2024 – June 2025
+Led a cross-functional team to architect and deliver three AI-driven products. Reviewed and merged 500+ pull requests. Built a multi-tenant Next.js CMS controlling private club mobile apps globally with dynamic pages, real-time updates, and RBAC. Developed secure contactless check-ins using encrypted QR codes. Built a Fin-AI product with 99%+ accurate financial insights using Vercel AI SDK, LangChain, and Eleven Labs. Architected an AI-driven Expo mobile app using BFF architecture, digital wallet and ticketing system, and CI/CD pipelines with GitHub Actions. Used PostHog, Redux Toolkit, Upstash Redis, Prisma ORM, and Supabase Realtime.
+
+### SDE — AccioJob (YC 2021)
+October 2022 – October 2024
+Managed 300+ features and issues (highest in team) across four product repositories. Built AI products including AI-based tutoring, unique question generation, and proctoring services. Taught Frontend Web Development to 90,000+ students online.
+
+### Founder — STV Technologies
+October 2021 – August 2022
+Co-founded a freelancing firm. Completed 30+ freelance projects for international and national clients spanning full-stack web dev, app dev, Shopify, Wix/WordPress, and Unity games. Generated revenue of INR 10,00,000.
+
+### Fullstack Intern — Attrilu
+February 2022 – April 2022
+Worked with Facebook (Meta) APIs. Built a web application for creators and brand marketing using Next.js and Django.
+
+### Mobile App Intern — Fitzura
+January 2022 – March 2022
+Developed a fitness clothing app using React Native with a Python Django backend.
+
+## Skills
+
+### Frontend
+React, Next.js, React Native, TypeScript, JavaScript, HTML, CSS, SCSS, Tailwind CSS, Three.js, React Three Fiber (R3F), Framer Motion, GSAP, Motion, Redux, Zustand, MUI, Ant Design
+
+### Backend
+Node.js, NestJS, Express, Python, Django, Flask, Firebase, MongoDB, REST APIs, GraphQL
+
+### Tools & DevOps
+Git, GitHub, VS Code, Vercel, Firebase, AWS (SQS, EC2), Docker, CI/CD, GitHub Actions, Unity, C#, Figma
+
+## Projects
+
+### AI For Messaging App
+React Native, Flask, JavaScript, Python, OpenAI API
+Transform your thoughts into effective messages using the power of AI. No signup required. Express your thoughts via chat or voice. Use quick chips to instantly write messages.
+GitHub: https://github.com/orgs/whatsapp-ai-helper/repositories
+
+### BOLDBot
+Next.js, TypeScript, NestJS, Redux, Firebase, Framer Motion
+Automating customer service for Instagram businesses. Levels up the professionalism of your business by increasing efficacy and simplifying interaction with your consumer.
+GitHub: https://github.com/BoldStore/bold-bot-frontend
+
+### BOLD Store
+React Native, Expo, Firebase, JavaScript, Redux, Node.js
+The world's first one-click marketplace. Fully integrated with Facebook APIs, automatically converts your feed into a store.
+GitHub: https://github.com/BoldStore/MobileApp
+
+### Infinite Rider & Infinite Rider 3D
+Unity, C#
+A flappy bird-style infinite game where the player has to avoid obstacles. Available in both 2D and 3D.
+
+### Anonimo.fun
+Next.js, Firebase, JavaScript, MUI
+A social media app that allows users to chat anonymously — a platform where users can share thoughts and opinions without the fear of being judged.
+
+## Teaching & Content
+
+Avi has created 17+ coding tutorial videos on YouTube with a combined viewership of 100,000+. Notable tutorials include:
+- Airbnb Clone with React (21,000+ views)
+- Crypto Currency Price Tracker (11,000+ views)
+- Spotify Clone (10,000+ views)
+- Personal Finance Tracker (9,900+ views)
+- Twitter Clone (9,000 views)
+- Fundamentals of React (8,000+ views)
+- Instagram Clone (7,000+ views)
+- Mario Game (6,000+ views)
+- Calculator (6,000+ views)
+
+## Published Works
+
+### Books (Amazon)
+- "Realis Reality" — A self-help book written at age 16.
+- "18 Things I Have Learned at 18" — Life lessons from an 18-year-old.
+
+### Podcast
+- "Lockdown Wars" — Started during the pandemic with friends. A platform for people to come on and show their talent. 100,000+ streams in 2 months.
+
+## About This Website
+
+This portfolio (avivashishta.com) is a React 19 + TypeScript SPA built with Vite and deployed on Vercel. It features:
+- 3D animations using Three.js and React Three Fiber
+- Scroll animations via GSAP ScrollTrigger
+- Motion (Framer Motion successor) for UI transitions
+- Camera-based gesture control using MediaPipe (hand tracking, head tracking, pinch-to-click)
+- An interactive terminal (Ctrl+J) with 27 commands and AI chat powered by OpenAI
+- Dark/light mode with gradient theming
