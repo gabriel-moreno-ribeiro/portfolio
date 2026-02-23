@@ -21,7 +21,7 @@ function CarCanvas({ setShowCarCanvas }) {
       </Canvas>
       <div className="ball-text">
         <p className="desc">
-          Use <code>Arrow Keys</code> to control BB-8.
+          Use <code>Arrow Keys</code> or <code>Hands</code> to control BB-8.
         </p>
         <p className="desc">
           Press <code onClick={() => setShowCarCanvas(false)}>Esc</code> to
