@@ -1,8 +1,48 @@
 import { useEffect } from "react";
+import { useInputSourceStore } from "../../store/inputSourceStore";
 import { useThemeStore } from "../../store/themeStore";
 
 function CustomMouse() {
   const { darkMode } = useThemeStore();
+
+  // Hide custom mouse when camera is active, show on real mouse movement
+  useEffect(() => {
+    let hidden = false;
+
+    const hide = () => {
+      if (hidden) return;
+      hidden = true;
+      const el = document.querySelector(".custom-mouse") as HTMLElement;
+      if (el) el.style.display = "none";
+    };
+
+    const show = () => {
+      if (!hidden) return;
+      hidden = false;
+      const el = document.querySelector(".custom-mouse") as HTMLElement;
+      if (el) el.style.display = "";
+    };
+
+    const onMouseMove = () => {
+      if (hidden) show();
+    };
+
+    const unsub = useInputSourceStore.subscribe((state) => {
+      if (state.inputSource === "camera") hide();
+      else show();
+    });
+
+    // Check initial state
+    if (useInputSourceStore.getState().inputSource === "camera") hide();
+
+    window.addEventListener("mousemove", onMouseMove);
+    return () => {
+      unsub();
+      window.removeEventListener("mousemove", onMouseMove);
+      show();
+    };
+  }, []);
+
   useEffect(() => {
     const mouseMove = (e: MouseEvent) => {
       const customMouse = document.querySelector(

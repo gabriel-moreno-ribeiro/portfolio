@@ -1,4 +1,4 @@
-import { motion, useScroll, useSpring } from "framer-motion";
+import { motion, useScroll, useSpring } from "motion/react";
 function HorizontalScroller() {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {

@@ -1,70 +1,88 @@
-import { useCallback } from "react";
-import { FaGithub, FaInstagram, FaLinkedinIn } from "react-icons/fa6";
-import { MdOutlineContactPage } from "react-icons/md";
-import { useThemeStore } from "../../store/themeStore";
+import { motion } from "motion/react";
+import { useMemo, useState } from "react";
+import useIsMobile from "../../hooks/useIsMobile";
 
 function Footer() {
-  const { darkMode } = useThemeStore();
-  const mouseEnterAndExit = useCallback(
-    (enter: boolean) => {
-      const customMouse = document.querySelector(
-        ".custom-mouse"
-      ) as HTMLElement;
-      if (customMouse) {
-        if (enter) {
-          customMouse.style.backgroundColor = darkMode
-            ? "var(--black)"
-            : "var(--white)";
-        } else {
-          customMouse.style.backgroundColor = darkMode
-            ? "var(--black)"
-            : "var(--black)";
-        }
-      }
-    },
-    [darkMode]
-  );
-
-  const socialLinks = [
+  const isMobile = useIsMobile();
+  const [isHovered, setIsHovered] = useState<boolean>(false);
+  const links = [
     {
-      icon: <FaGithub className="icon" />,
-      url: "https://github.com/AVIVASHISHTA29",
+      name: "LinkedIn.",
+      href: "https://linkedin.com/in/avivashishta",
     },
     {
-      icon: <FaLinkedinIn className="icon" />,
-      url: "https://linkedin.com/in/avivashishta",
+      name: "Github.",
+      href: "https://github.com/AVIVASHISHTA29",
     },
     {
-      icon: <FaInstagram className="icon" />,
-      url: "https://www.instagram.com/avi_vashishta29/",
-    },
-    {
-      icon: <MdOutlineContactPage className="icon" />,
-      url: "https://drive.google.com/file/d/1uaOoRCjC8sho5t_Yhjuu2fTiliCWy_mu/view?usp=drive_link",
+      name: "Email.",
+      href: "mailto:avivashishta29@gmail.com",
     },
   ];
+  const expandedWidth = useMemo(
+    () => (isMobile ? "300px" : "600px"),
+    [isMobile]
+  );
 
   return (
-    <div className="footer-wrapper">
-      <div
-        className="footer"
-        onMouseEnter={() => mouseEnterAndExit(true)}
-        onMouseLeave={() => mouseEnterAndExit(false)}
+    <motion.div
+      className="footer"
+      onMouseEnter={!isMobile ? () => setIsHovered(true) : undefined}
+      onMouseLeave={!isMobile ? () => setIsHovered(false) : undefined}
+      onClick={() => setIsHovered(!isHovered)}
+      animate={{
+        width: isHovered ? expandedWidth : "auto",
+      }}
+      transition={{
+        type: "spring",
+        stiffness: isMobile ? 200 : 100,
+        damping: 15,
+      }}
+      style={{
+        justifyContent: isHovered ? "flex-start" : "center",
+      }}
+    >
+      {isMobile ? (
+        <motion.h1
+          className="heading"
+          layout
+          animate={{ opacity: isHovered ? 0 : 1 }}
+          transition={{ duration: 0.25 }}
+        >
+          Footer.
+        </motion.h1>
+      ) : (
+        <motion.h1
+          className="heading"
+          layout
+          transition={{ type: "spring", stiffness: 200, damping: 25 }}
+        >
+          Footer.
+        </motion.h1>
+      )}
+      <motion.div
+        className="links"
+        initial={{ opacity: 0 }}
+        animate={{
+          opacity: isHovered ? 1 : 0,
+          display: isHovered ? "flex" : "none",
+        }}
+        transition={{ delay: isHovered ? 0.3 : 0, duration: 0.3 }}
       >
-        <div className="left-heading">Avi Vashishta.</div>
-        <div className="right-icons">
-          {socialLinks.map((link, index) => (
-            <div
-              key={index}
-              onClick={() => window.open(link.url, "_blank")}
-              style={{ cursor: "pointer" }}
-            >
-              {link.icon}
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
+        {links.map((link, i) => (
+          <p
+            onClick={(e) => {
+              e.stopPropagation();
+              window.open(link.href, "_blank");
+            }}
+            key={`footer-link-${i}`}
+            className={!isHovered ? "hidden" : ""}
+          >
+            {link.name}
+          </p>
+        ))}
+      </motion.div>
+    </motion.div>
   );
 }
 

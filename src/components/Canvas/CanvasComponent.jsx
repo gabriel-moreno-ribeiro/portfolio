@@ -1,34 +1,24 @@
 import { OrbitControls, useGLTF } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
+import { useInputSourceStore } from "../../store/inputSourceStore";
 import { useThemeStore } from "../../store/themeStore";
 
-function Model(props) {
-  const { nodes, materials } = useGLTF("assets/3d/cute_robot.glb");
+function Model({ onReady, ...props }) {
+  const { nodes, materials } = useGLTF("/assets/3d/cute_robot.glb");
   const group = useRef();
 
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-
   useEffect(() => {
-    const handleMouseMove = (event) => {
-      setMousePosition({
-        x: (event.clientX / window.innerWidth) * 2 - 1,
-        y: (event.clientY / window.innerHeight) * 2 - 1,
-      });
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-    };
+    // Model is mounted = GLB is loaded and scene is ready
+    onReady?.();
   }, []);
 
   useFrame(() => {
+    const { headPosition } = useInputSourceStore.getState();
     group.current.rotation.y +=
-      (mousePosition.x * 0.4 - group.current.rotation.y) * 0.2;
+      (headPosition.x * 0.4 - group.current.rotation.y) * 0.2;
     group.current.rotation.x +=
-      (mousePosition.y * 0.4 - group.current.rotation.x) * 0.2;
+      (headPosition.y * 0.4 - group.current.rotation.x) * 0.2;
   });
 
   return (
@@ -69,19 +59,21 @@ function Model(props) {
   );
 }
 
-useGLTF.preload("assets/3d/cute_robot.glb");
+useGLTF.preload("/assets/3d/cute_robot.glb");
 
-export default function CanvasComponent() {
+export default function CanvasComponent({ onReady }) {
   const { darkMode } = useThemeStore();
   return (
     <Canvas
       camera={{ position: [0.4, 1.17, 11.35], fov: 25 }}
       className={`robot-canvas`}
       data-drag-me={true}
+      gl={{ alpha: true, antialias: true }}
+      style={{ background: "transparent" }}
     >
       <ambientLight intensity={darkMode ? 0.25 : 1} />
       <directionalLight position={[10, 10, 10]} intensity={darkMode ? 0 : 2} />
-      <Model />
+      <Model onReady={onReady} />
       <OrbitControls enableZoom={false} />
     </Canvas>
   );

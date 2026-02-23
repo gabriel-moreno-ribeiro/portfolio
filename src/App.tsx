@@ -1,47 +1,36 @@
-import { initializeAnalytics } from "avi-analytics-sdk";
 import { useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import CameraFeedback from "./components/Shared/CameraFeedback";
 import CustomMouse from "./components/Shared/CustomMouse";
+import GestureTutorial from "./components/Shared/GestureTutorial";
+import HandCursor from "./components/Shared/HandCursor";
 import DarkModeButton from "./components/Shared/DarkModeButton";
+import HandsfreeButton from "./components/Shared/HandsfreeButton";
+import HandsfreeIntroModal from "./components/Shared/HandsfreeIntroModal";
 import HorizontalScroller from "./components/Shared/HorizontalScroller";
+import TerminalModal from "./components/Terminal/TerminalModal";
+import { useHandsfreeCamera } from "./hooks/useHandsfreeCamera";
 import useIsMobile from "./hooks/useIsMobile";
 import Home from "./pages/Home";
+import {
+  startMouseInputProvider,
+  stopMouseInputProvider,
+} from "./providers/MouseInputProvider";
 import { useThemeStore } from "./store/themeStore";
+
 function App() {
   const { darkMode } = useThemeStore();
   const isMobile = useIsMobile();
 
   useEffect(() => {
-    initializeAnalytics({
-      apiKey: "aba66723-638a-43bb-963d-58ad97960a5c",
-    });
-    fetch("https://jsonplaceholder.typicode.com/posts/1")
-      .then((res) => res.json())
-      .then((data) => console.log(data));
-
-    /* updating title of product with id 1 */
-    fetch(
-      "https://dummyjson.com/products?limit=10&skip=-sakisuaxsa&select=title,price",
-      {
-        method: "PUT" /* or PATCH */,
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          price: "iPhone Galaxy +1",
-        }),
-      }
-    )
-      .then((res) => res.json())
-      .then(console.log);
-
-    fetch("https://dummyjson.com/products/add", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: null,
-    })
-      .then((res) => res.json())
-      .then(console.log);
+    startMouseInputProvider();
+    return () => {
+      stopMouseInputProvider();
+    };
   }, []);
+
+  useHandsfreeCamera();
 
   useEffect(() => {
     document.documentElement.setAttribute(
@@ -54,7 +43,7 @@ function App() {
     if (!isMobile) {
       if (sessionStorage.getItem("showedToast")) return;
       setTimeout(() => {
-        toast("Just for fun, try pressing Ctrl + K!", {
+        toast("Just for fun, try pressing Ctrl + J!", {
           position: "bottom-right",
           autoClose: 1000 * 10,
           hideProgressBar: true,
@@ -70,15 +59,19 @@ function App() {
   }, [isMobile]);
 
   return (
-    // <ReactLenis root>
     <div className="app">
       <HorizontalScroller />
       <Home />
+      <HandsfreeButton />
       <DarkModeButton />
+      <HandsfreeIntroModal />
+      <GestureTutorial />
+      <CameraFeedback />
+      <HandCursor />
       <CustomMouse />
+      <TerminalModal />
       <ToastContainer />
     </div>
-    // </ReactLenis>
   );
 }
 

@@ -1,33 +1,42 @@
 import { useAnimations, useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import * as THREE from "three";
+import { useInputSourceStore } from "../../store/inputSourceStore";
 
+const ROTATION_RANGE = 2.5;
+const GRIP_TWIST_SCALE = 3.5;
+const GRIP_TILT_SCALE = 2.5;
+const LERP_SPEED = 0.22;
+const DEFAULT_ROLL_SPEED = 0.75;
 
 export function Ball(props) {
    const group = useRef();
   const { nodes, materials, animations } = useGLTF("/assets/3d/ball.glb");
   const { actions } = useAnimations(animations, group);
-  const [targetRotation, setTargetRotation] = useState({ x: 0, y: 0 });
+  const targetRotationRef = useRef({ x: 0, y: 0 });
+  const rollingActionRef = useRef(null);
 
   useEffect(() => {
     const rollingAction = actions["Rolling"];
     rollingAction.play();
-    rollingAction.setEffectiveTimeScale(0.75);
+    rollingAction.setEffectiveTimeScale(DEFAULT_ROLL_SPEED);
+    rollingActionRef.current = rollingAction;
     return () => rollingAction.stop();
   }, [actions]);
 
   useEffect(() => {
     const handleKeyDown = (event) => {
       const rotationSpeed = 0.5;
+      const target = targetRotationRef.current;
       if (event.code === "ArrowLeft") {
-        setTargetRotation((prev) => ({ ...prev, y: prev.y + rotationSpeed }));
+        target.y += rotationSpeed;
       } else if (event.code === "ArrowRight") {
-        setTargetRotation((prev) => ({ ...prev, y: prev.y - rotationSpeed }));
+        target.y -= rotationSpeed;
       } else if (event.code === "ArrowUp") {
-        setTargetRotation((prev) => ({ ...prev, x: prev.x - rotationSpeed }));
+        target.x -= rotationSpeed;
       } else if (event.code === "ArrowDown") {
-        setTargetRotation((prev) => ({ ...prev, x: prev.x + rotationSpeed }));
+        target.x += rotationSpeed;
       }
     };
 
@@ -38,19 +47,62 @@ export function Ball(props) {
 
   const Controller = () => {
     useFrame(() => {
-    if (group.current) {
-      // Smoothly interpolate between current and target rotation
-      group.current.rotation.x = THREE.MathUtils.lerp(
-        group.current.rotation.x,
-        targetRotation.x,
-        0.1
-      );
-      group.current.rotation.y = THREE.MathUtils.lerp(
-        group.current.rotation.y,
-        targetRotation.y,
-        0.1
-      );
+    if (!group.current) return;
+
+    const target = targetRotationRef.current;
+    const input = useInputSourceStore.getState();
+
+    if (input.inputSource === "camera") {
+      if (input.handPositions.length >= 2) {
+        // Two-hand grip & rotate mode
+        const sorted = [...input.handPositions].sort((a, b) => a.x - b.x);
+        const lh = sorted[0];
+        const rh = sorted[1];
+
+        // Angle between hands → Y rotation (twist like steering wheel)
+        const dx = rh.x - lh.x;
+        const dy = rh.y - lh.y;
+        const angle = Math.atan2(dy, dx);
+        target.y = -angle * GRIP_TWIST_SCALE;
+
+        // Average Y of both hands → X rotation (tilt up/down)
+        const avgY = (lh.y + rh.y) / 2;
+        target.x = avgY * GRIP_TILT_SCALE;
+
+        // Distance between hands → rolling animation speed
+        if (rollingActionRef.current) {
+          const dist = Math.hypot(dx, dy);
+          const speed = Math.min(2.0, Math.max(0.5, dist * 1.5));
+          rollingActionRef.current.setEffectiveTimeScale(speed);
+        }
+      } else if (input.handPositions.length === 1) {
+        // Single hand: direct position mapping
+        const pos = input.handPositions[0];
+        target.y = -pos.x * ROTATION_RANGE;
+        target.x = pos.y * ROTATION_RANGE;
+        if (rollingActionRef.current) {
+          rollingActionRef.current.setEffectiveTimeScale(DEFAULT_ROLL_SPEED);
+        }
+      } else {
+        // No hands: head tracking fallback
+        target.y = -input.headPosition.x * ROTATION_RANGE;
+        target.x = input.headPosition.y * ROTATION_RANGE;
+        if (rollingActionRef.current) {
+          rollingActionRef.current.setEffectiveTimeScale(DEFAULT_ROLL_SPEED);
+        }
+      }
     }
+
+    group.current.rotation.x = THREE.MathUtils.lerp(
+      group.current.rotation.x,
+      target.x,
+      LERP_SPEED
+    );
+    group.current.rotation.y = THREE.MathUtils.lerp(
+      group.current.rotation.y,
+      target.y,
+      LERP_SPEED
+    );
   });
     return <></>;
   }

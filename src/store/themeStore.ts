@@ -5,18 +5,15 @@ const getInitialTheme = () => {
   // Check local storage
   const savedTheme = localStorage.getItem("darkMode");
   if (savedTheme !== null) {
-    return JSON.parse(savedTheme);
+    const isDark = JSON.parse(savedTheme);
+    // Apply data-theme synchronously to prevent FOUC
+    document.documentElement.setAttribute(
+      "data-theme",
+      isDark ? "dark" : "light"
+    );
+    return isDark;
   }
 
-  // Check system settings
-  // const prefersDarkMode =
-  //   window.matchMedia &&
-  //   window.matchMedia("(prefers-color-scheme: dark)").matches;
-  // if (prefersDarkMode) {
-  //   return true;
-  // }
-
-  // Default to light mode
   return false;
 };
 
