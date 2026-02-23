@@ -52,12 +52,21 @@
 @media screen and (max-width: 600px) {
   .tabs {
     padding: 6px;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2px;
+    border-radius: 20px;
 
     .tab {
       position: relative;
-      margin: 0 8px;
-      padding: 8px 16px;
-      font-size: 14px;
+      margin: 0 4px;
+      padding: 8px 14px;
+      font-size: 13px;
+
+      &:last-child {
+        flex-basis: auto;
+        margin-top: 2px;
+      }
     }
   }
 

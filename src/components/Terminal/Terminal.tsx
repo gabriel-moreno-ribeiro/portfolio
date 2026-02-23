@@ -19,8 +19,13 @@ interface TerminalProps {
   onClose?: () => void;
 }
 
+const MOBILE_BREAKPOINT = 600;
+const isMobile = () => window.innerWidth <= MOBILE_BREAKPOINT;
+
 const DEFAULT_ROWS = 24;
+const MOBILE_ROWS = 18;
 const EXPANDED_ROWS = 36;
+const MOBILE_EXPANDED_ROWS = 28;
 
 const BOOT_LINES = [
   "Portfolio OS v2.0.26 [Avi Vashishta Edition]",
@@ -42,6 +47,7 @@ function Terminal({ onClose }: TerminalProps) {
   const chatModeRef = useRef(false);
   const chatHistoryRef = useRef<{ role: string; content: string }[]>([]);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isMinimized, setIsMinimized] = useState(false);
 
   const {
     currentDirectory,
@@ -198,10 +204,11 @@ function Terminal({ onClose }: TerminalProps) {
   useEffect(() => {
     if (!termRef.current) return;
 
+    const mobile = isMobile();
     const term = new XTerminal({
       cursorBlink: true,
-      rows: DEFAULT_ROWS,
-      fontSize: 14,
+      rows: mobile ? MOBILE_ROWS : DEFAULT_ROWS,
+      fontSize: mobile ? 12 : 14,
       fontFamily: '"SF Mono", "Fira Code", "Cascadia Code", Consolas, monospace',
       theme: {
         background: "#1e1e2e",
@@ -387,7 +394,10 @@ function Terminal({ onClose }: TerminalProps) {
     const fitAddon = fitAddonRef.current;
     if (!term || !fitAddon) return;
 
-    const targetRows = isExpanded ? EXPANDED_ROWS : DEFAULT_ROWS;
+    const mobile = isMobile();
+    const targetRows = isExpanded
+      ? (mobile ? MOBILE_EXPANDED_ROWS : EXPANDED_ROWS)
+      : (mobile ? MOBILE_ROWS : DEFAULT_ROWS);
     setTimeout(() => {
       try {
         const dims = fitAddon.proposeDimensions();
@@ -400,13 +410,17 @@ function Terminal({ onClose }: TerminalProps) {
   }, [isExpanded]);
 
   return (
-    <div className={`terminal-window ${isExpanded ? "terminal-expanded" : ""}`}>
+    <div className={`terminal-window ${isExpanded ? "terminal-expanded" : ""} ${isMinimized ? "terminal-minimized" : ""}`}>
       <TerminalHeader
         onClose={onClose}
-        onExpand={() => setIsExpanded((v) => !v)}
+        onExpand={() => {
+          if (isMinimized) setIsMinimized(false);
+          else setIsExpanded((v) => !v);
+        }}
+        onMinimise={() => setIsMinimized((v) => !v)}
         isExpanded={isExpanded}
       />
-      <div className="terminal-body">
+      <div className="terminal-body" style={isMinimized ? { display: "none" } : undefined}>
         <div ref={termRef} className="xterm-container" />
         {matrixActive && <MatrixRain />}
       </div>

@@ -125,11 +125,19 @@ $terminal-text: #cdd6f4;
   }
 }
 
+// Minimized state
+.terminal-window.terminal-minimized {
+  .terminal-body {
+    display: none;
+  }
+}
+
 // Responsive
 @media screen and (max-width: 600px) {
   .terminal-window {
     margin: 12px 0;
     border-radius: 8px;
+    max-width: 100%;
   }
 
   .xterm-container {
@@ -138,5 +146,15 @@ $terminal-text: #cdd6f4;
 
   .terminal-header .terminal-title {
     font-size: 11px;
+  }
+
+  .terminal-modal-overlay {
+    padding: 12px;
+    align-items: flex-start;
+    padding-top: 48px;
+  }
+
+  .terminal-modal-content {
+    max-width: 100%;
   }
 }
