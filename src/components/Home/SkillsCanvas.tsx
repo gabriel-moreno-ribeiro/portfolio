@@ -20,8 +20,8 @@ interface IconState {
 
 const SPRING_K = 0.08;
 const DAMPING = 0.82;
-const TRAIL_LERP = 0.20;
-const TRAIL_SPACING = 5; // frames between each icon in the trail
+const TRAIL_LERP = 0.14;
+const TRAIL_SPACING = 7; // frames between each icon in the trail
 const MOUSE_HISTORY_SIZE = 160;
 const ENTRANCE_DURATION = 500;
 const STAGGER = 75;
