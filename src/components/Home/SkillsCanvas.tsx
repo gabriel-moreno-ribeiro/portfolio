@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useRef } from "react";
 import { useInputSourceStore } from "../../store/inputSourceStore";
-import { useWindowSyncStore } from "../../store/windowSyncStore";
 
 // --- Types ---
 
@@ -118,24 +117,22 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
   // Hand tracking: finger count drives magnet strength
   const handFingersRef = useRef(5);
   const handTrailLerpRef = useRef(TRAIL_LERP);
-  // Track previous following-active state for clean transitions
-  const wasFollowingActiveRef = useRef(false);
 
   const iconSize = isMobile ? 60 : 80;
 
-  // Helper: check if this window is following another peer
-  const getFollowState = () => {
-    const sync = useWindowSyncStore.getState();
-    const isFollowing =
-      sync.activePeerId !== null && sync.activePeerId !== sync.myPeerId;
-    const activePeer = isFollowing
-      ? sync.connectedPeers.get(sync.activePeerId!) ?? null
-      : null;
-    return { isFollowing, activePeer };
-  };
-
-  // Initialize icon state
+  // Initialize icon state (preserve existing state on resize)
   const initIcons = useCallback(() => {
+    const existing = iconsRef.current;
+    if (existing.length === finalPositions.length && existing.length > 0) {
+      // Already initialized — just update rest positions, preserve physics/images
+      for (let i = 0; i < existing.length; i++) {
+        existing[i].baseRestX = finalPositions[i].x;
+        existing[i].baseRestY = finalPositions[i].y;
+        existing[i].restX = finalPositions[i].x;
+        existing[i].restY = finalPositions[i].y;
+      }
+      return;
+    }
     iconsRef.current = finalPositions.map((pos) => ({
       x: 0,
       y: 0,
@@ -156,19 +153,23 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
 
   // Sync images when they load or theme changes
   useEffect(() => {
-    const interval = setInterval(() => {
+    const syncImages = () => {
       const imgs = imagesRef.current;
-      if (imgs.length > 0 && iconsRef.current.length > 0) {
-        for (let i = 0; i < iconsRef.current.length; i++) {
-          if (i < imgs.length) {
-            iconsRef.current[i].image = imgs[i];
-          }
+      const icons = iconsRef.current;
+      if (imgs.length > 0 && icons.length > 0) {
+        for (let i = 0; i < icons.length; i++) {
+          if (i < imgs.length) icons[i].image = imgs[i];
         }
-        clearInterval(interval);
+        return true;
       }
+      return false;
+    };
+    if (syncImages()) return;
+    const interval = setInterval(() => {
+      if (syncImages()) clearInterval(interval);
     }, 50);
     return () => clearInterval(interval);
-  }, [iconUrls]);
+  }, [iconUrls, finalPositions]);
 
   // Update rest positions when finalPositions change (resize)
   useEffect(() => {
@@ -273,136 +274,68 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
         }
       }
 
-      // --- Input resolution phase ---
+      // --- Input resolution phase (camera hand tracking) ---
       const inputState = useInputSourceStore.getState();
-      const { isFollowing, activePeer } = getFollowState();
 
-      if (isFollowing && activePeer && phase === "idle") {
-        // ====== FOLLOWER PATH ======
-        const syncActive = inputState.skillsCursorActive;
-        const syncReturning = inputState.isReturning;
+      if (
+        inputState.inputSource === "camera" &&
+        inputState.handPositions.length > 0 &&
+        phase === "idle"
+      ) {
+        const hand = inputState.handPositions[0];
+        const fingers = hand.fingers;
+        handFingersRef.current = fingers;
 
-        if (syncActive) {
-          // Pick cursor source
-          const hp =
-            inputState.inputSource === "camera" &&
-            inputState.handPositions.length > 0
-              ? inputState.handPositions[0]
-              : inputState.headPosition;
+        mouse.x = hand.x * (cssW / 2);
+        mouse.y = hand.y * (cssH / 2);
 
-          // Absolute screen position of cursor in the active peer's window
-          const cursorScreenX =
-            activePeer.screenX +
-            ((hp.x + 1) / 2) * activePeer.innerWidth;
-          const cursorScreenY =
-            activePeer.screenY +
-            ((hp.y + 1) / 2) * activePeer.innerHeight;
-
-          // Convert to this window's viewport coords
-          const localVpX = cursorScreenX - window.screenX;
-          const localVpY = cursorScreenY - window.screenY;
-
-          // Convert to canvas center-relative coords
-          const rect = containerRef.current?.getBoundingClientRect();
-          if (rect) {
-            mouse.x = localVpX - rect.left - rect.width / 2;
-            mouse.y = localVpY - rect.top - rect.height / 2;
-          }
+        if (isMobile) {
+          handTrailLerpRef.current = Math.max(
+            0.08,
+            0.28 - fingers * 0.04
+          );
           mouse.active = true;
           returningRef.current = false;
-          wasFollowingActiveRef.current = true;
-
-          // Camera finger count for trail tightness
-          if (
-            inputState.inputSource === "camera" &&
-            inputState.handPositions.length > 0
-          ) {
-            const fingers = inputState.handPositions[0].fingers;
-            handFingersRef.current = fingers;
-            handTrailLerpRef.current = isMobile
-              ? Math.max(0.08, 0.28 - fingers * 0.04)
-              : fingers <= 3
-                ? 0.30 - fingers * 0.06
-                : TRAIL_LERP;
-          }
-        } else if (syncReturning) {
-          if (wasFollowingActiveRef.current || !returningRef.current) {
-            wasFollowingActiveRef.current = false;
+          if (!inputState.skillsCursorActive)
+            inputState.setSkillsCursorActive(true);
+          if (inputState.isReturning) inputState.setIsReturning(false);
+        } else if (fingers <= 3) {
+          handTrailLerpRef.current = 0.30 - fingers * 0.06;
+          mouse.active = true;
+          returningRef.current = false;
+          if (!inputState.skillsCursorActive)
+            inputState.setSkillsCursorActive(true);
+          if (inputState.isReturning) inputState.setIsReturning(false);
+        } else {
+          if (mouse.active || !returningRef.current) {
             mouse.active = false;
             returningRef.current = true;
             chainOrderRef.current = [];
             mouseHistoryRef.current = [];
-          }
-        } else {
-          // Cursor left canvas — freeze
-          if (mouse.active || wasFollowingActiveRef.current) {
-            wasFollowingActiveRef.current = false;
-            mouse.active = false;
-            chainOrderRef.current = [];
-            mouseHistoryRef.current = [];
-          }
-        }
-      } else if (!isFollowing) {
-        // ====== LOCAL INPUT PATH (camera hand tracking) ======
-        if (
-          inputState.inputSource === "camera" &&
-          inputState.handPositions.length > 0
-        ) {
-          const hand = inputState.handPositions[0];
-          const fingers = hand.fingers;
-          handFingersRef.current = fingers;
-
-          mouse.x = hand.x * (cssW / 2);
-          mouse.y = hand.y * (cssH / 2);
-
-          if (isMobile) {
-            handTrailLerpRef.current = Math.max(
-              0.08,
-              0.28 - fingers * 0.04
-            );
-            mouse.active = true;
-            returningRef.current = false;
-            if (!inputState.skillsCursorActive)
-              inputState.setSkillsCursorActive(true);
-            if (inputState.isReturning) inputState.setIsReturning(false);
-          } else if (fingers <= 3) {
-            handTrailLerpRef.current = 0.30 - fingers * 0.06;
-            mouse.active = true;
-            returningRef.current = false;
-            if (!inputState.skillsCursorActive)
-              inputState.setSkillsCursorActive(true);
-            if (inputState.isReturning) inputState.setIsReturning(false);
-          } else {
-            if (mouse.active || !returningRef.current) {
-              mouse.active = false;
-              returningRef.current = true;
-              chainOrderRef.current = [];
-              mouseHistoryRef.current = [];
-              if (inputState.skillsCursorActive)
-                inputState.setSkillsCursorActive(false);
-              if (!inputState.isReturning) inputState.setIsReturning(true);
-            }
-          }
-        } else if (
-          inputState.inputSource === "camera" &&
-          inputState.handPositions.length === 0
-        ) {
-          if (mouse.active) {
-            mouse.active = false;
-            if (isMobile) returningRef.current = true;
-            chainOrderRef.current = [];
-            mouseHistoryRef.current = [];
             if (inputState.skillsCursorActive)
               inputState.setSkillsCursorActive(false);
-            if (isMobile && !inputState.isReturning)
-              inputState.setIsReturning(true);
+            if (!inputState.isReturning) inputState.setIsReturning(true);
           }
-          handFingersRef.current = 5;
         }
+      } else if (
+        inputState.inputSource === "camera" &&
+        inputState.handPositions.length === 0 &&
+        phase === "idle"
+      ) {
+        if (mouse.active) {
+          mouse.active = false;
+          if (isMobile) returningRef.current = true;
+          chainOrderRef.current = [];
+          mouseHistoryRef.current = [];
+          if (inputState.skillsCursorActive)
+            inputState.setSkillsCursorActive(false);
+          if (isMobile && !inputState.isReturning)
+            inputState.setIsReturning(true);
+        }
+        handFingersRef.current = 5;
       }
 
       // --- Idle phase: physics ---
-      // BUG FIX: read returningRef.current directly (not stale cached variable)
       if (phase === "idle") {
         if (mouse.active && !returningRef.current) {
           // --- Trailing mode ---
@@ -501,11 +434,8 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
   }, [iconSize, isMobile]);
 
   // --- Event handlers ---
-  // Runtime store check: skip if following another peer
 
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
-    const sync = useWindowSyncStore.getState();
-    if (sync.activePeerId && sync.activePeerId !== sync.myPeerId) return;
     const rect = containerRef.current?.getBoundingClientRect();
     if (rect) {
       mouseRef.current.x = e.clientX - rect.left - rect.width / 2;
@@ -519,8 +449,6 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
   }, []);
 
   const handleMouseLeave = useCallback(() => {
-    const sync = useWindowSyncStore.getState();
-    if (sync.activePeerId && sync.activePeerId !== sync.myPeerId) return;
     mouseRef.current.active = false;
     chainOrderRef.current = [];
     mouseHistoryRef.current = [];
@@ -529,8 +457,6 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
   }, []);
 
   const handleClick = useCallback(() => {
-    const sync = useWindowSyncStore.getState();
-    if (sync.activePeerId && sync.activePeerId !== sync.myPeerId) return;
     mouseRef.current.active = false;
     returningRef.current = true;
     chainOrderRef.current = [];
@@ -541,8 +467,6 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
   }, []);
 
   const handleTouchMove = useCallback((e: React.TouchEvent) => {
-    const sync = useWindowSyncStore.getState();
-    if (sync.activePeerId && sync.activePeerId !== sync.myPeerId) return;
     const touch = e.touches[0];
     if (!touch) return;
     const rect = containerRef.current?.getBoundingClientRect();
@@ -558,8 +482,6 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
   }, []);
 
   const handleTouchEnd = useCallback(() => {
-    const sync = useWindowSyncStore.getState();
-    if (sync.activePeerId && sync.activePeerId !== sync.myPeerId) return;
     mouseRef.current.active = false;
     returningRef.current = true;
     chainOrderRef.current = [];
