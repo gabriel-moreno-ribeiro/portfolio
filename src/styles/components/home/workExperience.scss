@@ -119,13 +119,14 @@
 
     .right-column {
       width: 100%;
-      padding: 0px;
+      padding: 0px 16px;
       margin: 0px;
+      box-sizing: border-box;
 
       .work-experience-section {
         opacity: 1;
         transform: translateY(0px);
-        margin-bottom: 48px;
+        margin-bottom: 64px;
         text-align: center !important;
 
         .job-title {
