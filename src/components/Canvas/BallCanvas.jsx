@@ -39,7 +39,7 @@ function BallComponent() {
     if (showCarCanvas) {
       document.body.style.overflowY = "hidden";
     } else {
-      document.body.style.overflowY = "auto";
+      document.body.style.overflowY = "";
     }
 
     const handleKeyDown = (event) => {
