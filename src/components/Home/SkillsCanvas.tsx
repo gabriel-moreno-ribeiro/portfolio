@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useRef } from "react";
-import { useInputSourceStore } from "../../store/inputSourceStore";
+import React, { useCallback, useEffect, useRef } from 'react';
+import { useInputSourceStore } from '../../store/inputSourceStore';
 
 // --- Types ---
 
@@ -45,9 +45,9 @@ const randomInRange = (min: number, max: number) =>
 const usePreloadedImages = (iconUrls: string[]) => {
   const imagesRef = useRef<HTMLImageElement[]>([]);
   const loadedRef = useRef(false);
-  const urlsKeyRef = useRef("");
+  const urlsKeyRef = useRef('');
 
-  const urlsKey = iconUrls.join(",");
+  const urlsKey = iconUrls.join(',');
   if (urlsKeyRef.current !== urlsKey) {
     urlsKeyRef.current = urlsKey;
     loadedRef.current = false;
@@ -58,16 +58,16 @@ const usePreloadedImages = (iconUrls: string[]) => {
     let cancelled = false;
 
     const promises = iconUrls.map(
-      (url) =>
+      url =>
         new Promise<HTMLImageElement>((resolve, reject) => {
           const img = new Image();
           img.onload = () => resolve(img);
           img.onerror = reject;
           img.src = url;
-        })
+        }),
     );
 
-    Promise.all(promises).then((imgs) => {
+    Promise.all(promises).then(imgs => {
       if (!cancelled) {
         imagesRef.current = imgs;
         loadedRef.current = true;
@@ -104,7 +104,7 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
   const iconsRef = useRef<IconState[]>([]);
   const mouseRef = useRef({ x: 0, y: 0, active: false });
   const returningRef = useRef(false);
-  const phaseRef = useRef<"waiting" | "entering" | "idle">("waiting");
+  const phaseRef = useRef<'waiting' | 'entering' | 'idle'>('waiting');
   const entranceStartRef = useRef(0);
   const oscillationTimerRef = useRef(0);
   const lastTimestampRef = useRef(0);
@@ -133,7 +133,7 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
       }
       return;
     }
-    iconsRef.current = finalPositions.map((pos) => ({
+    iconsRef.current = finalPositions.map(pos => ({
       x: 0,
       y: 0,
       vx: 0,
@@ -184,8 +184,8 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
 
   // Trigger entrance animation
   useEffect(() => {
-    if (triggerEntrance && phaseRef.current === "waiting") {
-      phaseRef.current = "entering";
+    if (triggerEntrance && phaseRef.current === 'waiting') {
+      phaseRef.current = 'entering';
       entranceStartRef.current = performance.now();
     }
   }, [triggerEntrance]);
@@ -219,7 +219,7 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
     const loop = (timestamp: number) => {
@@ -242,7 +242,7 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
       const chainOrder = chainOrderRef.current;
 
       // --- Entrance phase ---
-      if (phase === "entering") {
+      if (phase === 'entering') {
         const elapsed = timestamp - entranceStartRef.current;
         let allDone = true;
 
@@ -263,7 +263,7 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
         }
 
         if (allDone) {
-          phaseRef.current = "idle";
+          phaseRef.current = 'idle';
           for (let i = 0; i < icons.length; i++) {
             icons[i].x = icons[i].baseRestX;
             icons[i].y = icons[i].baseRestY;
@@ -278,29 +278,31 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
       const inputState = useInputSourceStore.getState();
 
       if (
-        inputState.inputSource === "camera" &&
+        inputState.inputSource === 'camera' &&
         inputState.handPositions.length > 0 &&
-        phase === "idle"
+        phase === 'idle'
       ) {
         const hand = inputState.handPositions[0];
         const fingers = hand.fingers;
         handFingersRef.current = fingers;
 
-        mouse.x = hand.x * (cssW / 2);
-        mouse.y = hand.y * (cssH / 2);
+        const screenX = ((hand.x + 1) / 2) * window.innerWidth;
+        const screenY = ((hand.y + 1) / 2) * window.innerHeight;
+        const rect = containerRef.current?.getBoundingClientRect();
+        if (rect) {
+          mouse.x = screenX - rect.left - rect.width / 2;
+          mouse.y = screenY - rect.top - rect.height / 2;
+        }
 
         if (isMobile && fingers <= 3) {
-          handTrailLerpRef.current = Math.max(
-            0.08,
-            0.28 - fingers * 0.04
-          );
+          handTrailLerpRef.current = Math.max(0.14, 0.38 - fingers * 0.04);
           mouse.active = true;
           returningRef.current = false;
           if (!inputState.skillsCursorActive)
             inputState.setSkillsCursorActive(true);
           if (inputState.isReturning) inputState.setIsReturning(false);
         } else if (!isMobile && fingers <= 3) {
-          handTrailLerpRef.current = 0.30 - fingers * 0.06;
+          handTrailLerpRef.current = 0.34 - fingers * 0.06;
           mouse.active = true;
           returningRef.current = false;
           if (!inputState.skillsCursorActive)
@@ -318,9 +320,9 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
           }
         }
       } else if (
-        inputState.inputSource === "camera" &&
+        inputState.inputSource === 'camera' &&
         inputState.handPositions.length === 0 &&
-        phase === "idle"
+        phase === 'idle'
       ) {
         if (mouse.active) {
           mouse.active = false;
@@ -329,14 +331,13 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
           mouseHistoryRef.current = [];
           if (inputState.skillsCursorActive)
             inputState.setSkillsCursorActive(false);
-          if (!inputState.isReturning)
-            inputState.setIsReturning(true);
+          if (!inputState.isReturning) inputState.setIsReturning(true);
         }
         handFingersRef.current = 5;
       }
 
       // --- Idle phase: physics ---
-      if (phase === "idle") {
+      if (phase === 'idle') {
         if (mouse.active && !returningRef.current) {
           // --- Trailing mode ---
 
@@ -354,20 +355,19 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
                 dist: Math.hypot(icon.x - mouse.x, icon.y - mouse.y),
               }))
               .sort((a, b) => a.dist - b.dist)
-              .map((e) => e.i);
+              .map(e => e.i);
             chainOrderRef.current.push(...sorted);
           }
 
           // Each icon in the chain follows a different point in the mouse history
           for (let rank = 0; rank < chainOrder.length; rank++) {
             const icon = icons[chainOrder[rank]];
-            const histIdx =
-              mouseHistory.length - 1 - rank * TRAIL_SPACING;
+            const histIdx = mouseHistory.length - 1 - rank * TRAIL_SPACING;
 
             if (histIdx >= 0) {
               const target = mouseHistory[histIdx];
               const activeLerp =
-                inputState.inputSource === "camera"
+                inputState.inputSource === 'camera'
                   ? handTrailLerpRef.current
                   : TRAIL_LERP;
               icon.x = lerp(icon.x, target.x, activeLerp);
@@ -419,7 +419,7 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
           -iconSize / 2,
           -iconSize / 2,
           iconSize,
-          iconSize
+          iconSize,
         );
         ctx.restore();
       }
