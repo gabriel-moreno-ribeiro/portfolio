@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import React from "react";
 
 interface MenuIconProps {
@@ -8,8 +8,10 @@ interface MenuIconProps {
 
 const MenuIcon: React.FC<MenuIconProps> = ({ isHovered, setIsHovered }) => {
   return (
-    <div
+    <motion.div
       className="menu-icon"
+      layout
+      transition={{ type: "spring", stiffness: 200, damping: 25 }}
       onClick={() => {
         if (isHovered) {
           setIsHovered(false);
@@ -26,7 +28,7 @@ const MenuIcon: React.FC<MenuIconProps> = ({ isHovered, setIsHovered }) => {
         animate={isHovered ? { rotate: -45, y: 0 } : { rotate: 0, y: 4 }}
         transition={{ duration: 0.3 }}
       />
-    </div>
+    </motion.div>
   );
 };
 

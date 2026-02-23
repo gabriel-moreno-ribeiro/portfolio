@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import React from "react";
 import { IoMoonOutline, IoSunnyOutline } from "react-icons/io5";
 import { useThemeStore } from "../../store/themeStore";
@@ -8,8 +8,8 @@ const DarkModeButton: React.FC = () => {
 
   return (
     <motion.button
-      initial={{ scale: 0 }}
-      animate={{ scale: 1, transition: { duration: 0.2 } }}
+      initial={{ opacity: 0, scale: 0 }}
+      animate={{ opacity: 1, scale: 1, transition: { delay: 0.6, duration: 0.3, ease: "easeOut" } }}
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.9 }}
       onClick={toggleDarkMode}

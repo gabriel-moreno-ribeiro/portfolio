@@ -4,7 +4,9 @@
   align-items: center;
 
   .main-card {
-    background-color: $grey;
+    background: rgba($grey, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     min-width: 400px;
     height: auto;
     display: flex;
@@ -12,14 +14,14 @@
     align-items: center;
     padding: 12px;
     border-radius: 18px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.2s ease-in-out;
+    border: 1px solid rgba($border-grey, 0.5);
+    box-shadow: 0 4px 16px rgba(240, 115, 45, 0.06);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
     gap: 12px;
 
     &:hover {
-      [data-theme="light"] {
-        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
-      }
+      box-shadow: 0 8px 24px rgba(240, 115, 45, 0.12);
+      transform: translateY(-2px);
     }
 
     .card-img {
@@ -104,8 +106,13 @@
 [data-theme="dark"] {
   .card-modal-component {
     .main-card {
-      // border: 1px solid var(--black);
-      background-color: #1e1e1e;
+      background: rgba(#1e1e1e, 0.8);
+      border: 1px solid rgba(#fff, 0.1);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+
+      &:hover {
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      }
     }
 
     .modal-overlay {

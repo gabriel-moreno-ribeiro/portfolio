@@ -6,6 +6,7 @@
   justify-content: flex-start;
   align-items: center;
   gap: 0px;
+  position: relative;
 
   .heading-section {
     max-width: 900px;
@@ -16,10 +17,11 @@
 
     .heading {
       max-width: 900px;
-      font-size: 56px;
-      font-weight: 600px;
+      font-family: var(--font-serif);
+      font-size: 64px;
+      font-weight: 400;
       text-align: center;
-      line-height: 64px;
+      line-height: 72px;
     }
     .desc {
       color: var(--text-grey);
@@ -71,10 +73,11 @@
       gap: 20px;
 
       .heading {
-        font-size: 32px;
-        font-weight: 600px;
+        font-family: var(--font-serif);
+        font-size: 36px;
+        font-weight: 400;
         text-align: center;
-        line-height: 42px;
+        line-height: 44px;
       }
       .desc {
         color: var(--text-grey);

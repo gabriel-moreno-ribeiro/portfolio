@@ -12,25 +12,41 @@ $border-grey: #e7e7e7;
   --text-grey: #747474;
   --black: #111;
   --border-grey: #e7e7e7;
+
+  // 2026 gradient palette
+  --gradient-start: #fff8f4;
+  --gradient-mid: #ffe4d4;
+  --gradient-end: #ffd2b8;
+  --gradient-accent: #f0732d;
+
+  // Serif heading font (hero only)
+  --font-serif: "DM Serif Display", Georgia, serif;
 }
 
 [data-theme="dark"] {
   --white: #111;
   --black: #fff;
+
+  // Dark gradient palette
+  --gradient-start: #0a0a1a;
+  --gradient-mid: #1a1025;
+  --gradient-end: #2a1530;
 }
 
-@import url("https://fonts.googleapis.com/css2?family=Aladin&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap");
 
 html,
 body {
   margin: 0px;
+  overflow-x: clip;
 
-  font-family: "Poppins", sans-serif;
+  font-family: "DM Sans", sans-serif;
   color: var(--black);
-  background-color: var(--white);
+  background: var(--gradient-start);
   scroll-behavior: smooth;
-  transition: background-color 0.5s, color 0.5s;
-  // cursor: none;
+  transition: background 0.6s ease, color 0.5s;
+  min-height: 100vh;
+
   h1,
   h2,
   h3,
@@ -44,11 +60,79 @@ body {
 }
 
 body {
-  padding: 16px;
+  padding: 16px 0;
+  position: relative;
 
   &.no-scroll {
     overflow: hidden !important;
   }
+
+  // Painted background image - only hero area, fades out quickly
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50vh;
+    background-image: url("/assets/bg-painted.avif");
+    background-size: cover;
+    background-position: top center;
+    background-repeat: no-repeat;
+    mask-image: linear-gradient(to bottom, black 0%, rgba(0,0,0,0.6) 25%, rgba(0,0,0,0.2) 50%, transparent 75%);
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, rgba(0,0,0,0.6) 25%, rgba(0,0,0,0.2) 50%, transparent 75%);
+    z-index: 0;
+    pointer-events: none;
+    animation: bg-fade-in 1.2s ease-out forwards;
+  }
+
+  // Noise texture overlay - hero area only
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50vh;
+    pointer-events: none;
+    z-index: 0;
+    background-image: url("/assets/noise.avif");
+    background-repeat: repeat;
+    background-size: 300px 300px;
+    mix-blend-mode: multiply;
+    mask-image: linear-gradient(to bottom, black 0%, rgba(0,0,0,0.6) 25%, rgba(0,0,0,0.2) 50%, transparent 75%);
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, rgba(0,0,0,0.6) 25%, rgba(0,0,0,0.2) 50%, transparent 75%);
+    animation: noise-fade-in 1.2s ease-out forwards;
+  }
+}
+
+@keyframes bg-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes noise-fade-in {
+  from { opacity: 0; }
+  to { opacity: 0.12; }
+}
+
+[data-theme="dark"] {
+  body {
+    &::after {
+      animation: none;
+      opacity: 0;
+    }
+
+    &::before {
+      animation: noise-fade-in-dark 1.2s ease-out forwards;
+      mix-blend-mode: screen;
+    }
+  }
+}
+
+@keyframes noise-fade-in-dark {
+  from { opacity: 0; }
+  to { opacity: 0.06; }
 }
 
 .home-wrapper {
@@ -60,33 +144,20 @@ body {
   max-width: 1400px;
   margin: 0 auto;
   width: 100%;
+  padding: 0 16px;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 1;
 }
-
-// html.lenis {
-//   height: auto;
-// }
-
-// .lenis.lenis-smooth {
-//   scroll-behavior: auto;
-// }
-
-// .lenis.lenis-smooth [data-lenis-prevent] {
-//   overscroll-behavior: contain;
-// }
-
-// .lenis.lenis-stopped {
-//   overflow: hidden;
-// }
-
-// .lenis.lenis-scrolling iframe {
-//   pointer-events: none;
-// }
 
 .black {
   color: var(--black);
 }
 
-// on selection make text color as orange
+.orange {
+  color: var(--primary-orange);
+}
+
 ::selection {
   background: lighten($primary-orange, 40%);
   color: var(--primary-orange);
@@ -94,11 +165,11 @@ body {
 
 [data-theme="dark"] {
   ::selection {
-    background: $black;
+    background: #2a1530;
+    color: #f0732d;
   }
 }
 
-// make images non draggable
 img {
   -moz-user-select: none;
   -webkit-user-select: none;
@@ -107,6 +178,31 @@ img {
   -webkit-user-drag: none;
   user-drag: none;
   -webkit-touch-callout: none;
+}
+
+.window-glow {
+  position: fixed;
+  top: 0;
+  width: 6px;
+  height: 100vh;
+  z-index: 10000;
+  pointer-events: none;
+  box-shadow: 0 0 20px 8px rgba($primary-orange, 0.5);
+  background: rgba($primary-orange, 0.4);
+  animation: glow-pulse 2s ease-in-out infinite;
+
+  &--left {
+    left: 0;
+  }
+
+  &--right {
+    right: 0;
+  }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
 }
 
 @media screen and (max-width: 800px) {
