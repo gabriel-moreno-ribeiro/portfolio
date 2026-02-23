@@ -43,7 +43,7 @@ function App() {
     if (!isMobile) {
       if (sessionStorage.getItem("showedToast")) return;
       setTimeout(() => {
-        toast("Just for fun, try pressing Ctrl + K!", {
+        toast("Just for fun, try pressing Ctrl + J!", {
           position: "bottom-right",
           autoClose: 1000 * 10,
           hideProgressBar: true,
