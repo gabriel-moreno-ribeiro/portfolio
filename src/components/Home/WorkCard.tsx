@@ -59,7 +59,7 @@ const WorkCard = ({ data, cardIndex = 0 }: WorkCardInterface) => {
         x: Math.max(20, window.innerWidth / 2 - (isMobile ? 200 : 400)),
         y: Math.max(20, window.innerHeight / 2 - 250),
       },
-      size: { width: isMobile ? 400 : 800, height: 600 },
+      size: { width: isMobile ? 400 : 800, height: 0 },
       meta: { cardData, modalData },
     });
   };
