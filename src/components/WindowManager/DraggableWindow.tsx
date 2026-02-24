@@ -351,26 +351,39 @@ function DraggableWindow({
   );
 }
 
-// Wrapper that adds an overlay backdrop when windows are open
+// Wrapper that adds an overlay backdrop on mobile only
 export function WindowOverlay({
   children,
 }: {
   children: ReactNode;
 }) {
+  const isMobile = useIsMobile();
   const hasOpenWindows = useWindowManagerStore((s) =>
     Object.values(s.windows).some((w) => w.status !== "minimized")
   );
+  const windows = useWindowManagerStore((s) => s.windows);
+  const closeWindow = useWindowManagerStore((s) => s.closeWindow);
+
+  const handleBackdropClick = useCallback(() => {
+    // On mobile, close all open windows when tapping the backdrop
+    Object.values(windows).forEach((w) => {
+      if (w.status !== "minimized") {
+        closeWindow(w.id);
+      }
+    });
+  }, [windows, closeWindow]);
 
   return (
     <>
       <AnimatePresence>
-        {hasOpenWindows && (
+        {isMobile && hasOpenWindows && (
           <motion.div
             className="window-overlay-backdrop"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
+            onClick={handleBackdropClick}
           />
         )}
       </AnimatePresence>
