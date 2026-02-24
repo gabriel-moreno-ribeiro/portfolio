@@ -26,16 +26,17 @@ const HandsfreeIntroModal: React.FC = () => {
   // Bridge: handsfreeStore -> windowManagerStore
   useEffect(() => {
     if (showIntroModal && !win) {
+      const modalWidth = Math.min(480, window.innerWidth - 40);
       openWindow({
         id: "handsfree-intro",
         title: "Handsfree Mode",
         type: "handsfree-intro",
         status: "open",
         position: {
-          x: Math.max(0, window.innerWidth / 2 - 220),
-          y: Math.max(0, window.innerHeight / 2 - 200),
+          x: Math.max(20, (window.innerWidth - modalWidth) / 2),
+          y: Math.max(20, (window.innerHeight - 400) / 2),
         },
-        size: { width: 440, height: 0 },
+        size: { width: modalWidth, height: 0 },
       });
     }
   }, [showIntroModal, win, openWindow]);
