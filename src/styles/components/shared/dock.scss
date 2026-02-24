@@ -5,7 +5,7 @@
   z-index: 10002;
   display: flex;
   gap: 12px;
-  padding: 8px 16px;
+  padding: 10px 16px;
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
@@ -21,32 +21,92 @@
     cursor: pointer;
   }
 
-  &__icon {
-    width: 48px;
+  &__preview {
+    position: relative;
+    width: 64px;
     height: 48px;
-    border-radius: 12px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.05);
+
+    &:hover .dock__close {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  &__thumbnail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top left;
+    pointer-events: none;
+  }
+
+  &__placeholder {
+    width: 100%;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: 700;
-    font-size: 18px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 
     &--terminal {
       background: #1e1e2e;
-      color: #a6e3a1;
-      font-family: "SF Mono", "Fira Code", monospace;
     }
 
     &--workcard {
       background: rgba($primary-orange, 0.15);
-      color: $primary-orange;
     }
 
     &--handsfree-intro,
     &--gesture-tutorial {
       background: rgba(#89b4fa, 0.15);
-      color: #89b4fa;
+    }
+  }
+
+  &__placeholder-title {
+    font-size: 9px;
+    font-weight: 600;
+    color: var(--black);
+    opacity: 0.7;
+    text-align: center;
+    padding: 2px 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
+  }
+
+  &__close {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #ff5f57;
+    border: 1.5px solid rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    transform: scale(0.6);
+    transition: opacity 0.15s ease, transform 0.15s ease, background 0.1s ease;
+    z-index: 2;
+    padding: 0;
+    color: rgba(0, 0, 0, 0.6);
+
+    svg {
+      width: 10px;
+      height: 10px;
+    }
+
+    &:hover {
+      background: #ff3b30;
+      color: #fff;
     }
   }
 
@@ -67,25 +127,34 @@
     background: rgba(30, 30, 30, 0.8);
     border: 1px solid rgba(255, 255, 255, 0.08);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+
+    &__preview {
+      border-color: rgba(255, 255, 255, 0.06);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    &__placeholder-title {
+      color: rgba(255, 255, 255, 0.6);
+    }
   }
 }
 
 @media screen and (max-width: 600px) {
   .dock {
     bottom: 8px;
+    right: 8px;
     padding: 6px 12px;
     gap: 8px;
 
-    &__icon {
-      width: 40px;
+    &__preview {
+      width: 52px;
       height: 40px;
-      border-radius: 10px;
-      font-size: 14px;
+      border-radius: 6px;
     }
 
     &__label {
       font-size: 9px;
-      max-width: 48px;
+      max-width: 52px;
     }
   }
 }

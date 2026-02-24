@@ -19,6 +19,7 @@ import {
   useWindow,
   getDockIconRect,
 } from "../../store/windowManagerStore";
+import html2canvas from "html2canvas-pro";
 import MacButtons from "../Home/MacButtons";
 import useIsMobile from "../../hooks/useIsMobile";
 
@@ -58,12 +59,15 @@ function DraggableWindow({
   const updatePosition = useWindowManagerStore((s) => s.updatePosition);
 
   const updateSize = useWindowManagerStore((s) => s.updateSize);
+  const setThumbnail = useWindowManagerStore((s) => s.setThumbnail);
 
   const isMobile = useIsMobile();
   const dragControls = useDragControls();
   const controls = useAnimation();
   const windowRef = useRef<HTMLDivElement>(null);
   const [isAnimatingGenie, setIsAnimatingGenie] = useState(false);
+  const [isRestoring, setIsRestoring] = useState(false);
+  const prevStatusRef = useRef<string | undefined>(undefined);
   const [resizing, setResizing] = useState<{
     edge: "right" | "bottom" | "corner";
     startX: number;
@@ -77,11 +81,49 @@ function DraggableWindow({
 
   // Sync motion values when store position changes (e.g. from restore)
   useEffect(() => {
-    if (win && !isAnimatingGenie) {
+    if (win && !isAnimatingGenie && !isRestoring) {
       x.set(win.position.x);
       y.set(win.position.y);
     }
-  }, [win?.position.x, win?.position.y, isAnimatingGenie]);
+  }, [win?.position.x, win?.position.y, isAnimatingGenie, isRestoring]);
+
+  // Reverse genie: animate from dock → window position when restoring
+  useEffect(() => {
+    const wasMinimized = prevStatusRef.current === "minimized";
+    prevStatusRef.current = win?.status;
+
+    if (!wasMinimized || !win || win.status !== "open") return;
+
+    const dockIconRect = getDockIconRect(windowId);
+    const targetX = win.position.x;
+    const targetY = win.position.y;
+    const startX = dockIconRect
+      ? dockIconRect.x + dockIconRect.width / 2
+      : window.innerWidth - 50;
+    const startY = dockIconRect
+      ? dockIconRect.y + dockIconRect.height / 2
+      : window.innerHeight - 40;
+
+    setIsRestoring(true);
+
+    controls.start({
+      clipPath: [...GENIE_CLIP_PATHS].reverse(),
+      scaleX: [0.02, 0.08, 0.25, 0.6, 1],
+      scaleY: [0.02, 0.08, 0.2, 0.5, 1],
+      x: [startX, startX, startX + (targetX - startX) * 0.4, targetX, targetX],
+      y: [startY, startY - 20, startY + (targetY - startY) * 0.5, targetY, targetY],
+      opacity: [0, 0.3, 0.7, 0.9, 1],
+      transition: {
+        duration: 0.3,
+        ease: [0, 0, 0.2, 1],
+        times: [0, 0.15, 0.45, 0.8, 1],
+      },
+    }).then(() => {
+      setIsRestoring(false);
+      x.set(targetX);
+      y.set(targetY);
+    });
+  }, [win?.status]);
 
   // Resize handlers
   const handleResizeStart = useCallback(
@@ -161,6 +203,19 @@ function DraggableWindow({
       return;
     }
 
+    // Capture thumbnail before animating
+    try {
+      const canvas = await html2canvas(windowEl, {
+        scale: 0.25,
+        useCORS: true,
+        logging: false,
+        backgroundColor: null,
+      });
+      setThumbnail(windowId, canvas.toDataURL("image/png", 0.6));
+    } catch {
+      // Ignore capture errors
+    }
+
     setIsAnimatingGenie(true);
 
     // Target: dock icon if it exists, otherwise bottom-right where dock will appear
@@ -215,7 +270,7 @@ function DraggableWindow({
       scaleY: 1,
       opacity: 1,
     });
-  }, [controls, minimizeWindow, windowId, x, y]);
+  }, [controls, minimizeWindow, windowId, x, y, setThumbnail]);
 
   const handleExpand = useCallback(() => {
     if (win?.status === "maximized") {

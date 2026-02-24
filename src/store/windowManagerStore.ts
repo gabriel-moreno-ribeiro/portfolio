@@ -26,6 +26,7 @@ export interface WindowState {
   zIndex: number;
   previousGeometry?: WindowGeometry;
   meta?: Record<string, unknown>;
+  thumbnail?: string; // data URL captured before minimize
 }
 
 // Use plain objects instead of Map for React 19 compatibility
@@ -45,6 +46,7 @@ interface WindowManagerState {
   focusWindow: (id: WindowId) => void;
   updatePosition: (id: WindowId, pos: { x: number; y: number }) => void;
   updateSize: (id: WindowId, size: { width: number; height: number }) => void;
+  setThumbnail: (id: WindowId, dataUrl: string) => void;
 }
 
 // Dock icon rects stored outside Zustand (only read imperatively during animations)
@@ -200,6 +202,16 @@ export const useWindowManagerStore = create<WindowManagerState>((set, get) => ({
 
     set({
       windows: { ...state.windows, [id]: { ...win, size } },
+    });
+  },
+
+  setThumbnail: (id, dataUrl) => {
+    const state = get();
+    const win = state.windows[id];
+    if (!win) return;
+
+    set({
+      windows: { ...state.windows, [id]: { ...win, thumbnail: dataUrl } },
     });
   },
 }));
