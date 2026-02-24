@@ -3,11 +3,13 @@ import {
   useWindowManagerStore,
   useWindow,
 } from "../../store/windowManagerStore";
+import useIsMobile from "../../hooks/useIsMobile";
 
 function TerminalModal() {
   const terminalWindow = useWindow("terminal");
   const openWindow = useWindowManagerStore((s) => s.openWindow);
   const closeWindow = useWindowManagerStore((s) => s.closeWindow);
+  const isMobile = useIsMobile();
 
   const toggle = useCallback(() => {
     if (terminalWindow) {
@@ -27,10 +29,10 @@ function TerminalModal() {
     }
   }, [terminalWindow, openWindow, closeWindow]);
 
-  // Lock scroll when terminal is visible
+  // Lock scroll only on mobile (desktop windows float over scrollable content)
   useEffect(() => {
     const isVisible = terminalWindow && terminalWindow.status !== "minimized";
-    if (isVisible) {
+    if (isMobile && isVisible) {
       document.documentElement.style.overflow = "hidden";
       document.body.style.overflow = "hidden";
     } else {
@@ -41,7 +43,7 @@ function TerminalModal() {
       document.documentElement.style.overflow = "";
       document.body.style.overflow = "";
     };
-  }, [terminalWindow?.status]);
+  }, [terminalWindow?.status, isMobile]);
 
   // Keyboard shortcuts
   useEffect(() => {
