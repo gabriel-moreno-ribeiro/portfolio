@@ -11,6 +11,7 @@ import {
   ReactNode,
   useEffect,
   useState,
+  useMemo,
   PointerEvent as ReactPointerEvent,
 } from "react";
 import {
@@ -19,14 +20,12 @@ import {
   useWindow,
   getDockIconRect,
 } from "../../store/windowManagerStore";
-import html2canvas from "html2canvas-pro";
 import MacButtons from "../Home/MacButtons";
 import useIsMobile from "../../hooks/useIsMobile";
 import { useTabTransfer, pendingTransferEntries } from "../../hooks/useTabTransfer";
 
-const MIN_WIDTH = 300;
+const MIN_WIDTH = 180;
 const MIN_HEIGHT = 200;
-const EDGE_THRESHOLD = 30;
 
 interface DraggableWindowProps {
   windowId: WindowId;
@@ -76,12 +75,17 @@ function DraggableWindow({
   const prevStatusRef = useRef<string | undefined>(undefined);
   const nearEdgeRef = useRef<"left" | "right" | null>(null);
   const didTransferRef = useRef(false);
+  const winRef = useRef(win);
+  winRef.current = win;
+  const hasPeerRef = useRef(hasPeer);
+  hasPeerRef.current = hasPeer;
   const [resizing, setResizing] = useState<{
-    edge: "right" | "bottom" | "corner";
+    edge: "right" | "bottom" | "corner" | "left";
     startX: number;
     startY: number;
     startW: number;
     startH: number;
+    startWinX: number;
   } | null>(null);
 
   const x = useMotionValue(win?.position.x ?? 0);
@@ -173,7 +177,7 @@ function DraggableWindow({
 
   // Resize handlers
   const handleResizeStart = useCallback(
-    (edge: "right" | "bottom" | "corner", e: ReactPointerEvent) => {
+    (edge: "right" | "bottom" | "corner" | "left", e: ReactPointerEvent) => {
       e.stopPropagation();
       e.preventDefault();
       if (!win) return;
@@ -185,6 +189,7 @@ function DraggableWindow({
         startY: e.clientY,
         startW: win.size.width,
         startH: win.size.height || el?.offsetHeight || 400,
+        startWinX: win.position.x,
       });
     },
     [win]
@@ -199,6 +204,13 @@ function DraggableWindow({
       let newW = resizing.startW;
       let newH = resizing.startH;
 
+      if (resizing.edge === "left") {
+        newW = Math.max(MIN_WIDTH, resizing.startW - dx);
+        // Shift position so the right edge stays pinned
+        const newX = resizing.startWinX + (resizing.startW - newW);
+        updatePosition(windowId, { x: newX, y: y.get() });
+        x.set(newX);
+      }
       if (resizing.edge === "right" || resizing.edge === "corner") {
         newW = Math.max(MIN_WIDTH, resizing.startW + dx);
       }
@@ -234,13 +246,12 @@ function DraggableWindow({
   );
 
   // Real-time edge detection + mid-drag transfer.
-  // When a peer exists, constraints are widened so the window can go off-screen.
-  // Transfer fires as soon as the window crosses the viewport boundary — no pause.
+  // Uses refs so the callback stays stable and avoids re-creation every render.
   const handleDrag = useCallback(() => {
-    if (!hasPeer || !win || didTransferRef.current) return;
+    if (!hasPeerRef.current || !winRef.current || didTransferRef.current) return;
 
     const currentX = x.get();
-    const winWidth = win.size.width;
+    const winWidth = winRef.current.size.width;
 
     // Window's right edge past viewport right
     const pastRight = currentX + winWidth > window.innerWidth;
@@ -283,7 +294,7 @@ function DraggableWindow({
       updatePosition(windowId, { x: currentX, y: y.get() });
       transferWindow(windowId, "left");
     }
-  }, [hasPeer, win, x, y, windowId, signalNearEdge, signalLeftEdge, transferWindow, updatePosition]);
+  }, [x, y, windowId, signalNearEdge, signalLeftEdge, transferWindow, updatePosition]);
 
   const handleDragEnd = useCallback(() => {
     // If we already transferred mid-drag, just reset the flag
@@ -314,15 +325,19 @@ function DraggableWindow({
       return;
     }
 
-    // Capture thumbnail before animating
+    // Lazy-load html2canvas only when needed to avoid bloating memory
     try {
+      const { default: html2canvas } = await import("html2canvas-pro");
       const canvas = await html2canvas(windowEl, {
-        scale: 0.25,
+        scale: 0.15,
         useCORS: true,
         logging: false,
         backgroundColor: null,
       });
-      setThumbnail(windowId, canvas.toDataURL("image/png", 0.6));
+      setThumbnail(windowId, canvas.toDataURL("image/jpeg", 0.4));
+      // Release the canvas immediately
+      canvas.width = 0;
+      canvas.height = 0;
     } catch {
       // Ignore capture errors
     }
@@ -391,6 +406,23 @@ function DraggableWindow({
     }
   }, [win?.status, maximizeWindow, unmaximizeWindow, windowId]);
 
+  const dragConstraints = useMemo(() => {
+    const winWidth = win?.size.width ?? 0;
+    return hasPeer
+      ? {
+          top: 0,
+          left: -(winWidth + 200),
+          right: window.innerWidth + 200,
+          bottom: window.innerHeight - 50,
+        }
+      : {
+          top: 0,
+          left: -(winWidth - 100),
+          right: window.innerWidth - 100,
+          bottom: window.innerHeight - 50,
+        };
+  }, [hasPeer, win?.size.width]);
+
   if (!win || win.status === "minimized") return null;
 
   const isMaximized = win.status === "maximized";
@@ -411,21 +443,7 @@ function DraggableWindow({
       dragListener={false}
       dragElastic={0}
       dragMomentum={false}
-      dragConstraints={
-        hasPeer
-          ? {
-              top: 0,
-              left: -(win.size.width + 200),
-              right: window.innerWidth + 200,
-              bottom: window.innerHeight - 50,
-            }
-          : {
-              top: 0,
-              left: -(win.size.width - 100),
-              right: window.innerWidth - 100,
-              bottom: window.innerHeight - 50,
-            }
-      }
+      dragConstraints={dragConstraints}
       onDrag={handleDrag}
       onDragEnd={handleDragEnd}
       onPointerDown={handlePointerDown}
@@ -454,6 +472,10 @@ function DraggableWindow({
       <div className="draggable-window__body">{children}</div>
       {!isMobile && !isMaximized && (
         <>
+          <div
+            className="draggable-window__resize draggable-window__resize--left"
+            onPointerDown={(e) => handleResizeStart("left", e)}
+          />
           <div
             className="draggable-window__resize draggable-window__resize--right"
             onPointerDown={(e) => handleResizeStart("right", e)}

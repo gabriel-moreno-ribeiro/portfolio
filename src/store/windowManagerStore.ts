@@ -119,7 +119,10 @@ export const useWindowManagerStore = create<WindowManagerState>((set, get) => ({
 
     const zIndex = state.nextZIndex;
     set({
-      windows: { ...state.windows, [id]: { ...win, status: "open", zIndex } },
+      windows: {
+        ...state.windows,
+        [id]: { ...win, status: "open", zIndex, thumbnail: undefined },
+      },
       focusOrder: [...state.focusOrder.filter((wid) => wid !== id), id],
       nextZIndex: zIndex + 1,
     });
