@@ -294,7 +294,21 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
           mouse.y = screenY - rect.top - rect.height / 2;
         }
 
-        if (isMobile && fingers <= 3) {
+        // Suppress icon attraction while pinching or scrolling — those gestures
+        // are for navigation, not for playing with the skill icons.
+        const gestureActive = hand.isPinching || hand.isScrolling;
+
+        if (gestureActive) {
+          if (mouse.active || !returningRef.current) {
+            mouse.active = false;
+            returningRef.current = true;
+            chainOrderRef.current = [];
+            mouseHistoryRef.current = [];
+            if (inputState.skillsCursorActive)
+              inputState.setSkillsCursorActive(false);
+            if (!inputState.isReturning) inputState.setIsReturning(true);
+          }
+        } else if (isMobile && fingers <= 3) {
           handTrailLerpRef.current = Math.max(0.14, 0.38 - fingers * 0.04);
           mouse.active = true;
           returningRef.current = false;

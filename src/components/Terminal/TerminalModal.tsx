@@ -1,15 +1,38 @@
-import { lazy, Suspense, useEffect, useState, useCallback } from "react";
-
-const Terminal = lazy(() => import("./Terminal"));
+import { useEffect, useCallback } from "react";
+import {
+  useWindowManagerStore,
+  useWindow,
+} from "../../store/windowManagerStore";
+import useIsMobile from "../../hooks/useIsMobile";
 
 function TerminalModal() {
-  const [isOpen, setIsOpen] = useState(false);
+  const terminalWindow = useWindow("terminal");
+  const openWindow = useWindowManagerStore((s) => s.openWindow);
+  const closeWindow = useWindowManagerStore((s) => s.closeWindow);
+  const isMobile = useIsMobile();
 
-  const close = useCallback(() => setIsOpen(false), []);
+  const toggle = useCallback(() => {
+    if (terminalWindow) {
+      closeWindow("terminal");
+    } else {
+      openWindow({
+        id: "terminal",
+        title: "Terminal",
+        type: "terminal",
+        status: "open",
+        position: {
+          x: Math.max(0, window.innerWidth / 2 - 480),
+          y: Math.max(0, window.innerHeight / 2 - 300),
+        },
+        size: { width: 960, height: 0 },
+      });
+    }
+  }, [terminalWindow, openWindow, closeWindow]);
 
-  // Lock all scroll when modal is open
+  // Lock scroll only on mobile (desktop windows float over scrollable content)
   useEffect(() => {
-    if (isOpen) {
+    const isVisible = terminalWindow && terminalWindow.status !== "minimized";
+    if (isMobile && isVisible) {
       document.documentElement.style.overflow = "hidden";
       document.body.style.overflow = "hidden";
     } else {
@@ -20,37 +43,26 @@ function TerminalModal() {
       document.documentElement.style.overflow = "";
       document.body.style.overflow = "";
     };
-  }, [isOpen]);
+  }, [terminalWindow?.status, isMobile]);
 
+  // Keyboard shortcuts
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       // Cmd+J (Mac) or Ctrl+J (Windows/Linux)
       if ((e.metaKey || e.ctrlKey) && e.key === "j") {
         e.preventDefault();
-        setIsOpen((v) => !v);
+        toggle();
       }
-      if (e.key === "Escape" && isOpen) {
-        setIsOpen(false);
+      if (e.key === "Escape" && terminalWindow && terminalWindow.status !== "minimized") {
+        closeWindow("terminal");
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen]);
+  }, [terminalWindow, toggle, closeWindow]);
 
-  if (!isOpen) return null;
-
-  return (
-    <div className="terminal-modal-overlay" onClick={close}>
-      <div
-        className="terminal-modal-content"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <Suspense fallback={null}>
-          <Terminal onClose={close} />
-        </Suspense>
-      </div>
-    </div>
-  );
+  // Rendering is handled by WindowRenderer
+  return null;
 }
 
 export default TerminalModal;

@@ -7,13 +7,17 @@
 
   // Gradient blob behind work experience section
   &::before {
-    content: "";
+    content: '';
     position: absolute;
     top: 200px;
     right: -100px;
     width: 700px;
     height: 500px;
-    background: radial-gradient(ellipse, var(--gradient-end) 0%, transparent 70%);
+    background: radial-gradient(
+      ellipse,
+      var(--gradient-end) 0%,
+      transparent 70%
+    );
     filter: blur(100px);
     opacity: 0.35;
     z-index: -1;
@@ -98,6 +102,7 @@
     justify-content: flex-start;
     width: 100%;
     height: auto;
+    min-height: 300vh;
     margin-bottom: 0px;
     position: unset;
 
