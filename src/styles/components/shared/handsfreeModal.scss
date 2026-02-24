@@ -1,3 +1,4 @@
+// Legacy overlay (no longer used - handled by window-overlay-backdrop)
 .handsfree-modal-overlay {
   position: fixed;
   top: 0;
@@ -11,13 +12,11 @@
   z-index: 9999;
 }
 
+.handsfree-modal-body,
 .handsfree-modal-content {
   background-color: var(--white);
   padding: 16px 24px 28px;
-  border-radius: 14px;
-  width: 90%;
-  max-width: 480px;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -107,6 +106,7 @@
 
 // ── Gesture Tutorial ──
 
+// Legacy overlay (no longer used - handled by window-overlay-backdrop)
 .gesture-tutorial-overlay {
   position: fixed;
   top: 0;
@@ -120,13 +120,11 @@
   z-index: 10000;
 }
 
+.gesture-tutorial-body,
 .gesture-tutorial {
   background: var(--white);
-  border-radius: 16px;
   padding: 28px 32px 24px;
-  width: 90%;
-  max-width: 520px;
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3);
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -294,9 +292,9 @@
     background-color: rgba(0, 0, 0, 0.95);
   }
 
-  .handsfree-modal-content {
+  .handsfree-modal-content,
+  .handsfree-modal-body {
     background-color: #1e1e1e;
-    border: 1px solid rgba(#fff, 0.1);
 
     .progress-bar {
       background-color: rgba(#fff, 0.1);
@@ -307,9 +305,9 @@
     background-color: rgba(0, 0, 0, 0.9);
   }
 
-  .gesture-tutorial {
+  .gesture-tutorial,
+  .gesture-tutorial-body {
     background: #1e1e1e;
-    border: 1px solid rgba(#fff, 0.1);
   }
 
   .gesture-card {

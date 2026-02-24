@@ -98,6 +98,23 @@ function countExtendedFingers(landmarks: any[]): number {
   return count;
 }
 
+function countNonPinchFingers(landmarks: any[]): number {
+  // Count only middle, ring, pinky — excludes thumb & index (the pinching fingers)
+  const wrist = landmarks[0];
+  const tips = [12, 16, 20];
+  const mcps = [9, 13, 17];
+
+  let count = 0;
+  for (let i = 0; i < 3; i++) {
+    const tip = landmarks[tips[i]];
+    const mcp = landmarks[mcps[i]];
+    const tipDist = Math.hypot(tip.x - wrist.x, tip.y - wrist.y);
+    const mcpDist = Math.hypot(mcp.x - wrist.x, mcp.y - wrist.y);
+    if (tipDist > mcpDist * 1.15) count++;
+  }
+  return count;
+}
+
 // Raw landmarks for ML overlay drawing
 let latestFaceLandmarks: any[] | null = null;
 let latestHandLandmarks: any[][] | null = null;
@@ -118,7 +135,7 @@ const smoothedHands: SmoothedHand[] = [
 ];
 
 // ── Gesture debounce ──
-const GESTURE_DEBOUNCE_FRAMES = 2;
+const GESTURE_DEBOUNCE_FRAMES = 3;
 
 // ── Scroll constants (used by pinch-drag scroll) ──
 const SCROLL_SENSITIVITY = 8; // px multiplier for direct tracking
@@ -189,13 +206,22 @@ const makePinchState = (): PinchState => ({
 
 const pinchStates: PinchState[] = [makePinchState(), makePinchState()];
 
+// ── Fist cooldown: prevent fist→pinch transition artifacts ──
+const FIST_COOLDOWN_MS = 200;
+const fistTracker = [{ lastFistTime: 0 }, { lastFistTime: 0 }];
+
 function isFist(landmarks: any[]): boolean {
-  // Fist = 0-1 extended fingers (all curled, thumb may poke out)
-  return countExtendedFingers(landmarks) <= 1;
+  const extended = countExtendedFingers(landmarks);
+  if (extended > 1) return false;
+  // If thumb-index are close (pinch position), it's NOT a fist
+  const thumbTip = landmarks[4];
+  const indexTip = landmarks[8];
+  if (Math.hypot(thumbTip.x - indexTip.x, thumbTip.y - indexTip.y) < PINCH_RELEASE_THRESHOLD) return false;
+  return true;
 }
 
 function detectPinch(landmarks: any[]): boolean {
-  if (isFist(landmarks)) return false; // suppress pinch during fist
+  if (isFist(landmarks)) return false;
   const thumbTip = landmarks[4];
   const indexTip = landmarks[8];
   return Math.hypot(thumbTip.x - indexTip.x, thumbTip.y - indexTip.y) < PINCH_THRESHOLD;
@@ -228,6 +254,32 @@ function processPinchGesture(
   screenY: number
 ): { isPinching: boolean; isScrolling: boolean } {
   const state = pinchStates[handIdx];
+  const now = performance.now();
+
+  // ── Fist gate: track fist and enforce cooldown ──
+  if (isFist(landmarks)) {
+    fistTracker[handIdx].lastFistTime = now;
+    // If pinch was active, cancel it (fist overrides pinch)
+    if (state.isPinching) {
+      if (state.isScrolling && Math.abs(state.velocity) > MOMENTUM_MIN) {
+        scrollState.velocity = state.velocity;
+        startMomentumScroll();
+      }
+      state.isPinching = false;
+      state.isScrolling = false;
+      state.velocity = 0;
+      state.pinchFrames = 0;
+      state.releaseFrames = 0;
+    }
+    return { isPinching: false, isScrolling: false };
+  }
+
+  // Suppress pinch right after fist release (prevents transition artifacts)
+  if (now - fistTracker[handIdx].lastFistTime < FIST_COOLDOWN_MS) {
+    state.pinchFrames = 0;
+    return { isPinching: state.isPinching, isScrolling: state.isScrolling };
+  }
+
   const pinching = detectPinch(landmarks);
   const released = isPinchReleased(landmarks);
 
@@ -242,7 +294,6 @@ function processPinchGesture(
 
   // Enter pinch
   if (!state.isPinching && state.pinchFrames >= GESTURE_DEBOUNCE_FRAMES) {
-    const now = performance.now();
     if (now - state.lastClickTime < PINCH_COOLDOWN_MS)
       return { isPinching: false, isScrolling: false };
     state.isPinching = true;
@@ -396,6 +447,8 @@ function processFrame() {
           }
           Object.assign(ps, makePinchState());
         }
+        fistTracker[0].lastFistTime = 0;
+        fistTracker[1].lastFistTime = 0;
         smoothedHands[0].initialized = false;
         smoothedHands[1].initialized = false;
       }
@@ -469,6 +522,8 @@ export function stopCameraInput() {
   for (let i = 0; i < pinchStates.length; i++) {
     pinchStates[i] = makePinchState();
   }
+  fistTracker[0].lastFistTime = 0;
+  fistTracker[1].lastFistTime = 0;
   for (const sh of smoothedHands) sh.initialized = false;
   scrollState.velocity = 0;
   stopMomentumScroll();

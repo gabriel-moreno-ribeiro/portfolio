@@ -38,7 +38,7 @@ const HandCursor: React.FC = () => {
           // Convert -1..1 to screen coordinates
           const screenX = ((h.x + 1) / 2) * window.innerWidth;
           const screenY = ((h.y + 1) / 2) * window.innerHeight;
-          const size = 32;
+          const size = 22;
 
           dot.style.display = "block";
           dot.style.left = `${screenX}px`;
@@ -93,7 +93,7 @@ const HandCursor: React.FC = () => {
             border: "2px solid rgba(240, 115, 45, 0.8)",
             background: "rgba(240, 115, 45, 0.15)",
             pointerEvents: "none",
-            zIndex: 9996,
+            zIndex: 99999,
             transform: "translate(-50%, -50%)",
             transition: "width 0.15s, height 0.15s, opacity 0.15s",
           }}
