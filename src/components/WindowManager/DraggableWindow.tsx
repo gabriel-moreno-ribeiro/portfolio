@@ -22,9 +22,11 @@ import {
 import html2canvas from "html2canvas-pro";
 import MacButtons from "../Home/MacButtons";
 import useIsMobile from "../../hooks/useIsMobile";
+import { useTabTransfer, pendingTransferEntries } from "../../hooks/useTabTransfer";
 
 const MIN_WIDTH = 300;
 const MIN_HEIGHT = 200;
+const EDGE_THRESHOLD = 30;
 
 interface DraggableWindowProps {
   windowId: WindowId;
@@ -61,13 +63,18 @@ function DraggableWindow({
   const updateSize = useWindowManagerStore((s) => s.updateSize);
   const setThumbnail = useWindowManagerStore((s) => s.setThumbnail);
 
+  const { hasPeer, transferWindow, signalNearEdge, signalLeftEdge } =
+    useTabTransfer();
+
   const isMobile = useIsMobile();
   const dragControls = useDragControls();
   const controls = useAnimation();
   const windowRef = useRef<HTMLDivElement>(null);
   const [isAnimatingGenie, setIsAnimatingGenie] = useState(false);
   const [isRestoring, setIsRestoring] = useState(false);
+  const [isTransferring, setIsTransferring] = useState(false);
   const prevStatusRef = useRef<string | undefined>(undefined);
+  const nearEdgeRef = useRef<"left" | "right" | null>(null);
   const [resizing, setResizing] = useState<{
     edge: "right" | "bottom" | "corner";
     startX: number;
@@ -81,11 +88,49 @@ function DraggableWindow({
 
   // Sync motion values when store position changes (e.g. from restore)
   useEffect(() => {
-    if (win && !isAnimatingGenie && !isRestoring) {
+    if (win && !isAnimatingGenie && !isRestoring && !isTransferring) {
       x.set(win.position.x);
       y.set(win.position.y);
     }
-  }, [win?.position.x, win?.position.y, isAnimatingGenie, isRestoring]);
+  }, [win?.position.x, win?.position.y, isAnimatingGenie, isRestoring, isTransferring]);
+
+  // Entry animation for windows received from another tab
+  useEffect(() => {
+    const entry = pendingTransferEntries.get(windowId);
+    if (!entry || !win) return;
+
+    pendingTransferEntries.delete(windowId);
+
+    // Place window on the side it's entering from, then slide to a natural position
+    const winWidth = win.size.width;
+    const fromLeft = entry.fromEdge === "left";
+    const startX = fromLeft ? -winWidth + 40 : window.innerWidth - 40;
+    const restX = fromLeft
+      ? Math.max(40, 80)
+      : Math.min(window.innerWidth - winWidth - 40, window.innerWidth - winWidth - 80);
+    const restY = Math.max(40, Math.min(win.position.y, window.innerHeight - 100));
+
+    setIsTransferring(true);
+    x.set(startX);
+    y.set(restY);
+
+    controls
+      .start({
+        x: [startX, restX],
+        y: restY,
+        opacity: [0, 1],
+        transition: {
+          duration: 0.35,
+          ease: [0, 0, 0.2, 1],
+        },
+      })
+      .then(() => {
+        setIsTransferring(false);
+        updatePosition(windowId, { x: restX, y: restY });
+        x.set(restX);
+        y.set(restY);
+      });
+  }, [windowId, win?.id]);
 
   // Reverse genie: animate from dock → window position when restoring
   useEffect(() => {
@@ -187,9 +232,77 @@ function DraggableWindow({
     [dragControls, isMobile, win?.status]
   );
 
-  const handleDragEnd = useCallback(() => {
+  // Real-time edge detection during drag.
+  // Constraints limit x to [-(width-100), innerWidth-100].
+  // "Near right edge" = x pushed close to the right constraint limit.
+  // "Near left edge" = x pushed close to the left constraint limit.
+  const handleDrag = useCallback(() => {
+    if (!hasPeer || !win) return;
+
+    const currentX = x.get();
+    const rightLimit = window.innerWidth - 100;
+    const leftLimit = -(win.size.width - 100);
+
+    if (currentX >= rightLimit - EDGE_THRESHOLD) {
+      if (nearEdgeRef.current !== "right") {
+        nearEdgeRef.current = "right";
+        signalNearEdge(windowId, "right");
+      }
+    } else if (currentX <= leftLimit + EDGE_THRESHOLD) {
+      if (nearEdgeRef.current !== "left") {
+        nearEdgeRef.current = "left";
+        signalNearEdge(windowId, "left");
+      }
+    } else if (nearEdgeRef.current) {
+      nearEdgeRef.current = null;
+      signalLeftEdge(windowId);
+    }
+  }, [hasPeer, win, x, windowId, signalNearEdge, signalLeftEdge]);
+
+  const handleDragEnd = useCallback(async () => {
+    const finalX = x.get();
+    const winWidth = win?.size.width ?? 400;
+    const rightLimit = window.innerWidth - 100;
+    const leftLimit = -(winWidth - 100);
+
+    const atRightEdge = finalX >= rightLimit - EDGE_THRESHOLD;
+    const atLeftEdge = finalX <= leftLimit + EDGE_THRESHOLD;
+
+    // Clear edge signal
+    if (nearEdgeRef.current) {
+      nearEdgeRef.current = null;
+      signalLeftEdge(windowId);
+    }
+
+    // Transfer to peer tab if at edge
+    if (hasPeer && (atLeftEdge || atRightEdge)) {
+      const edge = atRightEdge ? "right" : "left";
+
+      // Persist current position first so transfer gets latest coords
+      updatePosition(windowId, { x: finalX, y: y.get() });
+
+      // Animate sliding off-screen
+      const targetX =
+        edge === "right"
+          ? window.innerWidth + 50
+          : -(winWidth + 50);
+
+      setIsTransferring(true);
+
+      await controls.start({
+        x: targetX,
+        opacity: [1, 0.6, 0],
+        transition: { duration: 0.2, ease: [0.4, 0, 1, 1] },
+      });
+
+      setIsTransferring(false);
+      transferWindow(windowId, edge);
+      return;
+    }
+
+    // Normal drag end — persist position
     updatePosition(windowId, { x: x.get(), y: y.get() });
-  }, [windowId, updatePosition, x, y]);
+  }, [windowId, updatePosition, x, y, win, hasPeer, transferWindow, signalLeftEdge, controls]);
 
   const handleClose = useCallback(() => {
     closeWindow(windowId);
@@ -306,6 +419,7 @@ function DraggableWindow({
         right: window.innerWidth - 100,
         bottom: window.innerHeight - 50,
       }}
+      onDrag={handleDrag}
       onDragEnd={handleDragEnd}
       onPointerDown={handlePointerDown}
       animate={controls}
