@@ -22,6 +22,9 @@ import {
 import MacButtons from "../Home/MacButtons";
 import useIsMobile from "../../hooks/useIsMobile";
 
+const MIN_WIDTH = 300;
+const MIN_HEIGHT = 200;
+
 interface DraggableWindowProps {
   windowId: WindowId;
   title: string;
@@ -54,11 +57,20 @@ function DraggableWindow({
   const focusWindow = useWindowManagerStore((s) => s.focusWindow);
   const updatePosition = useWindowManagerStore((s) => s.updatePosition);
 
+  const updateSize = useWindowManagerStore((s) => s.updateSize);
+
   const isMobile = useIsMobile();
   const dragControls = useDragControls();
   const controls = useAnimation();
   const windowRef = useRef<HTMLDivElement>(null);
   const [isAnimatingGenie, setIsAnimatingGenie] = useState(false);
+  const [resizing, setResizing] = useState<{
+    edge: "right" | "bottom" | "corner";
+    startX: number;
+    startY: number;
+    startW: number;
+    startH: number;
+  } | null>(null);
 
   const x = useMotionValue(win?.position.x ?? 0);
   const y = useMotionValue(win?.position.y ?? 0);
@@ -70,6 +82,54 @@ function DraggableWindow({
       y.set(win.position.y);
     }
   }, [win?.position.x, win?.position.y, isAnimatingGenie]);
+
+  // Resize handlers
+  const handleResizeStart = useCallback(
+    (edge: "right" | "bottom" | "corner", e: ReactPointerEvent) => {
+      e.stopPropagation();
+      e.preventDefault();
+      if (!win) return;
+      setResizing({
+        edge,
+        startX: e.clientX,
+        startY: e.clientY,
+        startW: win.size.width,
+        startH: win.size.height,
+      });
+    },
+    [win]
+  );
+
+  useEffect(() => {
+    if (!resizing) return;
+
+    const handleMove = (e: PointerEvent) => {
+      const dx = e.clientX - resizing.startX;
+      const dy = e.clientY - resizing.startY;
+      let newW = resizing.startW;
+      let newH = resizing.startH;
+
+      if (resizing.edge === "right" || resizing.edge === "corner") {
+        newW = Math.max(MIN_WIDTH, resizing.startW + dx);
+      }
+      if (resizing.edge === "bottom" || resizing.edge === "corner") {
+        newH = Math.max(MIN_HEIGHT, resizing.startH + dy);
+      }
+
+      updateSize(windowId, { width: newW, height: newH });
+    };
+
+    const handleUp = () => {
+      setResizing(null);
+    };
+
+    window.addEventListener("pointermove", handleMove);
+    window.addEventListener("pointerup", handleUp);
+    return () => {
+      window.removeEventListener("pointermove", handleMove);
+      window.removeEventListener("pointerup", handleUp);
+    };
+  }, [resizing, windowId, updateSize]);
 
   const handlePointerDown = useCallback(() => {
     focusWindow(windowId);
@@ -92,7 +152,6 @@ function DraggableWindow({
   }, [closeWindow, windowId]);
 
   const handleMinimize = useCallback(async () => {
-    const dockIconRect = getDockIconRect(windowId);
     const windowEl = windowRef.current;
 
     if (!windowEl) {
@@ -102,41 +161,45 @@ function DraggableWindow({
 
     setIsAnimatingGenie(true);
 
-    // Calculate target position (dock center or bottom center of screen)
+    // Target: dock icon if it exists, otherwise bottom-right where dock will appear
+    const dockIconRect = getDockIconRect(windowId);
     const targetX = dockIconRect
       ? dockIconRect.x + dockIconRect.width / 2
-      : window.innerWidth / 2;
+      : window.innerWidth - 50;
     const targetY = dockIconRect
-      ? dockIconRect.y
+      ? dockIconRect.y + dockIconRect.height / 2
       : window.innerHeight - 40;
 
     const currentX = x.get();
     const currentY = y.get();
     const windowWidth = windowEl.offsetWidth;
 
+    // Lerp X from current center toward target
+    const midX = currentX + (targetX - currentX - windowWidth / 2) * 0.5;
+
     await controls.start({
       clipPath: GENIE_CLIP_PATHS,
-      scaleX: [1, 0.8, 0.5, 0.2, 0.05],
-      scaleY: [1, 0.7, 0.4, 0.15, 0.05],
+      scaleX: [1, 0.6, 0.25, 0.08, 0.02],
+      scaleY: [1, 0.5, 0.2, 0.08, 0.02],
       x: [
         currentX,
-        currentX,
+        midX,
         targetX - windowWidth / 2,
         targetX - windowWidth / 2,
         targetX - windowWidth / 2,
       ],
       y: [
         currentY,
-        currentY + 50,
-        targetY - 200,
-        targetY - 50,
+        currentY + (targetY - currentY) * 0.3,
+        targetY - 80,
+        targetY - 20,
         targetY,
       ],
-      opacity: [1, 1, 0.8, 0.5, 0],
+      opacity: [1, 0.9, 0.6, 0.2, 0],
       transition: {
-        duration: 0.28,
-        ease: [0.4, 0, 1, 1],
-        times: [0, 0.15, 0.5, 0.8, 1],
+        duration: 0.3,
+        ease: [0.5, 0, 1, 1],
+        times: [0, 0.2, 0.55, 0.85, 1],
       },
     });
 
@@ -173,7 +236,7 @@ function DraggableWindow({
         y: isMaximized ? 0 : y,
         zIndex: win.zIndex,
         width: isMaximized ? "100vw" : win.size.width,
-        height: isMaximized ? "100vh" : "auto",
+        height: isMaximized ? "100vh" : win.size.height,
       }}
       drag={!isMobile && !isMaximized ? true : false}
       dragControls={dragControls}
@@ -211,6 +274,22 @@ function DraggableWindow({
         <span className="draggable-window__title">{title}</span>
       </div>
       <div className="draggable-window__body">{children}</div>
+      {!isMobile && !isMaximized && (
+        <>
+          <div
+            className="draggable-window__resize draggable-window__resize--right"
+            onPointerDown={(e) => handleResizeStart("right", e)}
+          />
+          <div
+            className="draggable-window__resize draggable-window__resize--bottom"
+            onPointerDown={(e) => handleResizeStart("bottom", e)}
+          />
+          <div
+            className="draggable-window__resize draggable-window__resize--corner"
+            onPointerDown={(e) => handleResizeStart("corner", e)}
+          />
+        </>
+      )}
     </motion.div>
   );
 }
