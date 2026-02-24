@@ -77,6 +77,14 @@
     position: absolute;
     z-index: 2;
 
+    &--left {
+      top: 0;
+      left: 0;
+      width: 6px;
+      height: 100%;
+      cursor: ew-resize;
+    }
+
     &--right {
       top: 0;
       right: 0;
