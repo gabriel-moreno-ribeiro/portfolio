@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "motion/react";
-import { useEffect, useRef, useCallback } from "react";
+import { useEffect, useRef, useCallback, useState } from "react";
 import { FiX } from "react-icons/fi";
 import {
   useMinimizedWindows,
@@ -8,6 +8,8 @@ import {
   removeDockIconRect,
   WindowState,
 } from "../../store/windowManagerStore";
+
+const MAX_VISIBLE = 5;
 
 function DockItem({
   win,
@@ -46,13 +48,14 @@ function DockItem({
     <motion.div
       ref={ref}
       className="dock__item"
+      layout
       data-window-id={win.id}
-      initial={{ scale: 0, opacity: 0, y: 20 }}
-      animate={{ scale: 1, opacity: 1, y: 0 }}
-      exit={{ scale: 0, opacity: 0, y: 20 }}
-      whileHover={{ scale: 1.05, y: -4 }}
-      whileTap={{ scale: 0.97 }}
-      transition={{ type: "spring", stiffness: 400, damping: 25 }}
+      initial={{ scale: 0, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      exit={{ scale: 0, opacity: 0 }}
+      whileHover={{ scale: 1.08, y: -3 }}
+      whileTap={{ scale: 0.95 }}
+      transition={{ type: "spring", stiffness: 500, damping: 30 }}
       onClick={() => onRestore(win.id)}
     >
       <div className="dock__preview">
@@ -68,10 +71,10 @@ function DockItem({
             <span className="dock__placeholder-title">{win.title}</span>
           </div>
         )}
-        <button className="dock__close" onClick={handleClose}>
-          <FiX />
-        </button>
       </div>
+      <button className="dock__close" onClick={handleClose}>
+        <FiX />
+      </button>
       <span className="dock__label">{win.title}</span>
     </motion.div>
   );
@@ -81,6 +84,7 @@ function Dock() {
   const minimizedWindows = useMinimizedWindows();
   const restoreWindow = useWindowManagerStore((s) => s.restoreWindow);
   const closeWindow = useWindowManagerStore((s) => s.closeWindow);
+  const [expanded, setExpanded] = useState(false);
 
   const handleRestore = useCallback(
     (id: string) => {
@@ -96,18 +100,39 @@ function Dock() {
     [closeWindow]
   );
 
+  // Reset expanded state when we drop below the threshold
+  useEffect(() => {
+    if (minimizedWindows.length <= MAX_VISIBLE) {
+      setExpanded(false);
+    }
+  }, [minimizedWindows.length]);
+
+  const hasOverflow = minimizedWindows.length > MAX_VISIBLE;
+  const visibleWindows = expanded
+    ? minimizedWindows
+    : minimizedWindows.slice(0, MAX_VISIBLE);
+  const hiddenCount = minimizedWindows.length - MAX_VISIBLE;
+
   return (
     <AnimatePresence>
       {minimizedWindows.length > 0 && (
         <motion.div
-          className="dock"
+          className={`dock ${expanded ? "dock--expanded" : ""}`}
+          layout
           initial={{ y: 80, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 80, opacity: 0 }}
-          transition={{ type: "spring", stiffness: 300, damping: 25 }}
+          transition={{
+            type: "spring",
+            stiffness: 400,
+            damping: 28,
+            layout: { type: "spring", stiffness: 300, damping: 30 },
+          }}
+          onMouseEnter={() => hasOverflow && setExpanded(true)}
+          onMouseLeave={() => setExpanded(false)}
         >
           <AnimatePresence mode="popLayout">
-            {minimizedWindows.map((win) => (
+            {visibleWindows.map((win) => (
               <DockItem
                 key={win.id}
                 win={win}
@@ -116,6 +141,18 @@ function Dock() {
               />
             ))}
           </AnimatePresence>
+          {hasOverflow && !expanded && (
+            <motion.div
+              className="dock__overflow-badge"
+              layout
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0 }}
+              transition={{ type: "spring", stiffness: 500, damping: 25 }}
+            >
+              +{hiddenCount}
+            </motion.div>
+          )}
         </motion.div>
       )}
     </AnimatePresence>
