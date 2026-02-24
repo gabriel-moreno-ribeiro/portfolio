@@ -211,20 +211,29 @@ const FIST_COOLDOWN_MS = 200;
 const fistTracker = [{ lastFistTime: 0 }, { lastFistTime: 0 }];
 
 function isFist(landmarks: any[]): boolean {
-  const extended = countExtendedFingers(landmarks);
-  if (extended > 1) return false;
-  // If thumb-index are close (pinch position), it's NOT a fist
-  const thumbTip = landmarks[4];
-  const indexTip = landmarks[8];
-  if (Math.hypot(thumbTip.x - indexTip.x, thumbTip.y - indexTip.y) < PINCH_RELEASE_THRESHOLD) return false;
-  return true;
+  // Fist = 0-1 extended fingers. Thumb may poke out.
+  // We DON'T check thumb-index distance here — during a fist the thumb
+  // naturally rests on/near the curled index finger, which would look like
+  // a pinch distance-wise. Finger extension count is the reliable signal.
+  return countExtendedFingers(landmarks) <= 1;
 }
 
 function detectPinch(landmarks: any[]): boolean {
   if (isFist(landmarks)) return false;
   const thumbTip = landmarks[4];
   const indexTip = landmarks[8];
-  return Math.hypot(thumbTip.x - indexTip.x, thumbTip.y - indexTip.y) < PINCH_THRESHOLD;
+  if (Math.hypot(thumbTip.x - indexTip.x, thumbTip.y - indexTip.y) >= PINCH_THRESHOLD) return false;
+
+  // Confirm the index finger is at least semi-extended (reaching toward thumb).
+  // In a fist, the index tip curls into the palm — close to palm center (landmark 9).
+  // In a pinch, the index tip extends outward — far from palm center.
+  const palmCenter = landmarks[9];
+  const wrist = landmarks[0];
+  const palmSize = Math.hypot(palmCenter.x - wrist.x, palmCenter.y - wrist.y);
+  const tipToPalm = Math.hypot(indexTip.x - palmCenter.x, indexTip.y - palmCenter.y);
+  if (tipToPalm < palmSize * 0.4) return false; // index curled into palm → fist, not pinch
+
+  return true;
 }
 
 function isPinchReleased(landmarks: any[]): boolean {
