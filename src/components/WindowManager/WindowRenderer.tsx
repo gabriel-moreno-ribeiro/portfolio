@@ -7,6 +7,8 @@ import Dock from "./Dock";
 import WorkCardWindow from "./WorkCardWindow";
 import DraggableWindow from "./DraggableWindow";
 import { WindowOverlay } from "./DraggableWindow";
+import EdgeGlow from "./EdgeGlow";
+import { TabTransferProvider } from "../../hooks/useTabTransfer";
 
 const Terminal = lazy(() => import("../Terminal/Terminal"));
 
@@ -43,12 +45,15 @@ function WindowRenderer() {
   const windowIds = useWindowIds();
 
   return (
-    <WindowOverlay>
-      {windowIds.map((id) => (
-        <WindowItem key={id} windowId={id} />
-      ))}
-      <Dock />
-    </WindowOverlay>
+    <TabTransferProvider>
+      <WindowOverlay>
+        {windowIds.map((id) => (
+          <WindowItem key={id} windowId={id} />
+        ))}
+        <Dock />
+        <EdgeGlow />
+      </WindowOverlay>
+    </TabTransferProvider>
   );
 }
 

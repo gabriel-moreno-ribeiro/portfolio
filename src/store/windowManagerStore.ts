@@ -47,6 +47,7 @@ interface WindowManagerState {
   updatePosition: (id: WindowId, pos: { x: number; y: number }) => void;
   updateSize: (id: WindowId, size: { width: number; height: number }) => void;
   setThumbnail: (id: WindowId, dataUrl: string) => void;
+  acceptTransferredWindow: (win: Omit<WindowState, "zIndex">) => void;
 }
 
 // Dock icon rects stored outside Zustand (only read imperatively during animations)
@@ -212,6 +213,16 @@ export const useWindowManagerStore = create<WindowManagerState>((set, get) => ({
 
     set({
       windows: { ...state.windows, [id]: { ...win, thumbnail: dataUrl } },
+    });
+  },
+
+  acceptTransferredWindow: (win) => {
+    const state = get();
+    const zIndex = state.nextZIndex;
+    set({
+      windows: { ...state.windows, [win.id]: { ...win, zIndex } },
+      focusOrder: [...state.focusOrder.filter((wid) => wid !== win.id), win.id],
+      nextZIndex: zIndex + 1,
     });
   },
 }));
