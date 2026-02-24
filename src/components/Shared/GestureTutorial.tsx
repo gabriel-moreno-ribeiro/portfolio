@@ -1,6 +1,11 @@
-import { AnimatePresence, motion } from "motion/react";
-import React from "react";
+import { motion } from "motion/react";
+import { useEffect } from "react";
 import { useHandsfreeStore } from "../../store/handsfreeStore";
+import {
+  useWindowManagerStore,
+  useWindow,
+} from "../../store/windowManagerStore";
+import DraggableWindow from "../WindowManager/DraggableWindow";
 
 const gestures = [
   {
@@ -27,68 +32,80 @@ const gestures = [
 
 const GestureTutorial: React.FC = () => {
   const show = useHandsfreeStore((s) => s.showGestureTutorial);
-  const dismiss = () => useHandsfreeStore.getState().setShowGestureTutorial(false);
+  const openWindow = useWindowManagerStore((s) => s.openWindow);
+  const closeWindow = useWindowManagerStore((s) => s.closeWindow);
+  const win = useWindow("gesture-tutorial");
+
+  // Bridge: handsfreeStore -> windowManagerStore
+  useEffect(() => {
+    if (show && !win) {
+      openWindow({
+        id: "gesture-tutorial",
+        title: "Hand Gestures",
+        type: "gesture-tutorial",
+        status: "open",
+        position: {
+          x: Math.max(0, window.innerWidth / 2 - 230),
+          y: Math.max(0, window.innerHeight / 2 - 220),
+        },
+        size: { width: 460, height: 440 },
+      });
+    }
+  }, [show, win, openWindow]);
+
+  // Bridge: windowManagerStore -> handsfreeStore
+  useEffect(() => {
+    if (!win && show) {
+      useHandsfreeStore.getState().setShowGestureTutorial(false);
+    }
+  }, [win, show]);
+
+  const dismiss = () => {
+    closeWindow("gesture-tutorial");
+    useHandsfreeStore.getState().setShowGestureTutorial(false);
+  };
+
+  if (!win || win.status === "minimized") return null;
 
   return (
-    <AnimatePresence>
-      {show && (
-        <motion.div
-          className="gesture-tutorial-overlay"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
+    <DraggableWindow windowId="gesture-tutorial" title="Hand Gestures">
+      <div className="gesture-tutorial-body">
+        <h2 className="gesture-tutorial__title">Hand Gestures</h2>
+        <p className="gesture-tutorial__subtitle">
+          Here's how to navigate hands-free
+        </p>
+
+        <div className="gesture-tutorial__grid">
+          {gestures.map((g, i) => (
+            <motion.div
+              key={g.title}
+              className="gesture-card"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{
+                opacity: 1,
+                y: 0,
+                transition: { delay: 0.1 + i * 0.1 },
+              }}
+            >
+              <div className="gesture-card__icon">{g.icon}</div>
+              <div className="gesture-card__info">
+                <span className="gesture-card__name">{g.title}</span>
+                <span className="gesture-card__desc">{g.desc}</span>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        <motion.button
+          className="gesture-tutorial__dismiss"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
           onClick={dismiss}
         >
-          <motion.div
-            className="gesture-tutorial"
-            onClick={(e) => e.stopPropagation()}
-            initial={{ opacity: 0, scale: 0.9, y: 30 }}
-            animate={{
-              opacity: 1,
-              scale: 1,
-              y: 0,
-              transition: { type: "spring", stiffness: 180, damping: 18 },
-            }}
-            exit={{ opacity: 0, scale: 0.9, y: 30 }}
-          >
-            <h2 className="gesture-tutorial__title">Hand Gestures</h2>
-            <p className="gesture-tutorial__subtitle">
-              Here's how to navigate hands-free
-            </p>
-
-            <div className="gesture-tutorial__grid">
-              {gestures.map((g, i) => (
-                <motion.div
-                  key={g.title}
-                  className="gesture-card"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{
-                    opacity: 1,
-                    y: 0,
-                    transition: { delay: 0.1 + i * 0.1 },
-                  }}
-                >
-                  <div className="gesture-card__icon">{g.icon}</div>
-                  <div className="gesture-card__info">
-                    <span className="gesture-card__name">{g.title}</span>
-                    <span className="gesture-card__desc">{g.desc}</span>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-
-            <motion.button
-              className="gesture-tutorial__dismiss"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={dismiss}
-            >
-              Got it!
-            </motion.button>
-          </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+          Got it!
+        </motion.button>
+      </div>
+    </DraggableWindow>
   );
 };
 

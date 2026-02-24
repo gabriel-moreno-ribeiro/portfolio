@@ -21,7 +21,7 @@ function FindMyWork() {
       ) : (
         <div className="work-content" id="work-content-scroll-div">
           {work[activeTab]?.map((data, i) => (
-            <WorkCard key={i} data={data} />
+            <WorkCard key={i} data={data} cardIndex={activeTab * 100 + i} />
           ))}
         </div>
       )}
