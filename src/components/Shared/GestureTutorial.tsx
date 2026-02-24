@@ -39,16 +39,17 @@ const GestureTutorial: React.FC = () => {
   // Bridge: handsfreeStore -> windowManagerStore
   useEffect(() => {
     if (show && !win) {
+      const modalWidth = Math.min(540, window.innerWidth - 40);
       openWindow({
         id: "gesture-tutorial",
         title: "Hand Gestures",
         type: "gesture-tutorial",
         status: "open",
         position: {
-          x: Math.max(0, window.innerWidth / 2 - 230),
-          y: Math.max(0, window.innerHeight / 2 - 220),
+          x: Math.max(20, (window.innerWidth - modalWidth) / 2),
+          y: Math.max(20, (window.innerHeight - 440) / 2),
         },
-        size: { width: 460, height: 0 },
+        size: { width: modalWidth, height: 0 },
       });
     }
   }, [show, win, openWindow]);
