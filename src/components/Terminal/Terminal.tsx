@@ -14,12 +14,20 @@ import {
 } from "../../constants/terminal/commands";
 import TerminalHeader from "./TerminalHeader";
 import MatrixRain from "./MatrixRain";
+import { registerTerminalInstance } from "../../services/terminalBridge";
 
 interface TerminalProps {
   onClose?: () => void;
   /** When true, the TerminalHeader (MacButtons + title) is hidden because
    *  an external DraggableWindow wrapper provides the window chrome. */
   hideHeader?: boolean;
+  /** Buffer lines to restore from a cross-tab transfer */
+  transferBuffer?: string[];
+  /** Terminal store state from the sending tab */
+  transferState?: {
+    commandHistory: string[];
+    currentDirectory: string;
+  };
 }
 
 const MOBILE_BREAKPOINT = 600;
@@ -41,7 +49,7 @@ const BOOT_LINES = [
   "",
 ];
 
-function Terminal({ onClose, hideHeader = false }: TerminalProps) {
+function Terminal({ onClose, hideHeader = false, transferBuffer, transferState }: TerminalProps) {
   const termRef = useRef<HTMLDivElement>(null);
   const xtermRef = useRef<XTerminal | null>(null);
   const fitAddonRef = useRef<FitAddon | null>(null);
@@ -246,9 +254,21 @@ function Terminal({ onClose, hideHeader = false }: TerminalProps) {
 
     xtermRef.current = term;
     fitAddonRef.current = fitAddon;
+    registerTerminalInstance(term);
 
-    // Boot sequence or immediate prompt
-    if (!isBooted) {
+    // Restore transferred state if present
+    if (transferState) {
+      setDirectory(transferState.currentDirectory);
+      currentDirRef.current = transferState.currentDirectory;
+      transferState.commandHistory.forEach((cmd) => addToHistory(cmd));
+      setBooted(true);
+    }
+
+    // Replay buffer from cross-tab transfer, or normal boot
+    if (transferBuffer && transferBuffer.length > 0) {
+      transferBuffer.forEach((line) => term.writeln(line));
+      writePrompt();
+    } else if (!isBooted && !transferState) {
       let i = 0;
       const bootNext = () => {
         if (i < BOOT_LINES.length) {
@@ -418,6 +438,7 @@ function Terminal({ onClose, hideHeader = false }: TerminalProps) {
       term.dispose();
       xtermRef.current = null;
       fitAddonRef.current = null;
+      registerTerminalInstance(null);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

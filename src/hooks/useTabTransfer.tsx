@@ -20,6 +20,8 @@ import {
   type WindowId,
   type WindowState,
 } from "../store/windowManagerStore";
+import { getTerminalBuffer } from "../services/terminalBridge";
+import { useTerminalStore } from "../store/terminalStore";
 
 // Map for DraggableWindow to check on mount — signals "animate from edge"
 export const pendingTransferEntries = new Map<
@@ -138,11 +140,29 @@ export function TabTransferProvider({ children }: { children: ReactNode }) {
       const win = state.windows[id];
       if (!win) return;
 
+      // For terminal windows, capture buffer + store state into meta
+      let windowState = win;
+      if (win.type === "terminal") {
+        const buffer = getTerminalBuffer();
+        const termState = useTerminalStore.getState();
+        windowState = {
+          ...win,
+          meta: {
+            ...win.meta,
+            terminalBuffer: buffer,
+            terminalState: {
+              commandHistory: termState.commandHistory,
+              currentDirectory: termState.currentDirectory,
+            },
+          },
+        };
+      }
+
       // Send the full window state to peer tabs
       postMessage({
         type: "TRANSFER_WINDOW",
         edge,
-        windowState: win,
+        windowState,
       });
 
       // Remove from local store

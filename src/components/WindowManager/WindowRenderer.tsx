@@ -18,10 +18,19 @@ function TerminalWindow() {
 
   if (!win || win.status === "minimized") return null;
 
+  const meta = win.meta as
+    | { terminalBuffer?: string[]; terminalState?: { commandHistory: string[]; currentDirectory: string } }
+    | undefined;
+
   return (
     <DraggableWindow windowId="terminal" title="Terminal">
       <Suspense fallback={null}>
-        <Terminal onClose={() => closeWindow("terminal")} hideHeader />
+        <Terminal
+          onClose={() => closeWindow("terminal")}
+          hideHeader
+          transferBuffer={meta?.terminalBuffer}
+          transferState={meta?.terminalState}
+        />
       </Suspense>
     </DraggableWindow>
   );

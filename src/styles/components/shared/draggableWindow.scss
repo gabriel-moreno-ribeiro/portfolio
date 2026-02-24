@@ -38,6 +38,12 @@
     max-width: calc(100vw - 24px);
     max-height: calc(100vh - 48px);
     width: 100% !important;
+    height: auto !important;
+
+    .draggable-window__body {
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
   }
 
   &__header {
