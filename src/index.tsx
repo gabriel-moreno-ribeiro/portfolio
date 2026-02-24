@@ -8,6 +8,9 @@ posthog.init("phc_cgNNpL9lqLK50jeJICAV6xcGZDmuDnuPVxPeG8Ieg6m", {
   person_profiles: "identified_only",
   capture_pageview: true,
   capture_pageleave: true,
+  session_recording: {
+    maskAllInputs: false,
+  },
 });
 
 const root = ReactDOM.createRoot(
