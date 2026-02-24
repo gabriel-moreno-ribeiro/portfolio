@@ -75,6 +75,7 @@ function DraggableWindow({
   const [isTransferring, setIsTransferring] = useState(false);
   const prevStatusRef = useRef<string | undefined>(undefined);
   const nearEdgeRef = useRef<"left" | "right" | null>(null);
+  const didTransferRef = useRef(false);
   const [resizing, setResizing] = useState<{
     edge: "right" | "bottom" | "corner";
     startX: number;
@@ -232,41 +233,64 @@ function DraggableWindow({
     [dragControls, isMobile, win?.status]
   );
 
-  // Real-time edge detection during drag.
-  // Constraints limit x to [-(width-100), innerWidth-100].
-  // "Near right edge" = x pushed close to the right constraint limit.
-  // "Near left edge" = x pushed close to the left constraint limit.
+  // Real-time edge detection + mid-drag transfer.
+  // When a peer exists, constraints are widened so the window can go off-screen.
+  // Transfer fires as soon as the window crosses the viewport boundary — no pause.
   const handleDrag = useCallback(() => {
-    if (!hasPeer || !win) return;
+    if (!hasPeer || !win || didTransferRef.current) return;
 
     const currentX = x.get();
-    const rightLimit = window.innerWidth - 100;
-    const leftLimit = -(win.size.width - 100);
+    const winWidth = win.size.width;
 
-    if (currentX >= rightLimit - EDGE_THRESHOLD) {
+    // Window's right edge past viewport right
+    const pastRight = currentX + winWidth > window.innerWidth;
+    // Window's left edge past viewport left
+    const pastLeft = currentX < 0;
+
+    // Signal glow when approaching edge (within 60px of viewport boundary)
+    const nearRight = currentX + winWidth > window.innerWidth - 60;
+    const nearLeft = currentX < 60;
+
+    if (nearRight && !pastRight) {
       if (nearEdgeRef.current !== "right") {
         nearEdgeRef.current = "right";
         signalNearEdge(windowId, "right");
       }
-    } else if (currentX <= leftLimit + EDGE_THRESHOLD) {
+    } else if (nearLeft && !pastLeft) {
       if (nearEdgeRef.current !== "left") {
         nearEdgeRef.current = "left";
         signalNearEdge(windowId, "left");
       }
-    } else if (nearEdgeRef.current) {
+    } else if (!pastRight && !pastLeft && nearEdgeRef.current) {
       nearEdgeRef.current = null;
       signalLeftEdge(windowId);
     }
-  }, [hasPeer, win, x, windowId, signalNearEdge, signalLeftEdge]);
 
-  const handleDragEnd = useCallback(async () => {
-    const finalX = x.get();
-    const winWidth = win?.size.width ?? 400;
-    const rightLimit = window.innerWidth - 100;
-    const leftLimit = -(winWidth - 100);
+    // Transfer mid-drag: when >60% of the window is off-screen, send it
+    const offScreenRight = currentX > window.innerWidth - winWidth * 0.4;
+    const offScreenLeft = currentX + winWidth < winWidth * 0.4;
 
-    const atRightEdge = finalX >= rightLimit - EDGE_THRESHOLD;
-    const atLeftEdge = finalX <= leftLimit + EDGE_THRESHOLD;
+    if (offScreenRight) {
+      didTransferRef.current = true;
+      nearEdgeRef.current = null;
+      signalLeftEdge(windowId);
+      updatePosition(windowId, { x: currentX, y: y.get() });
+      transferWindow(windowId, "right");
+    } else if (offScreenLeft) {
+      didTransferRef.current = true;
+      nearEdgeRef.current = null;
+      signalLeftEdge(windowId);
+      updatePosition(windowId, { x: currentX, y: y.get() });
+      transferWindow(windowId, "left");
+    }
+  }, [hasPeer, win, x, y, windowId, signalNearEdge, signalLeftEdge, transferWindow, updatePosition]);
+
+  const handleDragEnd = useCallback(() => {
+    // If we already transferred mid-drag, just reset the flag
+    if (didTransferRef.current) {
+      didTransferRef.current = false;
+      return;
+    }
 
     // Clear edge signal
     if (nearEdgeRef.current) {
@@ -274,35 +298,9 @@ function DraggableWindow({
       signalLeftEdge(windowId);
     }
 
-    // Transfer to peer tab if at edge
-    if (hasPeer && (atLeftEdge || atRightEdge)) {
-      const edge = atRightEdge ? "right" : "left";
-
-      // Persist current position first so transfer gets latest coords
-      updatePosition(windowId, { x: finalX, y: y.get() });
-
-      // Animate sliding off-screen
-      const targetX =
-        edge === "right"
-          ? window.innerWidth + 50
-          : -(winWidth + 50);
-
-      setIsTransferring(true);
-
-      await controls.start({
-        x: targetX,
-        opacity: [1, 0.6, 0],
-        transition: { duration: 0.2, ease: [0.4, 0, 1, 1] },
-      });
-
-      setIsTransferring(false);
-      transferWindow(windowId, edge);
-      return;
-    }
-
     // Normal drag end — persist position
     updatePosition(windowId, { x: x.get(), y: y.get() });
-  }, [windowId, updatePosition, x, y, win, hasPeer, transferWindow, signalLeftEdge, controls]);
+  }, [windowId, updatePosition, x, y, signalLeftEdge]);
 
   const handleClose = useCallback(() => {
     closeWindow(windowId);
@@ -413,12 +411,21 @@ function DraggableWindow({
       dragListener={false}
       dragElastic={0}
       dragMomentum={false}
-      dragConstraints={{
-        top: 0,
-        left: -(win.size.width - 100),
-        right: window.innerWidth - 100,
-        bottom: window.innerHeight - 50,
-      }}
+      dragConstraints={
+        hasPeer
+          ? {
+              top: 0,
+              left: -(win.size.width + 200),
+              right: window.innerWidth + 200,
+              bottom: window.innerHeight - 50,
+            }
+          : {
+              top: 0,
+              left: -(win.size.width - 100),
+              right: window.innerWidth - 100,
+              bottom: window.innerHeight - 50,
+            }
+      }
       onDrag={handleDrag}
       onDragEnd={handleDragEnd}
       onPointerDown={handlePointerDown}
