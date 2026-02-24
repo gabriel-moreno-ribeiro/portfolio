@@ -35,7 +35,7 @@ const HandsfreeIntroModal: React.FC = () => {
           x: Math.max(0, window.innerWidth / 2 - 220),
           y: Math.max(0, window.innerHeight / 2 - 200),
         },
-        size: { width: 440, height: 400 },
+        size: { width: 440, height: 0 },
       });
     }
   }, [showIntroModal, win, openWindow]);

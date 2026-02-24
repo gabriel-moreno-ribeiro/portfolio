@@ -48,7 +48,7 @@ const GestureTutorial: React.FC = () => {
           x: Math.max(0, window.innerWidth / 2 - 230),
           y: Math.max(0, window.innerHeight / 2 - 220),
         },
-        size: { width: 460, height: 440 },
+        size: { width: 460, height: 0 },
       });
     }
   }, [show, win, openWindow]);

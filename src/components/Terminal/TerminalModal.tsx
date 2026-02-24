@@ -22,7 +22,7 @@ function TerminalModal() {
           x: Math.max(0, window.innerWidth / 2 - 480),
           y: Math.max(0, window.innerHeight / 2 - 300),
         },
-        size: { width: 960, height: 600 },
+        size: { width: 960, height: 0 },
       });
     }
   }, [terminalWindow, openWindow, closeWindow]);

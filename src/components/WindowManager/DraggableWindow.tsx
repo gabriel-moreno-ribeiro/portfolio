@@ -89,12 +89,14 @@ function DraggableWindow({
       e.stopPropagation();
       e.preventDefault();
       if (!win) return;
+      // Use actual rendered size when height is auto (0)
+      const el = windowRef.current;
       setResizing({
         edge,
         startX: e.clientX,
         startY: e.clientY,
         startW: win.size.width,
-        startH: win.size.height,
+        startH: win.size.height || el?.offsetHeight || 400,
       });
     },
     [win]
@@ -236,7 +238,7 @@ function DraggableWindow({
         y: isMaximized ? 0 : y,
         zIndex: win.zIndex,
         width: isMaximized ? "100vw" : win.size.width,
-        height: isMaximized ? "100vh" : win.size.height,
+        height: isMaximized ? "100vh" : win.size.height || "auto",
       }}
       drag={!isMobile && !isMaximized ? true : false}
       dragControls={dragControls}
