@@ -1,0 +1,55 @@
+import { lazy, Suspense } from "react";
+import {
+  useWindowManagerStore,
+  useWindowIds,
+} from "../../store/windowManagerStore";
+import Dock from "./Dock";
+import WorkCardWindow from "./WorkCardWindow";
+import DraggableWindow from "./DraggableWindow";
+import { WindowOverlay } from "./DraggableWindow";
+
+const Terminal = lazy(() => import("../Terminal/Terminal"));
+
+function TerminalWindow() {
+  const win = useWindowManagerStore((s) => s.windows["terminal"]);
+  const closeWindow = useWindowManagerStore((s) => s.closeWindow);
+
+  if (!win || win.status === "minimized") return null;
+
+  return (
+    <DraggableWindow windowId="terminal" title="Terminal">
+      <Suspense fallback={null}>
+        <Terminal onClose={() => closeWindow("terminal")} hideHeader />
+      </Suspense>
+    </DraggableWindow>
+  );
+}
+
+function WindowItem({ windowId }: { windowId: string }) {
+  const win = useWindowManagerStore((s) => s.windows[windowId]);
+  if (!win) return null;
+
+  switch (win.type) {
+    case "terminal":
+      return <TerminalWindow />;
+    case "workcard":
+      return <WorkCardWindow windowId={win.id} />;
+    default:
+      return null;
+  }
+}
+
+function WindowRenderer() {
+  const windowIds = useWindowIds();
+
+  return (
+    <WindowOverlay>
+      {windowIds.map((id) => (
+        <WindowItem key={id} windowId={id} />
+      ))}
+      <Dock />
+    </WindowOverlay>
+  );
+}
+
+export default WindowRenderer;

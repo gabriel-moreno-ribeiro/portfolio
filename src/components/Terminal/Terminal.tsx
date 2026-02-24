@@ -17,6 +17,9 @@ import MatrixRain from "./MatrixRain";
 
 interface TerminalProps {
   onClose?: () => void;
+  /** When true, the TerminalHeader (MacButtons + title) is hidden because
+   *  an external DraggableWindow wrapper provides the window chrome. */
+  hideHeader?: boolean;
 }
 
 const MOBILE_BREAKPOINT = 600;
@@ -38,7 +41,7 @@ const BOOT_LINES = [
   "",
 ];
 
-function Terminal({ onClose }: TerminalProps) {
+function Terminal({ onClose, hideHeader = false }: TerminalProps) {
   const termRef = useRef<HTMLDivElement>(null);
   const xtermRef = useRef<XTerminal | null>(null);
   const fitAddonRef = useRef<FitAddon | null>(null);
@@ -442,15 +445,17 @@ function Terminal({ onClose }: TerminalProps) {
 
   return (
     <div className={`terminal-window ${isExpanded ? "terminal-expanded" : ""} ${isMinimized ? "terminal-minimized" : ""}`}>
-      <TerminalHeader
-        onClose={onClose}
-        onExpand={() => {
-          if (isMinimized) setIsMinimized(false);
-          else setIsExpanded((v) => !v);
-        }}
-        onMinimise={() => setIsMinimized((v) => !v)}
-        isExpanded={isExpanded}
-      />
+      {!hideHeader && (
+        <TerminalHeader
+          onClose={onClose}
+          onExpand={() => {
+            if (isMinimized) setIsMinimized(false);
+            else setIsExpanded((v) => !v);
+          }}
+          onMinimise={() => setIsMinimized((v) => !v)}
+          isExpanded={isExpanded}
+        />
+      )}
       <div className="terminal-body" style={isMinimized ? { display: "none" } : undefined}>
         <div ref={termRef} className="xterm-container" />
         {matrixActive && <MatrixRain />}

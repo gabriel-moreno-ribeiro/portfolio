@@ -1,15 +1,12 @@
 import {
-  AnimatePresence,
   motion,
   useAnimation,
   useInView,
 } from "motion/react";
-import { lazy, Suspense, useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { FiGithub, FiPlayCircle } from "react-icons/fi";
 import useIsMobile from "../../hooks/useIsMobile";
-
-const ReactPlayer = lazy(() => import("react-player/youtube"));
-import MacButtons from "./MacButtons";
+import { useWindowManagerStore } from "../../store/windowManagerStore";
 
 interface WorkCardInterface {
   data: {
@@ -28,17 +25,17 @@ interface WorkCardInterface {
       infoArr?: string[];
     };
   };
+  cardIndex?: number;
 }
 
-const WorkCard = ({ data }: WorkCardInterface) => {
+const WorkCard = ({ data, cardIndex = 0 }: WorkCardInterface) => {
   const { cardData, modalData } = data;
-  const [isOpen, setIsOpen] = useState(false);
-  const [isExpanded, setIsExpanded] = useState(true);
-  const [isMinimized, setIsMinimized] = useState(false);
   const isMobile = useIsMobile();
   const controls = useAnimation();
   const ref = useRef(null);
   const inView = useInView(ref, { margin: "0px 0px 200px 0px", once: true });
+
+  const openWindow = useWindowManagerStore((s) => s.openWindow);
 
   useEffect(() => {
     if (inView) {
@@ -51,36 +48,32 @@ const WorkCard = ({ data }: WorkCardInterface) => {
     }
   }, [controls, inView]);
 
-  const toggleModal = () => {
-    setIsOpen((prev) => {
-      if (!prev) {
-        setIsExpanded(true);
-        setIsMinimized(false);
-      }
-      return !prev;
+  const handleOpen = () => {
+    const windowId = `workcard-${cardIndex}`;
+    openWindow({
+      id: windowId,
+      title: modalData.title,
+      type: "workcard",
+      status: "open",
+      position: {
+        x: Math.max(20, window.innerWidth / 2 - (isMobile ? 200 : 400)),
+        y: Math.max(20, window.innerHeight / 2 - 250),
+      },
+      size: { width: isMobile ? 400 : 800, height: 600 },
+      meta: { cardData, modalData },
     });
-  };
-
-  const handleExpand = () => {
-    setIsExpanded((prev) => !prev);
-  };
-
-  const handleMinimize = () => {
-    setIsMinimized(true);
-    setTimeout(() => {
-      setIsOpen(false);
-      setIsMinimized(false);
-    }, 400);
-  };
-
-  const handleClose = () => {
-    setIsOpen(false);
   };
 
   useEffect(() => {
     const handleEsc = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        setIsOpen(false);
+        // Close all workcard windows
+        const state = useWindowManagerStore.getState();
+        Object.values(state.windows).forEach((win) => {
+          if (win.type === "workcard") {
+            state.closeWindow(win.id);
+          }
+        });
       }
     };
     window.addEventListener("keydown", handleEsc);
@@ -100,7 +93,7 @@ const WorkCard = ({ data }: WorkCardInterface) => {
           src={cardData.imgUrl}
           alt="card"
           className="card-img"
-          onClick={toggleModal}
+          onClick={handleOpen}
           whileTap={{ scale: 0.95 }}
           data-click-me={"true"}
         />
@@ -124,82 +117,6 @@ const WorkCard = ({ data }: WorkCardInterface) => {
           )}
         </div>
       </motion.div>
-
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            className="modal-overlay"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={toggleModal}
-          >
-            <motion.div
-              onClick={(e) => e.stopPropagation()}
-              className="modal-content"
-              initial={{ width: isMobile ? "400px" : "800px", opacity: 0 }}
-              animate={
-                isMinimized
-                  ? {
-                      width: isMobile ? "300px" : "500px",
-                      opacity: 0,
-                      x: 300,
-                      y: 300,
-                      transition: {
-                        type: "spring",
-                        stiffness: 500,
-                        damping: 30,
-                      },
-                    }
-                  : isExpanded
-                  ? {
-                      width: isMobile ? "400px" : "800px",
-                      opacity: 1,
-                      transition: {
-                        type: "spring",
-                        stiffness: 200,
-                        damping: 20,
-                      },
-                    }
-                  : {
-                      width: isMobile ? "300px" : "500px",
-                      opacity: 1,
-                      transition: {
-                        type: "spring",
-                        stiffness: 200,
-                        damping: 20,
-                      },
-                    }
-              }
-              exit={{ width: "800px", opacity: 0 }}
-            >
-              <MacButtons
-                onClose={handleClose}
-                onMinimise={handleMinimize}
-                onExpand={handleExpand}
-                isExpanded={isExpanded}
-              />
-              <h2 className="heading">{modalData.title}</h2>
-              {cardData.url?.youtubeUrl && (
-                <Suspense fallback={null}>
-                  <ReactPlayer
-                    url={cardData.url.youtubeUrl}
-                    controls
-                    width="100%"
-                    height={isMobile ? (isExpanded ? 200 : 150) : (isExpanded ? 400 : 300)}
-                  />
-                </Suspense>
-              )}
-              <p
-                className="desc"
-                dangerouslySetInnerHTML={{ __html: modalData.desc }}
-              />
-              <h2 className="heading-2">{modalData.infoHeading}</h2>
-              <p className="desc">{modalData.infoArr?.join(", ")}</p>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   );
 };

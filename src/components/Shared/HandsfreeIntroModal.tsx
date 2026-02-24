@@ -1,7 +1,11 @@
-import { AnimatePresence, motion } from "motion/react";
-import React from "react";
-import MacButtons from "../Home/MacButtons";
+import { useEffect } from "react";
 import { useHandsfreeStore } from "../../store/handsfreeStore";
+import {
+  useWindowManagerStore,
+  useWindow,
+} from "../../store/windowManagerStore";
+import DraggableWindow from "../WindowManager/DraggableWindow";
+import { motion } from "motion/react";
 
 const HandsfreeIntroModal: React.FC = () => {
   const {
@@ -14,11 +18,39 @@ const HandsfreeIntroModal: React.FC = () => {
     modelLoadProgress,
   } = useHandsfreeStore();
 
+  const { setShowGestureTutorial } = useHandsfreeStore();
+  const openWindow = useWindowManagerStore((s) => s.openWindow);
+  const closeWindow = useWindowManagerStore((s) => s.closeWindow);
+  const win = useWindow("handsfree-intro");
+
+  // Bridge: handsfreeStore -> windowManagerStore
+  useEffect(() => {
+    if (showIntroModal && !win) {
+      openWindow({
+        id: "handsfree-intro",
+        title: "Handsfree Mode",
+        type: "handsfree-intro",
+        status: "open",
+        position: {
+          x: Math.max(0, window.innerWidth / 2 - 220),
+          y: Math.max(0, window.innerHeight / 2 - 200),
+        },
+        size: { width: 440, height: 400 },
+      });
+    }
+  }, [showIntroModal, win, openWindow]);
+
+  // Bridge: windowManagerStore -> handsfreeStore (when window is closed via MacButtons)
+  useEffect(() => {
+    if (!win && showIntroModal) {
+      setShowIntroModal(false);
+    }
+  }, [win, showIntroModal, setShowIntroModal]);
+
   const handleClose = () => {
+    closeWindow("handsfree-intro");
     setShowIntroModal(false);
   };
-
-  const { setShowGestureTutorial } = useHandsfreeStore();
 
   const handleEnable = async () => {
     try {
@@ -26,91 +58,65 @@ const HandsfreeIntroModal: React.FC = () => {
       stream.getTracks().forEach((t) => t.stop());
       setCameraPermission("granted");
       setHasSeenIntro(true);
-      setShowIntroModal(false);
+      handleClose();
       setEnabled(true);
-      // Show gesture tutorial after a short delay for camera to initialize
       setTimeout(() => setShowGestureTutorial(true), 1500);
     } catch {
       setCameraPermission("denied");
     }
   };
 
+  if (!win || win.status === "minimized") return null;
+
   return (
-    <AnimatePresence>
-      {showIntroModal && (
-        <motion.div
-          className="handsfree-modal-overlay"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          onClick={handleClose}
-        >
-          <motion.div
-            className="handsfree-modal-content"
-            onClick={(e) => e.stopPropagation()}
-            initial={{ opacity: 0, scale: 0.9, y: 20 }}
-            animate={{
-              opacity: 1,
-              scale: 1,
-              y: 0,
-              transition: { type: "spring", stiffness: 200, damping: 20 },
-            }}
-            exit={{ opacity: 0, scale: 0.9, y: 20 }}
-          >
-            <MacButtons
-              onClose={handleClose}
-              onMinimise={handleClose}
-              onExpand={() => {}}
-              isExpanded={true}
+    <DraggableWindow windowId="handsfree-intro" title="Handsfree Mode">
+      <div className="handsfree-modal-body">
+        <h2 className="heading">Handsfree Mode</h2>
+        <p className="desc">
+          Control this portfolio with your head and hands — no mouse needed.
+        </p>
+        <div className="features">
+          <div className="feature">
+            <span className="feature-icon">👤</span>
+            <span>Move your head to control the robot</span>
+          </div>
+          <div className="feature">
+            <span className="feature-icon">👌</span>
+            <span>Pinch to click, pinch and drag to scroll</span>
+          </div>
+          <div className="feature">
+            <span className="feature-icon">✋</span>
+            <span>Activate chips mode to play with skill icons</span>
+          </div>
+        </div>
+        <p className="desc subtle">
+          Requires camera access. Video is processed locally and never
+          leaves your device.
+        </p>
+        {cameraPermission === "denied" && (
+          <p className="desc error">
+            Camera access was denied. Please allow camera access in your
+            browser settings and try again.
+          </p>
+        )}
+        {modelLoadProgress > 0 && modelLoadProgress < 100 && (
+          <div className="progress-bar">
+            <div
+              className="progress-fill"
+              style={{ width: `${modelLoadProgress}%` }}
             />
-            <h2 className="heading">Handsfree Mode</h2>
-            <p className="desc">
-              Control this portfolio with your head and hands — no mouse needed.
-            </p>
-            <div className="features">
-              <div className="feature">
-                <span className="feature-icon">👤</span>
-                <span>Move your head to control the robot</span>
-              </div>
-              <div className="feature">
-                <span className="feature-icon">👌</span>
-                <span>Pinch to click, pinch and drag to scroll</span>
-              </div>
-              <div className="feature">
-                <span className="feature-icon">✋</span>
-                <span>Activate chips mode to play with skill icons</span>
-              </div>
-            </div>
-            <p className="desc subtle">
-              Requires camera access. Video is processed locally and never
-              leaves your device.
-            </p>
-            {cameraPermission === "denied" && (
-              <p className="desc error">
-                Camera access was denied. Please allow camera access in your
-                browser settings and try again.
-              </p>
-            )}
-            {modelLoadProgress > 0 && modelLoadProgress < 100 && (
-              <div className="progress-bar">
-                <div
-                  className="progress-fill"
-                  style={{ width: `${modelLoadProgress}%` }}
-                />
-              </div>
-            )}
-            <motion.button
-              className="enable-button"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={handleEnable}
-            >
-              Enable Handsfree
-            </motion.button>
-          </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+          </div>
+        )}
+        <motion.button
+          className="enable-button"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={handleEnable}
+        >
+          Enable Handsfree
+        </motion.button>
+      </div>
+    </DraggableWindow>
   );
 };
 
