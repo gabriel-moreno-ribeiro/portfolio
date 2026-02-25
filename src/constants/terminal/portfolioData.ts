@@ -15,7 +15,7 @@ export const education = {
 export const experience = [
   {
     title: "Software Engineer",
-    company: "Dock.us (YC 21)",
+    company: "Dock.us",
     date: "March 2025 - Present",
     description:
       "Building features using the latest AI technologies on a Next.js, Node.js, GraphQL based tech stack with AWS SQS for messaging infrastructure.",
