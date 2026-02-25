@@ -121,13 +121,14 @@ function drawHandSkeleton(
 const CameraFeedback: React.FC = () => {
   const isMobile = useIsMobile();
   const isEnabled = useHandsfreeStore((s) => s.isEnabled);
+  const modelLoaded = useHandsfreeStore((s) => s.modelLoadProgress >= 100);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const pw = isMobile ? MOBILE_PREVIEW_W : PREVIEW_W;
   const ph = isMobile ? MOBILE_PREVIEW_H : PREVIEW_H;
 
   useEffect(() => {
-    if (!isEnabled) return;
+    if (!isEnabled || !modelLoaded) return;
 
     let rafId: number;
     const draw = () => {
@@ -188,13 +189,13 @@ const CameraFeedback: React.FC = () => {
       clearTimeout(startTimer);
       cancelAnimationFrame(rafId);
     };
-  }, [isEnabled, pw, ph]);
+  }, [isEnabled, modelLoaded, pw, ph]);
 
   const positionStyle = { bottom: 16, left: 16 };
 
   return (
     <AnimatePresence>
-      {isEnabled && (
+      {isEnabled && modelLoaded && (
         <motion.div
           className="camera-feedback"
           initial={{ opacity: 0, scale: 0.8 }}

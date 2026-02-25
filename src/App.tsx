@@ -8,6 +8,7 @@ import HandCursor from "./components/Shared/HandCursor";
 import DarkModeButton from "./components/Shared/DarkModeButton";
 import HandsfreeButton from "./components/Shared/HandsfreeButton";
 import HandsfreeIntroModal from "./components/Shared/HandsfreeIntroModal";
+import HandsfreeLoader from "./components/Shared/HandsfreeLoader";
 import HorizontalScroller from "./components/Shared/HorizontalScroller";
 import TerminalModal from "./components/Terminal/TerminalModal";
 import WindowRenderer from "./components/WindowManager/WindowRenderer";
@@ -72,6 +73,7 @@ function App() {
       <TerminalModal />
       {/* WindowRenderer renders all managed windows + dock */}
       <WindowRenderer />
+      <HandsfreeLoader />
       <CameraFeedback />
       <HandCursor />
       <CustomMouse />

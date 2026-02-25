@@ -4,12 +4,13 @@ import { useHandsfreeStore } from "../../store/handsfreeStore";
 
 const HandCursor: React.FC = () => {
   const isEnabled = useHandsfreeStore((s) => s.isEnabled);
+  const modelLoaded = useHandsfreeStore((s) => s.modelLoadProgress >= 100);
   const containerRef = useRef<HTMLDivElement>(null);
   const dotsRef = useRef<HTMLDivElement[]>([]);
   const rafRef = useRef<number | null>(null);
 
   useEffect(() => {
-    if (!isEnabled) {
+    if (!isEnabled || !modelLoaded) {
       if (containerRef.current) containerRef.current.style.display = "none";
       if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
       return;
@@ -76,7 +77,7 @@ const HandCursor: React.FC = () => {
     return () => {
       if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
     };
-  }, [isEnabled]);
+  }, [isEnabled, modelLoaded]);
 
   return (
     <div ref={containerRef} style={{ display: "none" }}>
