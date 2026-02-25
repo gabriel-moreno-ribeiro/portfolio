@@ -82,37 +82,45 @@ const WorkExperience = () => {
 
   useEffect(() => {
     const sections = gsap.utils.toArray('.work-experience-section');
+    const triggers: ScrollTrigger[] = [];
 
+    // Simple one-shot fade-in animation — no scrub, so items stay visible once revealed
     sections.forEach((section: any) => {
-      gsap.fromTo(
+      const anim = gsap.fromTo(
         section,
-        { opacity: 0, y: isMobile ? 100 : 100 },
+        { opacity: 0, y: 60 },
         {
           opacity: 1,
           y: 0,
-          overwrite: 'auto',
+          duration: 0.8,
+          ease: 'power2.out',
           scrollTrigger: {
             trigger: section,
-            start: isMobile ? 'top-=200 center+=500' : 'top+=20 center+=200',
-            end: 'bottom center',
-            scrub: 0.3,
+            start: 'top 85%',
+            toggleActions: 'play none none none',
           },
         },
       );
+      if (anim.scrollTrigger) triggers.push(anim.scrollTrigger);
     });
 
-    ScrollTrigger.create({
+    // Keep the 3D model progress tracker
+    const progressTrigger = ScrollTrigger.create({
       trigger: containerRef.current,
       start: 'top top',
       end: 'bottom bottom',
       scrub: 0.5,
       onUpdate: self => {
-        const progress = self.progress;
         document.dispatchEvent(
-          new CustomEvent('scrollAnimationProgress', { detail: progress }),
+          new CustomEvent('scrollAnimationProgress', { detail: self.progress }),
         );
       },
     });
+    triggers.push(progressTrigger);
+
+    return () => {
+      triggers.forEach(t => t.kill());
+    };
   }, [darkMode, isMobile]);
 
   return (
