@@ -55,7 +55,7 @@ export default function PartsAssemblingCanvas() {
 
   return (
     <div className="parts-assembling"  data-drag-me={true}>
-      <Canvas camera={{ position: [-36, 53, 174], fov: 70 }}>
+      <Canvas camera={{ position: [0, 50, 210], fov: 75 }}>
         <OrbitControls enableZoom={false} />
         <directionalLight
           position={[0, 10, 10]}
