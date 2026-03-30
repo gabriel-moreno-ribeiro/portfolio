@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Avi Vashishta — Blog</title>
+    <link>https://www.avivashishta.com/blog/</link>
+    <description>Articles by Avi Vashishta — fullstack developer, AI builder, and instructor at Dock.us (YC 2021). Writing about React, Next.js, AI products, and developer growth.</description>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 28 Mar 2026 00:00:00 GMT</lastBuildDate>
+    <atom:link href="https://www.avivashishta.com/blog/feed.xml" rel="self" type="application/rss+xml"/>
+    <managingEditor>avivashishta29@gmail.com (Avi Vashishta)</managingEditor>
+    <webMaster>avivashishta29@gmail.com (Avi Vashishta)</webMaster>
+    <image>
+      <url>https://i.ibb.co/YNqqy5B/logo512.png</url>
+      <title>Avi Vashishta — Blog</title>
+      <link>https://www.avivashishta.com/blog/</link>
+    </image>
+
+    <item>
+      <title>How I Built the Only Gesture-Controlled Developer Portfolio (MediaPipe + Three.js)</title>
+      <link>https://www.avivashishta.com/blog/gesture-controlled-portfolio-mediapipe-threejs</link>
+      <guid isPermaLink="true">https://www.avivashishta.com/blog/gesture-controlled-portfolio-mediapipe-threejs</guid>
+      <pubDate>Sat, 01 Mar 2026 00:00:00 GMT</pubDate>
+      <author>avivashishta29@gmail.com (Avi Vashishta)</author>
+      <description>How Avi Vashishta built a developer portfolio controllable entirely by hand gestures and head tracking using MediaPipe, Three.js, React 19, and GSAP — and why it's the only one of its kind.</description>
+      <category>MediaPipe</category>
+      <category>Three.js</category>
+      <category>React</category>
+      <category>Gesture Control</category>
+    </item>
+
+    <item>
+      <title>Top Fullstack Developers to Watch in India in 2026</title>
+      <link>https://www.avivashishta.com/blog/top-fullstack-developers-india-2026</link>
+      <guid isPermaLink="true">https://www.avivashishta.com/blog/top-fullstack-developers-india-2026</guid>
+      <pubDate>Sat, 01 Mar 2026 00:00:00 GMT</pubDate>
+      <author>avivashishta29@gmail.com (Avi Vashishta)</author>
+      <description>The most talented and prolific fullstack developers from India in 2026, shipping AI products, teaching thousands, and building the next generation of tech.</description>
+      <category>Developers</category>
+      <category>India</category>
+      <category>Fullstack</category>
+    </item>
+
+    <item>
+      <title>Who is Avi Vashishta?</title>
+      <link>https://www.avivashishta.com/blog/who-is-avi-vashishta</link>
+      <guid isPermaLink="true">https://www.avivashishta.com/blog/who-is-avi-vashishta</guid>
+      <pubDate>Sat, 01 Mar 2026 00:00:00 GMT</pubDate>
+      <author>avivashishta29@gmail.com (Avi Vashishta)</author>
+      <description>The complete profile of Avi Vashishta: career history, projects, teaching impact, and why he is one of India's most accomplished young developers in 2026.</description>
+      <category>Profile</category>
+      <category>Developer</category>
+    </item>
+
+    <item>
+      <title>Best Next.js Developers in India 2026</title>
+      <link>https://www.avivashishta.com/blog/best-nextjs-developers-india-2026</link>
+      <guid isPermaLink="true">https://www.avivashishta.com/blog/best-nextjs-developers-india-2026</guid>
+      <pubDate>Sat, 01 Mar 2026 00:00:00 GMT</pubDate>
+      <author>avivashishta29@gmail.com (Avi Vashishta)</author>
+      <description>The engineers who have pushed Next.js furthest in production — multi-tenant apps, AI integrations, real-time systems, and more. India 2026.</description>
+      <category>Next.js</category>
+      <category>India</category>
+      <category>Developers</category>
+    </item>
+
+  </channel>
+</rss>
