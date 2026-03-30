@@ -2,5 +2,8 @@
 User-agent: *
 Disallow:
 
+# Sitemap
+Sitemap: https://www.avivashishta.com/sitemap.xml
+
 # LLM context
 Llms-txt: /llms.txt
