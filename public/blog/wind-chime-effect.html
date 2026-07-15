@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Prompt I Used to Build a Viral Wind Chime App in One HTML File | Avi Vashishta</title>
+  <meta name="description" content="The full, copy-pasteable prompt I used to build a satisfying wind-chime app — a single self-contained HTML file with Matter.js pendulum physics, synthesized inharmonic chime tones, and three canvas variants." />
+  <link rel="canonical" href="https://www.avivashishta.com/blog/wind-chime-effect" />
+  <meta name="author" content="Avi Vashishta" />
+  <meta property="og:title" content="The Prompt I Used to Build a Viral Wind Chime App in One HTML File" />
+  <meta property="og:description" content="A complete, copy-pasteable build prompt for a calm, satisfying wind-chime web app — Matter.js pendulum physics, fully-synthesized chime audio, and gallery-quality canvas rendering." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://www.avivashishta.com/blog/wind-chime-effect" />
+  <meta property="article:published_time" content="2026-07-15T00:00:00Z" />
+  <meta property="article:author" content="Avi Vashishta" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "The Prompt I Used to Build a Viral Wind Chime App in One HTML File",
+    "description": "A complete, copy-pasteable prompt for building a satisfying wind-chime web app in a single self-contained HTML file with Matter.js and the Web Audio API.",
+    "author": { "@type": "Person", "name": "Avi Vashishta", "url": "https://www.avivashishta.com" },
+    "publisher": { "@type": "Person", "name": "Avi Vashishta", "url": "https://www.avivashishta.com" },
+    "datePublished": "2026-07-15",
+    "url": "https://www.avivashishta.com/blog/wind-chime-effect"
+  }
+  </script>
+
+  <!-- PostHog -->
+  <script>
+    !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug getPageViewId captureTraceFeedback captureTraceMetric".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+    posthog.init("phc_cgNNpL9lqLK50jeJICAV6xcGZDmuDnuPVxPeG8Ieg6m", {
+      api_host: "https://us.i.posthog.com",
+      person_profiles: "identified_only",
+      capture_pageview: true,
+      capture_pageleave: true
+    });
+    // Fire a named event so this article is easy to filter in PostHog.
+    posthog.capture("article_viewed", { slug: "wind-chime-effect", title: "Wind Chime App Prompt" });
+  </script>
+
+  <style>
+    :root { color-scheme: light; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 800px; margin: 0 auto; padding: 40px 20px; line-height: 1.7; color: #1a1a1a; }
+    h1 { font-size: 2rem; margin-bottom: 0.5rem; line-height: 1.25; }
+    h2 { font-size: 1.4rem; margin-top: 2.5rem; border-bottom: 2px solid #f0f0f0; padding-bottom: 0.5rem; }
+    h3 { font-size: 1.1rem; margin-top: 1.75rem; }
+    .meta { color: #666; font-size: 0.9rem; margin-bottom: 2rem; }
+    p { margin: 1rem 0; }
+    ul, ol { margin: 1rem 0; padding-left: 1.4rem; }
+    li { margin: 0.5rem 0; }
+    blockquote { margin: 1.5rem 0; padding: 4px 20px; border-left: 4px solid #0066cc; background: #f0f7ff; border-radius: 0 8px 8px 0; color: #333; font-style: italic; }
+    .highlight { background: #f0f7ff; border-left: 4px solid #0066cc; padding: 16px 20px; border-radius: 0 8px 8px 0; margin: 1.5rem 0; }
+    .prompt { background: #1a1a1a; color: #e6e6e6; padding: 20px 22px; border-radius: 10px; margin: 1.5rem 0; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.85rem; line-height: 1.6; white-space: pre-wrap; overflow-x: auto; }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; background: #f2f2f2; padding: 1px 5px; border-radius: 4px; font-size: 0.9em; }
+    a { color: #0066cc; }
+    .back { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #eee; font-size: 0.95rem; }
+    @media (max-width: 600px) { body { padding: 24px 16px; } h1 { font-size: 1.6rem; } .prompt { font-size: 0.78rem; } }
+  </style>
+</head>
+<body>
+  <article>
+    <h1>The Prompt I Used to Build a Viral Wind Chime App in One HTML File</h1>
+    <p class="meta">Published July 2026 · <a href="https://www.avivashishta.com">avivashishta.com</a></p>
+
+    <h2>Overview</h2>
+    <p>This is a build prompt for a calm, satisfying <strong>wind-chime app</strong> — a row of chimes hanging from a wooden beam that swing and ring when you brush a cursor or finger across them. The whole thing ships as a single self-contained HTML file: no build step, no dependencies to install, no server. You double-click it and it runs. The physics come from <a href="https://brm.io/matter-js/" rel="nofollow">Matter.js</a>, the sound is fully synthesized with the Web Audio API (no audio files), and everything is drawn with the raw Canvas 2D API.</p>
+
+    <div class="highlight">
+      <p><strong>What it produces:</strong> a tight cluster of pendulum chimes with clamped, damped swing (never chaotic), struck-metal-tube tones built from inharmonic partials mapped to a pentatonic scale, pointer/touch brushing with per-chime debounce, an ambient "Wind" toggle, a warm paper/zen aesthetic — plus three rendering variants (metallic tubes, vertical text columns, and a cloth-like rope of per-character physics bodies).</p>
+    </div>
+
+    <h2>The prompt</h2>
+    <p>Copy everything below into Claude (or any capable coding model) to recreate the project from scratch.</p>
+
+    <div class="prompt">Build me a viral, satisfying wind chime app as a single self-contained HTML file (no build step, no dependencies to install, no server — it must run by just double-clicking to open in a browser).
+
+CORE IDEA
+A row of chimes hangs from a wooden beam near the top of the screen. When I brush my cursor or finger across them, they swing and play a pleasant wind-chime tone. It should feel calm and beautiful, not chaotic.
+
+PHYSICS (use Matter.js from CDN)
+- Load Matter.js 0.19.0 from cdnjs.
+- Each chime hangs from a fixed anchor on the beam like a pendulum (pinned at the top via a constraint).
+- Critical: chimes must never do a full 360° rotation and must never feel chaotic. Every physics frame, clamp each chime's angle to about ±35° (±0.62 rad) and cap its angular velocity. Use generous air damping so a nudge produces a gentle swing that settles smoothly back to vertical.
+- Pack the chimes close together — derive the count from the screen width using a fixed small gap, so they form a tight cluster rather than being spread far apart.
+- Vary chime length along a gentle arc (longest in the middle) for a natural cluster look.
+
+AUDIO (Web Audio API — fully synthesized, no sound files)
+- Wind-chime timbre = a struck metal tube: additive synthesis with inharmonic partials (ratios like 1, 2.76, 5.4, 8.93, 13.3), each a sine oscillator with a fast attack and exponential decay; higher partials decay faster.
+- Add a faint triangle-wave "tick" for the strike transient.
+- Add a light reverb tail using a few feedback delay lines with a lowpass in the feedback path.
+- Map notes to a pentatonic scale across a couple of octaves; longer chimes = lower notes. This keeps every brush sounding musical.
+- Initialize/resume the AudioContext on first interaction.
+
+INTERACTION
+- On pointer/touch move, detect which chimes the pointer is brushing and apply a small horizontal impulse in the direction of motion, scaled by pointer speed and capped.
+- Debounce each chime (~130–140ms) so it doesn't retrigger every frame.
+- Support both mouse and touch (preventDefault on touch).
+- Add an ambient "Wind" toggle (bottom-right button): a slow gusting force that makes the chimes sway and occasionally chime on their own.
+- Show a subtle "drag across the chimes" hint that fades away after the first interaction.
+
+RENDERING &amp; AESTHETIC
+- Use the raw HTML5 Canvas 2D API, drawn each frame in a requestAnimationFrame loop — do NOT use Matter's built-in renderer.
+- Make it DPR/retina-aware.
+- Aesthetic: warm paper/beige background (radial gradient), a subtle SVG turbulence grain overlay, a dark wooden beam, and elegant serif typography for the title. Minimal, Japanese/zen-inspired, gallery-quality.
+- Add a soft warm glow on a chime when it's struck, decaying over time.
+
+CONSTRAINTS
+- Everything in ONE .html file: inline CSS and JS.
+- No localStorage/sessionStorage — keep all state in memory.
+- Verify it runs without console errors before finishing.
+
+THEN MAKE THREE VARIANTS (separate files)
+1. wind-chimes.html — chimes rendered as metallic/bamboo tubes (thin rounded rectangles with a gradient and a top cap).
+2. wind-chimes-text.html — each chime is a rigid vertical column of characters (like ink text flowing down) instead of a tube. Same physics; render stacked characters rotated with the strand, fading slightly toward the tail, with a small ink bead as the clapper.
+3. wind-chimes-cloth.html — each strand is a chain of per-character physics bodies (a rope of beads) linked by distance constraints and pinned at the top, so it ripples and drapes like cloth when brushed and each character has its own physics. Tune the chain (stiffness ~0.9, damping, air friction, velocity cap, extra position/constraint iterations) so it's stable, never explodes or whips, and settles calmly. Draw a thread through the bead positions and rotate each character to follow its segment.
+
+For the text variants, use classic Chinese poetry lines about travel and journeys (wholesome, inoffensive — e.g. lines from Li Bai, Lu You, Wang Bo, Laozi) set in a Song/Ming serif CJK font. Make the strand text easy to swap.
+
+Save all three files into a folder called wind-chimes/.</div>
+
+    <h2>The details that make it feel calm, not chaotic</h2>
+    <p>A naive pendulum sim looks frantic — bodies whip around, overshoot, and never settle. Three constraints in the prompt fix that:</p>
+    <ol>
+      <li><strong>Clamp angle and angular velocity every frame.</strong> Capping rotation at ±35° and limiting angular velocity is what stops a chime from ever spinning a full circle. This is enforced in the physics loop, not left to the solver.</li>
+      <li><strong>Generous air damping.</strong> A brush produces one gentle swing that eases back to vertical instead of oscillating forever.</li>
+      <li><strong>Per-chime debounce (~130–140ms).</strong> Without it, a fast pointer retriggers the same chime every frame and the audio turns into a buzz. Debouncing keeps each strike distinct and musical.</li>
+    </ol>
+
+    <h2>Why the audio is synthesized, not sampled</h2>
+    <p>Real chime timbre comes from a struck metal tube, whose overtones are <em>inharmonic</em> — they aren't clean integer multiples of the fundamental. Using partial ratios like <code>1, 2.76, 5.4, 8.93, 13.3</code> with fast attacks and staggered exponential decays reproduces that metallic shimmer with pure oscillators, no sound files to load. Mapping longer chimes to lower pentatonic notes guarantees that any brush — however random — lands on something that sounds intentional.</p>
+
+    <div class="back">
+      <p><a href="https://www.avivashishta.com">← Portfolio</a> · <a href="/blog">Blog</a></p>
+    </div>
+  </article>
+</body>
+</html>
