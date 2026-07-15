@@ -1,112 +1,353 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The Prompt I Used to Build a 3D Flappy Bird Plane Game in Three.js | Avi Vashishta</title>
-  <meta name="description" content="The full, copy-pasteable prompt I used to build a 3D Flappy Bird-style plane game with Three.js and Vite — physics-driven pitch, glTF propeller animation, AABB collision, and clean game states." />
-  <link rel="canonical" href="https://www.avivashishta.com/blog/build-3d-flappy-bird-plane-threejs" />
-  <meta name="author" content="Avi Vashishta" />
-  <meta property="og:title" content="The Prompt I Used to Build a 3D Flappy Bird Plane Game in Three.js" />
-  <meta property="og:description" content="A complete, copy-pasteable build prompt for a 3D Flappy Bird-style plane game with Three.js — real-feeling flight physics, glTF propeller spin, and recycled obstacle pipes." />
-  <meta property="og:type" content="article" />
-  <meta property="og:url" content="https://www.avivashishta.com/blog/build-3d-flappy-bird-plane-threejs" />
-  <meta property="article:published_time" content="2026-07-15T00:00:00Z" />
-  <meta property="article:author" content="Avi Vashishta" />
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    "headline": "The Prompt I Used to Build a 3D Flappy Bird Plane Game in Three.js",
-    "description": "A complete, copy-pasteable prompt for building a 3D Flappy Bird-style plane game with Three.js and Vite.",
-    "author": { "@type": "Person", "name": "Avi Vashishta", "url": "https://www.avivashishta.com" },
-    "publisher": { "@type": "Person", "name": "Avi Vashishta", "url": "https://www.avivashishta.com" },
-    "datePublished": "2026-07-15",
-    "url": "https://www.avivashishta.com/blog/build-3d-flappy-bird-plane-threejs"
-  }
-  </script>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      The Prompt I Used to Build a 3D Flappy Bird Plane Game in Three.js | Avi
+      Vashishta
+    </title>
+    <meta
+      name="description"
+      content="The full, copy-pasteable prompt I used to build a 3D Flappy Bird-style plane game with Three.js and Vite — physics-driven pitch, glTF propeller animation, AABB collision, and clean game states."
+    />
+    <link
+      rel="canonical"
+      href="https://www.avivashishta.com/blog/build-3d-flappy-bird-plane-threejs"
+    />
+    <meta name="author" content="Avi Vashishta" />
+    <meta
+      property="og:title"
+      content="The Prompt I Used to Build a 3D Flappy Bird Plane Game in Three.js"
+    />
+    <meta
+      property="og:description"
+      content="A complete, copy-pasteable build prompt for a 3D Flappy Bird-style plane game with Three.js — real-feeling flight physics, glTF propeller spin, and recycled obstacle pipes."
+    />
+    <meta property="og:type" content="article" />
+    <meta
+      property="og:url"
+      content="https://www.avivashishta.com/blog/build-3d-flappy-bird-plane-threejs"
+    />
+    <meta property="article:published_time" content="2026-07-15T00:00:00Z" />
+    <meta property="article:author" content="Avi Vashishta" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "The Prompt I Used to Build a 3D Flappy Bird Plane Game in Three.js",
+        "description": "A complete, copy-pasteable prompt for building a 3D Flappy Bird-style plane game with Three.js and Vite.",
+        "author": {
+          "@type": "Person",
+          "name": "Avi Vashishta",
+          "url": "https://www.avivashishta.com"
+        },
+        "publisher": {
+          "@type": "Person",
+          "name": "Avi Vashishta",
+          "url": "https://www.avivashishta.com"
+        },
+        "datePublished": "2026-07-15",
+        "url": "https://www.avivashishta.com/blog/build-3d-flappy-bird-plane-threejs"
+      }
+    </script>
 
-  <!-- PostHog -->
-  <script>
-    !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug getPageViewId captureTraceFeedback captureTraceMetric".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
-    posthog.init("phc_cgNNpL9lqLK50jeJICAV6xcGZDmuDnuPVxPeG8Ieg6m", {
-      api_host: "https://us.i.posthog.com",
-      person_profiles: "identified_only",
-      capture_pageview: true,
-      capture_pageleave: true
-    });
-    // Fire a named event so this article is easy to filter in PostHog.
-    posthog.capture("article_viewed", { slug: "build-3d-flappy-bird-plane-threejs", title: "3D Flappy Bird Plane Game Prompt" });
-  </script>
+    <!-- PostHog -->
+    <script>
+      !(function (t, e) {
+        var o, n, p, r;
+        e.__SV ||
+          ((window.posthog = e),
+          (e._i = []),
+          (e.init = function (i, s, a) {
+            function g(t, e) {
+              var o = e.split('.');
+              (2 == o.length && ((t = t[o[0]]), (e = o[1])),
+                (t[e] = function () {
+                  t.push([e].concat(Array.prototype.slice.call(arguments, 0)));
+                }));
+            }
+            (((p = t.createElement('script')).type = 'text/javascript'),
+              (p.crossOrigin = 'anonymous'),
+              (p.async = !0),
+              (p.src =
+                s.api_host.replace('.i.posthog.com', '-assets.i.posthog.com') +
+                '/static/array.js'),
+              (r = t.getElementsByTagName('script')[0]).parentNode.insertBefore(
+                p,
+                r,
+              ));
+            var u = e;
+            for (
+              void 0 !== a ? (u = e[a] = []) : (a = 'posthog'),
+                u.people = u.people || [],
+                u.toString = function (t) {
+                  var e = 'posthog';
+                  return (
+                    'posthog' !== a && (e += '.' + a),
+                    t || (e += ' (stub)'),
+                    e
+                  );
+                },
+                u.people.toString = function () {
+                  return u.toString(1) + '.people (stub)';
+                },
+                o =
+                  'init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug getPageViewId captureTraceFeedback captureTraceMetric'.split(
+                    ' ',
+                  ),
+                n = 0;
+              n < o.length;
+              n++
+            )
+              g(u, o[n]);
+            e._i.push([i, s, a]);
+          }),
+          (e.__SV = 1));
+      })(document, window.posthog || []);
+      posthog.init('phc_cgNNpL9lqLK50jeJICAV6xcGZDmuDnuPVxPeG8Ieg6m', {
+        api_host: 'https://us.i.posthog.com',
+        person_profiles: 'identified_only',
+        capture_pageview: true,
+        capture_pageleave: true,
+      });
+      // Fire a named event so this article is easy to filter in PostHog.
+      posthog.capture('article_viewed', {
+        slug: 'build-3d-flappy-bird-plane-threejs',
+        title: '3D Flappy Bird Plane Game Prompt',
+      });
+    </script>
 
-  <style>
-    :root { color-scheme: light; }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 800px; margin: 0 auto; padding: 40px 20px; line-height: 1.7; color: #1a1a1a; }
-    h1 { font-size: 2rem; margin-bottom: 0.5rem; line-height: 1.25; }
-    h2 { font-size: 1.4rem; margin-top: 2.5rem; border-bottom: 2px solid #f0f0f0; padding-bottom: 0.5rem; }
-    h3 { font-size: 1.1rem; margin-top: 1.75rem; }
-    .meta { color: #666; font-size: 0.9rem; margin-bottom: 2rem; }
-    p { margin: 1rem 0; }
-    ul, ol { margin: 1rem 0; padding-left: 1.4rem; }
-    li { margin: 0.5rem 0; }
-    blockquote { margin: 1.5rem 0; padding: 4px 20px; border-left: 4px solid #0066cc; background: #f0f7ff; border-radius: 0 8px 8px 0; color: #333; font-style: italic; }
-    .highlight { background: #f0f7ff; border-left: 4px solid #0066cc; padding: 16px 20px; border-radius: 0 8px 8px 0; margin: 1.5rem 0; }
-    .prompt { background: #1a1a1a; color: #e6e6e6; padding: 20px 22px; border-radius: 10px; margin: 1.5rem 0; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.85rem; line-height: 1.6; white-space: pre-wrap; overflow-x: auto; }
-    code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; background: #f2f2f2; padding: 1px 5px; border-radius: 4px; font-size: 0.9em; }
-    a { color: #0066cc; }
-    .back { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #eee; font-size: 0.95rem; }
-    @media (max-width: 600px) { body { padding: 24px 16px; } h1 { font-size: 1.6rem; } .prompt { font-size: 0.78rem; } }
-  </style>
-</head>
-<body>
-  <article>
-    <h1>The Prompt I Used to Build a 3D Flappy Bird Plane Game in Three.js</h1>
-    <p class="meta">Published July 2026 · <a href="https://www.avivashishta.com">avivashishta.com</a></p>
+    <style>
+      :root {
+        color-scheme: light;
+      }
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 40px 20px;
+        line-height: 1.7;
+        color: #1a1a1a;
+      }
+      h1 {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+        line-height: 1.25;
+      }
+      h2 {
+        font-size: 1.4rem;
+        margin-top: 2.5rem;
+        border-bottom: 2px solid #f0f0f0;
+        padding-bottom: 0.5rem;
+      }
+      h3 {
+        font-size: 1.1rem;
+        margin-top: 1.75rem;
+      }
+      .meta {
+        color: #666;
+        font-size: 0.9rem;
+        margin-bottom: 2rem;
+      }
+      p {
+        margin: 1rem 0;
+      }
+      ul,
+      ol {
+        margin: 1rem 0;
+        padding-left: 1.4rem;
+      }
+      li {
+        margin: 0.5rem 0;
+      }
+      blockquote {
+        margin: 1.5rem 0;
+        padding: 4px 20px;
+        border-left: 4px solid #0066cc;
+        background: #f0f7ff;
+        border-radius: 0 8px 8px 0;
+        color: #333;
+        font-style: italic;
+      }
+      .highlight {
+        background: #f0f7ff;
+        border-left: 4px solid #0066cc;
+        padding: 16px 20px;
+        border-radius: 0 8px 8px 0;
+        margin: 1.5rem 0;
+      }
+      .prompt {
+        background: #1a1a1a;
+        color: #e6e6e6;
+        padding: 20px 22px;
+        border-radius: 10px;
+        margin: 1.5rem 0;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 0.85rem;
+        line-height: 1.6;
+        white-space: pre-wrap;
+        overflow-x: auto;
+      }
+      code {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        background: #f2f2f2;
+        padding: 1px 5px;
+        border-radius: 4px;
+        font-size: 0.9em;
+      }
+      a {
+        color: #0066cc;
+      }
+      .back {
+        margin-top: 3rem;
+        padding-top: 1rem;
+        border-top: 1px solid #eee;
+        font-size: 0.95rem;
+      }
+      @media (max-width: 600px) {
+        body {
+          padding: 24px 16px;
+        }
+        h1 {
+          font-size: 1.6rem;
+        }
+        .prompt {
+          font-size: 0.78rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <article>
+      <h1>
+        The Prompt I Used to Build a 3D Flappy Bird Plane Game in Three.js
+      </h1>
+      <p class="meta">
+        Published July 2026 ·
+        <a href="https://www.avivashishta.com">avivashishta.com</a>
+      </p>
 
-    <h2>Overview</h2>
-    <p>This is a build prompt for a 3D Flappy Bird-style game — a low-poly voxel plane that flaps through pairs of obstacle walls — written as a single-page web app with <a href="https://threejs.org" rel="nofollow">Three.js</a> and Vite. The whole point of the prompt is one detail: making the flight <em>feel</em> real. Instead of snapping the plane's rotation on keypress, the pitch is driven by vertical velocity and smoothly damped toward a target angle every frame, so the nose eases up after a flap and tips forward as it falls.</p>
+      <h2>Overview</h2>
+      <p>
+        This is a build prompt for a 3D Flappy Bird-style game — a low-poly
+        voxel plane that flaps through pairs of obstacle walls — written as a
+        single-page web app with
+        <a href="https://threejs.org" rel="nofollow">Three.js</a> and Vite. The
+        whole point of the prompt is one detail: making the flight
+        <em>feel</em> real. Instead of snapping the plane's rotation on
+        keypress, the pitch is driven by vertical velocity and smoothly damped
+        toward a target angle every frame, so the nose eases up after a flap and
+        tips forward as it falls.
+      </p>
 
-    <div class="highlight">
-      <p><strong>What it produces:</strong> a side-scrolling 3D scene, a glTF plane with a continuously spinning propeller (baked animation clip), gravity + flap-impulse physics, velocity-driven pitch with damping, recycled obstacle pipes with AABB collision, scoring with a best-score tracker, and start / playing / game-over states — all frame-rate independent via <code>requestAnimationFrame</code> and delta time.</p>
-    </div>
+      <div class="highlight">
+        <p>
+          <strong>What it produces:</strong> a side-scrolling 3D scene, a glTF
+          plane with a continuously spinning propeller (baked animation clip),
+          gravity + flap-impulse physics, velocity-driven pitch with damping,
+          recycled obstacle pipes with AABB collision, scoring with a best-score
+          tracker, and start / playing / game-over states — all frame-rate
+          independent via <code>requestAnimationFrame</code> and delta time.
+        </p>
+      </div>
 
-    <h2>The prompt</h2>
-    <p>Copy this into any AI app-builder (Replit, Emergent, Cursor, etc.). It assumes you've uploaded a rigged glTF plane model with a baked <code>"Armature|prop spin"</code> animation clip.</p>
+      <h2>The prompt</h2>
+      <p>
+        Copy this into any AI app-builder (Replit). It assumes you've uploaded a
+        rigged glTF plane model with a baked
+        <code>"Armature|prop spin"</code> animation clip.
+      </p>
 
-    <div class="prompt">Build a 3D Flappy Bird-style game as a single-page web app using Three.js (import via CDN or npm), running in a Node/static environment with Vite.
+      <div class="prompt">
+        Build a 3D Flappy Bird-style game as a single-page web app using
+        Three.js (import via CDN or npm), running in a Node/static environment
+        with Vite. ASSETS: I've uploaded a glTF model (scene.gltf + scene.bin +
+        textures folder) of a low-poly voxel plane. It's rigged with a skeleton
+        and already has a baked animation clip named "Armature|prop spin" that
+        spins the propeller bone. Load the model with GLTFLoader, add it to the
+        scene, get its AnimationMixer, find the clip by that name, play it in a
+        loop (THREE.LoopRepeat), and update the mixer every frame with the clock
+        delta — the propeller should be visibly spinning at all times,
+        independent of game state. CAMERA &amp; SCENE: Side-scrolling view
+        (camera fixed, looking at the plane from the side, slightly above), like
+        classic Flappy Bird but in 3D. Simple sky-colored background, maybe a
+        subtle scrolling ground/horizon for depth cues. Plane stays at a fixed X
+        position; the world scrolls toward the camera. PHYSICS (the part I care
+        about most — make it feel real, not arcade-y): - Constant downward
+        gravity acceleration on the plane's vertical velocity. - Pressing
+        spacebar (or click/tap) applies an upward impulse to velocity (like a
+        flap/thrust). - The plane's pitch should be driven by vertical velocity,
+        NOT by whether the key is held: map velocity to a target pitch angle
+        (falling fast = nose tilts down/forward, strong upward velocity right
+        after a flap = nose tilts up/backward), then smoothly interpolate
+        (lerp/damping, not snapping) the model's current rotation toward that
+        target every frame so it eases in and out. Clamp the tilt to a
+        reasonable max angle (±25-35°) so it doesn't flip. - Keep horizontal
+        position fixed; only Y (height) and pitch rotation change. PIPES /
+        OBSTACLES: Instead of pipe sprites, use pairs of rectangular meshes
+        (THREE.BoxGeometry, solid material) — one from a gap going down, one
+        from the same gap going up — spawned at fixed horizontal spacing
+        off-screen right. Randomize gap position (optionally slightly randomize
+        gap size within a min/max). Move all active pairs toward the plane at a
+        constant speed each frame (same as the ground scroll), recycle/despawn
+        pairs once they pass behind the camera, and spawn new ones to keep a
+        steady stream. Use simple AABB (bounding box) collision between the
+        plane's box and each wall box — on collision, trigger game over. SCORING
+        &amp; STATES: +1 score each time the plane passes a pair (compare plane
+        X or scroll distance, not on collision). Track and display best score.
+        Include start screen, playing state, and game-over screen with restart
+        (space or click). Show current score during play. POLISH (nice to have):
+        subtle camera shake or screen flash on collision, a particle or
+        scale-pulse effect on the plane when scoring, controls limited to
+        spacebar/click so it works on mobile via tap. Structure the code cleanly
+        (separate modules for scene setup, physics, pipes, and game state), and
+        make sure the render loop uses requestAnimationFrame with delta time so
+        speed is frame-rate independent.
+      </div>
 
-ASSETS: I've uploaded a glTF model (scene.gltf + scene.bin + textures folder) of a low-poly voxel plane. It's rigged with a skeleton and already has a baked animation clip named "Armature|prop spin" that spins the propeller bone. Load the model with GLTFLoader, add it to the scene, get its AnimationMixer, find the clip by that name, play it in a loop (THREE.LoopRepeat), and update the mixer every frame with the clock delta — the propeller should be visibly spinning at all times, independent of game state.
+      <h2>Why the physics prompt is written this way</h2>
+      <p>
+        Most Flappy Bird clones rotate the sprite based on whether the button is
+        <em>pressed</em>. That reads as rigid and mechanical. The trick here is
+        decoupling rotation from input entirely:
+      </p>
+      <ol>
+        <li>
+          <strong>Velocity is the single source of truth.</strong> Gravity pulls
+          velocity down every frame; a flap adds an upward impulse. Both height
+          and pitch are derived from that one number.
+        </li>
+        <li>
+          <strong>Pitch is a target, not a state.</strong> Map current vertical
+          velocity to a target angle, then damp toward it (<code
+            >current += (target - current) * k</code
+          >). The nose lifts and settles on its own — no snapping.
+        </li>
+        <li>
+          <strong>Everything is delta-timed.</strong> Multiplying movement and
+          damping by the frame delta keeps the feel identical at 60fps and
+          144fps.
+        </li>
+      </ol>
 
-CAMERA &amp; SCENE: Side-scrolling view (camera fixed, looking at the plane from the side, slightly above), like classic Flappy Bird but in 3D. Simple sky-colored background, maybe a subtle scrolling ground/horizon for depth cues. Plane stays at a fixed X position; the world scrolls toward the camera.
+      <h2>Notes on the glTF propeller</h2>
+      <p>
+        The propeller spin is deliberately independent of game state. It's a
+        baked clip (<code>"Armature|prop spin"</code>) played on loop through an
+        <code>AnimationMixer</code> that ticks every frame with the clock delta
+        — so the prop keeps turning on the start screen, mid-flight, and on game
+        over. If your model's forward axis differs, the pitch axis in the
+        physics step (X vs. Z rotation) is the one line you'll adjust.
+      </p>
 
-PHYSICS (the part I care about most — make it feel real, not arcade-y):
-- Constant downward gravity acceleration on the plane's vertical velocity.
-- Pressing spacebar (or click/tap) applies an upward impulse to velocity (like a flap/thrust).
-- The plane's pitch should be driven by vertical velocity, NOT by whether the key is held: map velocity to a target pitch angle (falling fast = nose tilts down/forward, strong upward velocity right after a flap = nose tilts up/backward), then smoothly interpolate (lerp/damping, not snapping) the model's current rotation toward that target every frame so it eases in and out. Clamp the tilt to a reasonable max angle (±25-35°) so it doesn't flip.
-- Keep horizontal position fixed; only Y (height) and pitch rotation change.
-
-PIPES / OBSTACLES: Instead of pipe sprites, use pairs of rectangular meshes (THREE.BoxGeometry, solid material) — one from a gap going down, one from the same gap going up — spawned at fixed horizontal spacing off-screen right. Randomize gap position (optionally slightly randomize gap size within a min/max). Move all active pairs toward the plane at a constant speed each frame (same as the ground scroll), recycle/despawn pairs once they pass behind the camera, and spawn new ones to keep a steady stream. Use simple AABB (bounding box) collision between the plane's box and each wall box — on collision, trigger game over.
-
-SCORING &amp; STATES: +1 score each time the plane passes a pair (compare plane X or scroll distance, not on collision). Track and display best score. Include start screen, playing state, and game-over screen with restart (space or click). Show current score during play.
-
-POLISH (nice to have): subtle camera shake or screen flash on collision, a particle or scale-pulse effect on the plane when scoring, controls limited to spacebar/click so it works on mobile via tap.
-
-Structure the code cleanly (separate modules for scene setup, physics, pipes, and game state), and make sure the render loop uses requestAnimationFrame with delta time so speed is frame-rate independent.</div>
-
-    <h2>Why the physics prompt is written this way</h2>
-    <p>Most Flappy Bird clones rotate the sprite based on whether the button is <em>pressed</em>. That reads as rigid and mechanical. The trick here is decoupling rotation from input entirely:</p>
-    <ol>
-      <li><strong>Velocity is the single source of truth.</strong> Gravity pulls velocity down every frame; a flap adds an upward impulse. Both height and pitch are derived from that one number.</li>
-      <li><strong>Pitch is a target, not a state.</strong> Map current vertical velocity to a target angle, then damp toward it (<code>current += (target - current) * k</code>). The nose lifts and settles on its own — no snapping.</li>
-      <li><strong>Everything is delta-timed.</strong> Multiplying movement and damping by the frame delta keeps the feel identical at 60fps and 144fps.</li>
-    </ol>
-
-    <h2>Notes on the glTF propeller</h2>
-    <p>The propeller spin is deliberately independent of game state. It's a baked clip (<code>"Armature|prop spin"</code>) played on loop through an <code>AnimationMixer</code> that ticks every frame with the clock delta — so the prop keeps turning on the start screen, mid-flight, and on game over. If your model's forward axis differs, the pitch axis in the physics step (X vs. Z rotation) is the one line you'll adjust.</p>
-
-    <div class="back">
-      <p><a href="https://www.avivashishta.com">← Portfolio</a> · <a href="/blog">Blog</a></p>
-    </div>
-  </article>
-</body>
+      <div class="back">
+        <p>
+          <a href="https://www.avivashishta.com">← Portfolio</a> ·
+          <a href="/blog">Blog</a>
+        </p>
+      </div>
+    </article>
+  </body>
 </html>
