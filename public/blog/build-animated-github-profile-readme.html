@@ -1,0 +1,560 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      How I Built an Animated GitHub Profile README (ASCII Portrait + Neofetch
+      Card + Live Contribution Graph) | Avi Vashishta
+    </title>
+    <meta
+      name="description"
+      content="A step-by-step guide to building a terminal-style GitHub profile README — a monochrome ASCII portrait, a neofetch-style info card, and a contribution heatmap that types itself in, all as animated SVG auto-refreshed daily by GitHub Actions."
+    />
+    <link
+      rel="canonical"
+      href="https://www.avivashishta.com/blog/build-animated-github-profile-readme"
+    />
+    <meta name="author" content="Avi Vashishta" />
+    <meta
+      property="og:title"
+      content="How I Built an Animated GitHub Profile README (ASCII Portrait + Neofetch Card + Live Contribution Graph)"
+    />
+    <meta
+      property="og:description"
+      content="Step by step: turn a photo into a monochrome ASCII SVG, build a neofetch-style info card, scrape your real contributions into an animated heatmap, and auto-refresh it all daily with GitHub Actions."
+    />
+    <meta property="og:type" content="article" />
+    <meta
+      property="og:url"
+      content="https://www.avivashishta.com/blog/build-animated-github-profile-readme"
+    />
+    <meta property="article:published_time" content="2026-07-18T00:00:00Z" />
+    <meta property="article:author" content="Avi Vashishta" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "How I Built an Animated GitHub Profile README (ASCII Portrait + Neofetch Card + Live Contribution Graph)",
+        "description": "A step-by-step guide to building a terminal-style GitHub profile README with an ASCII portrait, a neofetch-style info card, and a live contribution heatmap — all animated SVG, auto-refreshed daily by GitHub Actions.",
+        "author": {
+          "@type": "Person",
+          "name": "Avi Vashishta",
+          "url": "https://www.avivashishta.com"
+        },
+        "publisher": {
+          "@type": "Person",
+          "name": "Avi Vashishta",
+          "url": "https://www.avivashishta.com"
+        },
+        "datePublished": "2026-07-18",
+        "url": "https://www.avivashishta.com/blog/build-animated-github-profile-readme"
+      }
+    </script>
+
+    <!-- PostHog -->
+    <script>
+      !(function (t, e) {
+        var o, n, p, r;
+        e.__SV ||
+          ((window.posthog = e),
+          (e._i = []),
+          (e.init = function (i, s, a) {
+            function g(t, e) {
+              var o = e.split('.');
+              (2 == o.length && ((t = t[o[0]]), (e = o[1])),
+                (t[e] = function () {
+                  t.push([e].concat(Array.prototype.slice.call(arguments, 0)));
+                }));
+            }
+            (((p = t.createElement('script')).type = 'text/javascript'),
+              (p.crossOrigin = 'anonymous'),
+              (p.async = !0),
+              (p.src =
+                s.api_host.replace('.i.posthog.com', '-assets.i.posthog.com') +
+                '/static/array.js'),
+              (r = t.getElementsByTagName('script')[0]).parentNode.insertBefore(
+                p,
+                r,
+              ));
+            var u = e;
+            for (
+              void 0 !== a ? (u = e[a] = []) : (a = 'posthog'),
+                u.people = u.people || [],
+                u.toString = function (t) {
+                  var e = 'posthog';
+                  return (
+                    'posthog' !== a && (e += '.' + a),
+                    t || (e += ' (stub)'),
+                    e
+                  );
+                },
+                u.people.toString = function () {
+                  return u.toString(1) + '.people (stub)';
+                },
+                o =
+                  'init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug getPageViewId captureTraceFeedback captureTraceMetric'.split(
+                    ' ',
+                  ),
+                n = 0;
+              n < o.length;
+              n++
+            )
+              g(u, o[n]);
+            e._i.push([i, s, a]);
+          }),
+          (e.__SV = 1));
+      })(document, window.posthog || []);
+      posthog.init('phc_cgNNpL9lqLK50jeJICAV6xcGZDmuDnuPVxPeG8Ieg6m', {
+        api_host: 'https://us.i.posthog.com',
+        person_profiles: 'identified_only',
+        capture_pageview: true,
+        capture_pageleave: true,
+      });
+      // Fire a named event so this article is easy to filter in PostHog.
+      posthog.capture('article_viewed', {
+        slug: 'build-animated-github-profile-readme',
+        title: 'Animated GitHub Profile README',
+      });
+    </script>
+
+    <style>
+      :root {
+        color-scheme: light;
+      }
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 40px 20px;
+        line-height: 1.7;
+        color: #1a1a1a;
+      }
+      h1 {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+        line-height: 1.25;
+      }
+      h2 {
+        font-size: 1.4rem;
+        margin-top: 2.5rem;
+        border-bottom: 2px solid #f0f0f0;
+        padding-bottom: 0.5rem;
+      }
+      h3 {
+        font-size: 1.1rem;
+        margin-top: 1.75rem;
+      }
+      .meta {
+        color: #666;
+        font-size: 0.9rem;
+        margin-bottom: 2rem;
+      }
+      p {
+        margin: 1rem 0;
+      }
+      ul,
+      ol {
+        margin: 1rem 0;
+        padding-left: 1.4rem;
+      }
+      li {
+        margin: 0.5rem 0;
+      }
+      blockquote {
+        margin: 1.5rem 0;
+        padding: 4px 20px;
+        border-left: 4px solid #0066cc;
+        background: #f0f7ff;
+        border-radius: 0 8px 8px 0;
+        color: #333;
+        font-style: italic;
+      }
+      .highlight {
+        background: #f0f7ff;
+        border-left: 4px solid #0066cc;
+        padding: 16px 20px;
+        border-radius: 0 8px 8px 0;
+        margin: 1.5rem 0;
+      }
+      .prompt {
+        background: #1a1a1a;
+        color: #e6e6e6;
+        padding: 20px 22px;
+        border-radius: 10px;
+        margin: 1.5rem 0;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 0.85rem;
+        line-height: 1.6;
+        white-space: pre-wrap;
+        overflow-x: auto;
+      }
+      code {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        background: #f2f2f2;
+        padding: 1px 5px;
+        border-radius: 4px;
+        font-size: 0.9em;
+      }
+      a {
+        color: #0066cc;
+      }
+      .back {
+        margin-top: 3rem;
+        padding-top: 1rem;
+        border-top: 1px solid #eee;
+        font-size: 0.95rem;
+      }
+      @media (max-width: 600px) {
+        body {
+          padding: 24px 16px;
+        }
+        h1 {
+          font-size: 1.6rem;
+        }
+        .prompt {
+          font-size: 0.78rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <article>
+      <h1>
+        How I Built an Animated GitHub Profile README (ASCII Portrait +
+        Neofetch Card + Live Contribution Graph)
+      </h1>
+      <p class="meta">
+        Published July 2026 ·
+        <a href="https://www.avivashishta.com">avivashishta.com</a>
+      </p>
+
+      <h2>Overview</h2>
+      <p>
+        My GitHub profile reads like a terminal: a monochrome ASCII portrait
+        that "types" itself in, a
+        <a href="https://github.com/dylanaraps/neofetch" rel="nofollow"
+          >neofetch</a
+        >-style info card next to it, and — above both — a contribution heatmap
+        that reveals itself box by box and refreshes with real data every day.
+        No profile-stats third-party services, no GitHub token, no JavaScript.
+        Everything is <strong>animated SVG</strong> generated by a handful of
+        Python scripts and kept fresh by a GitHub Actions cron.
+      </p>
+
+      <div class="highlight">
+        <p>
+          <strong>The one constraint that shapes everything:</strong> GitHub
+          strips <code>&lt;script&gt;</code> from READMEs and sanitizes almost
+          all inline CSS — but it <em>does</em> render SVGs embedded via
+          <code>&lt;img&gt;</code> and runs their SMIL / CSS-keyframe
+          animations. So the trick to an "animated" README is to push all the
+          motion into self-contained SVG files and let the README just place
+          them.
+        </p>
+      </div>
+
+      <h2>What you'll build</h2>
+      <ul>
+        <li>
+          <code>avi-ascii.svg</code> — a photo turned into clean, one-color
+          ASCII art that prints row by row.
+        </li>
+        <li>
+          <code>info-card.svg</code> — a neofetch-style panel of role, stack,
+          and highlights that fades in line by line.
+        </li>
+        <li>
+          <code>contrib-heatmap.svg</code> — your real 53-week contribution
+          calendar, rendered as rounded boxes that slide in diagonally.
+        </li>
+        <li>
+          A <code>README.md</code> that arranges them in a terminal layout.
+        </li>
+        <li>
+          A GitHub Actions workflow that regenerates the heatmap daily and
+          commits it.
+        </li>
+      </ul>
+
+      <h2>Step 1 — Create the magic repo</h2>
+      <p>
+        GitHub gives every account one special repository: a repo whose name is
+        <em>exactly your username</em>. Its <code>README.md</code> renders at
+        the top of your profile page.
+      </p>
+      <div class="prompt">
+        # replace AVIVASHISHTA29 with your own username
+        gh repo create AVIVASHISHTA29 --public --clone
+        cd AVIVASHISHTA29
+        mkdir -p scripts data .github/workflows</div>
+
+      <h2>Step 2 — Set up the Python toolchain</h2>
+      <p>
+        The portrait pipeline needs image libraries; the heatmap needs an HTTP
+        client and an HTML parser. Create <code>scripts/requirements.txt</code>:
+      </p>
+      <div class="prompt">
+        requests==2.32.3
+        beautifulsoup4==4.12.3
+        # portrait-only (not needed by the daily workflow):
+        pillow
+        numpy
+        opencv-python
+        rembg</div>
+      <p>
+        Then <code>python -m venv .venv &amp;&amp; source .venv/bin/activate
+        &amp;&amp; pip install -r scripts/requirements.txt</code>. The
+        portrait libraries only run locally when you change your photo — the
+        daily automation just needs <code>requests</code> and
+        <code>beautifulsoup4</code>.
+      </p>
+
+      <h2>Step 3 — Turn a photo into ASCII art</h2>
+      <p>
+        This is two scripts on purpose: <strong>prep</strong> the photo once,
+        then <strong>convert</strong> it to an SVG.
+      </p>
+
+      <h3>3a. Prep the photo (<code>prep_photo.py</code>)</h3>
+      <p>
+        A flatly-lit face converts to a dark, unreadable blob. Three steps fix
+        that:
+      </p>
+      <ol>
+        <li>
+          <strong>Remove the background</strong> with
+          <code>rembg</code> so the subject is isolated.
+        </li>
+        <li>
+          <strong>Boost local contrast</strong> with OpenCV's CLAHE
+          (contrast-limited adaptive histogram equalization) — this is what
+          gives a flat face real highlights and shadows.
+        </li>
+        <li>
+          <strong>Composite onto pure white</strong> so the background maps to
+          the blank end of the ASCII ramp (white → spaces).
+        </li>
+      </ol>
+      <p>
+        Output is a grayscale <code>source-prepped.png</code>. Run it once per
+        photo:
+      </p>
+      <div class="prompt">
+        python scripts/prep_photo.py source-photo.jpg</div>
+
+      <h3>3b. Convert to a self-typing SVG (<code>make_ascii_svg.py</code>)</h3>
+      <p>
+        The prepped image is downsampled to a character grid (~100×53), and
+        each pixel's brightness picks a glyph from a
+        <strong>density ramp</strong> — sparse characters for bright areas,
+        dense ones for dark:
+      </p>
+      <div class="prompt">
+        RAMP = " .`:-=+*cs#%@"   # bright (sparse) -&gt; dark (dense)
+        #        ^ leading space clears the background to nothing</div>
+      <p>
+        Two design choices make it look clean instead of noisy:
+      </p>
+      <ul>
+        <li>
+          <strong>Monochrome.</strong> One light-gray fill color. Per-character
+          rainbow coloring is exactly what makes most ASCII portraits look like
+          static.
+        </li>
+        <li>
+          <strong>High contrast.</strong> A busy background washes out to the
+          space glyph, so only the subject prints.
+        </li>
+      </ul>
+      <p>
+        For the animation, each row is wrapped in a horizontal clip that wipes
+        left-to-right (a small block "cursor" rides the wipe edge), staggered
+        top to bottom. The whole portrait prints once and freezes — no looping.
+        Because it's SMIL inside the SVG, GitHub plays it.
+      </p>
+      <div class="prompt">
+        python scripts/make_ascii_svg.py   # writes avi-ascii.svg</div>
+
+      <h2>Step 4 — Build the neofetch info card</h2>
+      <p>
+        <code>make_info_card.py</code> hand-authors a small SVG that looks like
+        the output of the <code>neofetch</code> command: a title bar, then
+        colored key/value rows — <code>Now</code>, <code>Prev</code>,
+        <code>Stack</code>, <code>Highlights</code>. Keep the content here and
+        <em>not</em> in the contribution graph; the graph already covers your
+        GitHub stats, so the card is for the story numbers can't tell.
+      </p>
+      <p>
+        Each line fades and slides in on a short stagger so the panel looks
+        like it's printing next to the portrait. A <code>STATIC=1</code> env
+        var emits a frozen frame for local Quick Look previews.
+      </p>
+      <div class="prompt">
+        python scripts/make_info_card.py   # writes info-card.svg</div>
+
+      <h2>Step 5 — Render the live contribution heatmap</h2>
+      <p>This is the part that stays alive, and it's two scripts again.</p>
+
+      <h3>5a. Get real data — no token (<code>fetch_contributions.py</code>)</h3>
+      <p>
+        You don't need the GraphQL API or a personal access token. GitHub serves
+        your contribution calendar as public HTML at
+        <code>https://github.com/users/&lt;username&gt;/contributions</code> —
+        the same fragment the profile page itself uses. Fetch it with
+        <code>requests</code>, parse the day cells with BeautifulSoup, and write
+        <code>data/contributions.json</code> with raw days plus derived stats
+        (current streak, longest streak, best day, monthly totals).
+      </p>
+      <div class="prompt">
+        python scripts/fetch_contributions.py</div>
+
+      <h3>5b. Draw the grid (<code>render_heatmap_svg.py</code>)</h3>
+      <p>
+        Render the JSON as the classic 53-week × 7-day calendar of rounded,
+        colored boxes using a GitHub-ish green ramp:
+      </p>
+      <div class="prompt">
+        PALETTE = ["#161b22", "#0e4429", "#006d32",
+                   "#26a641", "#39d353", "#69f0a0"]
+        #          none -&gt; brightest (level 5 is a neon top end)</div>
+      <p>
+        Reveal it once with a diagonal, line-after-line slide-down (CSS
+        keyframes that play on load, then freeze — no looping "glow"), and add
+        a Less→More legend plus a stats footer (<code
+          >"9,376 contributions in the last year"</code
+        >). Output: <code>contrib-heatmap.svg</code>.
+      </p>
+
+      <h2>Step 6 — Compose the README</h2>
+      <p>
+        Now the README just places the three SVGs in a centered terminal
+        layout. The portrait and card sit side by side in a
+        <code>&lt;table&gt;</code> (the only reliable way to put two images on
+        one row on GitHub), each column top-aligned. I label sections with
+        fake shell prompts to sell the terminal feel:
+      </p>
+      <div class="prompt">
+        &lt;div align="center"&gt;
+
+        &lt;h3&gt;&lt;code&gt;avi@github ~ $ ./contributions.sh&lt;/code&gt;&lt;/h3&gt;
+        &lt;img src="./contrib-heatmap.svg" width="860" /&gt;
+
+        &lt;br&gt;&lt;br&gt;
+
+        &lt;h3&gt;&lt;code&gt;avi@github ~ $ whoami&lt;/code&gt;&lt;/h3&gt;
+        &lt;table&gt;
+          &lt;tr&gt;
+            &lt;td valign="top"&gt;&lt;img src="./avi-ascii.svg" width="370" /&gt;&lt;/td&gt;
+            &lt;td valign="top"&gt;&lt;img src="./info-card.svg" width="490" /&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+        &lt;/table&gt;
+
+        &lt;/div&gt;</div>
+      <p>
+        Keep the widths aligned: the heatmap's <code>860</code> equals the two
+        columns (<code>370 + 490</code>), so the edges line up cleanly.
+      </p>
+
+      <div class="highlight">
+        <p>
+          <strong>GitHub markdown gotchas that cost me time:</strong>
+        </p>
+        <ul>
+          <li>
+            <strong>Inline <code>style</code> is stripped.</strong> A
+            <code>style="margin-top:36px"</code> does nothing. The only
+            vertical spacing GitHub honors is <code>&lt;br&gt;</code> tags.
+          </li>
+          <li>
+            <strong><code>&lt;h1&gt;</code> and <code>&lt;h2&gt;</code> draw a
+            full-width underline rule.</strong> Great as a divider, distracting
+            as a title. Use <code>&lt;h3&gt;</code> when you don't want the
+            line.
+          </li>
+          <li>
+            <strong>No JavaScript</strong>, and external CSS is blocked — the
+            animation must live entirely inside each SVG.
+          </li>
+        </ul>
+      </div>
+
+      <h2>Step 7 — Auto-refresh it daily with GitHub Actions</h2>
+      <p>
+        The portrait and info card are static (regenerate them only when your
+        photo or details change). Only the heatmap needs to update, so a small
+        workflow re-scrapes and re-renders it on a cron and commits the result.
+        Create <code>.github/workflows/update-profile-art.yml</code>:
+      </p>
+      <div class="prompt">
+        name: Update profile art
+
+        "on":
+          schedule:
+            - cron: "17 6 * * *"   # ~06:17 UTC daily
+          workflow_dispatch: {}
+          push:
+            branches: [main]
+
+        permissions:
+          contents: write
+
+        jobs:
+          heatmap:
+            runs-on: ubuntu-latest
+            steps:
+              - uses: actions/checkout@v4
+              - uses: actions/setup-python@v5
+                with:
+                  python-version: "3.11"
+              - run: pip install -r scripts/requirements.txt
+              - run: python scripts/fetch_contributions.py
+              - run: python scripts/render_heatmap_svg.py
+              - uses: stefanzweifel/git-auto-commit-action@v5
+                with:
+                  commit_message: "chore: refresh contribution graph [skip ci]"
+                  file_pattern: "data/contributions.json contrib-heatmap.svg"</div>
+      <p>
+        The <code>[skip ci]</code> keeps the bot's own commit from re-triggering
+        the workflow, and <code>contents: write</code> lets it push back to the
+        repo. Trigger it once by hand from the Actions tab
+        (<code>workflow_dispatch</code>) to confirm it commits a fresh SVG.
+      </p>
+
+      <h2>Why SVG instead of a stats service</h2>
+      <p>
+        Plenty of README widgets exist as hosted images, but they render on
+        someone else's server, rate-limit, and occasionally go down with a
+        broken-image icon on your profile. Generating your own SVGs means the
+        art is committed to your repo, loads instantly, looks exactly how you
+        designed it, and the only moving part you depend on is a public GitHub
+        HTML endpoint that needs no auth.
+      </p>
+
+      <h2>Recap</h2>
+      <ol>
+        <li>Make the <code>&lt;username&gt;/&lt;username&gt;</code> repo.</li>
+        <li>Prep a photo → convert to a self-typing monochrome ASCII SVG.</li>
+        <li>Hand-author a neofetch-style info card SVG.</li>
+        <li>Scrape your public contributions → render an animated heatmap SVG.</li>
+        <li>Lay the three out in a centered, terminal-styled README.</li>
+        <li>Cron a GitHub Action to refresh the heatmap every day.</li>
+      </ol>
+      <p>
+        The full source — every script and the workflow — lives in my profile
+        repo at
+        <a href="https://github.com/AVIVASHISHTA29/AVIVASHISHTA29" rel="nofollow"
+          >github.com/AVIVASHISHTA29</a
+        >.
+      </p>
+
+      <div class="back">
+        <p>
+          <a href="https://www.avivashishta.com">← Portfolio</a> ·
+          <a href="/blog">Blog</a>
+        </p>
+      </div>
+    </article>
+  </body>
+</html>
