@@ -76,5 +76,18 @@
       <category>GitHub Actions</category>
     </item>
 
+    <item>
+      <title>The Prompts I Used to Build a Drivable 3D Car Game (React Three Fiber + Rapier)</title>
+      <link>https://www.avivashishta.com/blog/build-drivable-3d-car-game-react-three-fiber</link>
+      <guid isPermaLink="true">https://www.avivashishta.com/blog/build-drivable-3d-car-game-react-three-fiber</guid>
+      <pubDate>Sat, 18 Jul 2026 00:00:00 GMT</pubDate>
+      <author>avivashishta29@gmail.com (Avi Vashishta)</author>
+      <description>A Bruno-Simon-style drivable 3D car game built with React Three Fiber and Rapier physics — the full one-shot prompt, an 8-step incremental build, and a refinement round for vehicle feel and the water shader.</description>
+      <category>Three.js</category>
+      <category>React Three Fiber</category>
+      <category>Rapier</category>
+      <category>WebGL</category>
+    </item>
+
   </channel>
 </rss>

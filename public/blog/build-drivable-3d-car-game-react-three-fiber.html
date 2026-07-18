@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      The Prompts I Used to Build a Drivable 3D Car Game (React Three Fiber +
+      Rapier) | Avi Vashishta
+    </title>
+    <meta
+      name="description"
+      content="A Bruno-Simon-style drivable 3D car game — drive a low-poly truck around a warm diorama and scatter the letters of your name. The full one-shot prompt, an 8-step incremental build, and a refinement round, using React Three Fiber and Rapier physics."
+    />
+    <link
+      rel="canonical"
+      href="https://www.avivashishta.com/blog/build-drivable-3d-car-game-react-three-fiber"
+    />
+    <meta name="author" content="Avi Vashishta" />
+    <meta
+      property="og:title"
+      content="The Prompts I Used to Build a Drivable 3D Car Game (React Three Fiber + Rapier)"
+    />
+    <meta
+      property="og:description"
+      content="Drive a low-poly truck around a Bruno-Simon-style diorama and shove the letters of your name around. The full one-shot prompt plus an 8-step incremental build with React Three Fiber and Rapier."
+    />
+    <meta property="og:type" content="article" />
+    <meta
+      property="og:url"
+      content="https://www.avivashishta.com/blog/build-drivable-3d-car-game-react-three-fiber"
+    />
+    <meta property="article:published_time" content="2026-07-18T00:00:00Z" />
+    <meta property="article:author" content="Avi Vashishta" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "The Prompts I Used to Build a Drivable 3D Car Game (React Three Fiber + Rapier)",
+        "description": "A Bruno-Simon-style drivable 3D car game built with React Three Fiber and Rapier — the full one-shot prompt, an 8-step incremental build, and a refinement round.",
+        "author": {
+          "@type": "Person",
+          "name": "Avi Vashishta",
+          "url": "https://www.avivashishta.com"
+        },
+        "publisher": {
+          "@type": "Person",
+          "name": "Avi Vashishta",
+          "url": "https://www.avivashishta.com"
+        },
+        "datePublished": "2026-07-18",
+        "url": "https://www.avivashishta.com/blog/build-drivable-3d-car-game-react-three-fiber"
+      }
+    </script>
+
+    <!-- PostHog -->
+    <script>
+      !(function (t, e) {
+        var o, n, p, r;
+        e.__SV ||
+          ((window.posthog = e),
+          (e._i = []),
+          (e.init = function (i, s, a) {
+            function g(t, e) {
+              var o = e.split('.');
+              (2 == o.length && ((t = t[o[0]]), (e = o[1])),
+                (t[e] = function () {
+                  t.push([e].concat(Array.prototype.slice.call(arguments, 0)));
+                }));
+            }
+            (((p = t.createElement('script')).type = 'text/javascript'),
+              (p.crossOrigin = 'anonymous'),
+              (p.async = !0),
+              (p.src =
+                s.api_host.replace('.i.posthog.com', '-assets.i.posthog.com') +
+                '/static/array.js'),
+              (r = t.getElementsByTagName('script')[0]).parentNode.insertBefore(
+                p,
+                r,
+              ));
+            var u = e;
+            for (
+              void 0 !== a ? (u = e[a] = []) : (a = 'posthog'),
+                u.people = u.people || [],
+                u.toString = function (t) {
+                  var e = 'posthog';
+                  return (
+                    'posthog' !== a && (e += '.' + a),
+                    t || (e += ' (stub)'),
+                    e
+                  );
+                },
+                u.people.toString = function () {
+                  return u.toString(1) + '.people (stub)';
+                },
+                o =
+                  'init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug getPageViewId captureTraceFeedback captureTraceMetric'.split(
+                    ' ',
+                  ),
+                n = 0;
+              n < o.length;
+              n++
+            )
+              g(u, o[n]);
+            e._i.push([i, s, a]);
+          }),
+          (e.__SV = 1));
+      })(document, window.posthog || []);
+      posthog.init('phc_cgNNpL9lqLK50jeJICAV6xcGZDmuDnuPVxPeG8Ieg6m', {
+        api_host: 'https://us.i.posthog.com',
+        person_profiles: 'identified_only',
+        capture_pageview: true,
+        capture_pageleave: true,
+      });
+      // Fire a named event so this article is easy to filter in PostHog.
+      posthog.capture('article_viewed', {
+        slug: 'build-drivable-3d-car-game-react-three-fiber',
+        title: 'Drivable 3D Car Game Prompts',
+      });
+    </script>
+
+    <style>
+      :root {
+        color-scheme: light;
+      }
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 40px 20px;
+        line-height: 1.7;
+        color: #1a1a1a;
+      }
+      h1 {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+        line-height: 1.25;
+      }
+      h2 {
+        font-size: 1.4rem;
+        margin-top: 2.5rem;
+        border-bottom: 2px solid #f0f0f0;
+        padding-bottom: 0.5rem;
+      }
+      h3 {
+        font-size: 1.1rem;
+        margin-top: 1.75rem;
+      }
+      .meta {
+        color: #666;
+        font-size: 0.9rem;
+        margin-bottom: 2rem;
+      }
+      p {
+        margin: 1rem 0;
+      }
+      ul,
+      ol {
+        margin: 1rem 0;
+        padding-left: 1.4rem;
+      }
+      li {
+        margin: 0.5rem 0;
+      }
+      blockquote {
+        margin: 1.5rem 0;
+        padding: 4px 20px;
+        border-left: 4px solid #0066cc;
+        background: #f0f7ff;
+        border-radius: 0 8px 8px 0;
+        color: #333;
+        font-style: italic;
+      }
+      .highlight {
+        background: #f0f7ff;
+        border-left: 4px solid #0066cc;
+        padding: 16px 20px;
+        border-radius: 0 8px 8px 0;
+        margin: 1.5rem 0;
+      }
+      .prompt {
+        background: #1a1a1a;
+        color: #e6e6e6;
+        padding: 20px 22px;
+        border-radius: 10px;
+        margin: 1.5rem 0;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 0.85rem;
+        line-height: 1.6;
+        white-space: pre-wrap;
+        overflow-x: auto;
+      }
+      .check {
+        margin: 0.75rem 0 0;
+        font-weight: 600;
+        color: #0a7d33;
+      }
+      code {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        background: #f2f2f2;
+        padding: 1px 5px;
+        border-radius: 4px;
+        font-size: 0.9em;
+      }
+      a {
+        color: #0066cc;
+      }
+      .back {
+        margin-top: 3rem;
+        padding-top: 1rem;
+        border-top: 1px solid #eee;
+        font-size: 0.95rem;
+      }
+      @media (max-width: 600px) {
+        body {
+          padding: 24px 16px;
+        }
+        h1 {
+          font-size: 1.6rem;
+        }
+        .prompt {
+          font-size: 0.78rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <article>
+      <h1>
+        The Prompts I Used to Build a Drivable 3D Car Game (React Three Fiber +
+        Rapier)
+      </h1>
+      <p class="meta">
+        Published July 2026 ·
+        <a href="https://www.avivashishta.com">avivashishta.com</a>
+      </p>
+
+      <h2>Overview</h2>
+      <p>
+        A physics playground inspired by
+        <a href="https://bruno-simon.com" rel="nofollow">bruno-simon.com</a>:
+        drive a low-poly truck around a warm, stylized world and shove the
+        letters of your name around. Built with
+        <strong>React Three Fiber + Rapier physics</strong>. Below is the exact
+        set of prompts I used — a single one-shot prompt to bootstrap the whole
+        thing, an 8-step incremental build for when the one-shot is too much for
+        the tool, and a refinement round for the two parts that always need
+        iteration.
+      </p>
+
+      <div class="highlight">
+        <p>
+          <strong>What it produces:</strong> a drivable low-poly truck (Rapier
+          raycast vehicle) on rolling hills, ~12 physics crates, the extruded
+          3D block letters of your name as individual rigid bodies you can plow
+          through, stylized water with a submerged look, static walls, and a
+          cozy sunset diorama — all in one Vite + React app.
+        </p>
+        <p style="margin-bottom: 0">
+          <strong>Stack:</strong> <code>three</code>,
+          <code>@react-three/fiber</code>, <code>@react-three/drei</code>,
+          <code>@react-three/rapier</code> (Rapier is WASM — wrap
+          <code>&lt;Physics&gt;</code> in <code>&lt;Suspense&gt;</code>).
+          <strong>Asset:</strong> upload
+          <code>low-poly_truck_car_drifter.glb</code> when the prompt asks for
+          it.
+        </p>
+      </div>
+
+      <h2>The one-shot prompt (for Fable 5)</h2>
+      <p>
+        Paste this whole thing at once, uploading
+        <code>low-poly_truck_car_drifter.glb</code> with it. Then iterate on
+        whatever needs polish — the incremental prompts further down are your
+        refinement toolkit.
+      </p>
+      <div class="prompt">Build a complete, single-page interactive 3D car game as a Vite + React app using three, @react-three/fiber, @react-three/drei, and @react-three/rapier. Visually inspired by bruno-simon.com: a low-poly, stylized diorama — NOT realistic textures. Ship it all in one go, cleanly structured into components (Scene, Terrain, Vehicle, Crates, NameLetters, Water, Walls, Lights, HUD).
+
+ART DIRECTION
+- Warm sunset palette: sandy-orange ground, teal/dark water, warm autumn accents, soft glows.
+- Flat-shaded low-poly / MeshMatcapMaterial everywhere — no photo textures.
+- One warm directional "sun" (soft shadows) + gentle ambient/hemisphere fill, light fog for depth.
+
+WORLD
+- Low-poly ground terrain with gentle rolling hills (subdivided plane, simplex-noise vertex displacement; keep hills subtle enough to drive over). Static (fixed) collider matching shape.
+- A water body in a low area: semi-transparent shader plane with gentle scrolling waves/ripples and depth-based tint so submerged objects look underwater. Teal color.
+- Static walls / barriers (fixed colliders): an outer boundary so the car can't leave the arena, plus a couple of interior obstacles. Loose objects bounce off them; walls never move.
+- ~12 cuboid crates of varying sizes as rigid bodies that fall in and settle (low-poly wood).
+- A few atmosphere props: low-poly trees, rocks, a lantern with a warm point-light glow.
+
+THE CAR — Load the uploaded GLB [upload low-poly_truck_car_drifter.glb] as the visual mesh of a Rapier raycast vehicle. Chassis = simple cuboid collider (never trimesh); the GLB follows the chassis each frame. Controls: W/S accelerate/reverse, A/D steer, Space brake. Tune mass, engine force, steering, suspension, and damping so it's responsive but doesn't flip easily.
+
+CAMERA — Third-person follow camera trailing behind/above the car; lerp position and lookAt (~0.1 smoothing) with slight lag on turns. No OrbitControls in the final game.
+
+MY NAME — Add "AVI VASHISHTA" as large extruded 3D block letters (drei Text3D, bold font), two rows ("AVI" / "VASHISHTA"), each letter its own rigid body with tuned mass so the car can plow through and scatter them. Bright accent matcap that pops against the ground.
+
+POLISH — Soft shadows, warm late-afternoon sun angle, mild bloom on glowing elements, subtle dust particles. On-screen hint: "WASD to drive · Space to brake." Wrap &lt;Physics&gt; in &lt;Suspense&gt; (Rapier is WASM). Keep it performant: reasonable shadow-map size, instance repeated props, and degrade gracefully on mobile.
+
+Deliver a working, drivable scene where I can immediately drive around, knock the letters of my name apart, shove crates, bounce off walls, and drive into the water.</div>
+      <p>
+        After the one-shot, use the phase prompts below to fix the two things
+        most likely to need iteration: vehicle feel (Prompt 3) and the water
+        shader (Prompt 6).
+      </p>
+
+      <h2>How to use the incremental build</h2>
+      <p>
+        Vibe coders fail when you ask for everything at once. If the one-shot is
+        too much for your tool, paste <strong>Prompt 0</strong> first to
+        establish the project and look. Then paste prompts
+        <strong>1 → 8 one at a time</strong>, checking the preview after each
+        before moving on. Each prompt ends with a ✅ acceptance check — don't
+        advance until it passes.
+      </p>
+
+      <h3>Prompt 0 — Project + art direction (paste first)</h3>
+      <div class="prompt">Build a single-page React app using Vite with three, @react-three/fiber, @react-three/drei, and @react-three/rapier. This is an interactive 3D car game, visually inspired by bruno-simon.com — a low-poly, stylized look (NOT realistic textures).
+
+Art direction:
+- Warm sunset palette: sandy-orange ground, teal/dark water, warm autumn accents, soft glows.
+- Use MeshMatcapMaterial / flat-shaded low-poly materials everywhere, not photo textures.
+- Soft shadows, one warm directional "sun" light + gentle ambient/hemisphere fill.
+- Slight fog for depth. Clean, cozy, game-like — think a small diorama world.
+
+For now just create the empty scene: canvas filling the viewport, warm background color, directional + ambient lights, soft shadows enabled, and a fog. Add an OrbitControls camera so I can inspect it.</div>
+      <p class="check">✅ Confirm the packages install and I see a lit, empty scene with the warm background.</p>
+
+      <h3>Prompt 1 — Ground with small hills + the car model</h3>
+      <div class="prompt">Add a low-poly ground terrain with gentle rolling hills (a subdivided plane with vertex displacement / simplex noise for small bumps — keep hills subtle so a car can drive over them). Give it a warm sandy-orange matcap/flat material and enable it to receive shadows.
+
+Load and display this GLB model on the ground: [upload low-poly_truck_car_drifter.glb]. Scale/position it so it sits nicely on the surface and casts a shadow.</div>
+      <p class="check">✅ I see the truck resting on a bumpy low-poly ground.</p>
+
+      <h3>Prompt 2 — Physics world + falling boxes</h3>
+      <div class="prompt">Add @react-three/rapier. Wrap the scene in &lt;Physics&gt; (with &lt;Suspense&gt; since Rapier is WASM). Enable gravity.
+
+Make the ground terrain a fixed (static) collider matching its shape. Drop about 12 cuboid rigid-body crates of varying sizes from above so they fall and settle on the ground. Give them a low-poly wooden/matcap look. Add a debug toggle for colliders.</div>
+      <p class="check">✅ Crates fall, bounce slightly, and come to rest on the terrain.</p>
+
+      <h3>Prompt 3 — Make the car drivable (raycast vehicle)</h3>
+      <div class="prompt">Turn the truck into a drivable raycast vehicle using Rapier's vehicle controller.
+- The chassis is a simple cuboid collider sized to the truck body; the GLB mesh is purely visual and follows the chassis transform each frame.
+- Controls: W/S = accelerate/reverse (engine force), A/D = steer, Space = brake.
+- Tune mass, engine force, steering angle, and suspension so it feels responsive but stable — it should NOT flip easily. Add mild damping.</div>
+      <p class="check">✅ I can drive the truck around the terrain with WASD and it pushes the crates realistically.</p>
+
+      <h3>Prompt 4 — Smooth follow camera</h3>
+      <div class="prompt">Replace OrbitControls with a third-person follow camera that trails behind and slightly above the car. Lerp both the camera position and its lookAt target toward the car each frame (smoothing ~0.1) so it glides rather than snaps. Keep a little lag on turns for a nice chase feel.</div>
+      <p class="check">✅ The camera smoothly follows the car as I drive; no jitter or motion sickness.</p>
+
+      <h3>Prompt 5 — My name as pushable letters</h3>
+      <div class="prompt">Add my name "AVI VASHISHTA" as large 3D block letters standing on the ground (use drei's Text3D with an extruded bold font, or per-letter box meshes). Each letter is its own rigid body so the car can plow through and scatter them.
+- Two words on two rows: "AVI" and "VASHISHTA".
+- Give letters a bright accent matcap that pops against the ground.
+- Tune their mass so they topple and slide when hit but aren't weightless.</div>
+      <p class="check">✅ I can drive into the letters and knock them around individually.</p>
+
+      <h3>Prompt 6 — Water body (with submerged look)</h3>
+      <div class="prompt">Add a water body — a low area / pond in one part of the terrain filled with a semi-transparent water plane.
+- Use a shader (or meshTransmission / depth-based tint) so objects below the surface look submerged: tinted and fogged with depth. Add gentle scrolling ripples / vertex waves.
+- Teal/dark water color to match the palette.
+- When the car drives in, it should visually sink/get tinted below the waterline (buoyancy optional — visual submersion is enough for v1).</div>
+      <p class="check">✅ The pond looks like water; the car and crates look submerged when they enter it.</p>
+
+      <h3>Prompt 7 — Immovable walls / boundaries</h3>
+      <div class="prompt">Add some static walls the car cannot move — low-poly stone or wooden barrier blocks placed around the play area as fixed colliders. Use them to:
+- Form an outer boundary so the car can't drive off the world.
+- Create a couple of interior obstacles / a little maze corner to drive around.
+
+Walls do not move when hit (they're fixed), but crates and letters still bounce off them.</div>
+      <p class="check">✅ The car collides with walls and stops; it can't leave the arena; loose objects bounce off walls.</p>
+
+      <h3>Prompt 8 — Polish pass</h3>
+      <div class="prompt">Polish the whole scene:
+- Add a few low-poly props for atmosphere (trees, rocks, a lantern with a warm glow light).
+- Enable and soften shadows; tune the sun angle for a warm late-afternoon feel.
+- Add subtle ambient particles/dust and mild bloom on the glowing elements.
+- Add a small on-screen hint: "WASD to drive · Space to brake."
+- Make sure it runs smoothly; if FPS drops, reduce shadow resolution and instance the props.</div>
+      <p class="check">✅ The scene looks cohesive and cozy, runs smoothly, and is fun to drive around.</p>
+
+      <h2>Refinement round 2 (after the one-shot)</h2>
+      <p>
+        Paste these one at a time — each is a focused fix, ordered easiest →
+        trickiest.
+      </p>
+
+      <h3>R2.1 — Orbit-follow camera (Bruno Simon style)</h3>
+      <div class="prompt">Replace the rigid behind-the-car camera with a Bruno-Simon-style orbit-follow camera. It should smoothly follow the car (the camera target lerps to the car's position each frame), but I can click-drag (and touch-drag) to orbit 360° around the car, and scroll to zoom. Implement it as a spherical offset (azimuth / polar / radius) around the car target; damp both the target and the rotation so it glides. Clamp the polar angle so the camera can't go under the ground. When I'm driving and NOT dragging, slowly ease the camera back to behind the car.</div>
+
+      <h3>R2.2 — Make props solid (colliders on trees/rocks/lamps/fence)</h3>
+      <div class="prompt">Right now the car phases through the trees, rocks, lamp posts, and fence — give them all physical colliders. Wrap each static prop in a fixed RigidBody (type="fixed"): rocks = convex hull collider, tree trunks and lamp posts = cylinder or cuboid collider, fence segments = cuboid. They shouldn't move, but the car, crates, and letters should collide with them properly.</div>
+
+      <h3>R2.3 — Play the truck's animations + spin the wheels</h3>
+      <div class="prompt">The truck GLB has animation clips that currently never play. Load them with drei's useAnimations and play the appropriate clip(s) — list the clip names you find so I can pick. Regardless of clips: spin the wheel meshes based on car speed and turn the front wheels with the steering input so the car looks alive while driving. Loop any idle clip when stationary.</div>
+
+      <h3>R2.4 — Jump</h3>
+      <div class="prompt">Add a jump on Spacebar (move the brake to Left-Shift and update the HUD hint). On jump, apply an upward impulse to the chassis — but only when the car is grounded (at least one wheel in contact, or a short downward raycast hits ground) so I can't fly. Tune the impulse for a satisfying hop, and add a tiny cooldown.</div>
+
+      <h3>R2.5 — Better water (kill the polka dots) + buoyancy</h3>
+      <div class="prompt">Redo the water — the scattered white polka dots look wrong; remove them entirely. Replace with clean stylized low-poly water: a flat plane with gentle Gerstner/sine vertex waves, a soft Fresnel rim, and a thin foam line only where water meets the shore (using scene depth), plus depth-based tint so submerged objects darken/blue with depth. Keep it calm and cohesive with the sunset palette. Subtle animated normal ripples are fine.
+
+Also add simple buoyancy so the truck floats and bobs at the surface instead of sinking and tipping over: apply an upward force proportional to how deep the chassis is below the waterline, plus vertical + angular damping, so it rides the waterline upright.</div>
+
+      <h2>Gotchas to watch</h2>
+      <div class="highlight">
+        <ul style="margin: 0">
+          <li>
+            <strong>Rapier is WASM</strong> — needs
+            <code>&lt;Suspense&gt;</code>; if the platform can't load WASM/npm,
+            the build fails at Prompt 2. That's your go/no-go signal for the
+            platform.
+          </li>
+          <li>
+            <strong>Never use a trimesh collider on the moving car</strong> —
+            use a cuboid. Trimesh is only for static terrain/walls.
+          </li>
+          <li>
+            <strong>Vehicle feel</strong> (Prompt 3) and the
+            <strong>water shader</strong> (Prompt 6) are the two that need
+            iteration. Expect 2–3 refinement rounds each; describe what feels
+            wrong rather than restarting.
+          </li>
+          <li>
+            <strong>Test on mobile early</strong> — physics + shadows + water is
+            the combo that hurts FPS.
+          </li>
+        </ul>
+      </div>
+
+      <div class="back">
+        <p>
+          <a href="https://www.avivashishta.com">← Portfolio</a> ·
+          <a href="/blog">Blog</a>
+        </p>
+      </div>
+    </article>
+  </body>
+</html>
