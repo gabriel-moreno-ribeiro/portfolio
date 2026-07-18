@@ -63,5 +63,18 @@
       <category>Developers</category>
     </item>
 
+    <item>
+      <title>How I Built an Animated GitHub Profile README (ASCII Portrait + Neofetch Card + Live Contribution Graph)</title>
+      <link>https://www.avivashishta.com/blog/build-animated-github-profile-readme</link>
+      <guid isPermaLink="true">https://www.avivashishta.com/blog/build-animated-github-profile-readme</guid>
+      <pubDate>Sat, 18 Jul 2026 00:00:00 GMT</pubDate>
+      <author>avivashishta29@gmail.com (Avi Vashishta)</author>
+      <description>A step-by-step guide to building a terminal-style GitHub profile README — a self-typing monochrome ASCII portrait, a neofetch-style info card, and a live contribution heatmap, all animated SVG auto-refreshed daily by GitHub Actions.</description>
+      <category>GitHub</category>
+      <category>SVG</category>
+      <category>Python</category>
+      <category>GitHub Actions</category>
+    </item>
+
   </channel>
 </rss>
