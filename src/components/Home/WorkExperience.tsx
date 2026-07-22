@@ -14,8 +14,8 @@ const workExperience = [
   {
     title: 'Co-Founder & CEO',
     company: 'HIBEEX',
-    funTitle: 'Chief Everything Officer',
-    funCompany: 'my baby startup',
+    funTitle: 'spreadsheet wizard',
+    funCompany: 'still picking a logo',
     date: 'January 2026 - Present',
     points: [
       "Building <span class='black'>financial AI</span> that turns accountants into business advisors for every SMB",
@@ -26,8 +26,8 @@ const workExperience = [
   {
     title: 'Co-Founder & CEO',
     company: 'GSAT Education',
-    funTitle: 'Student who became the teacher',
-    funCompany: 'the EdTech era',
+    funTitle: 'teacher by accident',
+    funCompany: 'the SAT prep saga',
     date: 'November 2025 - May 2026 (6 Months)',
     points: [
       "Built <span class='black'>EdTech platform</span> for standardized test preparation from scratch",
@@ -38,8 +38,8 @@ const workExperience = [
   {
     title: 'President',
     company: 'Olympic Club - Colegio Militar',
-    funTitle: 'Medal Factory Manager',
-    funCompany: 'nerd HQ',
+    funTitle: 'meeting scheduler',
+    funCompany: 'the study group',
     date: 'August 2024 - May 2026 (1 Year 9 Months)',
     points: [
       "Led executive board, secured support for <span class='black'>17 major initiatives</span>",
@@ -50,8 +50,8 @@ const workExperience = [
   {
     title: 'Scholar - PREP Program',
     company: 'Fundacao Estudar',
-    funTitle: 'Professional Overachiever',
-    funCompany: 'the 0.7% club',
+    funTitle: 'professional student',
+    funCompany: 'the scholarship people',
     date: 'January 2025 - March 2026 (1 Year 2 Months)',
     points: [
       "One of ~70 scholars from <span class='black'>10,000+ applicants</span> (0.7% acceptance)",
@@ -61,8 +61,8 @@ const workExperience = [
   {
     title: 'Researcher',
     company: 'Instituto Principia',
-    funTitle: 'Professional Nerd',
-    funCompany: 'quantum vibes only',
+    funTitle: 'lab coat enjoyer',
+    funCompany: 'nerds united',
     date: 'January 2023 - July 2025 (2 Years 6 Months)',
     points: [
       "One of <span class='black'>14 students</span> selected nationally",
@@ -124,8 +124,8 @@ const WorkExperience = () => {
   return (
     <div className="work-experience-main-wrapper" ref={containerRef}>
       <h1 className="fixed-heading">
-        <span className="orange" data-fun="console.log(my_life)">Destructuring </span>
-        <span data-color-inverted={'true'} data-fun="the grind never stops">My Experience.</span>
+        <span className="orange" data-fun="JSON.parse(my_career)">Destructuring </span>
+        <span data-color-inverted={'true'} data-fun="the resume, basically">My Experience.</span>
       </h1>
       <div className="left-column">
         <Suspense fallback={null}>
@@ -139,7 +139,7 @@ const WorkExperience = () => {
               <span data-fun={(exp as any).funTitle || exp.title}>{exp.title}</span> @ <span className="orange" data-fun={(exp as any).funCompany || exp.company}>{exp.company}</span>
             </h2>
             <div className="flex-row">
-              <p className="duration" data-fun="time flies when you're shipping">{exp.date}</p>
+              <p className="duration" data-fun="time is a social construct">{exp.date}</p>
             </div>
             <ul className="work-ex-points">
               {exp.points.map((point, i) => (
