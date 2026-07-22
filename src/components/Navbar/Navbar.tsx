@@ -103,7 +103,7 @@ function Navbar() {
           className="heading"
           style={{ visibility: isHovered ? 'hidden' : 'visible' }}
         >
-          Gabriel Moreno Ribeiro.
+          <span data-fun="the guy behind this site">Gabriel Moreno Ribeiro.</span>
         </h1>
       ) : (
         <motion.h1
@@ -111,7 +111,7 @@ function Navbar() {
           layout
           transition={{ type: 'spring', stiffness: 200, damping: 25 }}
         >
-          Gabriel Moreno Ribeiro.
+          <span data-fun="the guy behind this site">Gabriel Moreno Ribeiro.</span>
         </motion.h1>
       )}
       <motion.div

@@ -11,7 +11,7 @@ function FindMyWork() {
   return (
     <div className="find-my-work" id="work">
       <h1 className="heading" data-color-inverted={"true"}>
-        Find My Work
+        <span data-fun="the stuff I actually ship">Find My Work</span>
       </h1>
       <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} badges={{ 3: "New" }} />
       {activeTab === 3 ? (
