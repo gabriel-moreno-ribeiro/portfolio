@@ -11,6 +11,7 @@ import { FiArrowRight, FiLink } from 'react-icons/fi';
 import useIsMobile from '../../hooks/useIsMobile';
 import { scrollToComponent } from '../../utils/scrollToComponent';
 import CommonButton from '../Shared/CommonButton';
+import HoverSwapText from '../Shared/HoverSwapText';
 import ScrambleText from '../Shared/ScrambleText';
 
 const CanvasComponent = lazy(() => import('../Canvas/CanvasComponent'));
@@ -96,7 +97,12 @@ function Hero() {
             speed={100}
             pauseDuration={1000}
           />
-          <h1 className="heading">Developer.</h1>
+          <h1 className="heading">
+            <HoverSwapText
+              original="& CEO."
+              hovered="(addicted to Claude Code)"
+            />
+          </h1>
         </motion.div>
         <motion.p
           className="desc"
@@ -108,9 +114,14 @@ function Hero() {
             ease: 'easeOut',
           }}
         >
-          18-year-old founder building financial AI for SMBs. Researcher
-          in physics and chemistry. 39 olympiad medals. St Andrews CS &amp;
-          Economics scholar.
+          <HoverSwapText original="18-year-old" hovered="(yes, actually 18)" />{' '}
+          founder building{' '}
+          <HoverSwapText original="financial AI" hovered="the future of accounting" />{' '}
+          for SMBs.{' '}
+          <HoverSwapText original="Researcher" hovered="Lab rat by choice" />{' '}
+          in physics and chemistry.{' '}
+          <HoverSwapText original="39 olympiad medals." hovered="I lost count too." />{' '}
+          <HoverSwapText original="St Andrews scholar." hovered="Scotland here I come 🏴󠁧󠁢󠁳󠁣󠁴󠁿" />
         </motion.p>
         <motion.div
           className="btn-flex"

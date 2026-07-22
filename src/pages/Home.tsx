@@ -4,6 +4,7 @@ import Hero from "../components/Home/Hero";
 import HorizontalSkillsWrapper from "../components/Home/HorizontalSkillsWrapper";
 import NumbersAndStats from "../components/Home/Numbers";
 import Skills from "../components/Home/Skills";
+import Timeline from "../components/Home/Timeline";
 import WorkExperience from "../components/Home/WorkExperience";
 import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Shared/Footer";
@@ -20,6 +21,7 @@ function Home() {
       <NumbersAndStats />
       <HorizontalSkillsWrapper />
       <WorkExperience />
+      <Timeline />
       <Footer />
       <Suspense fallback={null}>
         <CarCanvas />
