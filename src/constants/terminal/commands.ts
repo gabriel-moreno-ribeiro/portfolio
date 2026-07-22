@@ -95,7 +95,7 @@ const commands: CommandDefinition[] = [
         }
       }
       ctx.writeln("");
-      ctx.writeln(yellow('Type "ai <message>" to chat with an AI that knows about Avi.'));
+      ctx.writeln(yellow('Type "ai <message>" to chat with an AI that knows about Gabriel.'));
     },
   },
   {
@@ -221,9 +221,9 @@ const commands: CommandDefinition[] = [
     name: "whoami",
     description: "Who are you?",
     execute: (ctx) => {
-      ctx.writeln("visitor@avi-portfolio");
+      ctx.writeln("visitor@gabriel-portfolio");
       ctx.writeln("");
-      ctx.writeln("Welcome! You're exploring Avi Vashishta's portfolio terminal.");
+      ctx.writeln("Welcome! You're exploring Gabriel Moreno Ribeiro's portfolio terminal.");
       ctx.writeln(`Type ${green('"help"')} to see what you can do here.`);
     },
   },
@@ -354,7 +354,7 @@ const commands: CommandDefinition[] = [
       if (ctx.args.join(" ").toLowerCase() === "hire-me") {
         ctx.writeln(yellow("=== PERMISSION GRANTED ==="));
         ctx.writeln("");
-        ctx.writeln("Excellent decision! Avi would love to hear from you.");
+        ctx.writeln("Excellent decision! Gabriel would love to hear from you.");
         ctx.writeln("");
         ctx.writeln(`  Email:    ${green(contact.email)}`);
         ctx.writeln(`  LinkedIn: ${green(contact.linkedin)}`);
@@ -378,7 +378,7 @@ const commands: CommandDefinition[] = [
     name: "cowsay",
     description: "ASCII cow says your message",
     execute: (ctx) => {
-      const message = ctx.args.join(" ") || "Moo! Hire Avi!";
+      const message = ctx.args.join(" ") || "Moo! Hire Gabriel!";
       const result = cowsayTemplate(message);
       for (const line of result.split("\n")) {
         ctx.writeln(line);

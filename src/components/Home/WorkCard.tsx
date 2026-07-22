@@ -16,7 +16,7 @@ interface WorkCardInterface {
   data: {
     cardData: {
       title: string;
-      imgUrl: string;
+      imgUrl: string | null;
       url: {
         githubUrl?: string;
         youtubeUrl?: string;
@@ -119,14 +119,39 @@ const WorkCard = ({ data, cardIndex = 0 }: WorkCardInterface) => {
         transition={{ duration: 0.5 }}
         ref={ref}
       >
-        <motion.img
-          src={cardData.imgUrl}
-          alt="card"
-          className="card-img"
-          onClick={handleOpen}
-          whileTap={{ scale: 0.95 }}
-          data-click-me={"true"}
-        />
+        {cardData.imgUrl ? (
+          <motion.img
+            src={cardData.imgUrl}
+            alt="card"
+            className="card-img"
+            onClick={handleOpen}
+            whileTap={{ scale: 0.95 }}
+            data-click-me={"true"}
+          />
+        ) : (
+          <motion.div
+            className="card-img card-img-placeholder"
+            onClick={handleOpen}
+            whileTap={{ scale: 0.95 }}
+            data-click-me={"true"}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              background: 'var(--card-bg, #f5f0eb)',
+              borderRadius: '12px',
+              minHeight: '180px',
+              cursor: 'pointer',
+              fontSize: '14px',
+              fontWeight: 600,
+              opacity: 0.7,
+              padding: '20px',
+              textAlign: 'center',
+            }}
+          >
+            {cardData.title}
+          </motion.div>
+        )}
         <div className="card-heading-flex">
           <h2 className="heading">{cardData.title}</h2>
           {cardData.url && (

@@ -1,59 +1,52 @@
 export const bio = {
-  name: "Avi Vashishta",
-  title: "Fullstack Developer | App Developer | Game Developer",
+  name: "Gabriel Moreno Ribeiro",
+  title: "Founder & CEO | Full Stack Builder | Researcher",
   summary:
-    "Avi has a strong interest in Product Management and Entrepreneurship and is committed to delivering high-quality tech products that offer an exceptional user experience. He is also an instructor at a leading YC EdTech platform, having taught MERN Stack to over 100,000+ students.",
-  interests: ["Algo Trading", "UI Design", "Product Design", "Entrepreneurship"],
+    "18-year-old founder building financial AI for SMBs at HIBEEX. Researcher in chemical kinetics and physics. 39 olympiad medals (19 gold). University of St Andrews CS & Economics scholar (Global Merit Scholarship). Passionate about turning complex problems into elegant tech solutions.",
+  interests: ["AI/ML", "FinTech", "Physics Research", "Entrepreneurship", "Product Design"],
 };
 
 export const education = {
-  degree: "BTech in Computer Science",
-  university: "IIIT Delhi (Indraprastha Institute of Information Technology)",
-  year: "2024",
+  degree: "BSc in Computer Science & Economics",
+  university: "University of St Andrews (Global Merit Scholarship)",
+  year: "2026 - 2030",
 };
 
 export const experience = [
   {
-    title: "Software Engineer",
-    company: "Dock.us",
-    date: "March 2025 - Present",
+    title: "Co-Founder & CEO",
+    company: "HIBEEX",
+    date: "January 2026 - Present",
     description:
-      "Building features using the latest AI technologies on a Next.js, Node.js, GraphQL based tech stack with AWS SQS for messaging infrastructure.",
+      "Building financial AI that turns accountants into business advisors for every SMB through cognitive automation. Full stack development with TypeScript, Next.js, Node.js, Supabase, and AWS.",
   },
   {
-    title: "Founding Engineer",
-    company: "Turgon AI",
-    date: "October 2024 - June 2025",
+    title: "Co-Founder & CEO",
+    company: "GSAT Education",
+    date: "November 2025 - May 2026",
     description:
-      "Led a cross-functional team to architect and deliver three AI-driven products. Reviewed and merged 500+ pull requests. Built a multi-tenant Next.js CMS controlling private club mobile apps globally with dynamic pages, real-time updates, and RBAC. Developed secure contactless check-ins using encrypted QR codes, a Fin-AI product with 99%+ accurate financial insights using Vercel AI SDK, LangChain, and Eleven Labs. Architected an AI-driven Expo mobile app using BFF architecture, digital wallet and ticketing system, and CI/CD pipelines with GitHub Actions.",
+      "Led an EdTech startup focused on standardized test preparation. Managed product development and go-to-market strategy.",
   },
   {
-    title: "SDE",
-    company: "AccioJob (YC 21)",
-    date: "October 2022 - October 2024",
+    title: "President",
+    company: "Olympic Club - Colegio Militar de Salvador",
+    date: "August 2024 - May 2026",
     description:
-      "Managed over 300+ features and issues (highest in the team) across four product repositories. Developed AI products including AI-based tutoring, unique question generation, and proctoring services. Taught Frontend Web Development to over 90,000 students online.",
+      "Led the club's executive board, spearheaded comprehensive restructuring, secured support for 17 major initiatives. Drove 47% increase in student participation and 62% increase in national olympiad results.",
   },
   {
-    title: "Founder",
-    company: "STV Technologies",
-    date: "October 2021 - August 2022",
+    title: "Scholar - PREP Program",
+    company: "Fundacao Estudar",
+    date: "January 2025 - March 2026",
     description:
-      "Co-founded a freelancing firm, collaborating with international and national clients to complete 30+ freelance projects. Projects spanned full-stack web dev, app dev, Shopify, Wix/WordPress, Unity games. Generated revenue of INR 10,00,000.",
+      "One of ~70 scholars selected from 10,000+ applicants (0.7% acceptance rate). Brazil's longest-running and ultra-competitive college access program.",
   },
   {
-    title: "Fullstack Intern",
-    company: "Attrilu",
-    date: "Feb 2022 - April 2022",
+    title: "Researcher",
+    company: "Instituto Principia (Escola de Talentos)",
+    date: "January 2023 - July 2025",
     description:
-      "Worked with Facebook (Meta) APIs. Built a web application for creators and brand marketing using Next.js and Django.",
-  },
-  {
-    title: "Mobile App Intern",
-    company: "Fitzura",
-    date: "Jan 2022 - March 2022",
-    description:
-      "Developed a comprehensive fitness clothing app using React Native with a Python Django backend.",
+      "One of 14 students selected. Advanced physics research (quantum mechanics, relativity, statistical physics). Conducting research in chemical kinetics and physicochemical modeling.",
   },
 ];
 
@@ -61,51 +54,39 @@ export const skills = {
   frontend: [
     "React",
     "Next.js",
-    "React Native",
     "TypeScript",
     "JavaScript",
     "HTML",
     "CSS",
-    "SCSS",
     "Tailwind CSS",
     "Three.js",
-    "R3F",
     "Framer Motion",
-    "GSAP",
-    "Redux",
-    "Zustand",
-    "MUI",
-    "Ant Design",
   ],
   backend: [
     "Node.js",
-    "NestJS",
-    "Express",
+    "Supabase",
+    "PostgreSQL",
     "Python",
-    "Django",
-    "Flask",
-    "Firebase",
-    "MongoDB",
     "REST APIs",
     "GraphQL",
+    "AWS",
   ],
   tools: [
     "Git",
     "GitHub",
     "VS Code",
     "Vercel",
-    "Firebase",
     "AWS",
     "Docker",
-    "CI/CD",
-    "Unity",
-    "C#",
+    "LaTeX",
+    "MATLAB",
+    "Mathematica",
     "Figma",
   ],
 };
 
 export const contact = {
-  email: "avivashishta29@gmail.com",
-  linkedin: "https://linkedin.com/in/avivashishta",
-  github: "https://github.com/AVIVASHISHTA29",
+  email: "gabrielmribeiro@hibeex.com.br",
+  linkedin: "https://linkedin.com/in/gabriel-moreno-ribeiro",
+  github: "https://github.com/gabriel-moreno-ribeiro",
 };

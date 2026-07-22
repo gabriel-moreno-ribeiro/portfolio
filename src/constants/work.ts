@@ -1,391 +1,227 @@
-import aiForMessaging from "../assets/work-tab/personal/ai-for-messaging.webp";
-import anonimo from "../assets/work-tab/personal/anonimo.webp";
-import boldBot from "../assets/work-tab/personal/bold-bot.webp";
-import boldStore from "../assets/work-tab/personal/bold.webp";
-import infinite from "../assets/work-tab/personal/infinite-rider.webp";
-
-import airbnb from "../assets/work-tab/youtube/airbnb.webp";
-import calc from "../assets/work-tab/youtube/calc.webp";
-import crypto from "../assets/work-tab/youtube/crypto.jpg";
-import finance from "../assets/work-tab/youtube/finance.webp";
-import flappy from "../assets/work-tab/youtube/flappy.webp";
-import git from "../assets/work-tab/youtube/git.webp";
-import insta from "../assets/work-tab/youtube/insta.webp";
-import mario from "../assets/work-tab/youtube/mario.webp";
-import pacman from "../assets/work-tab/youtube/pacman.webp";
-import podcast from "../assets/work-tab/youtube/podcast.jpg";
-import portfolio from "../assets/work-tab/youtube/portfolio.jpg";
-import quiz from "../assets/work-tab/youtube/quiz.webp";
-import react from "../assets/work-tab/youtube/react.webp";
-import snake from "../assets/work-tab/youtube/snake.webp";
-import spotify from "../assets/work-tab/youtube/spotify.webp";
-import tictac from "../assets/work-tab/youtube/tictac.webp";
-import twitter from "../assets/work-tab/youtube/twitter.webp";
-
-import things18 from "../assets/work-tab/books/18-things.webp";
-import lockdownWars from "../assets/work-tab/books/lockdown-wars.webp";
-
 export const work = [
   [
     {
       cardData: {
-        title: "AI For Messaging App",
+        title: "HIBEEX - Financial AI for SMBs",
         url: {
-          githubUrl: "https://github.com/orgs/whatsapp-ai-helper/repositories",
+          githubUrl: "https://www.hibeex.com.br/",
         },
-        imgUrl: aiForMessaging,
+        imgUrl: null,
       },
       modalData: {
-        title: "AI For Messaging App",
-        desc: "Transform your thoughts into effective messages using the power of Al. No Signup Required. Express Your thoughts via Chat or Voice. Use Quick chips to instantly write messages.",
+        title: "HIBEEX - Financial AI for SMBs",
+        desc: "Turning accountants into business advisors for every SMB through AI and Cognitive Automation. Full-stack B2B FinTech platform with intelligent financial insights and automated workflows.",
         infoHeading: "Technologies Used",
         infoArr: [
-          "React Native",
-          "Flask",
-          "Javascript",
+          "TypeScript",
+          "Next.js",
+          "Node.js",
+          "Supabase",
+          "PostgreSQL",
+          "AWS",
+          "AI/ML",
+        ],
+      },
+    },
+    {
+      cardData: {
+        title: "GSAT Education",
+        url: null,
+        imgUrl: null,
+      },
+      modalData: {
+        title: "GSAT Education",
+        desc: "EdTech startup focused on standardized test preparation. Built the platform from scratch, managing product development and go-to-market strategy for students preparing for competitive exams.",
+        infoHeading: "Technologies Used",
+        infoArr: [
+          "React",
+          "TypeScript",
+          "Node.js",
+          "PostgreSQL",
+        ],
+      },
+    },
+    {
+      cardData: {
+        title: "Financial Literacy RCT Study",
+        url: null,
+        imgUrl: null,
+      },
+      modalData: {
+        title: "Financial Literacy RCT Study",
+        desc: "Conducted a Randomized Controlled Trial with 208 low-income scholarship students from OBMEP. 3-month field experiment testing digital tools as cognitive prostheses for financial education. Hybrid group saved over 100% of expected residual income.",
+        infoHeading: "Research Methods",
+        infoArr: [
+          "Statistical Analysis",
+          "RCT Design",
+          "Data Science",
           "Python",
-          "Open AI API",
         ],
       },
     },
     {
       cardData: {
-        title: "BOLDBot",
-        imgUrl: boldBot,
-        url: {
-          githubUrl: "https://github.com/BoldStore/bold-bot-frontend",
-        },
-      },
-      modalData: {
-        title: "BOLDBot.",
-        desc: "BOLDbot is the next step in automating customer service for Instagram businesses. It levels up the professionalism of your business by increasing efficacy and simplifying interaction with your consumer.",
-        infoHeading: "Technologies Used",
-        infoArr: [
-          "Next JS",
-          "Typescript",
-          "Nest JS",
-          "Redux",
-          "Firebase",
-          "Framer Motion",
-        ],
-      },
-    },
-    {
-      cardData: {
-        title: "BOLD Store",
-        imgUrl: boldStore,
-        url: {
-          githubUrl: "https://github.com/BoldStore/MobileApp",
-        },
-      },
-      modalData: {
-        title: "BOLD Store",
-        desc: "BOLD Store is the world's first one click market place. Fully integrated with Facebook APIs, automatically converts your feed into a store ",
-        infoHeading: "Technologies Used",
-        infoArr: [
-          "React Native",
-          "Expo",
-          "Firebase",
-          "Javascript",
-          "Redux",
-          "Node JS",
-        ],
-      },
-    },
-    {
-      cardData: {
-        title: "Infinite Rider & Infinite Rider 3D",
+        title: "Chemical Kinetics Research",
         url: null,
-        imgUrl: infinite,
+        imgUrl: null,
       },
       modalData: {
-        title: "Infinite Rider & Infinite Rider 3D",
-        desc: "Infinite Rider is a 2D and 3D game is a flappy bird kind infinite game where the player has to avoid obstacles",
-        infoHeading: "Technologies Used",
-        infoArr: ["Unity", "C#"],
+        title: "Steady-State Hypothesis in Chemical Kinetics",
+        desc: "Undergraduate thesis at Instituto Principia on the steady-state hypothesis in chemical kinetics and physicochemical modeling. Research at the intersection of physics and chemistry.",
+        infoHeading: "Tools & Methods",
+        infoArr: [
+          "MATLAB",
+          "Mathematica",
+          "LaTeX",
+          "Python",
+        ],
       },
     },
     {
       cardData: {
-        title: "Anonimo.fun",
-        url: {
-          githubUrl: "",
-        },
-        imgUrl: anonimo,
+        title: "PIBIC Jr - Physics Lab Kits",
+        url: null,
+        imgUrl: null,
       },
       modalData: {
-        title: "Anonimo.fun",
-        desc: "Anonimo is a social media app that allows users to chat anonymously. It is a platform where users can share their thoughts and opinions without the fear of being judged.",
-        infoHeading: "Technologies Used",
-        infoArr: ["Next JS", "Firebase", "Javascript", "MUI"],
+        title: "PIBIC Jr - Low-Cost Physics Experiment Kits",
+        desc: "After winning gold at OBFEP, invited by Federal University of Bahia (UFBA) to create laboratory guides. Personally funded development of low-cost experimental kits for five physics experiments. Distributed to 4 public schools in Salvador, benefiting 1,900+ students. Failure rate dropped from 30% to 10%.",
+        infoHeading: "Impact",
+        infoArr: [
+          "1,900+ students reached",
+          "30% to 10% failure rate",
+          "4 public schools",
+          "Presented at IIP",
+        ],
       },
     },
   ],
   [
     {
       cardData: {
-        title: "Crypto Currency Price Tracker",
-        imgUrl: crypto,
-        url: {
-          youtubeUrl: "https://youtu.be/MIhQZxboUBA?feature=shared",
-        },
+        title: "Olympic Club Leadership",
+        url: null,
+        imgUrl: null,
       },
       modalData: {
-        title: "Crypto Currency Price Tracker",
-        desc: "Track crypto currencies through Coin gecko api in real time. Visit the dashboard to do so! <br/>Technologies Used: React JS, JavaScript, MUI, Chart JS, Framer Motion.",
-        infoHeading: "11,000+ Views",
-      },
-    },
-
-    {
-      cardData: {
-        title: "Tic Tac Toe Using JavaScript",
-        imgUrl: tictac,
-        url: {
-          youtubeUrl: "https://www.youtube.com/live/ZtnQlqJE-Wo?feature=shared",
-        },
-      },
-      modalData: {
-        title: "Tic Tac Toe Using JavaScript",
-        desc: "A tic tac toe game made using JavaScript. You can play with your friends or with the computer.<br/> Technologies Used: HTML, CSS, Javascript.",
-        infoHeading: "1,000 Views",
+        title: "Olympic Club - Colegio Militar de Salvador",
+        desc: "Led the executive board as President, representing the organization in all official matters. Spearheaded comprehensive restructuring and secured support for 17 major initiatives. Drove 47% increase in student participation and 62% increase in national olympiad results.",
+        infoHeading: "Key Results",
+        infoArr: [
+          "+47% participation",
+          "+62% national results",
+          "17 initiatives",
+          "2 years leading",
+        ],
       },
     },
     {
       cardData: {
-        title: "Airbnb Clone with React",
-        imgUrl: airbnb,
-        url: {
-          youtubeUrl: "https://www.youtube.com/live/Z8bpTT8GdNE?feature=shared",
-        },
+        title: "Fundacao Estudar Scholar",
+        url: null,
+        imgUrl: null,
       },
       modalData: {
-        title: "Airbnb Clone with React",
-        desc: "An Airbnb clone made using React. <br/>Technologies Used: HTML, CSS, Javascript.",
-        infoHeading: "21,000+ Views",
+        title: "Fundacao Estudar - PREP Program",
+        desc: "Selected as one of ~70 scholars from 10,000+ applicants (0.7% acceptance rate). Brazil's longest-running and most competitive college access program, preparing students for international universities.",
+        infoHeading: "Selection",
+        infoArr: [
+          "0.7% acceptance",
+          "70 of 10,000+",
+          "College Access",
+          "Leadership",
+        ],
       },
     },
     {
       cardData: {
-        title: "Podcast Platform Like Spotify",
-        imgUrl: podcast,
-        url: {
-          youtubeUrl: "https://youtu.be/a5Q4ngpSJnA?feature=shared",
-        },
+        title: "Instituto Principia",
+        url: null,
+        imgUrl: null,
       },
       modalData: {
-        title: "Podcast Platform Like Spotify",
-        desc: "A podcast platform like Spotify where you can listen to your favorite podcasts. You can also create your own podcasts and upload them.<br/> Technologies Used: React JS, JavaScript, MUI, Firebase, Redux.",
-        infoHeading: "1,300+ Views",
+        title: "Escola de Talentos - Instituto Principia",
+        desc: "One of 14 students selected nationally. Advanced physics classes including quantum mechanics, relativity, and statistical physics. Currently conducting research at the intersection of physics and chemistry.",
+        infoHeading: "Focus Areas",
+        infoArr: [
+          "Quantum Mechanics",
+          "Relativity",
+          "Statistical Physics",
+          "Chemical Kinetics",
+        ],
       },
     },
     {
       cardData: {
-        title: "Personal Finance Tracker",
-        imgUrl: finance,
-        url: {
-          youtubeUrl: "https://youtu.be/iQBJspbKp0s?feature=shared",
-        },
+        title: "IFT-UNESP Selection",
+        url: null,
+        imgUrl: null,
       },
       modalData: {
-        title: "Personal Finance Tracker",
-        desc: "A personal finance tracker where you can track your income and expenses. You can also set a budget and see how much you have spent. <br/>Technologies Used: React JS, JavaScript, Ant Design, Firebase, Redux.",
-        infoHeading: "9,900+ Views",
-      },
-    },
-    {
-      cardData: {
-        title: "Pacman Using JavaScript",
-        imgUrl: pacman,
-        url: {
-          youtubeUrl: "https://www.youtube.com/live/zU2hsb1yxUo?feature=shared",
-        },
-      },
-      modalData: {
-        title: "Pacman Using JavaScript",
-        desc: "A pacman game made using JavaScript. You can play the game and try to eat all the food without getting caught by the ghosts. <br/>Technologies Used: HTML, CSS, Javascript.",
-        infoHeading: "1,000 Views",
-      },
-    },
-    {
-      cardData: {
-        title: "Mario Using JavaScript",
-        imgUrl: mario,
-        url: {
-          youtubeUrl: "https://www.youtube.com/live/ioJbYLyj_W8?feature=shared",
-        },
-      },
-      modalData: {
-        title: "Mario Using JavaScript",
-        desc: "A mario game made using JavaScript. You can play the game and try to reach the flag without getting caught by the enemies. <br/>Technologies Used: HTML, CSS, Javascript.",
-        infoHeading: "6,000+ Views",
-      },
-    },
-    {
-      cardData: {
-        title: "Calculator Using JavaScript",
-        imgUrl: calc,
-        url: {
-          youtubeUrl: "https://www.youtube.com/live/otRjzBCYleg?feature=shared",
-        },
-      },
-      modalData: {
-        title: "Calculator Using JavaScript",
-        desc: "A calculator made using JavaScript. You can perform basic arithmetic operations using this calculator. <br/>Technologies Used: HTML, CSS, Javascript.",
-        infoHeading: "6,000+ Views",
-      },
-    },
-    {
-      cardData: {
-        title: "Quiz App Using JavaScript",
-        imgUrl: quiz,
-        url: {
-          youtubeUrl: "https://www.youtube.com/live/CtLx3uVTGOs?feature=shared",
-        },
-      },
-      modalData: {
-        title: "Quiz App Using JavaScript",
-        desc: "A quiz app made using JavaScript. You can play the quiz and test your knowledge. <br/>Technologies Used: HTML, CSS, Javascript.",
-        infoHeading: "4,500+ Views",
-      },
-    },
-    {
-      cardData: {
-        title: "Snake Game Using JavaScript",
-        imgUrl: snake,
-        url: {
-          youtubeUrl: "https://www.youtube.com/live/_S68uRsynxE?feature=shared",
-        },
-      },
-      modalData: {
-        title: "Snake Game Using JavaScript",
-        desc: "A snake game made using JavaScript. You can play the game and try to eat the food without hitting the walls or yourself. <br/>Technologies Used: HTML, CSS, Javascript.",
-        infoHeading: "3,500+ Views",
-      },
-    },
-    {
-      cardData: {
-        title: "Spotify Clone",
-        imgUrl: spotify,
-        url: {
-          youtubeUrl: "https://www.youtube.com/live/vnB2kA3mAgs?feature=shared",
-        },
-      },
-      modalData: {
-        title: "Spotify Clone",
-        desc: "A spotify clone made using HTML and CSS. <br/>Technologies Used: HTML, CSS, Javascript.",
-        infoHeading: "10,000+ Views",
-      },
-    },
-    {
-      cardData: {
-        title: "Twitter Clone with HTML",
-        imgUrl: twitter,
-        url: {
-          youtubeUrl: "https://www.youtube.com/live/XK9_YxlEmvI?feature=shared",
-        },
-      },
-      modalData: {
-        title: "Twitter Clone with HTML",
-        desc: "A Twitter clone made using HTML. <br/>Technologies Used: HTML, CSS, Javascript.",
-        infoHeading: "9,000 Views",
-      },
-    },
-    {
-      cardData: {
-        title: "Fundamentals Of React",
-        imgUrl: react,
-        url: {
-          youtubeUrl: "https://www.youtube.com/live/ghTS9wPhT10?feature=shared",
-        },
-      },
-      modalData: {
-        title: "Fundamentals Of React",
-        desc: "A tutorial on the fundamentals of React. <br/>Technologies Used: HTML, CSS, Javascript.",
-        infoHeading: "8,000+ Views",
-      },
-    },
-    {
-      cardData: {
-        title: "Instagram Clone",
-        imgUrl: insta,
-        url: {
-          youtubeUrl: "https://www.youtube.com/live/vnB2kA3mAgs?feature=shared",
-        },
-      },
-      modalData: {
-        title: "Instagram Clone",
-        desc: "A Instagram clone made using HTML and CSS. <br/>Technologies Used: HTML, CSS, Javascript.",
-        infoHeading: "7,000+ Views",
-      },
-    },
-    {
-      cardData: {
-        title: "Learn Git and Github",
-        imgUrl: git,
-        url: {
-          youtubeUrl: "https://www.youtube.com/live/u62rKX8GSfY?feature=shared",
-        },
-      },
-      modalData: {
-        title: "Learn Git and Github",
-        desc: "A tutorial on how to use Git and Github. <br/>Technologies Used: HTML, CSS, Javascript.",
-        infoHeading: "4,000 Views",
-      },
-    },
-    {
-      cardData: {
-        title: "Flappy Birds with JS",
-        imgUrl: flappy,
-        url: {
-          youtubeUrl: "https://www.youtube.com/live/qCNlqjdBhc0?feature=shared",
-        },
-      },
-      modalData: {
-        title: "Flappy Birds with JS",
-        desc: "A flappy birds game made using JavaScript. <br/>Technologies Used: HTML, CSS, Javascript.",
-        infoHeading: "1,000 Views",
-      },
-    },
-    {
-      cardData: {
-        title: "Portfolio in React",
-        imgUrl: portfolio,
-        url: {
-          youtubeUrl: "https://youtu.be/fq3IQUZ_6OM?feature=shared",
-        },
-      },
-      modalData: {
-        title: "Portfolio in React",
-        desc: "A portfolio website made using React. <br/>Technologies Used: HTML, CSS, Javascript.",
-        infoHeading: "1,000+ Views",
+        title: "IFT-UNESP - Instituto de Fisica Teorica",
+        desc: "Ranked 1st among 10,000+ applicants for the IFT-UNESP selection at the Instituto de Fisica Teorica. Only representative from the Northeast region of Brazil.",
+        infoHeading: "Achievement",
+        infoArr: [
+          "1st of 10,000+",
+          "Only from Northeast",
+          "Theoretical Physics",
+        ],
       },
     },
   ],
   [
     {
       cardData: {
-        title: "Books I Have Published.",
-        imgUrl: things18,
+        title: "39 Olympiad Medals (19 Gold)",
         url: null,
+        imgUrl: null,
       },
       modalData: {
-        title: "Books I have Published",
-        desc: "I have published 2 books on Amazon. One is a self help book called Realis Reality (written when I was 16) and the other is called 18 things I have learned at 18 - which is about life lessons from an 18 year old.",
-        infoHeading: "Books",
+        title: "Academic Olympiad Achievements",
+        desc: "Won 39 medals across 49 competitions including 19 gold medals and 2 international awards. Subjects span Mathematics, Physics, Chemistry, Biology, Astronomy, and more. Highlights: 1st of 10,000+ at IFT-UNESP, SAT 1510/1600 (top 1% Brazil), Gold at ONNEQ, Silver at OBMEP, Bronze at OBQ.",
+        infoHeading: "Highlights",
+        infoArr: [
+          "19 Gold Medals",
+          "SAT 1510/1600",
+          "1st OBAQ (0.014%)",
+          "ONNEQ Gold (0.675%)",
+        ],
       },
     },
-
     {
       cardData: {
-        title: "My Podcast - Lockdown Wars.",
-        imgUrl: lockdownWars,
+        title: "St Andrews Global Merit Scholar",
         url: null,
+        imgUrl: null,
       },
       modalData: {
-        title: "Lockdown Wars Podcast",
-        desc: "A podcast started by me and my friends during the lockdown to help people fight boredom. Instead of it being about us, the podcast was about people coming on the platform and showing their talent",
-        infoHeading: "With Over 100,000+ Streams in 2 months",
+        title: "University of St Andrews - Global Merit Scholarship",
+        desc: "Admitted to the University of St Andrews (Scotland) for Computer Science & Economics with a Global Merit Scholarship. One of the most selective programs in the UK.",
+        infoHeading: "Details",
+        infoArr: [
+          "CS & Economics",
+          "2026 - 2030",
+          "Merit Scholarship",
+          "Scotland, UK",
+        ],
+      },
+    },
+    {
+      cardData: {
+        title: "BRASA & Latitud Fellow",
+        url: null,
+        imgUrl: null,
+      },
+      modalData: {
+        title: "BRASA & Latitud Fellowship",
+        desc: "Selected for BRASA (Brazilian Student Association) among 1,000+ candidates and for the Latitud Fellowship program for founders building in Latin America.",
+        infoHeading: "Programs",
+        infoArr: [
+          "BRASA Selected",
+          "Latitud Fellow",
+          "YC Startup School",
+          "Entrepreneurship",
+        ],
       },
     },
   ],

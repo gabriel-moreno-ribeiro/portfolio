@@ -2,15 +2,15 @@ function Footer() {
   const links = [
     {
       name: "LinkedIn.",
-      href: "https://linkedin.com/in/avivashishta",
+      href: "https://linkedin.com/in/gabriel-moreno-ribeiro",
     },
     {
       name: "Github.",
-      href: "https://github.com/AVIVASHISHTA29",
+      href: "https://github.com/gabriel-moreno-ribeiro",
     },
     {
       name: "Email.",
-      href: "mailto:avivashishta29@gmail.com",
+      href: "mailto:gabrielmribeiro@hibeex.com.br",
     },
     {
       name: "llms.txt",

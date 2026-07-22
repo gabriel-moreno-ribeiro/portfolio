@@ -39,13 +39,13 @@ const EXPANDED_ROWS = 36;
 const MOBILE_EXPANDED_ROWS = 28;
 
 const BOOT_LINES = [
-  "Portfolio OS v2.0.26 [Avi Vashishta Edition]",
+  "Portfolio OS v2.0.26 [Gabriel Moreno Ribeiro Edition]",
   "Loading modules... done.",
   "Initializing file system... done.",
   "AI assistant ready.",
   "",
   'Type \x1b[32m"help"\x1b[0m to see available commands.',
-  'Type \x1b[32m"ai <message>"\x1b[0m to chat with an AI that knows about Avi.',
+  'Type \x1b[32m"ai <message>"\x1b[0m to chat with an AI that knows about Gabriel.',
   "",
 ];
 
@@ -88,7 +88,7 @@ function Terminal({ onClose, hideHeader = false, transferBuffer, transferState }
     if (chatModeRef.current) {
       return `\x1b[36myou>\x1b[0m `;
     }
-    return `\x1b[32mavi@portfolio:${currentDirRef.current}$\x1b[0m `;
+    return `\x1b[32mgabriel@portfolio:${currentDirRef.current}$\x1b[0m `;
   }, []);
 
   const writePrompt = useCallback(() => {
@@ -104,7 +104,7 @@ function Terminal({ onClose, hideHeader = false, transferBuffer, transferState }
     chatHistoryRef.current = [];
     term.writeln("");
     term.writeln("\x1b[1;35m--- AI Chat Mode ---\x1b[0m");
-    term.writeln(`\x1b[90mChat with an AI that knows about Avi.`);
+    term.writeln(`\x1b[90mChat with an AI that knows about Gabriel.`);
     term.writeln(`Type your message and press Enter.`);
     term.writeln(`Type \x1b[33mexit\x1b[90m or press \x1b[33mCtrl+C\x1b[90m to leave.\x1b[0m`);
     term.writeln("");
