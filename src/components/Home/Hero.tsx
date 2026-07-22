@@ -11,19 +11,17 @@ import { FiArrowRight, FiLink } from 'react-icons/fi';
 import useIsMobile from '../../hooks/useIsMobile';
 import { scrollToComponent } from '../../utils/scrollToComponent';
 import CommonButton from '../Shared/CommonButton';
-import HoverSwapText from '../Shared/HoverSwapText';
 import ScrambleText from '../Shared/ScrambleText';
 
 const CanvasComponent = lazy(() => import('../Canvas/CanvasComponent'));
 
-// Delay before content starts appearing (lets background settle first)
 const BG_SETTLE_DELAY = 0.7;
 
 const bottomTexts = [
-  `Gabriel is the Co-Founder & CEO of <span class="black"> HIBEEX </span> — building financial AI for SMBs.`,
-  `He has won <span class="black"> 39 olympiad medals </span> (19 gold) across math, physics, chemistry, and more.`,
-  `Admitted to <span class="black"> University of St Andrews </span> with a Global Merit Scholarship for CS & Economics.`,
-  `Selected for <span class="black"> Fundacao Estudar PREP </span> — 70 of 10,000+ applicants (0.7% acceptance).`,
+  `<span data-fun="my baby startup">Gabriel</span> is the <span class="black" data-fun="sleep-deprived CEO">Co-Founder & CEO</span> of <span class="black" data-fun="the future of accounting">HIBEEX</span> — building <span data-fun="robots that do taxes">financial AI</span> for SMBs.`,
+  `He has won <span class="black" data-fun="I lost count honestly">39 olympiad medals</span> (19 gold) across <span data-fun="basically everything">math, physics, chemistry</span>, and more.`,
+  `Admitted to <span class="black" data-fun="Scotland here I come">University of St Andrews</span> with a <span data-fun="they actually pay ME to study">Global Merit Scholarship</span> for CS & Economics.`,
+  `Selected for <span class="black" data-fun="0.7% acceptance btw">Fundacao Estudar PREP</span> — 70 of 10,000+ applicants.`,
 ];
 
 function Hero() {
@@ -34,8 +32,6 @@ function Hero() {
   const mountTimeRef = useRef(Date.now());
 
   const handleRobotReady = useCallback(() => {
-    // Wait for at least BG_SETTLE_DELAY after mount so background has settled,
-    // then wait one extra frame so the canvas has actually painted
     const elapsed = Date.now() - mountTimeRef.current;
     const remaining = Math.max(0, BG_SETTLE_DELAY * 1000 - elapsed);
     setTimeout(() => {
@@ -43,7 +39,6 @@ function Hero() {
     }, remaining);
   }, []);
 
-  // Mark intro as done after all elements have faded in
   useEffect(() => {
     const timer = setTimeout(
       () => setIntroDone(true),
@@ -52,13 +47,11 @@ function Hero() {
     return () => clearTimeout(timer);
   }, []);
 
-  // Only start cycling bottom text after intro is complete
   useEffect(() => {
     if (!introDone) return;
     const interval = setInterval(() => {
       setCurrentTextIndex(prevIndex => (prevIndex + 1) % bottomTexts.length);
     }, 3000);
-
     return () => clearInterval(interval);
   }, [introDone]);
 
@@ -98,10 +91,7 @@ function Hero() {
             pauseDuration={1000}
           />
           <h1 className="heading">
-            <HoverSwapText
-              original="& CEO."
-              hovered="(addicted to Claude Code)"
-            />
+            <span data-fun="(addicted to Claude Code)">& CEO.</span>
           </h1>
         </motion.div>
         <motion.p
@@ -114,14 +104,14 @@ function Hero() {
             ease: 'easeOut',
           }}
         >
-          <HoverSwapText original="18-year-old" hovered="(yes, actually 18)" />{' '}
-          founder building{' '}
-          <HoverSwapText original="financial AI" hovered="the future of accounting" />{' '}
+          <span data-fun="(yes, actually 18)">18-year-old</span>{' '}
+          <span data-fun="serial builder">founder</span> building{' '}
+          <span data-fun="robots that do taxes">financial AI</span>{' '}
           for SMBs.{' '}
-          <HoverSwapText original="Researcher" hovered="Lab rat by choice" />{' '}
+          <span data-fun="lab rat by choice">Researcher</span>{' '}
           in physics and chemistry.{' '}
-          <HoverSwapText original="39 olympiad medals." hovered="I lost count too." />{' '}
-          <HoverSwapText original="St Andrews scholar." hovered="Scotland here I come 🏴󠁧󠁢󠁳󠁣󠁴󠁿" />
+          <span data-fun="I lost count too">39 olympiad medals.</span>{' '}
+          <span data-fun="Scotland here I come">St Andrews scholar.</span>
         </motion.p>
         <motion.div
           className="btn-flex"

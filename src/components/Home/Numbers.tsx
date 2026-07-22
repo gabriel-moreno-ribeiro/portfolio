@@ -9,7 +9,6 @@ import l_jira from "../../assets/numbers/light/jira.webp";
 import l_safari from "../../assets/numbers/light/safari.webp";
 import l_youtube from "../../assets/numbers/light/youtube.webp";
 import { useThemeStore } from "../../store/themeStore";
-import HoverSwapText from "../Shared/HoverSwapText";
 import NumberStatsCard from "./NumberStatsCard";
 
 const NumbersAndStats = () => {
@@ -69,9 +68,7 @@ const NumbersAndStats = () => {
   return (
     <motion.div ref={containerRef} className="numbers-and-stats">
       <div className="center-text">
-        <p className="text-p">
-          <HoverSwapText original="Some Of My Interesting Stats" hovered="Flexing a little bit here" />
-        </p>
+        <p className="text-p" data-fun="flexing a little bit here">Some Of My Interesting Stats</p>
       </div>
       <motion.div className="card-container">
         <AnimatePresence initial={false}>

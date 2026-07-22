@@ -1,0 +1,48 @@
+.fun-lens-circle {
+  position: fixed;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 2px solid var(--primary-orange);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 9998;
+  transition: opacity 0.3s ease;
+  will-change: left, top;
+  mix-blend-mode: difference;
+  background: rgba(240, 115, 45, 0.04);
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
+
+[data-fun] {
+  position: relative;
+  cursor: default;
+  transition: color 0.2s ease;
+
+  &::after {
+    content: attr(data-fun);
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: inherit;
+    text-align: inherit;
+    color: var(--primary-orange);
+    font-style: italic;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    white-space: nowrap;
+  }
+
+  &:hover {
+    color: transparent !important;
+
+    &::after {
+      opacity: 1;
+    }
+  }
+}

@@ -1,49 +1,55 @@
 import { motion, useInView } from 'motion/react';
 import { useRef } from 'react';
-import HoverSwapText from '../Shared/HoverSwapText';
 
 const timelineEvents = [
   {
     year: '2019',
     title: 'Colegio Militar de Salvador',
     desc: 'Admitted at age 10 — one of 30 selected from 2,500+ applicants. Perfect score in mathematics.',
-    hover: 'The math test was actually fun',
+    funYear: 'the beginning',
+    funTitle: 'baby genius era',
   },
   {
     year: '2021',
     title: 'First Gold Medals',
     desc: 'Won gold at OBA (Astronomy), ONEE, and OIMSF International. The olympiad journey begins.',
-    hover: 'Collecting medals like Pokemon cards',
+    funYear: 'medal addiction starts',
+    funTitle: 'collecting golds like Pokemon',
   },
   {
     year: '2022',
     title: 'National Recognition',
     desc: 'Silver at OBFEP (Physics National), Gold at OBQJr (Chemistry). Started competing across all sciences.',
-    hover: 'Chemistry was supposed to be a side quest',
+    funYear: 'the grind year',
+    funTitle: 'chemistry was a side quest',
   },
   {
     year: '2023',
     title: 'PIBIC Jr & Instituto Principia',
     desc: 'Created low-cost physics kits for 4 public schools (1,900+ students). Selected for Escola de Talentos (14 of thousands).',
-    hover: 'Building labs from scratch hits different',
+    funYear: 'giving back arc',
+    funTitle: 'building labs from scratch',
   },
   {
     year: '2024',
-    title: 'Olympic Club President & IFT-UNESP #1',
-    desc: 'Led the Olympic Club. Ranked 1st of 10,000+ at IFT-UNESP (Theoretical Physics). Bronze OBQ, Silver OBMEP, Gold ONNEQ.',
-    hover: 'Slept 4 hours a day that semester',
+    title: 'Olympic Club President & IFT #1',
+    desc: 'Led the Olympic Club. Ranked 1st of 10,000+ at IFT-UNESP. Bronze OBQ, Silver OBMEP, Gold ONNEQ.',
+    funYear: 'slept 4hrs/day',
+    funTitle: 'president + competitor + student',
   },
   {
     year: '2025',
-    title: 'Fundacao Estudar & SAT 1510',
-    desc: 'Selected for PREP (0.7% acceptance). SAT 1510/1600 (top 1% Brazil). Co-founded GSAT Education. Admitted to St Andrews with Global Merit Scholarship.',
-    hover: 'The college app grind was real',
+    title: 'Estudar Scholar & SAT 1510',
+    desc: 'Selected for PREP (0.7% acceptance). SAT 1510/1600. Co-founded GSAT Education. Admitted to St Andrews.',
+    funYear: 'college app grind',
+    funTitle: 'they pay ME to study now',
   },
   {
     year: '2026',
     title: 'HIBEEX — Building the Future',
-    desc: 'Co-founded HIBEEX: financial AI turning accountants into advisors for every SMB. Full-stack builder. Ship fast, measure impact, iterate relentlessly.',
-    hover: 'Current status: shipping at 3am',
+    desc: 'Co-founded HIBEEX: financial AI for SMBs. Full-stack builder. Ship fast, measure impact, iterate relentlessly.',
+    funYear: 'current status: shipping at 3am',
+    funTitle: 'CEO at 18 btw',
   },
 ];
 
@@ -60,11 +66,11 @@ function TimelineItem({ event, index }: { event: typeof timelineEvents[0]; index
       transition={{ duration: 0.6, delay: 0.1 }}
     >
       <div className="timeline-year">
-        <HoverSwapText original={event.year} hovered={event.hover} />
+        <span data-fun={event.funYear}>{event.year}</span>
       </div>
       <div className="timeline-content">
-        <h3>{event.title}</h3>
-        <p>{event.desc}</p>
+        <h3 data-fun={event.funTitle}>{event.title}</h3>
+        <p data-fun="hover for vibes">{event.desc}</p>
       </div>
     </motion.div>
   );
@@ -74,7 +80,7 @@ function Timeline() {
   return (
     <div className="timeline-section" id="timeline">
       <h1 className="heading" data-color-inverted="true">
-        <HoverSwapText original="My Journey" hovered="The Lore" />
+        <span data-fun="the lore">My Journey</span>
       </h1>
       <div className="timeline-container">
         <div className="timeline-line" />
