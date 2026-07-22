@@ -28,10 +28,24 @@ export function Contact() {
               Email
             </span>
             <a
-              href="mailto:gabrielcms2112@gmail.com"
+              href="mailto:gabrielmribeiro@hibeex.com.br"
               className="text-subheading text-foreground hover:text-accent transition-colors duration-300"
             >
-              gabrielcms2112@gmail.com
+              gabrielmribeiro@hibeex.com.br
+            </a>
+          </div>
+
+          <div>
+            <span className="text-caption uppercase text-foreground-faint tracking-widest block mb-3">
+              WhatsApp
+            </span>
+            <a
+              href="https://wa.me/5571984072589"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-subheading text-foreground hover:text-accent transition-colors duration-300"
+            >
+              +55 71 98407-2589
             </a>
           </div>
 
@@ -40,21 +54,27 @@ export function Contact() {
               Socials
             </span>
             <div className="flex flex-col gap-2">
-              <a href="#" className="text-foreground-muted hover:text-accent transition-colors duration-300">
+              <a
+                href="https://github.com/gabriel-moreno-ribeiro"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-foreground-muted hover:text-accent transition-colors duration-300"
+              >
                 GitHub
               </a>
-              <a href="#" className="text-foreground-muted hover:text-accent transition-colors duration-300">
+              <a
+                href="https://linkedin.com/in/gabriel-moreno-ribeiro"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-foreground-muted hover:text-accent transition-colors duration-300"
+              >
                 LinkedIn
-              </a>
-              <a href="#" className="text-foreground-muted hover:text-accent transition-colors duration-300">
-                Twitter
               </a>
             </div>
           </div>
         </div>
       </motion.div>
 
-      {/* Footer line */}
       <motion.div
         className="mt-section pt-8 border-t border-foreground-faint/20 flex items-center justify-between"
         initial={{ opacity: 0 }}
@@ -62,10 +82,10 @@ export function Contact() {
         transition={{ delay: 0.4, duration: 0.8 }}
       >
         <span className="text-caption text-foreground-faint">
-          © 2024 Gabriel
+          © 2025 Gabriel Moreno Ribeiro
         </span>
         <span className="text-caption text-foreground-faint">
-          Built from scratch.
+          Ship fast. Measure impact. Iterate.
         </span>
       </motion.div>
     </section>

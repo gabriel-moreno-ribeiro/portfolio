@@ -4,8 +4,10 @@ import { motion } from 'framer-motion'
 
 export function Nav() {
   const links = [
-    { label: 'Work', href: '#work' },
     { label: 'About', href: '#about' },
+    { label: 'Work', href: '#work' },
+    { label: 'Impact', href: '#impact' },
+    { label: 'Honors', href: '#honors' },
     { label: 'Contact', href: '#contact' },
   ]
 
@@ -20,7 +22,7 @@ export function Nav() {
         Gabriel<span className="text-accent">.</span>
       </a>
 
-      <div className="flex items-center gap-8">
+      <div className="flex items-center gap-6 md:gap-8">
         {links.map((link) => (
           <a
             key={link.href}

@@ -2,12 +2,13 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Gabriel.',
-  description: 'Fixer & Builder.',
+  title: 'Gabriel Moreno Ribeiro — Builder & Founder',
+  description: 'Co-Founder & CEO at HIBEEX. Full-stack engineer building financial AI for Brazilian SMBs. 39 olympiad medals, SAT 1510.',
   openGraph: {
-    title: 'Gabriel.',
-    description: 'Fixer & Builder.',
+    title: 'Gabriel Moreno Ribeiro — Builder & Founder',
+    description: 'Co-Founder & CEO at HIBEEX. Full-stack engineer building financial AI for Brazilian SMBs.',
     type: 'website',
+    url: 'https://gabrielmr.com',
   },
 }
 

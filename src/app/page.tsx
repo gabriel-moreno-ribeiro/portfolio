@@ -6,6 +6,8 @@ import { Nav } from '@/components/Nav'
 import { Hero } from '@/components/Hero'
 import { About } from '@/components/About'
 import { Work } from '@/components/Work'
+import { SocialImpact } from '@/components/SocialImpact'
+import { Honors } from '@/components/Honors'
 import { Contact } from '@/components/Contact'
 
 export default function Home() {
@@ -23,6 +25,10 @@ export default function Home() {
           <About />
           <div className="line-separator mx-auto w-[90%]" />
           <Work />
+          <div className="line-separator mx-auto w-[90%]" />
+          <SocialImpact />
+          <div className="line-separator mx-auto w-[90%]" />
+          <Honors />
           <div className="line-separator mx-auto w-[90%]" />
           <Contact />
         </main>
