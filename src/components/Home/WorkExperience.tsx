@@ -115,7 +115,7 @@ const WorkExperience = () => {
     <div className="work-experience-main-wrapper" ref={containerRef}>
       <h1 className="fixed-heading">
         <span className="orange">Destructuring </span>
-        <span data-color-inverted={'true'}>My Work Experience.</span>
+        <span data-color-inverted={'true'}>My Experience.</span>
       </h1>
       <div className="left-column">
         <Suspense fallback={null}>

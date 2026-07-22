@@ -9,6 +9,7 @@ import l_jira from "../../assets/numbers/light/jira.webp";
 import l_safari from "../../assets/numbers/light/safari.webp";
 import l_youtube from "../../assets/numbers/light/youtube.webp";
 import { useThemeStore } from "../../store/themeStore";
+import HoverSwapText from "../Shared/HoverSwapText";
 import NumberStatsCard from "./NumberStatsCard";
 
 const NumbersAndStats = () => {
@@ -21,38 +22,38 @@ const NumbersAndStats = () => {
       return [
         {
           imgUrl: l_safari,
-          text: `<span class="orange"> 30+ </span>Freelance Clients`,
+          text: `<span class="orange"> 39 </span>Olympiad Medals (19 Gold)`,
         },
         {
           imgUrl: l_jira,
-          text: `<span class="orange"> 300+ </span>Tickets & Features`,
+          text: `<span class="orange"> 1,900+ </span>Students Impacted (PIBIC Jr)`,
         },
         {
           imgUrl: l_appstore,
-          text: `<span class="orange"> 5,000+ </span>App Downloads`,
+          text: `<span class="orange"> SAT 1510 </span>/ 1600 (Top 1% Brazil)`,
         },
         {
           imgUrl: l_youtube,
-          text: `<span class="orange"> 100,000+ </span>Youtube Views`,
+          text: `<span class="orange"> 0.7% </span>Acceptance — Fundacao Estudar`,
         },
       ];
     }
     return [
       {
         imgUrl: d_safari,
-        text: `<span class="orange"> 30+ </span>Freelance Clients`,
+        text: `<span class="orange"> 39 </span>Olympiad Medals (19 Gold)`,
       },
       {
         imgUrl: d_jira,
-        text: `<span class="orange"> 300+ </span>Tickets & Features`,
+        text: `<span class="orange"> 1,900+ </span>Students Impacted (PIBIC Jr)`,
       },
       {
         imgUrl: d_appstore,
-        text: `<span class="orange"> 5,000+ </span>App Downloads`,
+        text: `<span class="orange"> SAT 1510 </span>/ 1600 (Top 1% Brazil)`,
       },
       {
         imgUrl: d_youtube,
-        text: `<span class="orange"> 100,000+ </span>Youtube Views`,
+        text: `<span class="orange"> 0.7% </span>Acceptance — Fundacao Estudar`,
       },
     ];
   }, [darkMode]);
@@ -68,7 +69,9 @@ const NumbersAndStats = () => {
   return (
     <motion.div ref={containerRef} className="numbers-and-stats">
       <div className="center-text">
-        <p className="text-p">Some Of My Interesting Stats</p>
+        <p className="text-p">
+          <HoverSwapText original="Some Of My Interesting Stats" hovered="Flexing a little bit here" />
+        </p>
       </div>
       <motion.div className="card-container">
         <AnimatePresence initial={false}>
