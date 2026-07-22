@@ -6,7 +6,7 @@ import WorkCard from "./WorkCard";
 const Terminal = lazy(() => import("../Terminal/Terminal"));
 
 function FindMyWork() {
-  const tabs = ["Personal", "Projects", "Published", "Terminal"];
+  const tabs = ["Ventures", "Social Impact", "Achievements", "Terminal"];
   const [activeTab, setActiveTab] = useState<number>(0);
   return (
     <div className="find-my-work" id="work">

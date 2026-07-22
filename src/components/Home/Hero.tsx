@@ -19,9 +19,10 @@ const CanvasComponent = lazy(() => import('../Canvas/CanvasComponent'));
 const BG_SETTLE_DELAY = 0.7;
 
 const bottomTexts = [
-  `Avi has also been an instructor at a leading YC EdTech platform, having taught MERN Stack to over <span class="black"> 100,000+ </span> students.`,
-  `Avi is a graduate from <span class="black"> IIIT Delhi </span> and has done his <span class="black"> Btech (CS) </span> in 2024.`,
-  `Avi also has interests in <span class="black"> Algo Trading, UI Designing and Product Designing. </span>`,
+  `Gabriel is the Co-Founder & CEO of <span class="black"> HIBEEX </span> — building financial AI for SMBs.`,
+  `He has won <span class="black"> 39 olympiad medals </span> (19 gold) across math, physics, chemistry, and more.`,
+  `Admitted to <span class="black"> University of St Andrews </span> with a Global Merit Scholarship for CS & Economics.`,
+  `Selected for <span class="black"> Fundacao Estudar PREP </span> — 70 of 10,000+ applicants (0.7% acceptance).`,
 ];
 
 function Hero() {
@@ -91,7 +92,7 @@ function Hero() {
               fontStyle: 'italic',
               color: 'var(--primary-orange)',
             }}
-            texts={['Fullstack', 'App', 'Game', 'Web']}
+            texts={['Founder', 'Builder', 'Researcher', 'Developer']}
             speed={100}
             pauseDuration={1000}
           />
@@ -107,9 +108,9 @@ function Hero() {
             ease: 'easeOut',
           }}
         >
-          Avi has a strong interest in Product Management and Entrepreneurship
-          and is committed to delivering high-quality tech products that offer
-          an exceptional user experience.
+          18-year-old founder building financial AI for SMBs. Researcher
+          in physics and chemistry. 39 olympiad medals. St Andrews CS &amp;
+          Economics scholar.
         </motion.p>
         <motion.div
           className="btn-flex"
@@ -125,7 +126,7 @@ function Hero() {
             text="Connect"
             Icon={<FiLink className="icon-link" />}
             iconPosition="right"
-            onClick={() => window.open('https://linkedin.com/in/avivashishta')}
+            onClick={() => window.open('https://linkedin.com/in/gabriel-moreno-ribeiro')}
           />
           <CommonButton
             text="See Work"

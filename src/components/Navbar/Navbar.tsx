@@ -58,11 +58,11 @@ function Navbar() {
     },
     {
       name: 'LinkedIn.',
-      href: 'https://linkedin.com/in/avivashishta',
+      href: 'https://linkedin.com/in/gabriel-moreno-ribeiro',
     },
     {
       name: 'Github.',
-      href: 'https://github.com/AVIVASHISHTA29',
+      href: 'https://github.com/gabriel-moreno-ribeiro',
     },
   ];
   const collapsedWidth = isMobile ? '175px' : 'auto';
@@ -103,7 +103,7 @@ function Navbar() {
           className="heading"
           style={{ visibility: isHovered ? 'hidden' : 'visible' }}
         >
-          Avi Vashishta.
+          Gabriel Moreno Ribeiro.
         </h1>
       ) : (
         <motion.h1
@@ -111,7 +111,7 @@ function Navbar() {
           layout
           transition={{ type: 'spring', stiffness: 200, damping: 25 }}
         >
-          Avi Vashishta.
+          Gabriel Moreno Ribeiro.
         </motion.h1>
       )}
       <motion.div

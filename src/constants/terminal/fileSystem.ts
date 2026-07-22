@@ -106,19 +106,19 @@ export function buildFileSystem(): DirectoryNode {
         type: "directory",
         name: "projects",
         children: {
-          personal: {
+          ventures: {
             type: "directory",
-            name: "personal",
+            name: "ventures",
             children: buildProjectFiles(work[0]),
           },
-          youtube: {
+          "social-impact": {
             type: "directory",
-            name: "youtube",
+            name: "social-impact",
             children: buildProjectFiles(work[1]),
           },
-          published: {
+          achievements: {
             type: "directory",
-            name: "published",
+            name: "achievements",
             children: buildProjectFiles(work[2]),
           },
         },
