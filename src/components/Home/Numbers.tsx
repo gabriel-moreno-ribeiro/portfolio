@@ -68,7 +68,7 @@ const NumbersAndStats = () => {
   return (
     <motion.div ref={containerRef} className="numbers-and-stats">
       <div className="center-text">
-        <p className="text-p" data-fun="flexing a little bit here">Some Of My Interesting Stats</p>
+        <p className="text-p" data-fun="fun fact corner">Some Of My Interesting Stats</p>
       </div>
       <motion.div className="card-container">
         <AnimatePresence initial={false}>
