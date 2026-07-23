@@ -1,12 +1,18 @@
 .fun-lens-ball {
   position: fixed;
-  width: 240px;
-  height: 240px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   background: #000;
   pointer-events: none;
   z-index: 10000;
   transform: translate(-50%, -50%);
+  transition: width 0.3s ease, height 0.3s ease;
+
+  &.expanded {
+    width: 240px;
+    height: 240px;
+  }
 }
 
 .fun-lens-overlay {
@@ -14,16 +20,13 @@
   inset: 0;
   pointer-events: none;
   z-index: 10001;
-  clip-path: circle(120px at -300px -300px);
+  clip-path: circle(10px at -300px -300px);
+  transition: clip-path 0.3s ease;
 }
 
 .fun-clone {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   color: #4fc3f7;
   font-style: italic;
-  text-align: center;
   overflow: hidden;
 }
 
