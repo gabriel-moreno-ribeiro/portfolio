@@ -1,41 +1,33 @@
-.fun-lens-circle {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 140px;
-  height: 140px;
-  border-radius: 50%;
-  border: 2px solid rgba(79, 195, 247, 0.4);
-  background: transparent;
-  opacity: 0;
-  pointer-events: none;
-  z-index: 9998;
-  overflow: hidden;
-  will-change: transform;
-  transition: opacity 0.25s ease, background 0.2s ease, border-color 0.2s ease;
-
-  &.over-text {
-    background: var(--gradient-start);
-    border-color: #4fc3f7;
-  }
-
-  @media (max-width: 768px) {
-    display: none;
-  }
-}
-
-.fun-lens-text {
-  position: absolute;
-  color: #4fc3f7;
-  font-style: italic;
-  font-weight: 600;
-  white-space: nowrap;
-  opacity: 0;
-  transition: opacity 0.12s ease;
-  pointer-events: none;
-  transform: translate(-50%, -50%);
-}
-
 [data-fun] {
+  position: relative;
   cursor: default;
+  transition: color 0.2s ease;
+
+  &::after {
+    content: attr(data-fun);
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    color: #4fc3f7;
+    font-style: italic;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  &:hover {
+    color: transparent !important;
+
+    * {
+      color: transparent !important;
+    }
+
+    &::after {
+      opacity: 1;
+    }
+  }
 }

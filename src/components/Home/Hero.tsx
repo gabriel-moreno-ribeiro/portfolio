@@ -18,10 +18,10 @@ const CanvasComponent = lazy(() => import('../Canvas/CanvasComponent'));
 const BG_SETTLE_DELAY = 0.7;
 
 const bottomTexts = [
-  `<span data-fun="oi">Gabriel</span> is the <span class="black" data-fun="caffeine CEO">Co-Founder & CEO</span> of <span class="black" data-fun="still in beta">HIBEEX</span> — building <span data-fun="fancy excel">financial AI</span> for SMBs.`,
-  `He has won <span class="black" data-fun="no shelf left">39 olympiad medals</span> (19 gold) across <span data-fun="nerd bingo">math, physics, chemistry</span>, and more.`,
-  `Admitted to <span class="black" data-fun="cold weather">University of St Andrews</span> with a <span data-fun="free tuition">Global Merit Scholarship</span> for CS & Economics.`,
-  `Selected for <span class="black" data-fun="lottery odds">Fundacao Estudar PREP</span> — 70 of 10,000+ applicants.`,
+  { html: `Gabriel is the <span class="black">Co-Founder & CEO</span> of <span class="black">HIBEEX</span> — building financial AI for SMBs.`, fun: `Gabriel is the caffeine-powered CEO of a startup still in beta — building fancy excel for SMBs.` },
+  { html: `He has won <span class="black">39 olympiad medals</span> (19 gold) across math, physics, chemistry, and more.`, fun: `He has won way too many medals (no shelf left) across nerd bingo, and more.` },
+  { html: `Admitted to <span class="black">University of St Andrews</span> with a Global Merit Scholarship for CS & Economics.`, fun: `Admitted to a university with cold weather and free tuition for CS & Economics.` },
+  { html: `Selected for <span class="black">Fundacao Estudar PREP</span> — 70 of 10,000+ applicants.`, fun: `Won the lottery basically — 70 of 10,000+ applicants.` },
 ];
 
 function Hero() {
@@ -78,6 +78,7 @@ function Hero() {
             ease: 'easeOut',
           }}
           data-color-inverted={'true'}
+          data-fun="Coffee Addict & CEO."
         >
           <ScrambleText
             style={{
@@ -91,7 +92,7 @@ function Hero() {
             pauseDuration={1000}
           />
           <h1 className="heading">
-            <span data-fun="& coffee addict">& CEO.</span>
+            & CEO.
           </h1>
         </motion.div>
         <motion.p
@@ -103,15 +104,9 @@ function Hero() {
             duration: 0.6,
             ease: 'easeOut',
           }}
+          data-fun="Feels 30 tbh. Chaos manager building fancy excel for SMBs. Lab rat. No shelf left. Cold weather scholar."
         >
-          <span data-fun="feels 30 tbh">18-year-old</span>{' '}
-          <span data-fun="chaos manager">founder</span> building{' '}
-          <span data-fun="fancy excel">financial AI</span>{' '}
-          for SMBs.{' '}
-          <span data-fun="lab rat">Researcher</span>{' '}
-          in physics and chemistry.{' '}
-          <span data-fun="no shelf left">39 olympiad medals.</span>{' '}
-          <span data-fun="cold weather">St Andrews scholar.</span>
+          18-year-old founder building financial AI for SMBs. Researcher in physics and chemistry. 39 olympiad medals. St Andrews scholar.
         </motion.p>
         <motion.div
           className="btn-flex"
@@ -147,7 +142,8 @@ function Hero() {
               ? { duration: 0.5 }
               : { delay: BG_SETTLE_DELAY + 0.7, duration: 0.6, ease: 'easeOut' }
           }
-          dangerouslySetInnerHTML={{ __html: bottomTexts[currentTextIndex] }}
+          data-fun={bottomTexts[currentTextIndex].fun}
+          dangerouslySetInnerHTML={{ __html: bottomTexts[currentTextIndex].html }}
         />
       </div>
     </div>

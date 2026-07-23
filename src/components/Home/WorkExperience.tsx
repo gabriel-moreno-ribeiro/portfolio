@@ -14,8 +14,7 @@ const workExperience = [
   {
     title: 'Co-Founder & CEO',
     company: 'HIBEEX',
-    funTitle: 'excel wizard',
-    funCompany: 'the startup',
+    funSummary: 'Excel Wizard @ The Startup That Never Sleeps',
     date: 'January 2026 - Present',
     points: [
       "Building <span class='black'>financial AI</span> that turns accountants into business advisors for every SMB",
@@ -26,8 +25,7 @@ const workExperience = [
   {
     title: 'Co-Founder & CEO',
     company: 'GSAT Education',
-    funTitle: 'accidental prof',
-    funCompany: 'SAT prep',
+    funSummary: 'Accidental Professor @ SAT Prep Inc.',
     date: 'November 2025 - May 2026 (6 Months)',
     points: [
       "Built <span class='black'>EdTech platform</span> for standardized test preparation from scratch",
@@ -38,8 +36,7 @@ const workExperience = [
   {
     title: 'President',
     company: 'Olympic Club - Colegio Militar',
-    funTitle: 'nerd wrangler',
-    funCompany: 'study group',
+    funSummary: 'Nerd Wrangler @ The Study Group',
     date: 'August 2024 - May 2026 (1 Year 9 Months)',
     points: [
       "Led executive board, secured support for <span class='black'>17 major initiatives</span>",
@@ -50,8 +47,7 @@ const workExperience = [
   {
     title: 'Scholar - PREP Program',
     company: 'Fundacao Estudar',
-    funTitle: 'paid to study',
-    funCompany: 'the 0.7%',
+    funSummary: 'Paid To Study @ The 0.7% Club',
     date: 'January 2025 - March 2026 (1 Year 2 Months)',
     points: [
       "One of ~70 scholars from <span class='black'>10,000+ applicants</span> (0.7% acceptance)",
@@ -61,8 +57,7 @@ const workExperience = [
   {
     title: 'Researcher',
     company: 'Instituto Principia',
-    funTitle: 'lab rat',
-    funCompany: 'science club',
+    funSummary: 'Lab Rat @ Science Club',
     date: 'January 2023 - July 2025 (2 Years 6 Months)',
     points: [
       "One of <span class='black'>14 students</span> selected nationally",
@@ -123,9 +118,9 @@ const WorkExperience = () => {
 
   return (
     <div className="work-experience-main-wrapper" ref={containerRef}>
-      <h1 className="fixed-heading">
-        <span className="orange" data-fun="JSON.parse()">Destructuring </span>
-        <span data-color-inverted={'true'} data-fun="the resume">My Experience.</span>
+      <h1 className="fixed-heading" data-fun="JSON.parse(my_resume)">
+        <span className="orange">Destructuring </span>
+        <span data-color-inverted={'true'}>My Experience.</span>
       </h1>
       <div className="left-column">
         <Suspense fallback={null}>
@@ -134,12 +129,12 @@ const WorkExperience = () => {
       </div>
       <div className="right-column" ref={textRef}>
         {workExperience.map((exp, index) => (
-          <div key={index} className="work-experience-section">
+          <div key={index} className="work-experience-section" data-fun={exp.funSummary}>
             <h2 className="job-title">
-              <span data-fun={(exp as any).funTitle || exp.title}>{exp.title}</span> @ <span className="orange" data-fun={(exp as any).funCompany || exp.company}>{exp.company}</span>
+              {exp.title} @ <span className="orange">{exp.company}</span>
             </h2>
             <div className="flex-row">
-              <p className="duration" data-fun="time flies">{exp.date}</p>
+              <p className="duration">{exp.date}</p>
             </div>
             <ul className="work-ex-points">
               {exp.points.map((point, i) => (

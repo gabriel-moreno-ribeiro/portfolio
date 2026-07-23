@@ -10,8 +10,8 @@ function FindMyWork() {
   const [activeTab, setActiveTab] = useState<number>(0);
   return (
     <div className="find-my-work" id="work">
-      <h1 className="heading" data-color-inverted={"true"}>
-        <span data-fun="ctrl+F my work">Find My Work</span>
+      <h1 className="heading" data-color-inverted={"true"} data-fun="Ctrl+F My Work">
+        Find My Work
       </h1>
       <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} badges={{ 3: "New" }} />
       {activeTab === 3 ? (
