@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react';
 
 const RADIUS = 70;
-const DIAMETER = RADIUS * 2;
 
 function FunLens() {
   const circleRef = useRef<HTMLDivElement>(null);
@@ -33,38 +32,40 @@ function FunLens() {
 
           if (funEl !== lastFunEl.current) {
             lastFunEl.current = funEl;
-            // Adaptive font size: shorter texts get bigger font
-            const len = text.length;
-            const fontSize = len <= 8 ? 16 : len <= 14 ? 14 : len <= 20 ? 12 : 11;
-            textEl.style.fontSize = `${fontSize}px`;
-            textEl.style.lineHeight = '1.3';
+            textEl.textContent = text;
+
+            const computed = window.getComputedStyle(funEl);
+            textEl.style.fontSize = computed.fontSize;
+            textEl.style.fontFamily = computed.fontFamily;
+            textEl.style.lineHeight = computed.lineHeight;
           }
 
-          textEl.textContent = text;
           textEl.style.opacity = '1';
+          circle.classList.add('over-text');
 
-          // Position the text so it's centered where the original element is
-          // relative to the circle's top-left corner
-          const elCenterX = rect.left + rect.width / 2;
-          const elCenterY = rect.top + rect.height / 2;
-          const relCenterX = elCenterX - (cx - RADIUS);
-          const relCenterY = elCenterY - (cy - RADIUS);
-
-          textEl.style.position = 'absolute';
-          textEl.style.left = `${relCenterX}px`;
-          textEl.style.top = `${relCenterY}px`;
-          textEl.style.transform = 'translate(-50%, -50%)';
+          // The circle's top-left in viewport coords = (cx - RADIUS, cy - RADIUS).
+          // We want the text to appear centered at the element's midpoint.
+          // In the circle's local space, the element's center is at:
+          const midX = (rect.left + rect.width / 2) - (cx - RADIUS);
+          const midY = (rect.top + rect.height / 2) - (cy - RADIUS);
+          textEl.style.left = `${midX}px`;
+          textEl.style.top = `${midY}px`;
         } else {
           if (lastFunEl.current) {
             lastFunEl.current = null;
           }
           textEl.style.opacity = '0';
+          circle.classList.remove('over-text');
         }
       });
     };
 
     const onLeave = () => {
-      if (circleRef.current) circleRef.current.style.opacity = '0';
+      const circle = circleRef.current;
+      if (circle) {
+        circle.style.opacity = '0';
+        circle.classList.remove('over-text');
+      }
     };
 
     window.addEventListener('mousemove', onMove, { passive: true });
