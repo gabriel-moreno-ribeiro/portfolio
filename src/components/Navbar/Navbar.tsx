@@ -102,16 +102,18 @@ function Navbar() {
         <h1
           className="heading"
           style={{ visibility: isHovered ? 'hidden' : 'visible' }}
+          data-fun="Thats Me."
         >
-          <span data-fun="thats me">Gabriel Moreno Ribeiro.</span>
+          Gabriel Moreno Ribeiro.
         </h1>
       ) : (
         <motion.h1
           className="heading"
           layout
           transition={{ type: 'spring', stiffness: 200, damping: 25 }}
+          data-fun="Thats Me."
         >
-          <span data-fun="thats me">Gabriel Moreno Ribeiro.</span>
+          Gabriel Moreno Ribeiro.
         </motion.h1>
       )}
       <motion.div
