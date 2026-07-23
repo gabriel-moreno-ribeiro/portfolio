@@ -18,10 +18,10 @@ const CanvasComponent = lazy(() => import('../Canvas/CanvasComponent'));
 const BG_SETTLE_DELAY = 0.7;
 
 const bottomTexts = [
-  `<span data-fun="hi thats me">Gabriel</span> is the <span class="black" data-fun="runs on caffeine">Co-Founder & CEO</span> of <span class="black" data-fun="sounds cooler than it is">HIBEEX</span> — building <span data-fun="spreadsheets but spicy">financial AI</span> for SMBs.`,
-  `He has won <span class="black" data-fun="ran out of shelf space">39 olympiad medals</span> (19 gold) across <span data-fun="nerd bingo">math, physics, chemistry</span>, and more.`,
-  `Admitted to <span class="black" data-fun="golf courses included?">University of St Andrews</span> with a <span data-fun="free money glitch">Global Merit Scholarship</span> for CS & Economics.`,
-  `Selected for <span class="black" data-fun="basically a lottery win">Fundacao Estudar PREP</span> — 70 of 10,000+ applicants.`,
+  `<span data-fun="oi">Gabriel</span> is the <span class="black" data-fun="caffeine CEO">Co-Founder & CEO</span> of <span class="black" data-fun="still in beta">HIBEEX</span> — building <span data-fun="fancy excel">financial AI</span> for SMBs.`,
+  `He has won <span class="black" data-fun="no shelf left">39 olympiad medals</span> (19 gold) across <span data-fun="nerd bingo">math, physics, chemistry</span>, and more.`,
+  `Admitted to <span class="black" data-fun="cold weather">University of St Andrews</span> with a <span data-fun="free tuition">Global Merit Scholarship</span> for CS & Economics.`,
+  `Selected for <span class="black" data-fun="lottery odds">Fundacao Estudar PREP</span> — 70 of 10,000+ applicants.`,
 ];
 
 function Hero() {
@@ -104,14 +104,14 @@ function Hero() {
             ease: 'easeOut',
           }}
         >
-          <span data-fun="according to my ID">18-year-old</span>{' '}
-          <span data-fun="professional chaos manager">founder</span> building{' '}
-          <span data-fun="spreadsheets but spicy">financial AI</span>{' '}
+          <span data-fun="feels 30 tbh">18-year-old</span>{' '}
+          <span data-fun="chaos manager">founder</span> building{' '}
+          <span data-fun="fancy excel">financial AI</span>{' '}
           for SMBs.{' '}
-          <span data-fun="lab coat enthusiast">Researcher</span>{' '}
+          <span data-fun="lab rat">Researcher</span>{' '}
           in physics and chemistry.{' '}
-          <span data-fun="ran out of shelf space">39 olympiad medals.</span>{' '}
-          <span data-fun="golf courses included?">St Andrews scholar.</span>
+          <span data-fun="no shelf left">39 olympiad medals.</span>{' '}
+          <span data-fun="cold weather">St Andrews scholar.</span>
         </motion.p>
         <motion.div
           className="btn-flex"

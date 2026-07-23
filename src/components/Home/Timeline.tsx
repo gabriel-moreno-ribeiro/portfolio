@@ -7,49 +7,49 @@ const timelineEvents = [
     title: 'Colegio Militar de Salvador',
     desc: 'Admitted at age 10 — one of 30 selected from 2,500+ applicants. Perfect score in mathematics.',
     funYear: 'chapter 1',
-    funTitle: 'uniforms & discipline',
+    funTitle: 'uniform era',
   },
   {
     year: '2021',
     title: 'First Gold Medals',
     desc: 'Won gold at OBA (Astronomy), ONEE, and OIMSF International. The olympiad journey begins.',
     funYear: 'plot twist',
-    funTitle: 'wait I actually like tests?',
+    funTitle: 'tests are fun?',
   },
   {
     year: '2022',
     title: 'National Recognition',
     desc: 'Silver at OBFEP (Physics National), Gold at OBQJr (Chemistry). Started competing across all sciences.',
-    funYear: 'side quest accepted',
-    funTitle: 'chemistry arc unlocked',
+    funYear: 'side quest',
+    funTitle: 'chem arc',
   },
   {
     year: '2023',
     title: 'PIBIC Jr & Instituto Principia',
     desc: 'Created low-cost physics kits for 4 public schools (1,900+ students). Selected for Escola de Talentos (14 of thousands).',
-    funYear: 'wholesome chapter',
-    funTitle: 'DIY labs with duct tape',
+    funYear: 'giving back',
+    funTitle: 'DIY labs',
   },
   {
     year: '2024',
     title: 'Olympic Club President & IFT #1',
     desc: 'Led the Olympic Club. Ranked 1st of 10,000+ at IFT-UNESP. Bronze OBQ, Silver OBMEP, Gold ONNEQ.',
-    funYear: 'no sleep arc',
-    funTitle: 'meetings + exams + repeat',
+    funYear: 'no sleep',
+    funTitle: 'multitasking 101',
   },
   {
     year: '2025',
     title: 'Estudar Scholar & SAT 1510',
     desc: 'Selected for PREP (0.7% acceptance). SAT 1510/1600. Co-founded GSAT Education. Admitted to St Andrews.',
-    funYear: 'essay season trauma',
-    funTitle: 'college apps were a full-time job',
+    funYear: 'essay szn',
+    funTitle: 'app grind',
   },
   {
     year: '2026',
     title: 'HIBEEX — Building the Future',
     desc: 'Co-founded HIBEEX: financial AI for SMBs. Full-stack builder. Ship fast, measure impact, iterate relentlessly.',
     funYear: 'loading...',
-    funTitle: 'startup sleep schedule activated',
+    funTitle: 'no sleep mode',
   },
 ];
 
@@ -70,7 +70,7 @@ function TimelineItem({ event, index }: { event: typeof timelineEvents[0]; index
       </div>
       <div className="timeline-content">
         <h3 data-fun={event.funTitle}>{event.title}</h3>
-        <p data-fun="you're reading the fine print">{event.desc}</p>
+        <p data-fun="the fine print">{event.desc}</p>
       </div>
     </motion.div>
   );
