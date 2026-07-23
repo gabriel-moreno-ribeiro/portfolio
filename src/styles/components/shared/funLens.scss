@@ -1,52 +1,38 @@
-:root {
-  --lens-radius: 60px;
-  --lens-color: #4fc3f7;
-}
-
 .fun-lens-circle {
   position: fixed;
-  width: calc(var(--lens-radius) * 2);
-  height: calc(var(--lens-radius) * 2);
+  top: 0;
+  left: 0;
+  width: 140px;
+  height: 140px;
   border-radius: 50%;
-  border: 2px solid var(--lens-color);
+  border: 2px solid #4fc3f7;
   opacity: 0;
   pointer-events: none;
   z-index: 9998;
-  transition: opacity 0.3s ease;
-  will-change: left, top;
-  background: transparent;
+  overflow: hidden;
+  will-change: transform;
+  transition: opacity 0.25s ease;
+  background: var(--gradient-start);
 
   @media (max-width: 768px) {
     display: none;
   }
 }
 
+.fun-lens-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: #4fc3f7;
+  font-style: italic;
+  font-weight: 600;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  pointer-events: none;
+  font-family: "DM Sans", sans-serif;
+}
+
 [data-fun] {
-  position: relative;
   cursor: default;
-  --lx: -9999px;
-  --ly: -9999px;
-
-  &::after {
-    content: attr(data-fun);
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: inherit;
-    text-align: inherit;
-    color: var(--lens-color);
-    font-weight: 700;
-    pointer-events: none;
-    clip-path: circle(var(--lens-radius) at var(--lx) var(--ly));
-    background: var(--gradient-start);
-    white-space: nowrap;
-    z-index: 1;
-  }
-
-  @media (max-width: 768px) {
-    &::after {
-      display: none;
-    }
-  }
 }
