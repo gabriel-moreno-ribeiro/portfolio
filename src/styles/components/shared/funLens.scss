@@ -1,33 +1,35 @@
-[data-fun] {
-  position: relative;
-  cursor: default;
-  transition: color 0.2s ease;
+.fun-lens-ball {
+  position: fixed;
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  background: #000;
+  pointer-events: none;
+  z-index: 10000;
+  transform: translate(-50%, -50%);
+}
 
-  &::after {
-    content: attr(data-fun);
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    color: #4fc3f7;
-    font-style: italic;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.2s ease;
-    white-space: normal;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-  }
+.fun-lens-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10001;
+  clip-path: circle(120px at -300px -300px);
+}
 
-  &:hover {
-    color: transparent !important;
+.fun-clone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #4fc3f7;
+  font-style: italic;
+  text-align: center;
+  overflow: hidden;
+}
 
-    * {
-      color: transparent !important;
-    }
-
-    &::after {
-      opacity: 1;
-    }
+@media screen and (max-width: 600px) {
+  .fun-lens-ball,
+  .fun-lens-overlay {
+    display: none;
   }
 }
