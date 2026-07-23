@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import useIsMobile from "../../hooks/useIsMobile";
 
 const LENS_RADIUS = 120;
+const SMALL_RADIUS = 10;
 
 interface FunItem {
   el: HTMLElement;
@@ -13,6 +14,7 @@ function FunLens() {
   const overlayRef = useRef<HTMLDivElement>(null);
   const lensRef = useRef<HTMLDivElement>(null);
   const mouseRef = useRef({ x: -300, y: -300 });
+  const overTextRef = useRef(false);
   const rafRef = useRef<number>(0);
   const [items, setItems] = useState<FunItem[]>([]);
 
@@ -39,6 +41,8 @@ function FunLens() {
 
     const onMouseMove = (e: MouseEvent) => {
       mouseRef.current = { x: e.clientX, y: e.clientY };
+      const target = e.target as HTMLElement;
+      overTextRef.current = !!target?.closest("[data-fun]");
     };
 
     window.addEventListener("mousemove", onMouseMove);
@@ -54,9 +58,18 @@ function FunLens() {
       const lens = lensRef.current;
       if (!overlay || !lens) return;
 
-      overlay.style.clipPath = `circle(${LENS_RADIUS}px at ${x}px ${y}px)`;
+      const isOver = overTextRef.current;
+      const r = isOver ? LENS_RADIUS : SMALL_RADIUS;
+
+      overlay.style.clipPath = `circle(${r}px at ${x}px ${y}px)`;
       lens.style.left = `${x}px`;
       lens.style.top = `${y}px`;
+
+      if (isOver) {
+        lens.classList.add("expanded");
+      } else {
+        lens.classList.remove("expanded");
+      }
 
       rafRef.current = requestAnimationFrame(update);
     };
@@ -99,6 +112,12 @@ function FunClone({ el, fun }: { el: HTMLElement; fun: string }) {
       div.style.lineHeight = cs.lineHeight;
       div.style.letterSpacing = cs.letterSpacing;
       div.style.padding = cs.padding;
+      div.style.textAlign = cs.textAlign;
+      div.style.display = cs.display === "flex" ? "flex" : "block";
+      if (cs.display === "flex") {
+        div.style.alignItems = cs.alignItems;
+        div.style.justifyContent = cs.justifyContent;
+      }
     };
 
     sync();
