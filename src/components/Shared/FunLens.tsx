@@ -1,46 +1,48 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
-const SMALL_RADIUS = 15;
-const BIG_RADIUS = 70;
+const RADIUS = 60;
 
 function FunLens() {
   const circleRef = useRef<HTMLDivElement>(null);
-  const textRef = useRef<HTMLSpanElement>(null);
-  const [funText, setFunText] = useState('');
-  const [isOverText, setIsOverText] = useState(false);
 
   useEffect(() => {
     let raf = 0;
-    let currentTarget: Element | null = null;
+    let funElements: Element[] = [];
+    let rects: DOMRect[] = [];
+    let lastUpdate = 0;
+
+    const cacheRects = () => {
+      funElements = Array.from(document.querySelectorAll('[data-fun]'));
+      rects = funElements.map(el => el.getBoundingClientRect());
+      lastUpdate = Date.now();
+    };
+
+    cacheRects();
+
+    const onScroll = () => { cacheRects(); };
+    window.addEventListener('scroll', onScroll, { passive: true });
 
     const onMove = (e: MouseEvent) => {
       cancelAnimationFrame(raf);
       raf = requestAnimationFrame(() => {
-        if (!circleRef.current) return;
-
-        const el = document.elementFromPoint(e.clientX, e.clientY);
-        const funEl = el?.closest('[data-fun]');
-
-        if (funEl && funEl.getAttribute('data-fun')) {
-          const text = funEl.getAttribute('data-fun') || '';
-          if (funEl !== currentTarget) {
-            currentTarget = funEl;
-            setFunText(text);
-          }
-          setIsOverText(true);
-          circleRef.current.style.width = `${BIG_RADIUS * 2}px`;
-          circleRef.current.style.height = `${BIG_RADIUS * 2}px`;
-          circleRef.current.style.left = `${e.clientX - BIG_RADIUS}px`;
-          circleRef.current.style.top = `${e.clientY - BIG_RADIUS}px`;
-        } else {
-          currentTarget = null;
-          setIsOverText(false);
-          circleRef.current.style.width = `${SMALL_RADIUS * 2}px`;
-          circleRef.current.style.height = `${SMALL_RADIUS * 2}px`;
-          circleRef.current.style.left = `${e.clientX - SMALL_RADIUS}px`;
-          circleRef.current.style.top = `${e.clientY - SMALL_RADIUS}px`;
+        if (circleRef.current) {
+          circleRef.current.style.left = `${e.clientX - RADIUS}px`;
+          circleRef.current.style.top = `${e.clientY - RADIUS}px`;
+          circleRef.current.style.opacity = '1';
         }
-        circleRef.current.style.opacity = '1';
+
+        if (Date.now() - lastUpdate > 200) {
+          cacheRects();
+        }
+
+        for (let i = 0; i < funElements.length; i++) {
+          const el = funElements[i] as HTMLElement;
+          const rect = rects[i];
+          const relX = e.clientX - rect.left;
+          const relY = e.clientY - rect.top;
+          el.style.setProperty('--lx', `${relX}px`);
+          el.style.setProperty('--ly', `${relY}px`);
+        }
       });
     };
 
@@ -50,9 +52,15 @@ function FunLens() {
 
     window.addEventListener('mousemove', onMove);
     document.addEventListener('mouseleave', onLeave);
+
+    const observer = new MutationObserver(() => { cacheRects(); });
+    observer.observe(document.body, { childList: true, subtree: true });
+
     return () => {
       window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('scroll', onScroll);
       document.removeEventListener('mouseleave', onLeave);
+      observer.disconnect();
       cancelAnimationFrame(raf);
     };
   }, []);
@@ -60,13 +68,9 @@ function FunLens() {
   return (
     <div
       ref={circleRef}
-      className={`fun-lens-circle ${isOverText ? 'active' : ''}`}
+      className="fun-lens-circle"
       aria-hidden="true"
-    >
-      <span ref={textRef} className="fun-lens-text">
-        {funText}
-      </span>
-    </div>
+    />
   );
 }
 

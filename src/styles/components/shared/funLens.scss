@@ -1,45 +1,52 @@
+:root {
+  --lens-radius: 60px;
+  --lens-color: #4fc3f7;
+}
+
 .fun-lens-circle {
   position: fixed;
-  width: 30px;
-  height: 30px;
+  width: calc(var(--lens-radius) * 2);
+  height: calc(var(--lens-radius) * 2);
   border-radius: 50%;
-  background: #000;
+  border: 2px solid var(--lens-color);
   opacity: 0;
   pointer-events: none;
   z-index: 9998;
-  transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1),
-              height 0.25s cubic-bezier(0.4, 0, 0.2, 1),
-              opacity 0.3s ease;
-  will-change: left, top, width, height;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-
-  &.active {
-    .fun-lens-text {
-      opacity: 1;
-    }
-  }
+  transition: opacity 0.3s ease;
+  will-change: left, top;
+  background: transparent;
 
   @media (max-width: 768px) {
     display: none;
   }
 }
 
-.fun-lens-text {
-  color: var(--primary-orange);
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-size: 14px;
-  font-weight: 600;
-  text-align: center;
-  white-space: nowrap;
-  opacity: 0;
-  transition: opacity 0.2s ease;
-  padding: 0 12px;
-}
-
 [data-fun] {
+  position: relative;
   cursor: default;
+  --lx: -9999px;
+  --ly: -9999px;
+
+  &::after {
+    content: attr(data-fun);
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: inherit;
+    text-align: inherit;
+    color: var(--lens-color);
+    font-weight: 700;
+    pointer-events: none;
+    clip-path: circle(var(--lens-radius) at var(--lx) var(--ly));
+    background: var(--gradient-start);
+    white-space: nowrap;
+    z-index: 1;
+  }
+
+  @media (max-width: 768px) {
+    &::after {
+      display: none;
+    }
+  }
 }
