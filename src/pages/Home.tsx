@@ -7,7 +7,6 @@ import NumbersAndStats from "../components/Home/Numbers";
 import Skills from "../components/Home/Skills";
 import Timeline from "../components/Home/Timeline";
 import WorkExperience from "../components/Home/WorkExperience";
-import WorkflowPlayground from "../components/Home/WorkflowPlayground";
 import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Shared/Footer";
 
@@ -27,7 +26,6 @@ function Home() {
       <NumbersAndStats />
       <HorizontalSkillsWrapper />
       <WorkExperience />
-      <WorkflowPlayground />
       <Honors />
       <Timeline />
       <Footer />
