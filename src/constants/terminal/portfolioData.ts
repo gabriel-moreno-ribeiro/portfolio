@@ -2,14 +2,15 @@ export const bio = {
   name: "Gabriel Moreno Ribeiro",
   title: "Founder & CEO | Full Stack Builder | Researcher",
   summary:
-    "18-year-old founder building financial AI for SMBs at HIBEEX. Researcher in chemical kinetics and physics. 39 olympiad medals (19 gold). University of St Andrews CS & Economics scholar (Global Merit Scholarship). Passionate about turning complex problems into elegant tech solutions.",
+    "18-year-old founder and researcher on a build year. Co-Founder & CEO of HIBEEX — financial AI for SMBs. One of 6 startups in the Canastra Ventures AI Residency. 39 olympiad medals (19 gold). Founder of Projeto Candela (3,392 students, 28 schools). Admitted to St Andrews (Global Merit Scholarship); 1st place at Insper for Computer Engineering.",
   interests: ["AI/ML", "FinTech", "Physics Research", "Entrepreneurship", "Product Design"],
 };
 
 export const education = {
-  degree: "BSc in Computer Science & Economics",
-  university: "University of St Andrews (Global Merit Scholarship)",
-  year: "2026 - 2030",
+  degree: "Build year (2026) — going deep on HIBEEX before university",
+  university:
+    "Admitted: University of St Andrews, CS & Economics (Global Merit Scholarship) | Insper, Computer Engineering (1st place)",
+  year: "2026 - Present",
 };
 
 export const experience = [
@@ -18,7 +19,14 @@ export const experience = [
     company: "HIBEEX",
     date: "January 2026 - Present",
     description:
-      "Building financial AI that turns accountants into business advisors for every SMB through cognitive automation. Full stack development with TypeScript, Next.js, Node.js, Supabase, and AWS.",
+      "Building financial AI that turns messy financial data into decisions SMB owners can act on. One of 6 startups in the Canastra Ventures AI Residency — among the youngest founders selected. Full stack: TypeScript, Next.js, Node.js, Supabase, AWS.",
+  },
+  {
+    title: "Independent Researcher",
+    company: "Fintech Savings RCT",
+    date: "Advised by Aaron Litvin, Ph.D. (Harvard)",
+    description:
+      "Designed and ran a randomized controlled trial with 208 public-school students on how fintech tools change savings behavior. Treatment group increased savings by 130%.",
   },
   {
     title: "Co-Founder & CEO",
@@ -46,7 +54,7 @@ export const experience = [
     company: "Instituto Principia (Escola de Talentos)",
     date: "January 2023 - July 2025",
     description:
-      "One of 14 students selected. Advanced physics research (quantum mechanics, relativity, statistical physics). Conducting research in chemical kinetics and physicochemical modeling.",
+      "One of 14 students selected. Advanced physics (quantum mechanics, relativity, statistical physics). Researched chemical kinetics under Prof. Juliano Bonacin, Ph.D. — reaction mechanisms modeled with 97% accuracy in a 59-page thesis.",
   },
 ];
 

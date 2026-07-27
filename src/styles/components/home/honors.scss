@@ -1,0 +1,154 @@
+.honors-section {
+  padding: 80px 72px;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  > .heading {
+    font-size: 48px;
+    margin-bottom: 60px;
+    text-align: center;
+  }
+
+  .honors-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin-bottom: 64px;
+  }
+
+  .honor-card {
+    border: 1px solid var(--grey, #e8ddd4);
+    border-radius: 16px;
+    padding: 28px;
+
+    h3 {
+      font-size: 19px;
+      font-weight: 700;
+      margin: 0 0 10px;
+
+      &::before {
+        content: '🏅 ';
+      }
+    }
+
+    p {
+      font-size: 15px;
+      opacity: 0.7;
+      line-height: 1.6;
+      margin: 0;
+    }
+  }
+
+  .medal-gallery {
+    text-align: center;
+
+    h3 {
+      font-size: 24px;
+      font-weight: 700;
+      margin: 0 0 8px;
+      color: var(--primary-orange);
+    }
+
+    .medal-sub {
+      font-size: 15px;
+      opacity: 0.7;
+      margin: 0 0 24px;
+    }
+
+    .medal-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+      gap: 10px;
+
+      .medal-cell {
+        aspect-ratio: 1;
+        border-radius: 14px;
+        overflow: hidden;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+        }
+
+        .medal-ph {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 2px;
+          border: 1.5px dashed rgba(240, 115, 45, 0.45);
+          border-radius: 14px;
+          background: linear-gradient(
+            145deg,
+            rgba(240, 115, 45, 0.07),
+            rgba(240, 115, 45, 0.02)
+          );
+          box-sizing: border-box;
+
+          span {
+            font-size: 22px;
+            filter: grayscale(0.4);
+            opacity: 0.8;
+          }
+
+          small {
+            font-size: 11px;
+            font-weight: 600;
+            opacity: 0.45;
+          }
+        }
+
+        &.gold .medal-ph {
+          border-color: rgba(212, 160, 23, 0.55);
+          background: linear-gradient(
+            145deg,
+            rgba(212, 160, 23, 0.12),
+            rgba(212, 160, 23, 0.03)
+          );
+
+          span {
+            filter: none;
+            opacity: 1;
+          }
+        }
+      }
+    }
+
+    .medal-note {
+      margin-top: 16px;
+      font-size: 13px;
+      opacity: 0.45;
+
+      code {
+        background: rgba(240, 115, 45, 0.12);
+        padding: 2px 6px;
+        border-radius: 6px;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .honors-section {
+    padding: 40px 20px;
+
+    > .heading {
+      font-size: 32px;
+      margin-bottom: 40px;
+    }
+
+    .honors-grid {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .medal-gallery .medal-grid {
+      grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+      gap: 8px;
+    }
+  }
+}

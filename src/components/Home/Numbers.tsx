@@ -25,7 +25,7 @@ const NumbersAndStats = () => {
         },
         {
           imgUrl: l_jira,
-          text: `<span class="orange"> 1,900+ </span>Students Impacted (PIBIC Jr)`,
+          text: `<span class="orange"> 3,392 </span>Students Impacted (Projeto Candela)`,
         },
         {
           imgUrl: l_appstore,
@@ -44,7 +44,7 @@ const NumbersAndStats = () => {
       },
       {
         imgUrl: d_jira,
-        text: `<span class="orange"> 1,900+ </span>Students Impacted (PIBIC Jr)`,
+        text: `<span class="orange"> 3,392 </span>Students Impacted (Projeto Candela)`,
       },
       {
         imgUrl: d_appstore,

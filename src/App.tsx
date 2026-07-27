@@ -11,6 +11,7 @@ import HandsfreeButton from "./components/Shared/HandsfreeButton";
 import HandsfreeIntroModal from "./components/Shared/HandsfreeIntroModal";
 import HandsfreeLoader from "./components/Shared/HandsfreeLoader";
 import HorizontalScroller from "./components/Shared/HorizontalScroller";
+import TerminalButton from "./components/Shared/TerminalButton";
 import TerminalModal from "./components/Terminal/TerminalModal";
 import WindowRenderer from "./components/WindowManager/WindowRenderer";
 import { useHandsfreeCamera } from "./hooks/useHandsfreeCamera";
@@ -20,11 +21,22 @@ import {
   startMouseInputProvider,
   stopMouseInputProvider,
 } from "./providers/MouseInputProvider";
+import { useHandsfreeStore } from "./store/handsfreeStore";
 import { useThemeStore } from "./store/themeStore";
 
 function App() {
   const { darkMode } = useThemeStore();
   const isMobile = useIsMobile();
+  const { hasSeenIntro, setShowIntroModal } = useHandsfreeStore();
+
+  // Show the hands mode choice popup as soon as the site opens (first visit)
+  useEffect(() => {
+    if (isMobile || hasSeenIntro) return;
+    if (!navigator.mediaDevices?.getUserMedia) return;
+    const timer = setTimeout(() => setShowIntroModal(true), 1800);
+    return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isMobile, hasSeenIntro]);
 
   useEffect(() => {
     startMouseInputProvider();
@@ -67,6 +79,7 @@ function App() {
       <Home />
       <HandsfreeButton />
       <DarkModeButton />
+      <TerminalButton />
       {/* These components manage their own visibility via stores */}
       <HandsfreeIntroModal />
       <GestureTutorial />

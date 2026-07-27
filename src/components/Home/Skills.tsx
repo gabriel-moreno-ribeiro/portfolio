@@ -31,6 +31,22 @@ import useIsMobile from "../../hooks/useIsMobile";
 import { useThemeStore } from "../../store/themeStore";
 import SkillsCanvas from "./SkillsCanvas";
 
+// Extra logos loaded from the devicon CDN — rendered inside the same
+// floating physics squares as the local icons (card drawn by the canvas).
+const extraIcons = [
+  "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg",
+  "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg",
+  "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg",
+  "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg",
+  "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/graphql/graphql-plain.svg",
+  "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg",
+  "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg",
+  "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg",
+  "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg",
+];
+
+const BUILTIN_COUNT = 13;
+
 const lightIcons = [
   l_icon1,
   l_icon2,
@@ -45,6 +61,7 @@ const lightIcons = [
   l_icon11,
   l_icon12,
   l_icon13,
+  ...extraIcons,
 ];
 
 const darkIcons = [
@@ -61,6 +78,7 @@ const darkIcons = [
   d_icon11,
   d_icon12,
   d_icon13,
+  ...extraIcons,
 ];
 
 const deskstopFinalPositions = [
@@ -77,6 +95,16 @@ const deskstopFinalPositions = [
   { x: 250, y: 300 },
   { x: 550, y: -300 },
   { x: -250, y: 250 },
+  // extras
+  { x: -150, y: -350 },
+  { x: 400, y: -180 },
+  { x: -450, y: 130 },
+  { x: 700, y: 280 },
+  { x: -60, y: 260 },
+  { x: 430, y: 350 },
+  { x: -550, y: -350 },
+  { x: 60, y: -110 },
+  { x: 320, y: -350 },
 ];
 
 const mobileFinalPositions = [
@@ -93,6 +121,16 @@ const mobileFinalPositions = [
   { x: 125, y: -360 },
   { x: -150, y: -370 },
   { x: 100, y: 250 },
+  // extras
+  { x: -145, y: 65 },
+  { x: 145, y: 30 },
+  { x: -60, y: 225 },
+  { x: -145, y: 185 },
+  { x: 145, y: -235 },
+  { x: -60, y: -335 },
+  { x: 55, y: 60 },
+  { x: 145, y: 165 },
+  { x: 0, y: -185 },
 ];
 
 const Skills: React.FC = () => {
@@ -130,15 +168,22 @@ const Skills: React.FC = () => {
 
   return (
     <div className="skills-container" ref={ref} id="skills">
-      <p className="main-text" data-color-inverted={"true"}>
-        Always Building, <br />
-        Always Growing.
+      <p
+        className="main-text"
+        data-color-inverted={"true"}
+        data-fun="Buttons I press until the computer obeys."
+      >
+        Some of the languages <br />
+        &amp; tools I build with.
       </p>
       <SkillsCanvas
         iconUrls={iconUrls}
         finalPositions={finalPositions}
         isMobile={isMobile}
         triggerEntrance={inView}
+        cardStartIndex={BUILTIN_COUNT}
+        cardBg={darkMode ? "#16162e" : "#ffffff"}
+        cardBorder={darkMode ? "rgba(255,255,255,0.16)" : "rgba(0,0,0,0.08)"}
       />
     </div>
   );

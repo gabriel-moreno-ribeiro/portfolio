@@ -79,18 +79,18 @@ export const work = [
     },
     {
       cardData: {
-        title: "PIBIC Jr - Physics Lab Kits",
+        title: "Projeto Candela - Physics Lab Kits",
         url: null,
         imgUrl: null,
       },
       modalData: {
-        title: "PIBIC Jr - Low-Cost Physics Experiment Kits",
-        desc: "After winning gold at OBFEP, invited by Federal University of Bahia (UFBA) to create laboratory guides. Personally funded development of low-cost experimental kits for five physics experiments. Distributed to 4 public schools in Salvador, benefiting 1,900+ students. Failure rate dropped from 30% to 10%.",
+        title: "Projeto Candela - Low-Cost Physics Lab Kits",
+        desc: "Founded Projeto Candela after winning gold at OBFEP. Personally funded and built low-cost experimental kits for physics experiments, distributed across public schools in Salvador. Reached 3,392 students in 28 public schools. Physics failure rates dropped from 30% to 10%.",
         infoHeading: "Impact",
         infoArr: [
-          "1,900+ students reached",
+          "3,392 students reached",
           "30% to 10% failure rate",
-          "4 public schools",
+          "28 public schools",
           "Presented at IIP",
         ],
       },
@@ -196,13 +196,30 @@ export const work = [
       },
       modalData: {
         title: "University of St Andrews - Global Merit Scholarship",
-        desc: "Admitted to the University of St Andrews (Scotland) for Computer Science & Economics with a Global Merit Scholarship. One of the most selective programs in the UK.",
+        desc: "Admitted to the University of St Andrews (Scotland) for Computer Science & Economics with a Global Merit Scholarship — one of the most selective programs in the UK. Chose to take a build year to go deeper on HIBEEX before starting university.",
         infoHeading: "Details",
         infoArr: [
           "CS & Economics",
-          "2026 - 2030",
           "Merit Scholarship",
           "Scotland, UK",
+          "On a build year",
+        ],
+      },
+    },
+    {
+      cardData: {
+        title: "Insper - 1st Place Admission",
+        url: null,
+        imgUrl: null,
+      },
+      modalData: {
+        title: "Insper - Computer Engineering, 1st Place",
+        desc: "Approved in 1st place in the admissions process for Computer Engineering at Insper, one of Brazil's top engineering schools.",
+        infoHeading: "Details",
+        infoArr: [
+          "1st place overall",
+          "Computer Engineering",
+          "Insper, Sao Paulo",
         ],
       },
     },

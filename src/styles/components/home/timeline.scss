@@ -69,6 +69,44 @@
         line-height: 1.6;
         margin: 0;
       }
+
+      .timeline-photo {
+        margin-top: 14px;
+        max-width: 320px;
+
+        img {
+          width: 100%;
+          border-radius: 12px;
+          display: block;
+          object-fit: cover;
+          max-height: 220px;
+        }
+
+        small {
+          display: block;
+          margin-top: 6px;
+          font-size: 12px;
+          opacity: 0.5;
+        }
+
+        &.placeholder {
+          border: 2px dashed var(--primary-orange);
+          border-radius: 12px;
+          padding: 28px 20px;
+          text-align: center;
+          opacity: 0.55;
+
+          span {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+          }
+
+          small {
+            margin-top: 4px;
+          }
+        }
+      }
     }
   }
 }

@@ -19,7 +19,7 @@ function TerminalHeader({ onClose, onExpand, onMinimise, isExpanded }: TerminalH
         onMinimise={onMinimise || (() => {})}
         isExpanded={isExpanded || false}
       />
-      <span className="terminal-title">avi@portfolio:{currentDirectory}</span>
+      <span className="terminal-title">gabriel@portfolio:{currentDirectory}</span>
     </div>
   );
 }
