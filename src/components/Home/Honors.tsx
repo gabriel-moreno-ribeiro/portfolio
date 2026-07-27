@@ -14,6 +14,7 @@ interface MedalData {
 
 const MEDALS: MedalData[] = [
   { id: 'obqjr', name: 'OBQJr', year: '2020', glb: '/honors/medals/obqjr.glb' },
+  { id: 'obfep', name: 'OBFEP', year: '2022', glb: '/honors/medals/obfep.glb' },
 ];
 
 function MedalModel({ glbPath }: { glbPath: string }) {
