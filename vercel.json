@@ -1,7 +1,12 @@
 {
-  "framework": null,
-  "buildCommand": "tsc && vite build",
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "vite",
+  "installCommand": "npm install",
+  "buildCommand": "npx tsc && npx vite build",
   "outputDirectory": "dist",
+  "rewrites": [
+    { "source": "/((?!assets|honors|blog|projects|teaching|news|background|work|timeline|favicon|logo|manifest|robots|sitemap|llms).*)", "destination": "/index.html" }
+  ],
   "headers": [
     {
       "source": "/llms.txt",
@@ -16,6 +21,13 @@
       "headers": [
         { "key": "Content-Type", "value": "text/plain; charset=utf-8" },
         { "key": "Access-Control-Allow-Origin", "value": "*" }
+      ]
+    },
+    {
+      "source": "/honors/medals/(.*).glb",
+      "headers": [
+        { "key": "Content-Type", "value": "model/gltf-binary" },
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
       ]
     }
   ]
