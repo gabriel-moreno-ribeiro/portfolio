@@ -9,126 +9,85 @@
     text-align: center;
   }
 
-  .honors-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 24px;
-    margin-bottom: 64px;
+  .medal-showcase {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 48px;
   }
 
-  .honor-card {
-    border: 1px solid var(--grey, #e8ddd4);
-    border-radius: 16px;
-    padding: 28px;
+  .medal-3d-container {
+    width: 320px;
+    height: 320px;
+    border-radius: 24px;
+    overflow: hidden;
+    background: radial-gradient(
+      ellipse at center,
+      rgba(240, 115, 45, 0.06) 0%,
+      transparent 70%
+    );
+    flex-shrink: 0;
+  }
 
-    h3 {
-      font-size: 19px;
-      font-weight: 700;
-      margin: 0 0 10px;
+  .medal-3d-fallback {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
 
-      &::before {
-        content: '🏅 ';
-      }
+    span {
+      font-size: 48px;
+      animation: medal-pulse 1.5s ease-in-out infinite;
     }
 
-    p {
-      font-size: 15px;
-      opacity: 0.7;
-      line-height: 1.6;
-      margin: 0;
+    small {
+      font-size: 13px;
+      opacity: 0.5;
     }
   }
 
-  .medal-gallery {
-    text-align: center;
+  .medal-info {
+    max-width: 360px;
 
     h3 {
-      font-size: 24px;
+      font-size: 22px;
       font-weight: 700;
-      margin: 0 0 8px;
+      margin: 0 0 12px;
       color: var(--primary-orange);
     }
 
-    .medal-sub {
-      font-size: 15px;
-      opacity: 0.7;
-      margin: 0 0 24px;
-    }
-
-    .medal-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
-      gap: 10px;
-
-      .medal-cell {
-        aspect-ratio: 1;
-        border-radius: 14px;
-        overflow: hidden;
-
-        img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          display: block;
-        }
-
-        .medal-ph {
-          width: 100%;
-          height: 100%;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          gap: 2px;
-          border: 1.5px dashed rgba(240, 115, 45, 0.45);
-          border-radius: 14px;
-          background: linear-gradient(
-            145deg,
-            rgba(240, 115, 45, 0.07),
-            rgba(240, 115, 45, 0.02)
-          );
-          box-sizing: border-box;
-
-          span {
-            font-size: 22px;
-            filter: grayscale(0.4);
-            opacity: 0.8;
-          }
-
-          small {
-            font-size: 11px;
-            font-weight: 600;
-            opacity: 0.45;
-          }
-        }
-
-        &.gold .medal-ph {
-          border-color: rgba(212, 160, 23, 0.55);
-          background: linear-gradient(
-            145deg,
-            rgba(212, 160, 23, 0.12),
-            rgba(212, 160, 23, 0.03)
-          );
-
-          span {
-            filter: none;
-            opacity: 1;
-          }
-        }
-      }
+    .medal-desc {
+      font-size: 16px;
+      line-height: 1.6;
+      opacity: 0.8;
+      margin: 0 0 20px;
     }
 
     .medal-note {
-      margin-top: 16px;
       font-size: 13px;
-      opacity: 0.45;
+      opacity: 0.4;
+      line-height: 1.7;
 
       code {
         background: rgba(240, 115, 45, 0.12);
         padding: 2px 6px;
         border-radius: 6px;
+        font-size: 12px;
       }
     }
+  }
+}
+
+@keyframes medal-pulse {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
   }
 }
 
@@ -141,14 +100,18 @@
       margin-bottom: 40px;
     }
 
-    .honors-grid {
-      grid-template-columns: 1fr;
-      gap: 16px;
+    .medal-showcase {
+      flex-direction: column;
+      gap: 24px;
     }
 
-    .medal-gallery .medal-grid {
-      grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
-      gap: 8px;
+    .medal-3d-container {
+      width: 260px;
+      height: 260px;
+    }
+
+    .medal-info {
+      text-align: center;
     }
   }
 }
