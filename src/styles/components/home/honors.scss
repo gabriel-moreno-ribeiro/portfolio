@@ -5,89 +5,102 @@
 
   > .heading {
     font-size: 48px;
-    margin-bottom: 60px;
+    margin-bottom: 16px;
     text-align: center;
   }
 
-  .medal-showcase {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 48px;
+  .medal-summary {
+    text-align: center;
+    font-size: 16px;
+    opacity: 0.6;
+    margin: 0 0 48px;
   }
 
-  .medal-3d-container {
-    width: 320px;
-    height: 320px;
-    border-radius: 24px;
+  .medal-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 16px;
+  }
+
+  .medal-cell {
+    aspect-ratio: 1;
+    border-radius: 16px;
     overflow: hidden;
-    background: radial-gradient(
-      ellipse at center,
-      rgba(240, 115, 45, 0.06) 0%,
-      transparent 70%
-    );
-    flex-shrink: 0;
-  }
+    position: relative;
+    border: 1.5px solid rgba(240, 115, 45, 0.2);
+    background: linear-gradient(145deg, rgba(240, 115, 45, 0.04), transparent);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 
-  .medal-3d-fallback {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-
-    span {
-      font-size: 48px;
-      animation: medal-pulse 1.5s ease-in-out infinite;
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(240, 115, 45, 0.12);
     }
 
-    small {
-      font-size: 13px;
-      opacity: 0.5;
-    }
-  }
-
-  .medal-info {
-    max-width: 360px;
-
-    h3 {
-      font-size: 22px;
-      font-weight: 700;
-      margin: 0 0 12px;
-      color: var(--primary-orange);
+    &.medal-gold {
+      border-color: rgba(212, 160, 23, 0.4);
+      background: linear-gradient(145deg, rgba(212, 160, 23, 0.08), rgba(212, 160, 23, 0.02));
     }
 
-    .medal-desc {
-      font-size: 16px;
-      line-height: 1.6;
-      opacity: 0.8;
-      margin: 0 0 20px;
+    &.medal-silver {
+      border-color: rgba(180, 180, 190, 0.4);
+      background: linear-gradient(145deg, rgba(180, 180, 190, 0.08), rgba(180, 180, 190, 0.02));
     }
 
-    .medal-note {
-      font-size: 13px;
-      opacity: 0.4;
-      line-height: 1.7;
+    &.medal-bronze {
+      border-color: rgba(180, 120, 60, 0.4);
+      background: linear-gradient(145deg, rgba(180, 120, 60, 0.08), rgba(180, 120, 60, 0.02));
+    }
 
-      code {
-        background: rgba(240, 115, 45, 0.12);
-        padding: 2px 6px;
-        border-radius: 6px;
-        font-size: 12px;
+    .medal-label {
+      position: absolute;
+      bottom: 8px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      pointer-events: none;
+
+      .medal-name {
+        font-size: 11px;
+        font-weight: 700;
+        opacity: 0.7;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
       }
     }
-  }
-}
 
-@keyframes medal-pulse {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-6px);
+    &.placeholder {
+      .medal-ph {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+
+        .medal-emoji {
+          font-size: 28px;
+          filter: grayscale(0.3);
+          opacity: 0.6;
+        }
+
+        .medal-name {
+          font-size: 11px;
+          font-weight: 700;
+          opacity: 0.5;
+        }
+
+        .medal-year {
+          font-size: 10px;
+          opacity: 0.35;
+        }
+      }
+
+      &.medal-gold .medal-ph .medal-emoji {
+        filter: none;
+        opacity: 0.9;
+      }
+    }
   }
 }
 
@@ -97,21 +110,17 @@
 
     > .heading {
       font-size: 32px;
-      margin-bottom: 40px;
+      margin-bottom: 12px;
     }
 
-    .medal-showcase {
-      flex-direction: column;
-      gap: 24px;
+    .medal-summary {
+      font-size: 14px;
+      margin-bottom: 32px;
     }
 
-    .medal-3d-container {
-      width: 260px;
-      height: 260px;
-    }
-
-    .medal-info {
-      text-align: center;
+    .medal-grid {
+      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+      gap: 10px;
     }
   }
 }
