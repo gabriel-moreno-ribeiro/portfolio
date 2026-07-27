@@ -87,6 +87,13 @@
     }
   }
 
+  .intro-choice-buttons {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
   .enable-button {
     background-color: $primary-orange;
     color: #fff;
@@ -101,6 +108,16 @@
 
     &:hover {
       background-color: darken($primary-orange, 8%);
+    }
+
+    &.skip-button {
+      background-color: transparent;
+      color: var(--black);
+      border: 1.5px solid var(--black);
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.06);
+      }
     }
   }
 }

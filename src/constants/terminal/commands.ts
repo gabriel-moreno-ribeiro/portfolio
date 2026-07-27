@@ -325,19 +325,19 @@ const commands: CommandDefinition[] = [
     execute: (ctx) => {
       const artLines = neofetchArt.split("\n");
       const infoLines = [
-        bold("avi@portfolio"),
+        bold("gabriel@portfolio"),
         "-----------------",
         `${bold("OS:")} Portfolio OS v2.0.26`,
-        `${bold("Host:")} avivashishta.com`,
+        `${bold("Host:")} gabrielmr.com`,
         `${bold("Kernel:")} React 19 + Vite 7`,
         `${bold("Shell:")} TypeScript 5.7`,
         `${bold("DE:")} SCSS + Motion`,
         `${bold("WM:")} Zustand 5`,
         `${bold("Terminal:")} xterm.js`,
-        `${bold("CPU:")} BTech CS @ IIIT Delhi`,
-        `${bold("GPU:")} Fullstack Developer`,
-        `${bold("Memory:")} 3+ years SDE exp`,
-        `${bold("Uptime:")} Since Oct 2022`,
+        `${bold("CPU:")} Founder on a Build Year`,
+        `${bold("GPU:")} Founder & Full Stack Builder`,
+        `${bold("Memory:")} 39 olympiad medals (19 gold)`,
+        `${bold("Uptime:")} Since 2007`,
       ];
       const maxLines = Math.max(artLines.length, infoLines.length);
       for (let i = 0; i < maxLines; i++) {

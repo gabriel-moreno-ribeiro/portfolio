@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import useIsMobile from "../../hooks/useIsMobile";
 
-const LENS_RADIUS = 120;
 const SMALL_RADIUS = 10;
+const MIN_RADIUS = 40;
+const MAX_RADIUS = 90;
 
 interface FunItem {
   el: HTMLElement;
@@ -15,6 +16,7 @@ function FunLens() {
   const lensRef = useRef<HTMLDivElement>(null);
   const mouseRef = useRef({ x: -300, y: -300 });
   const overTextRef = useRef(false);
+  const radiusRef = useRef(MIN_RADIUS);
   const rafRef = useRef<number>(0);
   const [items, setItems] = useState<FunItem[]>([]);
 
@@ -41,8 +43,19 @@ function FunLens() {
 
     const onMouseMove = (e: MouseEvent) => {
       mouseRef.current = { x: e.clientX, y: e.clientY };
-      const target = e.target as HTMLElement;
-      overTextRef.current = !!target?.closest("[data-fun]");
+      const target = e.target as HTMLElement | null;
+      const funEl = target?.closest<HTMLElement>("[data-fun]") ?? null;
+      const zoneEl = target?.closest<HTMLElement>("[data-fun-zone]") ?? null;
+      overTextRef.current = !!(funEl || zoneEl);
+
+      // Size the lens to the text being hovered: just a bit bigger than
+      // the element itself, never a huge ball.
+      if (funEl) {
+        const h = funEl.getBoundingClientRect().height;
+        radiusRef.current = Math.min(Math.max(h / 2 + 20, MIN_RADIUS), MAX_RADIUS);
+      }
+      // If only over a zone (gap between texts), keep the last radius so
+      // the ball doesn't flicker while moving inside a section.
     };
 
     window.addEventListener("mousemove", onMouseMove);
@@ -52,24 +65,25 @@ function FunLens() {
   useEffect(() => {
     if (isMobile || !overlayRef.current || !lensRef.current) return;
 
+    let currentR = SMALL_RADIUS;
+
     const update = () => {
       const { x, y } = mouseRef.current;
       const overlay = overlayRef.current;
       const lens = lensRef.current;
       if (!overlay || !lens) return;
 
-      const isOver = overTextRef.current;
-      const r = isOver ? LENS_RADIUS : SMALL_RADIUS;
+      const targetR = overTextRef.current ? radiusRef.current : SMALL_RADIUS;
+      // Animate radius in JS so the black ball and the clip hole are ALWAYS
+      // the exact same size — no CSS transition lag, no ghost text on exit.
+      currentR += (targetR - currentR) * 0.35;
+      if (Math.abs(targetR - currentR) < 0.5) currentR = targetR;
 
-      overlay.style.clipPath = `circle(${r}px at ${x}px ${y}px)`;
+      overlay.style.clipPath = `circle(${currentR}px at ${x}px ${y}px)`;
       lens.style.left = `${x}px`;
       lens.style.top = `${y}px`;
-
-      if (isOver) {
-        lens.classList.add("expanded");
-      } else {
-        lens.classList.remove("expanded");
-      }
+      lens.style.width = `${currentR * 2}px`;
+      lens.style.height = `${currentR * 2}px`;
 
       rafRef.current = requestAnimationFrame(update);
     };
@@ -106,17 +120,25 @@ function FunClone({ el, fun }: { el: HTMLElement; fun: string }) {
       div.style.top = `${rect.top}px`;
       div.style.width = `${rect.width}px`;
       div.style.height = `${rect.height}px`;
+      div.style.boxSizing = "border-box";
+      div.style.margin = "0";
       div.style.fontSize = cs.fontSize;
       div.style.fontFamily = cs.fontFamily;
       div.style.fontWeight = cs.fontWeight;
+      div.style.fontStyle = cs.fontStyle;
       div.style.lineHeight = cs.lineHeight;
       div.style.letterSpacing = cs.letterSpacing;
+      div.style.textTransform = cs.textTransform;
       div.style.padding = cs.padding;
       div.style.textAlign = cs.textAlign;
-      div.style.display = cs.display === "flex" ? "flex" : "block";
-      if (cs.display === "flex") {
+      if (cs.display === "flex" || cs.display === "inline-flex") {
+        div.style.display = "flex";
+        div.style.flexDirection = cs.flexDirection;
         div.style.alignItems = cs.alignItems;
         div.style.justifyContent = cs.justifyContent;
+        div.style.gap = cs.gap;
+      } else {
+        div.style.display = "block";
       }
     };
 

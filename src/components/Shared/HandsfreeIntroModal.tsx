@@ -49,6 +49,7 @@ const HandsfreeIntroModal: React.FC = () => {
   }, [win, showIntroModal, setShowIntroModal]);
 
   const handleClose = () => {
+    setHasSeenIntro(true);
     closeWindow("handsfree-intro");
     setShowIntroModal(false);
   };
@@ -108,14 +109,24 @@ const HandsfreeIntroModal: React.FC = () => {
             />
           </div>
         )}
-        <motion.button
-          className="enable-button"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={handleEnable}
-        >
-          Enable Handsfree
-        </motion.button>
+        <div className="intro-choice-buttons">
+          <motion.button
+            className="enable-button"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={handleEnable}
+          >
+            Enable Handsfree
+          </motion.button>
+          <motion.button
+            className="enable-button skip-button"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={handleClose}
+          >
+            Continue with mouse
+          </motion.button>
+        </div>
       </div>
     </DraggableWindow>
   );

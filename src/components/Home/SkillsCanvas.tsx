@@ -42,8 +42,36 @@ const randomInRange = (min: number, max: number) =>
 
 // --- Hook: preload images ---
 
+const loadImage = (src: string): Promise<HTMLImageElement | null> =>
+  new Promise(resolve => {
+    const img = new Image();
+    img.onload = () => resolve(img);
+    img.onerror = () => resolve(null);
+    img.src = src;
+  });
+
+// Remote SVGs (e.g. devicon CDN) may lack width/height attributes, which
+// breaks canvas drawImage in some browsers — fetch, patch, load as blob.
+const loadRemoteSvg = async (url: string): Promise<HTMLImageElement | null> => {
+  try {
+    const res = await fetch(url);
+    if (!res.ok) return null;
+    let text = await res.text();
+    if (!/<svg[^>]*\swidth=/.test(text)) {
+      text = text.replace('<svg ', '<svg width="128" height="128" ');
+    }
+    const blobUrl = URL.createObjectURL(
+      new Blob([text], { type: 'image/svg+xml' }),
+    );
+    const img = await loadImage(blobUrl);
+    return img;
+  } catch {
+    return null;
+  }
+};
+
 const usePreloadedImages = (iconUrls: string[]) => {
-  const imagesRef = useRef<HTMLImageElement[]>([]);
+  const imagesRef = useRef<Array<HTMLImageElement | null>>([]);
   const loadedRef = useRef(false);
   const urlsKeyRef = useRef('');
 
@@ -57,14 +85,10 @@ const usePreloadedImages = (iconUrls: string[]) => {
     if (loadedRef.current) return;
     let cancelled = false;
 
-    const promises = iconUrls.map(
-      url =>
-        new Promise<HTMLImageElement>((resolve, reject) => {
-          const img = new Image();
-          img.onload = () => resolve(img);
-          img.onerror = reject;
-          img.src = url;
-        }),
+    const promises = iconUrls.map(url =>
+      url.startsWith('http') && url.endsWith('.svg')
+        ? loadRemoteSvg(url)
+        : loadImage(url),
     );
 
     Promise.all(promises).then(imgs => {
@@ -89,6 +113,11 @@ interface SkillsCanvasProps {
   finalPositions: Array<{ x: number; y: number }>;
   isMobile: boolean;
   triggerEntrance: boolean;
+  /** Icons from this index on get a drawn rounded card behind them
+      (used for CDN logos that don't have the card baked in). */
+  cardStartIndex?: number;
+  cardBg?: string;
+  cardBorder?: string;
 }
 
 const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
@@ -96,6 +125,9 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
   finalPositions,
   isMobile,
   triggerEntrance,
+  cardStartIndex,
+  cardBg = '#ffffff',
+  cardBorder = 'rgba(0,0,0,0.08)',
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -423,18 +455,53 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
       ctx.translate(cssW / 2, cssH / 2);
 
       ctx.globalAlpha = 1;
-      for (const icon of icons) {
+      for (let i = 0; i < icons.length; i++) {
+        const icon = icons[i];
         if (icon.scale <= 0 || !icon.image) continue;
         ctx.save();
         ctx.translate(icon.x, icon.y);
         ctx.scale(icon.scale, icon.scale);
-        ctx.drawImage(
-          icon.image,
-          -iconSize / 2,
-          -iconSize / 2,
-          iconSize,
-          iconSize,
-        );
+
+        const needsCard = cardStartIndex !== undefined && i >= cardStartIndex;
+        if (needsCard) {
+          // Draw the same rounded square card the baked-in icons have
+          const half = iconSize / 2;
+          const radius = iconSize * 0.22;
+          ctx.beginPath();
+          if (typeof ctx.roundRect === 'function') {
+            ctx.roundRect(-half, -half, iconSize, iconSize, radius);
+          } else {
+            ctx.rect(-half, -half, iconSize, iconSize);
+          }
+          ctx.fillStyle = cardBg;
+          ctx.shadowColor = 'rgba(0,0,0,0.10)';
+          ctx.shadowBlur = 10;
+          ctx.shadowOffsetY = 3;
+          ctx.fill();
+          ctx.shadowColor = 'transparent';
+          ctx.shadowBlur = 0;
+          ctx.shadowOffsetY = 0;
+          ctx.strokeStyle = cardBorder;
+          ctx.lineWidth = 1;
+          ctx.stroke();
+
+          const logoSize = iconSize * 0.6;
+          ctx.drawImage(
+            icon.image,
+            -logoSize / 2,
+            -logoSize / 2,
+            logoSize,
+            logoSize,
+          );
+        } else {
+          ctx.drawImage(
+            icon.image,
+            -iconSize / 2,
+            -iconSize / 2,
+            iconSize,
+            iconSize,
+          );
+        }
         ctx.restore();
       }
 
@@ -445,7 +512,7 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
 
     rafRef.current = requestAnimationFrame(loop);
     return () => cancelAnimationFrame(rafRef.current);
-  }, [iconSize, isMobile]);
+  }, [iconSize, isMobile, cardStartIndex, cardBg, cardBorder]);
 
   // --- Event handlers ---
 

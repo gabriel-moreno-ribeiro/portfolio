@@ -57,6 +57,14 @@ function Navbar() {
       href: '#work',
     },
     {
+      name: 'Blog.',
+      href: '/blog/',
+    },
+    {
+      name: 'News.',
+      href: '/news/',
+    },
+    {
       name: 'LinkedIn.',
       href: 'https://linkedin.com/in/gabriel-moreno-ribeiro',
     },
@@ -71,6 +79,8 @@ function Navbar() {
   const handleLinkClick = (link: { href: string; top?: number }) => {
     if (link.href.includes('#')) {
       scrollToComponent(link.href.split('#')[1], link.top);
+    } else if (link.href.startsWith('/')) {
+      window.location.href = link.href;
     } else {
       window.open(link.href, '_blank');
     }

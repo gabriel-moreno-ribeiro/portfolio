@@ -3,7 +3,7 @@ User-agent: *
 Disallow:
 
 # Sitemap
-Sitemap: https://www.avivashishta.com/sitemap.xml
+Sitemap: https://gabrielmr.com/sitemap.xml
 
 # LLM context
 Llms-txt: /llms.txt
