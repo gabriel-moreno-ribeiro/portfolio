@@ -1,4 +1,5 @@
 import { lazy, Suspense } from "react";
+import Books from "../components/Home/Books";
 import FindMyWork from "../components/Home/FindMyWork";
 import Hero from "../components/Home/Hero";
 import Honors from "../components/Home/Honors";
@@ -27,6 +28,7 @@ function Home() {
       <HorizontalSkillsWrapper />
       <WorkExperience />
       <Honors />
+      <Books />
       <Timeline />
       <Footer />
       <Suspense fallback={null}>
