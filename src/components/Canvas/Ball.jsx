@@ -4,6 +4,8 @@ import { useEffect, useRef } from "react";
 import { MathUtils } from "three";
 import { useInputSourceStore } from "../../store/inputSourceStore";
 
+useGLTF.setDecoderPath("https://www.gstatic.com/draco/versioned/decoders/1.5.7/");
+
 const ROTATION_RANGE = 2.5;
 const GRIP_TWIST_SCALE = 3.5;
 const GRIP_TILT_SCALE = 2.5;
