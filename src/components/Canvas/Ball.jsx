@@ -1,7 +1,7 @@
 import { useAnimations, useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useEffect, useRef } from "react";
-import * as THREE from "three";
+import { MathUtils } from "three";
 import { useInputSourceStore } from "../../store/inputSourceStore";
 
 const ROTATION_RANGE = 2.5;
@@ -93,12 +93,12 @@ export function Ball(props) {
       }
     }
 
-    group.current.rotation.x = THREE.MathUtils.lerp(
+    group.current.rotation.x = MathUtils.lerp(
       group.current.rotation.x,
       target.x,
       LERP_SPEED
     );
-    group.current.rotation.y = THREE.MathUtils.lerp(
+    group.current.rotation.y = MathUtils.lerp(
       group.current.rotation.y,
       target.y,
       LERP_SPEED

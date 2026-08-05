@@ -56,7 +56,7 @@ export default defineConfig({
   },
   build: {
     outDir: "dist",
-    sourcemap: true,
+    sourcemap: false,
     rollupOptions: {
       output: {
         manualChunks: {
@@ -65,6 +65,7 @@ export default defineConfig({
           motion: ["motion"],
           gsap: ["gsap"],
           mediapipe: ["@mediapipe/tasks-vision"],
+          posthog: ["posthog-js"],
         },
       },
     },
