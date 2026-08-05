@@ -1,6 +1,8 @@
 import { useAnimations, useGLTF } from "@react-three/drei";
 import { useEffect } from "react";
 
+useGLTF.setDecoderPath("https://www.gstatic.com/draco/versioned/decoders/1.5.7/");
+
 export function PartsAssembling({ setAnimationActions, groupRef,...props }) {
   // const group = useRef();
   const { nodes, materials, animations } = useGLTF("/assets/3d/parts-assembling.glb");

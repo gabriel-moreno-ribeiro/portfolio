@@ -4,6 +4,8 @@ import { useEffect, useRef } from "react";
 import { useInputSourceStore } from "../../store/inputSourceStore";
 import { useThemeStore } from "../../store/themeStore";
 
+useGLTF.setDecoderPath("https://www.gstatic.com/draco/versioned/decoders/1.5.7/");
+
 function Model({ onReady, ...props }) {
   const { nodes, materials } = useGLTF("/assets/3d/cute_robot.glb");
   const group = useRef();

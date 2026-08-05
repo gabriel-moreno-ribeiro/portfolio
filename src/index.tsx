@@ -7,7 +7,8 @@ const root = ReactDOM.createRoot(
 );
 root.render(<App />);
 
-requestIdleCallback(() => {
+const scheduleIdle = window.requestIdleCallback || ((cb: () => void) => setTimeout(cb, 2000));
+scheduleIdle(() => {
   import("posthog-js").then(({ default: posthog }) => {
     posthog.init("phc_cgNNpL9lqLK50jeJICAV6xcGZDmuDnuPVxPeG8Ieg6m", {
       api_host: "https://us.i.posthog.com",
