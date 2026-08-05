@@ -1,7 +1,7 @@
 import { Suspense, useRef, useMemo } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { useGLTF, Environment } from '@react-three/drei';
-import * as THREE from 'three';
+import type { Group } from 'three';
 
 useGLTF.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.7/');
 
@@ -19,7 +19,7 @@ const MEDALS: MedalData[] = [
 
 function MedalModel({ glbPath }: { glbPath: string }) {
   const { scene } = useGLTF(glbPath);
-  const groupRef = useRef<THREE.Group>(null);
+  const groupRef = useRef<Group>(null);
   const clonedScene = useMemo(() => scene.clone(), [scene]);
   const targetRot = useRef({ x: 0, y: 0 });
   const { pointer } = useThree();
@@ -91,6 +91,5 @@ function Honors() {
   );
 }
 
-MEDALS.forEach(m => useGLTF.preload(m.glb));
 
 export default Honors;
