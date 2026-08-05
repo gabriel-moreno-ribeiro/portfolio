@@ -26,3 +26,6 @@ yarn-error.log*
 .env
 .gstack/
 .wrangler/
+
+.vercel
+.env*

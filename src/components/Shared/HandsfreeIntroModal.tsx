@@ -5,7 +5,25 @@ import {
   useWindow,
 } from "../../store/windowManagerStore";
 import DraggableWindow from "../WindowManager/DraggableWindow";
-import { motion } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
+
+const FEATURES = [
+  {
+    icon: "👤",
+    title: "Head tracking",
+    desc: "Move your head to control the cursor",
+  },
+  {
+    icon: "👌",
+    title: "Pinch gestures",
+    desc: "Pinch to click, drag to scroll",
+  },
+  {
+    icon: "✋",
+    title: "Chips mode",
+    desc: "Play with skill icons using your hands",
+  },
+];
 
 const HandsfreeIntroModal: React.FC = () => {
   const {
@@ -23,10 +41,9 @@ const HandsfreeIntroModal: React.FC = () => {
   const closeWindow = useWindowManagerStore((s) => s.closeWindow);
   const win = useWindow("handsfree-intro");
 
-  // Bridge: handsfreeStore -> windowManagerStore
   useEffect(() => {
     if (showIntroModal && !win) {
-      const modalWidth = Math.min(480, window.innerWidth - 40);
+      const modalWidth = Math.min(420, window.innerWidth - 40);
       openWindow({
         id: "handsfree-intro",
         title: "Handsfree Mode",
@@ -34,14 +51,13 @@ const HandsfreeIntroModal: React.FC = () => {
         status: "open",
         position: {
           x: Math.max(20, (window.innerWidth - modalWidth) / 2),
-          y: Math.max(20, (window.innerHeight - 400) / 2),
+          y: Math.max(20, (window.innerHeight - 480) / 2),
         },
         size: { width: modalWidth, height: 0 },
       });
     }
   }, [showIntroModal, win, openWindow]);
 
-  // Bridge: windowManagerStore -> handsfreeStore (when window is closed via MacButtons)
   useEffect(() => {
     if (!win && showIntroModal) {
       setShowIntroModal(false);
@@ -72,56 +88,85 @@ const HandsfreeIntroModal: React.FC = () => {
 
   return (
     <DraggableWindow windowId="handsfree-intro" title="Handsfree Mode">
-      <div className="handsfree-modal-body">
-        <h2 className="heading">Handsfree Mode</h2>
-        <p className="desc">
-          Control this portfolio with your head and hands — no mouse needed.
-        </p>
-        <div className="features">
-          <div className="feature">
-            <span className="feature-icon">👤</span>
-            <span>Move your head to control the robot</span>
-          </div>
-          <div className="feature">
-            <span className="feature-icon">👌</span>
-            <span>Pinch to click, pinch and drag to scroll</span>
-          </div>
-          <div className="feature">
-            <span className="feature-icon">✋</span>
-            <span>Activate chips mode to play with skill icons</span>
-          </div>
+      <div className="hf-intro">
+        <div className="hf-intro__hero">
+          <motion.div
+            className="hf-intro__icon-ring"
+            animate={{ rotate: 360 }}
+            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          >
+            <div className="hf-intro__orbit-dot" />
+            <div className="hf-intro__orbit-dot" />
+            <div className="hf-intro__orbit-dot" />
+          </motion.div>
+          <span className="hf-intro__main-icon">🖐️</span>
         </div>
-        <p className="desc subtle">
-          Requires camera access. Video is processed locally and never
-          leaves your device.
-        </p>
-        {cameraPermission === "denied" && (
-          <p className="desc error">
-            Camera access was denied. Please allow camera access in your
-            browser settings and try again.
+
+        <div className="hf-intro__content">
+          <h2 className="hf-intro__title">Go Handsfree</h2>
+          <p className="hf-intro__subtitle">
+            Navigate this portfolio with gestures — no mouse needed.
           </p>
-        )}
-        {modelLoadProgress > 0 && modelLoadProgress < 100 && (
-          <div className="progress-bar">
-            <div
-              className="progress-fill"
-              style={{ width: `${modelLoadProgress}%` }}
-            />
+
+          <div className="hf-intro__features">
+            {FEATURES.map((f, i) => (
+              <motion.div
+                key={f.title}
+                className="hf-intro__feature"
+                initial={{ opacity: 0, x: -12 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.15 + i * 0.1, duration: 0.4 }}
+              >
+                <span className="hf-intro__feature-icon">{f.icon}</span>
+                <div className="hf-intro__feature-text">
+                  <span className="hf-intro__feature-title">{f.title}</span>
+                  <span className="hf-intro__feature-desc">{f.desc}</span>
+                </div>
+              </motion.div>
+            ))}
           </div>
-        )}
-        <div className="intro-choice-buttons">
+
+          <AnimatePresence>
+            {cameraPermission === "denied" && (
+              <motion.p
+                className="hf-intro__error"
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+              >
+                Camera access denied. Please allow it in browser settings.
+              </motion.p>
+            )}
+          </AnimatePresence>
+
+          {modelLoadProgress > 0 && modelLoadProgress < 100 && (
+            <div className="hf-intro__progress">
+              <div
+                className="hf-intro__progress-fill"
+                style={{ width: `${modelLoadProgress}%` }}
+              />
+            </div>
+          )}
+
+          <p className="hf-intro__privacy">
+            🔒 Camera data stays on your device — nothing is uploaded.
+          </p>
+        </div>
+
+        <div className="hf-intro__actions">
           <motion.button
-            className="enable-button"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            className="hf-intro__btn hf-intro__btn--primary"
+            whileHover={{ scale: 1.03, y: -1 }}
+            whileTap={{ scale: 0.97 }}
             onClick={handleEnable}
           >
+            <span className="hf-intro__btn-icon">✨</span>
             Enable Handsfree
           </motion.button>
           <motion.button
-            className="enable-button skip-button"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            className="hf-intro__btn hf-intro__btn--ghost"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.97 }}
             onClick={handleClose}
           >
             Continue with mouse
