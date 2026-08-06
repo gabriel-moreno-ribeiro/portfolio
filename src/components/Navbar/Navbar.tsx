@@ -112,8 +112,7 @@ function Navbar() {
         <h1
           className="heading"
           style={{ visibility: isHovered ? 'hidden' : 'visible' }}
-          data-fun="Thats Me."
-        >
+                  >
           Gabriel Moreno Ribeiro.
         </h1>
       ) : (
@@ -121,8 +120,7 @@ function Navbar() {
           className="heading"
           layout
           transition={{ type: 'spring', stiffness: 200, damping: 25 }}
-          data-fun="Thats Me."
-        >
+                  >
           Gabriel Moreno Ribeiro.
         </motion.h1>
       )}

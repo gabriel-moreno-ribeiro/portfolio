@@ -76,7 +76,7 @@ function MedalCard({ medal }: { medal: MedalData }) {
 function Honors() {
   return (
     <div className="honors-section" id="honors">
-      <h1 className="heading" data-color-inverted="true" data-fun="The Fridge Magnet Collection">
+      <h1 className="heading" data-color-inverted="true">
         The Medal Wall.
       </h1>
       <p className="medal-summary">
@@ -90,6 +90,5 @@ function Honors() {
     </div>
   );
 }
-
 
 export default Honors;

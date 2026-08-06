@@ -18,13 +18,13 @@ const CanvasComponent = lazy(() => import('../Canvas/CanvasComponent'));
 const BG_SETTLE_DELAY = 0.7;
 
 const bottomTexts = [
-  { html: `Gabriel is the <span class="black">Co-Founder & CEO</span> of <span class="black">HIBEEX</span> — building financial AI for SMBs.`, fun: `Gabriel is the Chief Coffee Officer of HIBEEX — teaching spreadsheets to think for SMBs.` },
-  { html: `One of <span class="black">6 startups</span> in the <span class="black">Canastra Ventures AI Residency</span> — among the youngest founders selected.`, fun: `Snuck into the Canastra Ventures AI Residency — youngest guy in every room, again.` },
-  { html: `He has won <span class="black">39 olympiad medals</span> (19 gold) across math, physics, chemistry, and more.`, fun: `He has hoarded 39 shiny fridge magnets (19 gold) across every nerd subject known to man.` },
-  { html: `Ran an <span class="black">RCT with 208 students</span> on fintech and savings — treatment group saved <span class="black">130% more</span>.`, fun: `Convinced 208 teenagers to save money — science says it worked (+130%).` },
-  { html: `Founded <span class="black">Projeto Candela</span> — physics kits reaching <span class="black">3,392 students</span> in 28 public schools.`, fun: `Founded Projeto Candela — physics kits so good that failing went out of fashion.` },
-  { html: `Admitted to <span class="black">University of St Andrews</span> (Global Merit Scholarship) — chose a <span class="black">build year</span> first.`, fun: `Got the fancy Scottish castle invite — said "hold on, shipping first" and kept building.` },
-  { html: `Selected for <span class="black">Fundacao Estudar PREP</span> — 70 of 10,000+ applicants.`, fun: `Survived the Hunger Games of scholarships — 70 of 10,000+ applicants.` },
+  `Gabriel is the <span class="black">Co-Founder & CEO</span> of <span class="black">HIBEEX</span> — building financial AI for SMBs.`,
+  `One of <span class="black">6 startups</span> in the <span class="black">Canastra Ventures AI Residency</span> — among the youngest founders selected.`,
+  `He has won <span class="black">39 olympiad medals</span> (19 gold) across math, physics, chemistry, and more.`,
+  `Ran an <span class="black">RCT with 208 students</span> on fintech and savings — treatment group saved <span class="black">130% more</span>.`,
+  `Founded <span class="black">Projeto Candela</span> — physics kits reaching <span class="black">3,392 students</span> in 28 public schools.`,
+  `Admitted to <span class="black">University of St Andrews</span> (Global Merit Scholarship) — chose a <span class="black">build year</span> first.`,
+  `Selected for <span class="black">Fundacao Estudar PREP</span> — 70 of 10,000+ applicants.`,
 ];
 
 function Hero() {
@@ -60,9 +60,6 @@ function Hero() {
 
   return (
     <div className="hero-section">
-      {/* 3D model: atualmente o robô (public/assets/3d/cute_robot.glb).
-          Quando o seu modelo 3D ficar pronto, substitua esse arquivo .glb
-          pelo seu (mesmo nome de arquivo = zero mudança de código). */}
       <motion.div
         style={{ marginTop: '48px' }}
         initial={{ opacity: 0 }}
@@ -84,12 +81,11 @@ function Hero() {
             ease: 'easeOut',
           }}
           data-color-inverted={'true'}
-          data-fun-zone="true"
         >
-          <h1 className="hero-name" data-fun="That Guy From The Internet.">
+          <h1 className="hero-name">
             Gabriel Moreno Ribeiro.
           </h1>
-          <div className="hero-roles" data-fun="Coffee Addict & Chaos.">
+          <div className="hero-roles">
             <ScrambleText
               style={{
                 fontSize: isMobile ? '22px' : '36px',
@@ -112,7 +108,6 @@ function Hero() {
             duration: 0.6,
             ease: 'easeOut',
           }}
-          data-fun="18-year-old who skipped freshman dorms to keep shipping. Professional beaker shaker. 39 fridge magnets. Organized chaos."
         >
           18-year-old founder and researcher on a build year. Building financial AI for SMBs. 39 olympiad medals. Projeto Candela founder.
         </motion.p>
@@ -150,8 +145,7 @@ function Hero() {
               ? { duration: 0.5 }
               : { delay: BG_SETTLE_DELAY + 0.7, duration: 0.6, ease: 'easeOut' }
           }
-          data-fun={bottomTexts[currentTextIndex].fun}
-          dangerouslySetInnerHTML={{ __html: bottomTexts[currentTextIndex].html }}
+          dangerouslySetInnerHTML={{ __html: bottomTexts[currentTextIndex] }}
         />
       </div>
     </div>

@@ -194,12 +194,11 @@ function WorkflowPlayground() {
 
   return (
     <div className="workflow-section" id="automation">
-      <h1 className="heading" data-color-inverted="true" data-fun="Robots Doing Robot Things.">
+      <h1 className="heading" data-color-inverted="true">
         Automation, Visualized.
       </h1>
       <p
         className="workflow-sub"
-        data-fun="Drag the little boxes. It's oddly satisfying."
       >
         A taste of how HIBEEX turns raw financial data into decisions — drag the
         blocks around, add your own nodes.

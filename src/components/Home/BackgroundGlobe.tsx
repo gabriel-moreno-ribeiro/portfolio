@@ -30,7 +30,7 @@ const CITIES: City[] = [
   },
 ];
 
-const PHOTO_FILES = ['01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg', '06.jpg'];
+const MEDIA_FILES = ['01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg', '06.jpg', '01.mp4', '02.mp4'];
 
 // From cobe's official "focus on location" example
 function locationToAngles(lat: number, lon: number): [number, number] {
@@ -182,12 +182,23 @@ function GlobeCanvas({ selected }: { selected: City | null }) {
   );
 }
 
-function CityPhoto({ cityId, file }: { cityId: string; file: string }) {
+function CityMedia({ cityId, file }: { cityId: string; file: string }) {
   const [failed, setFailed] = useState(false);
   if (failed) return null;
+  const src = `/background/${cityId}/${file}`;
+  if (file.endsWith('.mp4')) {
+    return (
+      <video
+        src={src}
+        controls
+        playsInline
+        onError={() => setFailed(true)}
+      />
+    );
+  }
   return (
     <img
-      src={`/background/${cityId}/${file}`}
+      src={src}
       alt={`Photo in ${cityId}`}
       loading="lazy"
       onError={() => setFailed(true)}
@@ -197,21 +208,21 @@ function CityPhoto({ cityId, file }: { cityId: string; file: string }) {
 
 function CityPanel({ city, onClose }: { city: City; onClose: () => void }) {
   return (
-    <div className="city-panel" data-fun-zone="true">
+    <div className="city-panel">
       <div className="city-panel-header">
-        <h3 data-fun="You are here (well, he was).">{city.name}</h3>
+        <h3>{city.name}</h3>
         <button onClick={onClose} aria-label="Close">
           ✕
         </button>
       </div>
       <p>{city.blurb}</p>
       <div className="city-photos">
-        {PHOTO_FILES.map((file) => (
-          <CityPhoto key={file} cityId={city.id} file={file} />
+        {MEDIA_FILES.map((file) => (
+          <CityMedia key={file} cityId={city.id} file={file} />
         ))}
       </div>
       <small className="city-note">
-        Photos coming soon — drop them in <code>/background/{city.id}/</code>
+        Drop photos & videos in <code>/background/{city.id}/</code>
       </small>
     </div>
   );
@@ -222,7 +233,7 @@ function BackgroundGlobe() {
 
   return (
     <div className="background-section" id="background">
-      <h1 className="heading" data-color-inverted="true" data-fun="Origin Coordinates">
+      <h1 className="heading" data-color-inverted="true">
         Where I Come From.
       </h1>
       <div className={`globe-wrap ${selected ? 'zoomed' : ''}`}>
