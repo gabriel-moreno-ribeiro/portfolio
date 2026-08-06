@@ -13,7 +13,6 @@ const CarCanvas = lazy(() => import("../components/Canvas/BallCanvas"));
 const BackgroundGlobe = lazy(() => import("../components/Home/BackgroundGlobe"));
 const HorizontalSkillsWrapper = lazy(() => import("../components/Home/HorizontalSkillsWrapper"));
 const WorkExperience = lazy(() => import("../components/Home/WorkExperience"));
-const Honors = lazy(() => import("../components/Home/Honors"));
 
 function Home() {
   return (
@@ -31,9 +30,6 @@ function Home() {
       </Suspense>
       <Suspense fallback={null}>
         <WorkExperience />
-      </Suspense>
-      <Suspense fallback={null}>
-        <Honors />
       </Suspense>
       <Research />
       <Books />
