@@ -1,12 +1,6 @@
 import { motion, useInView } from 'motion/react';
 import { useRef, useState } from 'react';
-import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
-
-interface ResearchMedia {
-  src: string;
-  type: 'image' | 'video';
-  caption?: string;
-}
+import { FiChevronLeft, FiChevronRight, FiFileText } from 'react-icons/fi';
 
 interface ResearchItem {
   slug: string;
@@ -16,7 +10,7 @@ interface ResearchItem {
   advisor?: string;
   abstract: string;
   tags: string[];
-  media?: ResearchMedia[];
+  pdf?: string;
 }
 
 const MEDIA_FILES = ['01.jpg', '02.jpg', '03.jpg', '01.mp4'];
@@ -31,6 +25,7 @@ const researchItems: ResearchItem[] = [
     abstract:
       'Randomized controlled trial with 208 public-school students measuring how access to fintech apps changes savings behavior. Treatment group saved 130% more than control over the study period.',
     tags: ['RCT', 'Fintech', 'Behavioral Economics', 'Python', 'Statistics'],
+    pdf: '/research/fintech-rct/paper.pdf',
   },
   {
     slug: 'chemical-kinetics',
@@ -41,6 +36,7 @@ const researchItems: ResearchItem[] = [
     abstract:
       '59-page thesis modeling reaction rate mechanisms with 97% accuracy using numerical methods. Covered steady-state approximation, Michaelis-Menten kinetics, and oscillating reactions.',
     tags: ['MATLAB', 'Mathematica', 'LaTeX', 'Numerical Methods', 'Kinetics'],
+    pdf: '/research/chemical-kinetics/paper.pdf',
   },
   {
     slug: 'projeto-candela',
@@ -50,6 +46,7 @@ const researchItems: ResearchItem[] = [
     abstract:
       'Designed and distributed low-cost experimental physics kits to 28 public schools, reaching 3,392 students. Measured a drop in physics failure rates from 30% to 10% in participating classrooms.',
     tags: ['Physics Education', 'Experimental Design', '3,392 students', '28 schools'],
+    pdf: '/research/projeto-candela/paper.pdf',
   },
 ];
 
@@ -116,19 +113,31 @@ function ResearchCard({ item, index }: { item: ResearchItem; index: number }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '0px 0px -80px 0px' });
 
+  const handleClick = () => {
+    if (item.pdf) {
+      window.open(item.pdf, '_blank');
+    }
+  };
+
   return (
     <motion.div
       ref={ref}
-      className="research-card"
+      className={`research-card ${item.pdf ? 'research-card--clickable' : ''}`}
       initial={{ opacity: 0, y: 40 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, delay: index * 0.1 }}
+      onClick={handleClick}
     >
       <ResearchMediaCarousel slug={item.slug} />
       <div className="research-card__content">
         <div className="research-card__header">
           <span className="research-card__field">{item.field}</span>
           <span className="research-card__year">{item.year}</span>
+          {item.pdf && (
+            <span className="research-card__pdf">
+              <FiFileText /> Read Paper
+            </span>
+          )}
         </div>
         <h3 className="research-card__title">{item.title}</h3>
         {item.advisor && (
