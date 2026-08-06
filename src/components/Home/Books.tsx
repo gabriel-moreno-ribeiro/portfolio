@@ -73,7 +73,6 @@ function Books() {
       <h1
         className="heading"
         data-color-inverted="true"
-        data-fun="The Library Card"
       >
         Books I've Read.
       </h1>

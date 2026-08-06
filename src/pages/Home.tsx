@@ -3,6 +3,7 @@ import Books from "../components/Home/Books";
 import FindMyWork from "../components/Home/FindMyWork";
 import Hero from "../components/Home/Hero";
 import NumbersAndStats from "../components/Home/Numbers";
+import Research from "../components/Home/Research";
 import Skills from "../components/Home/Skills";
 import Timeline from "../components/Home/Timeline";
 import Navbar from "../components/Navbar/Navbar";
@@ -34,6 +35,7 @@ function Home() {
       <Suspense fallback={null}>
         <Honors />
       </Suspense>
+      <Research />
       <Books />
       <Timeline />
       <Footer />

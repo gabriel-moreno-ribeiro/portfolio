@@ -1,10 +1,6 @@
 import { useInView } from "motion/react";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import l_icon1 from "../../assets/skills/light/icon1.webp";
-import l_icon10 from "../../assets/skills/light/icon10.webp";
-import l_icon11 from "../../assets/skills/light/icon11.webp";
-import l_icon12 from "../../assets/skills/light/icon12.webp";
-import l_icon13 from "../../assets/skills/light/icon13.webp";
 import l_icon2 from "../../assets/skills/light/icon2.webp";
 import l_icon3 from "../../assets/skills/light/icon3.webp";
 import l_icon4 from "../../assets/skills/light/icon4.webp";
@@ -13,12 +9,9 @@ import l_icon6 from "../../assets/skills/light/icon6.webp";
 import l_icon7 from "../../assets/skills/light/icon7.webp";
 import l_icon8 from "../../assets/skills/light/icon8.webp";
 import l_icon9 from "../../assets/skills/light/icon9.webp";
+import l_icon10 from "../../assets/skills/light/icon10.webp";
 
 import d_icon1 from "../../assets/skills/dark/icon1.webp";
-import d_icon10 from "../../assets/skills/dark/icon10.webp";
-import d_icon11 from "../../assets/skills/dark/icon11.webp";
-import d_icon12 from "../../assets/skills/dark/icon12.webp";
-import d_icon13 from "../../assets/skills/dark/icon13.webp";
 import d_icon2 from "../../assets/skills/dark/icon2.webp";
 import d_icon3 from "../../assets/skills/dark/icon3.webp";
 import d_icon4 from "../../assets/skills/dark/icon4.webp";
@@ -27,57 +20,31 @@ import d_icon6 from "../../assets/skills/dark/icon6.webp";
 import d_icon7 from "../../assets/skills/dark/icon7.webp";
 import d_icon8 from "../../assets/skills/dark/icon8.webp";
 import d_icon9 from "../../assets/skills/dark/icon9.webp";
+import d_icon10 from "../../assets/skills/dark/icon10.webp";
 import useIsMobile from "../../hooks/useIsMobile";
 import { useThemeStore } from "../../store/themeStore";
 import SkillsCanvas from "./SkillsCanvas";
 
-// Extra logos loaded from the devicon CDN — rendered inside the same
-// floating physics squares as the local icons (card drawn by the canvas).
 const extraIcons = [
   "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg",
-  "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg",
-  "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg",
-  "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg",
-  "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/graphql/graphql-plain.svg",
   "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg",
   "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg",
   "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg",
+  "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg",
   "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg",
 ];
 
-const BUILTIN_COUNT = 13;
+const BUILTIN_COUNT = 10;
 
 const lightIcons = [
-  l_icon1,
-  l_icon2,
-  l_icon3,
-  l_icon4,
-  l_icon5,
-  l_icon6,
-  l_icon7,
-  l_icon8,
-  l_icon9,
-  l_icon10,
-  l_icon11,
-  l_icon12,
-  l_icon13,
+  l_icon1, l_icon2, l_icon3, l_icon4, l_icon5,
+  l_icon6, l_icon7, l_icon8, l_icon9, l_icon10,
   ...extraIcons,
 ];
 
 const darkIcons = [
-  d_icon1,
-  d_icon2,
-  d_icon3,
-  d_icon4,
-  d_icon5,
-  d_icon6,
-  d_icon7,
-  d_icon8,
-  d_icon9,
-  d_icon10,
-  d_icon11,
-  d_icon12,
-  d_icon13,
+  d_icon1, d_icon2, d_icon3, d_icon4, d_icon5,
+  d_icon6, d_icon7, d_icon8, d_icon9, d_icon10,
   ...extraIcons,
 ];
 
@@ -92,9 +59,6 @@ const deskstopFinalPositions = [
   { x: 500, y: 200 },
   { x: -300, y: 0 },
   { x: 300, y: 0 },
-  { x: 250, y: 300 },
-  { x: 550, y: -300 },
-  { x: -250, y: 250 },
   // extras
   { x: -150, y: -350 },
   { x: 400, y: -180 },
@@ -102,9 +66,6 @@ const deskstopFinalPositions = [
   { x: 700, y: 280 },
   { x: -60, y: 260 },
   { x: 430, y: 350 },
-  { x: -550, y: -350 },
-  { x: 60, y: -110 },
-  { x: 320, y: -350 },
 ];
 
 const mobileFinalPositions = [
@@ -118,9 +79,6 @@ const mobileFinalPositions = [
   { x: 5, y: 150 },
   { x: -150, y: 300 },
   { x: 150, y: 380 },
-  { x: 125, y: -360 },
-  { x: -150, y: -370 },
-  { x: 100, y: 250 },
   // extras
   { x: -145, y: 65 },
   { x: 145, y: 30 },
@@ -128,9 +86,6 @@ const mobileFinalPositions = [
   { x: -145, y: 185 },
   { x: 145, y: -235 },
   { x: -60, y: -335 },
-  { x: 55, y: 60 },
-  { x: 145, y: 165 },
-  { x: 0, y: -185 },
 ];
 
 const Skills: React.FC = () => {
@@ -171,10 +126,9 @@ const Skills: React.FC = () => {
       <p
         className="main-text"
         data-color-inverted={"true"}
-        data-fun="Buttons I press until the computer obeys."
       >
         Some of the languages <br />
-        &amp; tools I build with.
+        & tools I build with.
       </p>
       <SkillsCanvas
         iconUrls={iconUrls}

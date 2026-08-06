@@ -3,7 +3,6 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CameraFeedback from "./components/Shared/CameraFeedback";
 import CustomMouse from "./components/Shared/CustomMouse";
-import FunLens from "./components/Shared/FunLens";
 import GestureTutorial from "./components/Shared/GestureTutorial";
 import HandCursor from "./components/Shared/HandCursor";
 import DarkModeButton from "./components/Shared/DarkModeButton";
@@ -91,7 +90,6 @@ function App() {
       <CameraFeedback />
       <HandCursor />
       <CustomMouse />
-      <FunLens />
       <ToastContainer />
     </div>
   );

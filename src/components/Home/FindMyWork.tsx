@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { toggleTerminalWindow } from "../../utils/terminalWindow";
 
-// Each featured item looks for photos & videos in /public/work/<slug>/
-// with these filenames. Missing files are silently skipped.
 const MEDIA_FILES = [
   "01.jpg",
   "02.jpg",
@@ -18,7 +16,6 @@ const MEDIA_FILES = [
 interface FeaturedItem {
   slug: string;
   title: string;
-  funTitle: string;
   desc: string;
   tags: string[];
 }
@@ -27,43 +24,37 @@ const featured: FeaturedItem[] = [
   {
     slug: "hibeex",
     title: "HIBEEX — Financial AI for SMBs",
-    funTitle: "Teaching Spreadsheets To Think",
-    desc: "Financial AI turning messy financial data into decisions SMB owners can act on. One of 6 startups in the Canastra Ventures AI Residency.",
+    desc: "Financial AI that turns messy data into decisions small business owners can act on. One of 6 startups picked for the Canastra Ventures AI Residency.",
     tags: ["TypeScript", "Next.js", "Supabase", "AWS", "AI/ML"],
   },
   {
     slug: "candela",
     title: "Projeto Candela",
-    funTitle: "Duct-Tape Physics, Real Results",
-    desc: "Low-cost physics lab kits reaching 3,392 students across 28 public schools — physics failure rates cut from 30% to 10%.",
-    tags: ["3,392 students", "28 schools", "30% → 10% failure"],
+    desc: "Low-cost physics lab kits used by 3,392 students in 28 public schools. Failure rates dropped from 30% to 10%.",
+    tags: ["3,392 students", "28 schools", "30% to 10% failure"],
   },
   {
     slug: "rct",
     title: "Fintech Savings RCT",
-    funTitle: "The Teen Savings Experiment",
-    desc: "Randomized controlled trial with 208 public-school students on how fintech tools change savings behavior, advised by Aaron Litvin, Ph.D. (Harvard). Treatment group saved 130% more.",
+    desc: "Randomized controlled trial with 208 public-school students on fintech tools and savings behavior, advised by Aaron Litvin, Ph.D. (Harvard). Treatment group saved 130% more.",
     tags: ["RCT design", "208 students", "+130% savings", "Python"],
   },
   {
     slug: "medals",
     title: "39 Olympiad Medals (19 Gold)",
-    funTitle: "The Fridge Magnet Collection",
-    desc: "49 olympiads across math, physics, chemistry and astronomy. 1st of 10,000+ at IFT-UNESP. Gold at ONNEQ (top 0.675%). 1st at OBAQ (top 0.014%).",
+    desc: "49 olympiads in math, physics, chemistry and astronomy. 1st of 10,000+ at IFT-UNESP. Gold at ONNEQ (top 0.675%). 1st at OBAQ (top 0.014%).",
     tags: ["19 gold", "2 international", "1st IFT-UNESP"],
   },
   {
     slug: "kinetics",
     title: "Chemical Kinetics Research",
-    funTitle: "59 Pages About Molecules Colliding",
-    desc: "Reaction mechanisms modeled with 97% accuracy in a 59-page thesis, under Prof. Juliano Bonacin, Ph.D.",
+    desc: "Reaction mechanisms modeled with 97% accuracy in a 59-page thesis under Prof. Juliano Bonacin, Ph.D.",
     tags: ["97% accuracy", "MATLAB", "Mathematica", "LaTeX"],
   },
   {
     slug: "gsat",
     title: "GSAT Education",
-    funTitle: "Accidental Professor Era",
-    desc: "EdTech startup for standardized test preparation — built the platform from scratch as founding CEO.",
+    desc: "EdTech platform for standardized test prep — built from scratch as founding CEO.",
     tags: ["React", "TypeScript", "Node.js", "EdTech"],
   },
 ];
@@ -147,9 +138,9 @@ function MediaCarousel({ slug, title }: { slug: string; title: string }) {
 
 function FeaturedCard({ item }: { item: FeaturedItem }) {
   return (
-    <div className="featured-card" data-fun-zone="true">
+    <div className="featured-card">
       <MediaCarousel slug={item.slug} title={item.title} />
-      <h2 data-fun={item.funTitle}>{item.title}</h2>
+      <h2>{item.title}</h2>
       <p>{item.desc}</p>
       <div className="featured-tags">
         {item.tags.map((tag) => (
@@ -163,10 +154,10 @@ function FeaturedCard({ item }: { item: FeaturedItem }) {
 function FindMyWork() {
   return (
     <div className="find-my-work" id="work">
-      <h1 className="heading" data-color-inverted={"true"} data-fun="Ctrl+F My Work">
+      <h1 className="heading" data-color-inverted={"true"}>
         Find My Work
       </h1>
-      <p className="work-sub" data-fun="The greatest hits album.">
+      <p className="work-sub">
         The most important things I've built and won.
       </p>
       <button className="terminal-launch" onClick={toggleTerminalWindow}>
