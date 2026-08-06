@@ -27,8 +27,9 @@
 
 .research-card {
   display: grid;
-  grid-template-columns: 280px 1fr;
+  grid-template-columns: 180px 1fr;
   gap: 24px;
+  align-items: start;
   padding: 24px;
   border-radius: 16px;
   background: rgba($grey, 0.3);
@@ -126,10 +127,11 @@
 
 .research-media {
   width: 100%;
-  height: 200px;
+  aspect-ratio: 210 / 297;
   border-radius: 10px;
   overflow: hidden;
   position: relative;
+  background: rgba(0, 0, 0, 0.03);
 
   img,
   video {
@@ -165,7 +167,7 @@
 
 .research-media-placeholder {
   width: 100%;
-  height: 200px;
+  aspect-ratio: 210 / 297;
   border-radius: 10px;
   background: rgba($grey, 0.5);
   display: flex;
@@ -237,7 +239,8 @@
 
   .research-media,
   .research-media-placeholder {
-    height: 160px;
+    aspect-ratio: 210 / 297;
+    max-height: 300px;
   }
 
   .research-card__title {
