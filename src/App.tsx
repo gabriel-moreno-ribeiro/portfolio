@@ -28,14 +28,7 @@ function App() {
   const isMobile = useIsMobile();
   const { hasSeenIntro, setShowIntroModal } = useHandsfreeStore();
 
-  // Show the hands mode choice popup as soon as the site opens (first visit)
-  useEffect(() => {
-    if (isMobile || hasSeenIntro) return;
-    if (!navigator.mediaDevices?.getUserMedia) return;
-    const timer = setTimeout(() => setShowIntroModal(true), 1800);
-    return () => clearTimeout(timer);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isMobile, hasSeenIntro]);
+  // Modal is triggered only by the HandsfreeButton click — never auto-opens.
 
   useEffect(() => {
     startMouseInputProvider();
