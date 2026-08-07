@@ -93,8 +93,7 @@ function Hero() {
                 fontStyle: 'italic',
               }}
               texts={['Founder', 'Builder', 'Researcher', 'Developer']}
-              speed={100}
-              pauseDuration={1000}
+              pauseDuration={2500}
             />
             <span className="role-suffix">& CEO.</span>
           </div>
