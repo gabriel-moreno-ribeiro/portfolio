@@ -146,8 +146,23 @@ function GlobeCanvas({ selected }: { selected: City | null }) {
             }
             currentTheta = currentTheta * 0.92 + focusTheta * 0.08;
           } else if (pointerInteracting.current === null) {
-            // Idle spin — theta stays wherever the user left it
-            currentPhi += 0.004;
+            // Slow down near each city marker — min angular dist across all cities
+            const BASE_SPEED = 0.0068; // 1.7× original 0.004
+            const SLOW_RADIUS = 0.35;  // radians — ~20° of arc
+            const normPhi = ((currentPhi % doublePi) + doublePi) % doublePi;
+            let minDist = Infinity;
+            for (const city of CITIES) {
+              const [cityPhi] = locationToAngles(city.lat, city.lon);
+              const d = Math.min(
+                Math.abs(normPhi - cityPhi),
+                doublePi - Math.abs(normPhi - cityPhi)
+              );
+              if (d < minDist) minDist = d;
+            }
+            const speedMult = minDist < SLOW_RADIUS
+              ? 0.2 + 0.8 * (minDist / SLOW_RADIUS)
+              : 1;
+            currentPhi += BASE_SPEED * speedMult;
           }
 
           state.phi = currentPhi + dragX;

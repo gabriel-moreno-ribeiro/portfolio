@@ -33,6 +33,8 @@ const BOOKS: Book[] = [
   // 2021-2022 (age 14)
   { title: "O Extraordinário", cover: "/books/extraordinario.webp", stars: 5, year: "2021-2022" },
   { title: "Tópicos de Física", cover: "/books/topicos.jpg", stars: 4, year: "2021-2022" },
+  { title: "Física — Renato Brito (Vol. 1)", cover: "/books/rb.webp", stars: 5, year: "2021-2022" },
+  { title: "Física — Renato Brito (Vol. 2)", cover: "/books/rb2.png", stars: 5, year: "2021-2022" },
   // 2020-2021 (age 13)
   { title: "Harry Potter", cover: "/books/harry-potter.jpg", stars: 5, year: "2020-2021" },
   { title: "Percy Jackson", cover: "/books/percy-jackson.png", stars: 5, year: "2020-2021" },
