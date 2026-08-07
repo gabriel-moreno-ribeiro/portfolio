@@ -30,7 +30,7 @@ const CITIES: City[] = [
   },
 ];
 
-const MEDIA_FILES = ['01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg', '06.jpg', '01.mp4', '02.mp4'];
+const MEDIA_FILES = ['01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg', '06.jpg', '07.jpg', '08.jpg', '01.mp4', '02.mp4'];
 
 // From cobe's official "focus on location" example
 function locationToAngles(lat: number, lon: number): [number, number] {
@@ -221,9 +221,6 @@ function CityPanel({ city, onClose }: { city: City; onClose: () => void }) {
           <CityMedia key={file} cityId={city.id} file={file} />
         ))}
       </div>
-      <small className="city-note">
-        Drop photos & videos in <code>/background/{city.id}/</code>
-      </small>
     </div>
   );
 }
