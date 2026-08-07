@@ -4,19 +4,15 @@ import NumberStatsCard from "./NumberStatsCard";
 
 const STATS = [
   {
-    img: '/stats/medals.webp',
     text: `<span class="orange"> 39 </span>Olympiad Medals (19 Gold)`,
   },
   {
-    img: '/stats/students.webp',
     text: `<span class="orange"> 3,392 </span>Students Impacted (Projeto Candela)`,
   },
   {
-    img: '/stats/sat.webp',
     text: `<span class="orange"> SAT 1510 </span>/ 1600 (Top 1% Brazil)`,
   },
   {
-    img: '/stats/estudar.webp',
     text: `<span class="orange"> 0.7% </span>Acceptance — Fundacao Estudar`,
   },
 ];
@@ -43,7 +39,6 @@ const NumbersAndStats = () => {
             key={index}
             frontCard={true}
             exitX={250}
-            imgSrc={STATS[index].img}
           />
           <NumberStatsCard key={index + 1} frontCard={false} exitX={-250} />
         </AnimatePresence>

@@ -50,7 +50,7 @@ const researchItems: ResearchItem[] = [
   },
 ];
 
-function ResearchMediaCarousel({ slug }: { slug: string }) {
+function ResearchMediaCarousel({ slug, onHasMedia }: { slug: string; onHasMedia?: (has: boolean) => void }) {
   const [loaded, setLoaded] = useState<string[]>([]);
   const [idx, setIdx] = useState(0);
   const checkedRef = useRef(false);
@@ -62,11 +62,17 @@ function ResearchMediaCarousel({ slug }: { slug: string }) {
       if (file.endsWith('.mp4')) {
         const probe = document.createElement('video');
         probe.preload = 'metadata';
-        probe.onloadedmetadata = () => setLoaded((prev) => [...prev, file]);
+        probe.onloadedmetadata = () => {
+          setLoaded((prev) => [...prev, file]);
+          onHasMedia?.(true);
+        };
         probe.src = url;
       } else {
         const probe = new Image();
-        probe.onload = () => setLoaded((prev) => [...prev, file]);
+        probe.onload = () => {
+          setLoaded((prev) => [...prev, file]);
+          onHasMedia?.(true);
+        };
         probe.src = url;
       }
     });
@@ -75,12 +81,7 @@ function ResearchMediaCarousel({ slug }: { slug: string }) {
   const available = MEDIA_FILES.filter((f) => loaded.includes(f));
 
   if (available.length === 0) {
-    return (
-      <div className="research-media-placeholder">
-        <span>📄</span>
-        <small>Add media to <code>/research/{slug}/</code></small>
-      </div>
-    );
+    return null;
   }
 
   const current = available[idx % available.length];
@@ -112,6 +113,7 @@ function ResearchMediaCarousel({ slug }: { slug: string }) {
 function ResearchCard({ item, index }: { item: ResearchItem; index: number }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '0px 0px -80px 0px' });
+  const [hasMedia, setHasMedia] = useState(false);
 
   const handleClick = () => {
     if (item.pdf) {
@@ -122,13 +124,13 @@ function ResearchCard({ item, index }: { item: ResearchItem; index: number }) {
   return (
     <motion.div
       ref={ref}
-      className={`research-card ${item.pdf ? 'research-card--clickable' : ''}`}
+      className={`research-card ${item.pdf ? 'research-card--clickable' : ''} ${!hasMedia ? 'research-card--no-media' : ''}`}
       initial={{ opacity: 0, y: 40 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, delay: index * 0.1 }}
       onClick={handleClick}
     >
-      <ResearchMediaCarousel slug={item.slug} />
+      <ResearchMediaCarousel slug={item.slug} onHasMedia={setHasMedia} />
       <div className="research-card__content">
         <div className="research-card__header">
           <span className="research-card__field">{item.field}</span>
