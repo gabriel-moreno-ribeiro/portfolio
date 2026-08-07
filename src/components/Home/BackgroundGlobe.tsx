@@ -9,21 +9,23 @@ interface City {
   lon: number;
   headline: string;
   story: string[];
+  period: string;   // shown in the horizontal timeline
+  role: string;     // one-line label for timeline chip
 }
 
-// Coordenadas exatas:
-// Salvador: 12°58′29″S 38°28′36″W  |  Missão Velha: 07°14′59″S 39°08′35″W
 const CITIES: City[] = [
   {
     id: 'missao-velha',
     name: 'Missão Velha, Ceará',
     lat: -7.2497,
     lon: -39.1431,
+    period: 'Every summer',
+    role: 'Where the roots are',
     headline: 'Where the roots are.',
     story: [
       'A small city in the interior of Ceará. My grandparents are from here. My father grew up here.',
-      'Every time I went back as a kid, something clicked about where I came from — the heat, the simplicity, the way people knew each other by name.',
-      'It\'s the kind of place that doesn\'t show up on anyone\'s map of Brazilian ambition. But it\'s where mine started.',
+      'Every summer, 4–5 months. The heat, the simplicity, the way everyone knew each other by name.',
+      "It's the kind of place that doesn't show up on anyone's map of Brazilian ambition. But it's where mine started.",
     ],
   },
   {
@@ -31,18 +33,48 @@ const CITIES: City[] = [
     name: 'Salvador, Bahia',
     lat: -12.9747,
     lon: -38.4767,
+    period: 'Age 0 – 17',
+    role: 'Where I grew up',
     headline: 'Where I grew up.',
     story: [
-      'I moved to Salvador when I was young and grew up here. Got into Colégio Militar at 10 — one of 30 from 2,500 applicants, perfect score in math.',
-      'The city shaped how I think. The olympiads started here. Projeto Candela was built for schools here. The first time I really built something that mattered was in Salvador.',
+      'I grew up here. Got into Colégio Militar at 10 — one of 30 from 2,500 applicants.',
+      'The olympiads started here. Projeto Candela was built for schools here.',
       'I still call it home.',
+    ],
+  },
+  {
+    id: 'fortaleza',
+    name: 'Fortaleza, Ceará',
+    lat: -3.7172,
+    lon: -38.5433,
+    period: '2024 – 2025',
+    role: 'Third year of high school',
+    headline: 'Third year — new city.',
+    story: [
+      'Moved to Fortaleza for the third year of high school. Closer to family roots.',
+      'SAT 1510. Fundação Estudar PREP. The year everything accelerated.',
+    ],
+  },
+  {
+    id: 'sao-paulo',
+    name: 'São Paulo, SP',
+    lat: -23.5505,
+    lon: -46.6333,
+    period: '2025 – present',
+    role: 'Building HIBEEX',
+    headline: 'Building HIBEEX.',
+    story: [
+      'Moved to São Paulo with Teodoro to build HIBEEX full-time.',
+      'One of 6 startups in the Canastra Ventures AI Residency. Financial AI for SMBs.',
+      "The build year — choosing this over freshman year was the right call.",
     ],
   },
 ];
 
 const MEDIA_FILES = ['01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg', '06.jpg', '07.jpg', '08.jpg', '01.mp4', '02.mp4'];
+// First N photos go in the right panel; remainder spill below the globe
+const PANEL_PHOTOS = 4;
 
-// From cobe's official "focus on location" example
 function locationToAngles(lat: number, lon: number): [number, number] {
   return [
     Math.PI - ((lon * Math.PI) / 180 - Math.PI / 2),
@@ -53,17 +85,13 @@ function locationToAngles(lat: number, lon: number): [number, number] {
 function GlobeCanvas({ selected }: { selected: City | null }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const focusRef = useRef<[number, number] | null>(null);
-  // Drag state (official cobe example pattern, extended to both axes)
   const pointerInteracting = useRef<{ x: number; y: number } | null>(null);
-  const pointerMovement = useRef({ x: 0, y: 0 }); // px of the current drag
+  const pointerMovement = useRef({ x: 0, y: 0 });
   const foldDrag = useRef<(() => void) | null>(null);
 
   useEffect(() => {
-    // Fold any leftover drag offset into the base rotation, then focus
     foldDrag.current?.();
-    focusRef.current = selected
-      ? locationToAngles(selected.lat, selected.lon)
-      : null;
+    focusRef.current = selected ? locationToAngles(selected.lat, selected.lon) : null;
   }, [selected]);
 
   const onPointerDown = useCallback((e: React.PointerEvent) => {
@@ -77,14 +105,12 @@ function GlobeCanvas({ selected }: { selected: City | null }) {
     if (!canvas) return;
 
     let globe: ReturnType<typeof createGlobe> | null = null;
-    // Start centred on Brazil (lon ≈ -38.5° → phi ≈ 2.81)
     const [brazilPhi] = locationToAngles(-10, -38.5);
     let currentPhi = brazilPhi;
-    let currentTheta = 0.15;
+    let currentTheta = 0.12;
     const doublePi = Math.PI * 2;
     const clampTheta = (t: number) => Math.max(-1.35, Math.min(1.35, t));
 
-    // Merge the finished drag into the base rotation so focus math stays exact
     foldDrag.current = () => {
       currentPhi += pointerMovement.current.x / 100;
       currentTheta = clampTheta(currentTheta + pointerMovement.current.y / 150);
@@ -101,9 +127,7 @@ function GlobeCanvas({ selected }: { selected: City | null }) {
       }
     };
     const onUp = () => {
-      if (pointerInteracting.current !== null) {
-        foldDrag.current?.();
-      }
+      if (pointerInteracting.current !== null) foldDrag.current?.();
       if (canvas) canvas.style.cursor = 'grab';
     };
     window.addEventListener('pointermove', onMove, { passive: true });
@@ -119,7 +143,7 @@ function GlobeCanvas({ selected }: { selected: City | null }) {
         width: size * 2,
         height: size * 2,
         phi: brazilPhi,
-        theta: 0.15,
+        theta: 0.12,
         dark: 0,
         diffuse: 1.5,
         mapSamples: 16000,
@@ -127,17 +151,13 @@ function GlobeCanvas({ selected }: { selected: City | null }) {
         baseColor: [1, 1, 1],
         markerColor: [240 / 255, 115 / 255, 45 / 255],
         glowColor: [0.98, 0.95, 0.92],
-        markers: CITIES.map((c) => ({
-          location: [c.lat, c.lon],
-          size: 0.06,
-        })),
+        markers: CITIES.map((c) => ({ location: [c.lat, c.lon], size: 0.06 })),
         onRender: (state) => {
           const focus = focusRef.current;
           const dragX = pointerMovement.current.x / 100;
           const dragY = pointerMovement.current.y / 150;
 
           if (focus) {
-            // Official cobe "rotate to location" math — shortest way around
             const [focusPhi, focusTheta] = focus;
             const distPositive = (focusPhi - currentPhi + doublePi) % doublePi;
             const distNegative = (currentPhi - focusPhi + doublePi) % doublePi;
@@ -148,9 +168,8 @@ function GlobeCanvas({ selected }: { selected: City | null }) {
             }
             currentTheta = currentTheta * 0.92 + focusTheta * 0.08;
           } else if (pointerInteracting.current === null) {
-            // Slow down near each city marker — min angular dist across all cities
-            const BASE_SPEED = 0.0132; // 3.3× original 0.004
-            const SLOW_RADIUS = 0.35;  // radians — ~20° of arc
+            const BASE_SPEED = 0.0132;
+            const SLOW_RADIUS = 0.35;
             const normPhi = ((currentPhi % doublePi) + doublePi) % doublePi;
             let minDist = Infinity;
             for (const city of CITIES) {
@@ -161,33 +180,27 @@ function GlobeCanvas({ selected }: { selected: City | null }) {
               );
               if (d < minDist) minDist = d;
             }
-            const speedMult = minDist < SLOW_RADIUS
-              ? 0.2 + 0.8 * (minDist / SLOW_RADIUS)
-              : 1;
+            const speedMult = minDist < SLOW_RADIUS ? 0.2 + 0.8 * (minDist / SLOW_RADIUS) : 1;
             currentPhi += BASE_SPEED * speedMult;
+            // Keep Brazil in view: gently pull theta back to ~0.12
+            currentTheta = currentTheta * 0.995 + 0.12 * 0.005;
           }
 
           state.phi = currentPhi + dragX;
           state.theta = clampTheta(currentTheta + dragY);
-          // Always use width for both dimensions to guarantee a perfect sphere
           const w = canvas.offsetWidth || size;
           state.width = w * 2;
           state.height = w * 2;
         },
       });
-      setTimeout(() => {
-        if (canvas) canvas.style.opacity = '1';
-      });
+      setTimeout(() => { if (canvas) canvas.style.opacity = '1'; });
     };
 
     if (canvas.offsetWidth > 0) {
       init();
     } else {
       const ro = new ResizeObserver((entries) => {
-        if (entries[0]?.contentRect.width > 0) {
-          ro.disconnect();
-          init();
-        }
+        if (entries[0]?.contentRect.width > 0) { ro.disconnect(); init(); }
       });
       ro.observe(canvas);
     }
@@ -200,13 +213,7 @@ function GlobeCanvas({ selected }: { selected: City | null }) {
     };
   }, []);
 
-  return (
-    <canvas
-      ref={canvasRef}
-      className="globe-canvas"
-      onPointerDown={onPointerDown}
-    />
-  );
+  return <canvas ref={canvasRef} className="globe-canvas" onPointerDown={onPointerDown} />;
 }
 
 function CityMedia({ cityId, file }: { cityId: string; file: string }) {
@@ -214,37 +221,21 @@ function CityMedia({ cityId, file }: { cityId: string; file: string }) {
   if (failed) return null;
   const src = `/background/${cityId}/${file}`;
   if (file.endsWith('.mp4')) {
-    return (
-      <video
-        src={src}
-        controls
-        playsInline
-        onError={() => setFailed(true)}
-      />
-    );
+    return <video src={src} controls playsInline onError={() => setFailed(true)} />;
   }
-  return (
-    <img
-      src={src}
-      alt={`Photo in ${cityId}`}
-      loading="lazy"
-      onError={() => setFailed(true)}
-    />
-  );
+  return <img src={src} alt={`Photo in ${cityId}`} loading="lazy" onError={() => setFailed(true)} />;
 }
 
 function CityPanel({ city, onClose }: { city: City; onClose: () => void }) {
   return (
     <motion.div
       className="city-panel"
-      initial={{ opacity: 0, y: 24 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: 16 }}
-      transition={{ duration: 0.4, ease: 'easeOut' }}
+      initial={{ opacity: 0, x: 20 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: 20 }}
+      transition={{ duration: 0.35, ease: 'easeOut' }}
     >
-      <button className="city-panel__close" onClick={onClose} aria-label="Close">
-        ✕
-      </button>
+      <button className="city-panel__close" onClick={onClose} aria-label="Close">✕</button>
 
       <div className="city-panel__text">
         <p className="city-panel__location">{city.name}</p>
@@ -255,7 +246,7 @@ function CityPanel({ city, onClose }: { city: City; onClose: () => void }) {
       </div>
 
       <div className="city-panel__photos">
-        {MEDIA_FILES.map((file) => (
+        {MEDIA_FILES.slice(0, PANEL_PHOTOS).map((file) => (
           <CityMedia key={file} cityId={city.id} file={file} />
         ))}
       </div>
@@ -263,8 +254,55 @@ function CityPanel({ city, onClose }: { city: City; onClose: () => void }) {
   );
 }
 
+// Overflow photos shown below the globe when a city is selected
+function GlobeOverflowPhotos({ city }: { city: City }) {
+  return (
+    <motion.div
+      className="globe-overflow-photos"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.4, delay: 0.15 }}
+    >
+      {MEDIA_FILES.slice(PANEL_PHOTOS).map((file) => (
+        <CityMedia key={file} cityId={city.id} file={file} />
+      ))}
+    </motion.div>
+  );
+}
+
+// Horizontal city timeline
+function CityTimeline({ selected, onSelect }: { selected: City | null; onSelect: (c: City) => void }) {
+  return (
+    <div className="city-timeline">
+      <div className="city-timeline__track">
+        {CITIES.map((city, i) => (
+          <div key={city.id} className="city-timeline__stop">
+            {i > 0 && <div className="city-timeline__line" />}
+            <button
+              className={`city-timeline__dot ${selected?.id === city.id ? 'city-timeline__dot--active' : ''}`}
+              onClick={() => onSelect(city)}
+              aria-label={city.name}
+            >
+              <span className="city-timeline__dot-inner" />
+            </button>
+            <div className="city-timeline__label">
+              <span className="city-timeline__city">{city.name.split(',')[0]}</span>
+              <span className="city-timeline__period">{city.period}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function BackgroundGlobe() {
   const [selected, setSelected] = useState<City | null>(null);
+
+  const handleSelect = (city: City) => {
+    setSelected(selected?.id === city.id ? null : city);
+  };
 
   return (
     <div className="background-section" id="background">
@@ -283,17 +321,20 @@ function BackgroundGlobe() {
               <button
                 key={city.id}
                 className={selected?.id === city.id ? 'active' : ''}
-                onClick={() => setSelected(selected?.id === city.id ? null : city)}
+                onClick={() => handleSelect(city)}
               >
                 {city.name}
               </button>
             ))}
             {selected && (
-              <button className="clear" onClick={() => setSelected(null)}>
-                Keep spinning
-              </button>
+              <button className="clear" onClick={() => setSelected(null)}>Keep spinning</button>
             )}
           </div>
+
+          {/* Overflow photos fill the space below the globe when open */}
+          <AnimatePresence>
+            {selected && <GlobeOverflowPhotos key={selected.id + '-overflow'} city={selected} />}
+          </AnimatePresence>
         </div>
 
         {/* ── Panel column ── */}
@@ -303,6 +344,9 @@ function BackgroundGlobe() {
           )}
         </AnimatePresence>
       </div>
+
+      {/* ── Horizontal timeline ── */}
+      <CityTimeline selected={selected} onSelect={handleSelect} />
     </div>
   );
 }
