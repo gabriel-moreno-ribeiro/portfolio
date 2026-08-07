@@ -1,6 +1,6 @@
 .background-section {
   padding: 80px 72px;
-  max-width: 1200px;
+  max-width: 1400px;
   width: 100%;
   margin: 0 auto;
   text-align: center;
@@ -16,8 +16,7 @@
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  gap: 48px;
-  transition: gap 0.5s ease;
+  gap: 40px;
 }
 
 .globe-column {
@@ -25,11 +24,13 @@
   flex-direction: column;
   align-items: center;
   flex-shrink: 0;
+  // Idle: centred large globe
   width: 784px;
   transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 
+  // Open: slightly smaller to give the panel room, but still large
   .globe-layout--open & {
-    width: 588px;
+    width: 680px;
   }
 }
 
@@ -61,13 +62,14 @@
     background: transparent;
     border: 1.5px solid var(--black);
     color: var(--black);
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
     border-radius: 999px;
-    padding: 8px 20px;
+    padding: 7px 16px;
     cursor: pointer;
     transition: all 0.2s;
     font-family: inherit;
+    white-space: nowrap;
 
     &:hover,
     &.active {
@@ -83,13 +85,31 @@
   }
 }
 
+// Overflow photos below the globe (visible only when panel is open)
+.globe-overflow-photos {
+  margin-top: 16px;
+  columns: 3;
+  column-gap: 8px;
+  width: 100%;
+
+  img, video {
+    display: block;
+    width: 100%;
+    border-radius: 10px;
+    object-fit: cover;
+    margin-bottom: 8px;
+    break-inside: avoid;
+  }
+}
+
 // ── City panel (right column) ──
 .city-panel {
   flex: 1;
-  min-width: 0;
+  min-width: 280px;
+  max-width: 420px;
   border: 1px solid rgba(0, 0, 0, 0.07);
   border-radius: 20px;
-  padding: 32px 28px;
+  padding: 28px 24px;
   text-align: left;
   position: relative;
   background: rgba($grey, 0.2);
@@ -97,11 +117,11 @@
 
   &__close {
     position: absolute;
-    top: 14px;
-    right: 14px;
+    top: 12px;
+    right: 12px;
     background: transparent;
     border: none;
-    font-size: 18px;
+    font-size: 17px;
     cursor: pointer;
     color: var(--black);
     opacity: 0.4;
@@ -115,8 +135,8 @@
   &__text {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    margin-bottom: 24px;
+    gap: 10px;
+    margin-bottom: 20px;
   }
 
   &__location {
@@ -129,7 +149,7 @@
   }
 
   &__headline {
-    font-size: 26px;
+    font-size: 24px;
     font-weight: 700;
     font-family: var(--font-serif);
     font-style: italic;
@@ -140,7 +160,7 @@
 
   &__para {
     font-size: 14px;
-    line-height: 1.7;
+    line-height: 1.65;
     color: var(--black);
     opacity: 0.72;
     margin: 0;
@@ -148,16 +168,109 @@
 
   &__photos {
     columns: 2;
-    column-gap: 10px;
+    column-gap: 8px;
 
     img, video {
       display: block;
       width: 100%;
       border-radius: 10px;
       object-fit: cover;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       break-inside: avoid;
     }
+  }
+}
+
+// ── Horizontal timeline ──
+.city-timeline {
+  margin-top: 56px;
+  padding: 0 8px;
+  overflow-x: auto;
+
+  &__track {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 0;
+    min-width: 480px;
+    position: relative;
+  }
+
+  &__stop {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    flex: 1;
+  }
+
+  &__line {
+    position: absolute;
+    top: 10px;
+    right: 50%;
+    width: 100%;
+    height: 2px;
+    background: rgba(0, 0, 0, 0.12);
+    z-index: 0;
+  }
+
+  &__dot {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 2px solid rgba(0, 0, 0, 0.15);
+    background: var(--gradient-start);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    z-index: 1;
+    font-family: inherit;
+    padding: 0;
+
+    &:hover {
+      border-color: $primary-orange;
+      transform: scale(1.15);
+    }
+
+    &--active {
+      border-color: $primary-orange;
+      background: $primary-orange;
+
+      .city-timeline__dot-inner {
+        background: #fff;
+      }
+    }
+  }
+
+  &__dot-inner {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: $primary-orange;
+    transition: background 0.2s;
+  }
+
+  &__label {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    text-align: center;
+  }
+
+  &__city {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--black);
+  }
+
+  &__period {
+    font-size: 10px;
+    color: $text-grey;
   }
 }
 
@@ -167,32 +280,49 @@
     background: rgba(#fff, 0.03);
     border-color: rgba(#fff, 0.07);
   }
+
+  .city-timeline {
+    &__line { background: rgba(#fff, 0.12); }
+    &__dot {
+      border-color: rgba(#fff, 0.2);
+      background: #0a0a1a;
+    }
+  }
 }
 
 // ── Mobile ──
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .background-section {
     padding: 40px 20px;
-
     > .heading { font-size: 32px; }
   }
 
   .globe-layout {
     flex-direction: column;
     align-items: center;
-    gap: 28px;
+    gap: 24px;
   }
 
   .globe-column {
     width: 100% !important;
-    max-width: 320px;
+    max-width: 360px;
+  }
+
+  .globe-overflow-photos {
+    columns: 3;
   }
 
   .city-panel {
     width: 100%;
-    padding: 22px 18px;
-
-    &__headline { font-size: 22px; }
+    max-width: 100%;
+    padding: 20px 16px;
+    &__headline { font-size: 20px; }
     &__photos { columns: 2; }
+  }
+
+  .city-timeline {
+    margin-top: 36px;
+    &__city { font-size: 11px; }
+    &__period { font-size: 9px; }
   }
 }
