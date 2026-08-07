@@ -46,11 +46,23 @@
   }
 
   &__empty {
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 60px 0;
+    width: 100%;
     color: $text-grey;
     font-size: 15px;
-    padding: 40px 0;
-    width: 100%;
+
+    p {
+      margin: 0;
+    }
+  }
+
+  &__empty-icon {
+    font-size: 40px;
+    opacity: 0.5;
   }
 }
 

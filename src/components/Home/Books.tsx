@@ -8,28 +8,6 @@ interface Book {
   year: string;
 }
 
-const YEARS = [
-  "2007-2008",
-  "2008-2009",
-  "2009-2010",
-  "2010-2011",
-  "2011-2012",
-  "2012-2013",
-  "2013-2014",
-  "2014-2015",
-  "2015-2016",
-  "2016-2017",
-  "2017-2018",
-  "2018-2019",
-  "2019-2020",
-  "2020-2021",
-  "2021-2022",
-  "2022-2023",
-  "2023-2024",
-  "2024-2025",
-  "2025-2026",
-];
-
 const BOOKS: Book[] = [
   // 2025-2026 (age 18)
   { title: "Made in America", cover: "/books/made-in-america.webp", stars: 5, year: "2025-2026" },
@@ -69,6 +47,9 @@ const BOOKS: Book[] = [
   { title: "Memórias Póstumas de Brás Cubas", cover: "/books/bras-cubas.jpg", stars: 4, year: "2017-2018" },
 ];
 
+// Only surface years that actually have books, in chronological order
+const YEARS_WITH_BOOKS = [...new Set(BOOKS.map((b) => b.year))].sort();
+
 function StarRating({ stars }: { stars: number }) {
   return (
     <div className="books-card__stars">
@@ -82,67 +63,43 @@ function StarRating({ stars }: { stars: number }) {
 }
 
 function Books() {
-  const [selectedYears, setSelectedYears] = useState<string[]>([]);
+  const [selectedYear, setSelectedYear] = useState<string | null>(null);
 
-  const toggleYear = (year: string) => {
-    setSelectedYears((prev) =>
-      prev.includes(year) ? prev.filter((y) => y !== year) : [...prev, year]
-    );
-  };
+  const filteredBooks = useMemo(
+    () => (selectedYear ? BOOKS.filter((b) => b.year === selectedYear) : []),
+    [selectedYear]
+  );
 
-  const filteredBooks = useMemo(() => {
-    if (selectedYears.length === 0) return BOOKS;
-    return BOOKS.filter((book) => selectedYears.includes(book.year));
-  }, [selectedYears]);
-
-  const getAge = (year: string) => {
-    const startYear = parseInt(year.split("-")[0]);
-    return startYear - 2007;
-  };
+  const getAge = (year: string) => parseInt(year.split("-")[0]) - 2007;
 
   return (
     <section className="books-section" id="books">
-      <h1
-        className="heading"
-        data-color-inverted="true"
-      >
+      <h1 className="heading" data-color-inverted="true">
         Books I've Read.
       </h1>
       <p className="books-section__subtitle">
-        Filter by year to see what I was reading at each age.
+        Pick a year to see what I was reading at that age.
       </p>
 
       <div className="books-section__years">
-        {YEARS.map((year) => {
-          const isActive = selectedYears.includes(year);
+        {YEARS_WITH_BOOKS.map((year) => {
+          const isActive = selectedYear === year;
           const age = getAge(year);
+          const count = BOOKS.filter((b) => b.year === year).length;
           return (
             <motion.button
               key={year}
               className={`books-year-chip ${isActive ? "books-year-chip--active" : ""}`}
-              onClick={() => toggleYear(year)}
+              onClick={() => setSelectedYear(isActive ? null : year)}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
               <span className="books-year-chip__year">{year}</span>
-              <span className="books-year-chip__age">age {age}</span>
+              <span className="books-year-chip__age">age {age} · {count} book{count !== 1 ? "s" : ""}</span>
             </motion.button>
           );
         })}
       </div>
-
-      {selectedYears.length > 0 && (
-        <motion.button
-          className="books-section__clear"
-          onClick={() => setSelectedYears([])}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          Clear selection
-        </motion.button>
-      )}
 
       <div className="books-grid">
         <AnimatePresence mode="popLayout">
@@ -154,31 +111,28 @@ function Books() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ delay: i * 0.05, duration: 0.3 }}
+                transition={{ delay: i * 0.04, duration: 0.3 }}
                 layout
               >
                 <div className="books-card__cover">
-                  <img
-                    src={book.cover}
-                    alt={book.title}
-                    loading="lazy"
-                  />
+                  <img src={book.cover} alt={book.title} loading="lazy" />
                 </div>
                 <div className="books-card__info">
                   <span className="books-card__title">{book.title}</span>
                   <StarRating stars={book.stars} />
-                  <span className="books-card__year">{book.year}</span>
                 </div>
               </motion.div>
             ))
           ) : (
-            <motion.p
+            <motion.div
               className="books-section__empty"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
+              key="empty"
             >
-              No books recorded for the selected years yet.
-            </motion.p>
+              <span className="books-section__empty-icon">📚</span>
+              <p>Select a year above to open the shelf.</p>
+            </motion.div>
           )}
         </AnimatePresence>
       </div>
