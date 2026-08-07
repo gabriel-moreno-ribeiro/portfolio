@@ -6,45 +6,47 @@ interface ScrambleTextProps {
   style?: React.CSSProperties;
 }
 
-// Cycles through texts with a fast fade — no scramble chars, always readable.
-// Screen readers get the real word via sr-only; the visible span is aria-hidden.
-function ScrambleText({
-  texts,
-  pauseDuration = 2500,
-  style,
-}: ScrambleTextProps) {
+// Typewriter: types each word character by character, pauses, deletes, cycles.
+// Always readable — no random characters.
+function ScrambleText({ texts, pauseDuration = 2200, style }: ScrambleTextProps) {
   const [index, setIndex] = useState(0);
-  const [visible, setVisible] = useState(true);
+  const [displayed, setDisplayed] = useState(texts[0].slice(0, 1));
+  const [phase, setPhase] = useState<"typing" | "pausing" | "deleting">("typing");
   const timerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   useEffect(() => {
-    const cycle = () => {
-      // fade out
-      setVisible(false);
-      timerRef.current = setTimeout(() => {
-        setIndex((i) => (i + 1) % texts.length);
-        // fade in
-        setVisible(true);
-        timerRef.current = setTimeout(cycle, pauseDuration);
-      }, 300);
-    };
+    const target = texts[index];
+    clearTimeout(timerRef.current);
 
-    timerRef.current = setTimeout(cycle, pauseDuration);
+    if (phase === "typing") {
+      if (displayed.length < target.length) {
+        timerRef.current = setTimeout(
+          () => setDisplayed(target.slice(0, displayed.length + 1)),
+          55
+        );
+      } else {
+        timerRef.current = setTimeout(() => setPhase("deleting"), pauseDuration);
+      }
+    } else if (phase === "deleting") {
+      if (displayed.length > 0) {
+        timerRef.current = setTimeout(
+          () => setDisplayed((d) => d.slice(0, -1)),
+          30
+        );
+      } else {
+        setIndex((i) => (i + 1) % texts.length);
+        setPhase("typing");
+      }
+    }
+
     return () => clearTimeout(timerRef.current);
-  }, [texts, pauseDuration]);
+  }, [displayed, phase, index, texts, pauseDuration]);
 
   return (
     <>
-      <span
-        aria-hidden="true"
-        style={{
-          ...style,
-          opacity: visible ? 1 : 0,
-          transition: "opacity 0.3s ease",
-          display: "inline-block",
-        }}
-      >
-        {texts[index]}
+      <span aria-hidden="true" style={style}>
+        {displayed}
+        <span className="typewriter-cursor">|</span>
       </span>
       <span className="sr-only">{texts[index]}</span>
     </>

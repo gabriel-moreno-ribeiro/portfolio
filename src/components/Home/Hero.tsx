@@ -93,9 +93,9 @@ function Hero() {
                 fontStyle: 'italic',
               }}
               texts={['Founder', 'Builder', 'Researcher', 'Developer']}
-              pauseDuration={2500}
+              pauseDuration={2200}
             />
-            <span className="role-suffix">& CEO.</span>
+            <span className="role-suffix">& Curious.</span>
           </div>
         </motion.div>
         <motion.p

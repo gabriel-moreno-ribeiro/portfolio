@@ -77,8 +77,10 @@ function GlobeCanvas({ selected }: { selected: City | null }) {
     if (!canvas) return;
 
     let globe: ReturnType<typeof createGlobe> | null = null;
-    let currentPhi = 0;
-    let currentTheta = 0.3;
+    // Start centred on Brazil (lon ≈ -38.5° → phi ≈ 2.81)
+    const [brazilPhi] = locationToAngles(-10, -38.5);
+    let currentPhi = brazilPhi;
+    let currentTheta = 0.15;
     const doublePi = Math.PI * 2;
     const clampTheta = (t: number) => Math.max(-1.35, Math.min(1.35, t));
 
@@ -116,8 +118,8 @@ function GlobeCanvas({ selected }: { selected: City | null }) {
         devicePixelRatio: 2,
         width: size * 2,
         height: size * 2,
-        phi: 0,
-        theta: 0.3,
+        phi: brazilPhi,
+        theta: 0.15,
         dark: 0,
         diffuse: 1.5,
         mapSamples: 16000,
@@ -147,7 +149,7 @@ function GlobeCanvas({ selected }: { selected: City | null }) {
             currentTheta = currentTheta * 0.92 + focusTheta * 0.08;
           } else if (pointerInteracting.current === null) {
             // Slow down near each city marker — min angular dist across all cities
-            const BASE_SPEED = 0.0068; // 1.7× original 0.004
+            const BASE_SPEED = 0.0108; // 2.7× original 0.004
             const SLOW_RADIUS = 0.35;  // radians — ~20° of arc
             const normPhi = ((currentPhi % doublePi) + doublePi) % doublePi;
             let minDist = Infinity;
@@ -244,20 +246,18 @@ function CityPanel({ city, onClose }: { city: City; onClose: () => void }) {
         ✕
       </button>
 
-      <div className="city-panel__body">
-        <div className="city-panel__text">
-          <p className="city-panel__location">{city.name}</p>
-          <h3 className="city-panel__headline">{city.headline}</h3>
-          {city.story.map((para, i) => (
-            <p key={i} className="city-panel__para">{para}</p>
-          ))}
-        </div>
+      <div className="city-panel__text">
+        <p className="city-panel__location">{city.name}</p>
+        <h3 className="city-panel__headline">{city.headline}</h3>
+        {city.story.map((para, i) => (
+          <p key={i} className="city-panel__para">{para}</p>
+        ))}
+      </div>
 
-        <div className="city-panel__photos">
-          {MEDIA_FILES.map((file) => (
-            <CityMedia key={file} cityId={city.id} file={file} />
-          ))}
-        </div>
+      <div className="city-panel__photos">
+        {MEDIA_FILES.map((file) => (
+          <CityMedia key={file} cityId={city.id} file={file} />
+        ))}
       </div>
     </motion.div>
   );
@@ -271,28 +271,38 @@ function BackgroundGlobe() {
       <h1 className="heading" data-color-inverted="true">
         Where I Come From.
       </h1>
-      <div className={`globe-wrap ${selected ? 'zoomed' : ''}`}>
-        <GlobeCanvas selected={selected} />
+
+      <div className={`globe-layout ${selected ? 'globe-layout--open' : ''}`}>
+        {/* ── Globe column ── */}
+        <div className="globe-column">
+          <div className="globe-wrap">
+            <GlobeCanvas selected={selected} />
+          </div>
+          <div className="globe-buttons">
+            {CITIES.map((city) => (
+              <button
+                key={city.id}
+                className={selected?.id === city.id ? 'active' : ''}
+                onClick={() => setSelected(selected?.id === city.id ? null : city)}
+              >
+                {city.name}
+              </button>
+            ))}
+            {selected && (
+              <button className="clear" onClick={() => setSelected(null)}>
+                Keep spinning
+              </button>
+            )}
+          </div>
+        </div>
+
+        {/* ── Panel column ── */}
+        <AnimatePresence>
+          {selected && (
+            <CityPanel key={selected.id} city={selected} onClose={() => setSelected(null)} />
+          )}
+        </AnimatePresence>
       </div>
-      <div className="globe-buttons">
-        {CITIES.map((city) => (
-          <button
-            key={city.id}
-            className={selected?.id === city.id ? 'active' : ''}
-            onClick={() => setSelected(selected?.id === city.id ? null : city)}
-          >
-            {city.name}
-          </button>
-        ))}
-        {selected && (
-          <button className="clear" onClick={() => setSelected(null)}>
-            Keep spinning
-          </button>
-        )}
-      </div>
-      <AnimatePresence>
-        {selected && <CityPanel key={selected.id} city={selected} onClose={() => setSelected(null)} />}
-      </AnimatePresence>
     </div>
   );
 }
