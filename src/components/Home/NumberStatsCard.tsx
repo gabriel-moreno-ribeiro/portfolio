@@ -6,9 +6,10 @@ interface CardProps {
   frontCard: boolean;
   exitX: number;
   imgSrc?: string;
+  imgPadding?: number;
 }
 
-const NumberStatsCard: React.FC<CardProps> = ({ frontCard, exitX, imgSrc }) => {
+const NumberStatsCard: React.FC<CardProps> = ({ frontCard, exitX, imgSrc, imgPadding = 18 }) => {
   const isMobile = useIsMobile();
   const x = useMotionValue(0);
   const scale = useTransform(x, [-150, 0, 150], [0.5, 1, 0.5]);
@@ -45,7 +46,14 @@ const NumberStatsCard: React.FC<CardProps> = ({ frontCard, exitX, imgSrc }) => {
       }
     >
       <motion.div className="card-content" style={{ scale }}>
-        {imgSrc && <img src={imgSrc} alt="icon" className="icon-img" />}
+        {imgSrc && (
+          <img
+            src={imgSrc}
+            alt="icon"
+            className="icon-img"
+            style={{ padding: `${imgPadding}px` }}
+          />
+        )}
       </motion.div>
     </motion.div>
   );
