@@ -93,6 +93,7 @@ function Hero() {
                 fontStyle: 'italic',
               }}
               texts={['Founder', 'Builder', 'Researcher', 'Developer']}
+              speed={40}
               pauseDuration={2200}
             />
             <span className="role-suffix">& Curious.</span>

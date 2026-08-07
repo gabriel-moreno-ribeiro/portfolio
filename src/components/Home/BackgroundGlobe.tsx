@@ -149,7 +149,7 @@ function GlobeCanvas({ selected }: { selected: City | null }) {
             currentTheta = currentTheta * 0.92 + focusTheta * 0.08;
           } else if (pointerInteracting.current === null) {
             // Slow down near each city marker — min angular dist across all cities
-            const BASE_SPEED = 0.0108; // 2.7× original 0.004
+            const BASE_SPEED = 0.0132; // 3.3× original 0.004
             const SLOW_RADIUS = 0.35;  // radians — ~20° of arc
             const normPhi = ((currentPhi % doublePi) + doublePi) % doublePi;
             let minDist = Infinity;
