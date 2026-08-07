@@ -12,7 +12,7 @@ const STATS = [
     text: `<span class="orange"> 3,392 </span>Students Impacted (Projeto Candela)`,
   },
   {
-    img: '/stats/sat.png',
+    img: '/stats/sat.webp',
     text: `<span class="orange"> SAT 1510 </span>/ 1600 (Top 1% Brazil)`,
   },
   {
