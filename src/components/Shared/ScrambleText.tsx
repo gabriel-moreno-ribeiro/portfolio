@@ -1,54 +1,72 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+
+const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
 interface ScrambleTextProps {
   texts: string[];
+  speed?: number;
   pauseDuration?: number;
   style?: React.CSSProperties;
 }
 
-// Typewriter: types each word character by character, pauses, deletes, cycles.
-// Always readable — no random characters.
-function ScrambleText({ texts, pauseDuration = 2200, style }: ScrambleTextProps) {
-  const [index, setIndex] = useState(0);
-  const [displayed, setDisplayed] = useState(texts[0].slice(0, 1));
-  const [phase, setPhase] = useState<"typing" | "pausing" | "deleting">("typing");
-  const timerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
+// Scramble decode: all chars random at once, reveals left-to-right.
+// speed=40 → full decode in ~(word.length * 20ms) ≈ 120-160ms — always readable fast.
+function ScrambleText({
+  texts,
+  speed = 40,
+  pauseDuration = 2200,
+  style,
+}: ScrambleTextProps) {
+  const [display, setDisplay] = useState(texts[0]);
+  const indexRef = useRef(0);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout>>(undefined);
+  const intervalRef = useRef<ReturnType<typeof setInterval>>(undefined);
+
+  const scrambleTo = useCallback(
+    (target: string) => {
+      let iteration = 0;
+      clearInterval(intervalRef.current);
+
+      intervalRef.current = setInterval(() => {
+        setDisplay(
+          target
+            .split("")
+            .map((char, i) => {
+              if (i < iteration) return char;
+              return CHARS[Math.floor(Math.random() * CHARS.length)];
+            })
+            .join("")
+        );
+
+        iteration += 1;
+        if (iteration > target.length) {
+          clearInterval(intervalRef.current);
+          setDisplay(target);
+        }
+      }, speed / 2);
+    },
+    [speed]
+  );
 
   useEffect(() => {
-    const target = texts[index];
-    clearTimeout(timerRef.current);
+    const cycle = () => {
+      indexRef.current = (indexRef.current + 1) % texts.length;
+      scrambleTo(texts[indexRef.current]);
+      timeoutRef.current = setTimeout(cycle, pauseDuration + texts[indexRef.current].length * (speed / 2));
+    };
 
-    if (phase === "typing") {
-      if (displayed.length < target.length) {
-        timerRef.current = setTimeout(
-          () => setDisplayed(target.slice(0, displayed.length + 1)),
-          55
-        );
-      } else {
-        timerRef.current = setTimeout(() => setPhase("deleting"), pauseDuration);
-      }
-    } else if (phase === "deleting") {
-      if (displayed.length > 0) {
-        timerRef.current = setTimeout(
-          () => setDisplayed((d) => d.slice(0, -1)),
-          30
-        );
-      } else {
-        setIndex((i) => (i + 1) % texts.length);
-        setPhase("typing");
-      }
-    }
+    timeoutRef.current = setTimeout(cycle, pauseDuration);
 
-    return () => clearTimeout(timerRef.current);
-  }, [displayed, phase, index, texts, pauseDuration]);
+    return () => {
+      clearTimeout(timeoutRef.current);
+      clearInterval(intervalRef.current);
+    };
+  }, [texts, speed, pauseDuration, scrambleTo]);
 
   return (
     <>
-      <span aria-hidden="true" style={style}>
-        {displayed}
-        <span className="typewriter-cursor">|</span>
-      </span>
-      <span className="sr-only">{texts[index]}</span>
+      <span aria-hidden="true" style={style}>{display}</span>
+      <span className="sr-only">{texts[indexRef.current]}</span>
     </>
   );
 }
