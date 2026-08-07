@@ -10,7 +10,7 @@ export const work = [
       },
       modalData: {
         title: "HIBEEX - Financial AI for SMBs",
-        desc: "Turning accountants into business advisors for every SMB through AI and Cognitive Automation. Full-stack B2B FinTech platform with intelligent financial insights and automated workflows.",
+        desc: "B2B FinTech that turns accountants into business advisors for small businesses. Converts raw financial data into decisions owners can act on. One of 6 startups in the Canastra Ventures AI Residency.",
         infoHeading: "Technologies Used",
         infoArr: [
           "TypeScript",
@@ -31,7 +31,7 @@ export const work = [
       },
       modalData: {
         title: "GSAT Education",
-        desc: "EdTech startup focused on standardized test preparation. Built the platform from scratch, managing product development and go-to-market strategy for students preparing for competitive exams.",
+        desc: "EdTech startup for standardized test prep. Built the platform from scratch as founding CEO — product, engineering, and go-to-market.",
         infoHeading: "Technologies Used",
         infoArr: [
           "React",
@@ -43,49 +43,13 @@ export const work = [
     },
     {
       cardData: {
-        title: "Financial Literacy RCT Study",
-        url: null,
-        imgUrl: null,
-      },
-      modalData: {
-        title: "Financial Literacy RCT Study",
-        desc: "Conducted a Randomized Controlled Trial with 208 low-income scholarship students from OBMEP. 3-month field experiment testing digital tools as cognitive prostheses for financial education. Hybrid group saved over 100% of expected residual income.",
-        infoHeading: "Research Methods",
-        infoArr: [
-          "Statistical Analysis",
-          "RCT Design",
-          "Data Science",
-          "Python",
-        ],
-      },
-    },
-    {
-      cardData: {
-        title: "Chemical Kinetics Research",
-        url: null,
-        imgUrl: null,
-      },
-      modalData: {
-        title: "Steady-State Hypothesis in Chemical Kinetics",
-        desc: "Undergraduate thesis at Instituto Principia on the steady-state hypothesis in chemical kinetics and physicochemical modeling. Research at the intersection of physics and chemistry.",
-        infoHeading: "Tools & Methods",
-        infoArr: [
-          "MATLAB",
-          "Mathematica",
-          "LaTeX",
-          "Python",
-        ],
-      },
-    },
-    {
-      cardData: {
         title: "Projeto Candela - Physics Lab Kits",
         url: null,
         imgUrl: null,
       },
       modalData: {
         title: "Projeto Candela - Low-Cost Physics Lab Kits",
-        desc: "Founded Projeto Candela after winning gold at OBFEP. Personally funded and built low-cost experimental kits for physics experiments, distributed across public schools in Salvador. Reached 3,392 students in 28 public schools. Physics failure rates dropped from 30% to 10%.",
+        desc: "After winning gold at OBFEP, I personally funded and built low-cost physics experiment kits and distributed them across public schools in Salvador. 3,392 students in 28 schools. Physics failure rates went from 30% to 10%.",
         infoHeading: "Impact",
         infoArr: [
           "3,392 students reached",
@@ -105,7 +69,7 @@ export const work = [
       },
       modalData: {
         title: "Olympic Club - Colegio Militar de Salvador",
-        desc: "Led the executive board as President, representing the organization in all official matters. Spearheaded comprehensive restructuring and secured support for 17 major initiatives. Drove 47% increase in student participation and 62% increase in national olympiad results.",
+        desc: "Served as President for 2 years, restructured the club from the ground up, and pushed 17 major initiatives through. Student participation up 47%. National olympiad results up 62%.",
         infoHeading: "Key Results",
         infoArr: [
           "+47% participation",
@@ -123,7 +87,7 @@ export const work = [
       },
       modalData: {
         title: "Fundacao Estudar - PREP Program",
-        desc: "Selected as one of ~70 scholars from 10,000+ applicants (0.7% acceptance rate). Brazil's longest-running and most competitive college access program, preparing students for international universities.",
+        desc: "One of ~70 scholars selected from 10,000+ applicants — 0.7% acceptance. Brazil's most competitive college access program for international universities.",
         infoHeading: "Selection",
         infoArr: [
           "0.7% acceptance",
@@ -141,7 +105,7 @@ export const work = [
       },
       modalData: {
         title: "Escola de Talentos - Instituto Principia",
-        desc: "One of 14 students selected nationally. Advanced physics classes including quantum mechanics, relativity, and statistical physics. Currently conducting research at the intersection of physics and chemistry.",
+        desc: "One of 14 students selected nationally. Covered quantum mechanics, relativity, and statistical physics. Research in chemical kinetics under Prof. Juliano Bonacin, Ph.D.",
         infoHeading: "Focus Areas",
         infoArr: [
           "Quantum Mechanics",
@@ -159,7 +123,7 @@ export const work = [
       },
       modalData: {
         title: "IFT-UNESP - Instituto de Fisica Teorica",
-        desc: "Ranked 1st among 10,000+ applicants for the IFT-UNESP selection at the Instituto de Fisica Teorica. Only representative from the Northeast region of Brazil.",
+        desc: "Ranked 1st among 10,000+ applicants. The only student from Northeast Brazil selected that year.",
         infoHeading: "Achievement",
         infoArr: [
           "1st of 10,000+",
@@ -178,7 +142,7 @@ export const work = [
       },
       modalData: {
         title: "Academic Olympiad Achievements",
-        desc: "Won 39 medals across 49 competitions including 19 gold medals and 2 international awards. Subjects span Mathematics, Physics, Chemistry, Biology, Astronomy, and more. Highlights: 1st of 10,000+ at IFT-UNESP, SAT 1510/1600 (top 1% Brazil), Gold at ONNEQ, Silver at OBMEP, Bronze at OBQ.",
+        desc: "39 medals across 49 competitions — 19 gold, 2 international. Math, physics, chemistry, biology, astronomy. 1st of 10,000+ at IFT-UNESP. SAT 1510/1600 (top 1% Brazil). Gold at ONNEQ. Silver at OBMEP. Bronze at OBQ.",
         infoHeading: "Highlights",
         infoArr: [
           "19 Gold Medals",
@@ -196,7 +160,7 @@ export const work = [
       },
       modalData: {
         title: "University of St Andrews - Global Merit Scholarship",
-        desc: "Admitted to the University of St Andrews (Scotland) for Computer Science & Economics with a Global Merit Scholarship — one of the most selective programs in the UK. Chose to take a build year to go deeper on HIBEEX before starting university.",
+        desc: "Admitted to St Andrews for Computer Science & Economics with a Global Merit Scholarship. Taking a build year to go deeper on HIBEEX before starting.",
         infoHeading: "Details",
         infoArr: [
           "CS & Economics",
@@ -214,7 +178,7 @@ export const work = [
       },
       modalData: {
         title: "Insper - Computer Engineering, 1st Place",
-        desc: "Approved in 1st place in the admissions process for Computer Engineering at Insper, one of Brazil's top engineering schools.",
+        desc: "1st place in admissions for Computer Engineering at Insper, one of Brazil's top engineering schools.",
         infoHeading: "Details",
         infoArr: [
           "1st place overall",
@@ -231,7 +195,7 @@ export const work = [
       },
       modalData: {
         title: "BRASA & Latitud Fellowship",
-        desc: "Selected for BRASA (Brazilian Student Association) among 1,000+ candidates and for the Latitud Fellowship program for founders building in Latin America.",
+        desc: "Selected for BRASA from 1,000+ candidates and for the Latitud Fellowship for founders building in Latin America.",
         infoHeading: "Programs",
         infoArr: [
           "BRASA Selected",

@@ -23,7 +23,7 @@ const researchItems: ResearchItem[] = [
     year: '2025',
     advisor: 'Aaron Litvin, Ph.D. (Harvard)',
     abstract:
-      'Randomized controlled trial with 208 public-school students measuring how access to fintech apps changes savings behavior. Treatment group saved 130% more than control over the study period.',
+      'RCT with 208 public-school students on whether fintech apps change savings behavior. The treatment group saved 130% more than control over the study period.',
     tags: ['RCT', 'Fintech', 'Behavioral Economics', 'Python', 'Statistics'],
     pdf: '/research/fintech-rct/paper.pdf',
   },
@@ -34,7 +34,7 @@ const researchItems: ResearchItem[] = [
     year: '2023-2025',
     advisor: 'Prof. Juliano Bonacin, Ph.D.',
     abstract:
-      '59-page thesis modeling reaction rate mechanisms with 97% accuracy using numerical methods. Covered steady-state approximation, Michaelis-Menten kinetics, and oscillating reactions.',
+      '59-page thesis modeling reaction rate mechanisms — 97% accuracy using numerical methods. Covers steady-state approximation, Michaelis-Menten kinetics, and oscillating reactions.',
     tags: ['MATLAB', 'Mathematica', 'LaTeX', 'Numerical Methods', 'Kinetics'],
     pdf: '/research/chemical-kinetics/paper.pdf',
   },
@@ -44,7 +44,7 @@ const researchItems: ResearchItem[] = [
     field: 'Physics Education',
     year: '2023-2024',
     abstract:
-      'Designed and distributed low-cost experimental physics kits to 28 public schools, reaching 3,392 students. Measured a drop in physics failure rates from 30% to 10% in participating classrooms.',
+      'Built and distributed low-cost physics experiment kits to 28 public schools. 3,392 students. Physics failure rates went from 30% to 10% in participating classrooms.',
     tags: ['Physics Education', 'Experimental Design', '3,392 students', '28 schools'],
     pdf: '/research/projeto-candela/paper.pdf',
   },
@@ -163,7 +163,7 @@ function Research() {
         Research
       </h1>
       <p className="research-section__subtitle">
-        From behavioral economics to physical chemistry — here's what I've investigated.
+        Behavioral economics, physical chemistry, and physics education.
       </p>
       <div className="research-grid">
         {researchItems.map((item, i) => (
