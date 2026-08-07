@@ -13,7 +13,8 @@
       // Apply dark mode synchronously to prevent FOUC
       try {
         var saved = localStorage.getItem("darkMode");
-        if (saved === "true") {
+        var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        if (saved === "true" || (saved === null && prefersDark)) {
           document.documentElement.setAttribute("data-theme", "dark");
         }
       } catch (e) {}
