@@ -1,4 +1,5 @@
 import createGlobe from 'cobe';
+import { AnimatePresence, motion } from 'motion/react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 interface City {
@@ -6,7 +7,8 @@ interface City {
   name: string;
   lat: number;
   lon: number;
-  blurb: string;
+  headline: string;
+  story: string[];
 }
 
 // Coordenadas exatas:
@@ -14,19 +16,27 @@ interface City {
 const CITIES: City[] = [
   {
     id: 'missao-velha',
-    name: 'Missao Velha, Ceara',
+    name: 'Missão Velha, Ceará',
     lat: -7.2497,
     lon: -39.1431,
-    blurb:
-      "Where my family's story begins, in the interior of Ceara — the roots of everything.",
+    headline: 'Where the roots are.',
+    story: [
+      'A small city in the interior of Ceará. My grandparents are from here. My father grew up here.',
+      'Every time I went back as a kid, something clicked about where I came from — the heat, the simplicity, the way people knew each other by name.',
+      'It\'s the kind of place that doesn\'t show up on anyone\'s map of Brazilian ambition. But it\'s where mine started.',
+    ],
   },
   {
     id: 'salvador',
     name: 'Salvador, Bahia',
     lat: -12.9747,
     lon: -38.4767,
-    blurb:
-      'Where I grew up — home of Colegio Militar, the first medals, and Projeto Candela.',
+    headline: 'Where I grew up.',
+    story: [
+      'I moved to Salvador when I was young and grew up here. Got into Colégio Militar at 10 — one of 30 from 2,500 applicants, perfect score in math.',
+      'The city shaped how I think. The olympiads started here. Projeto Candela was built for schools here. The first time I really built something that mattered was in Salvador.',
+      'I still call it home.',
+    ],
   },
 ];
 
@@ -208,20 +218,33 @@ function CityMedia({ cityId, file }: { cityId: string; file: string }) {
 
 function CityPanel({ city, onClose }: { city: City; onClose: () => void }) {
   return (
-    <div className="city-panel">
-      <div className="city-panel-header">
-        <h3>{city.name}</h3>
-        <button onClick={onClose} aria-label="Close">
-          ✕
-        </button>
+    <motion.div
+      className="city-panel"
+      initial={{ opacity: 0, y: 24 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 16 }}
+      transition={{ duration: 0.4, ease: 'easeOut' }}
+    >
+      <button className="city-panel__close" onClick={onClose} aria-label="Close">
+        ✕
+      </button>
+
+      <div className="city-panel__body">
+        <div className="city-panel__text">
+          <p className="city-panel__location">{city.name}</p>
+          <h3 className="city-panel__headline">{city.headline}</h3>
+          {city.story.map((para, i) => (
+            <p key={i} className="city-panel__para">{para}</p>
+          ))}
+        </div>
+
+        <div className="city-panel__photos">
+          {MEDIA_FILES.map((file) => (
+            <CityMedia key={file} cityId={city.id} file={file} />
+          ))}
+        </div>
       </div>
-      <p>{city.blurb}</p>
-      <div className="city-photos">
-        {MEDIA_FILES.map((file) => (
-          <CityMedia key={file} cityId={city.id} file={file} />
-        ))}
-      </div>
-    </div>
+    </motion.div>
   );
 }
 
@@ -252,7 +275,9 @@ function BackgroundGlobe() {
           </button>
         )}
       </div>
-      {selected && <CityPanel city={selected} onClose={() => setSelected(null)} />}
+      <AnimatePresence>
+        {selected && <CityPanel key={selected.id} city={selected} onClose={() => setSelected(null)} />}
+      </AnimatePresence>
     </div>
   );
 }
