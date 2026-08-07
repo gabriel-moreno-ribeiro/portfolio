@@ -79,7 +79,7 @@ function Books() {
         Books I've Read.
       </h1>
       <p className="books-section__subtitle">
-        A lifetime of reading — select years to explore my journey through books.
+        Filter by year to see what I was reading at each age.
       </p>
 
       <div className="books-section__years">
