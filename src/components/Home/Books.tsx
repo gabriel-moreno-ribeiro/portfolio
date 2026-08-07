@@ -27,14 +27,16 @@ const YEARS = [
   "2022-2023",
   "2023-2024",
   "2024-2025",
+  "2025-2026",
 ];
 
-// Books data — add your books here
-// cover path format: /books/{slug}.webp
 const BOOKS: Book[] = [
-  // Example entries (replace with your real data):
-  // { title: "O Pequeno Príncipe", cover: "/books/pequeno-principe.webp", stars: 5, year: "2014-2015" },
-  // { title: "Harry Potter e a Pedra Filosofal", cover: "/books/hp1.webp", stars: 5, year: "2016-2017" },
+  { title: "The Way of the Wolf", cover: "/books/way-of-the-wolf.webp", stars: 5, year: "2024-2025" },
+  { title: "The Wolf of Wall Street", cover: "/books/wolf-of-wall-street.webp", stars: 5, year: "2024-2025" },
+  { title: "Catching the Wolf of Wall Street", cover: "/books/catching-wolf.webp", stars: 4, year: "2024-2025" },
+  { title: "The Complete Sherlock Holmes", cover: "/books/sherlock-holmes.webp", stars: 5, year: "2024-2025" },
+  { title: "IDEA", cover: "/books/idea.webp", stars: 5, year: "2024-2025" },
+  { title: "Made in America", cover: "/books/made-in-america.webp", stars: 5, year: "2025-2026" },
 ];
 
 function StarRating({ stars }: { stars: number }) {
@@ -145,9 +147,7 @@ function Books() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
             >
-              {selectedYears.length > 0
-                ? "No books recorded for the selected years yet."
-                : "Books coming soon — add your reading history!"}
+              No books recorded for the selected years yet.
             </motion.p>
           )}
         </AnimatePresence>
