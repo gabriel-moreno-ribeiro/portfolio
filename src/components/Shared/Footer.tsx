@@ -1,25 +1,25 @@
 function Footer() {
   const links = [
-    {
-      name: "LinkedIn.",
-      href: "https://linkedin.com/in/gabriel-moreno-ribeiro",
-    },
-    {
-      name: "Github.",
-      href: "https://github.com/gabriel-moreno-ribeiro",
-    },
-    {
-      name: "Email.",
-      href: "mailto:gabrielmribeiro@hibeex.com.br",
-    },
-    {
-      name: "llms.txt",
-      href: "/llms.txt",
-    },
+    { name: "LinkedIn.", href: "https://linkedin.com/in/gabriel-moreno-ribeiro" },
+    { name: "Github.", href: "https://github.com/gabriel-moreno-ribeiro" },
+    { name: "Email.", href: "mailto:gabrielmribeiro@hibeex.com.br" },
+    { name: "Privacy.", href: "/privacy" },
+    { name: "llms.txt", href: "/llms.txt" },
   ];
 
   return (
-    <div className="footer">
+    <footer className="footer" role="contentinfo">
+      <div className="footer__cta">
+        <p className="footer__cta-text">
+          Building financial AI for small businesses. Want to connect?
+        </p>
+        <a
+          href="mailto:gabrielmribeiro@hibeex.com.br"
+          className="footer__cta-link"
+        >
+          gabrielmribeiro@hibeex.com.br
+        </a>
+      </div>
       <div className="links">
         {links.map((link, i) => (
           <a
@@ -32,7 +32,10 @@ function Footer() {
           </a>
         ))}
       </div>
-    </div>
+      <p className="footer__copy">
+        © {new Date().getFullYear()} Gabriel Moreno Ribeiro
+      </p>
+    </footer>
   );
 }
 

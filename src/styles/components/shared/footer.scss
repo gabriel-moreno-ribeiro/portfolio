@@ -1,13 +1,42 @@
 .footer {
   background-color: rgba($black, 0.9);
-  padding: 12px 36px;
+  padding: 20px 36px;
   border-radius: 36px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 12px;
   margin-bottom: 24px;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+
+  &__cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+
+  &__cta-text {
+    color: rgba($white, 0.6);
+    font-size: 13px;
+    text-align: center;
+  }
+
+  &__cta-link {
+    color: $white;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.2s;
+    &:hover { color: $primary-orange; }
+  }
+
+  &__copy {
+    color: rgba($white, 0.3);
+    font-size: 12px;
+  }
 
   .links {
     display: flex;

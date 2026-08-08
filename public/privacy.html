@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy — Gabriel Moreno Ribeiro</title>
+  <meta name="description" content="Privacy policy for gabrielmr.com — what data is collected and how." />
+  <link rel="canonical" href="https://gabrielmr.com/privacy" />
+  <link rel="icon" href="/favicon.ico" />
+  <meta name="theme-color" content="#fff8f4" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#0a0a1a" media="(prefers-color-scheme: dark)" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" />
+  <style>
+    :root {
+      --bg: #fff8f4; --fg: #111; --fg-muted: #5f5f5f;
+      --accent: #b8501a; --accent-decor: #f0732d;
+      --border: #e7e7e7; --surface: #ffffff;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0a0a1a; --fg: #ffffff; --fg-muted: #a8a8b8;
+        --accent: #f0732d; --border: rgba(255,255,255,0.14); --surface: #16162e;
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition-duration: 0.01ms !important; }
+    }
+    * { margin: 0; box-sizing: border-box; }
+    body {
+      background: var(--bg); color: var(--fg);
+      font-family: "DM Sans", system-ui, sans-serif;
+      min-height: 100vh;
+      line-height: 1.7;
+    }
+    .wrap { max-width: 760px; margin: 0 auto; padding: 48px 24px; }
+    nav { display: flex; gap: 24px; margin-bottom: 64px; font-size: 15px; }
+    nav a { color: var(--fg-muted); text-decoration: none; }
+    nav a:hover { color: var(--accent); }
+    nav a:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+    .home-link { font-weight: 700; color: var(--fg) !important; }
+    h1 { font-family: "DM Serif Display", Georgia, serif; font-size: clamp(28px, 6vw, 44px); font-weight: 400; margin-bottom: 8px; }
+    .date { color: var(--fg-muted); font-size: 0.9rem; margin-bottom: 40px; }
+    h2 { font-size: 1.15rem; font-weight: 700; margin: 32px 0 12px; }
+    p { color: var(--fg); margin-bottom: 16px; font-size: 0.97rem; }
+    ul { margin: 0 0 16px 24px; }
+    li { margin-bottom: 8px; font-size: 0.97rem; }
+    a { color: var(--accent); }
+    a:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+    .back { display: inline-block; margin-top: 40px; color: var(--accent); text-decoration: none; font-weight: 600; }
+    .back:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <nav>
+      <a href="/" class="home-link">Gabriel MR</a>
+    </nav>
+
+    <h1>Privacy Policy</h1>
+    <p class="date">Last updated: August 2026</p>
+
+    <p>This page explains what data gabrielmr.com collects and how it's used. It's short and honest.</p>
+
+    <h2>Camera &amp; Gesture Mode</h2>
+    <p>The site has an optional hands-free navigation mode powered by <a href="https://developers.google.com/mediapipe" target="_blank" rel="noopener">MediaPipe</a> (Google). To use it, you must explicitly click "Enable Handsfree Mode" and grant camera permission.</p>
+    <ul>
+      <li>Camera data never leaves your device.</li>
+      <li>All processing happens locally in your browser — no frames are sent to any server.</li>
+      <li>No images or video are stored or recorded.</li>
+    </ul>
+    <p>You can revoke camera access at any time from your browser settings, or by refreshing the page without clicking the button.</p>
+
+    <h2>Analytics</h2>
+    <p>This site uses <a href="https://posthog.com" target="_blank" rel="noopener">PostHog</a> for privacy-respecting analytics. PostHog is configured with:</p>
+    <ul>
+      <li><strong>Session recordings</strong> — enabled, but all text inputs and content are masked. No keystrokes or typed content are captured, including in the terminal.</li>
+      <li><strong>Do Not Track</strong> — if your browser sends a DNT header, PostHog respects it and no data is collected.</li>
+      <li><strong>Page views and page leaves</strong> — used to understand which sections of the portfolio are most visited.</li>
+    </ul>
+    <p>No personal identifiers are collected. No data is sold to third parties.</p>
+
+    <h2>Contact</h2>
+    <p>Questions? <a href="mailto:gabrielmribeiro@hibeex.com.br">gabrielmribeiro@hibeex.com.br</a></p>
+
+    <a class="back" href="/">&larr; Back to portfolio</a>
+  </div>
+</body>
+</html>
