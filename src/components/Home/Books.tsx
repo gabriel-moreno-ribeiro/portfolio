@@ -8,6 +8,11 @@ interface Book {
   year: string;
 }
 
+function optPath(cover: string, width: number, fmt: 'avif' | 'webp') {
+  const stem = cover.replace(/^\/books\//, '').replace(/\.[^.]+$/, '');
+  return `/optimized/books/${stem}-${width}w.${fmt}`;
+}
+
 const BOOKS: Book[] = [
   { title: "Manual do Mundo", cover: "/books/manual-do-mundo.webp", stars: 5, year: "2014-2015" },
   { title: "How to Train Your Dragon", cover: "/books/how-to-train-your-dragon.jpg", stars: 4, year: "2016-2017" },
@@ -73,7 +78,18 @@ function BookItem({ book, index }: { book: Book; index: number }) {
       aria-label={`${book.title} (${book.stars} out of 5 stars, ${book.year})`}
     >
       <div className="book__cover">
-        <img src={book.cover} alt="" loading="lazy" aria-hidden="true" />
+        <picture>
+          <source srcSet={`${optPath(book.cover, 120, 'avif')} 120w, ${optPath(book.cover, 240, 'avif')} 240w`} type="image/avif" />
+          <source srcSet={`${optPath(book.cover, 120, 'webp')} 120w, ${optPath(book.cover, 240, 'webp')} 240w`} type="image/webp" />
+          <img
+            src={book.cover}
+            alt=""
+            loading="lazy"
+            aria-hidden="true"
+            width={52}
+            height={188}
+          />
+        </picture>
       </div>
 
       {active && (
