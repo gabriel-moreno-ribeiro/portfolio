@@ -24,13 +24,11 @@
   flex-direction: column;
   align-items: center;
   flex-shrink: 0;
-  // Idle: centred large globe
-  width: 784px;
+  width: 520px;
   transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 
-  // Open: slightly smaller to give the panel room, but still large
   .globe-layout--open & {
-    width: 680px;
+    width: 480px;
   }
 }
 
@@ -51,39 +49,6 @@
   }
 }
 
-.globe-buttons {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 20px;
-
-  button {
-    background: transparent;
-    border: 1.5px solid var(--black);
-    color: var(--black);
-    font-size: 13px;
-    font-weight: 600;
-    border-radius: 999px;
-    padding: 7px 16px;
-    cursor: pointer;
-    transition: all 0.2s;
-    font-family: inherit;
-    white-space: nowrap;
-
-    &:hover,
-    &.active {
-      background: var(--primary-orange);
-      border-color: var(--primary-orange);
-      color: #fff;
-    }
-
-    &.clear {
-      border-style: dashed;
-      opacity: 0.7;
-    }
-  }
-}
 
 // Overflow photos below the globe (visible only when panel is open)
 .globe-overflow-photos {
