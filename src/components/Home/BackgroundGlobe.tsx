@@ -77,8 +77,8 @@ const CITIES: City[] = [
 // Static manifest of photos that actually exist in public/background/<cityId>/.
 // Add entries when uploading city photos — eliminates speculative 404 probing.
 const CITY_PHOTO_MANIFEST: Record<string, string[]> = {
-  'missao-velha': ['01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg'],
-  'salvador':     ['01.jpg', '02.jpg', '03.jpg'],
+  'missao-velha': ['01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg', '06.jpg', '07.jpg', '08.jpg'],
+  'salvador':     ['01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg', '06.jpg'],
   // 'fortaleza': [],  // no photos uploaded yet
   // 'sao-paulo': [],  // no photos uploaded yet
 };

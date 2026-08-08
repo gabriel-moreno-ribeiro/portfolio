@@ -49,8 +49,11 @@ const NumberStatsCard: React.FC<CardProps> = ({ frontCard, exitX, imgSrc, imgPad
         {imgSrc && (
           <img
             src={imgSrc}
-            alt="icon"
+            alt=""
+            aria-hidden="true"
             className="icon-img"
+            width={80}
+            height={80}
             style={{ padding: `${imgPadding}px` }}
           />
         )}
