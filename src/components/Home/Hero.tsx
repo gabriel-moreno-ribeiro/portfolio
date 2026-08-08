@@ -18,13 +18,13 @@ const CanvasComponent = lazy(() => import('../Canvas/CanvasComponent'));
 const BG_SETTLE_DELAY = 0.7;
 
 const bottomTexts = [
-  `Gabriel is the <span class="black">Co-Founder & CEO</span> of <span class="black">HIBEEX</span> — building financial AI for SMBs.`,
-  `One of <span class="black">6 startups</span> in the <span class="black">Canastra Ventures AI Residency</span> — among the youngest founders selected.`,
-  `He has won <span class="black">39 olympiad medals</span> (19 gold) across math, physics, chemistry, and more.`,
-  `Ran an <span class="black">RCT with 208 students</span> on fintech and savings — treatment group saved <span class="black">130% more</span>.`,
-  `Founded <span class="black">Projeto Candela</span> — physics kits reaching <span class="black">3,392 students</span> in 28 public schools.`,
-  `Admitted to <span class="black">University of St Andrews</span> (Global Merit Scholarship) — chose a <span class="black">build year</span> first.`,
-  `Selected for <span class="black">Fundacao Estudar PREP</span> — 70 of 10,000+ applicants.`,
+  `Co-Founder & CEO of <span class="black">HIBEEX</span>. Building financial AI for small businesses.`,
+  `One of <span class="black">6 startups</span> picked for the <span class="black">Canastra Ventures AI Residency</span>.`,
+  `<span class="black">39 olympiad medals</span> (19 gold) in math, physics, chemistry, and astronomy.`,
+  `Ran an <span class="black">RCT with 208 students</span> on fintech and savings. Treatment group saved <span class="black">130% more</span>.`,
+  `Founded <span class="black">Projeto Candela</span>: physics kits now in 28 public schools, reaching <span class="black">3,392 students</span>.`,
+  `Admitted to <span class="black">St Andrews</span> with a Global Merit Scholarship. Chose to build first.`,
+  `<span class="black">Fundacao Estudar PREP</span> scholar. 70 picked from 10,000+ applicants.`,
 ];
 
 function Hero() {
@@ -109,7 +109,7 @@ function Hero() {
             ease: 'easeOut',
           }}
         >
-          18-year-old founder and researcher on a build year. Building financial AI for SMBs. 39 olympiad medals. Projeto Candela founder.
+          18 years old. Building financial AI for small businesses at HIBEEX. 39 olympiad medals. Founded Projeto Candela.
         </motion.p>
         <motion.div
           className="btn-flex"

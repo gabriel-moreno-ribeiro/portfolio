@@ -26,9 +26,9 @@ const CITIES: City[] = [
     role: 'Where the roots are',
     headline: 'Where the roots are.',
     story: [
-      'A small city in the interior of Ceará. My grandparents are from here. My father grew up here.',
-      'Every summer, 4–5 months. The heat, the simplicity, the way everyone knew each other by name.',
-      "It's the kind of place that doesn't show up on anyone's map of Brazilian ambition. But it's where mine started.",
+      'Small city in the interior of Ceará. My grandparents are from here. My father grew up here.',
+      'Every summer — 4 or 5 months. The heat. Everyone knowing each other by name.',
+      "Not the kind of place that shows up on maps of Brazilian ambition. But it's where mine started.",
     ],
   },
   {
@@ -40,9 +40,9 @@ const CITIES: City[] = [
     role: 'Where I grew up',
     headline: 'Where I grew up.',
     story: [
-      'I grew up here. Got into Colégio Militar at 10 — one of 30 from 2,500 applicants.',
-      'The olympiads started here. Projeto Candela was built for schools here.',
-      'I still call it home.',
+      'Grew up here. Got into Colégio Militar at 10 — one of 30 from 2,500 applicants. Perfect score in math.',
+      'The olympiads started here. I built Projeto Candela for schools in this city.',
+      'Still call it home.',
     ],
   },
   {
@@ -54,8 +54,8 @@ const CITIES: City[] = [
     role: 'Third year of high school',
     headline: 'Third year — new city.',
     story: [
-      'Moved to Fortaleza for the third year of high school. Closer to family roots.',
-      'SAT 1510. Fundação Estudar PREP. The year everything accelerated.',
+      'Third year of high school. Moved closer to family.',
+      'SAT 1510. Got into Fundação Estudar PREP. The year things started moving fast.',
     ],
   },
   {
@@ -67,9 +67,9 @@ const CITIES: City[] = [
     role: 'Building HIBEEX',
     headline: 'Building HIBEEX.',
     story: [
-      'Moved to São Paulo with Teodoro to build HIBEEX full-time.',
-      'One of 6 startups in the Canastra Ventures AI Residency. Financial AI for SMBs.',
-      "The build year — choosing this over freshman year was the right call.",
+      'Moved here with Teodoro to build HIBEEX.',
+      'One of 6 startups in the Canastra Ventures AI Residency.',
+      'Chose this over freshman year. No regrets.',
     ],
   },
 ];

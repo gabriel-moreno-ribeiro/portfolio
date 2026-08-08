@@ -24,25 +24,25 @@ const featured: FeaturedItem[] = [
   {
     slug: "hibeex",
     title: "HIBEEX — Financial AI for SMBs",
-    desc: "Converts raw financial data into decisions small business owners can act on. One of 6 startups in the Canastra Ventures AI Residency.",
+    desc: "Financial AI for small businesses. Raw data in, decisions out. One of 6 startups in the Canastra Ventures AI Residency.",
     tags: ["TypeScript", "Next.js", "Supabase", "AWS", "AI/ML"],
   },
   {
     slug: "candela",
     title: "Projeto Candela",
-    desc: "Personally funded and distributed low-cost physics lab kits to 28 public schools. 3,392 students. Failure rates went from 30% to 10%.",
-    tags: ["3,392 students", "28 schools", "30% → 10% failure"],
+    desc: "Personally built and distributed low-cost physics lab kits to 28 public schools. 3,392 students reached. Failure rates: 30% down to 10%.",
+    tags: ["3,392 students", "28 schools", "30% → 10%"],
   },
   {
     slug: "medals",
     title: "39 Olympiad Medals (19 Gold)",
-    desc: "49 competitions across math, physics, chemistry, and astronomy. 1st of 10,000+ at IFT-UNESP. Gold at ONNEQ (top 0.675%). 1st at OBAQ (top 0.014%).",
+    desc: "49 competitions in math, physics, chemistry, and astronomy. 1st of 10,000+ at IFT-UNESP. Gold at ONNEQ. 1st at OBAQ.",
     tags: ["19 gold", "2 international", "1st IFT-UNESP"],
   },
   {
     slug: "gsat",
     title: "GSAT Education",
-    desc: "Built an EdTech platform for standardized test prep from scratch as founding CEO.",
+    desc: "EdTech platform for standardized test prep, built from scratch as founding CEO.",
     tags: ["React", "TypeScript", "Node.js", "EdTech"],
   },
 ];
