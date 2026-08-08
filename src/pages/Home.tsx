@@ -9,7 +9,6 @@ import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Shared/Footer";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import LineSidebar from "../components/ReactBits/LineSidebar";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import StickerPeel from "../components/ReactBits/StickerPeel";
@@ -19,8 +18,8 @@ const BackgroundGlobe = lazy(() => import("../components/Home/BackgroundGlobe"))
 const HorizontalSkillsWrapper = lazy(() => import("../components/Home/HorizontalSkillsWrapper"));
 const WorkExperience = lazy(() => import("../components/Home/WorkExperience"));
 
-const NAV_SECTIONS = ['Work', 'Research', 'Origins', 'Skills', 'Books'];
-const NAV_IDS      = ['work',  'research', 'background', 'skills', 'books'];
+const NAV_SECTIONS = ['Origins', 'Skills', 'Work', 'Research', 'Books'];
+const NAV_IDS      = ['background', 'skills', 'work', 'research', 'books'];
 
 function Home() {
   const [activeNav, setActiveNav] = useState(0);
@@ -53,32 +52,27 @@ function Home() {
   return (
     <div className="home-wrapper">
       {/* Fixed side navigation */}
-      <div className="home-sidenav">
-        <LineSidebar
-          items={NAV_SECTIONS as any}
-          defaultActive={activeNav}
-          onItemClick={handleNavClick}
-          accentColor="#f0732d"
-          textColor="#999"
-          markerColor="#ccc"
-          markerLength={36}
-          itemGap={22}
-          fontSize={0.78}
-          showIndex={false}
-          showMarker
-          maxShift={16}
-          proximityRadius={80}
-        />
-      </div>
+      <nav className="home-sidenav" aria-label="Page sections">
+        {NAV_SECTIONS.map((label, i) => (
+          <button
+            key={label}
+            className={`sidenav-item ${activeNav === i ? 'sidenav-item--active' : ''}`}
+            onClick={() => handleNavClick(i)}
+          >
+            <span className="sidenav-item__line" />
+            <span className="sidenav-item__label">{label}</span>
+          </button>
+        ))}
+      </nav>
 
       <Navbar />
       <Hero />
-      <Research />
       <Suspense fallback={null}>
         <BackgroundGlobe />
       </Suspense>
       <Skills />
       <FindMyWork />
+      <Research />
       <NumbersAndStats />
       <Suspense fallback={null}>
         <HorizontalSkillsWrapper />
@@ -90,16 +84,17 @@ function Home() {
       <Footer />
 
       {/* HIBEEX draggable sticker */}
+      {/* HIBEEX sticker — replace /logo192.png with /hibeex-logo.png when available */}
       <div className="sticker-stage">
         <StickerPeel
           imageSrc="/logo192.png"
-          width={120}
-          rotate={-12}
-          peelBackHoverPct={25}
-          peelBackActivePct={38}
-          initialPosition={"bottom-right" as any}
-          shadowIntensity={0.5}
-          lightingIntensity={0.1}
+          width={130}
+          rotate={-8}
+          peelBackHoverPct={22}
+          peelBackActivePct={35}
+          initialPosition={"center" as any}
+          shadowIntensity={0.45}
+          lightingIntensity={0.09}
         />
       </div>
 

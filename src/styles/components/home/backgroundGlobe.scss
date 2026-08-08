@@ -88,6 +88,13 @@
     margin-bottom: 20px;
   }
 
+  &__meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
   &__location {
     font-size: 11px;
     font-weight: 700;
@@ -95,6 +102,16 @@
     letter-spacing: 0.1em;
     color: $primary-orange;
     margin: 0;
+  }
+
+  &__period {
+    font-size: 11px;
+    font-weight: 600;
+    color: $text-grey;
+    background: rgba($primary-orange, 0.08);
+    padding: 2px 8px;
+    border-radius: 999px;
+    white-space: nowrap;
   }
 
   &__headline {
