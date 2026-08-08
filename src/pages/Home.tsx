@@ -87,7 +87,7 @@ function Home() {
       {/* HIBEEX sticker — replace /logo192.png with /hibeex-logo.png when available */}
       <div className="sticker-stage">
         <StickerPeel
-          imageSrc="/logo192.png"
+          imageSrc="/hibeex.png"
           width={130}
           rotate={-8}
           peelBackHoverPct={22}
