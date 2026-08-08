@@ -1,19 +1,17 @@
-import { OrbitControls } from "@react-three/drei";
+import { OrbitControls, Environment } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Suspense, useEffect, useRef } from "react";
 import { useThemeStore } from "../../store/themeStore";
-import { PartsAssembling } from "./PartsAssembling";
+import { ChevroletC10 } from "./ChevroletC10";
 
 export default function PartsAssemblingCanvas() {
   const group = useRef();
-  const animationActions = useRef(null);
   const progressRef = useRef(0);
   const { darkMode } = useThemeStore();
 
   useEffect(() => {
     const handleScrollAnimationProgress = (event) => {
-      const progress = event.detail;
-      progressRef.current = progress;
+      progressRef.current = event.detail;
     };
 
     document.addEventListener(
@@ -27,49 +25,40 @@ export default function PartsAssemblingCanvas() {
         handleScrollAnimationProgress
       );
     };
-  }, [darkMode]);
+  }, []);
 
-  // Smoothly scrub the animation frame by frame
-
-  const AnimationSmoother = () => {
+  const RotationController = () => {
     useFrame(() => {
-      if (animationActions.current) {
-        const action = animationActions.current;
-        const duration = action.getClip().duration;
-        const newTime = duration * progressRef.current;
-
-        // Debounce the animation time changes for smoother scrubbing
-        if (Math.abs(action.time - newTime) > 0.01) {
-          action.time = newTime;
-        }
-      }
-
-      // Apply rotation based on scroll progress
       if (group.current) {
-        const rotationSpeed = 0.5; // Adjust this value to control rotation speed
         group.current.rotation.y =
-          progressRef.current * Math.PI * 2 * rotationSpeed; // Rotate around the Y-axis
+          progressRef.current * Math.PI * 2 * 0.4;
       }
     });
+    return null;
   };
 
   return (
-    <div className="parts-assembling"  data-drag-me={true}>
-      <Canvas camera={{ position: [0, 50, 210], fov: 75 }}>
+    <div className="parts-assembling" data-drag-me={true}>
+      <Canvas camera={{ position: [400, 150, 400], fov: 50 }}>
         <OrbitControls enableZoom={false} />
         <directionalLight
-          position={[0, 10, 10]}
-          intensity={darkMode ? 0.5 : 1.5}
+          position={[5, 10, 5]}
+          intensity={darkMode ? 1.0 : 2.0}
+          castShadow
         />
-        <ambientLight intensity={darkMode ? 0.75 : 1} />
+        <directionalLight
+          position={[-5, 5, -5]}
+          intensity={darkMode ? 0.3 : 0.6}
+        />
+        <ambientLight intensity={darkMode ? 0.5 : 0.8} />
         <Suspense>
-          <PartsAssembling
-            setAnimationActions={(actions) =>
-              (animationActions.current = actions)
-            }
-             groupRef={group}
+          <ChevroletC10
+            progressRef={progressRef}
+            groupRef={group}
+            scale={1}
+            position={[0, -100, 0]}
           />
-          <AnimationSmoother />
+          <RotationController />
         </Suspense>
       </Canvas>
     </div>
