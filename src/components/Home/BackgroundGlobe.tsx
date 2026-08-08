@@ -90,7 +90,7 @@ function locationToAngles(lat: number, lon: number): [number, number] {
   ];
 }
 
-function GlobeCanvas({ selected }: { selected: City | null }) {
+function GlobeCanvas({ selected, darkMode }: { selected: City | null; darkMode?: boolean }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const focusRef = useRef<[number, number] | null>(null);
   const pointerInteracting = useRef<{ x: number; y: number } | null>(null);
@@ -146,19 +146,20 @@ function GlobeCanvas({ selected }: { selected: City | null }) {
       const size = canvas.offsetWidth;
       if (size === 0 || globe) return;
 
+      const isMobileDevice = window.innerWidth < 768;
       globe = createGlobe(canvas, {
-        devicePixelRatio: 2,
-        width: size * 2,
-        height: size * 2,
+        devicePixelRatio: isMobileDevice ? 1.5 : 2,
+        width: size * (isMobileDevice ? 1.5 : 2),
+        height: size * (isMobileDevice ? 1.5 : 2),
         phi: brazilPhi,
         theta: 0.12,
-        dark: 0,
+        dark: darkMode ? 1 : 0,
         diffuse: 1.5,
-        mapSamples: 16000,
-        mapBrightness: 9,
-        baseColor: [1, 1, 1],
+        mapSamples: isMobileDevice ? 8000 : 16000,
+        mapBrightness: darkMode ? 6 : 9,
+        baseColor: darkMode ? [0.1, 0.1, 0.2] : [1, 1, 1],
         markerColor: [240 / 255, 115 / 255, 45 / 255],
-        glowColor: [0.98, 0.95, 0.92],
+        glowColor: darkMode ? [0.15, 0.1, 0.3] : [0.98, 0.95, 0.92],
         markers: CITIES.map((c) => ({ location: [c.lat, c.lon], size: 0.06 })),
         onRender: (state) => {
           const focus = focusRef.current;
@@ -221,7 +222,7 @@ function GlobeCanvas({ selected }: { selected: City | null }) {
     };
   }, []);
 
-  return <canvas ref={canvasRef} className="globe-canvas" onPointerDown={onPointerDown} />;
+  return <canvas ref={canvasRef} className="globe-canvas" onPointerDown={onPointerDown} aria-hidden="true" />;
 }
 
 function useCityPhotos(cityId: string) {
@@ -304,6 +305,7 @@ function CityTimeline({ selected, onSelect }: { selected: City | null; onSelect:
 
 function BackgroundGlobe() {
   const [selected, setSelected] = useState<City | null>(null);
+  const darkMode = document.documentElement.getAttribute('data-theme') === 'dark';
 
   const handleSelect = (city: City) => {
     setSelected(selected?.id === city.id ? null : city);
@@ -311,15 +313,15 @@ function BackgroundGlobe() {
 
   return (
     <div className="background-section" id="background">
-      <h1 className="heading" data-color-inverted="true">
+      <h2 className="heading" data-color-inverted="true">
         Where I Come From.
-      </h1>
+      </h2>
 
       <div className={`globe-layout ${selected ? 'globe-layout--open' : ''}`}>
         {/* ── Globe column ── */}
         <div className="globe-column">
           <div className="globe-wrap">
-            <GlobeCanvas selected={selected} />
+            <GlobeCanvas selected={selected} darkMode={darkMode} />
           </div>
 
         </div>

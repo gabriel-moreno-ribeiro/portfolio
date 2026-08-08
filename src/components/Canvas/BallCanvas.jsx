@@ -6,7 +6,7 @@ import { Ball } from "./Ball";
 function CarCanvas({ setShowCarCanvas }) {
   return (
     <div className="car-canvas">
-      <Canvas
+      <Canvas aria-hidden="true"
         camera={{
           position: [-0.34, 0.24, 0.51],
           fov: 50,

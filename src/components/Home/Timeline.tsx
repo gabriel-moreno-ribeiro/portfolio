@@ -67,10 +67,10 @@ const timelineEvents: TimelineEvent[] = [
   },
   {
     year: '2019',
-    title: 'Colegio Militar de Salvador',
+    title: 'Colégio Militar de Salvador',
     desc: 'Admitted at age 10 — one of 30 selected from 2,500+ applicants. Perfect score in mathematics.',
     media: [
-      { src: '/timeline/colegio-militar.jpg', caption: 'Colegio Militar days' },
+      { src: '/timeline/colegio-militar.jpg', caption: 'Colégio Militar days' },
       { src: '/timeline/salvador-life.jpg', caption: 'Growing up in Salvador' },
     ],
   },
@@ -154,9 +154,9 @@ function TimelineItem({ event, index }: { event: TimelineEvent; index: number })
 function Timeline() {
   return (
     <div className="timeline-section" id="timeline">
-      <h1 className="heading" data-color-inverted="true">
+      <h2 className="heading" data-color-inverted="true">
         My Journey
-      </h1>
+      </h2>
       <div className="timeline-container">
         <div className="timeline-line" />
         {[...timelineEvents].reverse().map((event, i) => (

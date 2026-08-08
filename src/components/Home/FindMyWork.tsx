@@ -105,14 +105,14 @@ function FeaturedCard({ item }: { item: FeaturedItem }) {
 function FindMyWork() {
   return (
     <div className="find-my-work" id="work">
-      <h1 className="heading" data-color-inverted={"true"}>
-        Find My Work
-      </h1>
+      <h2 className="heading" data-color-inverted={"true"}>
+        Selected Work
+      </h2>
       <p className="work-sub">
         What I've built and what I've won.
       </p>
       <button className="terminal-launch" onClick={toggleTerminalWindow}>
-        {"> Open Terminal (floats anywhere — Ctrl+J)"}
+        {"> Open terminal"} <kbd>Ctrl+`</kbd>
       </button>
       <div className="featured-grid">
         {featured.map((item) => (

@@ -147,9 +147,9 @@ function ResearchCard({ item, index }: { item: ResearchItem; index: number }) {
 function Research() {
   return (
     <section className="research-section" id="research">
-      <h1 className="heading" data-color-inverted="true">
+      <h2 className="heading" data-color-inverted="true">
         Research
-      </h1>
+      </h2>
       <p className="research-section__subtitle">
         Three fields. Real data. Papers attached.
       </p>

@@ -21,7 +21,7 @@ const STATS = [
   {
     img: '/stats/fe.png',
     imgPadding: 4,
-    text: `<span class="orange"> 0.7% </span>Acceptance — Fundacao Estudar`,
+    text: `<span class="orange"> 0.7% </span>Acceptance — Fundação Estudar`,
   },
 ];
 
@@ -32,7 +32,7 @@ const NumbersAndStats = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setIndex((prevIndex) => (prevIndex + 1) % STATS.length);
-    }, 2000);
+    }, 5000);
     return () => clearInterval(interval);
   }, []);
 

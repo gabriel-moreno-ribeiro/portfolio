@@ -15,7 +15,11 @@ scheduleIdle(() => {
       person_profiles: "identified_only",
       capture_pageview: true,
       capture_pageleave: true,
-      session_recording: { maskAllInputs: false },
+      respect_dnt: true,
+      session_recording: {
+        maskAllInputs: true,
+        maskTextSelector: '*',
+      },
     });
   });
 });

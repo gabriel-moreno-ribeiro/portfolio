@@ -194,9 +194,9 @@ function WorkflowPlayground() {
 
   return (
     <div className="workflow-section" id="automation">
-      <h1 className="heading" data-color-inverted="true">
+      <h2 className="heading" data-color-inverted="true">
         Automation, Visualized.
-      </h1>
+      </h2>
       <p
         className="workflow-sub"
       >

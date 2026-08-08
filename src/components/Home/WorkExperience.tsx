@@ -41,7 +41,7 @@ const workExperience = [
   },
   {
     title: 'President',
-    company: 'Olympic Club - Colegio Militar',
+    company: 'Olympic Club - Colégio Militar',
     date: 'August 2024 - May 2026',
     points: [
       "Ran the board, pushed through <span class='black'>17 initiatives</span> over two years",
@@ -50,7 +50,7 @@ const workExperience = [
   },
   {
     title: 'Scholar - PREP Program',
-    company: 'Fundacao Estudar',
+    company: 'Fundação Estudar',
     date: 'January 2025 - March 2026',
     points: [
       "One of ~70 picked from <span class='black'>10,000+ applicants</span> (0.7% acceptance)",
@@ -117,11 +117,11 @@ const WorkExperience = () => {
   }, [darkMode, isMobile]);
 
   return (
-    <div className="work-experience-main-wrapper" ref={containerRef}>
-      <h1 className="fixed-heading">
+    <div className="work-experience-main-wrapper" ref={containerRef} id="work-experience">
+      <h2 className="fixed-heading">
         <span className="orange">Breaking Down </span>
         <span data-color-inverted={'true'}>My Experience.</span>
-      </h1>
+      </h2>
       <div className="left-column">
         <Suspense fallback={null}>
           <PartsAssemblingCanvas />

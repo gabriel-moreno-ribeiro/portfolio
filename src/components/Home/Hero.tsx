@@ -24,7 +24,7 @@ const bottomTexts = [
   `Ran an <span class="black">RCT with 208 students</span> on fintech and savings. Treatment group saved <span class="black">130% more</span>.`,
   `Founded <span class="black">Projeto Candela</span>: physics kits now in 28 public schools, reaching <span class="black">3,392 students</span>.`,
   `Admitted to <span class="black">St Andrews</span> with a Global Merit Scholarship. Chose to build first.`,
-  `<span class="black">Fundacao Estudar PREP</span> scholar. 70 picked from 10,000+ applicants.`,
+  `<span class="black">Fundação Estudar PREP</span> scholar. 70 picked from 10,000+ applicants.`,
 ];
 
 function Hero() {
@@ -54,7 +54,7 @@ function Hero() {
     if (!introDone) return;
     const interval = setInterval(() => {
       setCurrentTextIndex(prevIndex => (prevIndex + 1) % bottomTexts.length);
-    }, 3000);
+    }, 5000);
     return () => clearInterval(interval);
   }, [introDone]);
 

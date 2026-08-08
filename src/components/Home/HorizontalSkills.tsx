@@ -10,46 +10,36 @@ const HorizontalSkills = forwardRef<
 >(({ icons, reverse }, ref) => {
   useLayoutEffect(() => {
     const container = ref as React.MutableRefObject<HTMLDivElement | null>;
+    if (!container.current) return;
 
-    if (container.current) {
-      // Disable manual scrolling
-      container.current.style.overflow = "hidden";
+    // Use gsap.context() so cleanup is scoped to this component only
+    const ctx = gsap.context(() => {
+      const el = container.current!;
+      el.style.overflow = "hidden";
 
-      // Duplicate the icons to create an infinite loop effect
-      const totalWidth = container.current.scrollWidth;
-      const scrollDistance = totalWidth - container.current.clientWidth;
+      const totalWidth = el.scrollWidth;
+      const scrollDistance = totalWidth - el.clientWidth;
 
-      gsap.to(container.current, {
-        scrollLeft: reverse ? scrollDistance : scrollDistance,
+      gsap.to(el, {
+        scrollLeft: scrollDistance,
         ease: "none",
         scrollTrigger: {
-          trigger: container.current,
-          start: "top bottom", // Start scrolling when the top of the container hits the bottom of the viewport
-          end: "bottom top", // End scrolling when the bottom of the container hits the top of the viewport
-          scrub: 2, // Controls the speed of the scrolling, adjust for smoothness
+          trigger: el,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 2,
           onUpdate: (self) => {
-            if (
-              container.current &&
-              self.direction > 0 &&
-              container.current.scrollLeft >= scrollDistance
-            ) {
-              container.current.scrollLeft = 0;
-            } else if (
-              container.current &&
-              self.direction < 0 &&
-              container.current.scrollLeft <= 0
-            ) {
-              container.current.scrollLeft = scrollDistance;
+            if (self.direction > 0 && el.scrollLeft >= scrollDistance) {
+              el.scrollLeft = 0;
+            } else if (self.direction < 0 && el.scrollLeft <= 0) {
+              el.scrollLeft = scrollDistance;
             }
           },
         },
       });
-    }
+    }, container.current);
 
-    return () => {
-      // Cleanup ScrollTrigger instances on component unmount
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-    };
+    return () => ctx.revert();
   }, [reverse, ref, icons]);
 
   return (
@@ -61,7 +51,7 @@ const HorizontalSkills = forwardRef<
         <img
           src={icon}
           key={`icon-scrollable-${i}-${icon}`}
-          alt="icon"
+          alt=""
           className="icon"
         />
       ))}
@@ -70,7 +60,7 @@ const HorizontalSkills = forwardRef<
         <img
           src={icon}
           key={`icon-scrollable-duplicate-${i}-${icon}`}
-          alt="icon"
+          alt=""
           className="icon"
         />
       ))}

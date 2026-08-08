@@ -21,7 +21,7 @@ const TerminalButton: React.FC = () => {
       whileTap={{ scale: 0.9 }}
       onClick={toggleTerminalWindow}
       className="terminal-fab"
-      title="Terminal (Ctrl+J)"
+      title="Terminal (Ctrl+`)"
       data-color-inverted={"true"}
     >
       <FiTerminal />

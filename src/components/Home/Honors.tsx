@@ -76,9 +76,9 @@ function MedalCard({ medal }: { medal: MedalData }) {
 function Honors() {
   return (
     <div className="honors-section" id="honors">
-      <h1 className="heading" data-color-inverted="true">
+      <h2 className="heading" data-color-inverted="true">
         The Medal Wall.
-      </h1>
+      </h2>
       <p className="medal-summary">
         39 medals across 49 olympiads — 19 gold, 11 silver, 9 bronze.
       </p>
