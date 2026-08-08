@@ -316,20 +316,6 @@ function BackgroundGlobe() {
           <div className="globe-wrap">
             <GlobeCanvas selected={selected} />
           </div>
-          <div className="globe-buttons">
-            {CITIES.map((city) => (
-              <button
-                key={city.id}
-                className={selected?.id === city.id ? 'active' : ''}
-                onClick={() => handleSelect(city)}
-              >
-                {city.name}
-              </button>
-            ))}
-            {selected && (
-              <button className="clear" onClick={() => setSelected(null)}>Keep spinning</button>
-            )}
-          </div>
 
           {/* Overflow photos fill the space below the globe when open */}
           <AnimatePresence>
