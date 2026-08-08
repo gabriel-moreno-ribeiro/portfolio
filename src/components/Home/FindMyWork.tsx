@@ -1,17 +1,13 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { toggleTerminalWindow } from "../../utils/terminalWindow";
 
-const MEDIA_FILES = [
-  "01.jpg",
-  "02.jpg",
-  "03.jpg",
-  "04.jpg",
-  "05.jpg",
-  "06.jpg",
-  "01.mp4",
-  "02.mp4",
-];
+// Static manifest of media that actually exists in public/work/<slug>/.
+// Add entries here when uploading media — avoids speculative 404 probing.
+const WORK_MEDIA_MANIFEST: Record<string, string[]> = {
+  // hibeex: ["01.jpg", "02.jpg"],
+  // candela: ["01.jpg"],
+};
 
 interface FeaturedItem {
   slug: string;
@@ -48,34 +44,8 @@ const featured: FeaturedItem[] = [
 ];
 
 function MediaCarousel({ slug, title }: { slug: string; title: string }) {
-  const [loaded, setLoaded] = useState<string[]>([]);
+  const available = WORK_MEDIA_MANIFEST[slug] ?? [];
   const [idx, setIdx] = useState(0);
-
-  useEffect(() => {
-    let alive = true;
-    MEDIA_FILES.forEach((file) => {
-      const url = `/work/${slug}/${file}`;
-      if (file.endsWith(".mp4")) {
-        const probe = document.createElement("video");
-        probe.preload = "metadata";
-        probe.onloadedmetadata = () => {
-          if (alive) setLoaded((prev) => [...prev, file]);
-        };
-        probe.src = url;
-      } else {
-        const probe = new Image();
-        probe.onload = () => {
-          if (alive) setLoaded((prev) => [...prev, file]);
-        };
-        probe.src = url;
-      }
-    });
-    return () => {
-      alive = false;
-    };
-  }, [slug]);
-
-  const available = MEDIA_FILES.filter((f) => loaded.includes(f));
 
   if (available.length === 0) {
     return null;
