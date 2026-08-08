@@ -149,7 +149,7 @@ const HandsfreeIntroModal: React.FC = () => {
           )}
 
           <p className="hf-intro__privacy">
-            🔒 Camera data stays on your device — nothing is uploaded.
+            🔒 Camera data stays on your device — nothing is uploaded. <a href="/privacy" target="_blank" rel="noopener" style={{ color: 'inherit', textDecoration: 'underline' }}>Privacy policy</a>
           </p>
         </div>
 
