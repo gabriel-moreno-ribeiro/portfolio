@@ -57,14 +57,6 @@ function Navbar() {
       href: '#work',
     },
     {
-      name: 'Blog.',
-      href: '/blog/',
-    },
-    {
-      name: 'News.',
-      href: '/news/',
-    },
-    {
       name: 'LinkedIn.',
       href: 'https://linkedin.com/in/gabriel-moreno-ribeiro',
     },
