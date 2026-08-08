@@ -163,7 +163,7 @@ function Research() {
         Research
       </h1>
       <p className="research-section__subtitle">
-        Behavioral economics, physical chemistry, and physics education.
+        Three fields. Real data. Papers attached.
       </p>
       <div className="research-grid">
         {researchItems.map((item, i) => (

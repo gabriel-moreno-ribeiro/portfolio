@@ -16,9 +16,9 @@ const workExperience = [
     company: 'HIBEEX',
     date: 'January 2026 - Present',
     points: [
-      "Building <span class='black'>financial AI</span> that turns messy financial data into decisions SMB owners can act on",
-      "One of <span class='black'>6 startups</span> in the <span class='black'>Canastra Ventures AI Residency</span> — among the youngest founders selected",
-      "Full stack: <span class='black'>TypeScript, Next.js, Node.js, Supabase, PostgreSQL, AWS</span>",
+      "Building <span class='black'>financial AI</span> for small businesses — raw data in, decisions out",
+      "One of <span class='black'>6 startups</span> in the <span class='black'>Canastra Ventures AI Residency</span>",
+      "Stack: <span class='black'>TypeScript, Next.js, Node.js, Supabase, PostgreSQL, AWS</span>",
     ],
   },
   {
@@ -26,47 +26,45 @@ const workExperience = [
     company: 'Fintech Savings RCT',
     date: 'Advised by Aaron Litvin, Ph.D. (Harvard)',
     points: [
-      "Designed and ran a <span class='black'>randomized controlled trial</span> with <span class='black'>208 public-school students</span> on how fintech tools change savings behavior",
-      "Treatment group increased savings by <span class='black'>130%</span>",
+      "Ran an <span class='black'>RCT with 208 students</span> on whether fintech apps change savings behavior",
+      "Treatment group saved <span class='black'>130% more</span> than control",
     ],
   },
   {
     title: 'Co-Founder & CEO',
     company: 'GSAT Education',
-    date: 'November 2025 - May 2026 (6 Months)',
+    date: 'November 2025 - May 2026',
     points: [
-      "Built <span class='black'>EdTech platform</span> for standardized test preparation from scratch",
-      "Managed <span class='black'>product development</span> and go-to-market strategy",
-      "Led technical and business operations as founding CEO",
+      "Built an <span class='black'>EdTech platform</span> for standardized test prep from scratch",
+      "Owned product, engineering, and go-to-market as founding CEO",
     ],
   },
   {
     title: 'President',
     company: 'Olympic Club - Colegio Militar',
-    date: 'August 2024 - May 2026 (1 Year 9 Months)',
+    date: 'August 2024 - May 2026',
     points: [
-      "Led executive board, secured support for <span class='black'>17 major initiatives</span>",
-      "Drove <span class='black'>47% increase</span> in student participation",
-      "<span class='black'>62% increase</span> in national olympiad results",
+      "Ran the board, pushed through <span class='black'>17 initiatives</span> over two years",
+      "Student participation up <span class='black'>47%</span>. National olympiad results up <span class='black'>62%</span>.",
     ],
   },
   {
     title: 'Scholar - PREP Program',
     company: 'Fundacao Estudar',
-    date: 'January 2025 - March 2026 (1 Year 2 Months)',
+    date: 'January 2025 - March 2026',
     points: [
-      "One of ~70 scholars from <span class='black'>10,000+ applicants</span> (0.7% acceptance)",
-      "Brazil's longest-running and <span class='black'>most competitive</span> college access program",
+      "One of ~70 picked from <span class='black'>10,000+ applicants</span> (0.7% acceptance)",
+      "Brazil's college access program for international universities",
     ],
   },
   {
     title: 'Researcher',
     company: 'Instituto Principia',
-    date: 'January 2023 - July 2025 (2 Years 6 Months)',
+    date: 'January 2023 - July 2025',
     points: [
-      "One of <span class='black'>14 students</span> selected nationally",
-      "Chemical kinetics under <span class='black'>Prof. Juliano Bonacin, Ph.D.</span> — reaction mechanisms modeled with <span class='black'>97% accuracy</span> in a 59-page thesis",
-      "Advanced physics: quantum mechanics, relativity, statistical physics",
+      "One of <span class='black'>14 students</span> selected nationally for Escola de Talentos",
+      "Thesis on chemical kinetics under <span class='black'>Prof. Juliano Bonacin, Ph.D.</span> — <span class='black'>97% accuracy</span>, 59 pages",
+      "Covered quantum mechanics, relativity, statistical physics",
     ],
   },
 ];
@@ -121,7 +119,7 @@ const WorkExperience = () => {
   return (
     <div className="work-experience-main-wrapper" ref={containerRef}>
       <h1 className="fixed-heading">
-        <span className="orange">Destructuring </span>
+        <span className="orange">Breaking Down </span>
         <span data-color-inverted={'true'}>My Experience.</span>
       </h1>
       <div className="left-column">

@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { motion } from "motion/react";
 
 interface Book {
@@ -39,27 +39,46 @@ const BOOKS: Book[] = [
   { title: "Made in America", cover: "/books/made-in-america.webp", stars: 5, year: "2025-2026" },
 ];
 
-function BookSpine({ book, index }: { book: Book; index: number }) {
+// Consistent slight tilt per index — looks natural without being random
+const TILTS = [-0.8, 0.4, -0.3, 0.6, -0.5, 0.3, -0.7, 0.5, -0.2, 0.8,
+               -0.6, 0.4, -0.4, 0.7, -0.3, 0.5, -0.8, 0.3, -0.5, 0.6,
+               -0.4, 0.7, -0.3, 0.5, -0.6, 0.4, -0.7, 0.3];
+
+// Varied heights to look like a real shelf
+const HEIGHTS = [190, 178, 196, 184, 200, 176, 194, 182, 198, 172,
+                 192, 186, 204, 178, 196, 188, 200, 180, 194, 186,
+                 198, 176, 204, 182, 196, 180, 200, 188];
+
+function BookItem({ book, index }: { book: Book; index: number }) {
+  const [hovered, setHovered] = useState(false);
+  const tilt = TILTS[index % TILTS.length];
+  const height = HEIGHTS[index % HEIGHTS.length];
+
   return (
-    <motion.div
-      className="bookshelf__book"
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "0px 0px -60px 0px" }}
-      transition={{ delay: index * 0.025, duration: 0.35 }}
-      title={`${book.title} (${book.year})`}
+    <div
+      className={`book ${hovered ? 'book--hovered' : ''}`}
+      style={{
+        '--tilt': `${tilt}deg`,
+        '--h': `${height}px`,
+      } as React.CSSProperties}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
     >
-      <div className="bookshelf__cover">
+      <div className="book__cover">
         <img src={book.cover} alt={book.title} loading="lazy" />
       </div>
-      <div className="bookshelf__tooltip">
-        <span className="bookshelf__tooltip-title">{book.title}</span>
-        <span className="bookshelf__tooltip-year">{book.year}</span>
-        <span className="bookshelf__tooltip-stars">
-          {"★".repeat(book.stars)}{"☆".repeat(5 - book.stars)}
-        </span>
-      </div>
-    </motion.div>
+
+      {hovered && (
+        <div className="book__card">
+          <span className="book__card-title">{book.title}</span>
+          <span className="book__card-year">{book.year}</span>
+          <span className="book__card-stars">
+            {"★".repeat(book.stars)}
+            <span className="book__card-stars--empty">{"★".repeat(5 - book.stars)}</span>
+          </span>
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -72,20 +91,41 @@ function Books() {
         Books I've Read.
       </h2>
       <p className="books-section__subtitle">
-        Hover a spine to see the title. Left to right, youngest to now.
+        Every book I remember reading, in order. Hover a spine.
       </p>
 
-      <div className="bookshelf" ref={shelfRef}>
-        <div className="bookshelf__shelf">
-          {BOOKS.map((book, i) => (
-            <BookSpine key={book.title + book.year} book={book} index={i} />
-          ))}
-          {/* Empty slots for books yet to come */}
-          {Array.from({ length: 6 }).map((_, i) => (
-            <div key={`empty-${i}`} className="bookshelf__book bookshelf__book--empty" />
-          ))}
+      <div className="bookcase">
+        {/* Top trim */}
+        <div className="bookcase__top-trim" />
+
+        {/* Books row */}
+        <div className="bookcase__interior">
+          <div className="bookcase__row" ref={shelfRef}>
+            {BOOKS.map((book, i) => (
+              <motion.div
+                key={book.title + book.year}
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "0px 0px -40px 0px" }}
+                transition={{ delay: i * 0.018, duration: 0.3 }}
+              >
+                <BookItem book={book} index={i} />
+              </motion.div>
+            ))}
+
+            {/* Empty slots */}
+            {Array.from({ length: 5 }).map((_, i) => (
+              <div key={`empty-${i}`} className="book book--empty" />
+            ))}
+          </div>
         </div>
-        <div className="bookshelf__plank" />
+
+        {/* Shelf plank */}
+        <div className="bookcase__shelf" />
+
+        {/* Side walls */}
+        <div className="bookcase__wall bookcase__wall--left" />
+        <div className="bookcase__wall bookcase__wall--right" />
       </div>
     </section>
   );

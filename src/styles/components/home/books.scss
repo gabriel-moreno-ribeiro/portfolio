@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────
-//  Books section — library bookshelf
+//  Books section
 // ─────────────────────────────────────────────
 
 .books-section {
@@ -19,223 +19,228 @@
     text-align: center;
     font-size: 15px;
     color: $text-grey;
-    margin: 0 0 48px;
+    margin: 0 0 40px;
   }
 }
 
-// ── The whole shelf unit ──
-.bookshelf {
+// ── Bookcase wrapper ──
+.bookcase {
   position: relative;
   width: 100%;
-  background: #2c1a0e;
-  border-radius: 6px 6px 8px 8px;
-  padding: 0 0 0 0;
-  box-shadow:
-    inset 0 -4px 12px rgba(0,0,0,0.4),
-    0 8px 32px rgba(0,0,0,0.15);
+  border-radius: 4px 4px 6px 6px;
+
+  &__top-trim {
+    height: 10px;
+    background: linear-gradient(180deg, #b07830 0%, #8a5a20 100%);
+    border-radius: 4px 4px 0 0;
+    box-shadow: 0 -1px 0 rgba(#fff, 0.08) inset;
+  }
+
+  &__interior {
+    background:
+      repeating-linear-gradient(
+        90deg,
+        rgba(#000, 0) 0px,
+        rgba(#000, 0) 120px,
+        rgba(#000, 0.04) 120px,
+        rgba(#000, 0.04) 122px
+      ),
+      linear-gradient(180deg, #1c0f05 0%, #2a1608 60%, #1c0f05 100%);
+    padding: 16px 14px 0;
+    overflow: hidden;
+  }
+
+  &__row {
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    overflow-x: auto;
+    padding-bottom: 0;
+
+    &::-webkit-scrollbar { height: 5px; }
+    &::-webkit-scrollbar-track { background: #1c0f05; }
+    &::-webkit-scrollbar-thumb { background: #6a3e14; border-radius: 3px; }
+  }
+
+  // The wooden shelf plank
+  &__shelf {
+    height: 16px;
+    background: linear-gradient(
+      180deg,
+      #d4a040 0%,
+      #b07828 25%,
+      #8a5a18 65%,
+      #6a4010 100%
+    );
+    box-shadow:
+      inset 0 2px 3px rgba(#fff, 0.12),
+      0 4px 14px rgba(#000, 0.45),
+      0 8px 24px rgba(#000, 0.2);
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 40px,
+        rgba(#000, 0.04) 40px,
+        rgba(#000, 0.04) 42px
+      );
+    }
+  }
 
   // Side walls
-  &::before, &::after {
-    content: '';
+  &__wall {
     position: absolute;
     top: 0;
     bottom: 0;
     width: 14px;
-    background: linear-gradient(90deg, #1a0e06 0%, #3a2210 100%);
-    z-index: 5;
-  }
-  &::before { left: 0; border-radius: 6px 0 0 8px; }
-  &::after  { right: 0; border-radius: 0 6px 8px 0; }
-}
+    background: linear-gradient(90deg, #0f0702 0%, #2a1608 100%);
+    z-index: 4;
 
-// ── Books row ──
-.bookshelf__shelf {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-end;
-  gap: 0;
-  overflow-x: auto;
-  padding: 20px 20px 0;
-  background: linear-gradient(180deg,
-    #1a0e06 0%,
-    #2c1a0e 15%,
-    #3d2510 80%,
-    #2c1a0e 100%
-  );
-  border-bottom: none;
-  position: relative;
+    &--left {
+      left: 0;
+      border-radius: 4px 0 0 0;
+      background: linear-gradient(90deg, #0f0702 0%, #2a1608 80%, transparent 100%);
+    }
 
-  // subtle back-wall wood grain
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: repeating-linear-gradient(
-      90deg,
-      transparent,
-      transparent 80px,
-      rgba(255,255,255,0.015) 80px,
-      rgba(255,255,255,0.015) 82px
-    );
-    pointer-events: none;
-  }
-
-  &::-webkit-scrollbar { height: 6px; }
-  &::-webkit-scrollbar-track { background: #1a0e06; }
-  &::-webkit-scrollbar-thumb { background: #5a3820; border-radius: 3px; }
-}
-
-// ── Plank ──
-.bookshelf__plank {
-  height: 18px;
-  background: linear-gradient(180deg,
-    #c8902a 0%,
-    #a06820 40%,
-    #7a4e14 70%,
-    #5a3810 100%
-  );
-  box-shadow:
-    inset 0 2px 4px rgba(255,200,100,0.15),
-    0 6px 18px rgba(0,0,0,0.35);
-  position: relative;
-
-  // edge highlight
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(90deg,
-      rgba(255,220,100,0.0) 0%,
-      rgba(255,220,100,0.35) 30%,
-      rgba(255,220,100,0.35) 70%,
-      rgba(255,220,100,0.0) 100%
-    );
-  }
-}
-
-// ── Individual book ──
-.bookshelf__book {
-  position: relative;
-  flex-shrink: 0;
-  width: 52px;
-  height: 188px;
-  cursor: pointer;
-  transition: transform 0.22s cubic-bezier(0.22,1,0.36,1);
-  // slight random tilt via nth-child to look lived-in
-  &:nth-child(5n+1)  { transform: rotate(-0.8deg); }
-  &:nth-child(5n+2)  { transform: rotate(0.5deg); }
-  &:nth-child(5n+3)  { height: 196px; }
-  &:nth-child(5n+4)  { height: 178px; transform: rotate(-0.4deg); }
-  &:nth-child(5n+5)  { height: 192px; transform: rotate(0.7deg); }
-
-  &:hover {
-    transform: translateY(-14px) rotate(0deg) !important;
-    z-index: 20;
-    .bookshelf__tooltip { opacity: 1; pointer-events: none; }
-  }
-
-  // empty slot
-  &--empty {
-    width: 44px;
-    height: 180px;
-    cursor: default;
-    flex-shrink: 0;
-    &:nth-child(5n+1),
-    &:nth-child(5n+2),
-    &:nth-child(5n+4),
-    &:nth-child(5n+5) { transform: none; }
-    &:hover { transform: none !important; }
-
-    .bookshelf__cover {
-      background: rgba(#fff, 0.04);
-      border: 1.5px dashed rgba(#fff, 0.1);
-      box-shadow: none;
-
-      img { display: none; }
+    &--right {
+      right: 0;
+      border-radius: 0 4px 0 0;
+      background: linear-gradient(270deg, #0f0702 0%, #2a1608 80%, transparent 100%);
     }
   }
 }
 
-.bookshelf__cover {
-  width: 100%;
-  height: 100%;
-  border-radius: 1px 4px 4px 1px;
-  overflow: hidden;
-  box-shadow:
-    2px 0 6px rgba(0,0,0,0.5),
-    inset -2px 0 4px rgba(0,0,0,0.3);
+// ── Individual book ──
+.book {
+  position: relative;
+  flex-shrink: 0;
+  width: 60px;
+  height: var(--h, 188px);
+  transform: rotate(var(--tilt, 0deg));
+  transform-origin: bottom center;
+  transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), z-index 0s;
+  cursor: pointer;
+  z-index: 1;
 
-  img {
+  &--hovered {
+    transform: rotate(0deg) translateY(-16px) !important;
+    z-index: 20;
+  }
+
+  &__cover {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    display: block;
+    border-radius: 1px 3px 3px 1px;
+    overflow: hidden;
+    box-shadow:
+      3px 0 8px rgba(#000, 0.6),
+      inset -2px 0 6px rgba(#000, 0.35),
+      inset 1px 0 2px rgba(#fff, 0.08);
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+  }
+
+  // Spine highlight (left edge shimmer)
+  &__cover::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: linear-gradient(90deg, rgba(#fff, 0.12) 0%, transparent 100%);
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  // Empty slot
+  &--empty {
+    width: 50px;
+    height: 180px;
+    cursor: default;
+
+    &:hover { transform: rotate(0deg) !important; z-index: 1; }
+
+    .book__cover {
+      background: rgba(#fff, 0.03);
+      border: 1.5px dashed rgba(#fff, 0.08);
+      box-shadow: none;
+
+      img { display: none; }
+      &::before { display: none; }
+    }
   }
 }
 
-// ── Tooltip ──
-.bookshelf__tooltip {
+// ── Info card that pops up on hover ──
+.book__card {
   position: absolute;
-  bottom: calc(100% + 18px);
+  bottom: calc(100% + 14px);
   left: 50%;
   transform: translateX(-50%);
-  background: #1a0e06;
-  border: 1px solid rgba(#c8902a, 0.3);
-  color: #f0e0c0;
-  padding: 9px 14px;
-  border-radius: 8px;
-  font-size: 12px;
-  white-space: nowrap;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.15s;
-  z-index: 30;
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  min-width: 130px;
+  background: #fff8f0;
+  border: 1px solid #d4a040;
+  border-radius: 6px;
+  padding: 10px 14px;
+  min-width: 150px;
+  max-width: 200px;
   text-align: center;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+  pointer-events: none;
+  z-index: 30;
+  box-shadow: 0 8px 24px rgba(#000, 0.18);
 
+  // Arrow pointing down
   &::after {
     content: '';
     position: absolute;
     top: 100%;
     left: 50%;
     transform: translateX(-50%);
-    border: 6px solid transparent;
-    border-top-color: #1a0e06;
+    border: 7px solid transparent;
+    border-top-color: #d4a040;
+  }
+
+  [data-theme="dark"] & {
+    background: #1c0f05;
+    border-color: #8a5a18;
+    &::after { border-top-color: #8a5a18; }
   }
 }
 
-.bookshelf__tooltip-title {
-  font-weight: 600;
+.book__card-title {
+  display: block;
   font-size: 12px;
-  line-height: 1.3;
-  white-space: normal;
-  max-width: 180px;
-  color: #f0e0c0;
+  font-weight: 700;
+  color: #2a1608;
+  line-height: 1.35;
+  margin-bottom: 4px;
+
+  [data-theme="dark"] & { color: #f0dcc0; }
 }
 
-.bookshelf__tooltip-year {
+.book__card-year {
+  display: block;
   font-size: 10px;
-  color: rgba(#c8902a, 0.8);
+  color: #8a5a18;
+  margin-bottom: 5px;
 }
 
-.bookshelf__tooltip-stars {
-  font-size: 11px;
-  color: #c8902a;
+.book__card-stars {
+  font-size: 13px;
+  color: #c8800a;
   letter-spacing: 1px;
-}
 
-// ── Dark mode — already dark, just minor tweak ──
-[data-theme="dark"] {
-  .bookshelf {
-    box-shadow:
-      inset 0 -4px 12px rgba(0,0,0,0.6),
-      0 8px 32px rgba(0,0,0,0.4);
-  }
+  &--empty { color: rgba(#c8800a, 0.25); }
 }
 
 // ── Mobile ──
@@ -243,23 +248,18 @@
   .books-section {
     padding: 40px 20px;
     > .heading { font-size: 32px; }
-    &__subtitle { font-size: 13px; margin-bottom: 32px; }
+    &__subtitle { font-size: 13px; margin-bottom: 28px; }
   }
 
-  .bookshelf__book {
-    width: 40px;
-    height: 150px;
-    &:nth-child(5n+3) { height: 158px; }
-    &:nth-child(5n+4) { height: 142px; }
-    &:nth-child(5n+5) { height: 154px; }
+  .book {
+    width: 44px;
+    height: calc(var(--h, 188px) * 0.75);
   }
 
-  .bookshelf__book--empty {
-    width: 32px;
-    height: 140px;
+  .book--empty {
+    width: 36px;
+    height: 135px;
   }
 
-  .bookshelf__shelf {
-    padding: 14px 14px 0;
-  }
+  .bookcase__interior { padding: 12px 10px 0; }
 }
