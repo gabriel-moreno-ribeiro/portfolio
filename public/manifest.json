@@ -1,6 +1,8 @@
 {
+  "id": "/",
   "short_name": "Gabriel MR",
   "name": "Gabriel Moreno Ribeiro — Portfolio",
+  "description": "Founder, builder, and researcher. Co-Founder & CEO of HIBEEX.",
   "icons": [
     {
       "src": "favicon.ico",
@@ -18,8 +20,10 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": ".",
+  "start_url": "/",
+  "scope": "/",
   "display": "standalone",
-  "theme_color": "#000000",
+  "orientation": "portrait",
+  "theme_color": "#fff8f4",
   "background_color": "#fff8f4"
 }

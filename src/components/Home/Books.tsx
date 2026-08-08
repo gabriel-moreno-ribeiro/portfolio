@@ -50,35 +50,43 @@ const HEIGHTS = [190, 178, 196, 184, 200, 176, 194, 182, 198, 172,
                  198, 176, 204, 182, 196, 180, 200, 188];
 
 function BookItem({ book, index }: { book: Book; index: number }) {
-  const [hovered, setHovered] = useState(false);
+  const [active, setActive] = useState(false);
   const tilt = TILTS[index % TILTS.length];
   const height = HEIGHTS[index % HEIGHTS.length];
 
   return (
-    <div
-      className={`book ${hovered ? 'book--hovered' : ''}`}
+    <button
+      className={`book ${active ? 'book--hovered' : ''}`}
       style={{
         '--tilt': `${tilt}deg`,
         '--h': `${height}px`,
+        background: 'none',
+        border: 'none',
+        padding: 0,
+        cursor: 'pointer',
+        font: 'inherit',
       } as React.CSSProperties}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      onMouseEnter={() => setActive(true)}
+      onMouseLeave={() => setActive(false)}
+      onFocus={() => setActive(true)}
+      onBlur={() => setActive(false)}
+      aria-label={`${book.title} (${book.stars} out of 5 stars, ${book.year})`}
     >
       <div className="book__cover">
-        <img src={book.cover} alt={book.title} loading="lazy" />
+        <img src={book.cover} alt="" loading="lazy" aria-hidden="true" />
       </div>
 
-      {hovered && (
-        <div className="book__card">
+      {active && (
+        <div className="book__card" aria-hidden="true">
           <span className="book__card-title">{book.title}</span>
           <span className="book__card-year">{book.year}</span>
-          <span className="book__card-stars">
+          <span className="book__card-stars" aria-hidden="true">
             {"★".repeat(book.stars)}
             <span className="book__card-stars--empty">{"★".repeat(5 - book.stars)}</span>
           </span>
         </div>
       )}
-    </div>
+    </button>
   );
 }
 
@@ -91,7 +99,7 @@ function Books() {
         Books I've Read.
       </h2>
       <p className="books-section__subtitle">
-        Every book I remember reading, in order. Hover a spine.
+        Every book I've finished since I was nine. Oldest on the left.
       </p>
 
       <div className="bookcase">
@@ -113,10 +121,8 @@ function Books() {
               </motion.div>
             ))}
 
-            {/* Empty slots */}
-            {Array.from({ length: 5 }).map((_, i) => (
-              <div key={`empty-${i}`} className="book book--empty" />
-            ))}
+            {/* Single "more coming" slot */}
+            <div className="book book--empty book--next" aria-label="More books to come" />
           </div>
         </div>
 

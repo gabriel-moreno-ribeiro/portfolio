@@ -109,20 +109,22 @@ function Navbar() {
     >
       <MenuIcon isHovered={isHovered} setIsHovered={setIsHovered} />
       {isMobile ? (
-        <h1
+        <p
           className="heading"
+          aria-hidden="true"
           style={{ visibility: isHovered ? 'hidden' : 'visible' }}
-                  >
+        >
           Gabriel Moreno Ribeiro.
-        </h1>
+        </p>
       ) : (
-        <motion.h1
+        <motion.p
           className="heading"
+          aria-hidden="true"
           layout
           transition={{ type: 'spring', stiffness: 200, damping: 25 }}
-                  >
+        >
           Gabriel Moreno Ribeiro.
-        </motion.h1>
+        </motion.p>
       )}
       <motion.div
         className="links"

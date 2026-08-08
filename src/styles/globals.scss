@@ -1,39 +1,119 @@
-$primary-orange: #f0732d;
-$white: #fff;
-$grey: #f2f2f2;
-$text-grey: #747474;
-$black: #111;
-$border-grey: #e7e7e7;
-
+// ── Semantic design tokens ────────────────────────────────────────────────────
+// Light (default)
 :root {
-  --primary-orange: #f0732d;
-  --white: #fff;
-  --grey: #f2f2f2;
-  --text-grey: #747474;
-  --black: #111;
-  --border-grey: #e7e7e7;
+  --bg:           #fff8f4;
+  --surface:      #ffffff;
+  --fg:           #111111;
+  --fg-muted:     #5f5f5f;   // was #747474 (AA fail) → 6.08:1 on --bg
+  --border:       #e7e7e7;
+  --accent:       #b8501a;   // was #f0732d (2.78:1 fail) → 4.76:1 on --bg
+  --accent-decor: #f0732d;   // original orange — decorative only (lines, icons)
+  --focus-ring:   #b8501a;
 
   // 2026 gradient palette
   --gradient-start: #fff8f4;
-  --gradient-mid: #ffe4d4;
-  --gradient-end: #ffd2b8;
+  --gradient-mid:   #ffe4d4;
+  --gradient-end:   #ffd2b8;
+
+  // Legacy aliases — kept to avoid breakage; migrate usages to semantic tokens
+  --primary-orange: #f0732d;  // decorative orange (use --accent for text)
+  --white:          #fff;
+  --grey:           #f2f2f2;
+  --text-grey:      #5f5f5f;  // upgraded contrast
+  --black:          #111;
+  --border-grey:    #e7e7e7;
   --gradient-accent: #f0732d;
 
   // Serif heading font (hero only)
   --font-serif: "DM Serif Display", Georgia, serif;
 }
 
+// Dark
 [data-theme="dark"] {
-  --white: #111;
-  --black: #fff;
+  --bg:           #0a0a1a;
+  --surface:      #16162e;
+  --fg:           #ffffff;
+  --fg-muted:     #a8a8b8;   // was #747474 (4.19:1 fail) → 8.36:1 on --bg
+  --border:       rgba(255, 255, 255, 0.14);
+  --accent:       #f0732d;   // 6.72:1 on dark bg — passes
+  --accent-decor: #f0732d;
+  --focus-ring:   #ff9a5c;   // lighter for dark bg
 
   // Dark gradient palette
   --gradient-start: #0a0a1a;
-  --gradient-mid: #1a1025;
-  --gradient-end: #2a1530;
+  --gradient-mid:   #1a1025;
+  --gradient-end:   #2a1530;
+
+  // Legacy aliases — updated for dark mode
+  --primary-orange: #f0732d;
+  --white:          #111;    // inverted (legacy; prefer --fg / --bg)
+  --grey:           #1a1a2e; // was #f2f2f2 — was NEVER overridden before
+  --text-grey:      #a8a8b8; // upgraded contrast
+  --black:          #fff;    // inverted (legacy; prefer --fg / --bg)
+  --border-grey:    rgba(255, 255, 255, 0.14); // was #e7e7e7 — never overridden
 }
 
-@import url("https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap");
+// Sass variables for use in SCSS files
+$primary-orange: #f0732d;
+$white: #fff;
+$grey: #f2f2f2;
+$text-grey: #5f5f5f;
+$black: #111;
+$border-grey: #e7e7e7;
+
+// ── Font loading — link tags in index.html; preconnect added there too ──────
+
+// ── Skip link ────────────────────────────────────────────────────────────────
+.skip-link {
+  position: absolute;
+  top: -9999px;
+  left: 16px;
+  z-index: 10000;
+  background: var(--accent);
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 0 0 8px 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: top 0.1s;
+
+  &:focus {
+    top: 0;
+  }
+}
+
+// ── Global focus visible ──────────────────────────────────────────────────────
+:where(a, button, [role="button"], input, textarea, select, summary, [tabindex]):focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+// ── Reduced motion ────────────────────────────────────────────────────────────
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+// ── Forced colors (high-contrast Windows) ────────────────────────────────────
+@media (forced-colors: active) {
+  .btn.primary {
+    background: ButtonFace;
+    color: ButtonText;
+    border: 2px solid ButtonText;
+  }
+}
 
 .sr-only {
   position: absolute;
@@ -55,7 +135,7 @@ body {
   font-family: "DM Sans", sans-serif;
   color: var(--black);
   background: var(--gradient-start);
-  scroll-behavior: smooth;
+  scroll-behavior: smooth;  // guarded by prefers-reduced-motion above
   transition: background 0.6s ease, color 0.5s;
   min-height: 100vh;
 
@@ -211,15 +291,15 @@ body {
     white-space: nowrap;
   }
 
-  &:hover, &--active {
+  &:hover, &:focus-visible, &--active {
     .sidenav-item__line {
       width: 36px;
-      background: $primary-orange;
+      background: var(--accent-decor);
     }
     .sidenav-item__label {
       opacity: 1;
       transform: translateX(0);
-      color: $primary-orange;
+      color: var(--accent);
     }
   }
 }

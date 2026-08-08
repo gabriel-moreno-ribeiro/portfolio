@@ -18,8 +18,8 @@ const BackgroundGlobe = lazy(() => import("../components/Home/BackgroundGlobe"))
 const HorizontalSkillsWrapper = lazy(() => import("../components/Home/HorizontalSkillsWrapper"));
 const WorkExperience = lazy(() => import("../components/Home/WorkExperience"));
 
-const NAV_SECTIONS = ['Origins', 'Skills', 'Work', 'Research', 'Books'];
-const NAV_IDS      = ['background', 'skills', 'work', 'research', 'books'];
+const NAV_SECTIONS = ['Origins', 'Skills', 'Work', 'Experience', 'Research', 'Books'];
+const NAV_IDS      = ['background', 'skills', 'work', 'work-experience', 'research', 'books'];
 
 function Home() {
   const [activeNav, setActiveNav] = useState(0);
@@ -50,7 +50,7 @@ function Home() {
   };
 
   return (
-    <div className="home-wrapper">
+    <div className="home-wrapper" id="main-content">
       {/* Fixed side navigation */}
       <nav className="home-sidenav" aria-label="Page sections">
         {NAV_SECTIONS.map((label, i) => (
@@ -58,9 +58,11 @@ function Home() {
             key={label}
             className={`sidenav-item ${activeNav === i ? 'sidenav-item--active' : ''}`}
             onClick={() => handleNavClick(i)}
+            aria-label={`Go to ${label} section`}
+            aria-current={activeNav === i ? 'true' : undefined}
           >
             <span className="sidenav-item__line" />
-            <span className="sidenav-item__label">{label}</span>
+            <span className="sidenav-item__label" aria-hidden="true">{label}</span>
           </button>
         ))}
       </nav>

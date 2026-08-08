@@ -68,7 +68,7 @@ export const work = [
         imgUrl: null,
       },
       modalData: {
-        title: "Olympic Club - Colegio Militar de Salvador",
+        title: "Olympic Club - Colégio Militar de Salvador",
         desc: "Served as President for 2 years, restructured the club from the ground up, and pushed 17 major initiatives through. Student participation up 47%. National olympiad results up 62%.",
         infoHeading: "Key Results",
         infoArr: [
@@ -81,12 +81,12 @@ export const work = [
     },
     {
       cardData: {
-        title: "Fundacao Estudar Scholar",
+        title: "Fundação Estudar Scholar",
         url: null,
         imgUrl: null,
       },
       modalData: {
-        title: "Fundacao Estudar - PREP Program",
+        title: "Fundação Estudar - PREP Program",
         desc: "One of ~70 scholars selected from 10,000+ applicants — 0.7% acceptance. Brazil's most competitive college access program for international universities.",
         infoHeading: "Selection",
         infoArr: [

@@ -37,14 +37,14 @@ export const experience = [
   },
   {
     title: "President",
-    company: "Olympic Club - Colegio Militar de Salvador",
+    company: "Olympic Club - Colégio Militar de Salvador",
     date: "August 2024 - May 2026",
     description:
       "Led the club's executive board, spearheaded comprehensive restructuring, secured support for 17 major initiatives. Drove 47% increase in student participation and 62% increase in national olympiad results.",
   },
   {
     title: "Scholar - PREP Program",
-    company: "Fundacao Estudar",
+    company: "Fundação Estudar",
     date: "January 2025 - March 2026",
     description:
       "One of ~70 scholars selected from 10,000+ applicants (0.7% acceptance rate). Brazil's longest-running and ultra-competitive college access program.",
