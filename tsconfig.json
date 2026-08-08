@@ -20,6 +20,6 @@
     "forceConsistentCasingInFileNames": true
   },
   "include": ["src"],
-  "exclude": ["node_modules", "api", "functions", "dist"],
+  "exclude": ["node_modules", "api", "functions", "dist", "src/components/ReactBits"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

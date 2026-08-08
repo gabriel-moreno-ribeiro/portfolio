@@ -1,6 +1,9 @@
 import createGlobe from 'cobe';
 import { AnimatePresence, motion } from 'motion/react';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import AccordionGallery from '../ReactBits/AccordionGallery';
 
 interface City {
   id: string;
@@ -71,9 +74,7 @@ const CITIES: City[] = [
   },
 ];
 
-const MEDIA_FILES = ['01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg', '06.jpg', '07.jpg', '08.jpg', '01.mp4', '02.mp4'];
-// First N photos go in the right panel; remainder spill below the globe
-const PANEL_PHOTOS = 4;
+const MEDIA_FILES = ['01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg', '06.jpg', '07.jpg', '08.jpg'];
 
 function locationToAngles(lat: number, lon: number): [number, number] {
   return [
@@ -216,17 +217,36 @@ function GlobeCanvas({ selected }: { selected: City | null }) {
   return <canvas ref={canvasRef} className="globe-canvas" onPointerDown={onPointerDown} />;
 }
 
-function CityMedia({ cityId, file }: { cityId: string; file: string }) {
-  const [failed, setFailed] = useState(false);
-  if (failed) return null;
-  const src = `/background/${cityId}/${file}`;
-  if (file.endsWith('.mp4')) {
-    return <video src={src} controls playsInline onError={() => setFailed(true)} />;
-  }
-  return <img src={src} alt={`Photo in ${cityId}`} loading="lazy" onError={() => setFailed(true)} />;
+function useCityPhotos(cityId: string) {
+  const [available, setAvailable] = useState<string[]>([]);
+  useEffect(() => {
+    setAvailable([]);
+    const found: string[] = [];
+    let pending = MEDIA_FILES.filter(f => !f.endsWith('.mp4')).length;
+    MEDIA_FILES.filter(f => !f.endsWith('.mp4')).forEach(file => {
+      const img = new Image();
+      img.onload = () => {
+        found.push(file);
+        pending--;
+        if (pending === 0) setAvailable([...found].sort());
+      };
+      img.onerror = () => { pending--; if (pending === 0) setAvailable([...found].sort()); };
+      img.src = `/background/${cityId}/${file}`;
+    });
+  }, [cityId]);
+  return available;
 }
 
 function CityPanel({ city, onClose }: { city: City; onClose: () => void }) {
+  const photos = useCityPhotos(city.id);
+  const galleryItems = useMemo(() =>
+    photos.map(f => ({
+      image: `/background/${city.id}/${f}`,
+      label: city.name.split(',')[0],
+    })),
+    [photos, city.id, city.name]
+  );
+
   return (
     <motion.div
       className="city-panel"
@@ -245,28 +265,19 @@ function CityPanel({ city, onClose }: { city: City; onClose: () => void }) {
         ))}
       </div>
 
-      <div className="city-panel__photos">
-        {MEDIA_FILES.slice(0, PANEL_PHOTOS).map((file) => (
-          <CityMedia key={file} cityId={city.id} file={file} />
-        ))}
-      </div>
-    </motion.div>
-  );
-}
-
-// Overflow photos shown below the globe when a city is selected
-function GlobeOverflowPhotos({ city }: { city: City }) {
-  return (
-    <motion.div
-      className="globe-overflow-photos"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.4, delay: 0.15 }}
-    >
-      {MEDIA_FILES.slice(PANEL_PHOTOS).map((file) => (
-        <CityMedia key={file} cityId={city.id} file={file} />
-      ))}
+      {galleryItems.length > 0 && (
+        <AccordionGallery
+          items={galleryItems as any}
+          height={280}
+          defaultIndex={0}
+          trigger="hover"
+          showLabels={false}
+          grayscale={false}
+          expandRatio={0.5}
+          gap={6}
+          radius={10}
+        />
+      )}
     </motion.div>
   );
 }
@@ -317,10 +328,6 @@ function BackgroundGlobe() {
             <GlobeCanvas selected={selected} />
           </div>
 
-          {/* Overflow photos fill the space below the globe when open */}
-          <AnimatePresence>
-            {selected && <GlobeOverflowPhotos key={selected.id + '-overflow'} city={selected} />}
-          </AnimatePresence>
         </div>
 
         {/* ── Panel column ── */}
