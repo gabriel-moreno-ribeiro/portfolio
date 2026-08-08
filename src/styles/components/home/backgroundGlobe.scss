@@ -50,22 +50,6 @@
 }
 
 
-// Overflow photos below the globe (visible only when panel is open)
-.globe-overflow-photos {
-  margin-top: 16px;
-  columns: 3;
-  column-gap: 8px;
-  width: 100%;
-
-  img, video {
-    display: block;
-    width: 100%;
-    border-radius: 10px;
-    object-fit: cover;
-    margin-bottom: 8px;
-    break-inside: avoid;
-  }
-}
 
 // ── City panel (right column) ──
 .city-panel {
@@ -131,18 +115,8 @@
     margin: 0;
   }
 
-  &__photos {
-    columns: 2;
-    column-gap: 8px;
-
-    img, video {
-      display: block;
-      width: 100%;
-      border-radius: 10px;
-      object-fit: cover;
-      margin-bottom: 8px;
-      break-inside: avoid;
-    }
+  .accordion-gallery {
+    margin-top: 4px;
   }
 }
 

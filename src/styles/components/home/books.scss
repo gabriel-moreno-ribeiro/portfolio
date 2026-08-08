@@ -13,217 +13,150 @@
 
   &__subtitle {
     text-align: center;
-    font-size: 16px;
-    color: $text-grey;
-    margin: 0 0 40px;
-  }
-
-  &__empty {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    height: 100%;
-    min-height: 200px;
-    color: $text-grey;
     font-size: 15px;
-
-    p { margin: 0; }
-
-    &--unborn p {
-      font-style: italic;
-    }
-  }
-
-  &__empty-icon {
-    font-size: 40px;
-    opacity: 0.5;
-  }
-}
-
-// ── Two-column layout ──
-.books-layout {
-  display: grid;
-  grid-template-columns: 180px 1fr;
-  gap: 32px;
-  align-items: start;
-}
-
-// ── Calendar sidebar ──
-.books-calendar {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  position: sticky;
-  top: 24px;
-  max-height: 80vh;
-  overflow-y: auto;
-  padding-right: 4px;
-
-  // thin scrollbar
-  &::-webkit-scrollbar { width: 3px; }
-  &::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 2px; }
-}
-
-.books-year-row {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 7px 10px;
-  border-radius: 8px;
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  font-family: inherit;
-  text-align: left;
-  transition: background 0.15s;
-  position: relative;
-
-  &__label {
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--black);
-    opacity: 0.5;
-    flex-shrink: 0;
-  }
-
-  &__age {
-    font-size: 10px;
     color: $text-grey;
-    opacity: 0.6;
-  }
-
-  &__dot {
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: $primary-orange;
-    margin-left: auto;
-    flex-shrink: 0;
-    opacity: 0.7;
-  }
-
-  &--past {
-    opacity: 0.3;
-    cursor: pointer;
-
-    .books-year-row__label { opacity: 0.4; }
-  }
-
-  &--has-books {
-    .books-year-row__label { opacity: 1; }
-    .books-year-row__age { opacity: 0.8; }
-  }
-
-  &--active {
-    background: rgba($primary-orange, 0.1);
-
-    .books-year-row__label {
-      color: $primary-orange;
-      opacity: 1;
-    }
-
-    .books-year-row__age { opacity: 1; color: $primary-orange; }
-
-    .books-year-row__dot { opacity: 1; }
-  }
-
-  &:hover:not(&--active) {
-    background: rgba(0,0,0,0.04);
-
-    .books-year-row__label { opacity: 0.9; }
+    margin: 0 0 48px;
   }
 }
 
-// ── Right panel ──
-.books-panel {
-  min-height: 300px;
-}
-
-.books-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 20px;
+// ── Bookshelf ──
+.bookshelf {
+  position: relative;
   width: 100%;
 }
 
-.books-card {
+.bookshelf__shelf {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  padding: 12px;
-  border-radius: 12px;
-  background: rgba($grey, 0.3);
-  border: 1px solid rgba(0, 0, 0, 0.04);
-  transition: transform 0.2s, box-shadow 0.2s;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 4px;
+  overflow-x: auto;
+  padding: 24px 24px 0;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+
+  // hide scrollbar but keep scroll
+  &::-webkit-scrollbar { height: 4px; }
+  &::-webkit-scrollbar-track { background: transparent; }
+  &::-webkit-scrollbar-thumb { background: rgba($primary-orange, 0.3); border-radius: 2px; }
+}
+
+.bookshelf__plank {
+  height: 14px;
+  background: linear-gradient(180deg, #c8a97a 0%, #a07840 60%, #7a5a28 100%);
+  border-radius: 0 0 4px 4px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+  margin-top: 0;
+}
+
+// ── Book ──
+.bookshelf__book {
+  position: relative;
+  flex-shrink: 0;
+  width: 68px;
+  height: 200px;
+  cursor: pointer;
+  transition: transform 0.2s cubic-bezier(0.22,1,0.36,1);
 
   &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    transform: translateY(-12px);
+    z-index: 10;
+
+    .bookshelf__tooltip { opacity: 1; transform: translateY(-8px); }
+    .bookshelf__cover img { box-shadow: 4px 4px 20px rgba(0,0,0,0.3); }
   }
 
-  &__cover {
-    width: 110px;
-    height: 158px;
-    border-radius: 6px;
-    overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  &--empty {
+    width: 52px;
+    height: 200px;
+    border: 2px dashed rgba(0,0,0,0.1);
+    border-radius: 2px 6px 6px 2px;
+    background: rgba($grey, 0.3);
+    cursor: default;
 
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+    [data-theme="dark"] & {
+      border-color: rgba(#fff, 0.06);
+      background: rgba(#fff, 0.02);
     }
   }
+}
 
-  &__info {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    text-align: center;
+.bookshelf__cover {
+  width: 100%;
+  height: 100%;
+  border-radius: 2px 6px 6px 2px;
+  overflow: hidden;
+  box-shadow: 2px 2px 8px rgba(0,0,0,0.18);
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: box-shadow 0.2s;
   }
+}
 
-  &__title {
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--black);
-    line-height: 1.3;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+// ── Tooltip on hover ──
+.bookshelf__tooltip {
+  position: absolute;
+  bottom: calc(100% + 14px);
+  left: 50%;
+  transform: translateX(-50%) translateY(0px);
+  background: var(--black);
+  color: var(--white);
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s, transform 0.2s;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 120px;
+  text-align: center;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: var(--black);
   }
+}
 
-  &__stars {
-    display: flex;
-    gap: 1px;
-    font-size: 13px;
+.bookshelf__tooltip-title {
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 1.3;
+  white-space: normal;
+  max-width: 160px;
+}
 
-    .star--filled { color: $primary-orange; }
-    .star--empty  { color: rgba(0, 0, 0, 0.15); }
-  }
+.bookshelf__tooltip-year {
+  font-size: 10px;
+  opacity: 0.6;
+}
+
+.bookshelf__tooltip-stars {
+  font-size: 11px;
+  color: $primary-orange;
+  letter-spacing: 1px;
 }
 
 // ── Dark mode ──
 [data-theme="dark"] {
-  .books-year-row {
-    &--active { background: rgba($primary-orange, 0.15); }
-    &:hover:not(.books-year-row--active) { background: rgba(#fff, 0.06); }
+  .bookshelf__plank {
+    background: linear-gradient(180deg, #8a6040 0%, #6a4420 60%, #4a2808 100%);
   }
 
-  .books-calendar::-webkit-scrollbar-thumb {
-    background: rgba(#fff, 0.15);
-  }
-
-  .books-card {
-    background: rgba(#fff, 0.03);
-    border-color: rgba(#fff, 0.06);
-
-    &:hover { box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3); }
-    &__stars .star--empty { color: rgba(#fff, 0.15); }
+  .bookshelf__book .bookshelf__cover {
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.4);
   }
 }
 
@@ -231,49 +164,17 @@
 @media (max-width: 768px) {
   .books-section {
     padding: 40px 20px;
-
     > .heading { font-size: 32px; }
-    &__subtitle { font-size: 14px; margin-bottom: 28px; }
+    &__subtitle { font-size: 13px; margin-bottom: 32px; }
   }
 
-  .books-layout {
-    grid-template-columns: 1fr;
-    gap: 24px;
+  .bookshelf__book {
+    width: 52px;
+    height: 160px;
   }
 
-  .books-calendar {
-    position: static;
-    max-height: none;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 6px;
-    overflow-y: visible;
-  }
-
-  .books-year-row {
-    padding: 5px 10px;
-    border-radius: 8px;
-    border: 1.5px solid rgba(0,0,0,0.08);
-    background: rgba($grey, 0.5);
-
-    &__age { display: none; }
-
-    &--active {
-      background: $primary-orange;
-      border-color: $primary-orange;
-      .books-year-row__label { color: #fff; opacity: 1; }
-      .books-year-row__dot { background: #fff; }
-    }
-  }
-
-  .books-grid {
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    gap: 14px;
-  }
-
-  .books-card {
-    padding: 8px;
-    &__cover { width: 95px; height: 136px; }
-    &__title { font-size: 11px; }
+  .bookshelf__book--empty {
+    width: 40px;
+    height: 160px;
   }
 }
