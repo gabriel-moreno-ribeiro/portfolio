@@ -191,10 +191,13 @@ const commands: CommandDefinition[] = [
   },
   {
     name: "resume",
-    description: "Open resume",
+    description: "Show contact links",
     execute: (ctx) => {
-      ctx.writeln(yellow("Opening resume..."));
-      ctx.writeln("(Resume link would open in a new tab)");
+      ctx.writeln(yellow("Contact Gabriel directly:"));
+      ctx.writeln(`  Email:    ${green(contact.email)}`);
+      ctx.writeln(`  LinkedIn: ${green(contact.linkedin)}`);
+      ctx.writeln("");
+      ctx.writeln("A downloadable CV is coming soon.");
     },
   },
   {
@@ -204,7 +207,7 @@ const commands: CommandDefinition[] = [
       ctx.writeln(yellow("Education"));
       ctx.writeln(`  ${education.degree}`);
       ctx.writeln(`  ${education.university}`);
-      ctx.writeln(`  Graduated: ${education.year}`);
+      ctx.writeln(`  Status: ${education.year}`);
     },
   },
   {

@@ -1,5 +1,5 @@
 import { motion, useInView } from 'motion/react';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { FiChevronLeft, FiChevronRight, FiFileText } from 'react-icons/fi';
 
 interface ResearchItem {
@@ -13,7 +13,10 @@ interface ResearchItem {
   pdf?: string;
 }
 
-const MEDIA_FILES = ['01.jpg', '02.jpg', '03.jpg', '01.mp4'];
+// Only probe for actually-uploaded media. Add slugs to this map when files exist.
+const RESEARCH_MEDIA_MANIFEST: Record<string, string[]> = {
+  'projeto-candela': ['01.jpg'],
+};
 
 const researchItems: ResearchItem[] = [
   {
@@ -25,7 +28,7 @@ const researchItems: ResearchItem[] = [
     abstract:
       'RCT with 208 public-school students on whether fintech apps change savings behavior. The treatment group saved 130% more than control over the study period.',
     tags: ['RCT', 'Fintech', 'Behavioral Economics', 'Python', 'Statistics'],
-    pdf: '/research/fintech-rct/paper.pdf',
+    // pdf: '/research/fintech-rct/paper.pdf', // TODO: upload PDF to enable badge
   },
   {
     slug: 'chemical-kinetics',
@@ -36,7 +39,7 @@ const researchItems: ResearchItem[] = [
     abstract:
       '59-page thesis modeling reaction rate mechanisms — 97% accuracy using numerical methods. Covers steady-state approximation, Michaelis-Menten kinetics, and oscillating reactions.',
     tags: ['MATLAB', 'Mathematica', 'LaTeX', 'Numerical Methods', 'Kinetics'],
-    pdf: '/research/chemical-kinetics/paper.pdf',
+    // pdf: '/research/chemical-kinetics/paper.pdf', // TODO: upload PDF to enable badge
   },
   {
     slug: 'projeto-candela',
@@ -51,34 +54,16 @@ const researchItems: ResearchItem[] = [
 ];
 
 function ResearchMediaCarousel({ slug, onHasMedia }: { slug: string; onHasMedia?: (has: boolean) => void }) {
-  const [loaded, setLoaded] = useState<string[]>([]);
+  // Use static manifest — no speculative 404 probing
+  const knownFiles = RESEARCH_MEDIA_MANIFEST[slug] ?? [];
   const [idx, setIdx] = useState(0);
-  const checkedRef = useRef(false);
 
-  if (!checkedRef.current) {
-    checkedRef.current = true;
-    MEDIA_FILES.forEach((file) => {
-      const url = `/research/${slug}/${file}`;
-      if (file.endsWith('.mp4')) {
-        const probe = document.createElement('video');
-        probe.preload = 'metadata';
-        probe.onloadedmetadata = () => {
-          setLoaded((prev) => [...prev, file]);
-          onHasMedia?.(true);
-        };
-        probe.src = url;
-      } else {
-        const probe = new Image();
-        probe.onload = () => {
-          setLoaded((prev) => [...prev, file]);
-          onHasMedia?.(true);
-        };
-        probe.src = url;
-      }
-    });
-  }
+  useEffect(() => {
+    if (knownFiles.length > 0) onHasMedia?.(true);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [slug]);
 
-  const available = MEDIA_FILES.filter((f) => loaded.includes(f));
+  const available = knownFiles;
 
   if (available.length === 0) {
     return null;
@@ -116,19 +101,22 @@ function ResearchCard({ item, index }: { item: ResearchItem; index: number }) {
   const [hasMedia, setHasMedia] = useState(false);
 
   const handleClick = () => {
-    if (item.pdf) {
-      window.open(item.pdf, '_blank');
-    }
+    if (item.pdf) window.open(item.pdf, '_blank', 'noopener');
   };
+
+  const interactive = !!item.pdf;
 
   return (
     <motion.div
       ref={ref}
-      className={`research-card ${item.pdf ? 'research-card--clickable' : ''} ${!hasMedia ? 'research-card--no-media' : ''}`}
+      className={`research-card ${interactive ? 'research-card--clickable' : ''} ${!hasMedia ? 'research-card--no-media' : ''}`}
       initial={{ opacity: 0, y: 40 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      onClick={handleClick}
+      onClick={interactive ? handleClick : undefined}
+      role={interactive ? 'button' : undefined}
+      tabIndex={interactive ? 0 : undefined}
+      onKeyDown={interactive ? (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleClick(); } } : undefined}
     >
       <ResearchMediaCarousel slug={item.slug} onHasMedia={setHasMedia} />
       <div className="research-card__content">

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>404 — Gabriel Moreno Ribeiro</title>
+    <meta name="robots" content="noindex" />
+    <style>
+      :root { --bg: #fff8f4; --fg: #111; --accent: #b8501a; }
+      @media (prefers-color-scheme: dark) {
+        :root { --bg: #0a0a1a; --fg: #fff; --accent: #f0732d; }
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body {
+        background: var(--bg);
+        color: var(--fg);
+        font-family: "DM Sans", system-ui, sans-serif;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 24px;
+      }
+      .container { max-width: 480px; }
+      .code {
+        font-size: clamp(80px, 18vw, 160px);
+        font-weight: 900;
+        line-height: 1;
+        color: var(--accent);
+        letter-spacing: -4px;
+      }
+      h1 { font-size: 1.5rem; font-weight: 600; margin: 16px 0 8px; }
+      p { color: #888; font-size: 1rem; line-height: 1.6; margin-bottom: 32px; }
+      a {
+        display: inline-block;
+        background: var(--accent);
+        color: #fff;
+        text-decoration: none;
+        padding: 12px 28px;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        transition: opacity 0.15s;
+      }
+      a:hover { opacity: 0.85; }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="code">404</div>
+      <h1>Page not found</h1>
+      <p>This page doesn't exist — but the builder does.</p>
+      <a href="/">Back to gabrielmr.com</a>
+    </div>
+  </body>
+</html>

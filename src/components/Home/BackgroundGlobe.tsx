@@ -74,7 +74,14 @@ const CITIES: City[] = [
   },
 ];
 
-const MEDIA_FILES = ['01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg', '06.jpg', '07.jpg', '08.jpg'];
+// Static manifest of photos that actually exist in public/background/<cityId>/.
+// Add entries when uploading city photos — eliminates speculative 404 probing.
+const CITY_PHOTO_MANIFEST: Record<string, string[]> = {
+  'missao-velha': ['01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg'],
+  'salvador':     ['01.jpg', '02.jpg', '03.jpg'],
+  // 'fortaleza': [],  // no photos uploaded yet
+  // 'sao-paulo': [],  // no photos uploaded yet
+};
 
 function locationToAngles(lat: number, lon: number): [number, number] {
   return [
@@ -218,23 +225,7 @@ function GlobeCanvas({ selected }: { selected: City | null }) {
 }
 
 function useCityPhotos(cityId: string) {
-  const [available, setAvailable] = useState<string[]>([]);
-  useEffect(() => {
-    setAvailable([]);
-    const found: string[] = [];
-    let pending = MEDIA_FILES.filter(f => !f.endsWith('.mp4')).length;
-    MEDIA_FILES.filter(f => !f.endsWith('.mp4')).forEach(file => {
-      const img = new Image();
-      img.onload = () => {
-        found.push(file);
-        pending--;
-        if (pending === 0) setAvailable([...found].sort());
-      };
-      img.onerror = () => { pending--; if (pending === 0) setAvailable([...found].sort()); };
-      img.src = `/background/${cityId}/${file}`;
-    });
-  }, [cityId]);
-  return available;
+  return CITY_PHOTO_MANIFEST[cityId] ?? [];
 }
 
 function CityPanel({ city, onClose }: { city: City; onClose: () => void }) {
