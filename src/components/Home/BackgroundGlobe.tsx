@@ -258,7 +258,10 @@ function CityPanel({ city, onClose }: { city: City; onClose: () => void }) {
       <button className="city-panel__close" onClick={onClose} aria-label="Close">✕</button>
 
       <div className="city-panel__text">
-        <p className="city-panel__location">{city.name}</p>
+        <div className="city-panel__meta">
+          <p className="city-panel__location">{city.name}</p>
+          <span className="city-panel__period">{city.period}</span>
+        </div>
         <h3 className="city-panel__headline">{city.headline}</h3>
         {city.story.map((para, i) => (
           <p key={i} className="city-panel__para">{para}</p>
@@ -268,13 +271,13 @@ function CityPanel({ city, onClose }: { city: City; onClose: () => void }) {
       {galleryItems.length > 0 && (
         <AccordionGallery
           items={galleryItems as any}
-          height={280}
+          height={320}
           defaultIndex={0}
           trigger="hover"
           showLabels={false}
-          grayscale={false}
-          expandRatio={0.5}
-          gap={6}
+          grayscale={true}
+          expandRatio={galleryItems.length === 1 ? 0.99 : 0.6}
+          gap={5}
           radius={10}
         />
       )}
