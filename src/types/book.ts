@@ -20,6 +20,10 @@ export interface Book {
   tags: string[];
   finishedAt?: string;
   link?: string;
+  /** Reading period label, e.g. "2021 – 2022" */
+  readPeriod: string;
+  /** Age when Gabriel read this book */
+  readAge: number;
 }
 
 export interface BookshelfProps {
