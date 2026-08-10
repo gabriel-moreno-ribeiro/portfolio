@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────
-//  Books section
+//  Books section — Glass bookshelf with 3D spines
 // ─────────────────────────────────────────────
 
 .books-section {
@@ -19,128 +19,292 @@
     text-align: center;
     font-size: 15px;
     color: $text-grey;
-    margin: 0 0 40px;
+    margin: 0 0 48px;
   }
 }
 
-// ── Bookcase wrapper ──
+// ── Bookcase ──
 .bookcase {
   position: relative;
   width: 100%;
-  border-radius: 4px 4px 6px 6px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #1a1218 0%, #0d0a0f 100%);
+  box-shadow:
+    0 1px 0 rgba(#fff, 0.05) inset,
+    0 20px 60px rgba(#000, 0.4),
+    0 4px 12px rgba(#000, 0.3);
+
+  [data-theme="dark"] & {
+    background: linear-gradient(180deg, #0d0a0e 0%, #050308 100%);
+    box-shadow:
+      0 1px 0 rgba(#fff, 0.03) inset,
+      0 20px 60px rgba(#000, 0.7);
+  }
+
+  &__glass {
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    pointer-events: none;
+    z-index: 5;
+    background: linear-gradient(
+      135deg,
+      rgba(#fff, 0.04) 0%,
+      rgba(#fff, 0) 40%,
+      rgba(#fff, 0.02) 60%,
+      rgba(#fff, 0) 100%
+    );
+    border: 1px solid rgba(#fff, 0.06);
+  }
 
   &__top-trim {
-    height: 10px;
-    background: linear-gradient(180deg, #b07830 0%, #8a5a20 100%);
-    border-radius: 4px 4px 0 0;
-    box-shadow: 0 -1px 0 rgba(#fff, 0.08) inset;
+    height: 6px;
+    background: linear-gradient(180deg, rgba(#fff, 0.08) 0%, rgba(#fff, 0) 100%);
   }
 
   &__interior {
-    background:
-      repeating-linear-gradient(
-        90deg,
-        rgba(#000, 0) 0px,
-        rgba(#000, 0) 120px,
-        rgba(#000, 0.04) 120px,
-        rgba(#000, 0.04) 122px
-      ),
-      linear-gradient(180deg, #1c0f05 0%, #2a1608 60%, #1c0f05 100%);
-    padding: 16px 14px 0;
+    padding: 28px 24px 12px;
     overflow: hidden;
   }
 
   &__row {
     display: flex;
     align-items: flex-end;
-    gap: 2px;
+    gap: 3px;
     overflow-x: auto;
-    padding-bottom: 0;
+    padding-bottom: 4px;
+    scroll-behavior: smooth;
 
-    &::-webkit-scrollbar { height: 5px; }
-    &::-webkit-scrollbar-track { background: #1c0f05; }
-    &::-webkit-scrollbar-thumb { background: #6a3e14; border-radius: 3px; }
+    &::-webkit-scrollbar { height: 4px; }
+    &::-webkit-scrollbar-track { background: transparent; }
+    &::-webkit-scrollbar-thumb {
+      background: rgba(#fff, 0.15);
+      border-radius: 4px;
+    }
   }
 
-  // The wooden shelf plank
   &__shelf {
-    height: 16px;
+    height: 14px;
     background: linear-gradient(
       180deg,
-      #d4a040 0%,
-      #b07828 25%,
-      #8a5a18 65%,
-      #6a4010 100%
+      rgba(#fff, 0.06) 0%,
+      rgba(#fff, 0.02) 40%,
+      rgba(#000, 0.3) 100%
     );
-    box-shadow:
-      inset 0 2px 3px rgba(#fff, 0.12),
-      0 4px 14px rgba(#000, 0.45),
-      0 8px 24px rgba(#000, 0.2);
+    box-shadow: 0 1px 0 rgba(#fff, 0.04) inset;
+  }
+
+  &__wall {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 24px;
+    z-index: 6;
+    pointer-events: none;
+
+    &--left {
+      left: 0;
+      background: linear-gradient(90deg, #0d0a0f 0%, transparent 100%);
+      [data-theme="dark"] & { background: linear-gradient(90deg, #050308 0%, transparent 100%); }
+    }
+
+    &--right {
+      right: 0;
+      background: linear-gradient(270deg, #0d0a0f 0%, transparent 100%);
+      [data-theme="dark"] & { background: linear-gradient(270deg, #050308 0%, transparent 100%); }
+    }
+  }
+}
+
+// ── Book spine ──
+.book-spine {
+  position: relative;
+  flex-shrink: 0;
+  width: 48px;
+  height: var(--h, 190px);
+  transform: rotate(var(--tilt, 0deg));
+  transform-origin: bottom center;
+  transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+  cursor: pointer;
+  z-index: 1;
+  border: none;
+  padding: 0;
+  background: none;
+  font: inherit;
+  perspective: 600px;
+
+  &:hover, &:focus-visible {
+    transform: rotate(0deg) translateY(-14px) scale(1.05);
+    z-index: 20;
+
+    .book-spine__face {
+      box-shadow:
+        0 8px 24px rgba(#000, 0.5),
+        0 0 20px rgba(var(--book-color), 0.3);
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid rgba(#fff, 0.4);
+    outline-offset: 3px;
+    border-radius: 3px;
+  }
+
+  &__face {
+    width: 100%;
+    height: 100%;
+    border-radius: 2px 4px 4px 2px;
+    background: var(--book-color, #4f46e5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: relative;
+    overflow: hidden;
+    box-shadow:
+      3px 0 8px rgba(#000, 0.5),
+      inset -2px 0 4px rgba(#000, 0.3),
+      inset 2px 0 4px rgba(#fff, 0.1);
+    transition: box-shadow 0.25s ease;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 5px;
+      background: linear-gradient(90deg, rgba(#fff, 0.15) 0%, transparent 100%);
+    }
 
     &::after {
       content: '';
       position: absolute;
       inset: 0;
-      background: repeating-linear-gradient(
-        90deg,
-        transparent,
-        transparent 40px,
-        rgba(#000, 0.04) 40px,
-        rgba(#000, 0.04) 42px
-      );
+      background: linear-gradient(180deg, rgba(#fff, 0.08) 0%, transparent 30%, rgba(#000, 0.15) 100%);
     }
   }
 
-  // Side walls
-  &__wall {
+  &__title {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+    font-size: 10px;
+    font-weight: 600;
+    color: #fff;
+    text-shadow: 0 1px 2px rgba(#000, 0.5);
+    letter-spacing: 0.3px;
+    line-height: 1.2;
+    max-height: calc(var(--h, 190px) - 24px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 8px 0;
+    z-index: 1;
+    opacity: 0.92;
+  }
+
+  &__edge {
     position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 14px;
-    background: linear-gradient(90deg, #0f0702 0%, #2a1608 100%);
-    z-index: 4;
-
-    &--left {
-      left: 0;
-      border-radius: 4px 0 0 0;
-      background: linear-gradient(90deg, #0f0702 0%, #2a1608 80%, transparent 100%);
-    }
-
-    &--right {
-      right: 0;
-      border-radius: 0 4px 0 0;
-      background: linear-gradient(270deg, #0f0702 0%, #2a1608 80%, transparent 100%);
-    }
+    left: 0;
+    top: 3px;
+    bottom: 3px;
+    width: 3px;
+    background: linear-gradient(90deg, rgba(#000, 0.4) 0%, rgba(#fff, 0.05) 100%);
+    border-radius: 2px 0 0 2px;
   }
 }
 
-// ── Individual book ──
-.book {
-  position: relative;
-  flex-shrink: 0;
-  width: 60px;
-  height: var(--h, 188px);
-  transform: rotate(var(--tilt, 0deg));
-  transform-origin: bottom center;
-  transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), z-index 0s;
-  cursor: pointer;
-  z-index: 1;
+// ── Modal backdrop ──
+.book-modal__backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(#000, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
 
-  &--hovered {
-    transform: rotate(0deg) translateY(-16px) !important;
-    z-index: 20;
+// ── Modal ──
+.book-modal {
+  position: relative;
+  background: #fff;
+  border-radius: 20px;
+  max-width: 680px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 32px 80px rgba(#000, 0.4), 0 1px 0 rgba(#fff, 0.1) inset;
+
+  [data-theme="dark"] & {
+    background: #1a1520;
+    box-shadow: 0 32px 80px rgba(#000, 0.7), 0 1px 0 rgba(#fff, 0.05) inset;
   }
 
-  &__cover {
-    width: 100%;
-    height: 100%;
-    border-radius: 1px 3px 3px 1px;
+  &__close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(#000, 0.06);
+    color: #666;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.15s ease;
+
+    &:hover { background: rgba(#000, 0.12); color: #333; }
+
+    [data-theme="dark"] & {
+      background: rgba(#fff, 0.08);
+      color: #aaa;
+      &:hover { background: rgba(#fff, 0.15); color: #fff; }
+    }
+  }
+
+  &__content {
+    display: flex;
+    gap: 36px;
+    padding: 40px;
+    align-items: flex-start;
+  }
+
+  // 3D book cover
+  &__cover-wrapper {
+    flex-shrink: 0;
+    perspective: 800px;
+  }
+
+  &__cover-3d {
+    position: relative;
+    width: 160px;
+    transform-style: preserve-3d;
+    transform: rotateY(-25deg) rotateX(2deg);
+    transition: transform 0.5s ease;
+
+    &:hover {
+      transform: rotateY(-15deg) rotateX(1deg);
+    }
+  }
+
+  &__cover-front {
+    width: 160px;
+    aspect-ratio: 2/3;
+    border-radius: 2px 6px 6px 2px;
     overflow: hidden;
     box-shadow:
-      3px 0 8px rgba(#000, 0.6),
-      inset -2px 0 6px rgba(#000, 0.35),
-      inset 1px 0 2px rgba(#fff, 0.08);
+      6px 6px 20px rgba(#000, 0.35),
+      0 0 1px rgba(#000, 0.3);
+    transform: translateZ(14px);
+    position: relative;
 
     img {
       width: 100%;
@@ -148,118 +312,184 @@
       object-fit: cover;
       display: block;
     }
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        105deg,
+        rgba(#fff, 0.15) 0%,
+        rgba(#fff, 0) 10%,
+        rgba(#000, 0) 40%,
+        rgba(#000, 0.05) 100%
+      );
+    }
   }
 
-  // Spine highlight (left edge shimmer)
-  &__cover::before {
-    content: '';
+  &__cover-spine {
     position: absolute;
     left: 0;
     top: 0;
     bottom: 0;
-    width: 4px;
-    background: linear-gradient(90deg, rgba(#fff, 0.12) 0%, transparent 100%);
-    z-index: 2;
-    pointer-events: none;
+    width: 28px;
+    background: var(--cover-color-dark, #1e3a5f);
+    transform: rotateY(90deg) translateZ(0px) translateX(-14px);
+    border-radius: 2px 0 0 2px;
+
+    [data-theme="dark"] & { background: var(--cover-color-dark, #1e3a5f); }
   }
 
-  // Empty slot
-  &--empty {
-    width: 50px;
-    height: 180px;
-    cursor: default;
+  &__cover-top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 28px;
+    background: #f5f0e8;
+    transform: rotateX(90deg) translateZ(14px) translateY(-14px);
 
-    &:hover { transform: rotate(0deg) !important; z-index: 1; }
+    [data-theme="dark"] & { background: #2a2530; }
+  }
 
-    .book__cover {
-      background: rgba(#fff, 0.03);
-      border: 1.5px dashed rgba(#fff, 0.08);
-      box-shadow: none;
+  // Info section
+  &__info {
+    flex: 1;
+    min-width: 0;
+  }
 
-      img { display: none; }
-      &::before { display: none; }
+  &__title {
+    font-size: 24px;
+    font-weight: 800;
+    color: #111;
+    margin: 0 0 6px;
+    line-height: 1.3;
+
+    [data-theme="dark"] & { color: #f5f0ea; }
+  }
+
+  &__author {
+    font-size: 14px;
+    color: #666;
+    margin: 0 0 16px;
+
+    [data-theme="dark"] & { color: #9a95a0; }
+  }
+
+  &__stars {
+    display: flex;
+    gap: 3px;
+    margin-bottom: 24px;
+  }
+
+  &__star {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: #d4a040;
+    stroke-width: 1.5;
+
+    &--filled {
+      fill: #d4a040;
+      stroke: #d4a040;
     }
   }
-}
 
-// ── Info card that pops up on hover ──
-.book__card {
-  position: absolute;
-  bottom: calc(100% + 14px);
-  left: 50%;
-  transform: translateX(-50%);
-  background: #fff8f0;
-  border: 1px solid #d4a040;
-  border-radius: 6px;
-  padding: 10px 14px;
-  min-width: 150px;
-  max-width: 200px;
-  text-align: center;
-  pointer-events: none;
-  z-index: 30;
-  box-shadow: 0 8px 24px rgba(#000, 0.18);
-
-  // Arrow pointing down
-  &::after {
-    content: '';
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    border: 7px solid transparent;
-    border-top-color: #d4a040;
+  &__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 24px;
   }
 
-  [data-theme="dark"] & {
-    background: #1c0f05;
-    border-color: #8a5a18;
-    &::after { border-top-color: #8a5a18; }
+  &__meta-item {
+    background: rgba(#000, 0.04);
+    border-radius: 8px;
+    padding: 10px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+    [data-theme="dark"] & { background: rgba(#fff, 0.05); }
   }
-}
 
-.book__card-title {
-  display: block;
-  font-size: 12px;
-  font-weight: 700;
-  color: #2a1608;
-  line-height: 1.35;
-  margin-bottom: 4px;
+  &__meta-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: #999;
 
-  [data-theme="dark"] & { color: #f0dcc0; }
-}
+    [data-theme="dark"] & { color: #7a7580; }
+  }
 
-.book__card-year {
-  display: block;
-  font-size: 10px;
-  color: #8a5a18;
-  margin-bottom: 5px;
-}
+  &__meta-value {
+    font-size: 13px;
+    font-weight: 600;
+    color: #333;
 
-.book__card-stars {
-  font-size: 13px;
-  color: #c8800a;
-  letter-spacing: 1px;
+    [data-theme="dark"] & { color: #e0dce5; }
+  }
 
-  &--empty { color: rgba(#c8800a, 0.25); }
+  &__review {
+    font-size: 14px;
+    line-height: 1.7;
+    color: #444;
+    border-left: 3px solid #d4a040;
+    padding: 0 0 0 16px;
+    margin: 0;
+    font-style: italic;
+
+    [data-theme="dark"] & {
+      color: #bab5c0;
+      border-left-color: #8a6a20;
+    }
+  }
 }
 
 // ── Mobile ──
 @media (max-width: 768px) {
   .books-section {
-    padding: 40px 20px;
+    padding: 40px 16px;
     > .heading { font-size: 32px; }
-    &__subtitle { font-size: 13px; margin-bottom: 28px; }
+    &__subtitle { font-size: 13px; margin-bottom: 32px; }
   }
 
-  .book {
-    width: 44px;
-    height: calc(var(--h, 188px) * 0.75);
+  .book-spine {
+    width: 38px;
+    height: calc(var(--h, 190px) * 0.75);
+
+    &__title { font-size: 9px; }
   }
 
-  .book--empty {
-    width: 36px;
-    height: 135px;
+  .bookcase__interior { padding: 20px 16px 8px; }
+
+  .book-modal {
+    &__content {
+      flex-direction: column;
+      align-items: center;
+      padding: 32px 24px;
+      gap: 24px;
+    }
+
+    &__cover-3d {
+      transform: rotateY(-20deg) rotateX(2deg);
+      width: 130px;
+    }
+
+    &__cover-front { width: 130px; }
+    &__title { font-size: 20px; text-align: center; }
+    &__author { text-align: center; }
+    &__stars { justify-content: center; }
+    &__meta { justify-content: center; }
+  }
+}
+
+@media (max-width: 480px) {
+  .book-spine {
+    width: 32px;
+    &__title { font-size: 8px; }
   }
 
-  .bookcase__interior { padding: 12px 10px 0; }
+  .book-modal__content { padding: 24px 16px; }
 }
