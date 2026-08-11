@@ -159,79 +159,17 @@ body {
     overflow: hidden !important;
   }
 
-  // Painted background image - only hero area, fades out quickly
-  &::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 50vh;
-    background-image: url("/assets/bg-painted.avif");
-    background-size: cover;
-    background-position: top center;
-    background-repeat: no-repeat;
-    mask-image: linear-gradient(to bottom, black 0%, rgba(0,0,0,0.6) 25%, rgba(0,0,0,0.2) 50%, transparent 75%);
-    -webkit-mask-image: linear-gradient(to bottom, black 0%, rgba(0,0,0,0.6) 25%, rgba(0,0,0,0.2) 50%, transparent 75%);
-    z-index: 0;
-    pointer-events: none;
-    animation: bg-fade-in 1.2s ease-out forwards;
-  }
-
-  // Noise texture overlay - hero area only
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 50vh;
-    pointer-events: none;
-    z-index: 0;
-    background-image: url("/assets/noise.avif");
-    background-repeat: repeat;
-    background-size: 300px 300px;
-    mix-blend-mode: multiply;
-    mask-image: linear-gradient(to bottom, black 0%, rgba(0,0,0,0.6) 25%, rgba(0,0,0,0.2) 50%, transparent 75%);
-    -webkit-mask-image: linear-gradient(to bottom, black 0%, rgba(0,0,0,0.6) 25%, rgba(0,0,0,0.2) 50%, transparent 75%);
-    animation: noise-fade-in 1.2s ease-out forwards;
-  }
 }
 
-@keyframes bg-fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes noise-fade-in {
-  from { opacity: 0; }
-  to { opacity: 0.12; }
-}
-
-[data-theme="dark"] {
-  body {
-    &::after {
-      animation: none;
-      opacity: 0;
-    }
-
-    &::before {
-      animation: noise-fade-in-dark 1.2s ease-out forwards;
-      mix-blend-mode: screen;
-    }
-  }
-}
-
-@keyframes noise-fade-in-dark {
-  from { opacity: 0; }
-  to { opacity: 0.06; }
-}
 
 // ── Hero slideshow (cycling landscape photos) ──
 .hero-slideshow {
   position: fixed;
-  inset: 0;
-  z-index: -1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50vh;
+  z-index: 0;
   overflow: hidden;
   pointer-events: none;
 
@@ -239,17 +177,16 @@ body {
     position: absolute;
     inset: 0;
     width: 100%;
-    height: 50vh;
+    height: 100%;
     object-fit: cover;
     object-position: center 30%;
-    mask-image: linear-gradient(to bottom, black 0%, rgba(0,0,0,0.5) 40%, transparent 80%);
-    -webkit-mask-image: linear-gradient(to bottom, black 0%, rgba(0,0,0,0.5) 40%, transparent 80%);
-    opacity: 0.35;
+    mask-image: linear-gradient(to bottom, black 0%, rgba(0,0,0,0.6) 30%, rgba(0,0,0,0.2) 60%, transparent 85%);
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, rgba(0,0,0,0.6) 30%, rgba(0,0,0,0.2) 60%, transparent 85%);
   }
 }
 
-[data-theme="dark"] .hero-slideshow__img {
-  opacity: 0.15;
+[data-theme="dark"] .hero-slideshow {
+  opacity: 0.3;
 }
 
 .home-wrapper {
