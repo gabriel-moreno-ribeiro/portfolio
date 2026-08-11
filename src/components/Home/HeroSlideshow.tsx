@@ -4,8 +4,14 @@ import { useCallback, useEffect, useState } from 'react';
 const SLIDE_DURATION = 6000;
 
 const SLIDES: string[] = [
-  // Add photos/videos here — paths relative to public/
-  // e.g. '/assets/hero-slideshow/salvador-01.jpg'
+  '/assets/hero-slideshow/1.avif',
+  '/assets/hero-slideshow/2.avif',
+  '/assets/hero-slideshow/3.avif',
+  '/assets/hero-slideshow/4.avif',
+  '/assets/hero-slideshow/5.avif',
+  '/assets/hero-slideshow/6.avif',
+  '/assets/hero-slideshow/7.avif',
+  '/assets/hero-slideshow/8.avif',
 ];
 
 function HeroSlideshow() {
