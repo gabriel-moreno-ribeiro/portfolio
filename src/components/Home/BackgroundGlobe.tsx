@@ -75,8 +75,10 @@ const CITIES: City[] = [
 ];
 
 // Static manifest of photos that actually exist in public/background/<cityId>/.
-// Add entries when uploading city photos — eliminates speculative 404 probing.
-const CITY_PHOTO_MANIFEST: Record<string, string[]> = {
+// Each entry can be a filename string or {file, position} for object-position hints.
+type PhotoEntry = string | { file: string; position: string };
+
+const CITY_PHOTO_MANIFEST: Record<string, PhotoEntry[]> = {
   'missao-velha': ['01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg', '06.jpg', '07.jpg', '08.jpg'],
   'salvador':     ['01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg', '06.jpg'],
   // 'fortaleza': [],  // no photos uploaded yet
@@ -225,19 +227,20 @@ function GlobeCanvas({ selected, darkMode }: { selected: City | null; darkMode?:
   return <canvas ref={canvasRef} className="globe-canvas" onPointerDown={onPointerDown} aria-hidden="true" />;
 }
 
-function useCityPhotos(cityId: string) {
-  return CITY_PHOTO_MANIFEST[cityId] ?? [];
-}
-
 function CityPanel({ city, onClose }: { city: City; onClose: () => void }) {
-  const photos = useCityPhotos(city.id);
-  const galleryItems = useMemo(() =>
-    photos.map(f => ({
-      image: `/background/${city.id}/${f}`,
-      label: city.name.split(',')[0],
-    })),
-    [photos, city.id, city.name]
-  );
+  const galleryItems = useMemo(() => {
+    const entries = CITY_PHOTO_MANIFEST[city.id] ?? [];
+    return entries.map(entry => {
+      const { file, position } = typeof entry === 'string'
+        ? { file: entry, position: 'center top' }
+        : entry;
+      return {
+        image: `/background/${city.id}/${file}`,
+        label: city.name.split(',')[0],
+        position,
+      };
+    });
+  }, [city.id, city.name]);
 
   return (
     <motion.div

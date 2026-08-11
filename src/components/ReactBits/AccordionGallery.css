@@ -68,6 +68,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: var(--ag-img-pos, center);
   display: block;
   user-select: none;
   -webkit-user-drag: none;

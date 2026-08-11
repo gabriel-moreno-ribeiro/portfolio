@@ -7,7 +7,7 @@ import {
   useRef,
   useState,
 } from 'react';
-import { FiArrowRight, FiLink } from 'react-icons/fi';
+import { FiArrowRight, FiCalendar, FiLink } from 'react-icons/fi';
 import useIsMobile from '../../hooks/useIsMobile';
 import { scrollToComponent } from '../../utils/scrollToComponent';
 import CommonButton from '../Shared/CommonButton';
@@ -18,12 +18,12 @@ const CanvasComponent = lazy(() => import('../Canvas/CanvasComponent'));
 const BG_SETTLE_DELAY = 0.7;
 
 const bottomTexts = [
-  `Co-Founder & CEO of <span class="black">HIBEEX</span>. Building financial AI for small businesses.`,
+  `Co-Founder & CEO of <span class="black">HIBEEX</span>. Building Backoffice AI for small and medium businesses.`,
   `One of <span class="black">6 startups</span> picked for the <span class="black">Canastra Ventures AI Residency</span>.`,
   `<span class="black">39 olympiad medals</span> (19 gold) in math, physics, chemistry, and astronomy.`,
-  `Ran an <span class="black">RCT with 208 students</span> on fintech and savings. Treatment group saved <span class="black">130% more</span>.`,
+  `Ran an <span class="black">RCT with 208 students</span> on fintech and savings, advised by a Harvard Ph.D.`,
   `Founded <span class="black">Projeto Candela</span>: physics kits now in 28 public schools, reaching <span class="black">3,392 students</span>.`,
-  `Admitted to <span class="black">St Andrews</span> with a Global Merit Scholarship. Chose to build first.`,
+  `Admitted to <span class="black">St Andrews</span> with a Global Merit Scholarship.`,
   `<span class="black">Fundação Estudar PREP</span> scholar. 70 picked from 10,000+ applicants.`,
 ];
 
@@ -61,7 +61,7 @@ function Hero() {
   return (
     <div className="hero-section">
       <motion.div
-        style={{ marginTop: '48px' }}
+        style={{ marginTop: '16px' }}
         initial={{ opacity: 0 }}
         animate={{ opacity: showRobot ? 1 : 0 }}
         transition={{ duration: 0.8, ease: 'easeOut' }}
@@ -109,7 +109,7 @@ function Hero() {
             ease: 'easeOut',
           }}
         >
-          18 years old. Building financial AI for small businesses at HIBEEX. 39 olympiad medals. Founded Projeto Candela.
+          Building Backoffice AI for Small and Medium Businesses @ HIBEEX. Founder @ Projeto Candela.
         </motion.p>
         <motion.div
           className="btn-flex"
@@ -133,6 +133,12 @@ function Hero() {
             Icon={<FiArrowRight className="icon-arrow" />}
             iconPosition="right"
             onClick={() => scrollToComponent('work')}
+          />
+          <CommonButton
+            text="Book a Call"
+            Icon={<FiCalendar className="icon-link" />}
+            iconPosition="right"
+            onClick={() => window.open('https://cal.com/gabrielmribeiro', '_blank')}
           />
         </motion.div>
         <motion.p

@@ -1,4 +1,5 @@
-import { useEffect } from "react";
+import { lazy, Suspense, useEffect } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CameraFeedback from "./components/Shared/CameraFeedback";
@@ -22,6 +23,9 @@ import {
 } from "./providers/MouseInputProvider";
 import { useHandsfreeStore } from "./store/handsfreeStore";
 import { useThemeStore } from "./store/themeStore";
+
+const Library = lazy(() => import("./pages/Library"));
+const HeroSlideshow = lazy(() => import("./components/Home/HeroSlideshow"));
 
 function App() {
   const { darkMode } = useThemeStore();
@@ -66,25 +70,32 @@ function App() {
   }, [isMobile]);
 
   return (
-    <div className="app">
-      <HorizontalScroller />
-      <Home />
-      <HandsfreeButton />
-      <DarkModeButton />
-      <TerminalButton />
-      {/* These components manage their own visibility via stores */}
-      <HandsfreeIntroModal />
-      <GestureTutorial />
-      {/* TerminalModal only handles keyboard shortcuts; rendering is in WindowRenderer */}
-      <TerminalModal />
-      {/* WindowRenderer renders all managed windows + dock */}
-      <WindowRenderer />
-      <HandsfreeLoader />
-      <CameraFeedback />
-      <HandCursor />
-      <CustomMouse />
-      <ToastContainer />
-    </div>
+    <BrowserRouter>
+      <div className="app">
+        <Suspense fallback={null}>
+          <HeroSlideshow />
+        </Suspense>
+        <HorizontalScroller />
+        <Suspense fallback={null}>
+          <Routes>
+            <Route path="/library" element={<Library />} />
+            <Route path="*" element={<Home />} />
+          </Routes>
+        </Suspense>
+        <HandsfreeButton />
+        <DarkModeButton />
+        <TerminalButton />
+        <HandsfreeIntroModal />
+        <GestureTutorial />
+        <TerminalModal />
+        <WindowRenderer />
+        <HandsfreeLoader />
+        <CameraFeedback />
+        <HandCursor />
+        <CustomMouse />
+        <ToastContainer />
+      </div>
+    </BrowserRouter>
   );
 }
 

@@ -161,7 +161,7 @@ const AccordionGallery = ({
           >
             <span className="ag-panel__frame">
               <span className="ag-panel__media" ref={el => (mediaRefs.current[i] = el)}>
-                <img src={item.image} alt={item.alt || item.label || ''} draggable="false" loading="lazy" />
+                <img src={item.image} alt={item.alt || item.label || ''} draggable="false" loading="lazy" style={item.position ? { '--ag-img-pos': item.position } : undefined} />
               </span>
               <span className="ag-panel__overlay" aria-hidden="true" />
             </span>
