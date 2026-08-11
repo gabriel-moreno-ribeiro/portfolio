@@ -2,6 +2,7 @@ import { motion } from 'motion/react';
 import { useEffect, useMemo, useState } from 'react';
 import { FiVideoOff, FiX } from 'react-icons/fi';
 import { IoMoonOutline, IoSunnyOutline } from 'react-icons/io5';
+import { useNavigate } from 'react-router-dom';
 import useIsMobile from '../../hooks/useIsMobile';
 import { useHandsfreeStore } from '../../store/handsfreeStore';
 import { useThemeStore } from '../../store/themeStore';
@@ -57,6 +58,10 @@ function Navbar() {
       href: '#work',
     },
     {
+      name: 'Library.',
+      href: '/library',
+    },
+    {
       name: 'LinkedIn.',
       href: 'https://linkedin.com/in/gabriel-moreno-ribeiro',
     },
@@ -68,11 +73,13 @@ function Navbar() {
   const collapsedWidth = isMobile ? '175px' : 'auto';
   const expandedWidth = isMobile ? 'calc(100vw - 32px)' : '700px';
 
+  const navigate = useNavigate();
+
   const handleLinkClick = (link: { href: string; top?: number }) => {
     if (link.href.includes('#')) {
       scrollToComponent(link.href.split('#')[1], link.top);
     } else if (link.href.startsWith('/')) {
-      window.location.href = link.href;
+      navigate(link.href);
     } else {
       window.open(link.href, '_blank');
     }

@@ -35,60 +35,67 @@ function easeOutCubic(t) {
 
 export function ChevroletC10({ progressRef, groupRef, ...props }) {
   const { scene, materials } = useGLTF("/assets/3d/1965_chevrolet_c10.glb");
+  const clonedScene = useMemo(() => scene.clone(true), [scene]);
   const meshDataRef = useRef([]);
+  const initialized = useRef(false);
 
   useEffect(() => {
-    if (materials.Paint) {
-      materials.Paint.color = new THREE.Color(0xcc0000);
-      materials.Paint.needsUpdate = true;
-    }
-    if (materials["Paint.007"]) {
-      materials["Paint.007"].color = new THREE.Color(0xcc0000);
-      materials["Paint.007"].needsUpdate = true;
-    }
-  }, [materials]);
+    if (!clonedScene || initialized.current) return;
 
-  useEffect(() => {
-    const meshes = [];
-    scene.traverse((child) => {
-      if (child.isMesh) {
-        child.userData.originalPosition = child.position.clone();
-        child.userData.originalRotation = child.rotation.clone();
-
-        let config = null;
-        for (const [key, cfg] of Object.entries(EXPLOSION_CONFIG)) {
-          if (child.name.includes(key)) {
-            config = cfg;
-            break;
-          }
-        }
-
-        if (!config) {
-          const center = new THREE.Vector3();
-          child.getWorldPosition(center);
-          const dir = center.normalize();
-          config = {
-            dir: [dir.x || 0.1, dir.y + 0.5, dir.z || 0.1],
-            rotate: [0, 0, 0],
-            phase: 0.35,
-          };
-        }
-
-        meshes.push({ mesh: child, config });
+    // Paint the car red
+    clonedScene.traverse((child) => {
+      if (!child.isMesh) return;
+      if (child.material?.name === "Paint" || child.material?.name === "Paint.007") {
+        child.material = child.material.clone();
+        child.material.color = new THREE.Color(0xcc0000);
+        child.material.needsUpdate = true;
       }
     });
+
+    const meshes = [];
+    clonedScene.traverse((child) => {
+      if (!child.isMesh) return;
+
+      child.userData.originalPosition = child.position.clone();
+      child.userData.originalRotation = child.rotation.clone();
+
+      let config = null;
+      for (const [key, cfg] of Object.entries(EXPLOSION_CONFIG)) {
+        if (child.name.includes(key)) {
+          config = cfg;
+          break;
+        }
+      }
+
+      if (!config) {
+        const center = new THREE.Vector3();
+        child.getWorldPosition(center);
+        const dir = center.normalize();
+        config = {
+          dir: [dir.x || 0.1, dir.y + 0.5, dir.z || 0.1],
+          rotate: [0, 0, 0],
+          phase: 0.35,
+        };
+      }
+
+      meshes.push({ mesh: child, config });
+    });
+
     meshDataRef.current = meshes;
-  }, [scene]);
+    initialized.current = true;
+  }, [clonedScene]);
 
   useFrame(() => {
     const progress = progressRef.current;
     const data = meshDataRef.current;
+    if (!data.length) return;
 
     for (let i = 0; i < data.length; i++) {
       const { mesh, config } = data[i];
       const { dir, rotate, phase } = config;
       const orig = mesh.userData.originalPosition;
       const origRot = mesh.userData.originalRotation;
+      if (!orig || !origRot) continue;
 
       const localProgress = Math.max(0, Math.min(1, (progress - phase) / (1 - phase)));
       const eased = easeOutCubic(localProgress);
@@ -110,7 +117,7 @@ export function ChevroletC10({ progressRef, groupRef, ...props }) {
 
   return (
     <group ref={groupRef} {...props} dispose={null}>
-      <primitive object={scene} />
+      <primitive object={clonedScene} />
     </group>
   );
 }

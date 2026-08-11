@@ -1,5 +1,4 @@
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
-import Books from "../components/Home/Books";
 import FindMyWork from "../components/Home/FindMyWork";
 import Hero from "../components/Home/Hero";
 import NumbersAndStats from "../components/Home/Numbers";
@@ -7,19 +6,19 @@ import Research from "../components/Home/Research";
 import Skills from "../components/Home/Skills";
 import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Shared/Footer";
+import { scrollToComponent } from "../utils/scrollToComponent";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import StickerPeel from "../components/ReactBits/StickerPeel";
 
-const CarCanvas = lazy(() => import("../components/Canvas/BallCanvas"));
 const BackgroundGlobe = lazy(() => import("../components/Home/BackgroundGlobe"));
 const HorizontalSkillsWrapper = lazy(() => import("../components/Home/HorizontalSkillsWrapper"));
 const WorkExperience = lazy(() => import("../components/Home/WorkExperience"));
 
-const NAV_SECTIONS = ['Origins', 'Skills', 'Work', 'Experience', 'Research', 'Books'];
-const NAV_IDS      = ['background', 'skills', 'work', 'work-experience', 'research', 'books'];
+const NAV_SECTIONS = ['Origins', 'Skills', 'Work', 'Experience', 'Research'];
+const NAV_IDS      = ['background', 'skills', 'work', 'work-experience', 'research'];
 
 function Home() {
   const [activeNav, setActiveNav] = useState(0);
@@ -34,7 +33,7 @@ function Home() {
           if (idx !== -1) setActiveNav(idx);
         }
       });
-    }, { threshold: 0.3 });
+    }, { threshold: 0.15, rootMargin: '-60px 0px -40% 0px' });
 
     NAV_IDS.forEach(id => {
       const el = document.getElementById(id);
@@ -45,8 +44,7 @@ function Home() {
   }, []);
 
   const handleNavClick = (index: number) => {
-    const el = document.getElementById(NAV_IDS[index]);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
+    scrollToComponent(NAV_IDS[index], 60);
   };
 
   return (
@@ -82,7 +80,6 @@ function Home() {
       <Suspense fallback={null}>
         <WorkExperience />
       </Suspense>
-      <Books />
       <Footer />
 
       {/* HIBEEX draggable sticker */}
@@ -100,9 +97,6 @@ function Home() {
         />
       </div>
 
-      <Suspense fallback={null}>
-        <CarCanvas />
-      </Suspense>
     </div>
   );
 }
