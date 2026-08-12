@@ -1,4 +1,4 @@
-export type BookStatus = "reading" | "finished" | "want-to-read";
+export type BookStatus = "reading" | "finished";
 export type BookFilter = "all" | "reading" | "finished" | "favorites";
 
 export interface Book {
@@ -17,10 +17,11 @@ export interface Book {
   rating?: number;
   review?: string;
   quote?: string;
+  format?: "pocket" | "standard" | "large" | "textbook";
+  language?: string;
   tags: string[];
   finishedAt?: string;
-  link?: string;
-  /** Reading period label, e.g. "2021 – 2022" */
+  /** Reading period label, e.g. "2021 - 2022" */
   readPeriod: string;
   /** Age when Gabriel read this book */
   readAge: number;
@@ -37,7 +38,6 @@ export interface BookshelfProps {
 export const STATUS_META: Record<BookStatus, { label: string; short: string; dot: string }> = {
   reading: { label: "Reading now", short: "Reading", dot: "#00d9ff" },
   finished: { label: "Finished", short: "Read", dot: "#10b981" },
-  "want-to-read": { label: "Want to read", short: "Queue", dot: "#606060" },
 };
 
 export const FILTERS: { id: BookFilter; label: string }[] = [

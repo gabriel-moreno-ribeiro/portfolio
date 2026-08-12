@@ -1,0 +1,5 @@
+.claude/
+.git/
+.mcp.json
+node_modules/
+*.md
