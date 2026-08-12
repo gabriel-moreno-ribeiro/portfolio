@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CameraFeedback from "./components/Shared/CameraFeedback";
@@ -25,6 +25,7 @@ import { useHandsfreeStore } from "./store/handsfreeStore";
 import { useThemeStore } from "./store/themeStore";
 
 const HeroSlideshow = lazy(() => import("./components/Home/HeroSlideshow"));
+const LibraryPage = lazy(() => import("./pages/Library"));
 
 function App() {
   const { darkMode } = useThemeStore();
@@ -74,15 +75,23 @@ function App() {
 }
 
 function AppContent() {
+  const location = useLocation();
+  const isLibrary = location.pathname.startsWith("/library");
+
   return (
     <div className="app">
-      <Suspense fallback={null}>
-        <HeroSlideshow />
+      {!isLibrary && (
+        <Suspense fallback={null}>
+          <HeroSlideshow />
+        </Suspense>
+      )}
+      {!isLibrary && <HorizontalScroller />}
+      <Suspense fallback={isLibrary ? <div style={{ width: "100%", height: "100dvh", background: "var(--bg)" }} /> : null}>
+        <Routes>
+          <Route path="/library/:bookId?" element={<LibraryPage />} />
+          <Route path="*" element={<Home />} />
+        </Routes>
       </Suspense>
-      <HorizontalScroller />
-      <Routes>
-        <Route path="*" element={<Home />} />
-      </Routes>
       <HandsfreeButton />
       <DarkModeButton />
       <TerminalButton />
