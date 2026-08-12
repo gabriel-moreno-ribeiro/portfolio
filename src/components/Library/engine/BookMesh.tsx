@@ -211,21 +211,13 @@ export function BookMesh({
     groupRef.current.rotation.z = (tiltDeg * Math.PI / 180) * (isPresented ? 0 : 1);
     groupRef.current.scale.setScalar(c.scale);
 
-    // Dimming via emissive
-    if (meshRef.current) {
-      const targetDim = isDimmed ? 0.25 : 1.0;
-      materials.forEach(m => {
-        if (m instanceof THREE.MeshStandardMaterial || m instanceof THREE.MeshPhysicalMaterial) {
-          // Lerp color intensity via emissiveIntensity trick: darken roughness temporarily
-          // Better: reduce diffuse by setting color. We use a separate opacity approach.
-          // Simplest: material.color.multiplyScalar — but that's destructive.
-          // Instead we track a dimAlpha and set transparent+opacity.
-          m.transparent = isDimmed;
-          m.opacity = lerp(m.opacity ?? 1, targetDim, a * 0.5);
-          m.needsUpdate = false; // avoid GPU flush every frame
-        }
-      });
-    }
+    // Dimming: lerp opacity on all materials
+    const targetDim = isDimmed ? 0.25 : 1.0;
+    (materials as THREE.Material[]).forEach(m => {
+      const mat = m as THREE.MeshStandardMaterial;
+      mat.transparent = isDimmed || mat.opacity < 0.99;
+      mat.opacity = lerp(mat.opacity ?? 1, targetDim, a * 0.5);
+    });
   });
 
   const geo = useMemo(
