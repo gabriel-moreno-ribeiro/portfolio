@@ -10,6 +10,15 @@ export interface BookshelfProps {
 
 const BOOKS_PER_SHELF = 9;
 
+function getThickness(pages: number): number {
+  const ratio = Math.min(pages / 1200, 1);
+  return 22 + 38 * Math.pow(ratio, 0.55);
+}
+
+function getHeight(pages: number): number {
+  return 180 + Math.min(pages / 8, 50);
+}
+
 export function Bookshelf({ books, initialBookId, onNavigate }: BookshelfProps) {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(() => {
     if (!initialBookId) return null;
@@ -26,7 +35,6 @@ export function Bookshelf({ books, initialBookId, onNavigate }: BookshelfProps) 
   }, [books]);
 
   const selectedBook = selectedIndex !== null ? books[selectedIndex] : null;
-  const mode = selectedIndex !== null ? "focus" : "browse";
 
   useEffect(() => {
     if (!onNavigate) return;
@@ -34,7 +42,7 @@ export function Bookshelf({ books, initialBookId, onNavigate }: BookshelfProps) 
   }, [selectedBook, onNavigate]);
 
   const handleSelect = useCallback((bookIndex: number) => {
-    setSelectedIndex(bookIndex);
+    setSelectedIndex((prev) => prev === bookIndex ? null : bookIndex);
   }, []);
 
   const handleClose = useCallback(() => {
@@ -55,7 +63,6 @@ export function Bookshelf({ books, initialBookId, onNavigate }: BookshelfProps) 
     });
   }, [books.length]);
 
-  // Keyboard nav in focus mode
   useEffect(() => {
     if (selectedIndex === null) return;
     const onKey = (e: KeyboardEvent) => {
@@ -73,10 +80,10 @@ export function Bookshelf({ books, initialBookId, onNavigate }: BookshelfProps) 
         {shelves.map((shelf, shelfIdx) => (
           <div key={shelfIdx} className="bookcase__row">
             <div className="bookcase__books">
-              {shelf.map((book) => {
-                const globalIdx = shelfIdx * BOOKS_PER_SHELF + shelf.indexOf(book);
+              {shelf.map((book, i) => {
+                const globalIdx = shelfIdx * BOOKS_PER_SHELF + i;
                 return (
-                  <BookCard
+                  <Book3D
                     key={book.id}
                     book={book}
                     isSelected={globalIdx === selectedIndex}
@@ -85,7 +92,10 @@ export function Bookshelf({ books, initialBookId, onNavigate }: BookshelfProps) 
                 );
               })}
             </div>
-            <div className="bookcase__plank" />
+            <div className="bookcase__plank">
+              <div className="bookcase__plank-front" />
+              <div className="bookcase__plank-top" />
+            </div>
           </div>
         ))}
       </div>
@@ -182,11 +192,11 @@ export function Bookshelf({ books, initialBookId, onNavigate }: BookshelfProps) 
 
               <div className="bookcase__panel-nav">
                 <button onClick={handlePrev} aria-label="Previous book">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M15 18l-6-6 6-6"/></svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M15 18l-6-6 6-6" /></svg>
                 </button>
                 <span>{(selectedIndex ?? 0) + 1} / {books.length}</span>
                 <button onClick={handleNext} aria-label="Next book">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 18l6-6-6-6"/></svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 18l6-6-6-6" /></svg>
                 </button>
               </div>
             </motion.div>
@@ -197,32 +207,43 @@ export function Bookshelf({ books, initialBookId, onNavigate }: BookshelfProps) 
   );
 }
 
-function BookCard({ book, isSelected, onClick }: { book: Book; isSelected: boolean; onClick: () => void }) {
+function Book3D({ book, isSelected, onClick }: { book: Book; isSelected: boolean; onClick: () => void }) {
+  const thickness = getThickness(book.pages);
+  const height = getHeight(book.pages);
+  const width = 120;
+
   return (
     <button
-      className={`bookcase__book ${isSelected ? "bookcase__book--selected" : ""}`}
+      className={`book3d ${isSelected ? "book3d--selected" : ""}`}
       onClick={onClick}
       aria-label={`${book.title} by ${book.author}`}
+      style={{
+        "--book-thickness": `${thickness}px`,
+        "--book-height": `${height}px`,
+        "--book-width": `${width}px`,
+        "--book-color": book.coverColor,
+      } as React.CSSProperties}
     >
-      <div className="bookcase__book-spine" style={{ background: book.coverColor }}>
-        <span className="bookcase__book-spine-text">{book.title}</span>
+      <div className="book3d__wrapper">
+        {/* Spine (faces viewer) */}
+        <div className="book3d__spine">
+          <span className="book3d__spine-title">{book.title}</span>
+          <span className="book3d__spine-author">{book.author.split(" ").pop()}</span>
+        </div>
+        {/* Front cover (rotated -90deg on Y, revealed on hover) */}
+        <div className="book3d__front">
+          {book.cover ? (
+            <img src={book.cover} alt="" loading="lazy" decoding="async" />
+          ) : (
+            <div className="book3d__front-fallback">
+              <span>{book.title}</span>
+            </div>
+          )}
+        </div>
+        {/* Top edge */}
+        <div className="book3d__top" />
       </div>
-      <div className="bookcase__book-front">
-        {book.cover ? (
-          <img
-            src={book.cover}
-            alt={book.title}
-            loading="lazy"
-            decoding="async"
-          />
-        ) : (
-          <div className="bookcase__book-placeholder" style={{ background: book.coverColor }}>
-            <span>{book.title}</span>
-          </div>
-        )}
-      </div>
-      {book.favorite && <span className="bookcase__book-fav">★</span>}
-      {book.status === "reading" && <span className="bookcase__book-reading" />}
+      {book.status === "reading" && <span className="book3d__reading-dot" />}
     </button>
   );
 }

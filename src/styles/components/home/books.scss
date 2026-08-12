@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────
-//  Bookcase — multi-shelf layout with real covers
+//  Bookcase — 3D CSS books on wooden shelves
 // ─────────────────────────────────────────────
 
 $paper: #eee8db;
@@ -9,89 +9,174 @@ $ink-muted: rgba(37, 35, 31, 0.38);
 $hairline: rgba(37, 35, 31, 0.12);
 $accent: #a74735;
 $shelf-wood: #5a4132;
-$shelf-edge: #4b3429;
+$shelf-dark: #4b3429;
+$shelf-light: #7a5c4a;
 
-// ── Main section ──
+// ── Section ──
 .bookcase {
   width: 100%;
   min-height: 100dvh;
   background: $paper;
-  padding: 80px 0 60px;
+  padding: 60px 0 80px;
 }
 
 .bookcase__shelves {
-  max-width: 1200px;
+  max-width: 1100px;
   margin: 0 auto;
-  padding: 0 clamp(20px, 4vw, 60px);
+  padding: 0 clamp(16px, 3vw, 48px);
 }
 
 // ── Shelf row ──
 .bookcase__row {
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 }
 
 .bookcase__books {
   display: flex;
   align-items: flex-end;
-  gap: 0;
-  padding: 0 12px;
-  min-height: 180px;
+  justify-content: center;
+  gap: 3px;
+  padding: 0 8px 0;
+  perspective: 1200px;
+  min-height: 200px;
 }
 
+// Wooden plank with 3D look
 .bookcase__plank {
-  height: 14px;
-  background: linear-gradient(180deg, $shelf-wood 0%, $shelf-edge 100%);
-  border-radius: 0 0 3px 3px;
-  box-shadow:
-    0 4px 8px rgba(0, 0, 0, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  position: relative;
+  height: 18px;
 }
 
-// ── Individual book ──
-.bookcase__book {
+.bookcase__plank-front {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, $shelf-light 0%, $shelf-wood 30%, $shelf-dark 100%);
+  border-radius: 0 0 2px 2px;
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.2),
+    0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.bookcase__plank-top {
+  position: absolute;
+  top: -4px;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(180deg, $shelf-wood 0%, $shelf-dark 100%);
+  transform: rotateX(60deg);
+  transform-origin: bottom;
+}
+
+// ── 3D Book ──
+.book3d {
   position: relative;
-  display: flex;
-  flex-shrink: 0;
-  width: clamp(70px, 8vw, 100px);
-  height: auto;
   border: none;
   background: none;
   padding: 0;
   cursor: pointer;
+  flex-shrink: 0;
+  width: var(--book-thickness);
+  height: var(--book-height);
   transform-style: preserve-3d;
-  perspective: 600px;
-  transition: transform 0.2s ease;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 
   &:hover {
-    transform: translateY(-6px);
-
-    .bookcase__book-front {
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-    }
+    transform: rotateY(-35deg) translateZ(8px);
+    z-index: 10;
   }
 
   &--selected {
-    transform: translateY(-8px) scale(1.05);
-
-    .bookcase__book-front {
-      box-shadow: 0 8px 24px rgba($accent, 0.3);
-      outline: 2px solid $accent;
-      outline-offset: 2px;
-    }
+    transform: rotateY(-55deg) translateZ(14px) scale(1.03);
+    z-index: 20;
   }
 }
 
-.bookcase__book-spine {
-  display: none;
+.book3d__wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
 }
 
-.bookcase__book-front {
-  width: 100%;
-  aspect-ratio: 2 / 3;
-  border-radius: 3px;
+// Spine — the face you see by default
+.book3d__spine {
+  position: absolute;
+  inset: 0;
+  background: var(--book-color);
+  border-radius: 2px 0 0 2px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 4px;
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
-  transition: box-shadow 0.2s ease;
+  box-shadow: inset -1px 0 2px rgba(0, 0, 0, 0.2);
+
+  // Subtle highlight on left edge
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: rgba(255, 255, 255, 0.12);
+  }
+
+  // Dark edge on right
+  &::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: rgba(0, 0, 0, 0.15);
+  }
+}
+
+.book3d__spine-title {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+  font-family: "Inter Variable", Inter, system-ui, sans-serif;
+  font-size: clamp(8px, calc(var(--book-thickness) * 0.35), 13px);
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+  text-align: center;
+  max-height: 80%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.book3d__spine-author {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+  font-family: "Inter Variable", Inter, system-ui, sans-serif;
+  font-size: clamp(6px, calc(var(--book-thickness) * 0.25), 9px);
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-top: 8px;
+}
+
+// Front cover — rotated into position (right side of spine)
+.book3d__front {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--book-width);
+  height: 100%;
+  transform: rotateY(90deg);
+  transform-origin: left center;
+  border-radius: 0 3px 3px 0;
+  overflow: hidden;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
 
   img {
     width: 100%;
@@ -101,41 +186,62 @@ $shelf-edge: #4b3429;
   }
 }
 
-.bookcase__book-placeholder {
+.book3d__front-fallback {
   width: 100%;
   height: 100%;
+  background: var(--book-color);
   display: flex;
   align-items: flex-end;
-  padding: 8px;
+  padding: 12px;
 
   span {
     font-family: "Inter Variable", Inter, system-ui, sans-serif;
-    font-size: 9px;
+    font-size: 11px;
     font-weight: 600;
-    color: rgba(255, 255, 255, 0.85);
+    color: rgba(255, 255, 255, 0.8);
     line-height: 1.2;
   }
 }
 
-.bookcase__book-fav {
+// Top edge of book
+.book3d__top {
   position: absolute;
-  top: 4px;
-  right: 4px;
-  font-size: 10px;
-  color: $accent;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  top: 0;
+  left: 0;
+  width: var(--book-width);
+  height: var(--book-thickness);
+  background: #e9dfca;
+  transform: rotateX(90deg);
+  transform-origin: top center;
+  border-radius: 1px;
+
+  // Simulates page edges
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 2px;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent 0px,
+      transparent 1px,
+      rgba(0, 0, 0, 0.03) 1px,
+      rgba(0, 0, 0, 0.03) 2px
+    );
+  }
 }
 
-.bookcase__book-reading {
+// Reading indicator
+.book3d__reading-dot {
   position: absolute;
-  bottom: 6px;
+  bottom: 8px;
   left: 50%;
   transform: translateX(-50%);
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
   background: #00d9ff;
-  box-shadow: 0 0 4px rgba(0, 217, 255, 0.5);
+  box-shadow: 0 0 6px rgba(0, 217, 255, 0.6);
+  z-index: 5;
 }
 
 // ── Overlay + Detail Panel ──
@@ -143,20 +249,18 @@ $shelf-edge: #4b3429;
   position: fixed;
   inset: 0;
   z-index: 1000;
-  background: rgba(37, 35, 31, 0.4);
-  backdrop-filter: blur(4px);
+  background: rgba(37, 35, 31, 0.45);
+  backdrop-filter: blur(3px);
   display: flex;
-  align-items: center;
+  align-items: stretch;
   justify-content: flex-end;
 }
 
 .bookcase__panel {
-  width: clamp(340px, 42vw, 560px);
-  height: 100%;
-  background: rgba(246, 241, 231, 0.97);
-  backdrop-filter: blur(20px);
+  width: clamp(340px, 40vw, 540px);
+  background: rgba(246, 241, 231, 0.98);
   border-left: 1px solid $hairline;
-  padding: 48px 40px;
+  padding: 44px 36px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
@@ -167,7 +271,7 @@ $shelf-edge: #4b3429;
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 28px;
+  margin-bottom: 24px;
   padding: 8px 14px 8px 10px;
   border: 1px solid $hairline;
   border-radius: 6px;
@@ -188,10 +292,10 @@ $shelf-edge: #4b3429;
 }
 
 .bookcase__panel-cover {
-  max-width: 180px;
+  max-width: 160px;
   border-radius: 6px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
 .bookcase__panel-title {
@@ -250,7 +354,6 @@ $shelf-edge: #4b3429;
   height: 100%;
   background: $accent;
   border-radius: 2px;
-  transition: width 0.6s ease;
 }
 
 .bookcase__panel-rating {
@@ -333,23 +436,33 @@ $shelf-edge: #4b3429;
 
 // ── Responsive ──
 @media (max-width: 900px) {
-  .bookcase__book {
-    width: clamp(60px, 10vw, 85px);
+  .bookcase__books {
+    gap: 2px;
+  }
+
+  .book3d {
+    --book-width: 100px !important;
   }
 }
 
 @media (max-width: 640px) {
   .bookcase {
-    padding: 48px 0 40px;
-  }
-
-  .bookcase__book {
-    width: clamp(55px, 14vw, 75px);
+    padding: 40px 0 60px;
   }
 
   .bookcase__books {
-    gap: 0;
-    padding: 0 8px;
+    flex-wrap: wrap;
+    gap: 4px;
+    justify-content: flex-start;
+  }
+
+  .book3d {
+    --book-width: 85px !important;
+    --book-height: 160px !important;
+
+    &:hover {
+      transform: rotateY(-25deg) translateZ(6px);
+    }
   }
 
   .bookcase__panel {
@@ -357,33 +470,27 @@ $shelf-edge: #4b3429;
     border-left: none;
     border-radius: 16px 16px 0 0;
     padding: 24px;
-    max-height: 80dvh;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: auto;
+    max-height: 75dvh;
   }
 
   .bookcase__overlay {
     align-items: flex-end;
   }
-
-  .bookcase__panel-cover {
-    max-width: 120px;
-    align-self: center;
-  }
 }
 
 // ── Reduced motion ──
 @media (prefers-reduced-motion: reduce) {
-  .bookcase__book {
+  .book3d {
     transition: none;
-  }
 
-  .bookcase__panel,
-  .bookcase__overlay {
-    transition: none !important;
-    animation: none !important;
+    &:hover {
+      transform: none;
+    }
+
+    &--selected {
+      outline: 2px solid $accent;
+      outline-offset: 2px;
+      transform: none;
+    }
   }
 }
