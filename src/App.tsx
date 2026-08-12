@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CameraFeedback from "./components/Shared/CameraFeedback";
@@ -27,12 +27,16 @@ import { useThemeStore } from "./store/themeStore";
 const Library = lazy(() => import("./pages/Library"));
 const HeroSlideshow = lazy(() => import("./components/Home/HeroSlideshow"));
 
+function LibraryFallback() {
+  return (
+    <div style={{ width: "100%", height: "100dvh", background: "#eee8db" }} />
+  );
+}
+
 function App() {
   const { darkMode } = useThemeStore();
   const isMobile = useIsMobile();
   const { hasSeenIntro, setShowIntroModal } = useHandsfreeStore();
-
-  // Modal is triggered only by the HandsfreeButton click — never auto-opens.
 
   useEffect(() => {
     startMouseInputProvider();
@@ -71,31 +75,42 @@ function App() {
 
   return (
     <BrowserRouter>
-      <div className="app">
+      <AppContent />
+    </BrowserRouter>
+  );
+}
+
+function AppContent() {
+  const location = useLocation();
+  const isLibrary = location.pathname.startsWith("/library");
+
+  return (
+    <div className="app">
+      {!isLibrary && (
         <Suspense fallback={null}>
           <HeroSlideshow />
         </Suspense>
-        <HorizontalScroller />
-        <Suspense fallback={null}>
-          <Routes>
-            <Route path="/library" element={<Library />} />
-            <Route path="*" element={<Home />} />
-          </Routes>
-        </Suspense>
-        <HandsfreeButton />
-        <DarkModeButton />
-        <TerminalButton />
-        <HandsfreeIntroModal />
-        <GestureTutorial />
-        <TerminalModal />
-        <WindowRenderer />
-        <HandsfreeLoader />
-        <CameraFeedback />
-        <HandCursor />
-        <CustomMouse />
-        <ToastContainer />
-      </div>
-    </BrowserRouter>
+      )}
+      <HorizontalScroller />
+      <Suspense fallback={isLibrary ? <LibraryFallback /> : null}>
+        <Routes>
+          <Route path="/library/:bookId?" element={<Library />} />
+          <Route path="*" element={<Home />} />
+        </Routes>
+      </Suspense>
+      <HandsfreeButton />
+      <DarkModeButton />
+      <TerminalButton />
+      <HandsfreeIntroModal />
+      <GestureTutorial />
+      <TerminalModal />
+      <WindowRenderer />
+      <HandsfreeLoader />
+      <CameraFeedback />
+      <HandCursor />
+      <CustomMouse />
+      <ToastContainer />
+    </div>
   );
 }
 
