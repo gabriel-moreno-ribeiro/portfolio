@@ -1,236 +1,174 @@
 // ─────────────────────────────────────────────
-//  Bookshelf — 3D shelf with cream editorial UI
+//  Bookcase — multi-shelf layout with real covers
 // ─────────────────────────────────────────────
 
 $paper: #eee8db;
-$paper-deep: #e4dccd;
-$paper-light: #f6f1e7;
 $ink: #25231f;
 $ink-soft: rgba(37, 35, 31, 0.62);
 $ink-muted: rgba(37, 35, 31, 0.38);
 $hairline: rgba(37, 35, 31, 0.12);
 $accent: #a74735;
+$shelf-wood: #5a4132;
+$shelf-edge: #4b3429;
 
-// ── Section ──
-.shelf-section {
-  position: relative;
+// ── Main section ──
+.bookcase {
   width: 100%;
-  height: 100dvh;
-  min-height: 600px;
-  overflow: hidden;
+  min-height: 100dvh;
   background: $paper;
-
-  // Paper grain overlay
-  &::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    z-index: 2;
-    background:
-      radial-gradient(ellipse 80% 60% at 50% 40%, transparent 40%, rgba(0,0,0,0.03) 100%);
-    mix-blend-mode: multiply;
-  }
+  padding: 80px 0 60px;
 }
 
-// ── Overlay (all HTML UI) ──
-.shelf-overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 10;
-  pointer-events: none;
-
-  // Allow clicks on interactive elements only
-  button, a, .shelf-overlay__detail, .shelf-overlay__dim {
-    pointer-events: auto;
-  }
+.bookcase__shelves {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 4vw, 60px);
 }
 
-// ── Dim overlay (focus mode) ──
-.shelf-overlay__dim {
-  position: absolute;
-  inset: 0;
-  background: rgba(37, 35, 31, 0.35);
-  z-index: -1;
+// ── Shelf row ──
+.bookcase__row {
+  margin-bottom: 12px;
 }
 
-// ── Browse caption ──
-.shelf-overlay__caption {
-  position: absolute;
-  left: clamp(32px, 5vw, 80px);
-  top: 50%;
-  transform: translateY(-50%);
-  max-width: 320px;
-  padding: 20px 32px 20px 24px;
-  background: linear-gradient(90deg, rgba(238,232,219,0.88) 0%, rgba(238,232,219,0.5) 70%, transparent 100%);
-  border-radius: 12px;
-}
-
-.shelf-overlay__eyebrow {
-  font-family: "Inter Variable", Inter, system-ui, sans-serif;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: $ink-muted;
-  margin: 0 0 14px;
-}
-
-.shelf-overlay__title {
-  font-family: "Newsreader Variable", "Newsreader", Georgia, serif;
-  font-size: clamp(28px, 3.2vw, 44px);
-  font-weight: 480;
-  letter-spacing: -0.045em;
-  line-height: 0.92;
-  color: $ink;
-  margin: 0;
-}
-
-.shelf-overlay__subtitle {
-  font-family: "Inter Variable", Inter, system-ui, sans-serif;
-  font-size: 14px;
-  color: $ink-soft;
-  margin: 8px 0 0;
-  line-height: 1.4;
-}
-
-.shelf-overlay__inspect-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 24px;
-  padding: 10px 20px;
-  border: 1px solid $hairline;
-  border-radius: 6px;
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(8px);
-  font-family: "Inter Variable", Inter, system-ui, sans-serif;
-  font-size: 12px;
-  font-weight: 550;
-  letter-spacing: 0.04em;
-  color: $ink;
-  cursor: pointer;
-  transition: all 0.2s ease;
-
-  &:hover {
-    background: rgba(255, 255, 255, 0.9);
-    border-color: rgba(37, 35, 31, 0.25);
-    gap: 12px;
-  }
-}
-
-// ── Navigation arrows ──
-.shelf-overlay__arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  border: 1px solid $hairline;
-  background: rgba(255, 255, 255, 0.65);
-  backdrop-filter: blur(10px);
-  display: grid;
-  place-items: center;
-  cursor: pointer;
-  color: $ink;
-  transition: all 0.2s ease;
-
-  &:hover {
-    background: rgba(255, 255, 255, 0.95);
-    border-color: rgba(37, 35, 31, 0.3);
-    transform: translateY(-50%) scale(1.05);
-  }
-
-  &--left { left: 20px; }
-  &--right { right: 20px; }
-}
-
-// ── Tick marks ──
-.shelf-overlay__ticks {
-  position: absolute;
-  bottom: 32px;
-  left: 50%;
-  transform: translateX(-50%);
+.bookcase__books {
   display: flex;
   align-items: flex-end;
-  gap: 6px;
-  pointer-events: auto;
+  gap: 0;
+  padding: 0 12px;
+  min-height: 180px;
 }
 
-.shelf-overlay__tick {
-  width: 2px;
-  height: 10px;
+.bookcase__plank {
+  height: 14px;
+  background: linear-gradient(180deg, $shelf-wood 0%, $shelf-edge 100%);
+  border-radius: 0 0 3px 3px;
+  box-shadow:
+    0 4px 8px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+// ── Individual book ──
+.bookcase__book {
+  position: relative;
+  display: flex;
+  flex-shrink: 0;
+  width: clamp(70px, 8vw, 100px);
+  height: auto;
   border: none;
-  background: $ink-muted;
-  border-radius: 1px;
+  background: none;
   padding: 0;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transform-style: preserve-3d;
+  perspective: 600px;
+  transition: transform 0.2s ease;
 
-  &--active {
-    height: 20px;
-    background: $accent;
+  &:hover {
+    transform: translateY(-6px);
+
+    .bookcase__book-front {
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    }
   }
 
-  &:hover:not(&--active) {
-    height: 14px;
-    background: $ink-soft;
+  &--selected {
+    transform: translateY(-8px) scale(1.05);
+
+    .bookcase__book-front {
+      box-shadow: 0 8px 24px rgba($accent, 0.3);
+      outline: 2px solid $accent;
+      outline-offset: 2px;
+    }
   }
 }
 
-// ── Input hint ──
-.shelf-overlay__hint {
+.bookcase__book-spine {
+  display: none;
+}
+
+.bookcase__book-front {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  border-radius: 3px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+  transition: box-shadow 0.2s ease;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+.bookcase__book-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  padding: 8px;
+
+  span {
+    font-family: "Inter Variable", Inter, system-ui, sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.2;
+  }
+}
+
+.bookcase__book-fav {
   position: absolute;
-  bottom: 64px;
+  top: 4px;
+  right: 4px;
+  font-size: 10px;
+  color: $accent;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.bookcase__book-reading {
+  position: absolute;
+  bottom: 6px;
   left: 50%;
   transform: translateX(-50%);
-  font-family: "Inter Variable", Inter, system-ui, sans-serif;
-  font-size: 9px;
-  font-weight: 600;
-  letter-spacing: 0.19em;
-  color: $ink-muted;
-  margin: 0;
-  white-space: nowrap;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #00d9ff;
+  box-shadow: 0 0 4px rgba(0, 217, 255, 0.5);
 }
 
-// ── Focus detail panel ──
-.shelf-overlay__detail {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: clamp(320px, 41vw, 620px);
-  padding: 48px 40px;
-  background: rgba(246, 241, 231, 0.92);
+// ── Overlay + Detail Panel ──
+.bookcase__overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(37, 35, 31, 0.4);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.bookcase__panel {
+  width: clamp(340px, 42vw, 560px);
+  height: 100%;
+  background: rgba(246, 241, 231, 0.97);
   backdrop-filter: blur(20px);
   border-left: 1px solid $hairline;
+  padding: 48px 40px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: 0;
 }
 
-// ── Cover image in panel (mobile only) ──
-.shelf-overlay__detail-cover {
-  display: none;
-  margin-bottom: 16px;
-  text-align: center;
-
-  img {
-    max-height: 160px;
-    width: auto;
-    border-radius: 6px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-  }
-}
-
-.shelf-overlay__back-btn {
+.bookcase__panel-close {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 32px;
-  padding: 8px 16px 8px 12px;
+  margin-bottom: 28px;
+  padding: 8px 14px 8px 10px;
   border: 1px solid $hairline;
   border-radius: 6px;
   background: rgba(255, 255, 255, 0.5);
@@ -240,8 +178,8 @@ $accent: #a74735;
   letter-spacing: 0.03em;
   color: $ink-soft;
   cursor: pointer;
-  transition: all 0.2s ease;
   align-self: flex-start;
+  transition: all 0.15s ease;
 
   &:hover {
     background: rgba(255, 255, 255, 0.85);
@@ -249,139 +187,79 @@ $accent: #a74735;
   }
 }
 
-.shelf-overlay__detail-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
+.bookcase__panel-cover {
+  max-width: 180px;
+  border-radius: 6px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  margin-bottom: 24px;
 }
 
-.shelf-overlay__status-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  padding: 4px 12px;
-  border-radius: 20px;
-  border: 1px solid $hairline;
-  background: rgba(255, 255, 255, 0.5);
-  font-family: "Inter Variable", Inter, system-ui, sans-serif;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: $ink-soft;
-}
-
-.shelf-overlay__status-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-}
-
-.shelf-overlay__fav-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  padding: 4px 10px;
-  border-radius: 20px;
-  border: 1px solid rgba($accent, 0.25);
-  background: rgba($accent, 0.06);
-  font-family: "Inter Variable", Inter, system-ui, sans-serif;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: $accent;
-}
-
-.shelf-overlay__detail-title {
+.bookcase__panel-title {
   font-family: "Newsreader Variable", "Newsreader", Georgia, serif;
-  font-size: clamp(24px, 2.5vw, 36px);
+  font-size: clamp(22px, 2.2vw, 32px);
   font-weight: 480;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.03em;
   line-height: 1.1;
   color: $ink;
-  margin: 20px 0 0;
+  margin: 0;
 }
 
-.shelf-overlay__detail-subtitle {
-  font-size: 15px;
+.bookcase__panel-subtitle {
+  font-size: 14px;
   color: $ink-soft;
   margin: 6px 0 0;
+  line-height: 1.4;
 }
 
-.shelf-overlay__detail-meta {
+.bookcase__panel-meta {
   font-family: "Inter Variable", Inter, system-ui, sans-serif;
   font-size: 13px;
   color: $ink-soft;
-  margin: 10px 0 0;
+  margin: 12px 0 0;
 }
 
-.shelf-overlay__detail-period {
+.bookcase__panel-period {
   font-family: "Inter Variable", Inter, system-ui, sans-serif;
   font-size: 12px;
   font-weight: 500;
   color: $ink-muted;
   margin: 6px 0 0;
-  letter-spacing: 0.02em;
 }
 
-// ── Progress bar ──
-.shelf-overlay__progress {
+.bookcase__panel-progress {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-top: 20px;
-}
-
-.shelf-overlay__progress-bar {
-  flex: 1;
-  max-width: 180px;
-  height: 3px;
-  border-radius: 2px;
-  background: rgba(37, 35, 31, 0.1);
-  overflow: hidden;
-}
-
-.shelf-overlay__progress-fill {
-  height: 100%;
-  background: $accent;
-  transform-origin: left;
-  border-radius: 2px;
-}
-
-.shelf-overlay__progress-label {
+  gap: 10px;
+  margin-top: 16px;
   font-family: "Inter Variable", Inter, system-ui, sans-serif;
   font-size: 11px;
   font-weight: 600;
   color: $ink-soft;
 }
 
-// ── Rating ──
-.shelf-overlay__rating {
+.bookcase__panel-progress-bar {
+  flex: 1;
+  max-width: 160px;
+  height: 3px;
+  border-radius: 2px;
+  background: rgba(37, 35, 31, 0.1);
+  overflow: hidden;
+}
+
+.bookcase__panel-progress-fill {
+  height: 100%;
+  background: $accent;
+  border-radius: 2px;
+  transition: width 0.6s ease;
+}
+
+.bookcase__panel-rating {
+  display: flex;
+  gap: 2px;
   margin-top: 16px;
 }
 
-.shelf-overlay__stars {
-  display: flex;
-  align-items: center;
-  gap: 3px;
-}
-
-.shelf-overlay__star {
-  display: flex;
-}
-
-.shelf-overlay__rating-num {
-  margin-left: 8px;
-  font-family: "Inter Variable", Inter, system-ui, sans-serif;
-  font-size: 12px;
-  font-weight: 500;
-  color: $ink-muted;
-}
-
-// ── Review & Quote ──
-.shelf-overlay__review {
+.bookcase__panel-review {
   margin: 24px 0 0;
   font-family: "Inter Variable", Inter, system-ui, sans-serif;
   font-size: 15px;
@@ -389,9 +267,9 @@ $accent: #a74735;
   color: $ink-soft;
 }
 
-.shelf-overlay__quote {
+.bookcase__panel-quote {
   margin: 20px 0 0;
-  padding: 0 0 0 16px;
+  padding: 0 0 0 14px;
   border-left: 3px solid $accent;
   font-family: "Newsreader Variable", "Newsreader", Georgia, serif;
   font-size: 15px;
@@ -400,15 +278,14 @@ $accent: #a74735;
   color: $ink-muted;
 }
 
-// ── Tags ──
-.shelf-overlay__tags {
+.bookcase__panel-tags {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  margin-top: 24px;
+  margin-top: 20px;
 }
 
-.shelf-overlay__tag {
+.bookcase__panel-tag {
   padding: 4px 10px;
   border-radius: 4px;
   border: 1px solid $hairline;
@@ -421,327 +298,92 @@ $accent: #a74735;
   color: $ink-muted;
 }
 
-// ── Link ──
-.shelf-overlay__link {
-  display: inline-flex;
+.bookcase__panel-nav {
+  display: flex;
   align-items: center;
-  gap: 6px;
-  margin-top: 24px;
-  font-family: "Inter Variable", Inter, system-ui, sans-serif;
-  font-size: 13px;
-  font-weight: 550;
-  color: $accent;
-  text-decoration: none;
-  transition: gap 0.2s ease;
+  gap: 16px;
+  margin-top: auto;
+  padding-top: 24px;
 
-  &:hover {
-    gap: 10px;
-    text-decoration: underline;
-    text-underline-offset: 3px;
-  }
-}
-
-// ── Responsive ──
-@media (max-width: 1020px) {
-  .shelf-overlay__detail {
-    width: clamp(280px, 48vw, 570px);
-    padding: 40px 32px;
-  }
-
-  .shelf-overlay__caption {
-    max-width: 260px;
-  }
-}
-
-@media (max-width: 760px) {
-  .shelf-section {
-    height: 100dvh;
-    min-height: 500px;
-  }
-
-  .shelf-overlay__caption {
-    top: auto;
-    bottom: 24px;
-    left: 20px;
-    transform: none;
-    max-width: calc(100% - 40px);
-    padding: 16px 20px;
-    background: rgba(238, 232, 219, 0.88);
-    backdrop-filter: blur(12px);
-    border-radius: 12px;
+  button {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
     border: 1px solid $hairline;
-  }
+    background: rgba(255, 255, 255, 0.5);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    color: $ink-soft;
+    transition: all 0.15s ease;
 
-  .shelf-overlay__title {
-    font-size: 22px;
-    line-height: 1.05;
-  }
-
-  .shelf-overlay__eyebrow {
-    margin-bottom: 8px;
-  }
-
-  .shelf-overlay__inspect-btn {
-    margin-top: 14px;
-  }
-
-  .shelf-overlay__arrow {
-    width: 36px;
-    height: 36px;
-    top: 45%;
-
-    &--left { left: 10px; }
-    &--right { right: 10px; }
-  }
-
-  .shelf-overlay__detail {
-    top: auto;
-    right: 0;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: 55dvh;
-    max-height: 500px;
-    border-left: none;
-    border-top: 1px solid $hairline;
-    border-radius: 20px 20px 0 0;
-    padding: 24px;
-  }
-
-  .shelf-overlay__hint {
-    display: none;
-  }
-
-  .shelf-overlay__ticks {
-    display: none;
-  }
-
-  .shelf-overlay__detail-cover {
-    display: block;
-  }
-}
-
-// ── Search / Filter / Sort ──
-.shelf-search__toggle {
-  position: absolute;
-  top: 24px;
-  right: 24px;
-  z-index: 20;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: 1px solid $hairline;
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(8px);
-  display: grid;
-  place-items: center;
-  cursor: pointer;
-  color: $ink-soft;
-  pointer-events: auto;
-  transition: all 0.2s ease;
-
-  &:hover {
-    background: rgba(255, 255, 255, 0.9);
-    color: $ink;
-  }
-}
-
-.shelf-search {
-  position: absolute;
-  top: 72px;
-  right: 24px;
-  z-index: 20;
-  width: clamp(260px, 28vw, 360px);
-  padding: 16px;
-  background: rgba(246, 241, 231, 0.95);
-  backdrop-filter: blur(16px);
-  border: 1px solid $hairline;
-  border-radius: 12px;
-  pointer-events: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.shelf-search__stats {
-  display: flex;
-  gap: 12px;
-  font-family: "Inter Variable", Inter, system-ui, sans-serif;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: $ink-muted;
-}
-
-.shelf-search__input {
-  width: 100%;
-  padding: 8px 12px;
-  border: 1px solid $hairline;
-  border-radius: 6px;
-  background: rgba(255, 255, 255, 0.6);
-  font-family: "Inter Variable", Inter, system-ui, sans-serif;
-  font-size: 13px;
-  color: $ink;
-  outline: none;
-  transition: border-color 0.2s ease;
-
-  &::placeholder { color: $ink-muted; }
-  &:focus { border-color: rgba(37, 35, 31, 0.3); }
-}
-
-.shelf-search__tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-}
-
-.shelf-search__tag {
-  padding: 3px 8px;
-  border: 1px solid $hairline;
-  border-radius: 4px;
-  background: rgba(255, 255, 255, 0.4);
-  font-family: "Inter Variable", Inter, system-ui, sans-serif;
-  font-size: 9px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: $ink-muted;
-  cursor: pointer;
-  transition: all 0.15s ease;
-
-  &--active {
-    background: $accent;
-    border-color: $accent;
-    color: #fff;
-  }
-}
-
-.shelf-search__sort {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.shelf-search__sort-label {
-  font-family: "Inter Variable", Inter, system-ui, sans-serif;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  color: $ink-muted;
-  text-transform: uppercase;
-}
-
-.shelf-search__sort-btn {
-  padding: 4px 10px;
-  border: 1px solid $hairline;
-  border-radius: 4px;
-  background: rgba(255, 255, 255, 0.4);
-  font-family: "Inter Variable", Inter, system-ui, sans-serif;
-  font-size: 10px;
-  font-weight: 550;
-  color: $ink-soft;
-  cursor: pointer;
-  transition: all 0.15s ease;
-
-  &--active {
-    background: $ink;
-    border-color: $ink;
-    color: $paper;
-  }
-}
-
-.shelf-search__results {
-  max-height: 200px;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.shelf-search__result {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 2px;
-  padding: 8px 10px;
-  border: none;
-  border-radius: 6px;
-  background: transparent;
-  cursor: pointer;
-  text-align: left;
-  transition: background 0.15s ease;
-
-  &:hover { background: rgba(255, 255, 255, 0.6); }
-}
-
-.shelf-search__result-title {
-  font-family: "Inter Variable", Inter, system-ui, sans-serif;
-  font-size: 13px;
-  font-weight: 550;
-  color: $ink;
-}
-
-.shelf-search__result-author {
-  font-family: "Inter Variable", Inter, system-ui, sans-serif;
-  font-size: 11px;
-  color: $ink-muted;
-}
-
-.shelf-search__empty {
-  font-family: "Inter Variable", Inter, system-ui, sans-serif;
-  font-size: 12px;
-  color: $ink-muted;
-  text-align: center;
-  padding: 12px;
-  margin: 0;
-}
-
-// ── Reduced motion ──
-@media (prefers-reduced-motion: reduce) {
-  .shelf-overlay__caption,
-  .shelf-overlay__detail,
-  .shelf-overlay__dim,
-  .shelf-search {
-    transition: none !important;
-    animation: none !important;
-  }
-}
-
-// ── WebGL fallback grid ──
-.shelf-fallback {
-  width: 100%;
-  height: 100dvh;
-  min-height: 600px;
-  background: $paper;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 24px;
-  padding: 48px;
-  overflow-y: auto;
-  align-content: start;
-}
-
-.shelf-fallback__book {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  cursor: pointer;
-  text-align: center;
-
-  img {
-    width: 100%;
-    aspect-ratio: 2 / 3;
-    object-fit: cover;
-    border-radius: 6px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    &:hover {
+      background: rgba(255, 255, 255, 0.9);
+      color: $ink;
+    }
   }
 
   span {
     font-family: "Inter Variable", Inter, system-ui, sans-serif;
     font-size: 11px;
-    font-weight: 550;
-    color: $ink-soft;
-    line-height: 1.3;
+    font-weight: 500;
+    color: $ink-muted;
+  }
+}
+
+// ── Responsive ──
+@media (max-width: 900px) {
+  .bookcase__book {
+    width: clamp(60px, 10vw, 85px);
+  }
+}
+
+@media (max-width: 640px) {
+  .bookcase {
+    padding: 48px 0 40px;
+  }
+
+  .bookcase__book {
+    width: clamp(55px, 14vw, 75px);
+  }
+
+  .bookcase__books {
+    gap: 0;
+    padding: 0 8px;
+  }
+
+  .bookcase__panel {
+    width: 100%;
+    border-left: none;
+    border-radius: 16px 16px 0 0;
+    padding: 24px;
+    max-height: 80dvh;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: auto;
+  }
+
+  .bookcase__overlay {
+    align-items: flex-end;
+  }
+
+  .bookcase__panel-cover {
+    max-width: 120px;
+    align-self: center;
+  }
+}
+
+// ── Reduced motion ──
+@media (prefers-reduced-motion: reduce) {
+  .bookcase__book {
+    transition: none;
+  }
+
+  .bookcase__panel,
+  .bookcase__overlay {
+    transition: none !important;
+    animation: none !important;
   }
 }
