@@ -46,6 +46,7 @@ const researchItems: ResearchItem[] = [
     title: 'Low-Cost Physics Lab Kits for Public Schools',
     field: 'Physics Education',
     year: '2023-2024',
+    advisor: 'Coronel Iran Domingues Machado',
     abstract:
       'Built and distributed low-cost physics experiment kits to 28 public schools. 3,392 students. Physics failure rates went from 30% to 10% in participating classrooms.',
     tags: ['Physics Education', 'Experimental Design', '3,392 students', '28 schools'],
@@ -53,7 +54,7 @@ const researchItems: ResearchItem[] = [
   },
 ];
 
-function ResearchMediaCarousel({ slug, onHasMedia }: { slug: string; onHasMedia?: (has: boolean) => void }) {
+function ResearchMediaCarousel({ slug, title, onHasMedia }: { slug: string; title: string; onHasMedia?: (has: boolean) => void }) {
   // Use static manifest — no speculative 404 probing
   const knownFiles = RESEARCH_MEDIA_MANIFEST[slug] ?? [];
   const [idx, setIdx] = useState(0);
@@ -79,7 +80,7 @@ function ResearchMediaCarousel({ slug, onHasMedia }: { slug: string; onHasMedia?
       {current.endsWith('.mp4') ? (
         <video key={src} src={src} controls playsInline />
       ) : (
-        <img key={src} src={src} alt={slug} loading="lazy" />
+        <img key={src} src={src} alt={`Research image for ${title}`} loading="lazy" />
       )}
       {available.length > 1 && (
         <>
@@ -118,7 +119,7 @@ function ResearchCard({ item, index }: { item: ResearchItem; index: number }) {
       tabIndex={interactive ? 0 : undefined}
       onKeyDown={interactive ? (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleClick(); } } : undefined}
     >
-      <ResearchMediaCarousel slug={item.slug} onHasMedia={setHasMedia} />
+      <ResearchMediaCarousel slug={item.slug} title={item.title} onHasMedia={setHasMedia} />
       <div className="research-card__content">
         <div className="research-card__header">
           <span className="research-card__field">{item.field}</span>
@@ -150,9 +151,14 @@ function Research() {
       <h2 className="heading" data-color-inverted="true">
         Research
       </h2>
-      <p className="research-section__subtitle">
-        Three fields. Real data. Papers attached.
-      </p>
+      <a
+        href="https://orcid.org/0009-0009-2574-6646"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="research-section__orcid"
+      >
+        ORCID: 0009-0009-2574-6646
+      </a>
       <div className="research-grid">
         {researchItems.map((item, i) => (
           <ResearchCard key={item.slug} item={item} index={i} />
