@@ -13,13 +13,11 @@ scheduleIdle(() => {
     posthog.init("phc_cgNNpL9lqLK50jeJICAV6xcGZDmuDnuPVxPeG8Ieg6m", {
       api_host: "https://us.i.posthog.com",
       person_profiles: "identified_only",
+      persistence: "memory",
       capture_pageview: true,
       capture_pageleave: true,
       respect_dnt: true,
-      session_recording: {
-        maskAllInputs: true,
-        maskTextSelector: '*',
-      },
+      disable_session_recording: true,
     });
   });
 });

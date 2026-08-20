@@ -73,13 +73,14 @@
     <p>You can revoke camera access at any time from your browser settings, or by refreshing the page without clicking the button.</p>
 
     <h2>Analytics</h2>
-    <p>This site uses <a href="https://posthog.com" target="_blank" rel="noopener">PostHog</a> for privacy-respecting analytics. PostHog is configured with:</p>
+    <p>This site uses <a href="https://posthog.com" target="_blank" rel="noopener">PostHog</a> for privacy-respecting, cookieless analytics.</p>
     <ul>
-      <li><strong>Session recordings</strong> — enabled, but all text inputs and content are masked. No keystrokes or typed content are captured, including in the terminal.</li>
-      <li><strong>Do Not Track</strong> — if your browser sends a DNT header, PostHog respects it and no data is collected.</li>
-      <li><strong>Page views and page leaves</strong> — used to understand which sections of the portfolio are most visited.</li>
+      <li><strong>No cookies</strong> — PostHog runs in memory-only mode. No cookies or localStorage are set on your device.</li>
+      <li><strong>No session recordings</strong> — disabled entirely. No screen captures, clicks, or interactions are recorded.</li>
+      <li><strong>Do Not Track</strong> — if your browser sends a DNT header, PostHog respects it and no data is collected at all.</li>
+      <li><strong>Data collected</strong> — page URL, referrer, device type, browser, country (from IP, not stored). Used to understand which sections are most visited.</li>
     </ul>
-    <p>No personal identifiers are collected. No data is sold to third parties.</p>
+    <p>No personal identifiers are collected. No cross-session tracking occurs. No data is sold to third parties. Analytics data is hosted by PostHog (US servers).</p>
 
     <h2>Contact Form</h2>
     <p>If you submit the contact form at <a href="/contact">/contact</a>, the following data is collected:</p>
@@ -89,9 +90,9 @@
       <li><strong>Message content</strong> — the body of your inquiry.</li>
     </ul>
     <p><strong>Purpose:</strong> Responding to your message and potential follow-up communication.</p>
-    <p><strong>Retention:</strong> Messages are stored only as long as needed to reply and then deleted, or up to 12 months maximum.</p>
+    <p><strong>Processing:</strong> Your message is delivered to my inbox via <a href="https://resend.com" target="_blank" rel="noopener">Resend</a> (email delivery service, US-based). Resend processes the data solely for delivery and does not retain message content beyond delivery confirmation.</p>
+    <p><strong>Retention:</strong> Messages are stored in my email inbox only as long as needed to reply, or up to 12 months maximum, then deleted.</p>
     <p><strong>Your rights (LGPD):</strong> You may request access to, correction of, or deletion of your data at any time by emailing the address below. I will respond within 15 business days.</p>
-    <p>Data is not shared with third parties, except as required by law.</p>
 
     <h2>Your Rights Under LGPD</h2>
     <p>Under Brazil's Lei Geral de Proteção de Dados (LGPD), you have the right to:</p>
