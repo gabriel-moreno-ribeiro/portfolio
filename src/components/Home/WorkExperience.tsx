@@ -4,9 +4,12 @@ import { lazy, Suspense, useEffect, useRef } from 'react';
 import useIsMobile from '../../hooks/useIsMobile';
 import { useThemeStore } from '../../store/themeStore';
 
-const PartsAssemblingCanvas = lazy(
-  () => import('../Canvas/PartsAssemblingCanvas'),
-);
+const skipHeavy3D =
+  typeof window !== 'undefined' && window.innerWidth < 768;
+
+const PartsAssemblingCanvas = skipHeavy3D
+  ? null
+  : lazy(() => import('../Canvas/PartsAssemblingCanvas'));
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -16,7 +19,7 @@ const workExperience = [
     company: 'HIBEEX',
     date: 'January 2026 - Present',
     points: [
-      "Building <span class='black'>financial AI</span> for small businesses — raw data in, decisions out",
+      "Building <span class='black'>Backoffice AI</span> for small and medium businesses — raw data in, decisions out",
       "One of <span class='black'>6 startups</span> in the <span class='black'>Canastra Ventures AI Residency</span>",
       "Stack: <span class='black'>TypeScript, Next.js, Node.js, Supabase, PostgreSQL, AWS</span>",
     ],
@@ -119,13 +122,15 @@ const WorkExperience = () => {
   return (
     <div className="work-experience-main-wrapper" ref={containerRef} id="work-experience">
       <h2 className="fixed-heading">
-        <span className="orange">Breaking Down </span>
-        <span data-color-inverted={'true'}>My Experience.</span>
+        <span className="orange">Professional </span>
+        <span data-color-inverted={'true'}>Experience.</span>
       </h2>
       <div className="left-column">
-        <Suspense fallback={null}>
-          <PartsAssemblingCanvas />
-        </Suspense>
+        {PartsAssemblingCanvas && (
+          <Suspense fallback={null}>
+            <PartsAssemblingCanvas />
+          </Suspense>
+        )}
       </div>
       <div className="right-column" ref={textRef}>
         {workExperience.map((exp, index) => (

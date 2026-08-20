@@ -142,6 +142,7 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
   const lastTimestampRef = useRef(0);
   const canvasSizeRef = useRef({ w: 0, h: 0, cssW: 0, cssH: 0 });
   const rafRef = useRef(0);
+  const isVisibleRef = useRef(false);
 
   // Trail state
   const mouseHistoryRef = useRef<Array<{ x: number; y: number }>>([]);
@@ -247,6 +248,23 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
     return () => observer.disconnect();
   }, []);
 
+  // Visibility observer — pause rAF when off-screen
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+    const io = new IntersectionObserver(([entry]) => {
+      isVisibleRef.current = entry.isIntersecting;
+      if (entry.isIntersecting && !rafRef.current) {
+        lastTimestampRef.current = 0;
+        rafRef.current = requestAnimationFrame(loopRef.current);
+      }
+    }, { threshold: 0 });
+    io.observe(container);
+    return () => io.disconnect();
+  }, []);
+
+  const loopRef = useRef<(ts: number) => void>(() => {});
+
   // Main animation loop
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -255,8 +273,13 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
     if (!ctx) return;
 
     const loop = (timestamp: number) => {
+      if (!isVisibleRef.current) {
+        rafRef.current = 0;
+        return;
+      }
+
       const dt = lastTimestampRef.current
-        ? timestamp - lastTimestampRef.current
+        ? Math.min(timestamp - lastTimestampRef.current, 100)
         : 16;
       lastTimestampRef.current = timestamp;
 
@@ -510,7 +533,10 @@ const SkillsCanvas: React.FC<SkillsCanvasProps> = ({
       rafRef.current = requestAnimationFrame(loop);
     };
 
-    rafRef.current = requestAnimationFrame(loop);
+    loopRef.current = loop;
+    if (isVisibleRef.current) {
+      rafRef.current = requestAnimationFrame(loop);
+    }
     return () => cancelAnimationFrame(rafRef.current);
   }, [iconSize, isMobile, cardStartIndex, cardBg, cardBorder]);
 

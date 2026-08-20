@@ -10,10 +10,11 @@ interface City {
   name: string;
   lat: number;
   lon: number;
+  coords: string;
   headline: string;
   story: string[];
-  period: string;   // shown in the horizontal timeline
-  role: string;     // one-line label for timeline chip
+  period: string;
+  role: string;
 }
 
 const CITIES: City[] = [
@@ -22,13 +23,14 @@ const CITIES: City[] = [
     name: 'Missão Velha, Ceará',
     lat: -7.2497,
     lon: -39.1431,
+    coords: '7.2497° S, 39.1431° W',
     period: 'Every summer',
-    role: 'Where the roots are',
-    headline: 'Where the roots are.',
+    role: 'Roots',
+    headline: 'Where ambition begins quietly.',
     story: [
-      'Small city in the interior of Ceará. My grandparents are from here. My father grew up here.',
-      'Every summer — 4 or 5 months. The heat. Everyone knowing each other by name.',
-      "Not the kind of place that shows up on maps of Brazilian ambition. But it's where mine started.",
+      'Deep in the Cariri Valley — waterfalls carving through ancient rock, the statue of Padre Cícero watching from the hilltop, yellow churches standing since the colonial era.',
+      'My grandparents built their lives here. My father grew up on these streets. Every summer I came back — months of 40°C heat, everyone knowing your name before you said it.',
+      'The kind of place that doesn\'t make startup maps. But it taught me that building something from nothing is in the blood.',
     ],
   },
   {
@@ -36,13 +38,14 @@ const CITIES: City[] = [
     name: 'Salvador, Bahia',
     lat: -12.9747,
     lon: -38.4767,
+    coords: '12.9747° S, 38.4767° W',
     period: 'Age 0 – 17',
-    role: 'Where I grew up',
-    headline: 'Where I grew up.',
+    role: 'Foundation',
+    headline: 'Seventeen years of foundation.',
     story: [
-      'Grew up here. Got into Colégio Militar at 10 — one of 30 from 2,500 applicants. Perfect score in math.',
-      'The olympiads started here. I built Projeto Candela for schools in this city.',
-      'Still call it home.',
+      'First capital of Brazil. Pelourinho\'s cobblestones, the Elevador Lacerda framing the bay, gold-covered baroque ceilings inside São Francisco, the Farol da Barra at sunset.',
+      'Got into Colégio Militar at 10 — one of 30 from 2,500 applicants, perfect math score. The olympiad streak started here: 39 medals across math, physics, chemistry, and astronomy.',
+      'Built Projeto Candela for schools in this city. Still call it home.',
     ],
   },
   {
@@ -50,12 +53,13 @@ const CITIES: City[] = [
     name: 'Fortaleza, Ceará',
     lat: -3.7172,
     lon: -38.5433,
+    coords: '3.7172° S, 38.5433° W',
     period: '2024 – 2025',
-    role: 'Third year of high school',
-    headline: 'Third year — new city.',
+    role: 'Acceleration',
+    headline: 'The year everything accelerated.',
     story: [
-      'Third year of high school. Moved closer to family.',
-      'SAT 1510. Got into Fundação Estudar PREP. The year things started moving fast.',
+      'Moved for the final year of high school. Closer to family, closer to the northeast hustle.',
+      'SAT 1510. Fundação Estudar PREP — 70 selected from 10,000+ applicants. St Andrews admission with a Global Merit Scholarship. The year decisions started compounding.',
     ],
   },
   {
@@ -63,13 +67,14 @@ const CITIES: City[] = [
     name: 'São Paulo, SP',
     lat: -23.5505,
     lon: -46.6333,
+    coords: '23.5505° S, 46.6333° W',
     period: '2025 – present',
-    role: 'Building HIBEEX',
-    headline: 'Building HIBEEX.',
+    role: 'Building',
+    headline: 'Chose building over studying.',
     story: [
-      'Moved here with Teodoro to build HIBEEX.',
-      'One of 6 startups in the Canastra Ventures AI Residency.',
-      'Chose this over freshman year. No regrets.',
+      'Moved here with Teodoro to build HIBEEX. Deferred university. Bet everything on the company.',
+      'One of 6 startups selected for the Canastra Ventures AI Residency. Building backoffice AI for small and medium businesses.',
+      'Chose this over freshman year at St Andrews. No regrets.',
     ],
   },
 ];
@@ -81,8 +86,8 @@ type PhotoEntry = string | { file: string; position: string };
 const CITY_PHOTO_MANIFEST: Record<string, PhotoEntry[]> = {
   'missao-velha': ['01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg', '06.jpg', '07.jpg', '08.jpg'],
   'salvador':     ['01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg', '06.jpg'],
-  // 'fortaleza': [],  // no photos uploaded yet
-  // 'sao-paulo': [],  // no photos uploaded yet
+  'fortaleza':    ['01.jpeg', '02.jpeg', '03.jpeg', '04.jpeg'],
+  'sao-paulo':    ['01.jpeg', '02.jpeg', '03.jpeg', '04.jpeg', '05.jpeg'],
 };
 
 function locationToAngles(lat: number, lon: number): [number, number] {
@@ -255,6 +260,7 @@ function CityPanel({ city, onClose }: { city: City; onClose: () => void }) {
       <div className="city-panel__text">
         <div className="city-panel__meta">
           <p className="city-panel__location">{city.name}</p>
+          <span className="city-panel__coords">{city.coords}</span>
           <span className="city-panel__period">{city.period}</span>
         </div>
         <h3 className="city-panel__headline">{city.headline}</h3>
@@ -306,6 +312,9 @@ function CityTimeline({ selected, onSelect }: { selected: City | null; onSelect:
   );
 }
 
+const skipGlobe =
+  typeof window !== 'undefined' && window.innerWidth < 768;
+
 function BackgroundGlobe() {
   const [selected, setSelected] = useState<City | null>(null);
   const darkMode = document.documentElement.getAttribute('data-theme') === 'dark';
@@ -322,12 +331,13 @@ function BackgroundGlobe() {
 
       <div className={`globe-layout ${selected ? 'globe-layout--open' : ''}`}>
         {/* ── Globe column ── */}
-        <div className="globe-column">
-          <div className="globe-wrap">
-            <GlobeCanvas selected={selected} darkMode={darkMode} />
+        {!skipGlobe && (
+          <div className="globe-column">
+            <div className="globe-wrap">
+              <GlobeCanvas selected={selected} darkMode={darkMode} />
+            </div>
           </div>
-
-        </div>
+        )}
 
         {/* ── Panel column ── */}
         <AnimatePresence>
