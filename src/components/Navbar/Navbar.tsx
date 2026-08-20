@@ -49,17 +49,12 @@ function Navbar() {
 
   const links = [
     {
-      name: 'Skills.',
-      href: '#skills',
-      top: 40,
-    },
-    {
-      name: 'Work.',
-      href: '#work',
-    },
-    {
       name: 'Library.',
       href: '/library',
+    },
+    {
+      name: 'Contact.',
+      href: '/contact',
     },
     {
       name: 'LinkedIn.',
@@ -173,6 +168,7 @@ function Navbar() {
               e.stopPropagation();
               toggleDarkMode();
             }}
+            aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
           >
             {darkMode ? <IoSunnyOutline /> : <IoMoonOutline />}
           </button>
