@@ -19,8 +19,8 @@ interface FeaturedItem {
 const featured: FeaturedItem[] = [
   {
     slug: "hibeex",
-    title: "HIBEEX — Financial AI for SMBs",
-    desc: "Financial AI for small businesses. Raw data in, decisions out. One of 6 startups in the Canastra Ventures AI Residency.",
+    title: "HIBEEX — Backoffice AI for SMBs",
+    desc: "Backoffice AI for small and medium businesses. Raw data in, decisions out. One of 6 startups in the Canastra Ventures AI Residency.",
     tags: ["TypeScript", "Next.js", "Supabase", "AWS", "AI/ML"],
   },
   {
@@ -106,13 +106,13 @@ function FindMyWork() {
   return (
     <div className="find-my-work" id="work">
       <h2 className="heading" data-color-inverted={"true"}>
-        Selected Work
+        Cool Things
       </h2>
       <p className="work-sub">
         What I've built and what I've won.
       </p>
       <button className="terminal-launch" onClick={toggleTerminalWindow}>
-        {"> Open terminal"} <kbd>Ctrl+`</kbd>
+        {"> Open terminal"} <kbd>Ctrl+K</kbd>
       </button>
       <div className="featured-grid">
         {featured.map((item) => (

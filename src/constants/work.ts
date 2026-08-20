@@ -2,15 +2,15 @@ export const work = [
   [
     {
       cardData: {
-        title: "HIBEEX - Financial AI for SMBs",
+        title: "HIBEEX - Backoffice AI for SMBs",
         url: {
           githubUrl: "https://www.hibeex.com.br/",
         },
         imgUrl: null,
       },
       modalData: {
-        title: "HIBEEX - Financial AI for SMBs",
-        desc: "B2B FinTech that turns accountants into business advisors for small businesses. Converts raw financial data into decisions owners can act on. One of 6 startups in the Canastra Ventures AI Residency.",
+        title: "HIBEEX - Backoffice AI for SMBs",
+        desc: "Backoffice AI for small and medium businesses. Raw data in, decisions out. One of 6 startups in the Canastra Ventures AI Residency.",
         infoHeading: "Technologies Used",
         infoArr: [
           "TypeScript",

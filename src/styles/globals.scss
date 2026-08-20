@@ -185,7 +185,7 @@ body {
   }
 }
 
-[data-theme="dark"] .hero-slideshow {
+[data-theme="dark"] .hero-slideshow__img {
   opacity: 0.3;
 }
 
@@ -194,7 +194,7 @@ body {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  gap: 64px;
+  gap: 25px;
   max-width: 1400px;
   margin: 0 auto;
   width: 100%;
@@ -338,6 +338,97 @@ img {
   50% { opacity: 1; }
 }
 
+// ── Subpages (Blog, News) ──
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 24px;
+  position: relative;
+  z-index: 1;
+}
+
+.page-content {
+  flex: 1;
+  padding-top: 100px;
+  padding-bottom: 80px;
+}
+
+.page-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  color: $text-grey;
+  cursor: pointer;
+  padding: 6px 0;
+  margin-bottom: 32px;
+  transition: color 0.2s;
+
+  &:hover {
+    color: $primary-orange;
+  }
+}
+
+.page-title {
+  font-size: 48px;
+  font-weight: 700;
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: var(--black);
+  margin-bottom: 8px;
+}
+
+.page-subtitle {
+  font-size: 16px;
+  color: $text-grey;
+  margin-bottom: 48px;
+}
+
+.page-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 80px 24px;
+  border: 1px dashed rgba(0, 0, 0, 0.12);
+  border-radius: 16px;
+  background: rgba($grey, 0.3);
+
+  &__icon {
+    font-size: 32px;
+    color: $primary-orange;
+    margin-bottom: 16px;
+    opacity: 0.6;
+  }
+
+  h3 {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--black);
+    margin-bottom: 8px;
+  }
+
+  p {
+    font-size: 14px;
+    color: $text-grey;
+  }
+}
+
+[data-theme="dark"] {
+  .page-empty-state {
+    border-color: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.03);
+  }
+}
+
 @media screen and (max-width: 800px) {
   body {
     cursor: default !important;
@@ -350,5 +441,9 @@ img {
   .home-wrapper {
     gap: 24px;
     padding-bottom: 82px;
+  }
+
+  .page-title {
+    font-size: 36px;
   }
 }

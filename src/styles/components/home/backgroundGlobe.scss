@@ -94,8 +94,8 @@
   &__meta {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 8px;
+    flex-wrap: wrap;
+    gap: 6px 10px;
   }
 
   &__location {
@@ -105,6 +105,14 @@
     letter-spacing: 0.1em;
     color: $primary-orange;
     margin: 0;
+  }
+
+  &__coords {
+    font-size: 10px;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    color: $text-grey;
+    opacity: 0.6;
+    letter-spacing: 0.02em;
   }
 
   &__period {

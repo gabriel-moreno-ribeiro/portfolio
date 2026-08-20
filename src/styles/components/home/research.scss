@@ -17,6 +17,18 @@
     color: $text-grey;
     margin: 0 0 40px;
   }
+
+  &__orcid {
+    display: block;
+    text-align: center;
+    font-family: monospace;
+    font-size: 13px;
+    color: $text-grey;
+    text-decoration: none;
+    margin: 0 0 40px;
+    transition: color 0.2s;
+    &:hover { color: $primary-orange; }
+  }
 }
 
 .research-grid {
@@ -141,7 +153,8 @@
   video {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
+    image-rendering: -webkit-optimize-contrast;
   }
 
   .carousel-arrow {
