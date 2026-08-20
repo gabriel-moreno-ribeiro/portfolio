@@ -1,7 +1,8 @@
 import { AnimatePresence, motion } from 'motion/react';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 const SLIDE_DURATION = 6000;
+const FADE_DISTANCE = 400;
 
 const SLIDES: string[] = [
   '/assets/hero-slideshow/1.avif',
@@ -16,6 +17,8 @@ const SLIDES: string[] = [
 
 function HeroSlideshow() {
   const [index, setIndex] = useState(0);
+  const [scrollOpacity, setScrollOpacity] = useState(1);
+  const rafRef = useRef(0);
 
   const advance = useCallback(() => {
     setIndex(prev => (prev + 1) % SLIDES.length);
@@ -27,10 +30,29 @@ function HeroSlideshow() {
     return () => clearInterval(timer);
   }, [advance]);
 
+  useEffect(() => {
+    const onScroll = () => {
+      cancelAnimationFrame(rafRef.current);
+      rafRef.current = requestAnimationFrame(() => {
+        const y = window.scrollY;
+        const opacity = Math.max(0, 1 - y / FADE_DISTANCE);
+        setScrollOpacity(opacity);
+      });
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      cancelAnimationFrame(rafRef.current);
+    };
+  }, []);
+
   if (SLIDES.length === 0) return null;
 
   return (
-    <div className="hero-slideshow">
+    <div
+      className="hero-slideshow"
+      style={{ opacity: scrollOpacity, visibility: scrollOpacity === 0 ? 'hidden' : undefined }}
+    >
       <AnimatePresence mode="popLayout">
         <motion.img
           key={SLIDES[index]}

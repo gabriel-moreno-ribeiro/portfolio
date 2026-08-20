@@ -2,7 +2,7 @@ export const bio = {
   name: "Gabriel Moreno Ribeiro",
   title: "Founder & CEO | Full Stack Builder | Researcher",
   summary:
-    "18-year-old founder and researcher on a build year. Co-Founder & CEO of HIBEEX — financial AI for SMBs. One of 6 startups in the Canastra Ventures AI Residency. 39 olympiad medals (19 gold). Founder of Projeto Candela (3,392 students, 28 schools). Admitted to St Andrews (Global Merit Scholarship); 1st place at Insper for Computer Engineering.",
+    "18-year-old founder and researcher on a build year. Co-Founder & CEO of HIBEEX — Backoffice AI for SMBs. One of 6 startups in the Canastra Ventures AI Residency. 39 olympiad medals (19 gold). Founder of Projeto Candela (3,392 students, 28 schools). Admitted to St Andrews (Global Merit Scholarship); 1st place at Insper for Computer Engineering.",
   interests: ["AI/ML", "FinTech", "Physics Research", "Entrepreneurship", "Product Design"],
 };
 
@@ -19,7 +19,7 @@ export const experience = [
     company: "HIBEEX",
     date: "January 2026 - Present",
     description:
-      "Building financial AI that turns messy financial data into decisions SMB owners can act on. One of 6 startups in the Canastra Ventures AI Residency — among the youngest founders selected. Full stack: TypeScript, Next.js, Node.js, Supabase, AWS.",
+      "Building Backoffice AI for small and medium businesses — raw data in, decisions out. One of 6 startups in the Canastra Ventures AI Residency — among the youngest founders selected. Full stack: TypeScript, Next.js, Node.js, Supabase, AWS.",
   },
   {
     title: "Independent Researcher",

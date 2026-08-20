@@ -48,8 +48,8 @@ function TerminalModal() {
   // Keyboard shortcuts
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Cmd+` (Mac) or Ctrl+` (Windows/Linux) — avoids browser Download shortcut (Ctrl+J)
-      if ((e.metaKey || e.ctrlKey) && e.key === "`") {
+      // Cmd+K (Mac) or Ctrl+K (Windows/Linux)
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
         e.preventDefault();
         toggle();
       }
