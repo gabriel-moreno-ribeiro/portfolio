@@ -1,8 +1,8 @@
 {
   "id": "/",
   "short_name": "Gabriel MR",
-  "name": "Gabriel Moreno Ribeiro — Portfolio",
-  "description": "Founder, builder, and researcher. Co-Founder & CEO of HIBEEX.",
+  "name": "Gabriel Moreno Ribeiro",
+  "description": "Founder, builder, and researcher.",
   "icons": [
     {
       "src": "favicon.ico",
@@ -12,12 +12,14 @@
     {
       "src": "logo192.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "192x192",
+      "purpose": "any maskable"
     },
     {
       "src": "logo512.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "512x512",
+      "purpose": "any maskable"
     }
   ],
   "start_url": "/",
