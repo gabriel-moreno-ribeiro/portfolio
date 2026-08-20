@@ -4,6 +4,7 @@
   "installCommand": "npm install",
   "buildCommand": "npx tsc && npx vite build",
   "outputDirectory": "dist",
+  "cleanUrls": true,
   "rewrites": [
     { "source": "/((?!api|assets|honors|blog|projects|teaching|news|background|work|timeline|research|stats|favicon|logo|manifest|robots|sitemap|llms|books|og-image|hibeex|404|privacy|terms).*)", "destination": "/index.html" }
   ],
