@@ -1,9 +1,16 @@
+function obfuscatedEmail() {
+  const user = 'me';
+  const domain = 'gabrielmr.com';
+  return `${user}@${domain}`;
+}
+
 function Footer() {
   const links = [
     { name: "LinkedIn.", href: "https://linkedin.com/in/gabriel-moreno-ribeiro" },
     { name: "Github.", href: "https://github.com/gabriel-moreno-ribeiro" },
-    { name: "Email.", href: "mailto:gabrielmribeiro@hibeex.com.br" },
+    { name: "Email.", href: `mailto:${obfuscatedEmail()}` },
     { name: "Privacy.", href: "/privacy" },
+    { name: "Terms.", href: "/terms" },
     { name: "llms.txt", href: "/llms.txt" },
   ];
 
@@ -11,13 +18,14 @@ function Footer() {
     <footer className="footer" role="contentinfo">
       <div className="footer__cta">
         <p className="footer__cta-text">
-          Building financial AI for small businesses. Want to connect?
+          Building cool things. Want to connect?
         </p>
         <a
-          href="mailto:gabrielmribeiro@hibeex.com.br"
+          href={`mailto:${obfuscatedEmail()}`}
           className="footer__cta-link"
+          aria-label="Send email to Gabriel"
         >
-          gabrielmribeiro@hibeex.com.br
+          {obfuscatedEmail()}
         </a>
       </div>
       <div className="links">
@@ -33,7 +41,7 @@ function Footer() {
         ))}
       </div>
       <p className="footer__copy">
-        © {new Date().getFullYear()} Gabriel Moreno Ribeiro
+        &copy; {new Date().getFullYear()} Gabriel Moreno Ribeiro
       </p>
     </footer>
   );
