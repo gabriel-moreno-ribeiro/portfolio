@@ -16,6 +16,7 @@ import TerminalModal from "./components/Terminal/TerminalModal";
 import WindowRenderer from "./components/WindowManager/WindowRenderer";
 import { useHandsfreeCamera } from "./hooks/useHandsfreeCamera";
 import useIsMobile from "./hooks/useIsMobile";
+import MobileStickyCTA from "./components/Shared/MobileStickyCTA";
 import Home from "./pages/Home";
 import {
   startMouseInputProvider,
@@ -26,6 +27,11 @@ import { useThemeStore } from "./store/themeStore";
 
 const HeroSlideshow = lazy(() => import("./components/Home/HeroSlideshow"));
 const LibraryPage = lazy(() => import("./pages/Library"));
+const BlogPage = lazy(() => import("./pages/Blog"));
+const NewsPage = lazy(() => import("./pages/News"));
+const ContactPage = lazy(() => import("./pages/Contact"));
+const ThankYouPage = lazy(() => import("./pages/ThankYou"));
+const NotFoundPage = lazy(() => import("./pages/NotFound"));
 
 function App() {
   const { darkMode } = useThemeStore();
@@ -76,20 +82,26 @@ function App() {
 
 function AppContent() {
   const location = useLocation();
-  const isLibrary = location.pathname.startsWith("/library");
+  const isHome = location.pathname === "/";
+  const isSubpage = !isHome;
 
   return (
     <div className="app">
-      {!isLibrary && (
+      {!isSubpage && (
         <Suspense fallback={null}>
           <HeroSlideshow />
         </Suspense>
       )}
-      {!isLibrary && <HorizontalScroller />}
-      <Suspense fallback={isLibrary ? <div style={{ width: "100%", height: "100dvh", background: "var(--bg)" }} /> : null}>
+      {!isSubpage && <HorizontalScroller />}
+      <Suspense fallback={isSubpage ? <div style={{ width: "100%", height: "100dvh", background: "var(--bg)" }} /> : null}>
         <Routes>
           <Route path="/library/:bookId?" element={<LibraryPage />} />
-          <Route path="*" element={<Home />} />
+          <Route path="/blog" element={<BlogPage />} />
+          <Route path="/news" element={<NewsPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/obrigado" element={<ThankYouPage />} />
+          <Route path="/" element={<Home />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Suspense>
       <HandsfreeButton />
@@ -103,6 +115,7 @@ function AppContent() {
       <CameraFeedback />
       <HandCursor />
       <CustomMouse />
+      <MobileStickyCTA />
       <ToastContainer />
     </div>
   );

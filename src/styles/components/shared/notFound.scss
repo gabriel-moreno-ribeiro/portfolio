@@ -1,0 +1,53 @@
+.not-found {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px;
+
+  &__container {
+    max-width: 480px;
+  }
+
+  &__code {
+    font-size: clamp(80px, 18vw, 160px);
+    font-weight: 900;
+    line-height: 1;
+    color: var(--accent);
+    letter-spacing: -4px;
+  }
+
+  &__title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 16px 0 8px;
+    color: var(--fg);
+  }
+
+  &__desc {
+    color: var(--fg-muted);
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 32px;
+  }
+
+  &__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--accent);
+    color: #fff;
+    text-decoration: none;
+    padding: 12px 28px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: opacity 0.15s;
+    min-height: 44px;
+
+    &:hover {
+      opacity: 0.85;
+    }
+  }
+}
