@@ -15,6 +15,7 @@ const DarkModeButton: React.FC = () => {
       onClick={toggleDarkMode}
       className="toggle-button"
       data-color-inverted={"true"}
+      aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
     >
       {darkMode ? <IoSunnyOutline /> : <IoMoonOutline />}
     </motion.button>
