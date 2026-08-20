@@ -13,11 +13,12 @@ import { scrollToComponent } from '../../utils/scrollToComponent';
 import CommonButton from '../Shared/CommonButton';
 import ScrambleText from '../Shared/ScrambleText';
 
-const prefersReducedMotion =
+const shouldSkip3D =
   typeof window !== 'undefined' &&
-  window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  (window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
+   window.innerWidth < 768);
 
-const CanvasComponent = prefersReducedMotion
+const CanvasComponent = shouldSkip3D
   ? null
   : lazy(() => import('../Canvas/CanvasComponent'));
 
@@ -41,7 +42,7 @@ function Hero() {
   const mountTimeRef = useRef(Date.now());
 
   const handleRobotReady = useCallback(() => {
-    if (prefersReducedMotion) return;
+    if (shouldSkip3D) return;
     const elapsed = Date.now() - mountTimeRef.current;
     const remaining = Math.max(0, BG_SETTLE_DELAY * 1000 - elapsed);
     setTimeout(() => {

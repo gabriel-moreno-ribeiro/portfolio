@@ -56,16 +56,18 @@ export default defineConfig({
   },
   build: {
     outDir: "dist",
-    sourcemap: false,
+    sourcemap: true,
+    modulePreload: false,
     rollupOptions: {
       output: {
-        manualChunks: {
-          three: ["three"],
-          "react-three": ["@react-three/fiber", "@react-three/drei"],
-          motion: ["motion"],
-          gsap: ["gsap"],
-          mediapipe: ["@mediapipe/tasks-vision"],
-          posthog: ["posthog-js"],
+        manualChunks(id) {
+          if (id.includes('node_modules/react/') || id.includes('node_modules/react-dom/') || id.includes('node_modules/scheduler/')) return 'vendor-react';
+          if (id.includes('node_modules/three/')) return 'three';
+          if (id.includes('node_modules/@react-three/')) return 'react-three';
+          if (id.includes('node_modules/motion/') || id.includes('node_modules/framer-motion/')) return 'motion';
+          if (id.includes('node_modules/gsap/')) return 'gsap';
+          if (id.includes('node_modules/@mediapipe/')) return 'mediapipe';
+          if (id.includes('node_modules/posthog-js/')) return 'posthog';
         },
       },
     },

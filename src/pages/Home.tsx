@@ -17,8 +17,8 @@ const BackgroundGlobe = lazy(() => import("../components/Home/BackgroundGlobe"))
 const HorizontalSkillsWrapper = lazy(() => import("../components/Home/HorizontalSkillsWrapper"));
 const WorkExperience = lazy(() => import("../components/Home/WorkExperience"));
 
-const NAV_SECTIONS = ['Origins', 'Skills', 'Work', 'Experience', 'Research'];
-const NAV_IDS      = ['background', 'skills', 'work', 'work-experience', 'research'];
+const NAV_SECTIONS = ['Header', 'Origins', 'Skills', 'Cool Things', 'Research', 'Professional Experience'];
+const NAV_IDS      = ['main-content', 'background', 'skills', 'work', 'research', 'work-experience'];
 
 function Home() {
   const [activeNav, setActiveNav] = useState(0);
@@ -67,7 +67,7 @@ function Home() {
 
       <Navbar />
       <Hero />
-      <Suspense fallback={null}>
+      <Suspense fallback={<div style={{ minHeight: 700 }} />}>
         <BackgroundGlobe />
       </Suspense>
       <Skills />
