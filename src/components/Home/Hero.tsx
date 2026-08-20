@@ -13,7 +13,13 @@ import { scrollToComponent } from '../../utils/scrollToComponent';
 import CommonButton from '../Shared/CommonButton';
 import ScrambleText from '../Shared/ScrambleText';
 
-const CanvasComponent = lazy(() => import('../Canvas/CanvasComponent'));
+const prefersReducedMotion =
+  typeof window !== 'undefined' &&
+  window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+const CanvasComponent = prefersReducedMotion
+  ? null
+  : lazy(() => import('../Canvas/CanvasComponent'));
 
 const BG_SETTLE_DELAY = 0.7;
 
@@ -35,6 +41,7 @@ function Hero() {
   const mountTimeRef = useRef(Date.now());
 
   const handleRobotReady = useCallback(() => {
+    if (prefersReducedMotion) return;
     const elapsed = Date.now() - mountTimeRef.current;
     const remaining = Math.max(0, BG_SETTLE_DELAY * 1000 - elapsed);
     setTimeout(() => {
@@ -60,16 +67,18 @@ function Hero() {
 
   return (
     <div className="hero-section">
-      <motion.div
-        style={{ marginTop: '16px' }}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: showRobot ? 1 : 0 }}
-        transition={{ duration: 0.8, ease: 'easeOut' }}
-      >
-        <Suspense fallback={null}>
-          <CanvasComponent onReady={handleRobotReady} />
-        </Suspense>
-      </motion.div>
+      {CanvasComponent && (
+        <motion.div
+          style={{ marginTop: '16px', minHeight: 300, minWidth: 300 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: showRobot ? 1 : 0 }}
+          transition={{ duration: 0.8, ease: 'easeOut' }}
+        >
+          <Suspense fallback={null}>
+            <CanvasComponent onReady={handleRobotReady} />
+          </Suspense>
+        </motion.div>
+      )}
       <div className="heading-section">
         <motion.div
           className="heading"

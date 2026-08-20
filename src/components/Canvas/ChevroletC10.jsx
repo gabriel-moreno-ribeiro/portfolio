@@ -1,7 +1,7 @@
 import { useGLTF } from "@react-three/drei";
 import { useEffect, useMemo, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
-import * as THREE from "three";
+import { Color, Vector3 } from "three";
 
 const EXPLOSION_CONFIG = {
   "Hood": { dir: [0, 1.5, -1.2], rotate: [-0.6, 0, 0], phase: 0.0 },
@@ -47,7 +47,7 @@ export function ChevroletC10({ progressRef, groupRef, ...props }) {
       if (!child.isMesh) return;
       if (child.material?.name === "Paint" || child.material?.name === "Paint.007") {
         child.material = child.material.clone();
-        child.material.color = new THREE.Color(0xcc0000);
+        child.material.color = new Color(0xcc0000);
         child.material.needsUpdate = true;
       }
     });
@@ -68,7 +68,7 @@ export function ChevroletC10({ progressRef, groupRef, ...props }) {
       }
 
       if (!config) {
-        const center = new THREE.Vector3();
+        const center = new Vector3();
         child.getWorldPosition(center);
         const dir = center.normalize();
         config = {

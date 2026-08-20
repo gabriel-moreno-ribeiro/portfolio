@@ -2,8 +2,6 @@
 User-agent: *
 Disallow:
 
-# Sitemap
 Sitemap: https://gabrielmr.com/sitemap.xml
 
-# LLM context
-Llms-txt: /llms.txt
+# LLM context: /llms.txt
