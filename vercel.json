@@ -4,7 +4,6 @@
   "installCommand": "npm install",
   "buildCommand": "npx tsc && npx vite build",
   "outputDirectory": "dist",
-  "cleanUrls": true,
   "rewrites": [
     { "source": "/privacy", "destination": "/privacy.html" },
     { "source": "/terms", "destination": "/terms.html" },
