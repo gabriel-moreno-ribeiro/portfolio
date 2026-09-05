@@ -88,7 +88,7 @@ function Home() {
           stableTicks++;
         }
       }
-      if (stableTicks >= 6 || performance.now() - start > 6000) return stop();
+      if (stableTicks >= 14 || performance.now() - start > 8000) return stop();
       timer = window.setTimeout(tick, 150);
     };
     STOP_EVENTS.forEach(ev => window.addEventListener(ev, stop, { passive: true }));

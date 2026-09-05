@@ -7,13 +7,13 @@ import { Vector3 } from "three";
 // 1 = ASSEMBLY_END of the section scroll). Wheels roll in first, then the
 // body drops on, then the glass.
 const ASSEMBLY_CONFIG = [
-  { material: "tire", dir: [1.6, -0.8, 1.1], rotate: [0, 0, 0.8], phase: 0.0 },
-  { material: "tire", index: 1, dir: [-1.6, -0.8, 1.1], rotate: [0, 0, -0.8], phase: 0.06 },
-  { material: "tire", index: 2, dir: [1.6, -0.8, -1.1], rotate: [0, 0, 0.8], phase: 0.12 },
-  { material: "tire", index: 3, dir: [-1.6, -0.8, -1.1], rotate: [0, 0, -0.8], phase: 0.18 },
-  { material: "body", dir: [-0.5, 1.3, 0.5], rotate: [0, 0, 0], phase: 0.3 },
-  { material: "interior", dir: [-0.5, 1.3, 0.5], rotate: [0, 0, 0], phase: 0.3 },
-  { material: "glass", dir: [-0.5, 1.9, 0.3], rotate: [-0.3, 0, 0], phase: 0.55 },
+  { material: "tire", dir: [1.2, -0.6, 1.1], rotate: [0, 0, 0.8], phase: 0.0 },
+  { material: "tire", index: 1, dir: [-1.2, -0.6, 1.1], rotate: [0, 0, -0.8], phase: 0.06 },
+  { material: "tire", index: 2, dir: [1.2, -0.6, -1.1], rotate: [0, 0, 0.8], phase: 0.12 },
+  { material: "tire", index: 3, dir: [-1.2, -0.6, -1.1], rotate: [0, 0, -0.8], phase: 0.18 },
+  { material: "body", dir: [0, 1.3, 0.2], rotate: [0, 0, 0], phase: 0.3 },
+  { material: "interior", dir: [0, 1.3, 0.2], rotate: [0, 0, 0], phase: 0.3 },
+  { material: "glass", dir: [0, 1.9, 0.1], rotate: [-0.3, 0, 0], phase: 0.55 },
 ];
 
 const PHASE_LENGTH = 0.45;
@@ -54,7 +54,7 @@ export function D20Truck({ progressRef, groupRef, ...props }) {
           (c) => c.material === "tire" && (c.index === idx || (c.index === undefined && idx === 0))
         );
         if (!config) {
-          config = { dir: [idx % 2 === 0 ? 1.6 : -1.6, -0.8, idx < 2 ? 1.1 : -1.1], rotate: [0, 0, 0.5], phase: idx * 0.06 };
+          config = { dir: [idx % 2 === 0 ? 1.2 : -1.2, -0.6, idx < 2 ? 1.1 : -1.1], rotate: [0, 0, 0.5], phase: idx * 0.06 };
         }
       } else {
         config = ASSEMBLY_CONFIG.find((c) => c.material === matName);
