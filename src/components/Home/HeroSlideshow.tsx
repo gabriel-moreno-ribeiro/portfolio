@@ -5,12 +5,12 @@ const SLIDE_DURATION = 6000;
 const FADE_DISTANCE = 400;
 
 const SLIDES: string[] = [
-  '/assets/hero-slideshow/1.avif',
-  '/assets/hero-slideshow/3.avif',
-  '/assets/hero-slideshow/4.avif',
-  '/assets/hero-slideshow/6.avif',
-  '/assets/hero-slideshow/7.avif',
-  '/assets/hero-slideshow/8.avif',
+  '/assets/hero-slideshow/1-1920.avif',
+  '/assets/hero-slideshow/3-1920.avif',
+  '/assets/hero-slideshow/4-1920.avif',
+  '/assets/hero-slideshow/6-1920.avif',
+  '/assets/hero-slideshow/7-1920.avif',
+  '/assets/hero-slideshow/8-1920.avif',
 ];
 
 const skipSlideshow = typeof window !== 'undefined' && window.innerWidth < 768;
