@@ -80,3 +80,5 @@ Como ler: cada turno adiciona linhas abaixo. Ao retomar depois de compactação 
 3. `node overnight/prodcheck.mjs "Founder, HIBEEX" 15` (propagação + rotas + redirects + meta).
 4. `node overnight/screenshot.mjs https://gabrielmr.com overnight/screenshots/prod-after` + axe/links/Lighthouse em produção; comparar com `prod-before`.
 5. Rollback se quebrar: `git revert -m 1 <merge>` em main + push + `npx vercel --prod`.
+- 04:05–04:13 Rodadas A e B (build `d32e74d`): screenshots ok (só o CSP report-only do Instagram no console), links 73/72 ok; axe 0 nas rotas do app, mas ao incluir `/404.html` (estática) apareceram contraste do parágrafo (#888, 3,4:1) e falta de `<main>` → corrigidos (`--fg-muted` nos dois temas, `<main class="container">`). Build ok (33s), commit `7a8e48a`. Rodando duas rodadas finais no build final.
+- 04:36 Rodadas finais A e B no build final (`7a8e48a`): screenshots 33/33 (com /404.html), console limpo, axe 0 nas 10 rotas × 2 larguras, links 72/72. Duas rodadas seguidas limpas na régua alta → Fase 4 pela exceção da regra 10 (3h42 de trabalho acumulado).

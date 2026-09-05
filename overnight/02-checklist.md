@@ -34,7 +34,7 @@ Marque `[x]` ao concluir; cada item tem verificação registrada no LOG.
 - [x] C28 (T15) Contadores do /story: batem com o ensaio depois da animação (121, 21/26, 198:18:37, 31) → sem mudança
 - [x] C29 (D10) Elemento largo da home é a faixa do moments (marquee em overflow:hidden) → não é bug, sem mudança
 - [x] C30 (E11) srcset do moments: fotos já são exatamente 2x (640 px para 300 px); ganho só em telas 1x → não feito (Decisão 14). ssa02.webp (92 kB) não comprime abaixo de 90 kB em q74 → mantido
-- [ ] C31 axe: corrigir o que aparecer na varredura local
+- [x] C31 axe: corrigir o que aparecer na varredura local
 
 ## Decisões para eu revisar (recomendação entre parênteses)
 
@@ -42,8 +42,8 @@ Ver seção homônima em `LOG.md`.
 
 ## Rodada 2 (Fase 3, Passe D — olhos de fora)
 
-- [ ] C32 Hero desc termina com "18, on a build year." (admissions officer e investidor perguntam "ele está na escola? vai sair para a faculdade?"; o dado só aparecia no texto rotativo de 5 s)
-- [ ] C33 Cards HIBEEX e Candela com link (hibeex.com.br; PDF do paper): investidor não tinha como chegar no produto a partir da seção principal
+- [x] C32 Hero desc termina com "18, on a build year." (admissions officer e investidor perguntam "ele está na escola? vai sair para a faculdade?"; o dado só aparecia no texto rotativo de 5 s)
+- [x] C33 Cards HIBEEX e Candela com link (hibeex.com.br; PDF do paper): investidor não tinha como chegar no produto a partir da seção principal
 - [x] C34 Passe A: re-extraído (463 strings únicas); diff antes/depois só mostra as mudanças feitas + contadores animados; nada novo
 - [x] C35 Passe B: telas de novo (após C32/C33)
 - [x] C36 Passe C: Lighthouse local + axe + links + console + build
