@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import { FiArrowUpRight, FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { toggleTerminalWindow } from "../../utils/terminalWindow";
 
 // Static manifest of media that actually exists in public/work/<slug>/.
@@ -13,6 +13,7 @@ interface FeaturedItem {
   title: string;
   desc: string;
   tags: string[];
+  link?: { href: string; label: string };
 }
 
 const featured: FeaturedItem[] = [
@@ -21,23 +22,25 @@ const featured: FeaturedItem[] = [
     title: "HIBEEX: backoffice AI for SMBs",
     desc: "Backoffice AI for small and medium businesses: raw data in, decisions out. One of 6 startups in the Canastra Ventures AI Residency.",
     tags: ["TypeScript", "Next.js", "Supabase", "AWS", "AI/ML"],
+    link: { href: "https://www.hibeex.com.br/", label: "hibeex.com.br" },
   },
   {
     slug: "candela",
     title: "Projeto Candela",
     desc: "Low-cost physics lab kits I built and delivered to 28 public schools. 3,392 students so far. Physics failure rates in those classes went from 30% to 10%.",
     tags: ["3,392 students", "28 schools", "30% → 10%"],
+    link: { href: "/research/projeto-candela/paper.pdf", label: "Read the paper (PDF)" },
   },
   {
     slug: "medals",
     title: "39 Olympiad Medals (19 Gold)",
-    desc: "49 competitions in math, physics, chemistry, and astronomy. 1st of 10,000+ at IFT-UNESP. Gold at ONNEQ. 1st at OBAQ.",
+    desc: "49 competitions in math, physics, chemistry and astronomy. 1st of 10,000+ at IFT-UNESP. Gold at ONNEQ. 1st at OBAQ.",
     tags: ["19 gold", "2 international", "1st IFT-UNESP"],
   },
   {
     slug: "gsat",
     title: "GSAT Education",
-    desc: "A test-prep platform I built from scratch as founding CEO.",
+    desc: "A test-prep platform I built from scratch as founding CEO, November 2025 to May 2026.",
     tags: ["React", "TypeScript", "Node.js", "EdTech"],
   },
 ];
@@ -99,12 +102,19 @@ function FeaturedCard({ item }: { item: FeaturedItem }) {
   return (
     <div className="featured-card">
       <MediaCarousel slug={item.slug} title={item.title} />
+      <div className="featured-card__body">
       <h2>{item.title}</h2>
       <p>{item.desc}</p>
       <div className="featured-tags">
         {item.tags.map((tag) => (
           <span key={tag}>{tag}</span>
         ))}
+      </div>
+      {item.link && (
+        <a className="featured-link" href={item.link.href} target="_blank" rel="noopener noreferrer">
+          {item.link.label} <FiArrowUpRight aria-hidden="true" />
+        </a>
+      )}
       </div>
     </div>
   );

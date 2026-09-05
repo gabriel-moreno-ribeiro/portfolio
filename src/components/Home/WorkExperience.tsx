@@ -27,7 +27,7 @@ const workExperience = [
   {
     title: 'Independent Researcher',
     company: 'Fintech Savings RCT',
-    date: 'Advised by Aaron Litvin, Ph.D. (Harvard)',
+    date: '2025 · Advised by Aaron Litvin, Ph.D. (Harvard)',
     points: [
       "Ran an <span class='black'>RCT with 208 students</span> on whether fintech apps change savings behavior",
       "Treatment group saved <span class='black'>130% more</span> than control",

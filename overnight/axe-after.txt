@@ -1,0 +1,184 @@
+
+## / @390: 3 violações
+- [serious] color-contrast (37x): Elements must meet minimum color contrast ratio thresholds
+    .city-panel__location [2.74:1 fg=#f0732d bg=#fcf7f4 8.3pt (11px)]
+    .city-panel__coords [2.6:1 fg=#9d9b9a bg=#fcf7f4 7.5pt (10px)]
+    .featured-card:nth-child(1) > .featured-tags > span:nth-child(1) [4.22:1 fg=#b8501a bg=#fde8dc 9.0pt (12px)]
+    .featured-card:nth-child(1) > .featured-tags > span:nth-child(2) [4.22:1 fg=#b8501a bg=#fde8dc 9.0pt (12px)]
+    .featured-card:nth-child(1) > .featured-tags > span:nth-child(3) [4.22:1 fg=#b8501a bg=#fde8dc 9.0pt (12px)]
+    .featured-card:nth-child(1) > .featured-tags > span:nth-child(4) [4.22:1 fg=#b8501a bg=#fde8dc 9.0pt (12px)]
+    .featured-tags > span:nth-child(5) [4.22:1 fg=#b8501a bg=#fde8dc 9.0pt (12px)]
+    .featured-card:nth-child(2) > .featured-tags > span:nth-child(1) [4.22:1 fg=#b8501a bg=#fde8dc 9.0pt (12px)]
+    .featured-card:nth-child(2) > .featured-tags > span:nth-child(2) [4.22:1 fg=#b8501a bg=#fde8dc 9.0pt (12px)]
+    .featured-card:nth-child(2) > .featured-tags > span:nth-child(3) [4.22:1 fg=#b8501a bg=#fde8dc 9.0pt (12px)]
+    .featured-card:nth-child(3) > .featured-tags > span:nth-child(1) [4.22:1 fg=#b8501a bg=#fde8dc 9.0pt (12px)]
+    .featured-card:nth-child(3) > .featured-tags > span:nth-child(2) [4.22:1 fg=#b8501a bg=#fde8dc 9.0pt (12px)]
+    .featured-card:nth-child(3) > .featured-tags > span:nth-child(3) [4.22:1 fg=#b8501a bg=#fde8dc 9.0pt (12px)]
+    .featured-card:nth-child(4) > .featured-tags > span:nth-child(1) [4.22:1 fg=#b8501a bg=#fde8dc 9.0pt (12px)]
+    .featured-card:nth-child(4) > .featured-tags > span:nth-child(2) [4.22:1 fg=#b8501a bg=#fde8dc 9.0pt (12px)]
+    .featured-card:nth-child(4) > .featured-tags > span:nth-child(3) [4.22:1 fg=#b8501a bg=#fde8dc 9.0pt (12px)]
+    .featured-card:nth-child(4) > .featured-tags > span:nth-child(4) [4.22:1 fg=#b8501a bg=#fde8dc 9.0pt (12px)]
+    .research-card--no-media.research-card:nth-child(1) > .research-card__content > .research-card__header > .rese [2.72:1 fg=#f0732d bg=#fbf6f3 9.0pt (12px)]
+    .research-card--no-media.research-card:nth-child(1) > .research-card__content > .research-card__tags > .resear [2.52:1 fg=#f0732d bg=#faece4 8.3pt (11px)]
+    .research-card--no-media.research-card:nth-child(1) > .research-card__content > .research-card__tags > .resear [2.52:1 fg=#f0732d bg=#faece4 8.3pt (11px)]
+    .research-card--no-media.research-card:nth-child(1) > .research-card__content > .research-card__tags > .resear [2.52:1 fg=#f0732d bg=#faece4 8.3pt (11px)]
+    .research-card--no-media.research-card:nth-child(1) > .research-card__content > .research-card__tags > .resear [2.52:1 fg=#f0732d bg=#faece4 8.3pt (11px)]
+    .research-card--no-media.research-card:nth-child(1) > .research-card__content > .research-card__tags > .resear [2.52:1 fg=#f0732d bg=#faece4 8.3pt (11px)]
+    .research-card--no-media.research-card:nth-child(2) > .research-card__content > .research-card__header > .rese [2.72:1 fg=#f0732d bg=#fbf6f3 9.0pt (12px)]
+    .research-card--no-media.research-card:nth-child(2) > .research-card__content > .research-card__tags > .resear [2.52:1 fg=#f0732d bg=#faece4 8.3pt (11px)]
+    .research-card--no-media.research-card:nth-child(2) > .research-card__content > .research-card__tags > .resear [2.52:1 fg=#f0732d bg=#faece4 8.3pt (11px)]
+    .research-card--no-media.research-card:nth-child(2) > .research-card__content > .research-card__tags > .resear [2.52:1 fg=#f0732d bg=#faece4 8.3pt (11px)]
+    .research-card--no-media.research-card:nth-child(2) > .research-card__content > .research-card__tags > .resear [2.52:1 fg=#f0732d bg=#faece4 8.3pt (11px)]
+    .research-card--no-media.research-card:nth-child(2) > .research-card__content > .research-card__tags > .resear [2.52:1 fg=#f0732d bg=#faece4 8.3pt (11px)]
+    .research-card--clickable > .research-card__content > .research-card__header > .research-card__field [2.72:1 fg=#f0732d bg=#fbf6f3 9.0pt (12px)]
+    .research-card__pdf [2.72:1 fg=#f0732d bg=#fbf6f3 9.0pt (12px)]
+    .research-card--clickable > .research-card__content > .research-card__tags > .research-tag:nth-child(1) [2.52:1 fg=#f0732d bg=#faece4 8.3pt (11px)]
+    .research-card--clickable > .research-card__content > .research-card__tags > .research-tag:nth-child(2) [2.52:1 fg=#f0732d bg=#faece4 8.3pt (11px)]
+    .research-card--clickable > .research-card__content > .research-card__tags > .research-tag:nth-child(3) [2.52:1 fg=#f0732d bg=#faece4 8.3pt (11px)]
+    .research-card--clickable > .research-card__content > .research-card__tags > .research-tag:nth-child(4) [2.52:1 fg=#f0732d bg=#faece4 8.3pt (11px)]
+    .contact-section__eyebrow [2.77:1 fg=#f0732d bg=#fff8f4 9.0pt (12px)]
+    em [2.77:1 fg=#f0732d bg=#fff8f4 28.5pt (38px)]
+- [moderate] landmark-contentinfo-is-top-level (1x): Contentinfo landmark should not be contained in another landmark
+    footer
+- [moderate] region (1x): All page content should be contained by landmarks
+    .mobile-sticky-cta
+
+## / @1440: 2 violações
+- [serious] color-contrast (37x): Elements must meet minimum color contrast ratio thresholds
+    .city-panel__location [2.74:1 fg=#f0732d bg=#fcf7f4 8.3pt (11px)]
+    .city-panel__coords [2.6:1 fg=#9d9b9a bg=#fcf7f4 7.5pt (10px)]
+    .featured-card:nth-child(1) > .featured-tags > span:nth-child(1) [4.22:1 fg=#b8501a bg=#fde8dc 9.0pt (12px)]
+    .featured-card:nth-child(1) > .featured-tags > span:nth-child(2) [4.22:1 fg=#b8501a bg=#fde8dc 9.0pt (12px)]
+    .featured-card:nth-child(1) > .featured-tags > span:nth-child(3) [4.22:1 fg=#b8501a bg=#fde8dc 9.0pt (12px)]
+    .featured-card:nth-child(1) > .featured-tags > span:nth-child(4) [4.22:1 fg=#b8501a bg=#fde8dc 9.0pt (12px)]
+    .featured-tags > span:nth-child(5) [4.22:1 fg=#b8501a bg=#fde8dc 9.0pt (12px)]
+    .featured-card:nth-child(2) > .featured-tags > span:nth-child(1) [4.22:1 fg=#b8501a bg=#fde8dc 9.0pt (12px)]
+    .featured-card:nth-child(2) > .featured-tags > span:nth-child(2) [4.22:1 fg=#b8501a bg=#fde8dc 9.0pt (12px)]
+    .featured-card:nth-child(2) > .featured-tags > span:nth-child(3) [4.22:1 fg=#b8501a bg=#fde8dc 9.0pt (12px)]
+    .featured-card:nth-child(3) > .featured-tags > span:nth-child(1) [4.22:1 fg=#b8501a bg=#fde8dc 9.0pt (12px)]
+    .featured-card:nth-child(3) > .featured-tags > span:nth-child(2) [4.22:1 fg=#b8501a bg=#fde8dc 9.0pt (12px)]
+    .featured-card:nth-child(3) > .featured-tags > span:nth-child(3) [4.22:1 fg=#b8501a bg=#fde8dc 9.0pt (12px)]
+    .featured-card:nth-child(4) > .featured-tags > span:nth-child(1) [4.22:1 fg=#b8501a bg=#fde8dc 9.0pt (12px)]
+    .featured-card:nth-child(4) > .featured-tags > span:nth-child(2) [4.22:1 fg=#b8501a bg=#fde8dc 9.0pt (12px)]
+    .featured-card:nth-child(4) > .featured-tags > span:nth-child(3) [4.22:1 fg=#b8501a bg=#fde8dc 9.0pt (12px)]
+    .featured-card:nth-child(4) > .featured-tags > span:nth-child(4) [4.22:1 fg=#b8501a bg=#fde8dc 9.0pt (12px)]
+    .research-card--no-media.research-card:nth-child(1) > .research-card__content > .research-card__header > .rese [2.72:1 fg=#f0732d bg=#fbf6f3 9.0pt (12px)]
+    .research-card--no-media.research-card:nth-child(1) > .research-card__content > .research-card__tags > .resear [2.52:1 fg=#f0732d bg=#faece4 8.3pt (11px)]
+    .research-card--no-media.research-card:nth-child(1) > .research-card__content > .research-card__tags > .resear [2.52:1 fg=#f0732d bg=#faece4 8.3pt (11px)]
+    .research-card--no-media.research-card:nth-child(1) > .research-card__content > .research-card__tags > .resear [2.52:1 fg=#f0732d bg=#faece4 8.3pt (11px)]
+    .research-card--no-media.research-card:nth-child(1) > .research-card__content > .research-card__tags > .resear [2.52:1 fg=#f0732d bg=#faece4 8.3pt (11px)]
+    .research-card--no-media.research-card:nth-child(1) > .research-card__content > .research-card__tags > .resear [2.52:1 fg=#f0732d bg=#faece4 8.3pt (11px)]
+    .research-card--no-media.research-card:nth-child(2) > .research-card__content > .research-card__header > .rese [2.72:1 fg=#f0732d bg=#fbf6f3 9.0pt (12px)]
+    .research-card--no-media.research-card:nth-child(2) > .research-card__content > .research-card__tags > .resear [2.52:1 fg=#f0732d bg=#faece4 8.3pt (11px)]
+    .research-card--no-media.research-card:nth-child(2) > .research-card__content > .research-card__tags > .resear [2.52:1 fg=#f0732d bg=#faece4 8.3pt (11px)]
+    .research-card--no-media.research-card:nth-child(2) > .research-card__content > .research-card__tags > .resear [2.52:1 fg=#f0732d bg=#faece4 8.3pt (11px)]
+    .research-card--no-media.research-card:nth-child(2) > .research-card__content > .research-card__tags > .resear [2.52:1 fg=#f0732d bg=#faece4 8.3pt (11px)]
+    .research-card--no-media.research-card:nth-child(2) > .research-card__content > .research-card__tags > .resear [2.52:1 fg=#f0732d bg=#faece4 8.3pt (11px)]
+    .research-card--clickable > .research-card__content > .research-card__header > .research-card__field [2.72:1 fg=#f0732d bg=#fbf6f3 9.0pt (12px)]
+    .research-card__pdf [2.72:1 fg=#f0732d bg=#fbf6f3 9.0pt (12px)]
+    .research-card--clickable > .research-card__content > .research-card__tags > .research-tag:nth-child(1) [2.52:1 fg=#f0732d bg=#faece4 8.3pt (11px)]
+    .research-card--clickable > .research-card__content > .research-card__tags > .research-tag:nth-child(2) [2.52:1 fg=#f0732d bg=#faece4 8.3pt (11px)]
+    .research-card--clickable > .research-card__content > .research-card__tags > .research-tag:nth-child(3) [2.52:1 fg=#f0732d bg=#faece4 8.3pt (11px)]
+    .research-card--clickable > .research-card__content > .research-card__tags > .research-tag:nth-child(4) [2.52:1 fg=#f0732d bg=#faece4 8.3pt (11px)]
+    .contact-section__eyebrow [2.77:1 fg=#f0732d bg=#fff8f4 9.0pt (12px)]
+    em [2.77:1 fg=#f0732d bg=#fff8f4 42.0pt (56px)]
+- [moderate] landmark-contentinfo-is-top-level (1x): Contentinfo landmark should not be contained in another landmark
+    footer
+
+## /story @390: 3 violações
+- [serious] color-contrast (5x): Elements must meet minimum color contrast ratio thresholds
+    .repo--star.repo:nth-child(5) > .repo__n [1.83:1 fg=#bebcba bg=#fffbf8 10.5pt (14px)]
+    .repo--star.repo:nth-child(5) > .repo__name [2.64:1 fg=#9f9c9b bg=#fffbf8 10.5pt (14px)]
+    .repo--star.repo:nth-child(5) > .repo__note [1.83:1 fg=#bebcba bg=#fffbf8 10.5pt (14px)]
+    .scale__ring--garage > .scale__label [2.5:1 fg=#fdeae0 bg=#f0732d 9.0pt (12px)]
+    .scale__ring--garage > .scale__label > b [2.91:1 fg=#ffffff bg=#f0732d 14.3pt (19px)]
+- [moderate] landmark-contentinfo-is-top-level (1x): Contentinfo landmark should not be contained in another landmark
+    footer
+- [moderate] region (1x): All page content should be contained by landmarks
+    .mobile-sticky-cta
+
+## /story @1440: 2 violações
+- [serious] color-contrast (2x): Elements must meet minimum color contrast ratio thresholds
+    .scale__ring--garage > .scale__label [2.83:1 fg=#fffbf9 bg=#f0732d 9.8pt (13px)]
+    .scale__ring--garage > .scale__label > b [2.91:1 fg=#ffffff bg=#f0732d 14.3pt (19px)]
+- [moderate] landmark-contentinfo-is-top-level (1x): Contentinfo landmark should not be contained in another landmark
+    footer
+
+## /news @390: 2 violações
+- [moderate] landmark-contentinfo-is-top-level (1x): Contentinfo landmark should not be contained in another landmark
+    footer
+- [moderate] region (1x): All page content should be contained by landmarks
+    .mobile-sticky-cta
+
+## /news @1440: 1 violações
+- [moderate] landmark-contentinfo-is-top-level (1x): Contentinfo landmark should not be contained in another landmark
+    footer
+
+## /library @390: 1 violações
+- [serious] target-size (28x): All touch targets must be 24px large, or leave sufficient space
+    .is-active
+    .library__ticks > button[type="button"]:nth-child(2)
+    button[aria-label="Browse to Percy Jackson"]
+    button[aria-label="Browse to A Ilha do Tesouro"]
+
+## /library @1440: 0 violações
+
+## /blog @390: 2 violações
+- [moderate] landmark-contentinfo-is-top-level (1x): Contentinfo landmark should not be contained in another landmark
+    footer
+- [moderate] region (1x): All page content should be contained by landmarks
+    .mobile-sticky-cta
+
+## /blog @1440: 1 violações
+- [moderate] landmark-contentinfo-is-top-level (1x): Contentinfo landmark should not be contained in another landmark
+    footer
+
+## /obrigado @390: 1 violações
+- [moderate] region (1x): All page content should be contained by landmarks
+    .mobile-sticky-cta
+
+## /obrigado @1440: 0 violações
+
+## /privacy @390: 2 violações
+- [moderate] landmark-one-main (1x): Document should have one main landmark
+    html
+- [moderate] region (25x): All page content should be contained by landmarks
+    h1
+    .date
+    p:nth-child(4)
+    h2:nth-child(5)
+
+## /privacy @1440: 2 violações
+- [moderate] landmark-one-main (1x): Document should have one main landmark
+    html
+- [moderate] region (25x): All page content should be contained by landmarks
+    h1
+    .date
+    p:nth-child(4)
+    h2:nth-child(5)
+
+## /terms @390: 2 violações
+- [moderate] landmark-one-main (1x): Document should have one main landmark
+    html
+- [moderate] region (24x): All page content should be contained by landmarks
+    h1
+    .date
+    p:nth-child(4)
+    h2:nth-child(5)
+
+## /terms @1440: 2 violações
+- [moderate] landmark-one-main (1x): Document should have one main landmark
+    html
+- [moderate] region (24x): All page content should be contained by landmarks
+    h1
+    .date
+    p:nth-child(4)
+    h2:nth-child(5)
+
+## /rota-que-nao-existe @390: 1 violações
+- [moderate] region (1x): All page content should be contained by landmarks
+    .mobile-sticky-cta
+
+## /rota-que-nao-existe @1440: 0 violações
+
+TOTAL: 27 tipos de violação

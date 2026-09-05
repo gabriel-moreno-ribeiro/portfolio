@@ -1,0 +1,45 @@
+
+## / @390: 0 violações
+
+## / @1440: 0 violações
+
+## /story @390: 1 violações
+- [serious] color-contrast (1x): Elements must meet minimum color contrast ratio thresholds
+    .scale__ring--country > .scale__label > b [1.68:1 fg=#c7c1be bg=#fff7f3 12.8pt (17px)]
+
+## /story @1440: 1 violações
+- [serious] color-contrast (4x): Elements must meet minimum color contrast ratio thresholds
+    .ledger__total > span:nth-child(1) [3.11:1 fg=#929292 bg=#ffffff 10.5pt (14px)]
+    .ledger__total > span:nth-child(3) [3.11:1 fg=#929292 bg=#ffffff 10.5pt (14px)]
+    .scale__ring--country > .scale__label [1.55:1 fg=#cec9c5 bg=#fff7f2 9.8pt (13px)]
+    .scale__ring--country > .scale__label > b [2:1 fg=#b7b1ad bg=#fff7f2 16.5pt (22px)]
+
+## /news @390: 0 violações
+
+## /news @1440: 0 violações
+
+## /library @390: 0 violações
+
+## /library @1440: 0 violações
+
+## /blog @390: 0 violações
+
+## /blog @1440: 0 violações
+
+## /obrigado @390: 0 violações
+
+## /obrigado @1440: 0 violações
+
+## /privacy @390: 0 violações
+
+## /privacy @1440: 0 violações
+
+## /terms @390: 0 violações
+
+## /terms @1440: 0 violações
+
+## /rota-que-nao-existe @390: 0 violações
+
+## /rota-que-nao-existe @1440: 0 violações
+
+TOTAL: 2 tipos de violação

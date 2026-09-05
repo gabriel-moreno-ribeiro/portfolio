@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 declare global {
   interface Window {
@@ -24,6 +24,8 @@ function loadEmbedScript() {
 }
 
 export default function InstagramEmbed({ url, caption }: { url: string; caption?: string }) {
+  const ref = useRef<HTMLElement>(null);
+
   useEffect(() => {
     let cancelled = false;
     loadEmbedScript().then(() => {
@@ -32,8 +34,19 @@ export default function InstagramEmbed({ url, caption }: { url: string; caption?
     return () => { cancelled = true; };
   }, [url]);
 
+  // embed.js swaps the blockquote for an iframe with no title; give it an accessible name.
+  useEffect(() => {
+    const host = ref.current;
+    if (!host) return;
+    const name = () => host.querySelectorAll("iframe:not([title])").forEach((f) => f.setAttribute("title", "Instagram post"));
+    name();
+    const mo = new MutationObserver(name);
+    mo.observe(host, { childList: true, subtree: true });
+    return () => mo.disconnect();
+  }, []);
+
   return (
-    <figure className="news__ig">
+    <figure className="news__ig" ref={ref}>
       <blockquote
         className="instagram-media"
         data-instgrm-permalink={url}

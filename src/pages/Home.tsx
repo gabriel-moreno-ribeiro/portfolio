@@ -17,7 +17,8 @@ const ContactSection = lazy(() => import("../components/Home/ContactSection"));
 // @ts-ignore
 const StickerPeel = lazy(() => import("../components/ReactBits/StickerPeel"));
 
-const NAV_SECTIONS = ['Top', 'Origins', 'Cool Things', 'Research', 'Skills', 'Professional Experience', 'Contact'];
+// "Experience" (not "Professional Experience"): the longest label must fit the 194px gutter left of the content column at 1440.
+const NAV_SECTIONS = ['Top', 'Origins', 'Cool Things', 'Research', 'Skills', 'Experience', 'Contact'];
 const NAV_IDS      = ['main-content', 'background', 'work', 'research', 'skills', 'work-experience', 'contact'];
 
 // A section is "current" once its top crosses this line of the viewport.
@@ -102,7 +103,7 @@ function Home() {
   };
 
   return (
-    <div className="home-wrapper" id="main-content">
+    <main className="home-wrapper" id="main-content">
       {/* Fixed side navigation */}
       <nav className="home-sidenav" aria-label="Page sections">
         {NAV_SECTIONS.map((label, i) => (
@@ -152,7 +153,7 @@ function Home() {
       <div className="sticker-stage">
         <Suspense fallback={null}>
         <StickerPeel
-          imageSrc="/hibeex.png"
+          imageSrc="/hibeex.webp"
           width={130}
           rotate={-8}
           peelBackHoverPct={22}
@@ -164,7 +165,7 @@ function Home() {
         </Suspense>
       </div>
 
-    </div>
+    </main>
   );
 }
 

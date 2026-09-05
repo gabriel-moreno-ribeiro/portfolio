@@ -1,0 +1,68 @@
+
+## / @390: 3 violações
+- [serious] color-contrast (50x): Elements must meet minimum color contrast ratio thresholds
+    h1 | .city-panel__location | .city-panel__coords
+- [moderate] landmark-one-main (1x): Document should have one main landmark
+    html
+- [moderate] region (40x): All page content should be contained by landmarks
+    h1 | .sr-only | .role-suffix
+
+## / @1440: 3 violações
+- [serious] color-contrast (52x): Elements must meet minimum color contrast ratio thresholds
+    button[aria-label="Go to Research section"] > .sidenav-item__label[aria-hidden="true"] | button[aria-label="Go to Skills section"] > .sidenav-item__label[aria-hidden="true"] | .sidenav-item:nth-child(6) > .sidenav-item__label[aria-hidden="true"]
+- [moderate] landmark-one-main (1x): Document should have one main landmark
+    html
+- [moderate] region (40x): All page content should be contained by landmarks
+    .hero-section > div:nth-child(1) | h1 | .sr-only
+
+## /story @390: 4 violações
+- [serious] color-contrast (16x): Elements must meet minimum color contrast ratio thresholds
+    .repo:nth-child(4) > .repo__n | .scale__ring--country > .scale__label | .scale__ring--garage > .scale__label
+- [moderate] landmark-one-main (1x): Document should have one main landmark
+    html
+- [moderate] region (50x): All page content should be contained by landmarks
+    .skip-link | .story__p--first | .fig--town
+- [moderate] skip-link (1x): The skip-link target should exist and be focusable
+    .skip-link
+
+## /story @1440: 4 violações
+- [serious] color-contrast (15x): Elements must meet minimum color contrast ratio thresholds
+    .scale__ring--country > .scale__label | .scale__ring--garage > .scale__label | .scale__ring--garage > .scale__label > b
+- [moderate] landmark-one-main (1x): Document should have one main landmark
+    html
+- [moderate] region (49x): All page content should be contained by landmarks
+    .skip-link | .story__p--first | .fig--town
+- [moderate] skip-link (1x): The skip-link target should exist and be focusable
+    .skip-link
+
+## /news @390: 5 violações
+- [serious] color-contrast (12x): Elements must meet minimum color contrast ratio thresholds
+    nav > a[href="/"][data-discover="true"] | a[href$="library"] | a[href$="news"][data-discover="true"]
+- [serious] frame-title (5x): Frames must have an accessible name
+    #instagram-embed-0 | #instagram-embed-1 | #instagram-embed-2
+- [moderate] landmark-one-main (1x): Document should have one main landmark
+    html
+- [moderate] region (2x): All page content should be contained by landmarks
+    .skip-link | .mobile-sticky-cta
+- [moderate] skip-link (1x): The skip-link target should exist and be focusable
+    .skip-link
+
+## /news @1440: 5 violações
+- [serious] color-contrast (12x): Elements must meet minimum color contrast ratio thresholds
+    nav > a[href="/"][data-discover="true"] | a[href$="library"] | a[href$="news"][data-discover="true"]
+- [serious] frame-title (3x): Frames must have an accessible name
+    #instagram-embed-0 | #instagram-embed-1 | #instagram-embed-2
+- [moderate] landmark-one-main (1x): Document should have one main landmark
+    html
+- [moderate] region (1x): All page content should be contained by landmarks
+    .skip-link
+- [moderate] skip-link (1x): The skip-link target should exist and be focusable
+    .skip-link
+
+## /library @390: 1 violações
+- [serious] target-size (28x): All touch targets must be 24px large, or leave sufficient space
+    .is-active | .library__ticks > button[type="button"]:nth-child(2) | button[aria-label="Browse to Percy Jackson"]
+
+## /library @1440: 0 violações
+
+TOTAL: 25 tipos de violação
