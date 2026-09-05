@@ -251,6 +251,7 @@ function Terminal({ onClose, hideHeader = false, transferBuffer, transferState }
     const fitAddon = new FitAddon();
     term.loadAddon(fitAddon);
     term.open(termRef.current);
+    term.focus();
 
     xtermRef.current = term;
     fitAddonRef.current = fitAddon;

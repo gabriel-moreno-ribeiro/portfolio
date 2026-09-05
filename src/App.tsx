@@ -16,6 +16,7 @@ import {
   stopMouseInputProvider,
 } from "./providers/MouseInputProvider";
 import { useHandsfreeStore } from "./store/handsfreeStore";
+import { useWindowManagerStore } from "./store/windowManagerStore";
 
 const HandsfreeUI = lazy(() => import("./components/Shared/HandsfreeUI"));
 const HeroSlideshow = lazy(() => import("./components/Home/HeroSlideshow"));
@@ -46,8 +47,11 @@ function App() {
 function AppContent() {
   const location = useLocation();
   const isHome = location.pathname === "/";
+  const isLibrary = location.pathname.startsWith("/library");
   const isMobile = useIsMobile();
-  const handsfreeActive = useHandsfreeStore((s) => s.isEnabled || s.showIntroModal);
+  const handsfreeFlags = useHandsfreeStore((s) => s.isEnabled || s.showIntroModal);
+  const handsfreeWindow = useWindowManagerStore((s) => !!s.windows["handsfree-intro"] || !!s.windows["gesture-tutorial"]);
+  const handsfreeActive = handsfreeFlags || handsfreeWindow;
   const [tip, setTip] = useState(false);
 
   useEffect(() => {
@@ -90,7 +94,7 @@ function AppContent() {
         </Suspense>
       )}
       <CustomMouse />
-      <MobileStickyCTA />
+      {!isLibrary && <MobileStickyCTA />}
       {tip && (
         <button type="button" className="tip-toast" onClick={() => setTip(false)}>
           Just for fun, try pressing Ctrl + K!

@@ -1,7 +1,7 @@
 import { Suspense, lazy } from "react";
 import { useThemeStore } from "../store/themeStore";
 
-const LibraryComponent = lazy(() => import("../components/Library/Library").then(m => ({ default: m.Library })));
+const LibraryComponent = lazy(() => import("../components/Library/ShelfLibrary"));
 
 function Fallback() {
   const { darkMode } = useThemeStore();
