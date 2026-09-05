@@ -1,6 +1,7 @@
 import createGlobe from 'cobe';
 import { AnimatePresence, motion } from 'motion/react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useThemeStore } from '../../store/themeStore';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import AccordionGallery from '../ReactBits/AccordionGallery';
@@ -227,7 +228,7 @@ function GlobeCanvas({ selected, darkMode }: { selected: City | null; darkMode?:
       window.removeEventListener('pointercancel', onUp);
       if (globe) globe.destroy();
     };
-  }, []);
+  }, [darkMode]);
 
   return <canvas ref={canvasRef} className="globe-canvas" onPointerDown={onPointerDown} aria-hidden="true" />;
 }
@@ -317,7 +318,7 @@ const skipGlobe =
 
 function BackgroundGlobe() {
   const [selected, setSelected] = useState<City | null>(null);
-  const darkMode = document.documentElement.getAttribute('data-theme') === 'dark';
+  const { darkMode } = useThemeStore();
 
   const handleSelect = (city: City) => {
     setSelected(selected?.id === city.id ? null : city);
