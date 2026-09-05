@@ -10,7 +10,7 @@ export const work = [
       },
       modalData: {
         title: "HIBEEX - Backoffice AI for SMBs",
-        desc: "Backoffice AI for small and medium businesses. Raw data in, decisions out. One of 6 startups in the Canastra Ventures AI Residency.",
+        desc: "Backoffice AI for small and medium businesses: raw data in, decisions out. One of 6 startups in the Canastra Ventures AI Residency.",
         infoHeading: "Technologies Used",
         infoArr: [
           "TypeScript",
@@ -31,7 +31,7 @@ export const work = [
       },
       modalData: {
         title: "GSAT Education",
-        desc: "EdTech startup for standardized test prep. Built the platform from scratch as founding CEO — product, engineering, and go-to-market.",
+        desc: "EdTech startup for standardized test prep. I built the platform from scratch as founding CEO: product, engineering and go-to-market.",
         infoHeading: "Technologies Used",
         infoArr: [
           "React",
@@ -49,7 +49,7 @@ export const work = [
       },
       modalData: {
         title: "Projeto Candela - Low-Cost Physics Lab Kits",
-        desc: "After winning gold at OBFEP, I personally funded and built low-cost physics experiment kits and distributed them across public schools in Salvador. 3,392 students in 28 schools. Physics failure rates went from 30% to 10%.",
+        desc: "After a gold at OBFEP, I paid for and built low-cost physics kits and took them to public schools in Salvador. 3,392 students in 28 schools. Physics failure rates went from 30% to 10%.",
         infoHeading: "Impact",
         infoArr: [
           "3,392 students reached",
@@ -69,7 +69,7 @@ export const work = [
       },
       modalData: {
         title: "Olympic Club - Colégio Militar de Salvador",
-        desc: "Served as President for 2 years, restructured the club from the ground up, and pushed 17 major initiatives through. Student participation up 47%. National olympiad results up 62%.",
+        desc: "President for two years. Rebuilt the club and got 17 initiatives through. Student participation up 47%, national olympiad results up 62%.",
         infoHeading: "Key Results",
         infoArr: [
           "+47% participation",
@@ -87,7 +87,7 @@ export const work = [
       },
       modalData: {
         title: "Fundação Estudar - PREP Program",
-        desc: "One of ~70 scholars selected from 10,000+ applicants — 0.7% acceptance. Brazil's most competitive college access program for international universities.",
+        desc: "One of about 70 picked from 10,000+ applicants, a 0.7% acceptance rate. Brazil's college access program for international universities.",
         infoHeading: "Selection",
         infoArr: [
           "0.7% acceptance",
@@ -105,7 +105,7 @@ export const work = [
       },
       modalData: {
         title: "Escola de Talentos - Instituto Principia",
-        desc: "One of 14 students selected nationally. Covered quantum mechanics, relativity, and statistical physics. Research in chemical kinetics under Prof. Juliano Bonacin, Ph.D.",
+        desc: "One of 14 students picked nationally. Quantum mechanics, relativity and statistical physics, plus chemical kinetics research with Prof. Juliano Bonacin, Ph.D.",
         infoHeading: "Focus Areas",
         infoArr: [
           "Quantum Mechanics",
@@ -123,7 +123,7 @@ export const work = [
       },
       modalData: {
         title: "IFT-UNESP - Instituto de Fisica Teorica",
-        desc: "Ranked 1st among 10,000+ applicants. The only student from Northeast Brazil selected that year.",
+        desc: "1st among 10,000+ applicants, and the only student from the Northeast picked that year.",
         infoHeading: "Achievement",
         infoArr: [
           "1st of 10,000+",
@@ -142,7 +142,7 @@ export const work = [
       },
       modalData: {
         title: "Academic Olympiad Achievements",
-        desc: "39 medals across 49 competitions — 19 gold, 2 international. Math, physics, chemistry, biology, astronomy. 1st of 10,000+ at IFT-UNESP. SAT 1510/1600 (top 1% Brazil). Gold at ONNEQ. Silver at OBMEP. Bronze at OBQ.",
+        desc: "39 medals in 49 competitions: 19 gold, 2 international. Math, physics, chemistry, biology and astronomy. 1st of 10,000+ at IFT-UNESP. SAT 1510/1600, top 1% in Brazil. Gold at ONNEQ, silver at OBMEP, bronze at OBQ.",
         infoHeading: "Highlights",
         infoArr: [
           "19 Gold Medals",
@@ -160,7 +160,7 @@ export const work = [
       },
       modalData: {
         title: "University of St Andrews - Global Merit Scholarship",
-        desc: "Admitted to St Andrews for Computer Science & Economics with a Global Merit Scholarship. Taking a build year to go deeper on HIBEEX before starting.",
+        desc: "Admitted for Computer Science and Economics with a Global Merit Scholarship. Taking a build year to go deeper on HIBEEX first.",
         infoHeading: "Details",
         infoArr: [
           "CS & Economics",
@@ -195,7 +195,7 @@ export const work = [
       },
       modalData: {
         title: "BRASA & Latitud Fellowship",
-        desc: "Selected for BRASA from 1,000+ candidates and for the Latitud Fellowship for founders building in Latin America.",
+        desc: "Picked for BRASA from 1,000+ candidates, and for the Latitud Fellowship for founders building in Latin America.",
         infoHeading: "Programs",
         infoArr: [
           "BRASA Selected",

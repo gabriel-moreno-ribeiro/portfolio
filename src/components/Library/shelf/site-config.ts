@@ -6,6 +6,6 @@ export const siteConfig = {
   coverImprint: "GABRIEL'S LIBRARY",
   coverTagline: "BOOKS I READ AND RECOMMEND",
   spineMark: "GMR",
-  bookLinkLabel: "Find the book",
+  bookLinkLabel: "Find a copy",
   independentNote: "Shelf engine adapted from The Complete Shelf by kabarza.",
 } as const;

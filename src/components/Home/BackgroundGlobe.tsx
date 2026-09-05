@@ -14,7 +14,6 @@ interface City {
   coords: string;
   headline: string;
   story: string[];
-  period: string;
   role: string;
 }
 
@@ -25,13 +24,12 @@ const CITIES: City[] = [
     lat: -7.2497,
     lon: -39.1431,
     coords: '7.2497° S, 39.1431° W',
-    period: 'Every summer',
     role: 'Roots',
-    headline: 'Where ambition begins quietly.',
+    headline: 'My grandfather\'s garage.',
     story: [
-      'Deep in the Cariri Valley — waterfalls carving through ancient rock, the statue of Padre Cícero watching from the hilltop, yellow churches standing since the colonial era.',
-      'My grandparents built their lives here. My father grew up on these streets. Every summer I came back — months of 40°C heat, everyone knowing your name before you said it.',
-      'The kind of place that doesn\'t make startup maps. But it taught me that building something from nothing is in the blood.',
+      'The Cariri valley, in the countryside of Ceará. Waterfalls cut through the rock, Padre Cícero\'s statue watches from the hill, and everyone knows your name before you say it.',
+      'My grandparents built their lives here and my father grew up on these streets. I came back every summer, months of 40°C heat, most of them spent handing my grandfather tools in his garage.',
+      'It\'s not on any startup map. It\'s where I learned to open things that won\'t start.',
     ],
   },
   {
@@ -40,13 +38,12 @@ const CITIES: City[] = [
     lat: -12.9747,
     lon: -38.4767,
     coords: '12.9747° S, 38.4767° W',
-    period: 'Age 0 – 17',
     role: 'Foundation',
-    headline: 'Seventeen years of foundation.',
+    headline: 'Home for seventeen years.',
     story: [
-      'First capital of Brazil. Pelourinho\'s cobblestones, the Elevador Lacerda framing the bay, gold-covered baroque ceilings inside São Francisco, the Farol da Barra at sunset.',
-      'Got into Colégio Militar at 10 — one of 30 from 2,500 applicants, perfect math score. The olympiad streak started here: 39 medals across math, physics, chemistry, and astronomy.',
-      'Built Projeto Candela for schools in this city. Still call it home.',
+      'The first capital of Brazil. Pelourinho\'s cobblestones, the Elevador Lacerda over the bay, the gold ceilings of São Francisco, sunset at Farol da Barra.',
+      'I got into Colégio Militar at 10, one of 30 out of 2,500 applicants, with a perfect math score. The olympiad run started here: 39 medals in math, physics, chemistry and astronomy.',
+      'Projeto Candela was built for the public schools of this city. I still call it home.',
     ],
   },
   {
@@ -55,12 +52,11 @@ const CITIES: City[] = [
     lat: -3.7172,
     lon: -38.5433,
     coords: '3.7172° S, 38.5433° W',
-    period: '2024 – 2025',
     role: 'Acceleration',
-    headline: 'The year everything accelerated.',
+    headline: 'Last year of school, far from home.',
     story: [
-      'Moved for the final year of high school at Colégio Ari de Sá Cavalcante (Aldeota), ITA/IME track. Lived in a shared apartment with 11 other students. Graduated with a 9.41 average.',
-      'SAT 1510. Fundação Estudar PREP — 70 selected from 10,000+ applicants. St Andrews admission with a Global Merit Scholarship. The year decisions started compounding.',
+      'I moved here for my final year of high school at Colégio Ari de Sá Cavalcante, on the ITA/IME track, sharing an apartment with 11 other students. Graduated with a 9.41 average.',
+      'That year: SAT 1510, Fundação Estudar PREP (70 picked from 10,000+ applicants), and admission to St Andrews with a Global Merit Scholarship.',
     ],
   },
   {
@@ -69,13 +65,12 @@ const CITIES: City[] = [
     lat: -23.5505,
     lon: -46.6333,
     coords: '23.5505° S, 46.6333° W',
-    period: '2025 – present',
     role: 'Building',
-    headline: 'Chose building over studying.',
+    headline: 'Building HIBEEX.',
     story: [
-      'Moved here with Teodoro to build HIBEEX. Deferred university. Bet everything on the company.',
-      'One of 6 startups selected for the Canastra Ventures AI Residency. Building backoffice AI for small and medium businesses.',
-      'Chose this over freshman year at St Andrews. No regrets.',
+      'I moved here with Teodoro to build HIBEEX. Deferred university and went all in.',
+      'One of 6 startups in the Canastra Ventures AI Residency. We build backoffice AI for small and medium businesses.',
+      'I chose this over freshman year at St Andrews. So far, no regrets.',
     ],
   },
 ];
@@ -262,7 +257,6 @@ function CityPanel({ city, onClose }: { city: City; onClose: () => void }) {
         <div className="city-panel__meta">
           <p className="city-panel__location">{city.name}</p>
           <span className="city-panel__coords">{city.coords}</span>
-          <span className="city-panel__period">{city.period}</span>
         </div>
         <h3 className="city-panel__headline">{city.headline}</h3>
         {city.story.map((para, i) => (
@@ -307,7 +301,6 @@ function CityTimeline({ selected, onSelect, autoplay }: { selected: City | null;
             </button>
             <div className="city-timeline__label">
               <span className="city-timeline__city">{city.name.split(',')[0]}</span>
-              <span className="city-timeline__period">{city.period}</span>
             </div>
           </div>
         ))}

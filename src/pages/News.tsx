@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { FiArrowUpRight, FiInstagram, FiRadio } from 'react-icons/fi';
+import { FiArrowLeft, FiArrowUpRight, FiMessageSquare, FiRadio } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar/Navbar';
 import InstagramEmbed from '../components/News/InstagramEmbed';
@@ -18,7 +18,7 @@ const rise = (i: number) => ({
 function News() {
   useDocumentHead({
     title: 'News — Gabriel Moreno Ribeiro',
-    description: 'Press, media mentions and posts about Gabriel Moreno Ribeiro, HIBEEX and Projeto Candela.',
+    description: 'Press, mentions and posts about Gabriel Moreno Ribeiro, HIBEEX and Projeto Candela.',
     canonical: 'https://gabrielmr.com/news',
   });
 
@@ -27,19 +27,16 @@ function News() {
       <div className="page-nav"><Navbar /></div>
 
       <header className="news__header">
-        <motion.p className="news__eyebrow" {...rise(0)}><Link to="/">Home</Link><i />News</motion.p>
+        <motion.p className="news__eyebrow" {...rise(0)}><Link to="/" className="page-back"><FiArrowLeft aria-hidden="true" /> Home</Link></motion.p>
         <motion.h1 className="news__title" {...rise(1)}>In the news.</motion.h1>
-        <motion.p className="news__lede" {...rise(2)}>
-          Press, mentions and posts about what I&apos;m building.
-        </motion.p>
       </header>
 
-      <section className="news__section" aria-labelledby="news-instagram">
-        <h2 id="news-instagram" className="news__section-title">
-          <FiInstagram aria-hidden="true" /> Instagram
+      <section className="news__section" aria-labelledby="news-posts">
+        <h2 id="news-posts" className="news__section-title">
+          <FiMessageSquare aria-hidden="true" /> Posts
         </h2>
         {instagram.length === 0 ? (
-          <p className="news__empty">Posts coming soon.</p>
+          <p className="news__empty">Nothing here yet.</p>
         ) : (
           <motion.div className="news__grid" {...rise(4)}>
             {instagram.map((item) => (

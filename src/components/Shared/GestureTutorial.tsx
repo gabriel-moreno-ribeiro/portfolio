@@ -16,12 +16,12 @@ const gestures = [
   {
     icon: "👌",
     title: "Pinch to Click",
-    desc: "Quick pinch and release to click on elements",
+    desc: "Pinch and release to click",
   },
   {
     icon: "👌",
     title: "Pinch & Drag Scroll",
-    desc: "Pinch and drag up/down to scroll — with momentum!",
+    desc: "Pinch and drag to scroll",
   },
   {
     icon: "🖐",
@@ -73,7 +73,7 @@ const GestureTutorial: React.FC = () => {
       <div className="gesture-tutorial-body">
         <h2 className="gesture-tutorial__title">Hand Gestures</h2>
         <p className="gesture-tutorial__subtitle">
-          Here's how to navigate hands-free
+          How it works
         </p>
 
         <div className="gesture-tutorial__grid">

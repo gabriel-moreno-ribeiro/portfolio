@@ -105,7 +105,7 @@ const HandsfreeIntroModal: React.FC = () => {
         <div className="hf-intro__content">
           <h2 className="hf-intro__title">Go Handsfree</h2>
           <p className="hf-intro__subtitle">
-            Navigate this portfolio with gestures — no mouse needed.
+            Move around the site with your hands. No mouse.
           </p>
 
           <div className="hf-intro__features">
@@ -149,7 +149,7 @@ const HandsfreeIntroModal: React.FC = () => {
           )}
 
           <p className="hf-intro__privacy">
-            🔒 Camera data stays on your device — nothing is uploaded. <a href="/privacy" target="_blank" rel="noopener" style={{ color: 'inherit', textDecoration: 'underline' }}>Privacy policy</a>
+            Camera frames never leave your device. <a href="/privacy" target="_blank" rel="noopener" style={{ color: 'inherit', textDecoration: 'underline' }}>Privacy policy</a>
           </p>
         </div>
 

@@ -1,12 +1,5 @@
 import { motion, useReducedMotion } from 'motion/react';
-import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { Reveal, useRevealed } from './shared';
-
-const skipHeavy3D =
-  typeof window !== 'undefined' &&
-  (window.innerWidth < 900 || window.matchMedia('(prefers-reduced-motion: reduce)').matches);
-
-const StoryTruck = skipHeavy3D ? null : lazy(() => import('./StoryTruck'));
 
 const SECTION_ID = 'story-truck';
 
@@ -31,32 +24,25 @@ function FuseSvg({ lit }: { lit: boolean }) {
 }
 
 export function TruckFigure() {
-  const stageRef = useRef<HTMLDivElement>(null);
-  const [near, setNear] = useState(false);
   const { ref: lastRef, inView: lastInView } = useRevealed('0px 0px -30% 0px');
   const reduced = useReducedMotion();
 
-  useEffect(() => {
-    if (!StoryTruck || !stageRef.current) return;
-    const io = new IntersectionObserver(([e]) => {
-      if (e.isIntersecting) { setNear(true); io.disconnect(); }
-    }, { rootMargin: '900px 0px' });
-    io.observe(stageRef.current);
-    return () => io.disconnect();
-  }, []);
-
   return (
-    <figure className={`fig fig--truck ${StoryTruck ? 'fig--truck-3d' : ''}`} id={SECTION_ID}>
-      {StoryTruck && (
-        <div className="fig-truck__stage" ref={stageRef} aria-hidden="true">
-          {near && (
-            <Suspense fallback={null}>
-              <StoryTruck sectionId={SECTION_ID} />
-            </Suspense>
-          )}
-          <span className="fig-truck__hint">scroll to assemble</span>
-        </div>
-      )}
+    <figure className="fig fig--truck" id={SECTION_ID}>
+      <div className="fig-truck__stage">
+        <Reveal as="div" className="fig-truck__photo">
+          <img
+            src="/story/d20.webp"
+            alt="A white Chevrolet D-20 pickup parked in a field at dusk"
+            loading="lazy"
+            decoding="async"
+          />
+          <span className="fig-truck__credit">
+            A D-20 like his. Photo:{' '}
+            <a href="https://commons.wikimedia.org/wiki/File:D_20_no_cerrado_-_panoramio.jpg" target="_blank" rel="noopener noreferrer">beto junqueira</a>, CC BY-SA 3.0
+          </span>
+        </Reveal>
+      </div>
       <div className="fig-truck__steps">
         <Reveal className="fig-truck__intro">
           <p className="fig-kicker">Car #9</p>

@@ -37,9 +37,9 @@ function NotFound() {
 
       <div className="not-found__container">
         <div className="not-found__code" data-text="404">404</div>
-        <h1 className="not-found__title">Lost in the void</h1>
+        <h1 className="not-found__title">Nothing here.</h1>
         <p className="not-found__desc">
-          This route doesn't resolve. But don't worry — the rest of the portfolio is very much alive.
+          This page doesn't exist. The rest of the site does.
         </p>
 
         <div className="not-found__terminal">

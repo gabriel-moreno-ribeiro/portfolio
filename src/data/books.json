@@ -20,7 +20,7 @@
     "readAge": 7,
     "readPeriod": "2014 - 2015",
     "finishedAt": "2015-06-01",
-    "review": "I was seven and the book smelled like fresh paint. Every experiment had this confident tone that made science feel like something you did at the kitchen table, not something you watched adults do on TV. The chapter on homemade rockets kept me up until midnight building one out of a plastic bottle. Rating feels obvious but it earned it: this is the book that made me a person who asks 'what happens if I mix these.'",
+    "review": "I was seven and the book still smelled like fresh paint. The experiments were written as if you were expected to do them at the kitchen table, not watch adults do them on TV. The homemade rocket chapter kept me up past midnight with a plastic bottle. This is the book that made me ask 'what happens if I mix these'.",
     "accentColor": "#6d1729"
   },
   {
@@ -43,7 +43,7 @@
     "readAge": 9,
     "readPeriod": "2016 - 2017",
     "finishedAt": "2017-03-01",
-    "review": "Hiccup is small, bad at everything the tribe values, and wins anyway by being smarter than the problem requires. At nine I didn't have words for 'unconventional competitive advantage' but the book planted the idea. The humor is dry in a way I didn't fully get until rereading it years later. Not transcendent, but I kept thinking about Hiccup's method of persuasion long after I forgot the plot."
+    "review": "Hiccup is small, bad at everything the tribe cares about, and wins anyway by being smarter than the problem needs. At nine I didn't have the words for that, but the idea stuck. The humor is drier than I noticed at the time; I only got it on a reread years later. I forgot most of the plot and kept thinking about how Hiccup gets people to change their minds."
   },
   {
     "id": "percy-jackson",
@@ -66,7 +66,7 @@
     "readAge": 10,
     "readPeriod": "2017 - 2018",
     "finishedAt": "2018-02-01",
-    "review": "I read the whole series in two months. The trick Riordan pulls is that he makes Greek mythology feel like background knowledge you already have, so you never feel like you're being taught. Annabeth is better written than Percy and I don't think that's an accident. The ending of the first book has a betrayal that I genuinely did not see coming at ten, which is harder to achieve than it sounds.",
+    "review": "I read the whole series in two months. Riordan's trick is that Greek mythology feels like something you already knew, so it never feels like a lesson. Annabeth is written better than Percy, and I don't think that's by accident. The betrayal at the end of the first book caught me completely off guard at ten.",
     "accentColor": "#292b3f"
   },
   {
@@ -90,7 +90,7 @@
     "readAge": 10,
     "readPeriod": "2017 - 2018",
     "finishedAt": "2018-04-01",
-    "review": "Long John Silver is the most interesting character because the book can't quite decide if he's the villain. He saves Jim twice. He switches sides when it suits him and you almost respect him for it. Stevenson wrote adventure fiction and accidentally wrote a study in moral ambiguity. I read it in Portuguese and some of the nautical vocabulary I had to ask about, which made me feel like I was actually on the ship."
+    "review": "Long John Silver is the best character because the book never settles on whether he's the villain. He saves Jim twice. He switches sides whenever it suits him, and you almost respect him for it. Stevenson set out to write an adventure and ended up writing about moral ambiguity. I read it in Portuguese and had to ask about half the nautical words, which made it feel like I was on the ship."
   },
   {
     "id": "harry-potter",
@@ -113,7 +113,7 @@
     "readAge": 11,
     "readPeriod": "2018 - 2019",
     "finishedAt": "2019-01-01",
-    "review": "The series that turned reading into a compulsion. Books five and six did something most fantasy series refuse to do: made the world worse as the protagonist gets more powerful, which felt honest. I cried at the end of book seven, which I was mildly embarrassed about at eleven. I've since stopped being embarrassed. The lore doesn't hold up to hard scrutiny and I don't care, because the emotional scaffolding is solid."
+    "review": "The series that turned reading into a habit I couldn't stop. Books five and six do something most fantasy avoids: the world gets worse as the hero gets stronger. I cried at the end of book seven, which embarrassed me at eleven. It doesn't anymore. The lore falls apart if you push on it and I don't care, because the feelings hold."
   },
   {
     "id": "pijama-listrado",
@@ -136,7 +136,7 @@
     "readAge": 11,
     "readPeriod": "2018 - 2019",
     "finishedAt": "2019-03-01",
-    "review": "The ending arrived faster than I expected and I sat with the book closed for a few minutes after. Boyne makes the horror visible by routing it through a child's incomplete understanding, which is a technique that shouldn't work as well as it does. I read it in one sitting on a Sunday afternoon, which I remember specifically because I went quiet at dinner and my parents asked what was wrong."
+    "review": "The ending came sooner than I expected and I sat with the book closed for a few minutes. Boyne shows the horror through a child who doesn't understand what he's seeing, and it works better than it has any right to. I read it in one sitting on a Sunday afternoon. I remember that because I went quiet at dinner and my parents asked what was wrong."
   },
   {
     "id": "auto-da-compadecida",
@@ -159,7 +159,7 @@
     "readAge": 11,
     "readPeriod": "2018 - 2019",
     "finishedAt": "2019-05-01",
-    "review": "João Grilo wins every fight by being the smartest person in the room and also the most willing to humiliate himself. Suassuna builds a whole theology out of Northeastern Brazilian folk culture and it's completely coherent. The trial scene in the third act is the funniest thing I read before age fifteen. It's also deeply sad if you think about what João Grilo actually wants versus what he gets. Brazilian literature has nothing else quite like this."
+    "review": "João Grilo wins every fight by being the smartest person in the room and the most willing to make a fool of himself. Suassuna builds a whole theology out of Northeastern folk culture and it holds together. The trial in the third act is the funniest thing I read before fifteen. It's also sad, once you think about what João Grilo wants and what he actually gets. Nothing else in Brazilian literature is quite like it."
   },
   {
     "id": "extraordinario",
@@ -182,7 +182,7 @@
     "readAge": 12,
     "readPeriod": "2019 - 2020",
     "finishedAt": "2020-02-01",
-    "review": "Multiple perspectives on the same events, and each one notices different things. What I remember most is Jack's chapter, where he doesn't realize he's being cruel until after. The book made me think about how many times I've been Jack without noticing. Palacio doesn't let anyone be cleanly good or bad, and for a middle-grade novel that's more than you'd expect. Changed something small in how I treat people.",
+    "review": "The same events told from several points of view, and each narrator notices different things. The chapter I remember is Jack's, where he only realizes he was cruel after the fact. It made me count how many times I'd been Jack without noticing. Nobody in the book gets to be simply good or bad, which is more than I expected from a middle-grade novel. It changed something small in how I treat people.",
     "accentColor": "#261b07"
   },
   {
@@ -206,7 +206,7 @@
     "readAge": 13,
     "readPeriod": "2020 - 2021",
     "finishedAt": "2021-03-01",
-    "review": "I'm still not sure Capitu did it, and I think that's on purpose. Bentinho is an unreliable narrator who doesn't know he's unreliable, which Machado executes without once winking at the reader. The prose is technically impressive. I gave it a four because the jealousy spiral gets repetitive around the midpoint, and I found myself skimming to find out if the evidence ever becomes real evidence. It doesn't. That's the point. I know.",
+    "review": "I still don't know if Capitu did it, and I think that's the point. Bentinho is an unreliable narrator who doesn't know he's unreliable, and Machado pulls it off without ever winking at the reader. The prose is very good. Four stars because the jealousy spiral gets repetitive halfway through and I caught myself skimming for the moment the evidence becomes real. It never does. I know.",
     "accentColor": "#af886b"
   },
   {
@@ -230,7 +230,7 @@
     "readAge": 13,
     "readPeriod": "2020 - 2021",
     "finishedAt": "2021-06-01",
-    "review": "The narrator opens by noting he died. He spends the rest of the book being wrong about himself in very specific ways. Machado is doing something formally strange for 1881 and the book reads almost contemporary because of it. Four stars because Brás Cubas is deliberately insufferable, which is the author's point but still makes some chapters slow to get through. The chapter called 'O delírio' is worth the whole book alone.",
+    "review": "The narrator opens by mentioning he's dead, then spends the book being wrong about himself in very precise ways. For 1881 the form is strange enough that it reads almost modern. Four stars because Brás Cubas is insufferable on purpose, and some chapters drag because of it. The chapter called 'O delírio' is worth the whole book.",
     "accentColor": "#6c7353"
   },
   {
@@ -254,7 +254,7 @@
     "readAge": 14,
     "readPeriod": "2021 - 2022",
     "finishedAt": "2022-04-01",
-    "review": "The mechanics chapter changed how I think about forces: not as things that push objects, but as constraints on motion. Renato Brito writes textbook problems that have a logic to them, so solving them feels less like grinding and more like following an argument. I worked through every exercise in this volume. It's the reason I started doing well in physics olympiads. A textbook that teaches you to think before it teaches you to calculate."
+    "review": "The mechanics chapter changed how I think about forces: not as things that push objects, but as constraints on motion. Renato Brito's problems have a logic to them, so solving them feels like following an argument instead of grinding. I did every exercise in this volume. It's the reason I started doing well in physics olympiads."
   },
   {
     "id": "fisica-rb-2",
@@ -277,7 +277,7 @@
     "readAge": 14,
     "readPeriod": "2021 - 2022",
     "finishedAt": "2022-07-01",
-    "review": "Electromagnetism is where physics gets abstract and a lot of people lose the thread. This volume builds the intuition slowly and I didn't feel lost the way I did with other references. The thermodynamics section is denser and I had to reread some of it, which I count as a feature. By the end I could look at a circuit diagram and see the energy flows rather than just the connections. That shift in perception took a few months of working through this book."
+    "review": "Electromagnetism is where a lot of people lose the thread, and this volume builds the intuition slowly enough that I didn't. The thermodynamics part is denser and I had to reread chunks of it, which I think is fair. By the end I could look at a circuit diagram and see where the energy goes, not just what connects to what. That took a few months with this book."
   },
   {
     "id": "topicos-de-fisica",
@@ -300,7 +300,7 @@
     "readAge": 14,
     "readPeriod": "2021 - 2022",
     "finishedAt": "2022-09-01",
-    "review": "The standard Brazilian physics textbook and it shows: solid explanations, good problem sets, nothing surprising. I used it mostly as a reference to cross-check things I'd learned from Renato Brito, and for that purpose it worked well. The optical diagrams are cleaner than most alternatives. Four stars because it gets the job done without any particular elegance. If you're studying for vestibular, it has everything. If you want to enjoy physics, start elsewhere.",
+    "review": "The standard Brazilian physics textbook, and it reads like one: solid explanations, good problem sets, no surprises. I used it mostly to cross-check what I'd learned from Renato Brito, and it was good for that. The optics diagrams are cleaner than most. Four stars because it does the job without much elegance. If you're studying for vestibular, it has everything. If you want to enjoy physics, start somewhere else.",
     "accentColor": "#2d2a17"
   },
   {
@@ -325,7 +325,7 @@
     "readPeriod": "2021 - 2022",
     "finishedAt": "2022-11-01",
     "quote": "Fear is the mind-killer.",
-    "review": "The ecology of Arrakis is more thought-out than most real political science. Herbert stacks ecology, religion, colonial economics, and messianic psychology into one story and doesn't simplify any of them. I read it in Portuguese at fourteen and had to stop several times to look up what the Fremen were actually saying to each other below the surface conversation. The ending refuses to be a happy ending. That bothered me at first and then I understood why it was the only honest choice."
+    "review": "The ecology of Arrakis is thought through more carefully than most real political science. Herbert stacks ecology, religion, colonial economics and messianic psychology into one story and doesn't water any of it down. I read it in Portuguese at fourteen and kept stopping to work out what the Fremen were really saying to each other underneath the conversation. The ending refuses to be happy. That bothered me at first, and then I saw why it had to."
   },
   {
     "id": "frankenstein",
@@ -348,7 +348,7 @@
     "readPeriod": "2022 - 2023",
     "finishedAt": "2023-01-01",
     "quote": "Nothing is so painful to the human mind as a great and sudden change.",
-    "review": "Not the monster story I expected. Victor Frankenstein is the actual problem in this book and Shelley makes that clear early. The creature's speech in the middle section is more articulate and self-aware than anything Victor manages. My one complaint is that the frame structure with Walton slows the opening significantly. The question the book keeps asking is what you owe something you brought into existence knowing it would suffer. I didn't have a clean answer at fifteen. I still don't."
+    "review": "Not the monster story I expected. Victor is the real problem, and Shelley makes that clear early. The creature's speech in the middle is more self-aware than anything Victor manages. My one complaint is that the frame story with Walton slows the opening. The question the book keeps asking is what you owe to something you created knowing it would suffer. I didn't have an answer at fifteen. I still don't."
   },
   {
     "id": "fahrenheit-451",
@@ -371,7 +371,7 @@
     "readPeriod": "2022 - 2023",
     "finishedAt": "2023-04-01",
     "quote": "A book is a loaded gun in the house next door.",
-    "review": "Short and dense and genuinely unsettling. Bradbury's version of censorship is scarier than Orwell's because it doesn't require a dictator: people just stop reading voluntarily, and the firemen are almost redundant by the time the story happens. Mildred's storyline is the part that stuck with me, not Montag's. The ending works as both hope and a warning, which is harder to write than it looks. I read this in one afternoon and felt like I'd had a conversation I needed to have."
+    "review": "Short, dense and unsettling. Bradbury's censorship is scarier than Orwell's because it needs no dictator: people stop reading on their own, and by the time the story starts the firemen are almost redundant. Mildred's story stayed with me more than Montag's. The ending works as both hope and warning. I read it in one afternoon."
   },
   {
     "id": "brave-new-world",
@@ -393,7 +393,7 @@
     "readAge": 15,
     "readPeriod": "2022 - 2023",
     "finishedAt": "2023-06-01",
-    "review": "More unsettling than 1984 because the mechanism of control is comfort, not pain. Nobody's being tortured; they're just satisfied enough that resistance feels pointless. The Savage's argument with Mustapha Mond near the end is the actual thesis of the book and it's one of the most honestly written dialogues I've read: Mond doesn't lie, he just explains why the tradeoff is worth it, and the reader has to decide if he's wrong. I wasn't sure he was entirely wrong, which bothered me.",
+    "review": "More unsettling than 1984 because control comes from comfort, not pain. Nobody is tortured; everyone is satisfied enough that resisting feels pointless. The argument between the Savage and Mustapha Mond near the end is the real thesis of the book. Mond doesn't lie. He explains why the trade is worth it and leaves you to decide if he's wrong. I wasn't sure he was, and that bothered me.",
     "accentColor": "#c25e13"
   },
   {
@@ -416,7 +416,7 @@
     "readAge": 16,
     "readPeriod": "2023 - 2024",
     "finishedAt": "2024-01-01",
-    "review": "University-level physical chemistry at sixteen because my research required the thermodynamic background. The quantum mechanics chapters are where I spent most of my time, and Atkins explains molecular orbital theory clearly enough that the math stops feeling abstract. Some sections, especially electrochemistry, assume lab context I didn't have, which made them harder to connect. Four stars because it's written as a companion to a course, and I was reading it alone. As a reference it's excellent. As a self-study text, parts of it require patience.",
+    "review": "University-level physical chemistry at sixteen, because my research needed the thermodynamics. I spent most of my time in the quantum chapters, and Atkins explains molecular orbital theory well enough that the math stops feeling abstract. The electrochemistry sections assume lab experience I didn't have. Four stars because it's written to go with a course, and I was reading it alone. As a reference it's excellent. On your own, parts of it take patience.",
     "accentColor": "#a76ea0"
   },
   {
@@ -439,7 +439,7 @@
     "readAge": 16,
     "readPeriod": "2023 - 2024",
     "finishedAt": "2024-03-01",
-    "review": "Watney's voice is almost aggressively cheerful for someone who might die of botany failure, and that gap between tone and stakes is where the book lives. The science is mostly correct and Weir doesn't hide the math, which means you can follow the logic of every improvised solution. The part where NASA runs orbital mechanics on a whiteboard and then realizes they forgot to carry a number is the funniest scene in hard sci-fi I've read. Engineering as a survival strategy landed differently after I started building products."
+    "review": "Watney is almost aggressively cheerful for someone who might die of a failed potato crop, and the gap between the tone and the stakes is where the book lives. The science is mostly right and Weir shows the math, so you can follow every improvised fix. The scene where NASA works out orbital mechanics on a whiteboard and then realizes someone forgot to carry a number is the funniest thing in hard sci-fi. Engineering as a way to stay alive hit differently after I started building products."
   },
   {
     "id": "project-hail-mary",
@@ -462,7 +462,7 @@
     "readPeriod": "2023 - 2024",
     "finishedAt": "2024-05-01",
     "quote": "Fist my bump!",
-    "review": "Better than The Martian. The science problem is more elegant, the stakes are higher, and then Weir introduces Rocky and the book becomes something else entirely. Building a shared language from first principles to solve a problem together, with nothing in common except curiosity and necessity, is a premise I'd read a hundred times. The ending is the correct ending. It will make you feel something specific that I won't describe. Rocky is the best fictional character in either of Weir's books.",
+    "review": "Better than The Martian. The science problem is more elegant, the stakes are higher, and then Rocky shows up and the book becomes something else. Two beings with nothing in common but curiosity and necessity, building a language from scratch to solve a problem together. The ending is the right ending. Rocky is the best character in either of Weir's books.",
     "accentColor": "#cbad2a"
   },
   {
@@ -485,7 +485,7 @@
     "readAge": 16,
     "readPeriod": "2023 - 2024",
     "finishedAt": "2024-06-01",
-    "review": "Not really a physics book. It's a book about how to be curious without caring what that looks like. Feynman is sometimes insufferable and I think he knows it and includes it anyway, which is more honest than most memoirs. The safecracking chapters are funny in a way that requires no physics background. The chapter where he describes learning to draw because he wanted to give something to people who couldn't follow the equations stuck with me. The best scientists are also translators."
+    "review": "Not really a physics book. It's about being curious without caring how that looks. Feynman is sometimes insufferable, knows it, and leaves it in, which is more honest than most memoirs. The safecracking chapters are funny with zero physics required. The chapter where he learns to draw so he can give something to people who can't follow the equations stayed with me. The best scientists are also translators."
   },
   {
     "id": "sherlock-holmes",
@@ -507,7 +507,7 @@
     "readAge": 17,
     "readPeriod": "2024 - 2025",
     "finishedAt": "2025-01-01",
-    "review": "Over a thousand pages and the quality stays consistent because Holmes is a method, not just a character. The short stories work better than the novels because the deduction chains are tighter. Watson is the real narrative achievement: he makes Holmes readable by being the person who finds Holmes impressive instead of exhausting. I read the whole thing across several months and it trained something in how I look at problems, specifically the habit of generating multiple hypotheses before committing to any explanation."
+    "review": "Over a thousand pages and the quality holds, because Holmes is a method more than a character. The short stories beat the novels; the deduction chains are tighter. Watson is the real achievement: he makes Holmes readable by being the one person who finds him impressive instead of exhausting. It took me months, and it trained a habit I still use: come up with several explanations before committing to one."
   },
   {
     "id": "sat-study-guide",
@@ -528,7 +528,7 @@
     "readAge": 17,
     "readPeriod": "2024 - 2025",
     "finishedAt": "2025-02-01",
-    "review": "Nobody reads this for pleasure. You read it to understand the test well enough that the test stops being a test and starts being a pattern you recognize. I worked through eight full practice tests with timed sections. The math is easier than Brazilian olympiad math but the time pressure is harder. The reading comprehension questions have a specific logic once you understand that every correct answer must be supported by exact text, which sounds obvious and isn't. The discipline it required was more useful than any individual skill it taught."
+    "review": "Nobody reads this for fun. You read it until the test stops being a test and becomes a pattern you recognize. I did eight full practice tests, timed. The math is easier than Brazilian olympiad math; the time pressure is harder. The reading questions have their own logic once you accept that every right answer is backed by exact words in the text, which sounds obvious and isn't. The discipline it took was worth more than anything it taught."
   },
   {
     "id": "wolf-of-wall-street",
@@ -550,7 +550,7 @@
     "readAge": 17,
     "readPeriod": "2024 - 2025",
     "finishedAt": "2025-03-01",
-    "review": "Belfort writes his own disaster with too much energy for it to function as a cautionary tale, and I think he knows it. The selling techniques buried in the chaos are actually sound. What the book demonstrates, unintentionally, is that exceptional sales ability in an unethical system doesn't produce exceptional outcomes: it produces exceptional destruction at scale. The parts where he describes losing control of the organization he built are more interesting than the parts about getting rich. A useful read if you're building something, mostly for the negative examples.",
+    "review": "Belfort tells his own disaster with too much energy for it to work as a warning, and I think he knows. The selling techniques buried in the chaos are sound. What the book shows, without meaning to, is that great sales inside a rotten system doesn't produce great outcomes, just destruction at scale. The parts where he loses control of the company he built are more interesting than the parts about getting rich. Useful if you're building something, mostly as a list of what not to do.",
     "accentColor": "#0f1a27"
   },
   {
@@ -573,7 +573,7 @@
     "readAge": 17,
     "readPeriod": "2024 - 2025",
     "finishedAt": "2025-04-01",
-    "review": "Better written than the first book in some ways because Belfort can't glamorize what's happening. The cooperation process is fascinating in a procedural sense: who flips first, what the FBI actually needs, how long you can hold a front together under investigation. The moments where Belfort starts genuinely respecting the agents pursuing him are the most honest parts of the book. Four stars because the pacing drags in the middle third and some of the legal detail stops being interesting. Worth reading after the first one."
+    "review": "Better written than the first one in some ways, because Belfort can't dress up what's happening. The cooperation process is the interesting part: who flips first, what the FBI actually needs, how long a front holds under investigation. The moments where he starts respecting the agents chasing him are the most honest pages. Four stars because the middle third drags and some of the legal detail stops being interesting. Read it after the first one."
   },
   {
     "id": "way-of-the-wolf",
@@ -595,7 +595,7 @@
     "readAge": 17,
     "readPeriod": "2024 - 2025",
     "finishedAt": "2025-05-01",
-    "review": "The straight-line system is less about manipulation and more about reducing uncertainty for both sides of a conversation. The core idea is that objections are usually not about the stated objection. Once you accept that, the whole framework follows logically. I use pieces of this when pitching HIBEEX: not the scripts, but the underlying model of what someone needs to believe before they say yes. Shorter and more applicable than I expected from a sales book written by someone with Belfort's reputation."
+    "review": "The straight-line system is less about manipulation than about taking uncertainty out of a conversation for both sides. The core idea: objections are rarely about the stated objection. Accept that, and the rest follows. I use pieces of it when pitching HIBEEX. Not the scripts, but the model of what someone needs to believe before saying yes. Shorter and more practical than I expected from a sales book by someone with Belfort's reputation."
   },
   {
     "id": "made-in-america",
@@ -616,7 +616,7 @@
     ],
     "readAge": 18,
     "readPeriod": "2025 - 2026",
-    "review": "Walton's competitive obsession is constant but it never tips into arrogance because he spends most of the book describing what he got wrong and who he learned from. The store visits chapter, where he flew his own plane between locations to check prices and talk to floor staff, is a better operations manual than most business books I've read. The humility reads as real rather than performed because he keeps giving credit for specific decisions to specific people. Still reading, currently at the chapter on distribution."
+    "review": "Walton's competitiveness never lets up, but it never reads as arrogance, because most of the book is him describing what he got wrong and who he learned it from. The chapter where he flies his own plane between stores to check prices and talk to the floor staff is a better operations manual than most business books. The humility feels real because he keeps crediting specific people for specific decisions. Still reading; I'm at the chapter on distribution."
   },
   {
     "id": "zero-to-one",
@@ -639,6 +639,6 @@
     "readPeriod": "2025 - 2026",
     "finishedAt": "2026-01-01",
     "quote": "Competition is for losers.",
-    "review": "The monopoly argument is the useful part and Thiel states it plainly: competition destroys the margin that funds innovation, so the goal is to build something nobody else is building. The chapter on secrets is the one I think about most. His definition of a secret is something that is true, that most people don't believe, and that you can act on. Building HIBEEX required having a specific answer to that question. The contrarian framing is sometimes overextended but the core thesis earns it."
+    "review": "The monopoly argument is the useful part, and Thiel states it plainly: competition eats the margin that funds innovation, so build something nobody else is building. The chapter on secrets is the one I keep coming back to. A secret is something true, that most people don't believe, and that you can act on. Building HIBEEX meant having a specific answer to that. The contrarian framing gets stretched sometimes, but the core idea earns it."
   }
 ]

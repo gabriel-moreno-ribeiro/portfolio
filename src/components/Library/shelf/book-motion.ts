@@ -43,12 +43,12 @@ const maximumFocusScale = 1.08;
 const collisionMargin = 0.035;
 
 export const browsePhaseDuration: Record<BrowseMotionPhase, number> = {
-  "retreat-current": 0.11,
-  "turn-current": 0.14,
-  "shelve-current": 0.13,
-  "extract-next": 0.13,
-  "turn-next": 0.14,
-  "settle-next": 0.11,
+  "retreat-current": 0.08,
+  "turn-current": 0.1,
+  "shelve-current": 0.09,
+  "extract-next": 0.09,
+  "turn-next": 0.1,
+  "settle-next": 0.08,
 };
 
 function clamp01(value: number) {
