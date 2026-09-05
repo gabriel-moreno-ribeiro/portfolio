@@ -50,26 +50,6 @@ const loadImage = (src: string): Promise<HTMLImageElement | null> =>
     img.src = src;
   });
 
-// Remote SVGs (e.g. devicon CDN) may lack width/height attributes, which
-// breaks canvas drawImage in some browsers — fetch, patch, load as blob.
-const loadRemoteSvg = async (url: string): Promise<HTMLImageElement | null> => {
-  try {
-    const res = await fetch(url);
-    if (!res.ok) return null;
-    let text = await res.text();
-    if (!/<svg[^>]*\swidth=/.test(text)) {
-      text = text.replace('<svg ', '<svg width="128" height="128" ');
-    }
-    const blobUrl = URL.createObjectURL(
-      new Blob([text], { type: 'image/svg+xml' }),
-    );
-    const img = await loadImage(blobUrl);
-    return img;
-  } catch {
-    return null;
-  }
-};
-
 const usePreloadedImages = (iconUrls: string[]) => {
   const imagesRef = useRef<Array<HTMLImageElement | null>>([]);
   const loadedRef = useRef(false);
@@ -85,13 +65,7 @@ const usePreloadedImages = (iconUrls: string[]) => {
     if (loadedRef.current) return;
     let cancelled = false;
 
-    const promises = iconUrls.map(url =>
-      url.startsWith('http') && url.endsWith('.svg')
-        ? loadRemoteSvg(url)
-        : loadImage(url),
-    );
-
-    Promise.all(promises).then(imgs => {
+    Promise.all(iconUrls.map(loadImage)).then(imgs => {
       if (!cancelled) {
         imagesRef.current = imgs;
         loadedRef.current = true;

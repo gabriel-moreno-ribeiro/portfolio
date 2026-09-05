@@ -1,5 +1,7 @@
 import ReactDOM from "react-dom/client";
 import App from "./App";
+import "@fontsource/dm-serif-display/400.css";
+import "@fontsource/dm-serif-display/400-italic.css";
 import "./styles/index.scss";
 
 const root = ReactDOM.createRoot(
@@ -18,6 +20,7 @@ scheduleIdle(() => {
       capture_pageleave: true,
       respect_dnt: true,
       disable_session_recording: true,
+      disable_surveys: true,
     });
   });
 });

@@ -1,11 +1,12 @@
 import { useState, useCallback, useEffect, useRef, useMemo } from "react";
 import { AnimatePresence } from "motion/react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import type { Book } from "../../types/book";
 import { LibraryScene } from "./LibraryScene";
 import { BrowseOverlay, DetailPanel, FallbackGrid } from "./LibraryOverlay";
 import { useThemeStore } from "../../store/themeStore";
 import booksData from "../../data/books.json";
+import "../../styles/components/home/books.scss";
 
 const books = booksData as Book[];
 
@@ -118,7 +119,13 @@ export function Library() {
 
   return (
     <section ref={sectionRef} className="lib-section" id="main-content" aria-label="Library">
-      <h1 className="sr-only">Gabriel's Library</h1>
+      <header className="lib-header">
+        <Link to="/" className="lib-header__back" aria-label="Back to home">
+          <span aria-hidden="true">&larr;</span> Home
+        </Link>
+        <h1 className="lib-header__title">Library</h1>
+        <p className="lib-header__subtitle">{books.length} books I've read and recommend</p>
+      </header>
 
       {webglFailed ? (
         <FallbackGrid books={books} onSelect={i => { setSelectedIndex(i); setFocusMode(true); }} />
@@ -153,8 +160,8 @@ export function Library() {
             bookIndex={selectedIndex}
             total={books.length}
             onClose={handleClose}
-            onPrev={() => { handlePrev(); }}
-            onNext={() => { handleNext(); }}
+            onPrev={handlePrev}
+            onNext={handleNext}
             onResize={setPanelWidthPx}
           />
         )}

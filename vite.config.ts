@@ -56,12 +56,11 @@ export default defineConfig({
   },
   build: {
     outDir: "dist",
-    sourcemap: true,
-    modulePreload: false,
     rollupOptions: {
       output: {
         manualChunks(id) {
-          if (id.includes('node_modules/react/') || id.includes('node_modules/react-dom/') || id.includes('node_modules/scheduler/')) return 'vendor-react';
+          if (id.includes('vite/preload-helper')) return 'vendor-react';
+          if (id.includes('node_modules/react/') || id.includes('node_modules/react-dom/') || id.includes('node_modules/scheduler/') || id.includes('node_modules/zustand/')) return 'vendor-react';
           if (id.includes('node_modules/three/')) return 'three';
           if (id.includes('node_modules/@react-three/')) return 'react-three';
           if (id.includes('node_modules/motion/') || id.includes('node_modules/framer-motion/')) return 'motion';

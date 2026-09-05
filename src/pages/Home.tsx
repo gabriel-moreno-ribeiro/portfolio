@@ -1,23 +1,20 @@
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
-import FindMyWork from "../components/Home/FindMyWork";
 import Hero from "../components/Home/Hero";
-import NumbersAndStats from "../components/Home/Numbers";
-import Research from "../components/Home/Research";
-import Skills from "../components/Home/Skills";
 import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Shared/Footer";
 import { scrollToComponent } from "../utils/scrollToComponent";
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import StickerPeel from "../components/ReactBits/StickerPeel";
 
 const BackgroundGlobe = lazy(() => import("../components/Home/BackgroundGlobe"));
+const Skills = lazy(() => import("../components/Home/Skills"));
+const FindMyWork = lazy(() => import("../components/Home/FindMyWork"));
+const Research = lazy(() => import("../components/Home/Research"));
+const NumbersAndStats = lazy(() => import("../components/Home/Numbers"));
 const HorizontalSkillsWrapper = lazy(() => import("../components/Home/HorizontalSkillsWrapper"));
 const WorkExperience = lazy(() => import("../components/Home/WorkExperience"));
+// @ts-ignore
+const StickerPeel = lazy(() => import("../components/ReactBits/StickerPeel"));
 
-const NAV_SECTIONS = ['Header', 'Origins', 'Skills', 'Cool Things', 'Research', 'Professional Experience'];
+const NAV_SECTIONS = ['Top', 'Origins', 'Skills', 'Cool Things', 'Research', 'Professional Experience'];
 const NAV_IDS      = ['main-content', 'background', 'skills', 'work', 'research', 'work-experience'];
 
 function Home() {
@@ -70,10 +67,18 @@ function Home() {
       <Suspense fallback={<div style={{ minHeight: 700 }} />}>
         <BackgroundGlobe />
       </Suspense>
-      <Skills />
-      <FindMyWork />
-      <Research />
-      <NumbersAndStats />
+      <Suspense fallback={null}>
+        <Skills />
+      </Suspense>
+      <Suspense fallback={null}>
+        <FindMyWork />
+      </Suspense>
+      <Suspense fallback={null}>
+        <Research />
+      </Suspense>
+      <Suspense fallback={null}>
+        <NumbersAndStats />
+      </Suspense>
       <Suspense fallback={null}>
         <HorizontalSkillsWrapper />
       </Suspense>
@@ -82,9 +87,9 @@ function Home() {
       </Suspense>
       <Footer />
 
-      {/* HIBEEX draggable sticker */}
-      {/* HIBEEX sticker — replace /logo192.png with /hibeex-logo.png when available */}
+      {/* HIBEEX sticker */}
       <div className="sticker-stage">
+        <Suspense fallback={null}>
         <StickerPeel
           imageSrc="/hibeex.png"
           width={130}
@@ -95,6 +100,7 @@ function Home() {
           shadowIntensity={0.45}
           lightingIntensity={0.09}
         />
+        </Suspense>
       </div>
 
     </div>

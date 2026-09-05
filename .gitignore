@@ -29,3 +29,11 @@ yarn-error.log*
 
 .vercel
 .env*
+
+# local-only
+/Avatar
+/tools
+/screenshots
+/.claude/refs
+/.claude/settings.local.json
+/.mcp.json

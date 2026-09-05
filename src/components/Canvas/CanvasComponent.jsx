@@ -7,7 +7,7 @@ import { useThemeStore } from "../../store/themeStore";
 useGLTF.setDecoderPath("https://www.gstatic.com/draco/versioned/decoders/1.5.7/");
 
 function Model({ onReady, ...props }) {
-  const { nodes, materials } = useGLTF("/assets/3d/cute_robot.glb");
+  const { scene } = useGLTF("/assets/3d/robot.glb");
   const group = useRef();
 
   useEffect(() => {
@@ -25,50 +25,19 @@ function Model({ onReady, ...props }) {
 
   return (
     <group ref={group} {...props} dispose={null}>
-      <group position={[0, 0, 0]}>
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Object_4.geometry}
-          material={materials.Plastik}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Object_5.geometry}
-          material={materials.Scratch_Metal}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Object_6.geometry}
-          material={materials.Darker_Metal}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Object_7.geometry}
-          material={materials.Layar}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Object_8.geometry}
-          material={materials["Material.001"]}
-        />
-      </group>
+      <primitive object={scene} />
     </group>
   );
 }
 
-useGLTF.preload("/assets/3d/cute_robot.glb");
+useGLTF.preload("/assets/3d/robot.glb");
 
 export default function CanvasComponent({ onReady }) {
   const { darkMode } = useThemeStore();
   return (
     <Canvas
       camera={{ position: [0.4, 1.17, 11.35], fov: 25 }}
-      className={`robot-canvas`}
+      className="robot-canvas"
       data-drag-me={true}
       gl={{ alpha: true, antialias: true }}
       style={{ background: "transparent" }}

@@ -1,26 +1,19 @@
-import { motion, useMotionValue, useTransform } from "motion/react";
-import React from "react";
+import { motion } from "motion/react";
 import useIsMobile from "../../hooks/useIsMobile";
 
 interface CardProps {
   frontCard: boolean;
-  exitX: number;
   imgSrc?: string;
   imgPadding?: number;
 }
 
-const NumberStatsCard: React.FC<CardProps> = ({ frontCard, exitX, imgSrc, imgPadding = 18 }) => {
-  const isMobile = useIsMobile();
-  const x = useMotionValue(0);
-  const scale = useTransform(x, [-150, 0, 150], [0.5, 1, 0.5]);
-  const rotate = useTransform(x, [-150, 0, 150], [-45, 0, 45], {
-    clamp: false,
-  });
+const FRONT_VARIANTS = {
+  animate: { scale: 1, y: 0, opacity: 1 },
+  exit: { opacity: 0, scale: 0.5, transition: { duration: 0.5 } },
+};
 
-  const variantsFrontCard = {
-    animate: { scale: 1, y: 0, opacity: 1 },
-    exit: { opacity: 0, scale: 0.5, transition: { duration: 0.5 } },
-  };
+const NumberStatsCard = ({ frontCard, imgSrc, imgPadding = 18 }: CardProps) => {
+  const isMobile = useIsMobile();
 
   const variantsBackCard = {
     initial: { scale: 0, y: isMobile ? 80 : 105, opacity: 0 },
@@ -30,22 +23,17 @@ const NumberStatsCard: React.FC<CardProps> = ({ frontCard, exitX, imgSrc, imgPad
   return (
     <motion.div
       className={`card ${frontCard ? "front-card" : "back-card"}`}
-      style={{
-        x,
-        rotate,
-      }}
-      variants={frontCard ? variantsFrontCard : variantsBackCard}
+      variants={frontCard ? FRONT_VARIANTS : variantsBackCard}
       initial="initial"
       animate="animate"
       exit="exit"
-      custom={exitX}
       transition={
         frontCard
           ? { type: "spring", stiffness: 300, damping: 20 }
           : { scale: { duration: 0.5 }, opacity: { duration: 0.4 } }
       }
     >
-      <motion.div className="card-content" style={{ scale }}>
+      <div className="card-content">
         {imgSrc && (
           <img
             src={imgSrc}
@@ -57,7 +45,7 @@ const NumberStatsCard: React.FC<CardProps> = ({ frontCard, exitX, imgSrc, imgPad
             style={{ padding: `${imgPadding}px` }}
           />
         )}
-      </motion.div>
+      </div>
     </motion.div>
   );
 };

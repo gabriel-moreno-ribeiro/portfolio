@@ -1,6 +1,4 @@
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useMemo, useRef } from "react";
+import { useRef } from "react";
 import d_icon1 from "../../assets/skills/dark/icon1.webp";
 import d_icon2 from "../../assets/skills/dark/icon2.webp";
 import d_icon3 from "../../assets/skills/dark/icon3.webp";
@@ -23,8 +21,6 @@ import l_icon9 from "../../assets/skills/light/icon9.webp";
 import l_icon10 from "../../assets/skills/light/icon10.webp";
 import { useThemeStore } from "../../store/themeStore";
 import HorizontalSkills from "./HorizontalSkills";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const lightIcons1 = [
   l_icon1, l_icon2, l_icon3, l_icon4, l_icon5,
@@ -49,14 +45,8 @@ function HorizontalSkillsWrapper() {
   const containerRef1 = useRef<HTMLDivElement | null>(null);
   const containerRef2 = useRef<HTMLDivElement | null>(null);
 
-  const icons1 = useMemo(
-    () => (darkMode ? darkIcons1 : lightIcons1),
-    [darkMode]
-  );
-  const icons2 = useMemo(
-    () => (darkMode ? darkIcons2 : lightIcons2),
-    [darkMode]
-  );
+  const icons1 = darkMode ? darkIcons1 : lightIcons1;
+  const icons2 = darkMode ? darkIcons2 : lightIcons2;
 
   return (
     <div className="horizontal-skills-parent">

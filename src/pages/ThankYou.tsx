@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { FiCheck } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
 import { useDocumentHead } from '../hooks/useDocumentHead';
+import '../styles/components/shared/contact.scss';
 
 function ThankYou() {
   useDocumentHead({

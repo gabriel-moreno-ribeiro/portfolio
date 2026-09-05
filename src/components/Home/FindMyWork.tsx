@@ -1,12 +1,11 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { toggleTerminalWindow } from "../../utils/terminalWindow";
 
 // Static manifest of media that actually exists in public/work/<slug>/.
 // Add entries here when uploading media — avoids speculative 404 probing.
 const WORK_MEDIA_MANIFEST: Record<string, string[]> = {
-  // hibeex: ["01.jpg", "02.jpg"],
-  // candela: ["01.jpg"],
+  hibeex: ["01.webp", "02.webp", "03.webp", "04.webp"],
 };
 
 interface FeaturedItem {
@@ -46,16 +45,25 @@ const featured: FeaturedItem[] = [
 function MediaCarousel({ slug, title }: { slug: string; title: string }) {
   const available = WORK_MEDIA_MANIFEST[slug] ?? [];
   const [idx, setIdx] = useState(0);
+  const timerRef = useRef<ReturnType<typeof setInterval>>(null);
 
-  if (available.length === 0) {
-    return null;
-  }
+  const restartTimer = () => {
+    if (timerRef.current) clearInterval(timerRef.current);
+    if (available.length <= 1) return;
+    timerRef.current = setInterval(() => setIdx((i) => (i + 1) % available.length), 4000);
+  };
+
+  useEffect(() => {
+    restartTimer();
+    return () => { if (timerRef.current) clearInterval(timerRef.current); };
+  }, [available.length]);
+
+  if (available.length === 0) return null;
 
   const current = available[idx % available.length];
   const src = `/work/${slug}/${current}`;
-  const prev = () =>
-    setIdx((i) => (i - 1 + available.length) % available.length);
-  const next = () => setIdx((i) => (i + 1) % available.length);
+  const prev = () => { setIdx((i) => (i - 1 + available.length) % available.length); restartTimer(); };
+  const next = () => { setIdx((i) => (i + 1) % available.length); restartTimer(); };
 
   return (
     <div className="media-carousel">

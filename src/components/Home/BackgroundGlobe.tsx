@@ -58,7 +58,7 @@ const CITIES: City[] = [
     role: 'Acceleration',
     headline: 'The year everything accelerated.',
     story: [
-      'Moved for the final year of high school. Closer to family, closer to the northeast hustle.',
+      'Moved for the final year of high school at Colégio Ari de Sá Cavalcante (Aldeota), ITA/IME track. Lived in a shared apartment with 11 other students. Graduated with a 9.41 average.',
       'SAT 1510. Fundação Estudar PREP — 70 selected from 10,000+ applicants. St Andrews admission with a Global Merit Scholarship. The year decisions started compounding.',
     ],
   },
@@ -84,10 +84,10 @@ const CITIES: City[] = [
 type PhotoEntry = string | { file: string; position: string };
 
 const CITY_PHOTO_MANIFEST: Record<string, PhotoEntry[]> = {
-  'missao-velha': ['01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg', '06.jpg', '07.jpg', '08.jpg'],
-  'salvador':     ['01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg', '06.jpg'],
-  'fortaleza':    ['01.jpeg', '02.jpeg', '03.jpeg', '04.jpeg'],
-  'sao-paulo':    ['01.jpeg', '02.jpeg', '03.jpeg', '04.jpeg', '05.jpeg'],
+  'missao-velha': ['01.webp', '02.webp', '03.webp', '04.webp', '05.webp', '06.webp', '07.webp', '08.webp'],
+  'salvador':     ['01.webp', '02.webp', '03.webp', '04.webp', '05.webp', '06.webp'],
+  'fortaleza':    ['01.webp', '02.webp', '03.webp', '04.webp', '05.webp'],
+  'sao-paulo':    ['01.webp', '02.webp', '03.webp', '04.webp', '05.webp'],
 };
 
 function locationToAngles(lat: number, lon: number): [number, number] {

@@ -20,7 +20,7 @@ function easeInOutCubic(t) {
 }
 
 export function D20Truck({ progressRef, groupRef, ...props }) {
-  const { scene } = useGLTF("/assets/3d/D20_v2.glb");
+  const { scene } = useGLTF("/assets/3d/d20.glb");
   const clonedScene = useMemo(() => scene.clone(true), [scene]);
   const meshDataRef = useRef([]);
   const initialized = useRef(false);
@@ -110,4 +110,4 @@ export function D20Truck({ progressRef, groupRef, ...props }) {
   );
 }
 
-useGLTF.preload("/assets/3d/D20_v2.glb");
+useGLTF.preload("/assets/3d/d20.glb");
