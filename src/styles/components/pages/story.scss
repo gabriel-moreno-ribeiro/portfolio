@@ -616,7 +616,7 @@ $story-text: 760px;
   background: var(--surface);
 
   &--country { inset: 20%; border-color: rgba(240, 115, 45, 0.45); background: color-mix(in srgb, var(--surface) 92%, var(--accent-decor)); }
-  &--garage { inset: 36%; border-color: var(--accent-decor); background: var(--accent-decor); color: #fff; border-radius: 18px; display: grid; place-items: center; text-align: center; }
+  &--garage { inset: 36%; border-color: #b8501a; background: #b8501a; /* white label needs 4.5:1: 5.0 here, 2.9 on #f0732d */ color: #fff; border-radius: 18px; display: grid; place-items: center; text-align: center; }
 }
 
 .scale__label {
@@ -630,7 +630,7 @@ $story-text: 760px;
 
 .scale__ring--garage .scale__label {
   position: static;
-  color: rgba(255, 255, 255, 0.85);
+  color: #fff;
   white-space: nowrap;
   b { color: #fff; font-size: 19px; }
 }

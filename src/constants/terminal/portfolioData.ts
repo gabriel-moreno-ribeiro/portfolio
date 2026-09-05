@@ -24,7 +24,7 @@ export const experience = [
   {
     title: "Independent Researcher",
     company: "Fintech Savings RCT",
-    date: "Advised by Aaron Litvin, Ph.D. (Harvard)",
+    date: "2025 · Advised by Aaron Litvin, Ph.D. (Harvard)",
     description:
       "Designed and ran a randomized controlled trial with 208 public-school students on whether fintech apps change savings behavior. The treatment group saved 130% more.",
   },
@@ -94,7 +94,7 @@ export const skills = {
 };
 
 export const contact = {
-  email: "gabrielmribeiro@hibeex.com.br",
+  email: "me@gabrielmr.com",
   linkedin: "https://linkedin.com/in/gabriel-moreno-ribeiro",
   github: "https://github.com/gabriel-moreno-ribeiro",
 };

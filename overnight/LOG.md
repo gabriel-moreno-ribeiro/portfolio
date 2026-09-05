@@ -30,6 +30,11 @@ Como ler: cada turno adiciona linhas abaixo. Ao retomar depois de compactação 
 ### Turno 3 — retomada (relógio do sistema agora marca 02:14; contabilizo 1h20 de trabalho feitos antes da queda)
 - Regra de tempo: publicar só depois de 4h30 acumuladas → não antes de 05:24 no relógio atual; fim do trabalho ~05:54.
 - Build completo do lote 2 passa (44s, mesmo warning do chunk `three`). Preview reiniciado.
+- Commit `7759900` com os lotes 1 e 2 (37 arquivos).
+- Verificação: screenshots `after/` 30/30 ok (10 rotas × 3 larguras), overflow 0 em todas, console limpo (só o aviso GL do headless). Conferido nas imagens: hero claro e escuro com 2 botões legíveis; navbar mobile inteira; /library com "Home" e "LIBRARY · 28 BOOKS" alinhados; /news com fallback centralizado nos embeds; 404 com terminal legível; /story com primeira foto carregada (eager).
+- Email da HIBEEX também estava no terminal e no prompt do chat → alinhados para me@gabrielmr.com (Decisão 4). RCT com ano no terminal; descrição da HIBEEX no prompt do chat igual à do site.
+- axe pós-lote: 59 → 27 tipos de violação. Sobraram: contraste (tags dos cards 4,2:1; tags/campo/PDF do Research; painel de cidades do globo; eyebrow e "talk." do Contact; anel da garagem no /story), `landmark-contentinfo-is-top-level` (footer com role dentro de `<main>`), `region` (barra fixa mobile), `target-size` dos ticks da /library em 390, `landmark-one-main` em /privacy e /terms.
+- Lote 3 (C31) aplicado: token `--accent-tag` (#a64616, 5,1:1) para tags; `var(--accent)` no campo/PDF do Research, eyebrow do Contact e cidade do globo; `--accent-hero` no "talk."; coordenadas do globo sem opacity 0,6; anel da garagem em #b8501a com label branca (5,0:1); footer sem `role="contentinfo"`; barra fixa mobile virou `<nav aria-label>`; ticks da /library escondidos < 600 px (10 px de largura cada, inutilizáveis por toque; painel mostra "01 — 28"); /privacy e /terms com `<main>`. Build ok (38s).
 
 ---
 
@@ -38,3 +43,16 @@ Como ler: cada turno adiciona linhas abaixo. Ao retomar depois de compactação 
 (itens que precisam da opinião do Gabriel; recomendação em cada um)
 
 1. **`.letta/` adicionado ao `.gitignore`.** Era um diretório sem track (estado local do agente Letta, tem `settings.local.json`). Recomendação: manter ignorado; se quiser versionar, remover a linha.
+2. **Hero com 2 CTAs em vez de 3 (aplicado).** Removi o botão "Connect" (LinkedIn). No mobile a primeira tela tinha 5 botões (3 do hero + 2 fixos). LinkedIn continua no Contact, no footer e na navbar. Recomendação: manter. Para voltar: `git revert` do trecho em `Hero.tsx` (bloco `CommonButton text="Connect"`).
+3. **Título da aba/OG agora "Gabriel Moreno Ribeiro — Founder, HIBEEX" (aplicado).** O h1 e o nome no site não mudaram. Recomendação: manter; se preferir só o nome, trocar em `index.html` e `useDocumentHead.ts`.
+4. **Email gabrielmribeiro@hibeex.com.br trocado por me@gabrielmr.com em `llms.txt`, no terminal (`portfolioData.ts`) e no prompt do chat (`api/chat.ts`) (aplicado).** O site visível (footer, contato, JSON-LD) usa me@gabrielmr.com; agora tudo bate. Se o email da HIBEEX era intencional nesses três lugares, reverter.
+5. **Cor do h1 do hero no tema claro: `#e2601a` em vez de `#f0732d` (aplicado).** Necessário para passar 3:1 de contraste em texto grande (era 2,78:1). No dark continua `#f0732d`. A diferença é sutil; se preferir o laranja original, aceitar a falha de contraste e trocar `--accent-hero` em `globals.scss`.
+6. **Hero "typing/scramble" (Founder / Builder / Researcher / Developer & Curious.)** — não mexi. É um clichê da lista do plano, mas é identidade do site. Recomendação: trocar por uma linha estática "Founder, builder, researcher." e deixar o "& Curious." de fora (reduz ruído e um bundle a menos: `ScrambleText`).
+7. **Heading "Cool Things"** — não mexi. Casual para admissions officer/investidor. Recomendação: "Work" (a nav lateral também).
+8. **Travessões no /story** — o arquivo diz "text is verbatim" (personal statement). Não mexi. Se quiser aplicar a regra "sem em dash", são 3 ocorrências em `src/content/story.ts`.
+9. **Fotos dos cards Candela, Medals e GSAT** — as pastas `public/work/candela|medals|gsat` só têm `.gitkeep`. O card do HIBEEX tem 4 fotos e os outros nenhum, o que deixa a grade desigual. Recomendação: subir 1–2 fotos por card (o manifest está em `FindMyWork.tsx`).
+10. **PDFs das pesquisas fintech-rct e chemical-kinetics** — continuam como TODO no código (`Research.tsx`). Só o da Candela existe.
+11. **Meta por rota para crawlers** — /story, /news, /library só recebem title/description/canonical via JS. Sem prerender (mudança de stack), o Google e as prévias sociais veem a meta da home. Recomendação: futura, gerar HTML estático por rota no build (vite-plugin-ssr/prerender) ou aceitar.
+12. **/privacy e /terms carregam Google Fonts externo** — páginas estáticas fora do bundle; o resto do site é self-hosted. Baixo impacto; deixei.
+13. **Performance do Lighthouse (35–57 em produção, mobile)** — estrutural: three.js + GSAP + emulação 4x. Fiz só ganhos baratos (LCP eager, preconnect, sticker webp, foto de 92 kB recomprimida para ~30 kB). Chegar a 95 exigiria tirar o 3D do carregamento inicial, o que muda a identidade do site.
+14. **srcset do moments (C30)** — as fotos têm 640 px para 300 px exibidos (exatamente 2x). Gerar variantes 1x economizaria só em telas 1x (~200 kB) e adiciona 17 arquivos. Não fiz.

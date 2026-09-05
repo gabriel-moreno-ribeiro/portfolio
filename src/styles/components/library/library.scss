@@ -570,7 +570,9 @@
   }
 
   .library__index-bar { right: 72px; bottom: 72px; left: 72px; display: block; }
-  .library__ticks { height: 14px; button { height: 14px; span { bottom: 2px; height: 5px; } &:hover span, &.is-active span { height: 12px; } } }
+  // 28 ticks in <600px are ~10px wide each: below the 24px target minimum and unusable by touch.
+  // The panel counter ("01 — 28"), arrows, drag and keyboard cover navigation on small screens.
+  .library__ticks { display: none; }
   .library__hint { display: none; }
 
   .library__panel {

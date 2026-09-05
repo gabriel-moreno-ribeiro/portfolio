@@ -103,15 +103,15 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: $primary-orange;
+    color: var(--accent);
     margin: 0;
   }
 
   &__coords {
     font-size: 10px;
     font-family: 'SF Mono', 'Fira Code', monospace;
-    color: $text-grey;
-    opacity: 0.6;
+    color: var(--fg-muted);
+    opacity: 1; // was 0.6: 2.6:1 on 10px text
     letter-spacing: 0.02em;
   }
 
