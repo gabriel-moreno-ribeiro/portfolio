@@ -2,7 +2,9 @@
 
 ## Status da publicação
 
-[TODO: preencher na Fase 4]
+**NÃO publicado.** O merge está feito e pushado (`main` = `f310887`: 8 commits da branch `overnight/2026-09-05` + merge), mas o deploy falhou: o token do Vercel CLI, que respondia `gabrielmribeiro` às 06:50 (Fase 0), passou a devolver "The specified token is not valid" na hora de publicar. Não há integração GitHub→Vercel (o push não publica sozinho; o repositório não tem webhooks) e `vercel login` é interativo, então não pude renovar a credencial (regra 3). **Produção continua na versão antiga (`c803cfc`).** Monitorei a produção por 10 min depois do push e tentei o deploy 3 vezes (04:38, 04:39 com `--scope`, 04:52).
+
+**Para publicar** (2 comandos, em `main`): `npx vercel login` e depois `npx vercel --prod`. Em seguida `node overnight/prodcheck.mjs "Founder, HIBEEX" 15` (propagação, rotas, redirects, meta) e `node overnight/screenshot.mjs https://gabrielmr.com overnight/screenshots/prod-after` para comparar com `prod-before/`. Detalhes na Decisão 15 do `LOG.md`.
 
 ## Resumo (dez linhas)
 
@@ -34,10 +36,10 @@ Perf em headless com throttling 4x oscila ±8 entre rodadas; o que é estável �
 
 | Página | Perf | A11y | BP | SEO |
 |---|---|---|---|---|
-| / | 35 → [TODO] | 96 → [TODO] | 100 → [TODO] | 100 → [TODO] |
-| /story | 29 → [TODO] | 94 → [TODO] | 100 → [TODO] | 100 → [TODO] |
-| /news | 35 → [TODO] | 90 → [TODO] | 79 → [TODO] | 100 → [TODO] |
-| /library | 57 → [TODO] | 96 → [TODO] | 100 → [TODO] | 92 → [TODO] |
+| / | 35 → (não publicado) | 96 → — | 100 → — | 100 → — |
+| /story | 29 → — | 94 → — | 100 → — | 100 → — |
+| /news | 35 → — | 90 → — | 79 → — | 100 → — |
+| /library | 57 → — | 96 → — | 100 → — | 92 → — |
 
 ### Outros
 
@@ -68,16 +70,20 @@ A home só chega a 5,9 MB depois de rolar tudo (3D do robô, caminhão e skills,
 - `7759900` fix(site): lotes 1 e 2 — a11y, contraste, hero, navbar mobile, microtextos, LCP, README, código morto
 - `89aeee2` fix(a11y): lote 3 — contraste restante, landmarks, alvos de toque, email unificado
 - `cd8c9a4` feat(site): rodada 2 — "18, on a build year", links nos cards, layout do HIBEEX, footer dark, overflow tablet, print
-- [TODO: commits seguintes]
+- `fdf4672` fix(mobile): régua de 320px — timeline, grade da /news, toggles sobre o nome, foco dos inputs
+- `d32e74d` fix(404): 404 estática com o mesmo texto da 404 do app
+- `7a8e48a` fix(404): 404 estática com landmark <main> e texto legível nos dois temas
+- `f310887` Merge overnight/2026-09-05 em main
+- (este relatório)
 
 ## Screenshots
 
 - Antes (local): `overnight/screenshots/before/` · Antes (produção): `overnight/screenshots/prod-before/`
-- Depois (local): `overnight/screenshots/after/` (+ `sections/`, `spots/`, `tiles/`) · Depois (produção): `overnight/screenshots/prod-after/`
+- Depois (local): `overnight/screenshots/after/` (+ `sections/`, `spots/`, `tiles/`) · Depois (produção): não gerado (deploy não realizado); rodar `node overnight/screenshot.mjs https://gabrielmr.com overnight/screenshots/prod-after` depois de publicar
 
 ## Decisões para eu revisar
 
-Ver a seção homônima em `LOG.md` (14 itens, com recomendação).
+Ver a seção homônima em `LOG.md` (15 itens, com recomendação). A mais urgente é a 15: renovar o login do Vercel e publicar.
 
 ## Próximos passos (mais uma noite)
 
