@@ -4,41 +4,45 @@ import { FiDownload } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar/Navbar';
 import Footer from '../components/Shared/Footer';
-import { story } from '../content/story';
+import {
+  ChatFigure,
+  EndFigure,
+  LaptopsFigure,
+  LedgerFigure,
+  MISSAO_VELHA_PHOTOS,
+  PhotoStrip,
+  PorcaFigure,
+  ReposFigure,
+  SALVADOR_PHOTOS,
+  ScaleFigure,
+  TownFigure,
+} from '../components/Story/figures';
+import { EASE, Reveal } from '../components/Story/shared';
+import { TruckFigure } from '../components/Story/TruckFigure';
+import { blocks, FigureId, story } from '../content/story';
 import { useDocumentHead } from '../hooks/useDocumentHead';
 import '../styles/components/pages/story.scss';
-
-const EASE = [0.22, 1, 0.36, 1] as const;
 
 const escapeHtml = (s: string) =>
   s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
-// Inline Markdown: **bold**, *italic*, [text](url)
-const inline = (s: string) =>
-  escapeHtml(s)
-    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-    .replace(/\*(.+?)\*/g, '<em>$1</em>')
-    .replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, (_m, text, url) => {
-      const ext = /^https?:/.test(url);
-      return `<a href="${url}"${ext ? ' target="_blank" rel="noreferrer"' : ''}>${text}</a>`;
-    });
+// Only *italic* is supported inside the essay text.
+const inline = (s: string) => escapeHtml(s).replace(/\*(.+?)\*/g, '<em>$1</em>');
 
-// Block Markdown: the handful of constructs an essay needs
-function render(md: string): string {
-  return md
-    .replace(/\r\n/g, '\n')
-    .trim()
-    .split(/\n\s*\n/)
-    .map((block) => {
-      const b = block.trim();
-      if (/^---+$/.test(b)) return '<hr />';
-      if (b.startsWith('### ')) return `<h3>${inline(b.slice(4))}</h3>`;
-      if (b.startsWith('## ')) return `<h2>${inline(b.slice(3))}</h2>`;
-      if (b.startsWith('# ')) return `<h2>${inline(b.slice(2))}</h2>`;
-      if (b.startsWith('> ')) return `<blockquote><p>${inline(b.replace(/^> ?/gm, '').replace(/\n/g, ' '))}</p></blockquote>`;
-      return `<p>${inline(b.replace(/\n/g, ' '))}</p>`;
-    })
-    .join('\n');
+function Figure({ id }: { id: FigureId }) {
+  switch (id) {
+    case 'town': return <TownFigure />;
+    case 'porca': return <PorcaFigure />;
+    case 'ledger': return <LedgerFigure />;
+    case 'truck': return <TruckFigure />;
+    case 'missao-velha': return <PhotoStrip photos={MISSAO_VELHA_PHOTOS} eyebrow="Missão Velha · every summer" />;
+    case 'laptops': return <LaptopsFigure />;
+    case 'salvador': return <PhotoStrip photos={SALVADOR_PHOTOS} eyebrow="Salvador · the years in between" />;
+    case 'chat': return <ChatFigure />;
+    case 'repos': return <ReposFigure />;
+    case 'scale': return <ScaleFigure />;
+    case 'end': return <EndFigure />;
+  }
 }
 
 function Story() {
@@ -48,9 +52,13 @@ function Story() {
     canonical: 'https://gabrielmr.com/story',
   });
 
-  const html = useMemo(() => render(story.body), []);
-  const words = useMemo(() => story.body.split(/\s+/).filter(Boolean).length, []);
+  const words = useMemo(
+    () => blocks.reduce((n, b) => (b.type === 'figure' ? n : n + b.text.split(/\s+/).filter(Boolean).length), 0),
+    [],
+  );
   const minutes = Math.max(1, Math.round(words / 220));
+
+  let paragraphs = 0;
 
   return (
     <div className="story">
@@ -77,13 +85,34 @@ function Story() {
         </div>
       </motion.header>
 
-      <motion.article
-        className="story__body"
-        initial={{ opacity: 0, y: 24 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: EASE, delay: 0.25 }}
-        dangerouslySetInnerHTML={{ __html: html }}
-      />
+      <article className="story__body">
+        {blocks.map((b, i) => {
+          if (b.type === 'figure') return <Figure id={b.id} key={`fig-${b.id}`} />;
+          if (b.type === 'quote') {
+            return (
+              <Reveal as="div" className="story__quote" key={`q-${i}`}>
+                <blockquote><p dangerouslySetInnerHTML={{ __html: inline(b.text) }} /></blockquote>
+              </Reveal>
+            );
+          }
+          paragraphs += 1;
+          const first = paragraphs === 1;
+          return first ? (
+            <motion.p
+              className="story__p story__p--first"
+              key={`p-${i}`}
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: EASE, delay: 0.25 }}
+              dangerouslySetInnerHTML={{ __html: inline(b.text) }}
+            />
+          ) : (
+            <Reveal as="div" className="story__p" key={`p-${i}`}>
+              <p dangerouslySetInnerHTML={{ __html: inline(b.text) }} />
+            </Reveal>
+          );
+        })}
+      </article>
 
       <Footer />
     </div>
