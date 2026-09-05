@@ -33,7 +33,13 @@ function Row({ items, reverse, duration, priority }: { items: Moment[]; reverse?
   // The track holds two copies; the animation slides exactly one copy's width.
   const doubled = [...items, ...items];
   return (
-    <div className={`moments__row ${reverse ? "moments__row--reverse" : ""}`}>
+    // Under prefers-reduced-motion the row stops and becomes scrollable, so it needs a keyboard stop
+    <div
+      className={`moments__row ${reverse ? "moments__row--reverse" : ""}`}
+      role="group"
+      aria-label={reverse ? "Photos, second row" : "Photos, first row"}
+      tabIndex={0}
+    >
       <div className="moments__track" style={{ animationDuration: `${duration}s` }}>
         {doubled.map((m, i) => (
           <figure className="moments__item" key={`${m.src}-${i}`} aria-hidden={i >= items.length}>

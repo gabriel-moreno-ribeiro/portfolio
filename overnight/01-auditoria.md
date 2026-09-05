@@ -92,3 +92,11 @@ Pergunta final ("o que um designer apontaria primeiro?"): 1440 → a coluna de �
 | E23 | `.letta/` sem track | — | adicionado ao .gitignore (Decisões) |
 
 ## 1.5 Priorização → `02-checklist.md`
+
+## Fase 3 — Passe D (três leituras)
+
+**Admissions officer.** (1) Em 5 segundos não fica claro se ele está no ensino médio, na faculdade ou fora: "18, on a build year" só aparecia na meta e no texto rotativo do hero (1 de 7 frases, 5 s cada). → hero desc ganha "18, on a build year." (2) O ensaio pessoal está em /story, acessível pelo menu e footer; ok. (3) "Cool Things" como heading da seção de prova → Decisão 7.
+
+**Investidor.** (1) Nenhum caminho da seção principal para o produto: o card do HIBEEX não tinha link (o site hibeex.com.br só aparecia em /news e no terminal). → link no card. (2) Sem tração/números do HIBEEX além da residência Canastra; nada a inventar → nada. (3) Card da Candela agora aponta para o paper (PDF já existia no Research).
+
+**Engenheiro sênior.** (1) GitHub a um clique no menu/footer/contato; ok. (2) Faixa de logos de skills é o clichê da lista, mas é identidade → Decisão 6. (3) JS pesado (three.js) — estrutural → Decisão 13.

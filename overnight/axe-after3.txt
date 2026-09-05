@@ -1,0 +1,48 @@
+
+## / @390: 1 violações
+- [serious] scrollable-region-focusable (2x): Scrollable region must have keyboard access
+    .moments__row:nth-child(2)
+    .moments__row--reverse
+
+## / @1440: 1 violações
+- [serious] scrollable-region-focusable (2x): Scrollable region must have keyboard access
+    .moments__row:nth-child(2)
+    .moments__row--reverse
+
+## /story @390: 1 violações
+- [serious] aria-prohibited-attr (1x): Elements must only use permitted ARIA attributes
+    .bubble__wave
+
+## /story @1440: 1 violações
+- [serious] aria-prohibited-attr (1x): Elements must only use permitted ARIA attributes
+    .bubble__wave
+
+## /news @390: 0 violações
+
+## /news @1440: 0 violações
+
+## /library @390: 0 violações
+
+## /library @1440: 0 violações
+
+## /blog @390: 0 violações
+
+## /blog @1440: 0 violações
+
+## /obrigado @390: 0 violações
+
+## /obrigado @1440: 0 violações
+
+## /privacy @390: 0 violações
+
+## /privacy @1440: 0 violações
+
+## /terms @390: 0 violações
+
+## /terms @1440: 0 violações
+
+## /rota-que-nao-existe @390: 0 violações
+
+## /rota-que-nao-existe @1440: 0 violações
+
+TOTAL: 4 tipos de violação

@@ -35,6 +35,12 @@ Como ler: cada turno adiciona linhas abaixo. Ao retomar depois de compactação 
 - Email da HIBEEX também estava no terminal e no prompt do chat → alinhados para me@gabrielmr.com (Decisão 4). RCT com ano no terminal; descrição da HIBEEX no prompt do chat igual à do site.
 - axe pós-lote: 59 → 27 tipos de violação. Sobraram: contraste (tags dos cards 4,2:1; tags/campo/PDF do Research; painel de cidades do globo; eyebrow e "talk." do Contact; anel da garagem no /story), `landmark-contentinfo-is-top-level` (footer com role dentro de `<main>`), `region` (barra fixa mobile), `target-size` dos ticks da /library em 390, `landmark-one-main` em /privacy e /terms.
 - Lote 3 (C31) aplicado: token `--accent-tag` (#a64616, 5,1:1) para tags; `var(--accent)` no campo/PDF do Research, eyebrow do Contact e cidade do globo; `--accent-hero` no "talk."; coordenadas do globo sem opacity 0,6; anel da garagem em #b8501a com label branca (5,0:1); footer sem `role="contentinfo"`; barra fixa mobile virou `<nav aria-label>`; ticks da /library escondidos < 600 px (10 px de largura cada, inutilizáveis por toque; painel mostra "01 — 28"); /privacy e /terms com `<main>`. Build ok (38s).
+- axe pós-lote 3: 27 → 2 tipos (só /story, e são cores medidas no meio do fade dos reveals; `axe.mjs` agora roda com `reducedMotion: reduce`). Commit `89aeee2`.
+- Spots (viewport, claro/escuro, 1440/390): cards ok, anel da garagem ok, contato dark ok, /library 390 ok. **Bug novo encontrado no footer em dark mode:** o footer vira um cartão claro mas "Want to talk?", o email e o copyright continuavam brancos (invisíveis). Corrigido em `footer.scss`.
+- Fase 3, Passe D (três leituras) → C32 hero desc com "18, on a build year."; C33 links nos cards HIBEEX (hibeex.com.br) e Candela (PDF). Ver `01-auditoria.md`.
+- Cool Things: com `align-items:start` o card da Candela ficou curto ao lado do card alto do HIBEEX (buraco à direita). Novo layout: o card do HIBEEX (único com fotos) ocupa a linha inteira, foto à esquerda e texto à direita; os três cards de texto vão em 3 colunas (2 no tablet, 1 no mobile). Build ok (37s).
+- Régua mais alta: `@media print` esconde navbar, nav lateral, barra fixa, sticker, canvases e botões flutuantes. OG image conferida (1200×630, nome + "Co-Founder & CEO @ HIBEEX"): ok, mantida.
+- Rodando: extração de texto (Passe A), screenshots (Passe B), spots, axe, links e Lighthouse local (Passe C).
 
 ---
 
@@ -56,3 +62,4 @@ Como ler: cada turno adiciona linhas abaixo. Ao retomar depois de compactação 
 12. **/privacy e /terms carregam Google Fonts externo** — páginas estáticas fora do bundle; o resto do site é self-hosted. Baixo impacto; deixei.
 13. **Performance do Lighthouse (35–57 em produção, mobile)** — estrutural: three.js + GSAP + emulação 4x. Fiz só ganhos baratos (LCP eager, preconnect, sticker webp, foto de 92 kB recomprimida para ~30 kB). Chegar a 95 exigiria tirar o 3D do carregamento inicial, o que muda a identidade do site.
 14. **srcset do moments (C30)** — as fotos têm 640 px para 300 px exibidos (exatamente 2x). Gerar variantes 1x economizaria só em telas 1x (~200 kB) e adiciona 17 arquivos. Não fiz.
+- Passe A: `palavras-raw-after.md` (958 strings, 463 únicas) comparado com o antes: as únicas diferenças são as mudanças desta noite (title, description, hero, cards, "EXPERIENCE", GitHub, links novos, /privacy, description da /library) e contadores animados capturados em valores diferentes. Nenhum erro novo, nenhuma inconsistência entre seções.

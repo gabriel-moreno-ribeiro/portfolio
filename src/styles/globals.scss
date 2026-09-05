@@ -606,3 +606,26 @@ img {
     border-color: $primary-orange;
   }
 }
+
+// ── Print ────────────────────────────────────────────────────────────────────
+// Fixed chrome, 3D canvases and controls make no sense on paper; keep the text.
+@media print {
+  .navbar,
+  .home-sidenav,
+  .mobile-sticky-cta,
+  .sticker-stage,
+  .tip-toast,
+  .toggle-button,
+  .terminal-fab,
+  .back-to-top,
+  .horizontal-scroller,
+  .hero-slideshow,
+  .skip-link,
+  canvas {
+    display: none !important;
+  }
+
+  html, body { background: #fff !important; color: #000 !important; }
+  a { color: inherit; text-decoration: underline; }
+  * { animation: none !important; transition: none !important; opacity: 1 !important; transform: none !important; }
+}
