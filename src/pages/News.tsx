@@ -33,6 +33,21 @@ function News() {
         </motion.p>
       </header>
 
+      <section className="news__section" aria-labelledby="news-instagram">
+        <h2 id="news-instagram" className="news__section-title">
+          <FiInstagram aria-hidden="true" /> Instagram
+        </h2>
+        {instagram.length === 0 ? (
+          <p className="news__empty">Posts coming soon.</p>
+        ) : (
+          <motion.div className="news__grid" {...rise(4)}>
+            {instagram.map((item) => (
+              <InstagramEmbed key={item.url} url={item.url} caption={item.caption} />
+            ))}
+          </motion.div>
+        )}
+      </section>
+
       <section className="news__section" aria-labelledby="news-press">
         <h2 id="news-press" className="news__section-title">
           <FiRadio aria-hidden="true" /> Press &amp; mentions
@@ -63,21 +78,6 @@ function News() {
               </motion.a>
             ))}
           </div>
-        )}
-      </section>
-
-      <section className="news__section" aria-labelledby="news-instagram">
-        <h2 id="news-instagram" className="news__section-title">
-          <FiInstagram aria-hidden="true" /> Instagram
-        </h2>
-        {instagram.length === 0 ? (
-          <p className="news__empty">Posts coming soon.</p>
-        ) : (
-          <motion.div className="news__grid" {...rise(4)}>
-            {instagram.map((item) => (
-              <InstagramEmbed key={item.url} url={item.url} caption={item.caption} />
-            ))}
-          </motion.div>
         )}
       </section>
 

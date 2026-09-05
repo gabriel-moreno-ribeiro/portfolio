@@ -10,7 +10,7 @@ const ASSEMBLY_CONFIG = [
   { material: "tire", index: 3, dir: [-1.8, -1.5, -1.2], rotate: [0, 0, -0.8], phase: 0.09 },
   { material: "body", dir: [0, 2.5, 0], rotate: [0, 0, 0], phase: 0.2 },
   { material: "interior", dir: [0, 2.5, 0], rotate: [0, 0, 0], phase: 0.2 },
-  { material: "glass", dir: [0, 3.5, -0.3], rotate: [-0.3, 0, 0], phase: 0.7 },
+  { material: "glass", dir: [0, 3.5, -0.3], rotate: [-0.3, 0, 0], phase: 0.45 },
 ];
 
 const EXPLOSION_STRENGTH = 200;
