@@ -201,14 +201,15 @@ export class ShelfEngine {
   private focusCameraPosition = new THREE.Vector3();
   private focusCameraTarget = new THREE.Vector3();
   private responsiveBrowseCamera = browseCamera.clone();
+  private responsiveBrowseTarget = browseTarget.clone();
   private lastTimestamp = 0;
   private lastDiagnosticsAt = 0;
   private isDisposed = false;
   private hemisphere!: THREE.HemisphereLight;
   private keyLight!: THREE.DirectionalLight;
   private rimLight!: THREE.DirectionalLight;
-  private wallMaterial!: THREE.MeshStandardMaterial;
-  private groundMaterial!: THREE.MeshStandardMaterial;
+  private wallMaterial!: THREE.MeshLambertMaterial;
+  private groundMaterial!: THREE.MeshLambertMaterial;
   private shelfMaterial!: THREE.MeshStandardMaterial;
 
   constructor(
@@ -288,10 +289,7 @@ export class ShelfEngine {
     const key = new THREE.DirectionalLight("#fff6e7", 4.6);
     key.position.set(-4.2, 7.4, 5.5);
     key.castShadow = true;
-    key.shadow.mapSize.set(
-      1024,
-      1024,
-    );
+    key.shadow.mapSize.set(512, 512);
     key.shadow.camera.left = -8;
     key.shadow.camera.right = 8;
     key.shadow.camera.top = 6;
@@ -307,36 +305,24 @@ export class ShelfEngine {
     this.scene.add(rim);
     this.rimLight = rim;
 
-    const warmBounce = new THREE.PointLight("#d79b72", 1.2, 10, 2);
-    warmBounce.position.set(-3, 0.4, 3.2);
-    this.scene.add(warmBounce);
-
     const wall = new THREE.Mesh(
       new THREE.PlaneGeometry(34, 18),
-      new THREE.MeshStandardMaterial({
-        color: "#eee8db",
-        roughness: 1,
-        metalness: 0,
-      }),
+      new THREE.MeshLambertMaterial({ color: "#eee8db" }),
     );
     wall.position.set(0, 5, -3.2);
     wall.receiveShadow = true;
     this.scene.add(wall);
-    this.wallMaterial = wall.material as THREE.MeshStandardMaterial;
+    this.wallMaterial = wall.material as THREE.MeshLambertMaterial;
 
     const ground = new THREE.Mesh(
       new THREE.PlaneGeometry(36, 18),
-      new THREE.MeshStandardMaterial({
-        color: "#e7dfd0",
-        roughness: 0.94,
-        metalness: 0,
-      }),
+      new THREE.MeshLambertMaterial({ color: "#e7dfd0" }),
     );
     ground.rotation.x = -Math.PI / 2;
     ground.position.y = -0.24;
     ground.receiveShadow = true;
     this.scene.add(ground);
-    this.groundMaterial = ground.material as THREE.MeshStandardMaterial;
+    this.groundMaterial = ground.material as THREE.MeshLambertMaterial;
 
     this.scene.add(this.shelfGroup);
     this.shelfGroup.add(this.shelfFurniture);
@@ -374,7 +360,7 @@ export class ShelfEngine {
     });
 
     const shelfWidth = cursor + 8;
-    const shelfGeometry = new RoundedBoxGeometry(shelfWidth, 0.22, 1.72, 4, 0.045);
+    const shelfGeometry = new RoundedBoxGeometry(shelfWidth, 0.22, 1.72, 2, 0.045);
     const shelfMaterial = new THREE.MeshStandardMaterial({
       color: shelfColor,
       roughness: 0.62,
@@ -389,7 +375,7 @@ export class ShelfEngine {
     this.shelfMaterial = shelfMaterial;
 
     const shelfEdge = new THREE.Mesh(
-      new RoundedBoxGeometry(shelfWidth, 0.12, 0.16, 3, 0.025),
+      new RoundedBoxGeometry(shelfWidth, 0.12, 0.16, 2, 0.025),
       new THREE.MeshStandardMaterial({
         color: "#4b3429",
         roughness: 0.46,
@@ -443,7 +429,7 @@ export class ShelfEngine {
         width - 0.075,
         book.height - 0.105,
         Math.max(0.08, depth - 0.052),
-        3,
+        2,
         0.018,
       ),
       paperMaterial,
@@ -457,7 +443,7 @@ export class ShelfEngine {
       width,
       book.height,
       0.034,
-      4,
+      2,
       0.025,
     );
     const frontBoard = new THREE.Mesh(boardGeometry, boardMaterial);
@@ -475,7 +461,7 @@ export class ShelfEngine {
     physical.add(backBoard);
 
     const spine = new THREE.Mesh(
-      new RoundedBoxGeometry(0.055, book.height - 0.01, depth + 0.012, 3, 0.018),
+      new RoundedBoxGeometry(0.055, book.height - 0.01, depth + 0.012, 2, 0.018),
       boardMaterial,
     );
     spine.name = "spine";
@@ -488,7 +474,7 @@ export class ShelfEngine {
       roughness: 0.62,
       metalness: 0.2,
     });
-    const headbandGeometry = new THREE.CylinderGeometry(0.017, 0.017, width - 0.1, 10);
+    const headbandGeometry = new THREE.CylinderGeometry(0.017, 0.017, width - 0.1, 6);
     headbandGeometry.rotateZ(Math.PI / 2);
     const headbandTop = new THREE.Mesh(headbandGeometry, headbandMaterial);
     headbandTop.position.set(0, book.height * 0.5 - 0.045, 0);
@@ -626,7 +612,7 @@ export class ShelfEngine {
         ? event.deltaX
         : event.deltaY;
     this.targetScrollIndex = clamp(
-      this.targetScrollIndex + dominant * 0.0024,
+      this.targetScrollIndex + dominant * 0.005,
       0,
       this.runtimeBooks.length - 1,
     );
@@ -846,6 +832,14 @@ export class ShelfEngine {
         }
         return;
       }
+      // Fast scrolling should slide the shelf, not animate every book in and
+      // out. Swap the presented book only once the scroll has settled.
+      if (
+        Math.abs(this.targetScrollIndex - this.scrollIndex) > 0.12 ||
+        performance.now() - this.lastInputTime < 110
+      ) {
+        return;
+      }
 
       this.motionBookIndex = this.presentedIndex;
       this.browseMotionPhase =
@@ -963,7 +957,7 @@ export class ShelfEngine {
         this.responsiveBrowseCamera,
         1 - Math.exp(-(this.reducedMotion ? 18 : 7) * delta),
       );
-      this.camera.lookAt(browseTarget);
+      this.camera.lookAt(this.responsiveBrowseTarget);
     } else if (this.mode === "focusing") {
       this.focusProgress = clamp(
         this.focusProgress +
@@ -979,7 +973,7 @@ export class ShelfEngine {
         this.callbacks.onMode(this.mode, this.selectedIndex);
         if (this.selectedIndex !== null) {
           this.callbacks.onStatus(
-            `Inspecting ${this.runtimeBooks[this.selectedIndex].data.shortTitle}`,
+            `Looking at ${this.runtimeBooks[this.selectedIndex].data.shortTitle}`,
           );
         }
       }
@@ -996,7 +990,7 @@ export class ShelfEngine {
         this.responsiveBrowseCamera,
         1 - Math.exp(-(this.reducedMotion ? 24 : 14) * delta),
       );
-      this.camera.lookAt(browseTarget);
+      this.camera.lookAt(this.responsiveBrowseTarget);
       if (this.focusProgress <= 0) {
         if (this.selectedIndex !== null) {
           this.commitBookPose(
@@ -1008,7 +1002,7 @@ export class ShelfEngine {
         this.selectedIndex = null;
         this.mode = "browse";
         this.callbacks.onMode(this.mode, null);
-        this.callbacks.onStatus(`${this.booksData.length} volumes ready`);
+        this.callbacks.onStatus(`${this.booksData.length} books`);
         this.canvas.focus({ preventScroll: true });
       }
     }
@@ -1060,7 +1054,9 @@ export class ShelfEngine {
 
       const isSelected = book.index === this.selectedIndex;
       book.content.visible = !isolated || isSelected;
-      book.content.position.y = isSelected ? motionFocus * 0.04 : 0;
+      book.content.position.y =
+        (book.pose.scale - 1) * book.data.height * 0.5 +
+        (isSelected ? motionFocus * 0.04 : 0);
 
       const idleTarget =
         isSelected && this.mode === "inspect" && !this.reducedMotion ? 1 : 0;
@@ -1170,9 +1166,10 @@ export class ShelfEngine {
     const dprCap = 1.25;
     this.responsiveBrowseCamera.set(
       0,
-      width < 760 ? 1.5 : browseCamera.y,
-      width < 760 ? 8.3 : browseCamera.z,
+      width < 760 ? 1.7 : browseCamera.y,
+      width < 760 ? 9.8 : browseCamera.z,
     );
+    this.responsiveBrowseTarget.set(0, width < 760 ? 0.75 : browseTarget.y, browseTarget.z);
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, dprCap));
     this.renderer.setSize(width, height, false);
     this.camera.aspect = width / height;
@@ -1181,7 +1178,7 @@ export class ShelfEngine {
     if (this.mode === "browse" && this.focusProgress < 0.01) {
       this.camera.clearViewOffset();
       this.camera.position.copy(this.responsiveBrowseCamera);
-      this.camera.lookAt(browseTarget);
+      this.camera.lookAt(this.responsiveBrowseTarget);
     } else if (this.mode === "inspect" && this.selectedIndex !== null) {
       const worldPosition = new THREE.Vector3();
       this.runtimeBooks[this.selectedIndex].content.getWorldPosition(
@@ -1432,14 +1429,14 @@ export class ShelfEngine {
   returnToShelf() {
     if (this.mode === "browse" && this.pendingFocusIndex !== null) {
       this.pendingFocusIndex = null;
-      this.callbacks.onStatus("Opening cancelled");
+      this.callbacks.onStatus("Cancelled");
       return;
     }
     if (this.mode === "browse" || this.mode === "returning") return;
     this.controls.enabled = false;
     this.mode = "returning";
     this.callbacks.onMode(this.mode, this.selectedIndex);
-    this.callbacks.onStatus("Returning to the complete shelf");
+    this.callbacks.onStatus("Back to the shelf");
   }
 
   resetFocusView() {

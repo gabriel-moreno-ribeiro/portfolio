@@ -30,12 +30,12 @@ function Blog() {
           <FiArrowLeft /> Back
         </button>
         <h1 className="page-title">Blog.</h1>
-        <p className="page-subtitle">Thoughts on building, research, and everything in between.</p>
+        <p className="page-subtitle">Notes on what I'm building and reading.</p>
 
         <div className="page-empty-state">
           <FiEdit3 className="page-empty-state__icon" />
-          <h3>Coming soon</h3>
-          <p>I'm working on my first posts. Check back soon.</p>
+          <h3>Not yet</h3>
+          <p>Nothing published yet. The first posts are on the way.</p>
         </div>
       </motion.div>
       <Footer />

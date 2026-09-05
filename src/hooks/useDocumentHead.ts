@@ -26,7 +26,7 @@ export function useDocumentHead({ title, description, canonical }: DocumentHeadO
       if (meta) {
         meta.setAttribute(
           'content',
-          'Gabriel Moreno Ribeiro — 18-year-old founder and researcher on a build year. Building Backoffice AI for SMBs at HIBEEX. 39 olympiad medals. Founder of Projeto Candela.'
+          'Gabriel Moreno Ribeiro, 18, founder and researcher on a build year. Co-founder and CEO of HIBEEX (backoffice AI for small and medium businesses), founder of Projeto Candela, 39 olympiad medals.'
         );
       }
       const link = document.querySelector('link[rel="canonical"]');

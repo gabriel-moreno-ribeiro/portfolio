@@ -19,7 +19,7 @@ const workExperience = [
     company: 'HIBEEX',
     date: 'January 2026 - Present',
     points: [
-      "Building <span class='black'>Backoffice AI</span> for small and medium businesses — raw data in, decisions out",
+      "Building <span class='black'>backoffice AI</span> for small and medium businesses: raw data in, decisions out",
       "One of <span class='black'>6 startups</span> in the <span class='black'>Canastra Ventures AI Residency</span>",
       "Stack: <span class='black'>TypeScript, Next.js, Node.js, Supabase, PostgreSQL, AWS</span>",
     ],
@@ -38,8 +38,8 @@ const workExperience = [
     company: 'GSAT Education',
     date: 'November 2025 - May 2026',
     points: [
-      "Built an <span class='black'>EdTech platform</span> for standardized test prep from scratch",
-      "Owned product, engineering, and go-to-market as founding CEO",
+      "Built a <span class='black'>test-prep platform</span> from scratch",
+      "Product, engineering and go-to-market, as founding CEO",
     ],
   },
   {
@@ -66,8 +66,8 @@ const workExperience = [
     date: 'January 2023 - July 2025',
     points: [
       "One of <span class='black'>14 students</span> selected nationally for Escola de Talentos",
-      "Thesis on chemical kinetics under <span class='black'>Prof. Juliano Bonacin, Ph.D.</span> — <span class='black'>97% accuracy</span>, 59 pages",
-      "Covered quantum mechanics, relativity, statistical physics",
+      "Thesis on chemical kinetics with <span class='black'>Prof. Juliano Bonacin, Ph.D.</span>: 59 pages, <span class='black'>97% accuracy</span>",
+      "Quantum mechanics, relativity, statistical physics",
     ],
   },
 ];

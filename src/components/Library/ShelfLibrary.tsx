@@ -25,7 +25,7 @@ export default function ShelfLibrary() {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [mode, setMode] = useState<ShelfMode>("browse");
   const [ready, setReady] = useState(false);
-  const [status, setStatus] = useState("Preparing the shelf");
+  const [status, setStatus] = useState("Loading the shelf");
 
   const activeBook = catalog[activeIndex];
   const selectedBook = useMemo(() => (selectedIndex === null ? null : catalog[selectedIndex]), [selectedIndex]);
@@ -52,7 +52,7 @@ export default function ShelfLibrary() {
         onStatus: setStatus,
         onReady: () => {
           setReady(true);
-          setStatus(`${catalog.length} volumes ready`);
+          setStatus(`${catalog.length} books`);
         },
       });
       engine.setTheme(themeRef.current);
@@ -114,7 +114,7 @@ export default function ShelfLibrary() {
         role="application"
         tabIndex={0}
         data-drag-me={true}
-        aria-label={`Interactive three-dimensional shelf of ${catalog.length} books. Drag or use the arrow keys to browse. Press Enter to inspect the selected book.`}
+        aria-label={`A shelf of ${catalog.length} books. Drag or use the arrow keys to browse. Press Enter to open the selected book.`}
       />
 
       <div className="library__nav">
@@ -123,21 +123,21 @@ export default function ShelfLibrary() {
 
       <div className="library__eyebrow">
         <p className="library__crumb">
-          <Link to="/">Home</Link>
+          <Link to="/" className="page-back"><FiArrowLeft aria-hidden="true" /> Home</Link>
           <span>Library</span>
-          <span>{catalog.length} volumes</span>
+          <span>{catalog.length} books</span>
         </p>
-        <p className="library__status" role="status" aria-live="polite">{status}</p>
+        <p className="sr-only" role="status" aria-live="polite">{status}</p>
       </div>
 
       <section className="library__caption" aria-hidden={isFocused}>
         <AnimatePresence mode="popLayout" initial={false}>
           <motion.div
             key={activeBook.id}
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.34, ease: EASE }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.3, ease: EASE }}
           >
             <p className="library__index">
               <span>{pad(activeIndex + 1)}</span>
@@ -151,9 +151,9 @@ export default function ShelfLibrary() {
               className="library__pill library__inspect"
               disabled={isFocused}
               onClick={() => engineRef.current?.focusBook(activeIndex)}
-              aria-label={`Inspect ${activeBook.title}`}
+              aria-label={`Open ${activeBook.title}`}
             >
-              Inspect
+              Open
               <FiArrowUpRight aria-hidden="true" />
             </button>
           </motion.div>
@@ -183,13 +183,7 @@ export default function ShelfLibrary() {
             </button>
           ))}
         </div>
-        <p className="library__hint" aria-hidden="true">
-          <span>DRAG</span>
-          <i />
-          <span>SCROLL</span>
-          <i />
-          <span>ARROW KEYS</span>
-        </p>
+        <p className="library__hint" aria-hidden="true">Drag, scroll, or use the arrow keys</p>
       </nav>
 
       <aside className="library__panel" aria-hidden={!isFocused} aria-label={selectedBook ? `Details for ${selectedBook.title}` : "Book details"}>
@@ -198,7 +192,7 @@ export default function ShelfLibrary() {
             <div className="library__panel-top">
               <button type="button" className="library__pill library__back" onClick={() => engineRef.current?.returnToShelf()}>
                 <FiArrowLeft aria-hidden="true" />
-                Back to shelf
+                Back to the shelf
               </button>
               <p className="library__panel-pos">
                 <span>{pad(selectedIndex! + 1)}</span>
@@ -214,7 +208,6 @@ export default function ShelfLibrary() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, ease: EASE, delay: 0.12 }}
             >
-              <p className="library__panel-eyebrow">{siteConfig.editionEyebrow}</p>
               <h2 className="library__panel-title">{selectedBook.title}</h2>
               <p className="library__panel-author">{selectedBook.author}</p>
               <p className="library__panel-desc">{selectedBook.description}</p>
@@ -228,7 +221,7 @@ export default function ShelfLibrary() {
 
               <dl className="library__facts">
                 <div>
-                  <dt>Format</dt>
+                  <dt>Edition</dt>
                   <dd>{selectedBook.format}</dd>
                 </div>
                 <div>
@@ -258,7 +251,7 @@ export default function ShelfLibrary() {
             </motion.div>
 
             <div className="library__controls" aria-label="Inspection controls">
-              <span>Drag to orbit</span>
+              <span>Drag to turn it</span>
               <span>Scroll to zoom</span>
               <button type="button" onClick={() => engineRef.current?.resetFocusView()}>Reset view</button>
             </div>
@@ -272,7 +265,7 @@ export default function ShelfLibrary() {
           <span />
           <span />
         </div>
-        <p>Assembling {catalog.length} volumes</p>
+        <p>Loading the shelf</p>
       </div>
 
       <p className="library__credit">

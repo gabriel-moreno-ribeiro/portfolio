@@ -226,7 +226,7 @@ const commands: CommandDefinition[] = [
     execute: (ctx) => {
       ctx.writeln("visitor@gabriel-portfolio");
       ctx.writeln("");
-      ctx.writeln("Welcome! You're exploring Gabriel Moreno Ribeiro's portfolio terminal.");
+      ctx.writeln("A visitor, poking around Gabriel Moreno Ribeiro's terminal.");
       ctx.writeln(`Type ${green('"help"')} to see what you can do here.`);
     },
   },
@@ -357,7 +357,7 @@ const commands: CommandDefinition[] = [
       if (ctx.args.join(" ").toLowerCase() === "hire-me") {
         ctx.writeln(yellow("=== PERMISSION GRANTED ==="));
         ctx.writeln("");
-        ctx.writeln("Excellent decision! Gabriel would love to hear from you.");
+        ctx.writeln("Gabriel would like to hear from you.");
         ctx.writeln("");
         ctx.writeln(`  Email:    ${green(contact.email)}`);
         ctx.writeln(`  LinkedIn: ${green(contact.linkedin)}`);

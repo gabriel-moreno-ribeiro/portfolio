@@ -1,6 +1,6 @@
 import { motion } from 'motion/react';
 import { useMemo } from 'react';
-import { FiDownload } from 'react-icons/fi';
+import { FiArrowLeft, FiDownload } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar/Navbar';
 import Footer from '../components/Shared/Footer';
@@ -70,9 +70,8 @@ function Story() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.55, ease: EASE, delay: 0.08 }}
       >
-        <p className="story__eyebrow"><Link to="/">Home</Link><i />{story.eyebrow}</p>
+        <p className="story__eyebrow"><Link to="/" className="page-back"><FiArrowLeft aria-hidden="true" /> Home</Link></p>
         <h1 className="story__title">{story.title}</h1>
-        <p className="story__subtitle">{story.subtitle}</p>
         <div className="story__meta">
           <span>{minutes} min read</span>
           <i />

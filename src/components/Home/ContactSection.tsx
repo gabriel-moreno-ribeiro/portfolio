@@ -81,8 +81,7 @@ function ContactSection() {
           Let's <em>talk.</em>
         </h2>
         <p className="contact-section__lead">
-          Building something, hiring, doing research, or just curious? Tell me about it.
-          I read and answer every message.
+          Building something, hiring, or just curious? Write to me.
         </p>
         <ul className="contact-section__channels">
           {channels.map(({ label, value, href, Icon }) => (
@@ -110,7 +109,7 @@ function ContactSection() {
           <div className="contact-section__sent" role="status">
             <span className="contact-section__sent-icon"><FiCheck /></span>
             <h3>Message sent.</h3>
-            <p>Thanks for reaching out. I'll get back to you soon.</p>
+            <p>Got it. I'll write back soon.</p>
             <button type="button" className="contact-section__link-btn" onClick={reset}>
               Send another message
             </button>
@@ -161,7 +160,6 @@ function ContactSection() {
               <button type="submit" className="contact-section__submit" disabled={submitting}>
                 {submitting ? 'Sending...' : <>Send message <FiSend /></>}
               </button>
-              <span className="contact-section__hint">Usually replies within a day.</span>
             </div>
           </form>
         )}

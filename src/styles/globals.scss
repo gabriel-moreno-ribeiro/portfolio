@@ -385,6 +385,30 @@ img {
   > * { pointer-events: auto; }
 }
 
+.page-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px 6px 10px;
+  border: 1.5px solid var(--border);
+  border-radius: 36px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: none;
+  color: var(--fg-muted);
+  text-decoration: none;
+  transition: color 0.2s, border-color 0.2s, background-color 0.2s;
+
+  svg { transition: transform 0.2s; }
+
+  &:hover {
+    color: var(--fg);
+    border-color: var(--fg);
+    svg { transform: translateX(-2px); }
+  }
+}
+
 .page-wrapper {
   display: flex;
   flex-direction: column;

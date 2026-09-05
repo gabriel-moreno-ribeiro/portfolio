@@ -3,10 +3,10 @@ import { useEffect, useState } from "react";
 import NumberStatsCard from "./NumberStatsCard";
 
 const STATS = [
-  { img: '/stats/obfep.webp', imgPadding: 6, value: 39, label: 'Olympiad Medals (19 Gold)' },
-  { img: '/stats/screwdriver.webp', imgPadding: 18, value: 3392, label: 'Students Impacted (Projeto Candela)' },
+  { img: '/stats/obfep.webp', imgPadding: 6, value: 39, label: 'olympiad medals (19 gold)' },
+  { img: '/stats/screwdriver.webp', imgPadding: 18, value: 3392, label: 'students reached (Projeto Candela)' },
   { img: '/stats/sat.webp', imgPadding: 18, prefix: 'SAT ', value: 1510, label: '/ 1600 (Top 1% Brazil)' },
-  { img: '/stats/fe.webp', imgPadding: 4, value: 0.7, decimals: 1, suffix: '%', label: 'Acceptance — Fundação Estudar' },
+  { img: '/stats/fe.webp', imgPadding: 4, value: 0.7, decimals: 1, suffix: '%', label: 'acceptance rate, Fundação Estudar' },
 ];
 
 // Counts from 0 to value over ~1.1s with an ease-out; restarts whenever value changes.

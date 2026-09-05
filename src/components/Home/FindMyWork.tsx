@@ -18,14 +18,14 @@ interface FeaturedItem {
 const featured: FeaturedItem[] = [
   {
     slug: "hibeex",
-    title: "HIBEEX — Backoffice AI for SMBs",
-    desc: "Backoffice AI for small and medium businesses. Raw data in, decisions out. One of 6 startups in the Canastra Ventures AI Residency.",
+    title: "HIBEEX: backoffice AI for SMBs",
+    desc: "Backoffice AI for small and medium businesses: raw data in, decisions out. One of 6 startups in the Canastra Ventures AI Residency.",
     tags: ["TypeScript", "Next.js", "Supabase", "AWS", "AI/ML"],
   },
   {
     slug: "candela",
     title: "Projeto Candela",
-    desc: "Personally built and distributed low-cost physics lab kits to 28 public schools. 3,392 students reached. Failure rates: 30% down to 10%.",
+    desc: "Low-cost physics lab kits I built and delivered to 28 public schools. 3,392 students so far. Physics failure rates in those classes went from 30% to 10%.",
     tags: ["3,392 students", "28 schools", "30% → 10%"],
   },
   {
@@ -37,7 +37,7 @@ const featured: FeaturedItem[] = [
   {
     slug: "gsat",
     title: "GSAT Education",
-    desc: "EdTech platform for standardized test prep, built from scratch as founding CEO.",
+    desc: "A test-prep platform I built from scratch as founding CEO.",
     tags: ["React", "TypeScript", "Node.js", "EdTech"],
   },
 ];

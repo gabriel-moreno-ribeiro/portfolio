@@ -25,13 +25,13 @@ const CanvasComponent = shouldSkip3D
 const BG_SETTLE_DELAY = 0.7;
 
 const bottomTexts = [
-  `Co-Founder & CEO of <span class="black">HIBEEX</span>. Building Backoffice AI for small and medium businesses.`,
-  `One of <span class="black">6 startups</span> picked for the <span class="black">Canastra Ventures AI Residency</span>.`,
-  `<span class="black">39 olympiad medals</span> (19 gold) in math, physics, chemistry, and astronomy.`,
-  `Ran an <span class="black">RCT with 208 students</span> on fintech and savings, advised by a Harvard Ph.D.`,
-  `Founded <span class="black">Projeto Candela</span>: physics kits now in 28 public schools, reaching <span class="black">3,392 students</span>.`,
+  `Co-founder and CEO of <span class="black">HIBEEX</span>. We build backoffice AI for small and medium businesses.`,
+  `HIBEEX is one of <span class="black">6 startups</span> in the <span class="black">Canastra Ventures AI Residency</span>.`,
+  `<span class="black">39 olympiad medals</span>, 19 of them gold, in math, physics, chemistry and astronomy.`,
+  `Ran a randomized trial with <span class="black">208 students</span> on whether fintech apps change how teenagers save.`,
+  `Started <span class="black">Projeto Candela</span>: physics kits in 28 public schools, <span class="black">3,392 students</span> so far.`,
   `Admitted to <span class="black">St Andrews</span> with a Global Merit Scholarship.`,
-  `<span class="black">Fundação Estudar PREP</span> scholar. 70 picked from 10,000+ applicants.`,
+  `<span class="black">Fundação Estudar PREP</span> scholar, one of 70 picked from 10,000+ applicants.`,
 ];
 
 function Hero() {
@@ -119,7 +119,7 @@ function Hero() {
             ease: 'easeOut',
           }}
         >
-          18, from Salvador, Bahia. On a build year: founder of HIBEEX and Projeto Candela, researcher, 39 olympiad medals along the way.
+          Building Backoffice AI for Small and Medium Businesses @ HIBEEX. Founder @ Projeto Candela.
         </motion.p>
         <motion.div
           className="btn-flex"

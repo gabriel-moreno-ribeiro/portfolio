@@ -37,7 +37,7 @@ const researchItems: ResearchItem[] = [
     year: '2023-2025',
     advisor: 'Prof. Juliano Bonacin, Ph.D.',
     abstract:
-      '59-page thesis modeling reaction rate mechanisms — 97% accuracy using numerical methods. Covers steady-state approximation, Michaelis-Menten kinetics, and oscillating reactions.',
+      'A 59-page thesis modeling reaction rate mechanisms with numerical methods, at 97% accuracy. Covers the steady-state approximation, Michaelis-Menten kinetics and oscillating reactions.',
     tags: ['MATLAB', 'Mathematica', 'LaTeX', 'Numerical Methods', 'Kinetics'],
     // pdf: '/research/chemical-kinetics/paper.pdf', // TODO: upload PDF to enable badge
   },
@@ -48,7 +48,7 @@ const researchItems: ResearchItem[] = [
     year: '2023-2024',
     advisor: 'Coronel Iran Domingues Machado',
     abstract:
-      'Built and distributed low-cost physics experiment kits to 28 public schools. 3,392 students. Physics failure rates went from 30% to 10% in participating classrooms.',
+      'Low-cost physics kits, built and delivered to 28 public schools. 3,392 students. Physics failure rates went from 30% to 10% in the classrooms that used them.',
     tags: ['Physics Education', 'Experimental Design', '3,392 students', '28 schools'],
     pdf: '/research/projeto-candela/paper.pdf',
   },

@@ -30,12 +30,12 @@ function ThankYou() {
         <div className="thank-you__icon">
           <FiCheck />
         </div>
-        <h1 className="thank-you__title">Message sent!</h1>
+        <h1 className="thank-you__title">Message sent.</h1>
         <p className="thank-you__desc">
-          Thanks for reaching out. I'll get back to you soon.
+          Got it. I'll write back soon.
         </p>
         <p className="thank-you__redirect">
-          Redirecting to homepage in a few seconds...
+          Taking you back home in a few seconds.
         </p>
       </motion.div>
     </div>

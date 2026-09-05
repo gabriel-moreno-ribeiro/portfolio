@@ -33,26 +33,6 @@ $story-text: 760px;
   text-transform: uppercase;
   color: var(--accent);
 
-  &::before {
-    content: "";
-    width: 36px;
-    height: 1px;
-    background: var(--accent-decor);
-  }
-
-  a {
-    color: var(--fg-muted);
-    text-decoration: none;
-    transition: color 0.2s;
-    &:hover { color: var(--fg); }
-  }
-
-  i {
-    width: 3px;
-    height: 3px;
-    border-radius: 50%;
-    background: var(--fg-muted);
-  }
 }
 
 .story__title {
@@ -216,61 +196,16 @@ $story-text: 760px;
   }
 }
 
-.fig-town__card {
-  @extend .fig-card;
-  position: absolute;
-  left: 32px;
-  bottom: 56px;
-  width: min(360px, calc(100% - 64px));
-  padding: 22px 24px;
-}
-
-.fig-town__pop {
-  margin: 0;
-  font-family: var(--font-serif);
-  font-size: 44px;
-  line-height: 1;
-  letter-spacing: -0.02em;
-  font-variant-numeric: tabular-nums;
-
-  span {
-    font-family: "DM Sans", sans-serif;
-    font-size: 15px;
-    letter-spacing: 0;
-    color: var(--fg-muted);
-  }
-}
-
-.fig-town__split {
-  display: flex;
-  height: 30px;
-  margin-top: 16px;
-  border-radius: 8px;
-  overflow: hidden;
-  background: var(--bg);
-}
-
-.fig-town__half {
+.fig-town__caption {
   display: flex;
   align-items: center;
-  overflow: hidden;
-  padding: 0 10px;
-  white-space: nowrap;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #fff;
-  background: var(--accent-decor);
+  justify-content: center;
+  gap: 12px;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
 
-  &--alt { background: var(--fg); color: var(--bg); }
-}
-
-.fig-town__note {
-  margin: 8px 0 0;
-  font-size: 12px;
-  color: var(--fg-muted);
-  font-style: italic;
+  span:first-child { font-family: var(--font-serif); font-style: italic; font-size: 20px; color: var(--fg); }
+  i { width: 24px; height: 1px; background: var(--accent-decor); }
 }
 
 // ── Porca ─────────────────────────────────────────────────────────────────────
@@ -791,36 +726,37 @@ $story-text: 760px;
   margin: 1em auto 2em;
 }
 
-.fig--truck-3d {
-  display: grid;
-  grid-template-columns: 1.1fr 1fr;
-  align-items: start;
+.fig-truck__photo {
+  img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: 24px;
+  }
 }
 
-.fig-truck__stage {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  overflow: hidden;
-
-  canvas { display: block; }
-}
-
-.fig-truck__hint {
-  position: absolute;
-  left: 50%;
-  top: 28px;
-  transform: translateX(-50%);
-  font-size: 11px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+.fig-truck__credit {
+  display: block;
+  margin-top: 10px;
+  font-size: 12px;
   color: var(--fg-muted);
-  pointer-events: none;
+  a { color: inherit; }
 }
 
-.fig-truck__steps { padding: 6vh 0 10vh; }
+.fig-truck__steps { padding: 6vh 0 4vh; }
 
-.fig--truck-3d .fig-truck__steps { padding: 26vh 0 24vh 24px; }
+@media screen and (min-width: 901px) {
+  .fig--truck {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+  .fig-truck__stage { position: sticky; top: 12vh; }
+  .fig-truck__steps { padding: 0 0 4vh; }
+  .fig-truck__step { min-height: 42vh; display: flex; align-items: center; }
+}
 
 .fig-truck__intro { margin-bottom: 8vh; }
 
@@ -835,12 +771,6 @@ $story-text: 760px;
 .fig-truck__step {
   padding: 22px 0;
   border-top: 1px solid var(--border);
-}
-
-.fig--truck-3d .fig-truck__step {
-  display: flex;
-  align-items: center;
-  min-height: 52vh;
 }
 
 .fig-truck__when {
@@ -905,7 +835,7 @@ $story-text: 760px;
   .story__body { font-size: 17px; }
   .story__quote blockquote p { font-size: 22px; }
   .fig-town__photo { height: 320px; border-radius: 20px; }
-  .fig-town__card { position: static; width: auto; margin-top: -40px; margin-inline: 16px; }
+  .fig-town__caption { flex-wrap: wrap; }
 }
 
 @media screen and (max-width: 600px) {

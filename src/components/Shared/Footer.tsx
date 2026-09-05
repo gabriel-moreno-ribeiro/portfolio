@@ -28,7 +28,7 @@ function Footer() {
     <footer className="footer" role="contentinfo">
       <div className="footer__cta">
         <p className="footer__cta-text">
-          Building cool things. Want to connect?
+          Want to talk?
         </p>
         <a
           href={`mailto:${obfuscatedEmail()}`}

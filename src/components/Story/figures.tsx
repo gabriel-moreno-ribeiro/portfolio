@@ -7,7 +7,7 @@ import { CountUp, EASE, Reveal, useCountUp, useRevealed } from './shared';
 // ── Town: waterfall photo with parallax + population count ───────────────────
 export function TownFigure() {
   const wrap = useRef<HTMLElement>(null);
-  const { ref, inView } = useRevealed();
+  const { ref, inView } = useRevealed<HTMLElement>();
   const reduced = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: wrap, offset: ['start end', 'end start'] });
   const y = useTransform(scrollYProgress, [0, 1], reduced ? ['0%', '0%'] : ['-10%', '10%']);
@@ -23,32 +23,11 @@ export function TownFigure() {
           decoding="async"
         />
       </div>
-      <div className="fig-town__card" ref={ref}>
-        <p className="fig-kicker">Missão Velha · Ceará</p>
-        <p className="fig-town__pop">
-          <CountUp value={35672} start={inView} /> <span>people</span>
-        </p>
-        <div className="fig-town__split" aria-hidden="true">
-          <motion.span
-            className="fig-town__half"
-            initial={reduced ? false : { width: 0 }}
-            animate={inView ? { width: '50%' } : undefined}
-            transition={{ duration: 1.1, ease: EASE, delay: 0.5 }}
-          >
-            my cousins
-          </motion.span>
-          <motion.span
-            className="fig-town__half fig-town__half--alt"
-            initial={reduced ? false : { width: 0 }}
-            animate={inView ? { width: '50%' } : undefined}
-            transition={{ duration: 1.1, ease: EASE, delay: 0.8 }}
-          >
-            married one
-          </motion.span>
-        </div>
-        <p className="fig-town__note">Fairly confident.</p>
-      </div>
-      <figcaption>Cachoeira de Missão Velha, in the Cariri valley.</figcaption>
+      <figcaption className="fig-town__caption" ref={ref}>
+        <span>Missão Velha, Ceará</span>
+        <i />
+        <span><CountUp value={35672} start={inView} /> people</span>
+      </figcaption>
     </figure>
   );
 }
@@ -176,7 +155,6 @@ export function LedgerFigure() {
           <span>even</span>
         </motion.p>
       </div>
-      <figcaption>Numbers, though: those he taught me to keep.</figcaption>
     </figure>
   );
 }
@@ -292,8 +270,8 @@ export function LaptopsFigure() {
         <p className="tile__num tile__num--mono">
           <CountUp value={HOURS_TOTAL} start={inView} duration={2600} format={clock} />
         </p>
-        <p className="tile__label">hours of Indian tutorials. One playlist.</p>
-        <p className="tile__foot"><span className="mono">machine #82 › BIOS<i className="typed__caret" /></span> tested fine. Crashed anyway.</p>
+        <p className="tile__label">hours of Indian YouTube tutorials</p>
+        <p className="tile__foot"><span className="mono">machine #82 › BIOS<i className="typed__caret" /></span> every part tested fine. It crashed anyway.</p>
       </div>
       <div className="tile tile--hindi" lang="hi">
         <p className="tile__num tile__num--hindi"><Typed text={HINDI} start={inView} delay={900} /></p>
@@ -336,7 +314,7 @@ export function ChatFigure() {
             </Bubble>
           )}
         </div>
-        <div className="chat__foot">62 recorded answers · one voice · hers</div>
+        <div className="chat__foot">62 questions, answered in her voice</div>
       </div>
     </figure>
   );
@@ -408,7 +386,6 @@ export function ReposFigure() {
           </motion.div>
         ))}
       </div>
-      <figcaption>They know me better than I do.</figcaption>
     </figure>
   );
 }
