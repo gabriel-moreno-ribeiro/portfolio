@@ -119,7 +119,7 @@ function Hero() {
             ease: 'easeOut',
           }}
         >
-          CEO of HIBEEX, backoffice AI for small and medium businesses. Founder of Projeto Candela. 18, on a build year.
+          Building Backoffice AI for Small and Medium Businesses @ HIBEEX. Founder @ Projeto Candela.
         </motion.p>
         <motion.div
           className="btn-flex"
