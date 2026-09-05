@@ -1,6 +1,7 @@
-import { OrbitControls, Environment } from "@react-three/drei";
+import { Environment } from "@react-three/drei";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Suspense, useEffect, useRef, useCallback } from "react";
+import { Vector3 } from "three";
 import { useThemeStore } from "../../store/themeStore";
 import { D20Truck } from "./D20Truck";
 
@@ -17,13 +18,24 @@ function RotationController({ progressRef, groupRef }) {
   return null;
 }
 
+// Model: ~13.6 wide × 13.6 tall × 33.6 long, base at y=0 (before the -2 offset).
+const TRUCK_CENTER = new Vector3(0, 4.8, 0.7);
+const TRUCK_FIT_RADIUS = 21; // half the XZ diagonal + margin, so no rotation clips
+const CAMERA_FOV = 50;
+const CAMERA_DIR = new Vector3(1, 0.42, 1).normalize();
+
+// Places the camera so the whole truck fits in the sticky column at any
+// rotation, whatever the column's aspect ratio is.
 function CameraSetup() {
-  const { camera } = useThree();
+  const { camera, size } = useThree();
   useEffect(() => {
-    camera.position.set(30, 12, 30);
-    camera.lookAt(0, 4, 0);
+    const aspect = size.width / size.height;
+    const halfFov = (CAMERA_FOV / 2) * (Math.PI / 180);
+    const distance = TRUCK_FIT_RADIUS / (Math.tan(halfFov) * Math.min(aspect, 1));
+    camera.position.copy(CAMERA_DIR).multiplyScalar(distance).add(TRUCK_CENTER);
+    camera.lookAt(TRUCK_CENTER);
     camera.updateProjectionMatrix();
-  }, [camera]);
+  }, [camera, size.width, size.height]);
   return null;
 }
 
@@ -77,12 +89,11 @@ export default function PartsAssemblingCanvas() {
   return (
     <div className="parts-assembling" ref={containerRef} data-drag-me={true}>
       <Canvas
-        camera={{ position: [30, 12, 30], fov: 50 }}
+        camera={{ fov: CAMERA_FOV }}
         gl={{ antialias: true, alpha: true }}
         style={{ width: "100%", height: "100%" }}
       >
         <CameraSetup />
-        <OrbitControls enableZoom={false} enablePan={false} enableRotate={false} />
         <directionalLight
           position={[10, 20, 10]}
           intensity={darkMode ? 1.2 : 2.5}
