@@ -72,3 +72,11 @@ Como ler: cada turno adiciona linhas abaixo. Ao retomar depois de compactação 
 - 03:49 3ª passagem (Passes A, B, C sem Lighthouse): screenshots 30/30, axe 0, links 67/67, texto sem novidades → 2 passagens limpas seguidas. Régua alta adicional: ritmo vertical medido (ok, C51) e `public/404.html` alinhada com a 404 do app (C50, precisa de rebuild). Falta olhar todas as rotas em dark mode de página inteira (só vi spots) → rodando agora.
 - 03:56 Dark mode, página inteira, 7 rotas × 3 larguras: nada novo (footer dark ok, cards ok, /story ok, /library ok). Ciclo da Fase 3 fechado: passagens 2 e 3 limpas. Código sem console.log, sem código comentado; 2 TODOs = PDFs pendentes (Decisão 10).
 - Rebuild para incluir `public/404.html` alinhada; depois duas rodadas rápidas (screenshots + axe + links) e Fase 4 pela exceção da regra 10 (duas rodadas limpas na régua alta).
+- 03:57 Commit `d32e74d`. Build final ok (35s). `git fetch`: origin/main continua em `c803cfc` (nenhum commit novo desde a Fase 0) → merge sem conflito previsto. Ponto de retorno: `c803cfc`. Rodando duas rodadas finais (screenshots com /404.html, axe, links).
+
+### Fase 4 — procedimento (a executar quando as duas rodadas fecharem limpas)
+1. `git checkout main && git merge --no-ff overnight/2026-09-05` → `git push origin main`.
+2. `npx vercel --prod` (uma vez), colar saída.
+3. `node overnight/prodcheck.mjs "Founder, HIBEEX" 15` (propagação + rotas + redirects + meta).
+4. `node overnight/screenshot.mjs https://gabrielmr.com overnight/screenshots/prod-after` + axe/links/Lighthouse em produção; comparar com `prod-before`.
+5. Rollback se quebrar: `git revert -m 1 <merge>` em main + push + `npx vercel --prod`.
