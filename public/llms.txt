@@ -52,4 +52,5 @@ Tools: Git, GitHub, Docker, Vercel, LaTeX, MATLAB, Mathematica, Figma
 
 - / — interactive portfolio (3D, terminal, hands-free gesture controls)
 - /blog/ — writing
-- /news/ — press and media mentions
+- /news — press, media mentions and Instagram posts
+- /story — personal statement

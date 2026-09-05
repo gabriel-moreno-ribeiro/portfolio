@@ -3,29 +3,22 @@ import { useEffect, useMemo, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { Vector3 } from "three";
 
-// `phase` values are fractions of the assembly window (0 = section top,
-// 1 = ASSEMBLY_END of the section scroll). Wheels roll in first, then the
-// body drops on, then the glass.
 const ASSEMBLY_CONFIG = [
-  { material: "tire", dir: [1.2, -0.6, 1.1], rotate: [0, 0, 0.8], phase: 0.0 },
-  { material: "tire", index: 1, dir: [-1.2, -0.6, 1.1], rotate: [0, 0, -0.8], phase: 0.06 },
-  { material: "tire", index: 2, dir: [1.2, -0.6, -1.1], rotate: [0, 0, 0.8], phase: 0.12 },
-  { material: "tire", index: 3, dir: [-1.2, -0.6, -1.1], rotate: [0, 0, -0.8], phase: 0.18 },
-  { material: "body", dir: [0, 1.3, 0.2], rotate: [0, 0, 0], phase: 0.3 },
-  { material: "interior", dir: [0, 1.3, 0.2], rotate: [0, 0, 0], phase: 0.3 },
-  { material: "glass", dir: [0, 1.9, 0.1], rotate: [-0.3, 0, 0], phase: 0.55 },
+  { material: "tire", dir: [1.8, -1.5, 1.2], rotate: [0, 0, 0.8], phase: 0.0 },
+  { material: "tire", index: 1, dir: [-1.8, -1.5, 1.2], rotate: [0, 0, -0.8], phase: 0.03 },
+  { material: "tire", index: 2, dir: [1.8, -1.5, -1.2], rotate: [0, 0, 0.8], phase: 0.06 },
+  { material: "tire", index: 3, dir: [-1.8, -1.5, -1.2], rotate: [0, 0, -0.8], phase: 0.09 },
+  { material: "body", dir: [0, 2.5, 0], rotate: [0, 0, 0], phase: 0.2 },
+  { material: "interior", dir: [0, 2.5, 0], rotate: [0, 0, 0], phase: 0.2 },
+  { material: "glass", dir: [0, 3.5, -0.3], rotate: [-0.3, 0, 0], phase: 0.7 },
 ];
 
-const PHASE_LENGTH = 0.45;
-// Small enough that every exploded part is still inside the frame at the top
-// of the section (wheels low, body hovering above), instead of off-screen.
-const EXPLOSION_STRENGTH = 8;
+const EXPLOSION_STRENGTH = 200;
 
 function easeInOutCubic(t) {
   return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 }
 
-// progressRef: 0..1 assembly progress (already remapped by the canvas)
 export function D20Truck({ progressRef, groupRef, ...props }) {
   const { scene } = useGLTF("/assets/3d/d20.glb");
   const clonedScene = useMemo(() => scene.clone(true), [scene]);
@@ -54,7 +47,7 @@ export function D20Truck({ progressRef, groupRef, ...props }) {
           (c) => c.material === "tire" && (c.index === idx || (c.index === undefined && idx === 0))
         );
         if (!config) {
-          config = { dir: [idx % 2 === 0 ? 1.2 : -1.2, -0.6, idx < 2 ? 1.1 : -1.1], rotate: [0, 0, 0.5], phase: idx * 0.06 };
+          config = { dir: [idx % 2 === 0 ? 1.8 : -1.8, -1.5, idx < 2 ? 1.2 : -1.2], rotate: [0, 0, 0.5], phase: idx * 0.05 };
         }
       } else {
         config = ASSEMBLY_CONFIG.find((c) => c.material === matName);
@@ -90,7 +83,7 @@ export function D20Truck({ progressRef, groupRef, ...props }) {
       const origRot = mesh.userData.originalRotation;
       if (!orig || !origRot) continue;
 
-      const phaseEnd = Math.min(phase + PHASE_LENGTH, 1.0);
+      const phaseEnd = Math.min(phase + 0.4, 1.0);
       const localProgress = Math.max(0, Math.min(1, (progress - phase) / (phaseEnd - phase)));
       const eased = easeInOutCubic(localProgress);
 
