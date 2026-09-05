@@ -288,7 +288,7 @@ function CityPanel({ city, onClose }: { city: City; onClose: () => void }) {
 }
 
 // Horizontal city timeline
-function CityTimeline({ selected, onSelect }: { selected: City | null; onSelect: (c: City) => void }) {
+function CityTimeline({ selected, onSelect, autoplay }: { selected: City | null; onSelect: (c: City) => void; autoplay: boolean }) {
   return (
     <div className="city-timeline">
       <div className="city-timeline__track">
@@ -301,6 +301,9 @@ function CityTimeline({ selected, onSelect }: { selected: City | null; onSelect:
               aria-label={city.name}
             >
               <span className="city-timeline__dot-inner" />
+              {autoplay && selected?.id === city.id && (
+                <span key={city.id} className="city-timeline__dot-progress" aria-hidden="true" />
+              )}
             </button>
             <div className="city-timeline__label">
               <span className="city-timeline__city">{city.name.split(',')[0]}</span>
@@ -316,16 +319,45 @@ function CityTimeline({ selected, onSelect }: { selected: City | null; onSelect:
 const skipGlobe =
   typeof window !== 'undefined' && window.innerWidth < 768;
 
+const AUTOPLAY_MS = 7000;
+
 function BackgroundGlobe() {
   const [selected, setSelected] = useState<City | null>(null);
+  const [pinned, setPinned] = useState(false); // a click stops the tour
+  const [inView, setInView] = useState(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
   const { darkMode } = useThemeStore();
 
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => setInView(e.isIntersecting), { threshold: 0.3 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  // Guided tour: open the first city when the section arrives, then advance every few seconds
+  useEffect(() => {
+    if (!inView || pinned) return;
+    setSelected((prev) => prev ?? CITIES[0]);
+    const id = setInterval(() => {
+      setSelected((prev) => CITIES[(CITIES.findIndex((c) => c.id === prev?.id) + 1) % CITIES.length]);
+    }, AUTOPLAY_MS);
+    return () => clearInterval(id);
+  }, [inView, pinned]);
+
   const handleSelect = (city: City) => {
+    setPinned(true);
     setSelected(selected?.id === city.id ? null : city);
   };
 
+  const handleClose = () => {
+    setPinned(true);
+    setSelected(null);
+  };
+
   return (
-    <div className="background-section" id="background">
+    <div className="background-section" id="background" ref={sectionRef}>
       <h2 className="heading" data-color-inverted="true">
         Where I Come From.
       </h2>
@@ -343,13 +375,13 @@ function BackgroundGlobe() {
         {/* ── Panel column ── */}
         <AnimatePresence>
           {selected && (
-            <CityPanel key={selected.id} city={selected} onClose={() => setSelected(null)} />
+            <CityPanel key={selected.id} city={selected} onClose={handleClose} />
           )}
         </AnimatePresence>
       </div>
 
       {/* ── Horizontal timeline ── */}
-      <CityTimeline selected={selected} onSelect={handleSelect} />
+      <CityTimeline selected={selected} onSelect={handleSelect} autoplay={inView && !pinned} />
     </div>
   );
 }

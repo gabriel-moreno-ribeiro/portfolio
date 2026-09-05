@@ -1,6 +1,7 @@
 import { lazy, Suspense, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Hero from "../components/Home/Hero";
+import MomentsStrip from "../components/Home/MomentsStrip";
 import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Shared/Footer";
 import { scrollToComponent } from "../utils/scrollToComponent";
@@ -16,8 +17,8 @@ const ContactSection = lazy(() => import("../components/Home/ContactSection"));
 // @ts-ignore
 const StickerPeel = lazy(() => import("../components/ReactBits/StickerPeel"));
 
-const NAV_SECTIONS = ['Top', 'Origins', 'Skills', 'Cool Things', 'Research', 'Professional Experience', 'Contact'];
-const NAV_IDS      = ['main-content', 'background', 'skills', 'work', 'research', 'work-experience', 'contact'];
+const NAV_SECTIONS = ['Top', 'Origins', 'Cool Things', 'Research', 'Skills', 'Professional Experience', 'Contact'];
+const NAV_IDS      = ['main-content', 'background', 'work', 'research', 'skills', 'work-experience', 'contact'];
 
 // A section is "current" once its top crosses this line of the viewport.
 const ACTIVE_LINE = 0.4;
@@ -120,20 +121,21 @@ function Home() {
 
       <Navbar />
       <Hero />
+      <MomentsStrip />
       <Suspense fallback={<div style={{ minHeight: 700 }} />}>
         <BackgroundGlobe />
-      </Suspense>
-      <Suspense fallback={null}>
-        <Skills />
       </Suspense>
       <Suspense fallback={null}>
         <FindMyWork />
       </Suspense>
       <Suspense fallback={null}>
+        <NumbersAndStats />
+      </Suspense>
+      <Suspense fallback={null}>
         <Research />
       </Suspense>
       <Suspense fallback={null}>
-        <NumbersAndStats />
+        <Skills />
       </Suspense>
       <Suspense fallback={null}>
         <HorizontalSkillsWrapper />
