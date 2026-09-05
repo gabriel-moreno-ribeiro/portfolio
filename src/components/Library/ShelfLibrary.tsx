@@ -50,7 +50,10 @@ export default function ShelfLibrary() {
           setSelectedIndex(index);
         },
         onStatus: setStatus,
-        onReady: () => setReady(true),
+        onReady: () => {
+          setReady(true);
+          setStatus(`${catalog.length} volumes ready`);
+        },
       });
       engineRef.current = engine;
       if (initialIndex > 0 || bookId) {
