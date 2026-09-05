@@ -31,13 +31,13 @@ const featured: FeaturedItem[] = [
   {
     slug: "medals",
     title: "39 Olympiad Medals (19 Gold)",
-    desc: "49 competitions in math, physics, chemistry, and astronomy. 1st of 10,000+ at IFT-UNESP. Gold at ONNEQ. 1st at OBAQ.",
+    desc: "49 competitions in math, physics, chemistry and astronomy. 1st of 10,000+ at IFT-UNESP. Gold at ONNEQ. 1st at OBAQ.",
     tags: ["19 gold", "2 international", "1st IFT-UNESP"],
   },
   {
     slug: "gsat",
     title: "GSAT Education",
-    desc: "A test-prep platform I built from scratch as founding CEO.",
+    desc: "A test-prep platform I built from scratch as founding CEO, November 2025 to May 2026.",
     tags: ["React", "TypeScript", "Node.js", "EdTech"],
   },
 ];

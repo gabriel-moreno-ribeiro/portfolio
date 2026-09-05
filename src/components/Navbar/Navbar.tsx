@@ -69,11 +69,12 @@ function Navbar() {
       href: 'https://linkedin.com/in/gabriel-moreno-ribeiro',
     },
     {
-      name: 'Github.',
+      name: 'GitHub.',
       href: 'https://github.com/gabriel-moreno-ribeiro',
     },
   ];
-  const collapsedWidth = isMobile ? '175px' : 'auto';
+  // 240px fits "Gabriel Moreno Ribeiro." at 16px plus the menu icon; 175px clipped the name
+  const collapsedWidth = isMobile ? '240px' : 'auto';
   const expandedWidth = isMobile ? 'calc(100vw - 32px)' : '700px';
 
   const navigate = useNavigate();

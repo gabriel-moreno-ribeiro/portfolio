@@ -5,12 +5,12 @@ import NumberStatsCard from "./NumberStatsCard";
 const STATS = [
   { img: '/stats/obfep.webp', imgPadding: 6, value: 39, label: 'olympiad medals (19 gold)' },
   { img: '/stats/screwdriver.webp', imgPadding: 18, value: 3392, label: 'students reached (Projeto Candela)' },
-  { img: '/stats/sat.webp', imgPadding: 18, prefix: 'SAT ', value: 1510, label: '/ 1600 (Top 1% Brazil)' },
+  { img: '/stats/sat.webp', imgPadding: 18, prefix: 'SAT ', value: 1510, grouping: false, label: '/ 1600 (Top 1% Brazil)' },
   { img: '/stats/fe.webp', imgPadding: 4, value: 0.7, decimals: 1, suffix: '%', label: 'acceptance rate, Fundação Estudar' },
 ];
 
 // Counts from 0 to value over ~1.1s with an ease-out; restarts whenever value changes.
-function CountUp({ value, decimals = 0 }: { value: number; decimals?: number }) {
+function CountUp({ value, decimals = 0, grouping = true }: { value: number; decimals?: number; grouping?: boolean }) {
   const [n, setN] = useState(0);
   useEffect(() => {
     let raf = 0;
@@ -23,7 +23,7 @@ function CountUp({ value, decimals = 0 }: { value: number; decimals?: number }) 
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
   }, [value]);
-  return <>{n.toLocaleString('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}</>;
+  return <>{n.toLocaleString('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals, useGrouping: grouping })}</>;
 }
 
 const NumbersAndStats = () => {
@@ -62,7 +62,7 @@ const NumbersAndStats = () => {
         transition={{ duration: 0.3 }}
         className="card-text"
       >
-        <span className="orange"> {stat.prefix}<CountUp value={stat.value} decimals={stat.decimals} />{stat.suffix} </span>
+        <span className="orange"> {stat.prefix}<CountUp value={stat.value} decimals={stat.decimals} grouping={stat.grouping} />{stat.suffix} </span>
         {stat.label}
       </motion.p>
     </div>

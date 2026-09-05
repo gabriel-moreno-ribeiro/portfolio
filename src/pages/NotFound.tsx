@@ -28,7 +28,7 @@ function NotFound() {
   }, [visibleLines]);
 
   return (
-    <div className="not-found">
+    <main className="not-found" id="main-content">
       <div className="not-found__bg">
         {Array.from({ length: 6 }, (_, i) => (
           <div key={i} className="not-found__scanline" style={{ animationDelay: `${i * 0.7}s` }} />
@@ -81,7 +81,7 @@ function NotFound() {
           <FiArrowLeft /> Take me home
         </Link>
       </div>
-    </div>
+    </main>
   );
 }
 

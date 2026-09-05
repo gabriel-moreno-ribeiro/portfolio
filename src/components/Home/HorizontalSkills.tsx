@@ -53,6 +53,8 @@ const HorizontalSkills = forwardRef<
           key={`icon-scrollable-${i}-${icon}`}
           alt=""
           className="icon"
+          width={120}
+          height={120}
         />
       ))}
       {/* Repeat icons for infinite looping */}
@@ -62,6 +64,8 @@ const HorizontalSkills = forwardRef<
           key={`icon-scrollable-duplicate-${i}-${icon}`}
           alt=""
           className="icon"
+          width={120}
+          height={120}
         />
       ))}
     </div>

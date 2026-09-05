@@ -20,7 +20,7 @@ function ThankYou() {
   }, [navigate]);
 
   return (
-    <div className="thank-you">
+    <main className="thank-you" id="main-content">
       <motion.div
         className="thank-you__container"
         initial={{ opacity: 0, scale: 0.95 }}
@@ -38,7 +38,7 @@ function ThankYou() {
           Taking you back home in a few seconds.
         </p>
       </motion.div>
-    </div>
+    </main>
   );
 }
 

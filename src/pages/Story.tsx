@@ -61,7 +61,7 @@ function Story() {
   let paragraphs = 0;
 
   return (
-    <div className="story">
+    <main className="story" id="main-content">
       <div className="page-nav"><Navbar /></div>
 
       <motion.header
@@ -114,7 +114,7 @@ function Story() {
       </article>
 
       <Footer />
-    </div>
+    </main>
   );
 }
 

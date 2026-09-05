@@ -1,4 +1,5 @@
 import { motion } from 'motion/react';
+import { useEffect } from 'react';
 import { FiArrowLeft, FiArrowUpRight, FiMessageSquare, FiRadio } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar/Navbar';
@@ -22,8 +23,18 @@ function News() {
     canonical: 'https://gabrielmr.com/news',
   });
 
+  // The Instagram embeds are the heaviest thing on this page; open the connection early.
+  useEffect(() => {
+    if (instagram.length === 0) return;
+    const link = document.createElement('link');
+    link.rel = 'preconnect';
+    link.href = 'https://www.instagram.com';
+    document.head.appendChild(link);
+    return () => { link.remove(); };
+  }, []);
+
   return (
-    <div className="news">
+    <main className="news" id="main-content">
       <div className="page-nav"><Navbar /></div>
 
       <header className="news__header">
@@ -80,7 +91,7 @@ function News() {
       </section>
 
       <Footer />
-    </div>
+    </main>
   );
 }
 

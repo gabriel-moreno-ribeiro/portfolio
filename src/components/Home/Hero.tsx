@@ -7,7 +7,7 @@ import {
   useRef,
   useState,
 } from 'react';
-import { FiArrowRight, FiCalendar, FiLink } from 'react-icons/fi';
+import { FiArrowRight, FiCalendar } from 'react-icons/fi';
 import useIsMobile from '../../hooks/useIsMobile';
 import { scrollToComponent } from '../../utils/scrollToComponent';
 import CommonButton from '../Shared/CommonButton';
@@ -119,7 +119,7 @@ function Hero() {
             ease: 'easeOut',
           }}
         >
-          Building Backoffice AI for Small and Medium Businesses @ HIBEEX. Founder @ Projeto Candela.
+          CEO of HIBEEX, backoffice AI for small and medium businesses. Founder of Projeto Candela.
         </motion.p>
         <motion.div
           className="btn-flex"
@@ -131,21 +131,16 @@ function Hero() {
             ease: 'easeOut',
           }}
         >
-          <CommonButton
-            text="Connect"
-            Icon={<FiLink className="icon-link" />}
-            iconPosition="right"
-            onClick={() => window.open('https://linkedin.com/in/gabriel-moreno-ribeiro')}
-          />
+          {/* Two calls to action: the work first, then a call. LinkedIn lives in Contact and the footer. */}
           <CommonButton
             text="See Work"
-            variant="outline"
             Icon={<FiArrowRight className="icon-arrow" />}
             iconPosition="right"
             onClick={() => scrollToComponent('work')}
           />
           <CommonButton
             text="Book a Call"
+            variant="outline"
             Icon={<FiCalendar className="icon-link" />}
             iconPosition="right"
             onClick={() => window.open('https://cal.com/gabrielmribeiro', '_blank')}

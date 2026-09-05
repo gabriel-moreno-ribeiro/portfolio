@@ -20,7 +20,8 @@
 
   &.primary {
     // Fixed: use explicit fg/bg so legibility doesn't depend on a z-index trick
-    color: #fff;
+    // (--bg, not #fff: in dark mode --fg is white and the label would vanish)
+    color: var(--bg);
     background-color: var(--fg);
     border: 2px solid var(--fg);
     transition: background-color 0.3s, color 0.3s, border-color 0.3s;
