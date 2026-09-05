@@ -182,3 +182,12 @@
     }
   }
 }
+
+// Narrow phones (<= 360px): the collapsed pill (240px) and the two floating toggles do not fit side by side
+// and the toggles covered the end of the name. The expanded menu already carries camera + theme toggles.
+@media screen and (max-width: 360px) {
+  .toggle-button,
+  .handsfree-button {
+    display: none !important;
+  }
+}

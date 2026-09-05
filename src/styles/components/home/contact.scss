@@ -170,7 +170,7 @@
       &:focus {
         outline: none;
         border-color: $primary-orange;
-        box-shadow: 0 0 0 3px rgba($primary-orange, 0.18);
+        box-shadow: 0 0 0 3px rgba($primary-orange, 0.35); // focus ring readable at a glance (was 0.18)
       }
     }
 
