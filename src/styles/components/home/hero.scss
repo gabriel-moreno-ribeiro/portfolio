@@ -107,7 +107,7 @@
 
 @media screen and (max-width: 600px) {
   .hero-section {
-    margin-top: 48px;
+    margin-top: 88px; // no robot on phones: clear the fixed navbar (was 48px, the name touched the pill)
 
     .heading-section {
       max-width: 100%;
