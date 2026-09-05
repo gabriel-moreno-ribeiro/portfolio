@@ -43,3 +43,5 @@ yarn-error.log*
 
 # letta agent local state
 /.letta
+/overnight/lighthouse
+/overnight/preview.log
