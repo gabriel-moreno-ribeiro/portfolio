@@ -309,6 +309,11 @@
   }
 }
 
+// Phones have no globe (skipGlobe): the timeline drives the panel, so "close" would only leave a hole
+@media (max-width: 600px) {
+  .city-panel__close { display: none; }
+}
+
 // Guided-tour cue on the active city dot (restarts per city)
 .city-timeline__dot { position: relative; }
 .city-timeline__dot-progress {

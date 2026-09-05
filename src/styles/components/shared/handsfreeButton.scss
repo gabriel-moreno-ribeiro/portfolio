@@ -49,3 +49,11 @@
     visibility: hidden;
   }
 }
+
+// Phones: hand-tracking is a desktop/webcam feature and the toggle also lives in the expanded menu;
+// the floating button only crowded the navbar.
+@media screen and (max-width: 600px) {
+  .handsfree-button {
+    display: none !important;
+  }
+}

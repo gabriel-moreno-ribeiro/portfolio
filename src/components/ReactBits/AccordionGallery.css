@@ -118,10 +118,36 @@
 
 .ag-panel--active .ag-panel__media { --ag-gray: 0; --ag-dim: 0; }
 
-@media (max-width: 520px) {
-  .accordion-gallery { flex-direction: column; perspective: none; height: auto !important; }
-  .ag-panel { min-height: 72px; transform: none !important; }
-  .accordion-gallery .ag-panel__media { width: 100%; height: var(--ag-media-size); }
+/* Phones: no hover, so the accordion becomes a swipeable row of full-colour photos
+   (the stacked version was eight 70px grey strips). !important beats the GSAP inline styles. */
+@media (max-width: 600px) {
+  .accordion-gallery {
+    flex-direction: row;
+    perspective: none;
+    height: auto !important;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 4px;
+    scrollbar-width: none;
+  }
+  .accordion-gallery::-webkit-scrollbar { display: none; }
+  .ag-panel {
+    flex: 0 0 82% !important;
+    aspect-ratio: 4 / 3;
+    min-height: 0;
+    scroll-snap-align: start;
+    transform: none !important;
+  }
+  .accordion-gallery .ag-panel__media {
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    transform: none !important;
+    filter: none !important;
+  }
+  .ag-panel__overlay { background: none !important; }
 }
 
 @media (prefers-reduced-motion: reduce) {

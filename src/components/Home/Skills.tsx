@@ -127,15 +127,18 @@ const Skills: React.FC = () => {
         Some of the languages <br />
         & tools I build with.
       </p>
-      <SkillsCanvas
-        iconUrls={iconUrls}
-        finalPositions={finalPositions}
-        isMobile={isMobile}
-        triggerEntrance={inView}
-        cardStartIndex={BUILTIN_COUNT}
-        cardBg={darkMode ? "#16162e" : "#ffffff"}
-        cardBorder={darkMode ? "rgba(255,255,255,0.16)" : "rgba(0,0,0,0.08)"}
-      />
+      {/* The physics playground needs a mouse and ~1000px of height; phones get the logo strip below instead. */}
+      {!isMobile && (
+        <SkillsCanvas
+          iconUrls={iconUrls}
+          finalPositions={finalPositions}
+          isMobile={isMobile}
+          triggerEntrance={inView}
+          cardStartIndex={BUILTIN_COUNT}
+          cardBg={darkMode ? "#16162e" : "#ffffff"}
+          cardBorder={darkMode ? "rgba(255,255,255,0.16)" : "rgba(0,0,0,0.08)"}
+        />
+      )}
     </div>
   );
 };

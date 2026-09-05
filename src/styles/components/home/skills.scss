@@ -40,7 +40,15 @@
 }
 
 @media screen and (max-width: 600px) {
+  // No canvas on phones (see Skills.tsx): the section is just the title above the logo strip
   .skills-container {
-    min-height: 800px;
+    height: auto;
+    min-height: 0;
+    padding: 32px 0 0;
+
+    .main-text {
+      font-size: 22px;
+      margin-bottom: 0;
+    }
   }
 }
