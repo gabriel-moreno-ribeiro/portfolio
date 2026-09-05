@@ -1,5 +1,5 @@
 import { motion, useInView } from 'motion/react';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { FiChevronLeft, FiChevronRight, FiFileText } from 'react-icons/fi';
 
 interface ResearchItem {
@@ -15,7 +15,7 @@ interface ResearchItem {
 
 // Only probe for actually-uploaded media. Add slugs to this map when files exist.
 const RESEARCH_MEDIA_MANIFEST: Record<string, string[]> = {
-  'projeto-candela': ['01.jpg'],
+  'projeto-candela': ['01.webp'],
 };
 
 const researchItems: ResearchItem[] = [
@@ -54,21 +54,11 @@ const researchItems: ResearchItem[] = [
   },
 ];
 
-function ResearchMediaCarousel({ slug, title, onHasMedia }: { slug: string; title: string; onHasMedia?: (has: boolean) => void }) {
-  // Use static manifest — no speculative 404 probing
-  const knownFiles = RESEARCH_MEDIA_MANIFEST[slug] ?? [];
+function ResearchMediaCarousel({ slug, title }: { slug: string; title: string }) {
+  const available = RESEARCH_MEDIA_MANIFEST[slug] ?? [];
   const [idx, setIdx] = useState(0);
 
-  useEffect(() => {
-    if (knownFiles.length > 0) onHasMedia?.(true);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [slug]);
-
-  const available = knownFiles;
-
-  if (available.length === 0) {
-    return null;
-  }
+  if (available.length === 0) return null;
 
   const current = available[idx % available.length];
   const src = `/research/${slug}/${current}`;
@@ -99,7 +89,7 @@ function ResearchMediaCarousel({ slug, title, onHasMedia }: { slug: string; titl
 function ResearchCard({ item, index }: { item: ResearchItem; index: number }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '0px 0px -80px 0px' });
-  const [hasMedia, setHasMedia] = useState(false);
+  const hasMedia = (RESEARCH_MEDIA_MANIFEST[item.slug] ?? []).length > 0;
 
   const handleClick = () => {
     if (item.pdf) window.open(item.pdf, '_blank', 'noopener');
@@ -119,7 +109,7 @@ function ResearchCard({ item, index }: { item: ResearchItem; index: number }) {
       tabIndex={interactive ? 0 : undefined}
       onKeyDown={interactive ? (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleClick(); } } : undefined}
     >
-      <ResearchMediaCarousel slug={item.slug} title={item.title} onHasMedia={setHasMedia} />
+      <ResearchMediaCarousel slug={item.slug} title={item.title} />
       <div className="research-card__content">
         <div className="research-card__header">
           <span className="research-card__field">{item.field}</span>

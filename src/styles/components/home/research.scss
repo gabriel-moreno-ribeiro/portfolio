@@ -117,11 +117,12 @@
   }
 
   &__abstract {
-    font-size: 14px;
+    font-size: 16px;
     color: var(--black);
     line-height: 1.6;
     margin: 0;
     opacity: 0.85;
+    max-width: 65ch;
   }
 
   &__tags {
@@ -244,7 +245,6 @@
     }
 
     &__subtitle {
-      font-size: 14px;
       margin-bottom: 28px;
     }
   }
@@ -256,7 +256,6 @@
 
   .research-media,
   .research-media-placeholder {
-    aspect-ratio: 210 / 297;
     max-height: 300px;
   }
 

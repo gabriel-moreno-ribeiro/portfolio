@@ -197,7 +197,7 @@ const commands: CommandDefinition[] = [
       ctx.writeln(`  Email:    ${green(contact.email)}`);
       ctx.writeln(`  LinkedIn: ${green(contact.linkedin)}`);
       ctx.writeln("");
-      ctx.writeln("A downloadable CV is coming soon.");
+      ctx.writeln("Or book a call: " + green("https://cal.com/gabrielmribeiro"));
     },
   },
   {

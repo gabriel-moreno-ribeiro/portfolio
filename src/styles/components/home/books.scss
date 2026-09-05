@@ -15,6 +15,43 @@
   touch-action: pan-y;
 }
 
+.lib-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  padding: 16px 24px;
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  pointer-events: none;
+
+  &__back {
+    pointer-events: auto;
+    font-size: 14px;
+    color: var(--text-grey);
+    text-decoration: none;
+    transition: color 0.2s;
+    &:hover { color: var(--primary-orange); }
+  }
+
+  &__title {
+    font-family: var(--font-serif);
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--text-primary);
+    margin: 0;
+  }
+
+  &__subtitle {
+    font-size: 14px;
+    color: var(--text-grey);
+    margin: 0;
+    @media (max-width: 600px) { display: none; }
+  }
+}
+
 // ── Browse mode caption ──────────────────────
 
 .lib-browse {

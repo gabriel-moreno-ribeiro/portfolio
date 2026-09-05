@@ -1,6 +1,6 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { lazy, Suspense, useEffect, useRef } from 'react';
+import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import useIsMobile from '../../hooks/useIsMobile';
 import { useThemeStore } from '../../store/themeStore';
 
@@ -77,6 +77,17 @@ const WorkExperience = () => {
   const containerRef = useRef(null);
   const { darkMode } = useThemeStore();
   const isMobile = useIsMobile(600);
+  const [near, setNear] = useState(false);
+
+  // Mount the 3D scene (three + 1.2MB model) only when the section is close to the viewport
+  useEffect(() => {
+    if (!PartsAssemblingCanvas || !containerRef.current) return;
+    const io = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) { setNear(true); io.disconnect(); }
+    }, { rootMargin: '800px 0px' });
+    io.observe(containerRef.current);
+    return () => io.disconnect();
+  }, []);
 
   useEffect(() => {
     const sections = gsap.utils.toArray('.work-experience-section');
@@ -126,7 +137,7 @@ const WorkExperience = () => {
         <span data-color-inverted={'true'}>Experience.</span>
       </h2>
       <div className="left-column">
-        {PartsAssemblingCanvas && (
+        {PartsAssemblingCanvas && near && (
           <Suspense fallback={null}>
             <PartsAssemblingCanvas />
           </Suspense>

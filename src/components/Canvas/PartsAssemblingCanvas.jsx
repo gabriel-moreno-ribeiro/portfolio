@@ -100,7 +100,7 @@ export default function PartsAssemblingCanvas() {
             scale={1}
             position={[0, -2, 0]}
           />
-          <Environment preset="studio" />
+          <Environment files="/assets/3d/studio.hdr" />
           {!REDUCED_MOTION && (
             <RotationController progressRef={progressRef} groupRef={group} />
           )}

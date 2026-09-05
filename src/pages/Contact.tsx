@@ -2,7 +2,9 @@ import { motion } from 'motion/react';
 import { FormEvent, useState } from 'react';
 import { FiArrowLeft, FiSend } from 'react-icons/fi';
 import { Link, useNavigate } from 'react-router-dom';
+import Footer from '../components/Shared/Footer';
 import { useDocumentHead } from '../hooks/useDocumentHead';
+import '../styles/components/shared/contact.scss';
 
 interface FormErrors {
   name?: string;
@@ -137,6 +139,7 @@ function Contact() {
           </a>
         </p>
       </motion.div>
+      <Footer />
     </div>
   );
 }

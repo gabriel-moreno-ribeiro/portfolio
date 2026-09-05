@@ -1,186 +1,75 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useInputSourceStore } from "../../store/inputSourceStore";
 import { useThemeStore } from "../../store/themeStore";
 
+const IDLE: Partial<CSSStyleDeclaration> = {
+  width: "10px",
+  height: "10px",
+  opacity: "1",
+  mixBlendMode: "unset",
+  filter: "unset",
+  backgroundColor: "",
+  backdropFilter: "unset",
+};
+
 function CustomMouse() {
   const { darkMode } = useThemeStore();
+  const ref = useRef<HTMLDivElement>(null);
 
-  // Hide custom mouse when camera is active, show on real mouse movement
   useEffect(() => {
-    let hidden = false;
+    const el = ref.current;
+    if (!el) return;
 
-    const hide = () => {
-      if (hidden) return;
-      hidden = true;
-      const el = document.querySelector(".custom-mouse") as HTMLElement;
-      if (el) el.style.display = "none";
+    const set = (style: Partial<CSSStyleDeclaration>, html = "") => {
+      Object.assign(el.style, style);
+      el.innerHTML = html;
     };
 
-    const show = () => {
-      if (!hidden) return;
-      hidden = false;
-      const el = document.querySelector(".custom-mouse") as HTMLElement;
-      if (el) el.style.display = "";
-    };
-
-    const onMouseMove = () => {
-      if (hidden) show();
-    };
-
-    const unsub = useInputSourceStore.subscribe((state) => {
-      if (state.inputSource === "camera") hide();
-      else show();
+    // Hidden while the camera drives the cursor; a real mouse move brings it back
+    let hidden = useInputSourceStore.getState().inputSource === "camera";
+    el.style.display = hidden ? "none" : "";
+    const unsub = useInputSourceStore.subscribe((s) => {
+      hidden = s.inputSource === "camera";
+      el.style.display = hidden ? "none" : "";
     });
 
-    // Check initial state
-    if (useInputSourceStore.getState().inputSource === "camera") hide();
+    const onMove = (e: MouseEvent) => {
+      el.style.top = `${e.pageY}px`;
+      el.style.left = `${e.pageX}px`;
+      if (hidden) { hidden = false; el.style.display = ""; }
+    };
+    const onDown = () => set({ width: "50px", height: "50px", opacity: "0.5" });
+    const onUp = () => set({ width: "10px", height: "10px", opacity: "1" });
 
-    window.addEventListener("mousemove", onMouseMove);
+    // Event delegation: works for sections that mount later (lazy-loaded) too
+    const onOver = (e: MouseEvent) => {
+      const t = e.target as Element;
+      if (t.closest("[data-click-me]")) {
+        set({ ...IDLE, width: "100px", height: "100px", backgroundColor: "rgba(0, 0, 0, 0.8)" }, "<p>Click Me!</p>");
+      } else if (t.closest("[data-drag-me]")) {
+        set({ ...IDLE, width: "50px", height: "50px", backgroundColor: "var(--black)", backdropFilter: "blur(10px)", opacity: darkMode ? "0.25" : "0.8" });
+      } else if (t.closest("[data-color-inverted]")) {
+        set({ ...IDLE, width: "80px", height: "80px", mixBlendMode: "difference", filter: darkMode ? "" : "invert(1)" });
+      } else {
+        set(IDLE);
+      }
+    };
+
+    document.addEventListener("mousemove", onMove);
+    document.addEventListener("mousedown", onDown);
+    document.addEventListener("mouseup", onUp);
+    document.addEventListener("mouseover", onOver);
     return () => {
       unsub();
-      window.removeEventListener("mousemove", onMouseMove);
-      show();
-    };
-  }, []);
-
-  useEffect(() => {
-    const mouseMove = (e: MouseEvent) => {
-      const customMouse = document.querySelector(
-        ".custom-mouse"
-      ) as HTMLElement;
-      if (customMouse) {
-        customMouse.style.top = `${e.pageY}px`;
-        customMouse.style.left = `${e.pageX}px`;
-      }
-    };
-
-    const mouseDown = () => {
-      const customMouse = document.querySelector(
-        ".custom-mouse"
-      ) as HTMLElement;
-      if (customMouse) {
-        customMouse.style.width = "50px";
-        customMouse.style.height = "50px";
-        customMouse.style.opacity = "0.5";
-      }
-    };
-
-    const mouseUp = () => {
-      const customMouse = document.querySelector(
-        ".custom-mouse"
-      ) as HTMLElement;
-      if (customMouse) {
-        customMouse.style.width = "10px";
-        customMouse.style.height = "10px";
-        customMouse.style.opacity = "1";
-      }
-    };
-
-    document.addEventListener("mousemove", mouseMove);
-    document.addEventListener("mousedown", mouseDown);
-    document.addEventListener("mouseup", mouseUp);
-
-    const invertColorElements = document.querySelectorAll(
-      "[data-color-inverted]"
-    );
-    invertColorElements.forEach((element) => {
-      const el = element as HTMLElement;
-
-      el.addEventListener("mouseenter", () => {
-        const customMouse = document.querySelector(
-          ".custom-mouse"
-        ) as HTMLElement;
-        if (customMouse) {
-          customMouse.style.width = "80px";
-          customMouse.style.height = "80px";
-          customMouse.style["mixBlendMode"] = "difference";
-          customMouse.style.filter = !darkMode ? "invert(1)" : "";
-        }
-      });
-
-      el.addEventListener("mouseleave", () => {
-        const customMouse = document.querySelector(
-          ".custom-mouse"
-        ) as HTMLElement;
-        if (customMouse) {
-          customMouse.style.width = "10px";
-          customMouse.style.height = "10px";
-          customMouse.style["mixBlendMode"] = "unset";
-          customMouse.style.filter = "unset";
-        }
-      });
-    });
-
-    // when mouse enters a data-attribute element of  data-click-me={"true"} then change the cursor to grow bigger and have a text which says click me
-    const clickMeElements = document.querySelectorAll("[data-click-me]");
-    clickMeElements.forEach((element) => {
-      const el = element as HTMLElement;
-
-      el.addEventListener("mouseenter", () => {
-        const customMouse = document.querySelector(
-          ".custom-mouse"
-        ) as HTMLElement;
-        if (customMouse) {
-          customMouse.style.width = "100px";
-          customMouse.style.height = "100px";
-          customMouse.innerHTML = "<p>Click Me!</p>";
-          customMouse.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
-        }
-      });
-
-      el.addEventListener("mouseleave", () => {
-        const customMouse = document.querySelector(
-          ".custom-mouse"
-        ) as HTMLElement;
-        if (customMouse) {
-          customMouse.style.width = "10px";
-          customMouse.style.height = "10px";
-          customMouse.innerHTML = "";
-          customMouse.style.backgroundColor = "";
-          customMouse.style.backdropFilter = "unset";
-        }
-      });
-    });
-
-    const dragMeElements = document.querySelectorAll("[data-drag-me]");
-    dragMeElements.forEach((element) => {
-      const el = element as HTMLElement;
-
-      el.addEventListener("mouseenter", () => {
-        const customMouse = document.querySelector(
-          ".custom-mouse"
-        ) as HTMLElement;
-        if (customMouse) {
-          customMouse.style.width = "50px";
-          customMouse.style.height = "50px";
-          customMouse.style.backgroundColor = "var(--black)";
-          customMouse.style.backdropFilter = "blur(10px)";
-          customMouse.style.opacity = !darkMode ? "0.8" : "0.25";
-        }
-      });
-
-      el.addEventListener("mouseleave", () => {
-        const customMouse = document.querySelector(
-          ".custom-mouse"
-        ) as HTMLElement;
-        if (customMouse) {
-          customMouse.style.width = "10px";
-          customMouse.style.height = "10px";
-          customMouse.innerHTML = "";
-          customMouse.style.backgroundColor = "";
-          customMouse.style.backdropFilter = "unset";
-          customMouse.style.opacity = "1";
-        }
-      });
-    });
-
-    return () => {
-      document.removeEventListener("mousemove", mouseMove);
-      document.removeEventListener("mousedown", mouseDown);
+      document.removeEventListener("mousemove", onMove);
+      document.removeEventListener("mousedown", onDown);
+      document.removeEventListener("mouseup", onUp);
+      document.removeEventListener("mouseover", onOver);
+      el.style.display = "";
     };
   }, [darkMode]);
 
-  return <div className="custom-mouse" />;
+  return <div ref={ref} className="custom-mouse" />;
 }
 
 export default CustomMouse;

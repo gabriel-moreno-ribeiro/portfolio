@@ -3,7 +3,7 @@ export const scrollToComponent = (id: string, offset: number = 100) => {
 
   if (element) {
     const elementPosition = element.getBoundingClientRect().top;
-    const offsetPosition = elementPosition + window.pageYOffset - offset;
+    const offsetPosition = elementPosition + window.scrollY - offset;
 
     window.scrollTo({
       top: offsetPosition,

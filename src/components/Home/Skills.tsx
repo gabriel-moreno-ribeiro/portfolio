@@ -21,18 +21,17 @@ import d_icon7 from "../../assets/skills/dark/icon7.webp";
 import d_icon8 from "../../assets/skills/dark/icon8.webp";
 import d_icon9 from "../../assets/skills/dark/icon9.webp";
 import d_icon10 from "../../assets/skills/dark/icon10.webp";
+import python from "../../assets/skills/devicon/python.svg";
+import docker from "../../assets/skills/devicon/docker.svg";
+import git from "../../assets/skills/devicon/git.svg";
+import figma from "../../assets/skills/devicon/figma.svg";
+import postgresql from "../../assets/skills/devicon/postgresql.svg";
+import tailwindcss from "../../assets/skills/devicon/tailwindcss.svg";
 import useIsMobile from "../../hooks/useIsMobile";
 import { useThemeStore } from "../../store/themeStore";
 import SkillsCanvas from "./SkillsCanvas";
 
-const extraIcons = [
-  "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg",
-  "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg",
-  "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg",
-  "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg",
-  "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg",
-  "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg",
-];
+const extraIcons = [python, docker, git, figma, postgresql, tailwindcss];
 
 const BUILTIN_COUNT = 10;
 
@@ -116,10 +115,7 @@ const Skills: React.FC = () => {
     }));
   }, [isMobile, vpWidth]);
 
-  const iconUrls = useMemo(
-    () => (darkMode ? darkIcons : lightIcons),
-    [darkMode]
-  );
+  const iconUrls = darkMode ? darkIcons : lightIcons;
 
   return (
     <div className="skills-container" ref={ref} id="skills">

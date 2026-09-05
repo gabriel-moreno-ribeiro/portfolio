@@ -1,15 +1,8 @@
-import { lazy, Suspense, useEffect } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import CameraFeedback from "./components/Shared/CameraFeedback";
 import CustomMouse from "./components/Shared/CustomMouse";
-import GestureTutorial from "./components/Shared/GestureTutorial";
-import HandCursor from "./components/Shared/HandCursor";
 import DarkModeButton from "./components/Shared/DarkModeButton";
 import HandsfreeButton from "./components/Shared/HandsfreeButton";
-import HandsfreeIntroModal from "./components/Shared/HandsfreeIntroModal";
-import HandsfreeLoader from "./components/Shared/HandsfreeLoader";
 import HorizontalScroller from "./components/Shared/HorizontalScroller";
 import TerminalButton from "./components/Shared/TerminalButton";
 import TerminalModal from "./components/Terminal/TerminalModal";
@@ -23,8 +16,8 @@ import {
   stopMouseInputProvider,
 } from "./providers/MouseInputProvider";
 import { useHandsfreeStore } from "./store/handsfreeStore";
-import { useThemeStore } from "./store/themeStore";
 
+const HandsfreeUI = lazy(() => import("./components/Shared/HandsfreeUI"));
 const HeroSlideshow = lazy(() => import("./components/Home/HeroSlideshow"));
 const LibraryPage = lazy(() => import("./pages/Library"));
 const BlogPage = lazy(() => import("./pages/Blog"));
@@ -34,10 +27,6 @@ const ThankYouPage = lazy(() => import("./pages/ThankYou"));
 const NotFoundPage = lazy(() => import("./pages/NotFound"));
 
 function App() {
-  const { darkMode } = useThemeStore();
-  const isMobile = useIsMobile();
-  const { hasSeenIntro, setShowIntroModal } = useHandsfreeStore();
-
   useEffect(() => {
     startMouseInputProvider();
     return () => {
@@ -46,32 +35,6 @@ function App() {
   }, []);
 
   useHandsfreeCamera();
-
-  useEffect(() => {
-    document.documentElement.setAttribute(
-      "data-theme",
-      darkMode ? "dark" : "light"
-    );
-  }, [darkMode]);
-
-  useEffect(() => {
-    if (!isMobile) {
-      if (sessionStorage.getItem("showedToast")) return;
-      setTimeout(() => {
-        toast("Just for fun, try pressing Ctrl + J!", {
-          position: "bottom-right",
-          autoClose: 1000 * 10,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: darkMode ? "light" : "dark",
-        });
-        sessionStorage.setItem("showedToast", "true");
-      }, 3000);
-    }
-  }, [isMobile]);
 
   return (
     <BrowserRouter>
@@ -83,17 +46,29 @@ function App() {
 function AppContent() {
   const location = useLocation();
   const isHome = location.pathname === "/";
-  const isSubpage = !isHome;
+  const isMobile = useIsMobile();
+  const handsfreeActive = useHandsfreeStore((s) => s.isEnabled || s.showIntroModal);
+  const [tip, setTip] = useState(false);
+
+  useEffect(() => {
+    if (isMobile || window.innerWidth <= 1024 || sessionStorage.getItem("showedToast")) return;
+    const show = setTimeout(() => {
+      setTip(true);
+      sessionStorage.setItem("showedToast", "true");
+    }, 3000);
+    const hide = setTimeout(() => setTip(false), 13000);
+    return () => { clearTimeout(show); clearTimeout(hide); };
+  }, [isMobile]);
 
   return (
     <div className="app">
-      {!isSubpage && (
+      {isHome && (
         <Suspense fallback={null}>
           <HeroSlideshow />
         </Suspense>
       )}
-      {!isSubpage && <HorizontalScroller />}
-      <Suspense fallback={isSubpage ? <div style={{ width: "100%", height: "100dvh", background: "var(--bg)" }} /> : null}>
+      {isHome && <HorizontalScroller />}
+      <Suspense fallback={!isHome ? <div style={{ width: "100%", height: "100dvh", background: "var(--bg)" }} /> : null}>
         <Routes>
           <Route path="/library/:bookId?" element={<LibraryPage />} />
           <Route path="/blog" element={<BlogPage />} />
@@ -107,16 +82,20 @@ function AppContent() {
       <HandsfreeButton />
       <DarkModeButton />
       <TerminalButton />
-      <HandsfreeIntroModal />
-      <GestureTutorial />
       <TerminalModal />
       <WindowRenderer />
-      <HandsfreeLoader />
-      <CameraFeedback />
-      <HandCursor />
+      {handsfreeActive && (
+        <Suspense fallback={null}>
+          <HandsfreeUI />
+        </Suspense>
+      )}
       <CustomMouse />
       <MobileStickyCTA />
-      <ToastContainer />
+      {tip && (
+        <button type="button" className="tip-toast" onClick={() => setTip(false)}>
+          Just for fun, try pressing Ctrl + K!
+        </button>
+      )}
     </div>
   );
 }
