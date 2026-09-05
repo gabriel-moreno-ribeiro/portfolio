@@ -54,7 +54,7 @@ function Navbar() {
     },
     {
       name: 'Contact.',
-      href: '/contact',
+      href: '/#contact',
     },
     {
       name: 'LinkedIn.',
@@ -72,7 +72,12 @@ function Navbar() {
 
   const handleLinkClick = (link: { href: string; top?: number }) => {
     if (link.href.includes('#')) {
-      scrollToComponent(link.href.split('#')[1], link.top);
+      const id = link.href.split('#')[1];
+      if (document.getElementById(id)) {
+        scrollToComponent(id, link.top);
+      } else {
+        navigate(link.href);
+      }
     } else if (link.href.startsWith('/')) {
       navigate(link.href);
     } else {

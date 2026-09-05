@@ -70,7 +70,7 @@ function Hero() {
     <div className="hero-section">
       {CanvasComponent && (
         <motion.div
-          style={{ marginTop: '16px', minHeight: 300, minWidth: 300 }}
+          style={{ marginTop: '40px', minHeight: 300, minWidth: 300 }}
           initial={{ opacity: 0 }}
           animate={{ opacity: showRobot ? 1 : 0 }}
           transition={{ duration: 0.8, ease: 'easeOut' }}

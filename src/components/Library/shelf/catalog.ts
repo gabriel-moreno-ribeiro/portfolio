@@ -97,7 +97,7 @@ export const catalog: CatalogBook[] = books.map((b) => {
     availability: `${b.status === "reading" ? "Reading now" : "Finished"} · ${b.readPeriod} · age ${b.readAge}`,
     url: b.link ?? "",
     cover: b.coverColor,
-    accent: shift(b.coverColor, dark ? 0.45 : -0.35),
+    accent: b.accentColor ?? shift(b.coverColor, dark ? 0.45 : -0.35),
     ink: dark ? "#f4ead7" : "#25231f",
     motif: MOTIFS[hash(b.id) % MOTIFS.length],
     height: HEIGHT[b.format] ?? 2.05,

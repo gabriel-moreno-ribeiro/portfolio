@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 function MobileStickyCTA() {
   return (
     <div className="mobile-sticky-cta">
-      <Link to="/contact" className="mobile-sticky-cta__btn">
+      <Link to="/#contact" className="mobile-sticky-cta__btn">
         Get in Touch
       </Link>
       <a

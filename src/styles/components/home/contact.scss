@@ -1,0 +1,336 @@
+.contact-section {
+  width: 100%;
+  max-width: 1100px;
+  margin: 40px auto 24px;
+  padding: 0 24px;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  gap: 56px;
+  align-items: start;
+  scroll-margin-top: 80px;
+
+  &__eyebrow {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: $primary-orange;
+    margin-bottom: 12px;
+  }
+
+  &__title {
+    font-family: var(--font-serif);
+    font-size: 56px;
+    font-weight: 400;
+    line-height: 1.05;
+    margin-bottom: 16px;
+
+    em {
+      font-style: italic;
+      color: $primary-orange;
+    }
+  }
+
+  &__lead {
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--text-grey);
+    max-width: 420px;
+    margin-bottom: 28px;
+  }
+
+  &__channels {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  &__channel {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 12px;
+    margin-left: -12px;
+    border-radius: 14px;
+    text-decoration: none;
+    color: var(--black);
+    transition: background-color 0.2s, transform 0.2s;
+
+    &:hover {
+      background-color: rgba($grey, 0.6);
+      transform: translateX(2px);
+
+      .contact-section__channel-arrow {
+        opacity: 1;
+        transform: translate(0, 0);
+      }
+    }
+  }
+
+  &__channel-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba($primary-orange, 0.12);
+    color: $primary-orange;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  &__channel-text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  &__channel-label {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-grey);
+  }
+
+  &__channel-value {
+    font-size: 15px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__channel-arrow {
+    margin-left: auto;
+    color: var(--text-grey);
+    opacity: 0;
+    transform: translate(-4px, 4px);
+    transition: opacity 0.2s, transform 0.2s;
+    flex-shrink: 0;
+  }
+
+  &__card {
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 28px;
+    padding: 32px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.06);
+    box-sizing: border-box;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  &__row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+
+    label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--black);
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      box-sizing: border-box;
+      background-color: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 14px;
+      font-size: 15px;
+      font-family: inherit;
+      color: var(--black);
+      transition: border-color 0.2s, box-shadow 0.2s;
+      min-height: 46px;
+
+      &::placeholder {
+        color: var(--text-grey);
+        opacity: 0.6;
+      }
+
+      &:focus {
+        outline: none;
+        border-color: $primary-orange;
+        box-shadow: 0 0 0 3px rgba($primary-orange, 0.18);
+      }
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 130px;
+      line-height: 1.5;
+    }
+
+    &--error input,
+    &--error textarea {
+      border-color: #e53e3e;
+    }
+  }
+
+  &__error {
+    font-size: 13px;
+    color: #e53e3e;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  &__submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background-color: var(--fg);
+    color: var(--bg);
+    border: 2px solid var(--fg);
+    border-radius: 36px;
+    padding: 12px 26px;
+    font-size: 15px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    min-height: 46px;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+
+    &:hover:not(:disabled) {
+      background-color: var(--bg);
+      color: var(--fg);
+      border-color: var(--border);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+
+  &__hint {
+    font-size: 13px;
+    color: var(--text-grey);
+  }
+
+  &__sent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 40px 16px;
+    gap: 8px;
+
+    h3 {
+      font-family: var(--font-serif);
+      font-size: 32px;
+      font-weight: 400;
+      color: var(--black);
+    }
+
+    p {
+      color: var(--text-grey);
+      font-size: 16px;
+    }
+  }
+
+  &__sent-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background-color: $primary-orange;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    margin-bottom: 12px;
+  }
+
+  &__link-btn {
+    margin-top: 12px;
+    background: none;
+    border: none;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    color: $primary-orange;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+}
+
+[data-theme="dark"] {
+  .contact-section {
+    &__channel:hover {
+      background-color: rgba(255, 255, 255, 0.06);
+    }
+
+    &__channel-icon {
+      background-color: rgba($primary-orange, 0.18);
+    }
+
+    &__card {
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+    }
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .contact-section {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    margin-top: 16px;
+
+    &__title {
+      font-size: 44px;
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .contact-section {
+    padding: 0;
+
+    &__title {
+      font-size: 38px;
+    }
+
+    &__lead {
+      font-size: 16px;
+    }
+
+    &__card {
+      padding: 22px 18px;
+      border-radius: 22px;
+    }
+
+    &__row {
+      grid-template-columns: 1fr;
+    }
+
+    &__submit {
+      width: 100%;
+    }
+  }
+}

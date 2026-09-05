@@ -204,6 +204,12 @@ export class ShelfEngine {
   private lastTimestamp = 0;
   private lastDiagnosticsAt = 0;
   private isDisposed = false;
+  private hemisphere!: THREE.HemisphereLight;
+  private keyLight!: THREE.DirectionalLight;
+  private rimLight!: THREE.DirectionalLight;
+  private wallMaterial!: THREE.MeshStandardMaterial;
+  private groundMaterial!: THREE.MeshStandardMaterial;
+  private shelfMaterial!: THREE.MeshStandardMaterial;
 
   constructor(
     canvas: HTMLCanvasElement,
@@ -277,6 +283,7 @@ export class ShelfEngine {
 
     const hemisphere = new THREE.HemisphereLight("#fff8ea", "#6e5848", 2.4);
     this.scene.add(hemisphere);
+    this.hemisphere = hemisphere;
 
     const key = new THREE.DirectionalLight("#fff6e7", 4.6);
     key.position.set(-4.2, 7.4, 5.5);
@@ -293,10 +300,12 @@ export class ShelfEngine {
     key.shadow.camera.far = 22;
     key.shadow.bias = -0.0005;
     this.scene.add(key);
+    this.keyLight = key;
 
     const rim = new THREE.DirectionalLight("#c8d5e5", 2.1);
     rim.position.set(5, 3, -4);
     this.scene.add(rim);
+    this.rimLight = rim;
 
     const warmBounce = new THREE.PointLight("#d79b72", 1.2, 10, 2);
     warmBounce.position.set(-3, 0.4, 3.2);
@@ -313,6 +322,7 @@ export class ShelfEngine {
     wall.position.set(0, 5, -3.2);
     wall.receiveShadow = true;
     this.scene.add(wall);
+    this.wallMaterial = wall.material as THREE.MeshStandardMaterial;
 
     const ground = new THREE.Mesh(
       new THREE.PlaneGeometry(36, 18),
@@ -326,6 +336,7 @@ export class ShelfEngine {
     ground.position.y = -0.24;
     ground.receiveShadow = true;
     this.scene.add(ground);
+    this.groundMaterial = ground.material as THREE.MeshStandardMaterial;
 
     this.scene.add(this.shelfGroup);
     this.shelfGroup.add(this.shelfFurniture);
@@ -375,6 +386,7 @@ export class ShelfEngine {
     shelf.castShadow = true;
     shelf.receiveShadow = true;
     this.shelfFurniture.add(shelf);
+    this.shelfMaterial = shelfMaterial;
 
     const shelfEdge = new THREE.Mesh(
       new RoundedBoxGeometry(shelfWidth, 0.12, 0.16, 3, 0.025),
@@ -1364,6 +1376,25 @@ export class ShelfEngine {
     } catch {
       this.assetFailures += 1;
     }
+  }
+
+  /** Match the portfolio's light/dark tokens (background must equal the page --bg). */
+  setTheme(theme: "light" | "dark") {
+    const p = theme === "dark"
+      ? { bg: "#0a0a1a", wall: "#13132b", ground: "#0e0e22", shelf: "#3a2a1f", sky: "#8f93bf", skyGround: "#2b2438", hemi: 1.15, key: "#ffe6cc", keyI: 3.1, rim: "#7c86c9", rimI: 1.7 }
+      : { bg: "#fff8f4", wall: "#f7ece3", ground: "#efe2d7", shelf: "#5a4132", sky: "#fff8ea", skyGround: "#6e5848", hemi: 2.4, key: "#fff6e7", keyI: 4.6, rim: "#c8d5e5", rimI: 2.1 };
+    (this.scene.background as THREE.Color).set(p.bg);
+    (this.scene.fog as THREE.Fog).color.set(p.bg);
+    this.wallMaterial.color.set(p.wall);
+    this.groundMaterial.color.set(p.ground);
+    this.shelfMaterial.color.set(p.shelf);
+    this.hemisphere.color.set(p.sky);
+    this.hemisphere.groundColor.set(p.skyGround);
+    this.hemisphere.intensity = p.hemi;
+    this.keyLight.color.set(p.key);
+    this.keyLight.intensity = p.keyI;
+    this.rimLight.color.set(p.rim);
+    this.rimLight.intensity = p.rimI;
   }
 
   browseBy(direction: number) {

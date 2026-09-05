@@ -1,27 +1,26 @@
-// React shell for the shelf engine. Adapted from ProgressLibrary.tsx in
-// "The Complete Shelf" (github.com/kabarza/bookshelf).
+// React shell for the shelf engine. Structure adapted from ProgressLibrary.tsx in
+// "The Complete Shelf" (github.com/kabarza/bookshelf); styling follows the site.
+import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { FiArrowLeft, FiArrowRight, FiArrowUpRight } from "react-icons/fi";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import Navbar from "../Navbar/Navbar";
+import { useThemeStore } from "../../store/themeStore";
 import { books, catalog, stars } from "./shelf/catalog";
 import { ShelfEngine, type ShelfMode } from "./shelf/ShelfEngine";
 import { siteConfig } from "./shelf/site-config";
-import "./shelf/shelf.css";
-
-function ArrowIcon({ direction }: { direction: "left" | "right" }) {
-  return (
-    <span aria-hidden="true" className={`arrow-icon arrow-icon--${direction}`}>
-      <span />
-    </span>
-  );
-}
+import "../../styles/components/library/library.scss";
 
 const pad = (n: number) => String(n).padStart(2, "0");
+const EASE = [0.22, 1, 0.36, 1] as const;
 
 export default function ShelfLibrary() {
   const { bookId } = useParams<{ bookId?: string }>();
   const navigate = useNavigate();
+  const { darkMode } = useThemeStore();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const engineRef = useRef<ShelfEngine | null>(null);
+  const themeRef = useRef<"light" | "dark">(darkMode ? "dark" : "light");
   const [activeIndex, setActiveIndex] = useState(0);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [mode, setMode] = useState<ShelfMode>("browse");
@@ -33,6 +32,7 @@ export default function ShelfLibrary() {
   const selectedMeta = selectedIndex === null ? null : books[selectedIndex];
   const isFocused = mode !== "browse";
 
+  // Engine lifecycle
   useEffect(() => {
     let cancelled = false;
     let engine: ShelfEngine | null = null;
@@ -55,6 +55,7 @@ export default function ShelfLibrary() {
           setStatus(`${catalog.length} volumes ready`);
         },
       });
+      engine.setTheme(themeRef.current);
       engineRef.current = engine;
       if (initialIndex > 0 || bookId) {
         engine.browseTo(initialIndex);
@@ -71,6 +72,12 @@ export default function ShelfLibrary() {
     // The engine owns navigation after mount; the URL only seeds the first book.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Scene palette follows the site theme
+  useEffect(() => {
+    themeRef.current = darkMode ? "dark" : "light";
+    engineRef.current?.setTheme(themeRef.current);
+  }, [darkMode]);
 
   // URL + title follow the engine
   useEffect(() => {
@@ -100,54 +107,68 @@ export default function ShelfLibrary() {
   }, []);
 
   return (
-    <main className={`press-experience ${ready ? "is-ready" : ""} ${isFocused ? "is-focused" : "is-browsing"}`} id="main-content">
+    <main className={`library ${ready ? "library--ready" : ""} ${isFocused ? "library--focused" : ""}`} id="main-content">
       <canvas
         ref={canvasRef}
-        className="shelf-canvas"
+        className="library__canvas"
         role="application"
         tabIndex={0}
+        data-drag-me={true}
         aria-label={`Interactive three-dimensional shelf of ${catalog.length} books. Drag or use the arrow keys to browse. Press Enter to inspect the selected book.`}
       />
 
-      <header className="site-header">
-        <div className="wordmark" style={{ pointerEvents: "auto" }}>
-          <Link to="/" aria-label="Back to home">&larr; HOME</Link>
-          <span className="wordmark__divider" />
-          <span>{siteConfig.wordmark}</span>
-          <span className="wordmark__divider" />
-          <span>{siteConfig.collectionName} · {catalog.length} VOLUMES</span>
-        </div>
-      </header>
+      <div className="library__nav">
+        <Navbar />
+      </div>
 
-      <section className="browse-caption" aria-hidden={isFocused}>
-        <p className="eyebrow">
-          <span>{pad(activeIndex + 1)}</span>
-          <span className="eyebrow__line" />
-          <span>{pad(catalog.length)}</span>
+      <div className="library__eyebrow">
+        <p className="library__crumb">
+          <Link to="/">Home</Link>
+          <span>Library</span>
+          <span>{catalog.length} volumes</span>
         </p>
-        <h1>{activeBook.shortTitle}</h1>
-        <p className="browse-caption__author">{activeBook.author}</p>
-        <button
-          type="button"
-          className="inspect-button"
-          disabled={isFocused}
-          onClick={() => engineRef.current?.focusBook(activeIndex)}
-          aria-label={`Inspect ${activeBook.title}`}
-        >
-          <span>Inspect volume</span>
-          <span aria-hidden="true">↗</span>
-        </button>
+        <p className="library__status" role="status" aria-live="polite">{status}</p>
+      </div>
+
+      <section className="library__caption" aria-hidden={isFocused}>
+        <AnimatePresence mode="popLayout" initial={false}>
+          <motion.div
+            key={activeBook.id}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.34, ease: EASE }}
+          >
+            <p className="library__index">
+              <span>{pad(activeIndex + 1)}</span>
+              <i />
+              <span>{pad(catalog.length)}</span>
+            </p>
+            <h1 className="library__title">{activeBook.shortTitle}</h1>
+            <p className="library__author">{activeBook.author}</p>
+            <button
+              type="button"
+              className="library__pill library__inspect"
+              disabled={isFocused}
+              onClick={() => engineRef.current?.focusBook(activeIndex)}
+              aria-label={`Inspect ${activeBook.title}`}
+            >
+              Inspect
+              <FiArrowUpRight aria-hidden="true" />
+            </button>
+          </motion.div>
+        </AnimatePresence>
       </section>
 
-      <button type="button" className="shelf-arrow shelf-arrow--left" aria-label="Previous book" disabled={isFocused || activeIndex === 0} onClick={() => engineRef.current?.browseBy(-1)}>
-        <ArrowIcon direction="left" />
+      <button type="button" className="library__arrow library__arrow--left" aria-label="Previous book" disabled={isFocused || activeIndex === 0} onClick={() => engineRef.current?.browseBy(-1)}>
+        <FiArrowLeft />
       </button>
-      <button type="button" className="shelf-arrow shelf-arrow--right" aria-label="Next book" disabled={isFocused || activeIndex === catalog.length - 1} onClick={() => engineRef.current?.browseBy(1)}>
-        <ArrowIcon direction="right" />
+      <button type="button" className="library__arrow library__arrow--right" aria-label="Next book" disabled={isFocused || activeIndex === catalog.length - 1} onClick={() => engineRef.current?.browseBy(1)}>
+        <FiArrowRight />
       </button>
 
-      <nav className="shelf-index" aria-label="Catalog position">
-        <div className="shelf-index__ticks">
+      <nav className="library__index-bar" aria-label="Catalog position">
+        <div className="library__ticks">
           {catalog.map((book, index) => (
             <button
               key={book.id}
@@ -162,42 +183,50 @@ export default function ShelfLibrary() {
             </button>
           ))}
         </div>
-        <div className="input-hint" aria-hidden="true">
+        <p className="library__hint" aria-hidden="true">
           <span>DRAG</span>
           <i />
           <span>SCROLL</span>
           <i />
           <span>ARROW KEYS</span>
-        </div>
+        </p>
       </nav>
 
-      <aside className="book-details" aria-hidden={!isFocused} aria-label={selectedBook ? `Details for ${selectedBook.title}` : "Book details"}>
+      <aside className="library__panel" aria-hidden={!isFocused} aria-label={selectedBook ? `Details for ${selectedBook.title}` : "Book details"}>
         {selectedBook && selectedMeta ? (
-          <div className="book-details__inner">
-            <button type="button" className="back-button" onClick={() => engineRef.current?.returnToShelf()}>
-              <ArrowIcon direction="left" />
-              <span>Return to shelf</span>
-            </button>
-
-            <div className="book-details__position">
-              <span>{pad(selectedIndex! + 1)}</span>
-              <span>{pad(catalog.length)}</span>
+          <div className="library__panel-inner">
+            <div className="library__panel-top">
+              <button type="button" className="library__pill library__back" onClick={() => engineRef.current?.returnToShelf()}>
+                <FiArrowLeft aria-hidden="true" />
+                Back to shelf
+              </button>
+              <p className="library__panel-pos">
+                <span>{pad(selectedIndex! + 1)}</span>
+                <i />
+                <span>{pad(catalog.length)}</span>
+              </p>
             </div>
 
-            <div className="book-details__copy">
-              <p className="eyebrow">{siteConfig.editionEyebrow}</p>
-              <h2>{selectedBook.title}</h2>
-              <p className="book-details__author">{selectedBook.author}</p>
-              <p className="book-details__description">{selectedBook.description}</p>
+            <motion.div
+              key={selectedBook.id}
+              className="library__panel-copy"
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, ease: EASE, delay: 0.12 }}
+            >
+              <p className="library__panel-eyebrow">{siteConfig.editionEyebrow}</p>
+              <h2 className="library__panel-title">{selectedBook.title}</h2>
+              <p className="library__panel-author">{selectedBook.author}</p>
+              <p className="library__panel-desc">{selectedBook.description}</p>
 
               {selectedBook.quote && (
-                <blockquote>
+                <blockquote className="library__quote">
                   <p>“{selectedBook.quote}”</p>
                   <cite>{selectedBook.quoteBy}</cite>
                 </blockquote>
               )}
 
-              <dl>
+              <dl className="library__facts">
                 <div>
                   <dt>Format</dt>
                   <dd>{selectedBook.format}</dd>
@@ -208,40 +237,37 @@ export default function ShelfLibrary() {
                 </div>
                 <div>
                   <dt>Rating</dt>
-                  <dd aria-label={`${selectedMeta.rating ?? 0} out of 5`}>{stars(selectedMeta.rating)}</dd>
+                  <dd className="library__stars" aria-label={`${selectedMeta.rating ?? 0} out of 5`}>{stars(selectedMeta.rating)}</dd>
                 </div>
                 {selectedMeta.tags.length > 0 && (
                   <div>
                     <dt>Tags</dt>
-                    <dd>{selectedMeta.tags.join(" · ")}</dd>
+                    <dd className="library__tags">
+                      {selectedMeta.tags.map((t) => <span key={t}>{t}</span>)}
+                    </dd>
                   </div>
                 )}
               </dl>
 
               {selectedBook.url && (
-                <a className="official-link" href={selectedBook.url} target="_blank" rel="noreferrer">
-                  <span>{selectedBook.linkLabel ?? siteConfig.bookLinkLabel}</span>
-                  <span aria-hidden="true">↗</span>
+                <a className="library__pill library__link" href={selectedBook.url} target="_blank" rel="noreferrer">
+                  {selectedBook.linkLabel ?? siteConfig.bookLinkLabel}
+                  <FiArrowUpRight aria-hidden="true" />
                 </a>
               )}
-            </div>
+            </motion.div>
 
-            <div className="focus-controls" aria-label="Inspection controls">
+            <div className="library__controls" aria-label="Inspection controls">
               <span>Drag to orbit</span>
-              <span>Pinch or scroll to zoom</span>
+              <span>Scroll to zoom</span>
               <button type="button" onClick={() => engineRef.current?.resetFocusView()}>Reset view</button>
             </div>
           </div>
         ) : null}
       </aside>
 
-      <div className="experience-status" role="status" aria-live="polite">
-        <span className="experience-status__dot" />
-        <span>{status}</span>
-      </div>
-
-      <div className="loading-screen" aria-hidden={ready}>
-        <div className="loading-screen__mark">
+      <div className="library__loading" aria-hidden={ready}>
+        <div className="library__loading-mark">
           <span />
           <span />
           <span />
@@ -249,7 +275,16 @@ export default function ShelfLibrary() {
         <p>Assembling {catalog.length} volumes</p>
       </div>
 
-      <p className="independent-note">{siteConfig.independentNote}</p>
+      <p className="library__credit">
+        Shelf engine adapted from{" "}
+        <a href="https://github.com/kabarza/bookshelf" target="_blank" rel="noreferrer">The Complete Shelf</a>
+      </p>
+
+      <ul className="sr-only" aria-label="Books">
+        {books.map((book) => (
+          <li key={book.id}>{book.title} by {book.author}</li>
+        ))}
+      </ul>
     </main>
   );
 }

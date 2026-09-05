@@ -10,6 +10,7 @@ export interface Book {
   pages: number;
   cover?: string;
   coverColor: string;
+  accentColor?: string;
   format: BookFormat;
   language?: string;
   status: BookStatus;
