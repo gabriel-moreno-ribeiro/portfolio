@@ -22,6 +22,7 @@ for (const route of routes) {
   for (const width of widths) {
     const height = width < 768 ? 844 : width < 1440 ? 1024 : 900;
     const ctx = await browser.newContext({ viewport: { width, height }, deviceScaleFactor: 1, reducedMotion: "no-preference" });
+    if (process.env.DARK) await ctx.addInitScript(() => localStorage.setItem("darkMode", "true")); // DARK=1 → tema escuro
     const page = await ctx.newPage();
     const key = `${route} @${width}`;
     consoleLog[key] = [];
