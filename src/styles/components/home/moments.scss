@@ -1,0 +1,111 @@
+// ── Moments strip (photo marquee under the hero) ─────────────────────────────
+.moments {
+  width: 100%;
+  margin: 8px 0 24px;
+  overflow: hidden;
+}
+
+.moments__eyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 0 0 22px;
+  padding: 0 16px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  text-align: center;
+
+  i {
+    width: 22px;
+    height: 1px;
+    background: var(--accent-decor);
+  }
+}
+
+.moments__row {
+  width: 100%;
+  overflow: hidden;
+  padding: 12px 0;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 16%, #000 90%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, #000 16%, #000 90%, transparent 100%);
+
+  &:hover .moments__track { animation-play-state: paused; }
+
+  & + & { margin-top: 4px; }
+}
+
+.moments__track {
+  display: flex;
+  gap: 18px;
+  width: max-content;
+  padding-right: 18px; // keeps the seam invisible at -50%
+  animation: moments-scroll 80s linear infinite;
+}
+.moments__row--reverse .moments__track { animation-direction: reverse; }
+
+@keyframes moments-scroll {
+  to { transform: translate3d(-50%, 0, 0); }
+}
+
+// Polaroid-style card
+.moments__item {
+  flex: 0 0 auto;
+  margin: 0;
+  padding: 8px 8px 10px;
+  border-radius: 10px;
+  background: var(--surface);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1), 0 1px 0 rgba(0, 0, 0, 0.04);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
+
+  &:nth-child(odd) { transform: rotate(-1.4deg); }
+  &:nth-child(even) { transform: rotate(1.2deg); }
+  &:nth-child(3n) { transform: rotate(0.4deg) translateY(6px); }
+
+  &:hover {
+    transform: rotate(0) scale(1.04);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.16);
+    z-index: 1;
+  }
+
+  img {
+    display: block;
+    width: 300px;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 6px;
+    background: var(--grey);
+  }
+
+  figcaption {
+    margin-top: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--fg-muted);
+  }
+}
+
+[data-theme="dark"] .moments__item {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+}
+
+@media screen and (max-width: 700px) {
+  .moments { margin: 0 0 8px; }
+  .moments__eyebrow { display: none; }
+  .moments__row { -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 6%, #000 94%, transparent 100%); mask-image: linear-gradient(to right, transparent 0%, #000 6%, #000 94%, transparent 100%); }
+  .moments__track { gap: 12px; padding-right: 12px; animation-duration: 60s !important; }
+  .moments__item {
+    padding: 6px 6px 8px;
+    img { width: 200px; height: 150px; }
+    figcaption { font-size: 11px; }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .moments__row { overflow-x: auto; }
+  .moments__track { animation: none; }
+}

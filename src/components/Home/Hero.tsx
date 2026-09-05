@@ -119,7 +119,7 @@ function Hero() {
             ease: 'easeOut',
           }}
         >
-          Building Backoffice AI for Small and Medium Businesses @ HIBEEX. Founder @ Projeto Candela.
+          18, from Salvador, Bahia. On a build year: founder of HIBEEX and Projeto Candela, researcher, 39 olympiad medals along the way.
         </motion.p>
         <motion.div
           className="btn-flex"

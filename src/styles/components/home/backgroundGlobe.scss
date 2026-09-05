@@ -296,3 +296,18 @@
     &__period { font-size: 9px; }
   }
 }
+
+// Guided-tour cue on the active city dot (restarts per city)
+.city-timeline__dot { position: relative; }
+.city-timeline__dot-progress {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 2px solid var(--accent-decor);
+  pointer-events: none;
+  animation: city-dot-progress 7s ease-out forwards;
+}
+@keyframes city-dot-progress {
+  0% { transform: scale(0.6); opacity: 0.9; }
+  100% { transform: scale(1.4); opacity: 0; }
+}
