@@ -202,3 +202,16 @@
   .news__card { padding: 22px; }
   .news__card-title { font-size: 24px; }
 }
+
+.news__eyebrow a {
+  color: var(--fg-muted);
+  text-decoration: none;
+  transition: color 0.2s;
+  &:hover { color: var(--fg); }
+}
+.news__eyebrow i {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--fg-muted);
+}

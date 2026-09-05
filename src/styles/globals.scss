@@ -275,9 +275,8 @@ body {
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: #aaa;
-    opacity: 0;
-    transform: translateX(-4px);
-    transition: opacity 0.2s, transform 0.2s, color 0.2s;
+    opacity: 0.6;
+    transition: opacity 0.2s, color 0.2s;
     white-space: nowrap;
   }
 
@@ -288,7 +287,6 @@ body {
     }
     .sidenav-item__label {
       opacity: 1;
-      transform: translateX(0);
       color: var(--accent);
     }
   }
@@ -493,5 +491,87 @@ img {
 
   .page-title {
     font-size: 36px;
+  }
+}
+
+// ── Tooltips for the fixed action buttons (data-tip) ────────────────────────
+[data-tip]::after {
+  content: attr(data-tip);
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 10000;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: var(--fg);
+  color: var(--bg);
+  font: 600 12px/1 "DM Sans", sans-serif;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(-4px);
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+[data-tip]:hover::after,
+[data-tip]:focus-visible::after {
+  opacity: 1;
+  transform: translateY(0);
+}
+[data-tip-pos="left"]::after {
+  top: 50%;
+  right: calc(100% + 10px);
+  transform: translate(4px, -50%);
+}
+[data-tip-pos="left"]:hover::after,
+[data-tip-pos="left"]:focus-visible::after {
+  transform: translate(0, -50%);
+}
+@media (hover: none) {
+  [data-tip]::after { display: none; }
+}
+
+// ── Back to top ──────────────────────────────────────────────────────────────
+.back-to-top {
+  position: fixed;
+  right: 82px;
+  bottom: 16px;
+  z-index: 9998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background-color: rgba($grey, 0.8);
+  color: $black;
+  font-size: 1.3rem;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+
+  &:hover {
+    background-color: $primary-orange;
+    color: #fff;
+  }
+
+  @media screen and (max-width: 600px) {
+    right: 16px;
+    bottom: calc(106px + env(safe-area-inset-bottom));
+    width: 44px;
+    height: 44px;
+    font-size: 1.1rem;
+  }
+}
+
+[data-theme="dark"] .back-to-top {
+  background-color: rgba($black, 0.8);
+  border: 2px solid $white;
+  color: $white;
+
+  &:hover {
+    background-color: $primary-orange;
+    border-color: $primary-orange;
   }
 }

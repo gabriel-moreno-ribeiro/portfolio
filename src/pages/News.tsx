@@ -1,5 +1,6 @@
 import { motion } from 'motion/react';
 import { FiArrowUpRight, FiInstagram, FiRadio } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar/Navbar';
 import InstagramEmbed from '../components/News/InstagramEmbed';
 import Footer from '../components/Shared/Footer';
@@ -26,7 +27,7 @@ function News() {
       <div className="page-nav"><Navbar /></div>
 
       <header className="news__header">
-        <motion.p className="news__eyebrow" {...rise(0)}>News</motion.p>
+        <motion.p className="news__eyebrow" {...rise(0)}><Link to="/">Home</Link><i />News</motion.p>
         <motion.h1 className="news__title" {...rise(1)}>In the news.</motion.h1>
         <motion.p className="news__lede" {...rise(2)}>
           Press, mentions and posts about what I&apos;m building.
