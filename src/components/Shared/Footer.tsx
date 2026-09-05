@@ -25,7 +25,7 @@ function Footer() {
   ];
 
   return (
-    <footer className="footer" role="contentinfo">
+    <footer className="footer">
       <div className="footer__cta">
         <p className="footer__cta-text">
           Want to talk?

@@ -15,7 +15,7 @@
     font-weight: 700;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: $primary-orange;
+    color: var(--accent);
     margin-bottom: 12px;
   }
 
@@ -28,7 +28,7 @@
 
     em {
       font-style: italic;
-      color: $primary-orange;
+      color: var(--accent-hero);
     }
   }
 

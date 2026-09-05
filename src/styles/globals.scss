@@ -9,6 +9,7 @@
   --accent:       #b8501a;   // was #f0732d (2.78:1 fail) → 4.76:1 on --bg
   --accent-decor: #f0732d;   // original orange — decorative only (lines, icons)
   --accent-hero:  #e2601a;   // hero name: 3.37:1 on --bg (large text needs 3:1; #f0732d was 2.78)
+  --accent-tag:   #a64616;   // 11–12px text on the light orange tag backgrounds: 5.1:1 (--accent was 4.2)
   --focus-ring:   #b8501a;
 
   // 2026 gradient palette
@@ -39,6 +40,7 @@
   --accent:       #f0732d;   // 6.72:1 on dark bg — passes
   --accent-decor: #f0732d;
   --accent-hero:  #f0732d;
+  --accent-tag:   #f0732d;   // 6.7:1 on the dark tag backgrounds
   --focus-ring:   #ff9a5c;   // lighter for dark bg
 
   // Dark gradient palette
