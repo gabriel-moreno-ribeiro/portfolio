@@ -299,6 +299,16 @@
   }
 }
 
+// Narrow phones: the 480px track was centered inside a 320px box, hiding the first and last city
+@media (max-width: 520px) {
+  .city-timeline {
+    padding-left: 0;
+    padding-right: 0;
+    &__track { min-width: 0; }
+    &__city { font-size: 10px; }
+  }
+}
+
 // Guided-tour cue on the active city dot (restarts per city)
 .city-timeline__dot { position: relative; }
 .city-timeline__dot-progress {

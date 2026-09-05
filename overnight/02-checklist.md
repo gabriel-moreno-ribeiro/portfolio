@@ -45,12 +45,21 @@ Ver seção homônima em `LOG.md`.
 - [ ] C32 Hero desc termina com "18, on a build year." (admissions officer e investidor perguntam "ele está na escola? vai sair para a faculdade?"; o dado só aparecia no texto rotativo de 5 s)
 - [ ] C33 Cards HIBEEX e Candela com link (hibeex.com.br; PDF do paper): investidor não tinha como chegar no produto a partir da seção principal
 - [x] C34 Passe A: re-extraído (463 strings únicas); diff antes/depois só mostra as mudanças feitas + contadores animados; nada novo
-- [ ] C35 Passe B: telas de novo (após C32/C33)
-- [ ] C36 Passe C: Lighthouse local + axe + links + console + build
-- [ ] C37 (Passe B) Tablet 768: `.background-section`/`.city-panel` 40 px mais largos que a viewport (content-box) → box-sizing: border-box
-- [ ] C38 (Passe C) axe `scrollable-region-focusable` nas linhas do moments (viram scroll sob reduced-motion) → role=group + tabIndex
-- [ ] C39 (Passe C) axe `aria-prohibited-attr` em `.bubble__wave` (/story) → role="img"
-- [ ] C40 (Passe C) Lighthouse `image-aspect-ratio` nos ícones da faixa de skills (width/height 120 em ícones não quadrados) → CSS width:auto
-- [ ] C41 Footer em dark mode: textos do CTA e copyright brancos sobre cartão claro → cores escuras
-- [ ] C42 Cool Things: card do HIBEEX ocupa a linha inteira (foto + texto), 3 cards de texto em 3 colunas
-- [ ] C43 `@media print`
+- [x] C35 Passe B: telas de novo (após C32/C33)
+- [x] C36 Passe C: Lighthouse local + axe + links + console + build
+- [x] C37 (Passe B) Tablet 768: `.background-section`/`.city-panel` 40 px mais largos que a viewport (content-box) → box-sizing: border-box
+- [x] C38 (Passe C) axe `scrollable-region-focusable` nas linhas do moments (viram scroll sob reduced-motion) → role=group + tabIndex
+- [x] C39 (Passe C) axe `aria-prohibited-attr` em `.bubble__wave` (/story) → role="img"
+- [x] C40 (Passe C) Lighthouse `image-aspect-ratio` nos ícones da faixa de skills (width/height 120 em ícones não quadrados) → CSS width:auto
+- [x] C41 Footer em dark mode: textos do CTA e copyright brancos sobre cartão claro → cores escuras
+- [x] C42 Cool Things: card do HIBEEX ocupa a linha inteira (foto + texto), 3 cards de texto em 3 colunas
+- [x] C43 `@media print`
+
+## Rodada 3 (régua mais alta: 320 px, teclado, peso)
+
+- [x] C44 320 px: linha do tempo das cidades com `min-width: 480px` centralizada cortava a 1ª e a última cidade → min-width 0 abaixo de 520 px
+- [x] C45 320 px: grade da /news com `minmax(300px, 1fr)` vazava 24 px → `minmax(min(300px, 100%), 1fr)`
+- [x] C46 Teclado: anel de foco dos campos do formulário mais visível (alpha 0,18 → 0,35); ordem de Tab conferida na home (skip link → nav lateral → menu → CTAs → conteúdo → formulário)
+- [x] C47 Peso por página medido (tabela no relatório); nada a cortar sem mexer no 3D
+- [x] C48 ≤360 px: botões flutuantes de câmera/tema cobriam o fim do nome na navbar (o menu expandido já tem os dois) → escondidos abaixo de 360 px
+- [x] C49 320 px /news: iframe do Instagram tem mínimo próprio de 320 px (embed.js) e fica 24 px cortado dentro do card; sem correção possível do nosso lado (nota no relatório)
