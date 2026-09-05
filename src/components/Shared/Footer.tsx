@@ -1,3 +1,13 @@
+import { Link } from "react-router-dom";
+
+const pages = [
+  { name: "Home.", to: "/" },
+  { name: "Library.", to: "/library" },
+  { name: "News.", to: "/news" },
+  { name: "Story.", to: "/story" },
+  { name: "Contact.", to: "/#contact" },
+];
+
 function obfuscatedEmail() {
   const user = 'me';
   const domain = 'gabrielmr.com';
@@ -28,6 +38,11 @@ function Footer() {
           {obfuscatedEmail()}
         </a>
       </div>
+      <nav className="links" aria-label="Pages">
+        {pages.map((page) => (
+          <Link to={page.to} key={page.to}>{page.name}</Link>
+        ))}
+      </nav>
       <div className="links">
         {links.map((link, i) => (
           <a

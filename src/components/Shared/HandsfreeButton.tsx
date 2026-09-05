@@ -48,7 +48,8 @@ const HandsfreeButton: React.FC = () => {
       onClick={handleCameraClick}
       className={`handsfree-button ${isEnabled ? "active" : ""}`}
       data-color-inverted={"true"}
-      title={isEnabled ? "Disable camera" : "Enable camera"}
+      aria-label={isEnabled ? "Disable hands-free mode" : "Hands-free mode (camera)"}
+      data-tip={isEnabled ? "Turn off hands-free" : "Hands-free mode"}
     >
       {icon}
     </motion.button>

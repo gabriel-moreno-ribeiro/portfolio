@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import CustomMouse from "./components/Shared/CustomMouse";
 import DarkModeButton from "./components/Shared/DarkModeButton";
 import HandsfreeButton from "./components/Shared/HandsfreeButton";
+import BackToTop from "./components/Shared/BackToTop";
 import HorizontalScroller from "./components/Shared/HorizontalScroller";
 import TerminalButton from "./components/Shared/TerminalButton";
 import TerminalModal from "./components/Terminal/TerminalModal";
@@ -49,6 +50,12 @@ function AppContent() {
   const location = useLocation();
   const isHome = location.pathname === "/";
   const isLibrary = location.pathname.startsWith("/library");
+
+  // New page, start at the top (hash links are handled by the page itself)
+  useEffect(() => {
+    if (location.hash) return;
+    window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
+  }, [location.pathname, location.hash]);
   const isMobile = useIsMobile();
   const handsfreeFlags = useHandsfreeStore((s) => s.isEnabled || s.showIntroModal);
   const handsfreeWindow = useWindowManagerStore((s) => !!s.windows["handsfree-intro"] || !!s.windows["gesture-tutorial"]);
@@ -97,6 +104,7 @@ function AppContent() {
       )}
       <CustomMouse />
       {!isLibrary && <MobileStickyCTA />}
+      {!isLibrary && <BackToTop />}
       {tip && isHome && (
         <button type="button" className="tip-toast" onClick={() => setTip(false)}>
           Just for fun, try pressing Ctrl + K!

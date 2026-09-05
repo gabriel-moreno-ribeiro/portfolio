@@ -2,7 +2,7 @@ import { motion } from 'motion/react';
 import { useEffect, useMemo, useState } from 'react';
 import { FiVideoOff, FiX } from 'react-icons/fi';
 import { IoMoonOutline, IoSunnyOutline } from 'react-icons/io5';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import useIsMobile from '../../hooks/useIsMobile';
 import { useHandsfreeStore } from '../../store/handsfreeStore';
 import { useThemeStore } from '../../store/themeStore';
@@ -49,6 +49,10 @@ function Navbar() {
 
   const links = [
     {
+      name: 'Home.',
+      href: '/',
+    },
+    {
       name: 'Library.',
       href: '/library',
     },
@@ -73,9 +77,14 @@ function Navbar() {
   const expandedWidth = isMobile ? 'calc(100vw - 32px)' : '700px';
 
   const navigate = useNavigate();
+  const location = useLocation();
 
+  const isCurrent = (href: string) =>
+    href === '/' ? location.pathname === '/' : location.pathname.startsWith(href);
   const handleLinkClick = (link: { href: string; top?: number }) => {
-    if (link.href.includes('#')) {
+    if (link.href === '/' && location.pathname === '/') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (link.href.includes('#')) {
       const id = link.href.split('#')[1];
       if (document.getElementById(id)) {
         scrollToComponent(id, link.top);
@@ -92,9 +101,16 @@ function Navbar() {
   return (
     <motion.div
       className="navbar"
+      tabIndex={0}
+      role="navigation"
+      aria-label="Site menu"
       onMouseEnter={!isMobile ? () => setIsHovered(true) : undefined}
       onMouseLeave={!isMobile ? () => setIsHovered(false) : undefined}
       onClick={() => setIsHovered(!isHovered)}
+      onFocus={() => setIsHovered(true)}
+      onBlur={e => {
+        if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setIsHovered(false);
+      }}
       initial={{ opacity: 0 }}
       animate={{
         opacity: 1,
@@ -140,12 +156,18 @@ function Navbar() {
         style={{ pointerEvents: isHovered ? 'auto' : 'none' }}
       >
         {links.map((link, i) => (
-          <p
-            onClick={() => handleLinkClick(link)}
+          <button
+            type="button"
+            onClick={e => {
+              e.stopPropagation();
+              handleLinkClick(link);
+            }}
             key={`link-${i}`}
+            aria-current={isCurrent(link.href) ? 'page' : undefined}
+            tabIndex={isHovered ? 0 : -1}
           >
             {link.name}
-          </p>
+          </button>
         ))}
       </motion.div>
       {isMobile && (
