@@ -29,7 +29,7 @@ const ROW_TWO: Moment[] = [
   { src: "/moments/for05.webp", caption: "Fortaleza · 2024–2025", alt: "Gabriel with classmates" },
 ];
 
-function Row({ items, reverse, duration }: { items: Moment[]; reverse?: boolean; duration: number }) {
+function Row({ items, reverse, duration, priority }: { items: Moment[]; reverse?: boolean; duration: number; priority?: boolean }) {
   // The track holds two copies; the animation slides exactly one copy's width.
   const doubled = [...items, ...items];
   return (
@@ -37,7 +37,8 @@ function Row({ items, reverse, duration }: { items: Moment[]; reverse?: boolean;
       <div className="moments__track" style={{ animationDuration: `${duration}s` }}>
         {doubled.map((m, i) => (
           <figure className="moments__item" key={`${m.src}-${i}`} aria-hidden={i >= items.length}>
-            <img src={m.src} alt={i < items.length ? m.alt : ""} loading={i < 5 ? "eager" : "lazy"} decoding="async" width={300} height={220} />
+            {/* The first photo of the first row is the page's LCP element */}
+            <img src={m.src} alt={i < items.length ? m.alt : ""} loading={i < 5 ? "eager" : "lazy"} fetchPriority={priority && i === 0 ? "high" : undefined} decoding="async" width={300} height={220} />
             <figcaption>{m.caption}</figcaption>
           </figure>
         ))}
@@ -55,7 +56,7 @@ export default function MomentsStrip() {
         <span>Fortaleza</span><i />
         <span>São Paulo</span>
       </p>
-      <Row items={ROW_ONE} duration={75} />
+      <Row items={ROW_ONE} duration={75} priority />
       <Row items={ROW_TWO} duration={85} reverse />
     </section>
   );

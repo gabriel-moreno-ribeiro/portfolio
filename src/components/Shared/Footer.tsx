@@ -17,7 +17,7 @@ function obfuscatedEmail() {
 function Footer() {
   const links = [
     { name: "LinkedIn.", href: "https://linkedin.com/in/gabriel-moreno-ribeiro" },
-    { name: "Github.", href: "https://github.com/gabriel-moreno-ribeiro" },
+    { name: "GitHub.", href: "https://github.com/gabriel-moreno-ribeiro" },
     { name: "Email.", href: `mailto:${obfuscatedEmail()}` },
     { name: "Privacy.", href: "/privacy" },
     { name: "Terms.", href: "/terms" },
@@ -33,7 +33,6 @@ function Footer() {
         <a
           href={`mailto:${obfuscatedEmail()}`}
           className="footer__cta-link"
-          aria-label="Send email to Gabriel"
         >
           {obfuscatedEmail()}
         </a>

@@ -1,46 +1,60 @@
-# Getting Started with Create React App
+# gabrielmr.com
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Personal site of Gabriel Moreno Ribeiro: founder and researcher, CEO of HIBEEX.
+Live at [gabrielmr.com](https://gabrielmr.com).
 
-## Available Scripts
+## Stack
 
-In the project directory, you can run:
+- React 19, Vite 7, TypeScript 5.7
+- SCSS (BEM, semantic tokens in `src/styles/globals.scss`, light/dark via `data-theme`)
+- `motion/react` for UI animation, GSAP ScrollTrigger for scroll-driven sections
+- React Three Fiber + three.js for the 3D scenes (hero robot, truck, skills canvas), `cobe` for the globe
+- MediaPipe for the optional hands-free (camera) mode, xterm.js for the Ctrl+K terminal
+- Vercel Functions in `api/` (`contact.ts` via Resend, `chat.ts` for the terminal assistant)
+- PostHog analytics (memory-only, loaded on idle)
 
-### `npm start`
+## Commands
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+```bash
+npm install
+npm run dev        # Vite dev server on http://localhost:3000 (mocks /api/chat)
+npm run build      # tsc + vite build -> dist/
+npm run preview    # serves dist/ on http://localhost:4173
+npm run verify:assets
+```
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+There is no lint or test setup. Type-checking runs as part of `npm run build`.
 
-### `npm test`
+## Where things live
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+| What | Where |
+|---|---|
+| Routes | `src/App.tsx` (`/`, `/library/:bookId?`, `/blog`, `/news`, `/story`, `/contact` → `/#contact`, `/obrigado`, 404) |
+| Home sections | `src/components/Home/` (Hero, MomentsStrip, BackgroundGlobe, FindMyWork, Numbers, Research, Skills, WorkExperience, ContactSection) |
+| Personal statement | `src/content/story.ts` (text) + `src/components/Story/` (figures) |
+| News items | `src/data/news.ts` |
+| Library catalog | `src/data/books.json` (see `docs/adicionar-livros.md`) |
+| Head metadata | `index.html` (title, description, OG, JSON-LD) and `src/hooks/useDocumentHead.ts` per page |
+| Static pages and files | `public/` (`privacy.html`, `terms.html`, `404.html`, `llms.txt`, `sitemap.xml`, `robots.txt`) |
+| Images | `public/moments`, `public/work/<slug>`, `public/research/<slug>`, `public/stats`, `public/story`, `public/background` (WebP) |
+| 3D models | `public/assets/3d/` |
+| Styles | `src/styles/` (one SCSS file per component) |
 
-### `npm run build`
+## Deploy
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Hosted on Vercel behind Cloudflare. Deploys are manual from the CLI:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```bash
+npx vercel --prod
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+`vercel.json` holds the SPA rewrites (`/privacy`, `/terms`, everything else → `index.html`), cache headers and security headers.
+Environment variables (Resend, Groq/OpenAI key for `/api/chat`) are set in the Vercel project, not in the repo.
 
-### `npm run eject`
+To roll back: `npx vercel rollback`, or revert the commit and deploy again.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Notes
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- The library shelf engine is adapted from [kabarza/bookshelf](https://github.com/kabarza/bookshelf) (credited in the page footer).
+- Source files use CRLF line endings.
+- `overnight/` holds the audit logs and verification scripts from the September 2026 overnight pass (screenshots are gitignored).

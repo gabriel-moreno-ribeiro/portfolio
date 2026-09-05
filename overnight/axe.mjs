@@ -23,11 +23,18 @@ for (const route of routes) {
     const res = await page.evaluate(async () => {
       // @ts-ignore
       const r = await window.axe.run(document, { runOnly: { type: "tag", values: ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa", "best-practice"] } });
-      return r.violations.map((v) => ({ id: v.id, impact: v.impact, help: v.help, n: v.nodes.length, nodes: v.nodes.slice(0, 3).map((nd) => nd.target.join(" ")) }));
+      return r.violations.map((v) => ({
+        id: v.id, impact: v.impact, help: v.help, n: v.nodes.length,
+        nodes: v.nodes.slice(0, v.id === "color-contrast" ? 40 : 4).map((nd) => {
+          const d = nd.any?.[0]?.data;
+          const extra = d && d.contrastRatio ? ` [${d.contrastRatio}:1 fg=${d.fgColor} bg=${d.bgColor} ${d.fontSize}]` : "";
+          return nd.target.join(" ").slice(0, 110) + extra;
+        }),
+      }));
     });
     total += res.length;
     console.log(`\n## ${route} @${width}: ${res.length} violações`);
-    for (const v of res) console.log(`- [${v.impact}] ${v.id} (${v.n}x): ${v.help}\n    ${v.nodes.join(" | ")}`);
+    for (const v of res) console.log(`- [${v.impact}] ${v.id} (${v.n}x): ${v.help}\n    ${v.nodes.join("\n    ")}`);
     await ctx.close();
   }
 }

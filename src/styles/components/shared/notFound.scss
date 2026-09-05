@@ -145,7 +145,7 @@
 
   &__terminal-tab {
     margin-left: auto;
-    color: #555;
+    color: #9a9ab0; // #555 on the terminal background was below 4.5:1
     font-size: 11px;
     display: flex;
     align-items: center;
@@ -174,7 +174,7 @@
   }
 
   &__output {
-    color: #666680;
+    color: #9a9ab5; // was #666680 (about 3:1)
     margin-bottom: 8px;
     padding-left: 22px;
   }

@@ -28,8 +28,9 @@ for (const route of routes) {
     page.on("console", (m) => { if (["error", "warning"].includes(m.type())) consoleLog[key].push(`${m.type()}: ${m.text().slice(0, 200)}`); });
     page.on("pageerror", (e) => consoleLog[key].push(`pageerror: ${String(e).slice(0, 200)}`));
     try {
-      await page.goto(base + route, { waitUntil: "load", timeout: 60000 });
-      await page.waitForTimeout(1500);
+      // domcontentloaded: com WebGL o evento load pode demorar >60s no headless
+      await page.goto(base + route, { waitUntil: "domcontentloaded", timeout: 90000 });
+      await page.waitForTimeout(3000);
       // Rola em passos para disparar reveals por IntersectionObserver
       const total = await page.evaluate(() => document.documentElement.scrollHeight);
       for (let y = 0; y < total; y += Math.floor(height * 0.8)) {

@@ -3,14 +3,14 @@
 > Founder and researcher on a build year. Co-founder and CEO of HIBEEX.
 
 Website: https://gabrielmr.com
-Email: gabrielmribeiro@hibeex.com.br
+Email: me@gabrielmr.com
 LinkedIn: https://linkedin.com/in/gabriel-moreno-ribeiro
 GitHub: https://github.com/gabriel-moreno-ribeiro
 Last updated: September 2026
 
 ## Summary
 
-Gabriel Moreno Ribeiro is an 18-year-old Brazilian founder and researcher on a build year. He is co-founder and CEO of HIBEEX, a fintech startup that turns the messy financial data of small and medium businesses into decisions their owners can act on. HIBEEX is one of 6 startups in the Canastra Ventures AI Residency, and Gabriel is among the youngest founders the program has picked.
+Gabriel Moreno Ribeiro is an 18-year-old Brazilian founder and researcher on a build year. He is co-founder and CEO of HIBEEX, which builds backoffice AI for small and medium businesses: raw data in, decisions the owners can act on out. HIBEEX is one of 6 startups in the Canastra Ventures AI Residency, and Gabriel is among the youngest founders the program has picked.
 
 He was admitted to the University of St Andrews with a Global Merit Scholarship and placed 1st at Insper for Computer Engineering. He chose a build year to go deeper on HIBEEX before starting university.
 
@@ -51,6 +51,6 @@ Tools: Git, GitHub, Docker, Vercel, LaTeX, MATLAB, Mathematica, Figma
 ## Site structure
 
 - /: portfolio (3D, terminal, hands-free gesture controls)
-- /blog: writing
+- /blog: writing (nothing published yet)
 - /news: press, mentions and posts
 - /story: personal statement

@@ -19,7 +19,8 @@ export function TownFigure() {
           src="/background/missao-velha/01.webp"
           alt="Family standing on the rocks by the Missão Velha waterfall"
           style={{ y }}
-          loading="lazy"
+          loading="eager"
+          fetchPriority="high"
           decoding="async"
         />
       </div>
