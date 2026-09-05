@@ -19,7 +19,36 @@
 
 ## Antes / depois
 
-[TODO: tabela final com Lighthouse local e produção, axe, links, warnings]
+### Lighthouse mobile (local, preview do build) — antes → depois
+
+| Página | Perf | A11y | Best practices | SEO | LCP | TBT |
+|---|---|---|---|---|---|---|
+| / | 50 → 54 | 96 → **100** | 100 → 100 | 100 → 100 | 5,7s → 5,8s | 1385 → 948 ms |
+| /story | 64 → 68 | 94 → **100** | 100 → 100 | 100 → 100 | 4,5s → 4,5s | 748 → 553 ms |
+| /news | 68 → 74 | 90 → **100** | 79 → 79 (cookies do Instagram) | 100 → 100 | 4,7s → 4,6s | 467 → 335 ms |
+| /library | 38 → 40 | 96 → **100** | 100 → 100 | 100 → 100 | 6,9s → 6,8s | 3951 → 3938 ms |
+
+Perf em headless com throttling 4x oscila ±8 entre rodadas; o que é estável é a11y 100 e nenhum número pior que antes.
+
+### Lighthouse mobile (produção) — antes → depois
+
+| Página | Perf | A11y | BP | SEO |
+|---|---|---|---|---|
+| / | 35 → [TODO] | 96 → [TODO] | 100 → [TODO] | 100 → [TODO] |
+| /story | 29 → [TODO] | 94 → [TODO] | 100 → [TODO] | 100 → [TODO] |
+| /news | 35 → [TODO] | 90 → [TODO] | 79 → [TODO] | 100 → [TODO] |
+| /library | 57 → [TODO] | 96 → [TODO] | 100 → [TODO] | 92 → [TODO] |
+
+### Outros
+
+| Métrica | Antes | Depois |
+|---|---|---|
+| axe (9 rotas × 2 larguras, WCAG 2.2 AA + best-practice) | 59 tipos de violação | **0** |
+| Links (internos + externos) | 73 testados, 0 quebrados | 67–72 testados (varia com o Instagram), 0 quebrados |
+| Overflow horizontal (320/390/768/1440) | 0 no documento; globo vazava 40 px em 768 e timeline cortada em 320 (escondidos por `overflow: clip`) | 0 |
+| Console | limpo | limpo (único item novo: CSP report-only do iframe do Instagram) |
+| Build | ok, 1 warning (chunk `three` 717 kB) | ok, mesmo warning (estrutural) |
+| `tsc` | ok | ok |
 
 ### Peso por página (local, depois; bytes servidos pelo próprio site após rolar a página inteira, terceiros fora)
 

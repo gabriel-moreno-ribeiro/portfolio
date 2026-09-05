@@ -1,0 +1,38 @@
+
+## / @390: 0 violações
+
+## / @1440: 0 violações
+
+## /story @390: 0 violações
+
+## /story @1440: 0 violações
+
+## /news @390: 0 violações
+
+## /news @1440: 0 violações
+
+## /library @390: 0 violações
+
+## /library @1440: 0 violações
+
+## /blog @390: 0 violações
+
+## /blog @1440: 0 violações
+
+## /obrigado @390: 0 violações
+
+## /obrigado @1440: 0 violações
+
+## /privacy @390: 0 violações
+
+## /privacy @1440: 0 violações
+
+## /terms @390: 0 violações
+
+## /terms @1440: 0 violações
+
+## /rota-que-nao-existe @390: 0 violações
+
+## /rota-que-nao-existe @1440: 0 violações
+
+TOTAL: 0 tipos de violação

@@ -63,3 +63,5 @@ Ver seção homônima em `LOG.md`.
 - [x] C47 Peso por página medido (tabela no relatório); nada a cortar sem mexer no 3D
 - [x] C48 ≤360 px: botões flutuantes de câmera/tema cobriam o fim do nome na navbar (o menu expandido já tem os dois) → escondidos abaixo de 360 px
 - [x] C49 320 px /news: iframe do Instagram tem mínimo próprio de 320 px (embed.js) e fica 24 px cortado dentro do card; sem correção possível do nosso lado (nota no relatório)
+- [x] C50 `public/404.html` (estática) com texto diferente da 404 do app e um travessão → mesmo texto ("Nothing here." / "This page doesn't exist. The rest of the site does." / "Take me home")
+- [x] C51 Ritmo vertical da home medido (script): os gaps entre caixas variam (25–89 px) mas os paddings internos compensam e a distância visual entre conteúdos fica em ~105–125 px em todas as seções → sem mudança
