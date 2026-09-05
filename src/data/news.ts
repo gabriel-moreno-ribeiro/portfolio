@@ -29,5 +29,9 @@ export const press: PressItem[] = [
 
 // Paste Instagram post/reel links here. Each renders as a live preview of the post.
 export const instagram: InstagramItem[] = [
-  // { url: "https://www.instagram.com/p/XXXXXXXXXXX/", caption: "Canastra Ventures demo day" },
+  { url: "https://www.instagram.com/p/DcBlbZOh5hx/" },
+  { url: "https://www.instagram.com/p/DRhNb1vgH3p/" },
+  { url: "https://www.instagram.com/p/DMyVaLxPwab/" },
+  { url: "https://www.instagram.com/p/C0mIBI9MMmB/" },
+  { url: "https://www.instagram.com/p/C0jwc81sCGO/" },
 ];
