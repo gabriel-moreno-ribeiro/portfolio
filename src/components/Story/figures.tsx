@@ -19,7 +19,8 @@ export function TownFigure() {
           src="/background/missao-velha/01.webp"
           alt="Family standing on the rocks by the Missão Velha waterfall"
           style={{ y }}
-          loading="lazy"
+          loading="eager"
+          fetchPriority="high"
           decoding="async"
         />
       </div>
@@ -333,7 +334,7 @@ function Bubble({ side, typing, voice, children }: { side: 'in' | 'out'; typing?
       ) : (
         <>
           {voice && (
-            <span className="bubble__wave" aria-label="voice message">
+            <span className="bubble__wave" role="img" aria-label="voice message">
               {Array.from({ length: 9 }, (_, i) => <i key={i} style={{ animationDelay: `${i * 90}ms` }} />)}
             </span>
           )}

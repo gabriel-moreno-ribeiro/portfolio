@@ -8,6 +8,8 @@
   --border:       #e7e7e7;
   --accent:       #b8501a;   // was #f0732d (2.78:1 fail) → 4.76:1 on --bg
   --accent-decor: #f0732d;   // original orange — decorative only (lines, icons)
+  --accent-hero:  #e2601a;   // hero name: 3.37:1 on --bg (large text needs 3:1; #f0732d was 2.78)
+  --accent-tag:   #a64616;   // 11–12px text on the light orange tag backgrounds: 5.1:1 (--accent was 4.2)
   --focus-ring:   #b8501a;
 
   // 2026 gradient palette
@@ -37,6 +39,8 @@
   --border:       rgba(255, 255, 255, 0.14);
   --accent:       #f0732d;   // 6.72:1 on dark bg — passes
   --accent-decor: #f0732d;
+  --accent-hero:  #f0732d;
+  --accent-tag:   #f0732d;   // 6.7:1 on the dark tag backgrounds
   --focus-ring:   #ff9a5c;   // lighter for dark bg
 
   // Dark gradient palette
@@ -274,8 +278,8 @@ body {
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: #aaa;
-    opacity: 0.6;
+    color: var(--fg-muted); // #aaa at 0.6 opacity failed 4.5:1 on both themes
+    opacity: 0.9;
     transition: opacity 0.2s, color 0.2s;
     white-space: nowrap;
   }
@@ -426,7 +430,10 @@ img {
   padding-bottom: 80px;
 }
 
-.page-back {
+// Blog's plain "Back" button. Scoped to .page-wrapper: unscoped, it overrode the
+// pill above on /story, /news and /library and its margin-bottom pushed the
+// library's "Home" link onto the "Library · 28 books" label.
+.page-wrapper .page-back {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -598,4 +605,27 @@ img {
     background-color: $primary-orange;
     border-color: $primary-orange;
   }
+}
+
+// ── Print ────────────────────────────────────────────────────────────────────
+// Fixed chrome, 3D canvases and controls make no sense on paper; keep the text.
+@media print {
+  .navbar,
+  .home-sidenav,
+  .mobile-sticky-cta,
+  .sticker-stage,
+  .tip-toast,
+  .toggle-button,
+  .terminal-fab,
+  .back-to-top,
+  .horizontal-scroller,
+  .hero-slideshow,
+  .skip-link,
+  canvas {
+    display: none !important;
+  }
+
+  html, body { background: #fff !important; color: #000 !important; }
+  a { color: inherit; text-decoration: underline; }
+  * { animation: none !important; transition: none !important; opacity: 1 !important; transform: none !important; }
 }

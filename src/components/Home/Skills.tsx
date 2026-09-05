@@ -47,22 +47,23 @@ const darkIcons = [
   ...extraIcons,
 ];
 
+// |x| stays under ~560 so at 1440px nothing clips on the right or lands on the side nav (left gutter ≈ 195px).
 const deskstopFinalPositions = [
-  { x: -500, y: 0 },
-  { x: 650, y: 100 },
-  { x: 600, y: -50 },
-  { x: -600, y: -150 },
-  { x: -600, y: 250 },
+  { x: -440, y: 0 },
+  { x: 520, y: 90 },
+  { x: 540, y: -60 },
+  { x: -470, y: -170 },
+  { x: -470, y: 240 },
   { x: 100, y: -250 },
   { x: -400, y: -300 },
-  { x: 500, y: 200 },
+  { x: 420, y: 220 },
   { x: -300, y: 0 },
   { x: 300, y: 0 },
   // extras
   { x: -150, y: -350 },
   { x: 400, y: -180 },
-  { x: -450, y: 130 },
-  { x: 700, y: 280 },
+  { x: -330, y: 130 },
+  { x: 560, y: 300 },
   { x: -60, y: 260 },
   { x: 430, y: 350 },
 ];

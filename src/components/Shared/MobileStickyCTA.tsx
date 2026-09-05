@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 function MobileStickyCTA() {
   return (
-    <div className="mobile-sticky-cta">
+    <nav className="mobile-sticky-cta" aria-label="Quick contact">
       <Link to="/#contact" className="mobile-sticky-cta__btn">
         Get in Touch
       </Link>
@@ -15,7 +15,7 @@ function MobileStickyCTA() {
       >
         <FiCalendar /> Book a Call
       </a>
-    </div>
+    </nav>
   );
 }
 

@@ -6,9 +6,9 @@
     <title>404 — Gabriel Moreno Ribeiro</title>
     <meta name="robots" content="noindex" />
     <style>
-      :root { --bg: #fff8f4; --fg: #111; --accent: #b8501a; }
+      :root { --bg: #fff8f4; --fg: #111; --fg-muted: #5f5f5f; --accent: #b8501a; }
       @media (prefers-color-scheme: dark) {
-        :root { --bg: #0a0a1a; --fg: #fff; --accent: #f0732d; }
+        :root { --bg: #0a0a1a; --fg: #fff; --fg-muted: #a8a8b8; --accent: #f0732d; }
       }
       * { margin: 0; padding: 0; box-sizing: border-box; }
       body {
@@ -31,7 +31,7 @@
         letter-spacing: -4px;
       }
       h1 { font-size: 1.5rem; font-weight: 600; margin: 16px 0 8px; }
-      p { color: #888; font-size: 1rem; line-height: 1.6; margin-bottom: 32px; }
+      p { color: var(--fg-muted); font-size: 1rem; line-height: 1.6; margin-bottom: 32px; }
       a {
         display: inline-block;
         background: var(--accent);
@@ -47,11 +47,11 @@
     </style>
   </head>
   <body>
-    <div class="container">
+    <main class="container">
       <div class="code">404</div>
-      <h1>Page not found</h1>
-      <p>This page doesn't exist — but the builder does.</p>
-      <a href="/">Back to gabrielmr.com</a>
-    </div>
+      <h1>Nothing here.</h1>
+      <p>This page doesn't exist. The rest of the site does.</p>
+      <a href="/">Take me home</a>
+    </main>
   </body>
 </html>

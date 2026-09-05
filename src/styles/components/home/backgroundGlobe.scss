@@ -2,6 +2,7 @@
   padding: 40px 40px 80px;
   max-width: 1200px;
   width: 100%;
+  box-sizing: border-box; // width:100% + padding was 40px wider than the viewport on tablets
   margin: 0 auto;
   text-align: center;
   display: flex;
@@ -62,6 +63,7 @@
   border: 1px solid rgba(0, 0, 0, 0.07);
   border-radius: 20px;
   padding: 28px 24px;
+  box-sizing: border-box;
   text-align: left;
   position: relative;
   background: rgba($grey, 0.2);
@@ -103,15 +105,15 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: $primary-orange;
+    color: var(--accent);
     margin: 0;
   }
 
   &__coords {
     font-size: 10px;
     font-family: 'SF Mono', 'Fira Code', monospace;
-    color: $text-grey;
-    opacity: 0.6;
+    color: var(--fg-muted);
+    opacity: 1; // was 0.6: 2.6:1 on 10px text
     letter-spacing: 0.02em;
   }
 
@@ -294,6 +296,16 @@
     margin-top: 36px;
     &__city { font-size: 11px; }
     &__period { font-size: 9px; }
+  }
+}
+
+// Narrow phones: the 480px track was centered inside a 320px box, hiding the first and last city
+@media (max-width: 520px) {
+  .city-timeline {
+    padding-left: 0;
+    padding-right: 0;
+    &__track { min-width: 0; }
+    &__city { font-size: 10px; }
   }
 }
 

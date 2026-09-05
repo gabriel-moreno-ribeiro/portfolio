@@ -67,7 +67,7 @@
     gap: 4px;
     font-size: 12px;
     font-weight: 600;
-    color: $primary-orange;
+    color: var(--accent);
     margin-left: auto;
 
     svg {
@@ -93,7 +93,7 @@
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: $primary-orange;
+    color: var(--accent);
   }
 
   &__year {
@@ -139,7 +139,7 @@
   padding: 4px 10px;
   border-radius: 6px;
   background: rgba($primary-orange, 0.08);
-  color: $primary-orange;
+  color: var(--accent-tag);
 }
 
 .research-media {

@@ -18,7 +18,7 @@ function Blog() {
   }, []);
 
   return (
-    <div className="page-wrapper">
+    <main className="page-wrapper" id="main-content">
       <Navbar />
       <motion.div
         className="page-content"
@@ -34,12 +34,12 @@ function Blog() {
 
         <div className="page-empty-state">
           <FiEdit3 className="page-empty-state__icon" />
-          <h3>Not yet</h3>
+          <h2>Not yet</h2>
           <p>Nothing published yet. The first posts are on the way.</p>
         </div>
       </motion.div>
       <Footer />
-    </div>
+    </main>
   );
 }
 
