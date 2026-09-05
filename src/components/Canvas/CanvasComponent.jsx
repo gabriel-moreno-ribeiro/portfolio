@@ -44,7 +44,7 @@ export default function CanvasComponent({ onReady }) {
     >
       <ambientLight intensity={darkMode ? 0.25 : 1} />
       <directionalLight position={[10, 10, 10]} intensity={darkMode ? 0 : 2} />
-      <Model onReady={onReady} />
+      <Model onReady={onReady} position={[0, -1.8, 0]} />
       <OrbitControls enableZoom={false} />
     </Canvas>
   );

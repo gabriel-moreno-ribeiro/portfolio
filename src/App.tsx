@@ -95,7 +95,7 @@ function AppContent() {
       )}
       <CustomMouse />
       {!isLibrary && <MobileStickyCTA />}
-      {tip && (
+      {tip && isHome && (
         <button type="button" className="tip-toast" onClick={() => setTip(false)}>
           Just for fun, try pressing Ctrl + K!
         </button>
