@@ -37,3 +37,9 @@ yarn-error.log*
 /.claude/refs
 /.claude/settings.local.json
 /.mcp.json
+
+# overnight (screenshots local-only)
+/overnight/screenshots
+
+# letta agent local state
+/.letta
