@@ -373,6 +373,20 @@ img {
 }
 
 // ── Subpages (Blog, News) ──
+// Centers the fixed navbar pill on the viewport regardless of the page container width
+.page-nav {
+  position: fixed;
+  z-index: 9998;
+  top: 0;
+  right: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+
+  > * { pointer-events: auto; }
+}
+
 .page-wrapper {
   display: flex;
   flex-direction: column;
