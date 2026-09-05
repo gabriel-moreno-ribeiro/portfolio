@@ -334,7 +334,7 @@ function Bubble({ side, typing, voice, children }: { side: 'in' | 'out'; typing?
       ) : (
         <>
           {voice && (
-            <span className="bubble__wave" aria-label="voice message">
+            <span className="bubble__wave" role="img" aria-label="voice message">
               {Array.from({ length: 9 }, (_, i) => <i key={i} style={{ animationDelay: `${i * 90}ms` }} />)}
             </span>
           )}

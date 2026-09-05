@@ -11,14 +11,15 @@ const browser = await chromium.launch();
 let total = 0;
 for (const route of routes) {
   for (const width of [390, 1440]) {
-    const ctx = await browser.newContext({ viewport: { width, height: width < 768 ? 844 : 900 } });
+    // reducedMotion: os reveals do motion/react terminam na hora; sem isso o axe mede cores no meio do fade
+    const ctx = await browser.newContext({ viewport: { width, height: width < 768 ? 844 : 900 }, reducedMotion: "reduce" });
     const page = await ctx.newPage();
     await page.goto(base + route, { waitUntil: "load", timeout: 60000 });
     await page.waitForTimeout(1500);
     const total0 = await page.evaluate(() => document.documentElement.scrollHeight);
     for (let y = 0; y < total0; y += 700) { await page.evaluate((yy) => window.scrollTo({ top: yy, behavior: "instant" }), y); await page.waitForTimeout(60); }
     await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
-    await page.waitForTimeout(500);
+    await page.waitForTimeout(2500);
     await page.addScriptTag({ content: axeSrc });
     const res = await page.evaluate(async () => {
       // @ts-ignore

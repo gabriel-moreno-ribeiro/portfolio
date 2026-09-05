@@ -39,3 +39,18 @@ Marque `[x]` ao concluir; cada item tem verificação registrada no LOG.
 ## Decisões para eu revisar (recomendação entre parênteses)
 
 Ver seção homônima em `LOG.md`.
+
+## Rodada 2 (Fase 3, Passe D — olhos de fora)
+
+- [ ] C32 Hero desc termina com "18, on a build year." (admissions officer e investidor perguntam "ele está na escola? vai sair para a faculdade?"; o dado só aparecia no texto rotativo de 5 s)
+- [ ] C33 Cards HIBEEX e Candela com link (hibeex.com.br; PDF do paper): investidor não tinha como chegar no produto a partir da seção principal
+- [x] C34 Passe A: re-extraído (463 strings únicas); diff antes/depois só mostra as mudanças feitas + contadores animados; nada novo
+- [ ] C35 Passe B: telas de novo (após C32/C33)
+- [ ] C36 Passe C: Lighthouse local + axe + links + console + build
+- [ ] C37 (Passe B) Tablet 768: `.background-section`/`.city-panel` 40 px mais largos que a viewport (content-box) → box-sizing: border-box
+- [ ] C38 (Passe C) axe `scrollable-region-focusable` nas linhas do moments (viram scroll sob reduced-motion) → role=group + tabIndex
+- [ ] C39 (Passe C) axe `aria-prohibited-attr` em `.bubble__wave` (/story) → role="img"
+- [ ] C40 (Passe C) Lighthouse `image-aspect-ratio` nos ícones da faixa de skills (width/height 120 em ícones não quadrados) → CSS width:auto
+- [ ] C41 Footer em dark mode: textos do CTA e copyright brancos sobre cartão claro → cores escuras
+- [ ] C42 Cool Things: card do HIBEEX ocupa a linha inteira (foto + texto), 3 cards de texto em 3 colunas
+- [ ] C43 `@media print`
