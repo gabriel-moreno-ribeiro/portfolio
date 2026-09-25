@@ -14,6 +14,7 @@
     "cobe": "^0.6.4",
     "gsap": "^3.12.5",
     "html2canvas-pro": "^2.0.0",
+    "matter-js": "^0.20.0",
     "motion": "^12.34.3",
     "posthog-js": "^1.353.0",
     "react": "^19",
@@ -22,6 +23,7 @@
     "react-player": "^2.16.0",
     "react-router-dom": "^7.18.2",
     "three": "^0.170",
+    "zod": "^4.6.5",
     "zustand": "^5"
   },
   "scripts": {
@@ -31,11 +33,14 @@
     "verify:assets": "node scripts/verify-assets.mjs"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "@types/matter-js": "^0.20.2",
     "@types/node": "^22",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@vercel/node": "^5.6.6",
     "@vitejs/plugin-react": "^5.1.4",
+    "lighthouse": "^13.5.0",
     "playwright": "^1.61.1",
     "sass": "^1.77.8",
     "sharp": "^0.35.3",

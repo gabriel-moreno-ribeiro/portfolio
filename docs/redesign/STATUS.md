@@ -82,12 +82,14 @@ e auditar o estado atual daria um retrato errado.
 
 ## Riscos abertos
 
-1. **Agentes novos podem não estar despacháveis nesta sessão.** A pasta `.claude/agents/` já
-   existia (regra do brief satisfeita, sem necessidade de reiniciar), mas as sete definições
-   foram escritas agora. O registro de tipos de subagente é montado no início da sessão.
-   Verificar antes da Fase 3; se não resolverem, reiniciar com `claude --continue`.
-2. **Backlog grande de alterações não commitadas** veio de `main` junto com a branch (Hero,
-   BackgroundGlobe, CustomMouse, CanvasComponent, MouseInputProvider, FindMyWork, MomentsStrip,
-   sitemap, página `/files`). Os commits desta reforma usam caminhos explícitos, nunca `git add -A`.
-3. **17 JPEGs soltos na raiz do repo** (~44 MB, `Exp *.jpeg`, `Kit*.jpeg`), não commitados.
-   Qualquer `git add -A` os engole. Tratar antes do primeiro commit amplo.
+1. ~~Agentes novos podem não estar despacháveis nesta sessão.~~ **Resolvido:** os sete
+   apareceram no registro sem reiniciar.
+2. ~~Backlog grande de alterações não commitadas.~~ **Resolvido** em `6eb9e25` (restauração) e
+   `f32a4c5` (páginas `/files` e `/work/:slug`). Ficam fora do git, de propósito: os PDFs de
+   `public/files/` (documentos pessoais) e os 17 JPEGs da raiz (agora no `.gitignore`).
+3. **Modelo dos operários.** Os arquivos dos agentes pedem `claude-opus-5-5`, e o Claude Code
+   desta sessão (2.1.278) só aceita esse modelo a partir da 2.1.280. O primeiro disparo do
+   `qa-reviewer` morreu com `400 does not support this model`. Contorno adotado: cada disparo
+   passa `model: opus` (o Opus disponível), sem alterar os arquivos em `.claude/agents/`, que
+   voltam a valer como escritos depois de um `claude update`. Vale para os cinco operários e o
+   QA; o `runner` (haiku) e o Explore não são afetados.

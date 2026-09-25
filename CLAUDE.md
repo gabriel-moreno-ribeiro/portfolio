@@ -59,5 +59,5 @@ Padrão de qualidade (todo componente novo ou alterado):
 - Movimento é informação. Só transform e opacity; nada roda fora da viewport ou com a aba oculta.
 - Estados de carregando, erro e vazio; HTML semântico; foco visível; aria-live onde o dado muda; funciona por teclado e por toque.
 - Antes de reportar: typecheck e lint verdes nos arquivos tocados.
-- Comandos do projeto: dev: `npm run dev` (Vite, porta 5173; só o orquestrador sobe) | typecheck: `npx tsc --noEmit` | lint: não há ESLint neste repo — use o typecheck como portão (não introduza ESLint) | build: `npm run build` (`tsc && vite build`) | test: não há suíte de testes; a prova é o QA com Playwright
+- Comandos do projeto: dev: `npm run dev -- --port 5173 --strictPort` (o default do vite.config é 3000 com `open:true`; a reforma usa 5173; só o orquestrador sobe) | typecheck: `npx tsc --noEmit` | lint: não há ESLint neste repo — use o typecheck como portão (não introduza ESLint) | build: `npm run build` (`tsc && vite build`) | test: não há suíte de testes; a prova é o QA com Playwright
 - Relatório final com no máximo 40 linhas: Feito / Arquivos / Como usar (API pública) / Pendências / Pedidos ao orquestrador.

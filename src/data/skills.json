@@ -1,0 +1,18 @@
+[
+  { "id": "icon1", "name": "", "category": "other", "icon": { "light": "light/icon1.webp", "dark": "dark/icon1.webp" }, "projects": [], "_placeholder": true },
+  { "id": "icon2", "name": "", "category": "other", "icon": { "light": "light/icon2.webp", "dark": "dark/icon2.webp" }, "projects": [], "_placeholder": true },
+  { "id": "icon3", "name": "", "category": "other", "icon": { "light": "light/icon3.webp", "dark": "dark/icon3.webp" }, "projects": [], "_placeholder": true },
+  { "id": "icon4", "name": "", "category": "other", "icon": { "light": "light/icon4.webp", "dark": "dark/icon4.webp" }, "projects": [], "_placeholder": true },
+  { "id": "icon5", "name": "", "category": "other", "icon": { "light": "light/icon5.webp", "dark": "dark/icon5.webp" }, "projects": [], "_placeholder": true },
+  { "id": "icon6", "name": "", "category": "other", "icon": { "light": "light/icon6.webp", "dark": "dark/icon6.webp" }, "projects": [], "_placeholder": true },
+  { "id": "icon7", "name": "", "category": "other", "icon": { "light": "light/icon7.webp", "dark": "dark/icon7.webp" }, "projects": [], "_placeholder": true },
+  { "id": "icon8", "name": "", "category": "other", "icon": { "light": "light/icon8.webp", "dark": "dark/icon8.webp" }, "projects": [], "_placeholder": true },
+  { "id": "icon9", "name": "", "category": "other", "icon": { "light": "light/icon9.webp", "dark": "dark/icon9.webp" }, "projects": [], "_placeholder": true },
+  { "id": "icon10", "name": "", "category": "other", "icon": { "light": "light/icon10.webp", "dark": "dark/icon10.webp" }, "projects": [], "_placeholder": true },
+  { "id": "python", "name": "Python", "category": "backend", "icon": "devicon/python.svg", "projects": [] },
+  { "id": "docker", "name": "Docker", "category": "tools", "icon": "devicon/docker.svg", "projects": [] },
+  { "id": "git", "name": "Git", "category": "tools", "icon": "devicon/git.svg", "projects": ["hibeex"] },
+  { "id": "figma", "name": "Figma", "category": "design", "icon": "devicon/figma.svg", "projects": [] },
+  { "id": "postgresql", "name": "PostgreSQL", "category": "backend", "icon": "devicon/postgresql.svg", "projects": ["hibeex"] },
+  { "id": "tailwindcss", "name": "Tailwind CSS", "category": "frontend", "icon": "devicon/tailwindcss.svg", "projects": [] }
+]
