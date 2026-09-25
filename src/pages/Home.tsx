@@ -1,12 +1,13 @@
-import { lazy, Suspense, useEffect, useRef, useState, type ReactNode } from "react";
+import { lazy, Suspense, useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { useLocation } from "react-router-dom";
 import Hero from "../components/Home/Hero";
 import MomentsStrip from "../components/Home/MomentsStrip";
 import SectionRail from "../components/Home/SectionRail";
 import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Shared/Footer";
+import useIsMobile from "../hooks/useIsMobile";
 import { useVisible } from "../lib/motion";
-import { scrollToComponent } from "../utils/scrollToComponent";
+import { NAVIGATE_EVENT, type NavigateDetail } from "../utils/scrollToComponent";
 
 const BackgroundGlobe = lazy(() => import("../components/Home/BackgroundGlobe"));
 const Skills = lazy(() => import("../components/Home/Skills"));
@@ -29,35 +30,126 @@ const SECTIONS = [
   { id: 'contact', label: 'Contact' },
 ];
 
-// Gap left above a section reached through a URL hash (clears the navbar).
+// Heights measured on the production build at 1440 and 390 (QA r2). Close
+// enough that swapping the box for the real section barely moves what's below.
+const RESERVE: Record<string, [desktop: number, mobile: number]> = {
+  background: [1040, 880],
+  work: [1230, 1870],
+  numbers: [630, 1180],
+  research: [1120, 1630],
+  skills: [490, 650],
+  'work-experience': [4040, 3240],
+  contact: [445, 940],
+};
+const LAZY_IDS = new Set(Object.keys(RESERVE));
+
+// Gap left above a section reached through a URL hash or the rail (clears the navbar).
 const HASH_OFFSET = 90;
 const STOP_EVENTS = ['wheel', 'touchstart', 'keydown'];
 
-// Lazy sections reserve roughly their final height, so the document doesn't
-// grow in jumps as chunks arrive and nothing below reads as "blank" meanwhile.
-function Reserve({ height }: { height: number }) {
-  return <div style={{ minHeight: height }} aria-hidden="true" />;
+// Placeholder for a section that hasn't mounted (or is still downloading).
+// It carries the section id, so the rail, hash links and the active-section
+// probe find it, and a hidden heading so a screen reader knows what's there.
+function Reserve({ id, label, height }: { id: string; label: string; height: number }) {
+  return (
+    <div id={id} style={{ minHeight: height }}>
+      <h2 className="sr-only">{label}</h2>
+    </div>
+  );
 }
 
-// A section below the fold only mounts (and only downloads its chunk) once its
-// reserved box comes within half a viewport of the screen. Mounting everything
-// at load was the single biggest cost on the main thread. While unmounted the
-// wrapper carries the section id, so the rail and hash links still find it.
-function LazySection({ id, height, eager, children }: { id: string; height: number; eager: boolean; children: ReactNode }) {
+// A section below the fold only mounts (and only downloads its chunk) once
+// its reserved box comes within half a viewport of the screen. Mounting the
+// whole page at load was the single biggest cost on the main thread.
+function LazySection({ id, label, eager, children }: { id: string; label: string; eager: boolean; children: ReactNode }) {
   const ref = useRef<HTMLDivElement>(null);
   const near = useVisible(ref, { rootMargin: '50% 0px', once: true });
-  const mounted = eager || near;
+  const mobile = useIsMobile(600);
+  const height = RESERVE[id][mobile ? 1 : 0];
+  const placeholder = <Reserve id={id} label={label} height={height} />;
   return (
-    <div ref={ref} id={mounted ? undefined : id} style={mounted ? undefined : { minHeight: height }}>
-      {mounted && <Suspense fallback={<Reserve height={height} />}>{children}</Suspense>}
+    <div ref={ref}>
+      {eager || near ? <Suspense fallback={placeholder}>{children}</Suspense> : placeholder}
     </div>
   );
 }
 
 function Home() {
   const location = useLocation();
-  // A deep link (/#contact) needs its target in the DOM, so mount everything.
-  const eager = location.hash.length > 1;
+  // Everything mounts at once for a deep link, the first keypress (so Tab
+  // reaches the whole page) and any in-page navigation.
+  const [mountAll, setMountAll] = useState(() => location.hash.length > 1);
+  const stopAlign = useRef<() => void>(() => {});
+
+  // Keep re-aligning (instantly) to a target whose position drifts while the
+  // sections above it load, until the layout settles or the visitor takes over.
+  const alignTo = useCallback((id: string, offset: number) => {
+    stopAlign.current();
+    let timer = 0;
+    let stableTicks = 0;
+    const start = performance.now();
+    const stop = () => {
+      clearTimeout(timer);
+      STOP_EVENTS.forEach(ev => window.removeEventListener(ev, stop));
+    };
+    const tick = () => {
+      const el = document.getElementById(id);
+      if (el) {
+        const drift = el.getBoundingClientRect().top - offset;
+        if (Math.abs(drift) > 2) {
+          window.scrollTo({ top: window.scrollY + drift, behavior: 'instant' });
+          stableTicks = 0;
+        } else {
+          stableTicks++;
+        }
+      }
+      if (stableTicks >= 14 || performance.now() - start > 8000) return stop();
+      timer = window.setTimeout(tick, 150);
+    };
+    STOP_EVENTS.forEach(ev => window.addEventListener(ev, stop, { passive: true }));
+    tick();
+    stopAlign.current = stop;
+    return stop;
+  }, []);
+
+  // /#contact (and the old /contact URL).
+  useEffect(() => {
+    const id = location.hash.slice(1);
+    if (!id) return;
+    setMountAll(true);
+    return alignTo(id, HASH_OFFSET);
+  }, [location.hash, location.key, alignTo]);
+
+  // Rail clicks and "See Work": mount everything, scroll smoothly to where the
+  // target is now, then correct the drift once the smooth scroll has ended.
+  useEffect(() => {
+    const onNavigate = (e: Event) => {
+      const { id, offset } = (e as CustomEvent<NavigateDetail>).detail;
+      if (!LAZY_IDS.has(id)) return;
+      e.preventDefault();
+      setMountAll(true);
+      const el = document.getElementById(id);
+      if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - offset, behavior: 'smooth' });
+      let started = false;
+      const begin = () => {
+        if (started) return;
+        started = true;
+        window.removeEventListener('scrollend', begin);
+        alignTo(id, offset);
+      };
+      window.addEventListener('scrollend', begin, { once: true });
+      window.setTimeout(begin, 1200); // browsers without scrollend
+    };
+    window.addEventListener(NAVIGATE_EVENT, onNavigate);
+    return () => window.removeEventListener(NAVIGATE_EVENT, onNavigate);
+  }, [alignTo]);
+
+  useEffect(() => {
+    if (mountAll) return;
+    const onKey = () => setMountAll(true);
+    window.addEventListener('keydown', onKey, { once: true });
+    return () => window.removeEventListener('keydown', onKey);
+  }, [mountAll]);
 
   // The peelable sticker is a toy (and pulls GSAP): it waits for the first
   // interaction, or 6 s, instead of competing with the hero for the main thread.
@@ -77,43 +169,6 @@ function Home() {
     };
   }, []);
 
-  // /#contact (and the old /contact URL). In-page: smooth scroll. On a fresh
-  // load the target is lazy and the sections above it keep growing as they
-  // load, so keep re-aligning (instantly) until the layout settles or the
-  // visitor takes over.
-  useEffect(() => {
-    const id = location.hash.slice(1);
-    if (!id) return;
-    if (document.getElementById(id)) {
-      scrollToComponent(id, HASH_OFFSET);
-      return;
-    }
-    let timer = 0;
-    let stableTicks = 0;
-    const start = performance.now();
-    const stop = () => {
-      clearTimeout(timer);
-      STOP_EVENTS.forEach(ev => window.removeEventListener(ev, stop));
-    };
-    const tick = () => {
-      const el = document.getElementById(id);
-      if (el) {
-        const drift = el.getBoundingClientRect().top - HASH_OFFSET;
-        if (Math.abs(drift) > 2) {
-          window.scrollTo({ top: window.scrollY + drift, behavior: 'instant' });
-          stableTicks = 0;
-        } else {
-          stableTicks++;
-        }
-      }
-      if (stableTicks >= 14 || performance.now() - start > 8000) return stop();
-      timer = window.setTimeout(tick, 150);
-    };
-    STOP_EVENTS.forEach(ev => window.addEventListener(ev, stop, { passive: true }));
-    tick();
-    return stop;
-  }, [location.hash, location.key]);
-
   return (
     <main className="home-wrapper" id="main-content">
       <SectionRail sections={SECTIONS} />
@@ -121,25 +176,25 @@ function Home() {
       <Navbar />
       <Hero />
       <MomentsStrip />
-      <LazySection id="background" height={700} eager={eager}>
+      <LazySection id="background" label="Where I come from" eager={mountAll}>
         <BackgroundGlobe />
       </LazySection>
-      <LazySection id="work" height={900} eager={eager}>
+      <LazySection id="work" label="Cool things" eager={mountAll}>
         <FindMyWork />
       </LazySection>
-      <LazySection id="numbers" height={720} eager={eager}>
+      <LazySection id="numbers" label="By the numbers" eager={mountAll}>
         <NumbersAndStats />
       </LazySection>
-      <LazySection id="research" height={640} eager={eager}>
+      <LazySection id="research" label="Research" eager={mountAll}>
         <Research />
       </LazySection>
-      <LazySection id="skills" height={560} eager={eager}>
+      <LazySection id="skills" label="Skills" eager={mountAll}>
         <Skills />
       </LazySection>
-      <LazySection id="work-experience" height={3400} eager={eager}>
+      <LazySection id="work-experience" label="Professional experience" eager={mountAll}>
         <Experience />
       </LazySection>
-      <LazySection id="contact" height={720} eager={eager}>
+      <LazySection id="contact" label="Contact" eager={mountAll}>
         <ContactSection />
       </LazySection>
       <Footer />

@@ -450,18 +450,19 @@ a.exp__card-cta:visited {
   border: 1px solid var(--border);
   border-radius: 999px;
   font-family: $exp-mono;
-  font-size: 12.5px;
+  font-size: 14px;
   letter-spacing: 0.04em;
-  color: var(--accent);
-  background: none;
+  // --accent-tag (#a64616) em vez de --accent (#b8501a): o estado aceso dava 4,41:1.
+  color: var(--accent-tag, var(--accent));
+  background: var(--surface);
   text-decoration: none;
-  transition: border-color 0.25s ease, background-color 0.25s ease;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
 
   &:hover,
   &:focus-visible,
   &.is-on {
     border-color: var(--accent);
-    background: color-mix(in srgb, var(--accent-decor) 12%, transparent);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent-decor) 40%, transparent);
   }
 }
 

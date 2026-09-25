@@ -1,0 +1,329 @@
+{
+  "docHeight": 12299,
+  "viewportW": 390,
+  "dpr": 2,
+  "horizontalOverflow": {
+    "innerWidth": 390,
+    "docScrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflowPx": 0,
+    "offenderCount": 133,
+    "offenders": [
+      {
+        "label": "div.moments__track",
+        "left": 16,
+        "right": 4098,
+        "w": 4082
+      },
+      {
+        "label": "figure.moments__item",
+        "left": 255,
+        "right": 471,
+        "w": 216
+      },
+      {
+        "label": "img",
+        "left": 261,
+        "right": 464,
+        "w": 203
+      },
+      {
+        "label": "figcaption",
+        "left": 261,
+        "right": 461,
+        "w": 200
+      },
+      {
+        "label": "figure.moments__item",
+        "left": 480,
+        "right": 693,
+        "w": 213
+      },
+      {
+        "label": "img",
+        "left": 486,
+        "right": 687,
+        "w": 201
+      },
+      {
+        "label": "figcaption",
+        "left": 486,
+        "right": 686,
+        "w": 200
+      },
+      {
+        "label": "figure.moments__item",
+        "left": 703,
+        "right": 919,
+        "w": 216
+      },
+      {
+        "label": "img",
+        "left": 709,
+        "right": 912,
+        "w": 203
+      },
+      {
+        "label": "figcaption",
+        "left": 709,
+        "right": 909,
+        "w": 200
+      },
+      {
+        "label": "figure.moments__item",
+        "left": 926,
+        "right": 1143,
+        "w": 217
+      },
+      {
+        "label": "img",
+        "left": 933,
+        "right": 1136,
+        "w": 204
+      },
+      {
+        "label": "figcaption",
+        "left": 936,
+        "right": 1137,
+        "w": 200
+      },
+      {
+        "label": "figure.moments__item",
+        "left": 1152,
+        "right": 1365,
+        "w": 213
+      },
+      {
+        "label": "img",
+        "left": 1158,
+        "right": 1359,
+        "w": 201
+      }
+    ]
+  },
+  "sections": [
+    {
+      "label": "div.hero-section",
+      "tag": "div",
+      "top": 104,
+      "height": 519,
+      "heading": "Gabriel Moreno Ribeiro.",
+      "textChars": 226,
+      "imgs": 0,
+      "canvases": 0
+    },
+    {
+      "label": "#moments",
+      "tag": "section",
+      "top": 647,
+      "height": 489,
+      "heading": null,
+      "textChars": 1023,
+      "imgs": 34,
+      "canvases": 0
+    },
+    {
+      "label": "div",
+      "tag": "div",
+      "top": 1168,
+      "height": 882,
+      "heading": "Where I Come From.",
+      "textChars": 476,
+      "imgs": 8,
+      "canvases": 0
+    },
+    {
+      "label": "div",
+      "tag": "div",
+      "top": 2074,
+      "height": 1869,
+      "heading": "Cool Things",
+      "textChars": 824,
+      "imgs": 4,
+      "canvases": 0
+    },
+    {
+      "label": "div",
+      "tag": "div",
+      "top": 3967,
+      "height": 1271,
+      "heading": "By the Numbers",
+      "textChars": 438,
+      "imgs": 9,
+      "canvases": 0
+    },
+    {
+      "label": "div",
+      "tag": "div",
+      "top": 5262,
+      "height": 1630,
+      "heading": "Research",
+      "textChars": 927,
+      "imgs": 2,
+      "canvases": 0
+    },
+    {
+      "label": "div",
+      "tag": "div",
+      "top": 6916,
+      "height": 654,
+      "heading": "Some of the languages & tools I build with.",
+      "textChars": 169,
+      "imgs": 17,
+      "canvases": 1
+    },
+    {
+      "label": "div",
+      "tag": "div",
+      "top": 7594,
+      "height": 3241,
+      "heading": "Professional Experience.",
+      "textChars": 1271,
+      "imgs": 1,
+      "canvases": 1
+    },
+    {
+      "label": "div",
+      "tag": "div",
+      "top": 10858,
+      "height": 976,
+      "heading": "Let's talk.",
+      "textChars": 237,
+      "imgs": 0,
+      "canvases": 0
+    },
+    {
+      "label": "footer.footer",
+      "tag": "footer",
+      "top": 11858,
+      "height": 264,
+      "heading": null,
+      "textChars": 178,
+      "imgs": 0,
+      "canvases": 0
+    }
+  ],
+  "experienceColumns": {
+    "legacyLeftColumn": null,
+    "legacyRightColumn": null,
+    "section": {
+      "top": 7594,
+      "left": 16,
+      "w": 358,
+      "h": 3241
+    },
+    "stopList": {
+      "top": 7874,
+      "left": 16,
+      "w": 358,
+      "h": 2960,
+      "stops": 20
+    },
+    "stops": [
+      {
+        "id": "exp-principia",
+        "textChars": 223,
+        "top": 7994,
+        "left": 16,
+        "w": 358,
+        "h": 420
+      },
+      {
+        "id": "exp-olympic-club",
+        "textChars": 170,
+        "top": 8414,
+        "left": 16,
+        "w": 358,
+        "h": 420
+      },
+      {
+        "id": "exp-estudar",
+        "textChars": 166,
+        "top": 8834,
+        "left": 16,
+        "w": 358,
+        "h": 420
+      },
+      {
+        "id": "exp-fintech-rct",
+        "textChars": 183,
+        "top": 9254,
+        "left": 16,
+        "w": 358,
+        "h": 420
+      },
+      {
+        "id": "exp-gsat",
+        "textChars": 133,
+        "top": 9674,
+        "left": 16,
+        "w": 358,
+        "h": 420
+      },
+      {
+        "id": "exp-hibeex",
+        "textChars": 240,
+        "top": 10094,
+        "left": 16,
+        "w": 358,
+        "h": 420
+      }
+    ],
+    "stopNav": {
+      "top": 7731,
+      "left": 20,
+      "w": 350,
+      "h": 132
+    },
+    "road": {
+      "top": 7594,
+      "left": 16,
+      "w": 358,
+      "h": 3241
+    },
+    "carCanvas": {
+      "top": 10278,
+      "left": 12,
+      "w": 52,
+      "h": 52,
+      "bitmap": "104x104"
+    },
+    "carPoster": {
+      "top": 10278,
+      "left": 12,
+      "w": 52,
+      "h": 52,
+      "src": "/assets/car/car-00.webp",
+      "naturalW": 256,
+      "naturalH": 256,
+      "hasAttrDims": true
+    },
+    "odometer": {
+      "top": 7881,
+      "left": 16,
+      "w": 358,
+      "h": 33,
+      "position": "sticky",
+      "text": "2026stop 6/6 · HIBEEX"
+    },
+    "focusablesInside": 8,
+    "canvases": 1
+  },
+  "fixedOverlays": [
+    {
+      "label": "nav.navbar",
+      "h": 48,
+      "w": 254
+    },
+    {
+      "label": "button.toggle-button",
+      "h": 44,
+      "w": 44
+    },
+    {
+      "label": "nav.mobile-sticky-cta",
+      "h": 89,
+      "w": 390
+    }
+  ]
+}

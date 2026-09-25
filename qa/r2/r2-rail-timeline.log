@@ -1,0 +1,12 @@
+== Experience (#work-experience) docH 9553 -> 11308
+   scroll stopped at 1899ms, finalY=5059, section top=1174px, onScreen=false
+   id absent from DOM: 300ms (from 544 to 745)
+== Skills (#skills) docH 9553 -> 11308
+   scroll stopped at 1890ms, finalY=4474, section top=1245px, onScreen=false
+   id absent from DOM: 300ms (from 551 to 782)
+== Cool Things (#work) docH 9553 -> 10259
+   scroll stopped at 1309ms, finalY=2139, section top=401px, onScreen=true
+   id absent from DOM: 400ms (from 316 to 627)
+== Contact (#contact) docH 9553 -> 11308
+   scroll stopped at 1899ms, finalY=8484, section top=1815px, onScreen=false
+   id absent from DOM: 0ms (from null to null)

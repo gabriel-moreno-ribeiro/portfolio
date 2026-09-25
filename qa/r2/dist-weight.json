@@ -1,0 +1,1121 @@
+{
+  "generatedAt": "2026-09-25T20:11:36.133Z",
+  "distDir": "C:\\portfolio-gabriel\\dist",
+  "distTotalBytes": 13686514,
+  "distTotalMB": 13.05,
+  "assetsTotalBytes": 4823229,
+  "assetsTotalKB": 4710.2,
+  "assetsTotalMB": 4.6,
+  "assetsFileCount": 125,
+  "jsTotalKB": 2775.2,
+  "jsGzipTotalKB": 851.4,
+  "cssTotalKB": 136,
+  "byExt": {
+    ".html": {
+      "files": 16,
+      "bytes": 30934,
+      "kb": 30.2
+    },
+    ".glb": {
+      "files": 1,
+      "bytes": 103292,
+      "kb": 100.9
+    },
+    ".js": {
+      "files": 38,
+      "bytes": 2841855,
+      "kb": 2775.2
+    },
+    ".css": {
+      "files": 12,
+      "bytes": 139261,
+      "kb": 136
+    },
+    ".webp": {
+      "files": 143,
+      "bytes": 5043461,
+      "kb": 4925.3
+    },
+    ".woff2": {
+      "files": 8,
+      "bytes": 282348,
+      "kb": 275.7
+    },
+    ".woff": {
+      "files": 4,
+      "bytes": 61204,
+      "kb": 59.8
+    },
+    ".svg": {
+      "files": 1,
+      "bytes": 4477,
+      "kb": 4.4
+    },
+    ".avif": {
+      "files": 7,
+      "bytes": 1093542,
+      "kb": 1067.9
+    },
+    ".txt": {
+      "files": 8,
+      "bytes": 6378,
+      "kb": 6.2
+    },
+    "(none)": {
+      "files": 7,
+      "bytes": 12,
+      "kb": 0
+    },
+    ".xml": {
+      "files": 2,
+      "bytes": 2419,
+      "kb": 2.4
+    },
+    ".ico": {
+      "files": 1,
+      "bytes": 15406,
+      "kb": 15
+    },
+    ".pdf": {
+      "files": 5,
+      "bytes": 3874693,
+      "kb": 3783.9
+    },
+    ".png": {
+      "files": 4,
+      "bytes": 186319,
+      "kb": 182
+    },
+    ".json": {
+      "files": 1,
+      "bytes": 670,
+      "kb": 0.7
+    },
+    ".md": {
+      "files": 3,
+      "bytes": 243,
+      "kb": 0.2
+    }
+  },
+  "top10Chunks": [
+    {
+      "file": "assets/three-Cau--iyM.js",
+      "ext": ".js",
+      "bytes": 717074,
+      "kb": 700.3,
+      "gzipKB": 179.6
+    },
+    {
+      "file": "assets/Terminal-Dv_9ryUQ.js",
+      "ext": ".js",
+      "bytes": 363043,
+      "kb": 354.5,
+      "gzipKB": 92.5
+    },
+    {
+      "file": "assets/react-three-DKQo_3E1.js",
+      "ext": ".js",
+      "bytes": 242344,
+      "kb": 236.7,
+      "gzipKB": 73.1
+    },
+    {
+      "file": "assets/html2canvas-pro.esm-BP2_FaI7.js",
+      "ext": ".js",
+      "bytes": 229987,
+      "kb": 224.6,
+      "gzipKB": 55.6
+    },
+    {
+      "file": "assets/vendor-react-5tBKz8g6.js",
+      "ext": ".js",
+      "bytes": 198137,
+      "kb": 193.5,
+      "gzipKB": 61
+    },
+    {
+      "file": "assets/posthog-6pwzbHJx.js",
+      "ext": ".js",
+      "bytes": 177380,
+      "kb": 173.2,
+      "gzipKB": 56.6
+    },
+    {
+      "file": "assets/index-CDrBeNWA.js",
+      "ext": ".js",
+      "bytes": 146158,
+      "kb": 142.7,
+      "gzipKB": 48.1
+    },
+    {
+      "file": "assets/motion-CDmMuYs6.js",
+      "ext": ".js",
+      "bytes": 132272,
+      "kb": 129.2,
+      "gzipKB": 42.7
+    },
+    {
+      "file": "assets/mediapipe-qHAtWFBm.js",
+      "ext": ".js",
+      "bytes": 125531,
+      "kb": 122.6,
+      "gzipKB": 37.1
+    },
+    {
+      "file": "assets/gsap-DHgtL2rv.js",
+      "ext": ".js",
+      "bytes": 105152,
+      "kb": 102.7,
+      "gzipKB": 39.1
+    }
+  ],
+  "top10AssetsAnyType": [
+    {
+      "file": "assets/three-Cau--iyM.js",
+      "ext": ".js",
+      "bytes": 717074,
+      "kb": 700.3,
+      "gzipKB": 179.6
+    },
+    {
+      "file": "assets/Terminal-Dv_9ryUQ.js",
+      "ext": ".js",
+      "bytes": 363043,
+      "kb": 354.5,
+      "gzipKB": 92.5
+    },
+    {
+      "file": "assets/hero-slideshow/8-1920.avif",
+      "ext": ".avif",
+      "bytes": 294518,
+      "kb": 287.6,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/react-three-DKQo_3E1.js",
+      "ext": ".js",
+      "bytes": 242344,
+      "kb": 236.7,
+      "gzipKB": 73.1
+    },
+    {
+      "file": "assets/html2canvas-pro.esm-BP2_FaI7.js",
+      "ext": ".js",
+      "bytes": 229987,
+      "kb": 224.6,
+      "gzipKB": 55.6
+    },
+    {
+      "file": "assets/hero-slideshow/6-1920.avif",
+      "ext": ".avif",
+      "bytes": 208780,
+      "kb": 203.9,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/vendor-react-5tBKz8g6.js",
+      "ext": ".js",
+      "bytes": 198137,
+      "kb": 193.5,
+      "gzipKB": 61
+    },
+    {
+      "file": "assets/hero-slideshow/4-1920.avif",
+      "ext": ".avif",
+      "bytes": 193318,
+      "kb": 188.8,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/hero-slideshow/1-1920.avif",
+      "ext": ".avif",
+      "bytes": 183835,
+      "kb": 179.5,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/posthog-6pwzbHJx.js",
+      "ext": ".js",
+      "bytes": 177380,
+      "kb": 173.2,
+      "gzipKB": 56.6
+    }
+  ],
+  "allAssets": [
+    {
+      "file": "assets/three-Cau--iyM.js",
+      "ext": ".js",
+      "bytes": 717074,
+      "kb": 700.3,
+      "gzipKB": 179.6
+    },
+    {
+      "file": "assets/Terminal-Dv_9ryUQ.js",
+      "ext": ".js",
+      "bytes": 363043,
+      "kb": 354.5,
+      "gzipKB": 92.5
+    },
+    {
+      "file": "assets/hero-slideshow/8-1920.avif",
+      "ext": ".avif",
+      "bytes": 294518,
+      "kb": 287.6,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/react-three-DKQo_3E1.js",
+      "ext": ".js",
+      "bytes": 242344,
+      "kb": 236.7,
+      "gzipKB": 73.1
+    },
+    {
+      "file": "assets/html2canvas-pro.esm-BP2_FaI7.js",
+      "ext": ".js",
+      "bytes": 229987,
+      "kb": 224.6,
+      "gzipKB": 55.6
+    },
+    {
+      "file": "assets/hero-slideshow/6-1920.avif",
+      "ext": ".avif",
+      "bytes": 208780,
+      "kb": 203.9,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/vendor-react-5tBKz8g6.js",
+      "ext": ".js",
+      "bytes": 198137,
+      "kb": 193.5,
+      "gzipKB": 61
+    },
+    {
+      "file": "assets/hero-slideshow/4-1920.avif",
+      "ext": ".avif",
+      "bytes": 193318,
+      "kb": 188.8,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/hero-slideshow/1-1920.avif",
+      "ext": ".avif",
+      "bytes": 183835,
+      "kb": 179.5,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/posthog-6pwzbHJx.js",
+      "ext": ".js",
+      "bytes": 177380,
+      "kb": 173.2,
+      "gzipKB": 56.6
+    },
+    {
+      "file": "assets/index-CDrBeNWA.js",
+      "ext": ".js",
+      "bytes": 146158,
+      "kb": 142.7,
+      "gzipKB": 48.1
+    },
+    {
+      "file": "assets/motion-CDmMuYs6.js",
+      "ext": ".js",
+      "bytes": 132272,
+      "kb": 129.2,
+      "gzipKB": 42.7
+    },
+    {
+      "file": "assets/mediapipe-qHAtWFBm.js",
+      "ext": ".js",
+      "bytes": 125531,
+      "kb": 122.6,
+      "gzipKB": 37.1
+    },
+    {
+      "file": "assets/gsap-DHgtL2rv.js",
+      "ext": ".js",
+      "bytes": 105152,
+      "kb": 102.7,
+      "gzipKB": 39.1
+    },
+    {
+      "file": "assets/3d/robot.glb",
+      "ext": ".glb",
+      "bytes": 103292,
+      "kb": 100.9,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/Skills-C4GWK2G_.js",
+      "ext": ".js",
+      "bytes": 97985,
+      "kb": 95.7,
+      "gzipKB": 58.1
+    },
+    {
+      "file": "assets/hero-slideshow/7-1920.avif",
+      "ext": ".avif",
+      "bytes": 91643,
+      "kb": 89.5,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/matter-GrM7GHlD.js",
+      "ext": ".js",
+      "bytes": 84726,
+      "kb": 82.7,
+      "gzipKB": 26.2
+    },
+    {
+      "file": "assets/index-DKC5AF5D.css",
+      "ext": ".css",
+      "bytes": 76745,
+      "kb": 74.9,
+      "gzipKB": 13.6
+    },
+    {
+      "file": "assets/dm-sans-latin-opsz-italic-C8i6y2Ft.woff2",
+      "ext": ".woff2",
+      "bytes": 76248,
+      "kb": 74.5,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/hero-slideshow/3-1920.avif",
+      "ext": ".avif",
+      "bytes": 71802,
+      "kb": 70.1,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/dm-sans-latin-opsz-normal-Bf69Tn_J.woff2",
+      "ext": ".woff2",
+      "bytes": 62724,
+      "kb": 61.3,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/noise.avif",
+      "ext": ".avif",
+      "bytes": 49646,
+      "kb": 48.5,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/ShelfLibrary-D-yUz3cz.js",
+      "ext": ".js",
+      "bytes": 46772,
+      "kb": 45.7,
+      "gzipKB": 15.1
+    },
+    {
+      "file": "assets/dm-sans-latin-ext-opsz-italic-DNX9AbKj.woff2",
+      "ext": ".woff2",
+      "bytes": 40840,
+      "kb": 39.9,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/Experience-BUeBkGye.js",
+      "ext": ".js",
+      "bytes": 31985,
+      "kb": 31.2,
+      "gzipKB": 10.7
+    },
+    {
+      "file": "assets/dm-sans-latin-ext-opsz-normal-oos9povj.woff2",
+      "ext": ".woff2",
+      "bytes": 31292,
+      "kb": 30.6,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/youtube-CfK9PXrM.js",
+      "ext": ".js",
+      "bytes": 28181,
+      "kb": 27.5,
+      "gzipKB": 9.8
+    },
+    {
+      "file": "assets/dm-serif-display-latin-400-normal-C5_t9oOD.woff2",
+      "ext": ".woff2",
+      "bytes": 24744,
+      "kb": 24.2,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/dm-serif-display-latin-400-italic-DpcbibHm.woff2",
+      "ext": ".woff2",
+      "bytes": 24572,
+      "kb": 24,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/BackgroundGlobe-CP6jclWD.js",
+      "ext": ".js",
+      "bytes": 24379,
+      "kb": 23.8,
+      "gzipKB": 10.9
+    },
+    {
+      "file": "assets/Story-B6MhAEYw.js",
+      "ext": ".js",
+      "bytes": 24255,
+      "kb": 23.7,
+      "gzipKB": 8
+    },
+    {
+      "file": "assets/dm-serif-display-latin-400-normal-_kVFYEpx.woff",
+      "ext": ".woff",
+      "bytes": 21804,
+      "kb": 21.3,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/dm-serif-display-latin-400-italic-BgxzcTJK.woff",
+      "ext": ".woff",
+      "bytes": 21620,
+      "kb": 21.1,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/robot-poster.webp",
+      "ext": ".webp",
+      "bytes": 19176,
+      "kb": 18.7,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/Story-B2M7o2gL.css",
+      "ext": ".css",
+      "bytes": 16551,
+      "kb": 16.2,
+      "gzipKB": 3.8
+    },
+    {
+      "file": "assets/ShelfLibrary-9oLCfmI3.css",
+      "ext": ".css",
+      "bytes": 11885,
+      "kb": 11.6,
+      "gzipKB": 3
+    },
+    {
+      "file": "assets/dm-serif-display-latin-ext-400-italic-DiLdooSn.woff2",
+      "ext": ".woff2",
+      "bytes": 11124,
+      "kb": 10.9,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/dm-serif-display-latin-ext-400-normal-p18AlW_x.woff2",
+      "ext": ".woff2",
+      "bytes": 10804,
+      "kb": 10.6,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/HandsfreeUI-BDYLRti7.js",
+      "ext": ".js",
+      "bytes": 10425,
+      "kb": 10.2,
+      "gzipKB": 3.8
+    },
+    {
+      "file": "assets/dm-serif-display-latin-ext-400-italic-D6UvgSoX.woff",
+      "ext": ".woff",
+      "bytes": 9136,
+      "kb": 8.9,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/dm-serif-display-latin-ext-400-normal-B1toqZab.woff",
+      "ext": ".woff",
+      "bytes": 8644,
+      "kb": 8.4,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/Experience-B4Ox_YBd.css",
+      "ext": ".css",
+      "bytes": 7657,
+      "kb": 7.5,
+      "gzipKB": 2.1
+    },
+    {
+      "file": "assets/Project-CZiVw3uT.css",
+      "ext": ".css",
+      "bytes": 6499,
+      "kb": 6.3,
+      "gzipKB": 1.7
+    },
+    {
+      "file": "assets/car/car-39.webp",
+      "ext": ".webp",
+      "bytes": 6220,
+      "kb": 6.1,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/car/car-09.webp",
+      "ext": ".webp",
+      "bytes": 6108,
+      "kb": 6,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/car/car-42.webp",
+      "ext": ".webp",
+      "bytes": 6100,
+      "kb": 6,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/car/car-40.webp",
+      "ext": ".webp",
+      "bytes": 6050,
+      "kb": 5.9,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/car/car-08.webp",
+      "ext": ".webp",
+      "bytes": 6026,
+      "kb": 5.9,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/car/car-38.webp",
+      "ext": ".webp",
+      "bytes": 6018,
+      "kb": 5.9,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/car/car-41.webp",
+      "ext": ".webp",
+      "bytes": 5942,
+      "kb": 5.8,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/car/car-10.webp",
+      "ext": ".webp",
+      "bytes": 5860,
+      "kb": 5.7,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/car/car-15.webp",
+      "ext": ".webp",
+      "bytes": 5820,
+      "kb": 5.7,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/car/car-14.webp",
+      "ext": ".webp",
+      "bytes": 5816,
+      "kb": 5.7,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/car/car-07.webp",
+      "ext": ".webp",
+      "bytes": 5790,
+      "kb": 5.7,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/car/car-43.webp",
+      "ext": ".webp",
+      "bytes": 5772,
+      "kb": 5.6,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/icon13-D-esI-Zx.webp",
+      "ext": ".webp",
+      "bytes": 5760,
+      "kb": 5.6,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/car/car-16.webp",
+      "ext": ".webp",
+      "bytes": 5758,
+      "kb": 5.6,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/car/car-06.webp",
+      "ext": ".webp",
+      "bytes": 5742,
+      "kb": 5.6,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/car/car-34.webp",
+      "ext": ".webp",
+      "bytes": 5716,
+      "kb": 5.6,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/car/car-17.webp",
+      "ext": ".webp",
+      "bytes": 5662,
+      "kb": 5.5,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/car/car-05.webp",
+      "ext": ".webp",
+      "bytes": 5648,
+      "kb": 5.5,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/car/car-18.webp",
+      "ext": ".webp",
+      "bytes": 5644,
+      "kb": 5.5,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/icon13-BJoWQujj.webp",
+      "ext": ".webp",
+      "bytes": 5642,
+      "kb": 5.5,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/car/car-33.webp",
+      "ext": ".webp",
+      "bytes": 5612,
+      "kb": 5.5,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/car/car-44.webp",
+      "ext": ".webp",
+      "bytes": 5530,
+      "kb": 5.4,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/car/car-32.webp",
+      "ext": ".webp",
+      "bytes": 5508,
+      "kb": 5.4,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/car/car-04.webp",
+      "ext": ".webp",
+      "bytes": 5494,
+      "kb": 5.4,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/icon1-BXpyo2BC.webp",
+      "ext": ".webp",
+      "bytes": 5472,
+      "kb": 5.3,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/car/car-13.webp",
+      "ext": ".webp",
+      "bytes": 5406,
+      "kb": 5.3,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/car/car-19.webp",
+      "ext": ".webp",
+      "bytes": 5388,
+      "kb": 5.3,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/car/car-03.webp",
+      "ext": ".webp",
+      "bytes": 5374,
+      "kb": 5.2,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/car/car-11.webp",
+      "ext": ".webp",
+      "bytes": 5322,
+      "kb": 5.2,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/icon1-CJfYQwPj.webp",
+      "ext": ".webp",
+      "bytes": 5276,
+      "kb": 5.2,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/car/car-30.webp",
+      "ext": ".webp",
+      "bytes": 5260,
+      "kb": 5.1,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/car/car-37.webp",
+      "ext": ".webp",
+      "bytes": 5258,
+      "kb": 5.1,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/car/car-31.webp",
+      "ext": ".webp",
+      "bytes": 5252,
+      "kb": 5.1,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/car/car-45.webp",
+      "ext": ".webp",
+      "bytes": 5238,
+      "kb": 5.1,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/car/car-02.webp",
+      "ext": ".webp",
+      "bytes": 5222,
+      "kb": 5.1,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/car/car-21.webp",
+      "ext": ".webp",
+      "bytes": 5198,
+      "kb": 5.1,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/car/car-29.webp",
+      "ext": ".webp",
+      "bytes": 5196,
+      "kb": 5.1,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/ContactSection-DXllL1_q.js",
+      "ext": ".js",
+      "bytes": 5178,
+      "kb": 5.1,
+      "gzipKB": 1.7
+    },
+    {
+      "file": "assets/car/car-35.webp",
+      "ext": ".webp",
+      "bytes": 5174,
+      "kb": 5.1,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/car/car-20.webp",
+      "ext": ".webp",
+      "bytes": 5156,
+      "kb": 5,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/car/car-27.webp",
+      "ext": ".webp",
+      "bytes": 5144,
+      "kb": 5,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/Numbers-Bk0yrNZv.js",
+      "ext": ".js",
+      "bytes": 5132,
+      "kb": 5,
+      "gzipKB": 1.7
+    },
+    {
+      "file": "assets/FindMyWork-DMyISfBg.js",
+      "ext": ".js",
+      "bytes": 5115,
+      "kb": 5,
+      "gzipKB": 1.9
+    },
+    {
+      "file": "assets/car/car-46.webp",
+      "ext": ".webp",
+      "bytes": 5056,
+      "kb": 4.9,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/car/car-28.webp",
+      "ext": ".webp",
+      "bytes": 4944,
+      "kb": 4.8,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/car/car-22.webp",
+      "ext": ".webp",
+      "bytes": 4818,
+      "kb": 4.7,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/car/car-26.webp",
+      "ext": ".webp",
+      "bytes": 4780,
+      "kb": 4.7,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/projects-2AoZ-93d.js",
+      "ext": ".js",
+      "bytes": 4777,
+      "kb": 4.7,
+      "gzipKB": 1.9
+    },
+    {
+      "file": "assets/car/car-12.webp",
+      "ext": ".webp",
+      "bytes": 4686,
+      "kb": 4.6,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/car/car-01.webp",
+      "ext": ".webp",
+      "bytes": 4682,
+      "kb": 4.6,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/Project-D8Zs5GIY.js",
+      "ext": ".js",
+      "bytes": 4653,
+      "kb": 4.5,
+      "gzipKB": 1.7
+    },
+    {
+      "file": "assets/car/car-47.webp",
+      "ext": ".webp",
+      "bytes": 4610,
+      "kb": 4.5,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/car/car-25.webp",
+      "ext": ".webp",
+      "bytes": 4540,
+      "kb": 4.4,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/docker-CufPvIvi.svg",
+      "ext": ".svg",
+      "bytes": 4477,
+      "kb": 4.4,
+      "gzipKB": 1.1
+    },
+    {
+      "file": "assets/car/car-36.webp",
+      "ext": ".webp",
+      "bytes": 4460,
+      "kb": 4.4,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/car/car-23.webp",
+      "ext": ".webp",
+      "bytes": 4422,
+      "kb": 4.3,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/Research-C8M5cPoU.js",
+      "ext": ".js",
+      "bytes": 4174,
+      "kb": 4.1,
+      "gzipKB": 1.8
+    },
+    {
+      "file": "assets/News-CdCpvzBT.js",
+      "ext": ".js",
+      "bytes": 3975,
+      "kb": 3.9,
+      "gzipKB": 1.7
+    },
+    {
+      "file": "assets/StickerPeel-D2X_4Lyv.js",
+      "ext": ".js",
+      "bytes": 3867,
+      "kb": 3.8,
+      "gzipKB": 1.4
+    },
+    {
+      "file": "assets/car/car-00.webp",
+      "ext": ".webp",
+      "bytes": 3690,
+      "kb": 3.6,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/Terminal-DDGTF8rc.css",
+      "ext": ".css",
+      "bytes": 3621,
+      "kb": 3.5,
+      "gzipKB": 1
+    },
+    {
+      "file": "assets/NotFound-CXCYB0yc.css",
+      "ext": ".css",
+      "bytes": 3518,
+      "kb": 3.4,
+      "gzipKB": 1.2
+    },
+    {
+      "file": "assets/News-BqRumWVq.css",
+      "ext": ".css",
+      "bytes": 3504,
+      "kb": 3.4,
+      "gzipKB": 1.1
+    },
+    {
+      "file": "assets/car/car-24.webp",
+      "ext": ".webp",
+      "bytes": 3480,
+      "kb": 3.4,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/Preview-DCYZzikb.js",
+      "ext": ".js",
+      "bytes": 3075,
+      "kb": 3,
+      "gzipKB": 1.5
+    },
+    {
+      "file": "assets/Files-5DdrxYlp.js",
+      "ext": ".js",
+      "bytes": 3029,
+      "kb": 3,
+      "gzipKB": 1.4
+    },
+    {
+      "file": "assets/StickerPeel-C5jNO2pH.css",
+      "ext": ".css",
+      "bytes": 2956,
+      "kb": 2.9,
+      "gzipKB": 0.7
+    },
+    {
+      "file": "assets/Files-bWJpu0hW.css",
+      "ext": ".css",
+      "bytes": 2875,
+      "kb": 2.8,
+      "gzipKB": 0.9
+    },
+    {
+      "file": "assets/BackgroundGlobe-DYNsL3NC.css",
+      "ext": ".css",
+      "bytes": 2838,
+      "kb": 2.8,
+      "gzipKB": 1.1
+    },
+    {
+      "file": "assets/NotFound-DT32IbNm.js",
+      "ext": ".js",
+      "bytes": 2307,
+      "kb": 2.3,
+      "gzipKB": 0.9
+    },
+    {
+      "file": "assets/CanvasComponent-j-GGdyjY.js",
+      "ext": ".js",
+      "bytes": 2106,
+      "kb": 2.1,
+      "gzipKB": 1.1
+    },
+    {
+      "file": "assets/HeroSlideshow-Ba6Z91pu.js",
+      "ext": ".js",
+      "bytes": 1842,
+      "kb": 1.8,
+      "gzipKB": 0.9
+    },
+    {
+      "file": "assets/WidgetState-C5yMh9c3.js",
+      "ext": ".js",
+      "bytes": 1571,
+      "kb": 1.5,
+      "gzipKB": 0.8
+    },
+    {
+      "file": "assets/Library-OrIUHS3c.js",
+      "ext": ".js",
+      "bytes": 1223,
+      "kb": 1.2,
+      "gzipKB": 0.7
+    },
+    {
+      "file": "assets/Blog-D_Kgr-nV.js",
+      "ext": ".js",
+      "bytes": 1129,
+      "kb": 1.1,
+      "gzipKB": 0.6
+    },
+    {
+      "file": "assets/ThankYou-5adDw579.js",
+      "ext": ".js",
+      "bytes": 1000,
+      "kb": 1,
+      "gzipKB": 0.5
+    },
+    {
+      "file": "assets/useDocumentHead-BCTPkhaD.js",
+      "ext": ".js",
+      "bytes": 949,
+      "kb": 0.9,
+      "gzipKB": 0.5
+    },
+    {
+      "file": "assets/Reveal-BXX-wEXj.js",
+      "ext": ".js",
+      "bytes": 772,
+      "kb": 0.8,
+      "gzipKB": 0.5
+    },
+    {
+      "file": "assets/ThankYou-CN5s0VuL.css",
+      "ext": ".css",
+      "bytes": 612,
+      "kb": 0.6,
+      "gzipKB": 0.3
+    },
+    {
+      "file": "assets/hero-slideshow/README.txt",
+      "ext": ".txt",
+      "bytes": 332,
+      "kb": 0.3,
+      "gzipKB": null
+    },
+    {
+      "file": "assets/Contact-Bc7xRrBE.js",
+      "ext": ".js",
+      "bytes": 195,
+      "kb": 0.2,
+      "gzipKB": 0.2
+    }
+  ]
+}

@@ -1,0 +1,158 @@
+{
+  "generatedAt": "2026-09-25T20:16:38.500Z",
+  "url": "http://localhost:5173/",
+  "viewport": "1440x900",
+  "state": "after full slow scroll, back at top",
+  "axeVersion": "4.13.0",
+  "tags": [
+    "wcag2a",
+    "wcag2aa",
+    "wcag21a",
+    "wcag21aa",
+    "best-practice"
+  ],
+  "counts": {
+    "violations": 1,
+    "violationNodes": 2,
+    "passes": 44,
+    "incomplete": 1,
+    "critical": 0,
+    "serious": 1,
+    "moderate": 0,
+    "minor": 0
+  },
+  "byImpact": {
+    "critical": [],
+    "serious": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=playwright",
+        "nodes": 2,
+        "exampleSelector": ".exp__card-cta",
+        "exampleHtml": "<a class=\"exp__card-cta is-on\" href=\"#contact\">Let’s talk <span aria-hidden=\"true\">↓</span></a>",
+        "allSelectors": [
+          ".exp__card-cta",
+          ".footer__freshness-pulse > .hl-live__text"
+        ],
+        "failureSummary": "Fix any of the following: Element has insufficient color contrast of 4.41 (foreground color: #b8501a, background color: #fdeee6, font size: 9.4pt (12.5px), font weight: normal). Expected contrast ratio of 4.5:1"
+      }
+    ],
+    "moderate": [],
+    "minor": [],
+    "null": []
+  },
+  "incomplete": [
+    {
+      "id": "color-contrast",
+      "impact": "serious",
+      "nodes": 23,
+      "exampleSelector": ".section-rail__item--active > .section-rail__label"
+    }
+  ],
+  "notes": [],
+  "raw": [
+    {
+      "id": "color-contrast",
+      "impact": "serious",
+      "tags": [
+        "cat.color",
+        "wcag2aa",
+        "wcag143",
+        "TTv5",
+        "TT13.c",
+        "EN-301-549",
+        "EN-9.1.4.3",
+        "ACT",
+        "RGAAv4",
+        "RGAA-3.2.1"
+      ],
+      "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+      "help": "Elements must meet minimum color contrast ratio thresholds",
+      "helpUrl": "https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=playwright",
+      "nodes": [
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#b8501a",
+                "bgColor": "#fdeee6",
+                "contrastRatio": 4.41,
+                "fontSize": "9.4pt (12.5px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<a class=\"exp__card-cta is-on\" href=\"#contact\">Let’s talk <span aria-hidden=\"true\">↓</span></a>",
+                  "target": [
+                    ".exp__card-cta"
+                  ]
+                },
+                {
+                  "html": "<article class=\"exp__card\">",
+                  "target": [
+                    "#exp-hibeex > .exp__card"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 4.41 (foreground color: #b8501a, background color: #fdeee6, font size: 9.4pt (12.5px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<a class=\"exp__card-cta is-on\" href=\"#contact\">Let’s talk <span aria-hidden=\"true\">↓</span></a>",
+          "target": [
+            ".exp__card-cta"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.41 (foreground color: #b8501a, background color: #fdeee6, font size: 9.4pt (12.5px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#5f5f5f",
+                "bgColor": "#292828",
+                "contrastRatio": 2.3,
+                "fontSize": "9.0pt (12px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<footer class=\"footer\">",
+                  "target": [
+                    "footer"
+                  ]
+                },
+                {
+                  "html": "<body>",
+                  "target": [
+                    "body"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 2.3 (foreground color: #5f5f5f, background color: #292828, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<span class=\"hl-live__text\">demo</span>",
+          "target": [
+            ".footer__freshness-pulse > .hl-live__text"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 2.3 (foreground color: #5f5f5f, background color: #292828, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,9 @@
++ node qa/scripts/section-diff.mjs qa/r2 http://localhost:5173
++ node qa/scripts/probe-extras.mjs qa/r2 http://localhost:5173
++ node qa/scripts/r1-extras.mjs qa/r2 http://localhost:5173
++ node qa/scripts/axe.mjs qa/r2 http://localhost:5173
++ node qa/scripts/axe.mjs qa/r2/preview http://localhost:4173
++ node qa/scripts/r2-keyboard.mjs qa/r2 http://localhost:5173
++ node qa/scripts/r2-extras.mjs qa/r2 http://localhost:4173
++ echo CHAIN_DONE
+CHAIN_DONE

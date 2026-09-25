@@ -1,0 +1,22 @@
+--- canvases (1440) ---
+  canvas0 globe-wrap             480x480 @y1626  fullPage std=124.18  inViewport std=124.18  paints(fullPage/viewport)=true/true
+  canvas1 skills__box is-physics 823x240 @y5887  fullPage std=68.45  inViewport std=63.78  paints(fullPage/viewport)=true/true
+  canvas2 exp__car-shake         132x132 @y10208  fullPage std=110.48  inViewport std=62.95  paints(fullPage/viewport)=true/true
+--- count-up ---
+  normal: By the Numbers block not found
+  reducedMotion: By the Numbers block not found
+--- mobile sticky overlays ---
+[
+ {
+  "label": "nav.mobile-sticky-cta",
+  "position": "fixed",
+  "rect": {
+   "x": 0,
+   "y": 755,
+   "w": 390,
+   "h": 89
+  },
+  "viewportSharePct": 10.5,
+  "text": "Get in Touch Book a Call"
+ }
+]
