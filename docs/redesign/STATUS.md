@@ -3,6 +3,7 @@
 | Fase | Estado | Commit | Nota |
 |---|---|---|---|
 | 0 · setup | **concluída** | `feat(home): fase 0` | branch, 7 agentes, docs, CLAUDE.md |
+| 0.5 · recuperação | **concluída** | `6eb9e25` | 14 arquivos restaurados do deploy |
 | 1 · auditoria e baseline | pendente | — | — |
 | 2 · plano e contratos | pendente | — | — |
 | 3 · build paralelo | pendente | — | — |
@@ -53,8 +54,23 @@ código-fonte desses 14 arquivos. Gabriel baixa pela aba Source do painel e depo
 `recovery-incoming/`; o orquestrador compara com o HEAD, reintegra e valida com typecheck +
 build antes de seguir para a Fase 1.
 
+**Resolvido em 25/09.** Os 14 arquivos foram baixados do deploy pela API da Vercel com um token
+temporário do Gabriel (revogado em seguida) e commitados em `6eb9e25`, separado e antes da
+Fase 1. Typecheck e build verdes. Os cinco arquivos da sessão de `/files` voltaram com as marcas
+esperadas (`FilesPage`, `Disallow: /files`, `noindex`, `With my brothers`); os nove do backlog
+voltaram com 304 inserções e 162 remoções no total.
+
 Vias descartadas: histórico local do VSCode não cobre esses arquivos; `git fsck` não tem os
-blobs (nunca foram staged); API REST da Vercel recusa o token do CLI (403).
+blobs (nunca foram staged).
+
+Correção de diagnóstico: o 403 inicial da API **não** era incompatibilidade do token do CLI com
+a REST, era token vencido (`expiresAt` havia passado ~3h antes, e `vercel whoami` não renova o
+valor gravado em `auth.json`). Lição: checar `expiresAt` antes de descartar uma via de
+autenticação.
+
+Armadilha encontrada na comparação: os arquivos baixados vêm com CRLF e o `git show` devolve LF,
+o que inflava o diff para "todas as linhas diferentes". A comparação real exige normalizar o CR
+antes. Sem isso, `useDocumentHead.ts` aparentava 81 linhas alteradas em vez de 11.
 
 Medida adotada: `core.hooksPath` local aponta para `.git/hooks-disabled`, então o
 `post-commit` global que roda `git push` não dispara neste repo. Reverter com

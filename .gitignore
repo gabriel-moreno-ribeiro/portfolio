@@ -47,5 +47,3 @@ yarn-error.log*
 /overnight/preview.log
 /overnight/build.log
 
-# temporario: recuperacao do working tree (remover depois)
-recovery-incoming/
