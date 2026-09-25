@@ -6,6 +6,22 @@ function apiMockPlugin(): Plugin {
   return {
     name: "api-mock",
     configureServer(server) {
+      // Em dev não há Vercel Function: responde ok depois de um respiro, para os
+      // estados de enviando/enviado do formulário poderem ser vistos.
+      server.middlewares.use("/api/contact", (req, res) => {
+        if (req.method !== "POST") {
+          res.statusCode = 405;
+          res.end(JSON.stringify({ error: "Method not allowed" }));
+          return;
+        }
+        req.on("data", () => {});
+        req.on("end", () => {
+          setTimeout(() => {
+            res.setHeader("Content-Type", "application/json");
+            res.end(JSON.stringify({ ok: true, mock: true }));
+          }, 600);
+        });
+      });
       server.middlewares.use("/api/chat", (req, res) => {
         if (req.method !== "POST") {
           res.statusCode = 405;
@@ -43,6 +59,10 @@ function apiMockPlugin(): Plugin {
 
 export default defineConfig({
   plugins: [react(), apiMockPlugin()],
+  define: {
+    // Rodapé: "site updated X ago"
+    __BUILD_TIME__: JSON.stringify(new Date().toISOString()),
+  },
   css: {
     preprocessorOptions: {
       scss: {
@@ -65,6 +85,7 @@ export default defineConfig({
           if (id.includes('node_modules/@react-three/')) return 'react-three';
           if (id.includes('node_modules/motion/') || id.includes('node_modules/framer-motion/')) return 'motion';
           if (id.includes('node_modules/gsap/')) return 'gsap';
+          if (id.includes('node_modules/matter-js/')) return 'matter';
           if (id.includes('node_modules/@mediapipe/')) return 'mediapipe';
           if (id.includes('node_modules/posthog-js/')) return 'posthog';
         },

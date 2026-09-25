@@ -1,0 +1,19 @@
+[
+  { "src": "/moments/mv01.webp", "row": 1, "what": "Waterfall with the family", "city": "Missão Velha", "year": null, "alt": "Family at a waterfall in the Cariri valley", "w": 300, "h": 220, "_placeholder": true },
+  { "src": "/moments/ssa01.webp", "row": 1, "what": "Pineapple costume", "city": "Salvador", "year": null, "alt": "Gabriel as a child in a pineapple costume", "w": 300, "h": 220, "_placeholder": true },
+  { "src": "/moments/mv06.webp", "row": 1, "what": "São João festival", "city": "Missão Velha", "year": null, "alt": "Kids with cotton candy at a São João festival", "w": 300, "h": 220, "_placeholder": true },
+  { "src": "/moments/ssa06.webp", "row": 1, "what": "Sandboarding the dunes", "city": "Salvador", "year": null, "alt": "A child sandboarding down a dune", "w": 300, "h": 220, "_placeholder": true },
+  { "src": "/moments/mv04.webp", "row": 1, "what": "Summer break", "city": "Missão Velha", "year": null, "alt": "Gabriel as a boy holding a can of juice at night", "w": 300, "h": 220, "_placeholder": true },
+  { "src": "/moments/ssa05.webp", "row": 1, "what": "Festa junina", "city": "Salvador", "year": null, "alt": "Gabriel dressed for a festa junina", "w": 300, "h": 220, "_placeholder": true },
+  { "src": "/moments/ssa02.webp", "row": 1, "what": "Climbing the backyard tree", "city": "Salvador", "year": null, "alt": "A child climbing a tree in a backyard", "w": 300, "h": 220, "_placeholder": true },
+  { "src": "/moments/mv07.webp", "row": 1, "what": "With my brothers", "city": "Missão Velha", "year": null, "alt": "Gabriel and his two brothers laughing in the back of a car", "w": 300, "h": 220, "_placeholder": true },
+  { "src": "/moments/ssa03.webp", "row": 1, "what": "Rooftop afternoon", "city": "Salvador", "year": null, "alt": "Three kids on a rooftop in Salvador", "w": 300, "h": 220, "_placeholder": true },
+  { "src": "/moments/for02.webp", "row": 2, "what": "Projeto Candela at Fundação Estudar", "city": "São Paulo", "year": null, "alt": "Gabriel next to his Projeto Candela poster at the Fundação Estudar annual meeting", "w": 300, "h": 220, "_placeholder": true },
+  { "src": "/moments/sp03.webp", "row": 2, "what": "HIBEEX co-founders", "city": "São Paulo", "year": 2026, "alt": "The two HIBEEX co-founders at a table", "w": 300, "h": 220 },
+  { "src": "/moments/for01.webp", "row": 2, "what": "Graduation at Ari de Sá", "city": "Fortaleza", "year": 2025, "alt": "Gabriel holding his Ari de Sá graduation yearbook", "w": 300, "h": 220 },
+  { "src": "/moments/hbx02.webp", "row": 2, "what": "WOW Aceleradora", "city": "São Paulo", "year": null, "alt": "The HIBEEX founders at the WOW accelerator", "w": 300, "h": 220, "_placeholder": true },
+  { "src": "/moments/for04.webp", "row": 2, "what": "Talk about Projeto Candela", "city": "Fortaleza", "year": null, "alt": "Gabriel speaking with a microphone", "w": 300, "h": 220, "_placeholder": true },
+  { "src": "/moments/sp01.webp", "row": 2, "what": "HIBEEX team at work", "city": "São Paulo", "year": null, "alt": "The HIBEEX team in an office at night", "w": 300, "h": 220, "_placeholder": true },
+  { "src": "/moments/for03.webp", "row": 2, "what": "Graduation yearbooks", "city": "Fortaleza", "year": 2025, "alt": "Gabriel and a friend holding their Ari de Sá yearbooks", "w": 300, "h": 220 },
+  { "src": "/moments/for05.webp", "row": 2, "what": "Award with the team", "city": "Fortaleza", "year": 2025, "alt": "Gabriel with classmates holding trophies", "w": 300, "h": 220 }
+]

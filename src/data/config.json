@@ -1,0 +1,13 @@
+{
+  "buildYearStart": "2026-01-01",
+  "_placeholders": ["buildYearStart"],
+  "location": { "city": "São Paulo", "lat": -23.5505, "lon": -46.6333, "tz": "America/Sao_Paulo" },
+  "github": { "user": "gabriel-moreno-ribeiro", "repo": "portfolio" },
+  "refresh": { "githubMs": 600000, "weatherMs": 1800000, "clockMs": 1000 },
+  "cities": [
+    { "id": "missao-velha", "name": "Missão Velha", "tz": "America/Fortaleza", "lat": -7.2497, "lon": -39.1431 },
+    { "id": "salvador", "name": "Salvador", "tz": "America/Bahia", "lat": -12.9747, "lon": -38.4767 },
+    { "id": "fortaleza", "name": "Fortaleza", "tz": "America/Fortaleza", "lat": -3.7172, "lon": -38.5433 },
+    { "id": "sao-paulo", "name": "São Paulo", "tz": "America/Sao_Paulo", "lat": -23.5505, "lon": -46.6333 }
+  ]
+}

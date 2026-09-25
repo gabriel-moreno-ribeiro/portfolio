@@ -1,0 +1,11 @@
+[
+  { "id": "medals", "value": 39, "label": "olympiad medals", "sub": "19 gold · 2 international", "icon": "/stats/obfep.webp", "size": "hero" },
+  { "id": "students", "value": 3392, "label": "students reached", "sub": "Projeto Candela", "icon": "/stats/screwdriver.webp", "size": "lg" },
+  { "id": "competitions", "value": 49, "label": "competitions", "icon": "/stats/obfep.webp", "size": "lg" },
+  { "id": "schools", "value": 28, "label": "public schools", "icon": "/stats/screwdriver.webp", "size": "md" },
+  { "id": "startups", "value": 6, "label": "startups in the Canastra AI Residency", "icon": "/stats/fe.webp", "size": "md" },
+  { "id": "sat", "value": 1510, "label": "SAT / 1600", "sub": "Top 1% Brazil", "icon": "/stats/sat.webp", "size": "md", "grouping": false },
+  { "id": "estudar", "value": 0.7, "label": "acceptance rate, Fundação Estudar", "icon": "/stats/fe.webp", "size": "md", "decimals": 1, "suffix": "%" },
+  { "id": "laptops", "value": 121, "label": "laptops", "icon": "/stats/screwdriver.webp", "size": "md", "_placeholder": true },
+  { "id": "states", "value": 21, "label": "states", "icon": "/stats/screwdriver.webp", "size": "md", "_placeholder": true }
+]

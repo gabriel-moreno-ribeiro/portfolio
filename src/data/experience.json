@@ -1,0 +1,96 @@
+[
+  {
+    "id": "principia",
+    "order": 1,
+    "org": "Instituto Principia",
+    "role": "Researcher",
+    "start": "2023-01",
+    "end": "2025-07",
+    "periodLabel": "January 2023 - July 2025",
+    "city": "",
+    "_placeholder": true,
+    "bullets": [
+      "One of **14 students** selected nationally for Escola de Talentos",
+      "Thesis on chemical kinetics with **Prof. Juliano Bonacin, Ph.D.**: 59 pages, **97% accuracy**",
+      "Quantum mechanics, relativity, statistical physics"
+    ]
+  },
+  {
+    "id": "olympic-club",
+    "order": 2,
+    "org": "Olympic Club - Colégio Militar",
+    "role": "President",
+    "start": "2024-08",
+    "end": "2026-05",
+    "periodLabel": "August 2024 - May 2026",
+    "city": "Salvador",
+    "cityTz": "America/Bahia",
+    "bullets": [
+      "Ran the board, pushed through **17 initiatives** over two years",
+      "Student participation up **47%**. National olympiad results up **62%**."
+    ]
+  },
+  {
+    "id": "estudar",
+    "order": 3,
+    "org": "Fundação Estudar",
+    "role": "Scholar - PREP Program",
+    "start": "2025-01",
+    "end": "2026-03",
+    "periodLabel": "January 2025 - March 2026",
+    "city": "",
+    "_placeholder": true,
+    "bullets": [
+      "One of ~70 picked from **10,000+ applicants** (0.7% acceptance)",
+      "Brazil's college access program for international universities"
+    ]
+  },
+  {
+    "id": "fintech-rct",
+    "order": 4,
+    "org": "Fintech Savings RCT",
+    "role": "Independent Researcher",
+    "start": "2025",
+    "end": "2025",
+    "periodLabel": "2025",
+    "note": "Advised by Aaron Litvin, Ph.D. (Harvard)",
+    "city": "",
+    "_placeholder": true,
+    "bullets": [
+      "Ran an **RCT with 208 students** on whether fintech apps change savings behavior",
+      "Treatment group saved **130% more** than control"
+    ]
+  },
+  {
+    "id": "gsat",
+    "order": 5,
+    "org": "GSAT Education",
+    "role": "Co-Founder & CEO",
+    "start": "2025-11",
+    "end": "2026-05",
+    "periodLabel": "November 2025 - May 2026",
+    "city": "",
+    "_placeholder": true,
+    "bullets": [
+      "Built a **test-prep platform** from scratch",
+      "Product, engineering and go-to-market, as founding CEO"
+    ]
+  },
+  {
+    "id": "hibeex",
+    "order": 6,
+    "org": "HIBEEX",
+    "role": "Co-Founder & CEO",
+    "start": "2026-01",
+    "end": "present",
+    "periodLabel": "January 2026 - Present",
+    "city": "São Paulo",
+    "cityTz": "America/Sao_Paulo",
+    "url": "https://www.hibeex.com.br/",
+    "bullets": [
+      "Building **backoffice AI** for small and medium businesses: raw data in, decisions out",
+      "One of **6 startups** in the **Canastra Ventures AI Residency**",
+      "Stack: **TypeScript, Next.js, Node.js, Supabase, PostgreSQL, AWS**"
+    ]
+  }
+]
