@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import { formatRelative, useGitHub } from "../../lib/data";
+import { LivePulse } from "../../lib/motion";
 
 const pages = [
   { name: "Home.", to: "/" },
@@ -15,6 +17,8 @@ function obfuscatedEmail() {
 }
 
 function Footer() {
+  const github = useGitHub();
+  const siteCommit = github.data?.siteLastCommit ?? null;
   const links = [
     { name: "LinkedIn.", href: "https://linkedin.com/in/gabriel-moreno-ribeiro" },
     { name: "GitHub.", href: "https://github.com/gabriel-moreno-ribeiro" },
@@ -54,6 +58,29 @@ function Footer() {
           </a>
         ))}
       </div>
+      {/* How fresh this page is: the last commit on the site repo and the build time. */}
+      <p className="footer__freshness">
+        {siteCommit && (
+          <>
+            <a
+              className="footer__freshness-link"
+              href={siteCommit.url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              last commit {formatRelative(siteCommit.at)}
+            </a>
+            <LivePulse
+              className="footer__freshness-pulse"
+              source={github.source}
+              updatedAt={github.updatedAt}
+              stale={github.stale}
+            />
+            <span aria-hidden="true">·</span>
+          </>
+        )}
+        <span>site updated {formatRelative(__BUILD_TIME__)}</span>
+      </p>
       <p className="footer__copy">
         &copy; {new Date().getFullYear()} Gabriel Moreno Ribeiro
       </p>

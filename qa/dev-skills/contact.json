@@ -1,0 +1,64 @@
+{
+  "focus": {
+    "contact-name": {
+      "outlineWidth": "3px",
+      "outlineStyle": "solid",
+      "outlineColor": "rgb(184, 80, 26)",
+      "radius": "12px"
+    },
+    "contact-email": {
+      "outlineWidth": "3px",
+      "outlineStyle": "solid",
+      "outlineColor": "rgb(184, 80, 26)",
+      "radius": "12px"
+    },
+    "contact-message": {
+      "outlineWidth": "3px",
+      "outlineStyle": "solid",
+      "outlineColor": "rgb(184, 80, 26)",
+      "radius": "12px"
+    },
+    "submit": {
+      "outlineWidth": "3px",
+      "outlineStyle": "solid",
+      "outlineColor": "rgb(184, 80, 26)",
+      "radius": "36px"
+    }
+  },
+  "clock": "15:39 here · I usually reply within a day",
+  "states": {
+    "emptySubmit": {
+      "errors": [
+        "Name is required.",
+        "Email is required.",
+        "Message is required."
+      ],
+      "describedby": "contact-name-error",
+      "invalid": "true",
+      "roles": 3
+    },
+    "submitting": {
+      "label": "Sending…",
+      "busy": "true",
+      "disabled": true
+    },
+    "sent": {
+      "status": 1,
+      "text": "Message sent."
+    },
+    "networkError": {
+      "text": "Network error. Please try again or email me directly.",
+      "describedby": "contact-message-error",
+      "role": "alert"
+    }
+  },
+  "tabOrder": [
+    "contact-email",
+    "contact-message",
+    "contact-section__submit"
+  ],
+  "enterInTextarea": {
+    "stillForm": true
+  },
+  "errors": []
+}

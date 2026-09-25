@@ -200,27 +200,58 @@
       }
     }
 
-    .carousel-dots {
+    // Thumbnails instead of dots: a real target (>= 24px) and a preview of where you go.
+    .carousel-thumbs {
       position: absolute;
-      bottom: 10px;
+      bottom: 8px;
       left: 0;
       right: 0;
       z-index: 2;
       display: flex;
       justify-content: center;
-      gap: 6px;
+      flex-wrap: wrap;
+      gap: 4px;
+      padding: 0 8px;
+      box-sizing: border-box;
 
-      .dot {
-        width: 8px;
-        height: 8px;
+      .carousel-thumb {
+        width: 44px;
+        height: 28px;
         padding: 0;
-        border: none;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.5);
+        border: 1.5px solid rgba(255, 255, 255, 0.55);
+        border-radius: 5px;
+        overflow: hidden;
+        background: rgba(0, 0, 0, 0.35);
         cursor: pointer;
+        opacity: 0.65;
+        transition: opacity 0.2s;
 
-        &.active {
-          background: var(--primary-orange);
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+        }
+
+        &__video {
+          color: #fff;
+          font-size: 12px;
+          line-height: 26px;
+        }
+
+        &:hover,
+        &:focus-visible {
+          opacity: 1;
+        }
+
+        &:focus-visible {
+          outline: 2px solid var(--focus-ring);
+          outline-offset: 2px;
+        }
+
+        &.is-active {
+          opacity: 1;
+          border-color: var(--primary-orange);
         }
       }
     }
@@ -284,5 +315,128 @@
 @media screen and (min-width: 601px) and (max-width: 900px) {
   .find-my-work .featured-card--wide {
     grid-template-columns: 1fr;
+  }
+}
+
+// ── Live details inside the cards ───────────────────────────────────────────
+// Scoped through .featured-card so it wins over the card's muted paragraph style.
+.find-my-work .featured-card .project-live {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 13px;
+  color: var(--fg-muted);
+
+  p {
+    margin: 0;
+    font-family: inherit;
+    font-size: 13px;
+    opacity: 1;
+  }
+
+  &__key {
+    color: var(--fg-muted);
+    opacity: 0.75;
+  }
+
+  &__line strong,
+  &__counts strong {
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  &__counts {
+    font-size: 14px;
+    color: var(--fg);
+  }
+
+  &__rel {
+    opacity: 0.75;
+  }
+
+  // Above the card's stretched link so it stays clickable.
+  &__link {
+    position: relative;
+    z-index: 2;
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    min-height: 24px;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--accent);
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--focus-ring);
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
+  }
+}
+
+// 30% of the width shrinking to 10%: the fill's base width is the 30%.
+.failure-bar {
+  display: block;
+  width: 100%;
+  max-width: 260px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--border);
+  overflow: hidden;
+
+  &__fill {
+    display: block;
+    width: 30%;
+    height: 100%;
+    border-radius: 999px;
+    background: var(--accent-decor);
+    transform-origin: left center;
+    transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+}
+
+// Medal chips light up one after another when the card is hovered or focused.
+.featured-card--chips .featured-tags span {
+  opacity: 0.7;
+  transition: opacity 0.25s ease-out;
+}
+
+.featured-card--chips:hover .featured-tags span,
+.featured-card--chips:focus-within .featured-tags span {
+  opacity: 1;
+}
+
+.featured-card--chips:hover .featured-tags span:nth-child(2),
+.featured-card--chips:focus-within .featured-tags span:nth-child(2) {
+  transition-delay: 0.12s;
+}
+
+.featured-card--chips:hover .featured-tags span:nth-child(3),
+.featured-card--chips:focus-within .featured-tags span:nth-child(3) {
+  transition-delay: 0.24s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .failure-bar__fill {
+    transition: none;
+  }
+
+  .featured-card--chips .featured-tags span {
+    opacity: 1;
+    transition: none;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .find-my-work .media-carousel .carousel-thumbs .carousel-thumb {
+    width: 34px;
+    height: 24px;
   }
 }

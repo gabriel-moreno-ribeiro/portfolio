@@ -1,0 +1,279 @@
+{
+  "numbers": {
+    "found": true,
+    "w": 1100,
+    "h": 641,
+    "opacity": "1",
+    "display": "flex",
+    "chars": 555,
+    "sample": "By the Numberslive · updated 5s ago39olympiad medals19 gold · 2 international3,388students reachedProjeto Candela49compe"
+  },
+  "research": {
+    "cards": [
+      {
+        "opacity": "1",
+        "latest": true
+      },
+      {
+        "opacity": "1",
+        "latest": false
+      },
+      {
+        "opacity": "1",
+        "latest": false,
+        "link": "/research/projeto-candela/paper.pdf",
+        "target": "_blank",
+        "rel": "noopener noreferrer"
+      }
+    ],
+    "roleButtons": 0
+  },
+  "work": {
+    "found": true,
+    "w": 1368,
+    "h": 1228,
+    "opacity": "1",
+    "display": "flex",
+    "chars": 1002,
+    "sample": "Cool ThingsWhat I've built and what I've won.> Open terminal Ctrl+KHIBEEXBackoffice AI for small and medium businesses: "
+  },
+  "hiddenByAnim": [],
+  "numbersPanel": {
+    "tiles": [
+      {
+        "cls": "stat-tile stat-tile--hero",
+        "value": "3939"
+      },
+      {
+        "cls": "stat-tile stat-tile--lg",
+        "value": "3,3923,392"
+      },
+      {
+        "cls": "stat-tile stat-tile--lg",
+        "value": "4949"
+      },
+      {
+        "cls": "stat-tile stat-tile--md",
+        "value": "2828"
+      },
+      {
+        "cls": "stat-tile stat-tile--md",
+        "value": "66"
+      },
+      {
+        "cls": "stat-tile stat-tile--md",
+        "value": "15101510"
+      },
+      {
+        "cls": "stat-tile stat-tile--md",
+        "value": "0.7%0.7%"
+      },
+      {
+        "cls": "stat-tile stat-tile--md",
+        "value": "121121"
+      },
+      {
+        "cls": "stat-tile stat-tile--md",
+        "value": "2121"
+      }
+    ],
+    "now": [
+      "36 reposlast commit 1h agogabriel-moreno-ribeiro/gabriel-moreno-ribeir",
+      "≈ 8282commits this yearestimated from public events",
+      "day 268268of 365, build year",
+      "15:21 · 26 °CSão Paulolight drizzle"
+    ],
+    "pulse": "live · updated 10s ago",
+    "live": "36 public repositories. last commit 1h ago. 82 commits this year. 26 degrees and light drizzle in São Paulo."
+  },
+  "coolThings": {
+    "thumbs": [
+      {
+        "w": 44,
+        "h": 28,
+        "label": "Photo 1 of 4",
+        "current": "true"
+      },
+      {
+        "w": 44,
+        "h": 28,
+        "label": "Photo 2 of 4",
+        "current": null
+      },
+      {
+        "w": 44,
+        "h": 28,
+        "label": "Photo 3 of 4",
+        "current": null
+      },
+      {
+        "w": 44,
+        "h": 28,
+        "label": "Photo 4 of 4",
+        "current": null
+      },
+      {
+        "w": 44,
+        "h": 28,
+        "label": "Photo 1 of 8",
+        "current": "true"
+      },
+      {
+        "w": 44,
+        "h": 28,
+        "label": "Photo 2 of 8",
+        "current": null
+      },
+      {
+        "w": 44,
+        "h": 28,
+        "label": "Photo 3 of 8",
+        "current": null
+      },
+      {
+        "w": 44,
+        "h": 28,
+        "label": "Photo 4 of 8",
+        "current": null
+      },
+      {
+        "w": 44,
+        "h": 28,
+        "label": "Photo 5 of 8",
+        "current": null
+      },
+      {
+        "w": 44,
+        "h": 28,
+        "label": "Photo 6 of 8",
+        "current": null
+      }
+    ],
+    "thumbCount": 12,
+    "live": [
+      "last shipped Shipped the first version of the decisions feed · 6 days agolatest commit: ga",
+      "3,3923,392 students · 2828 schoolsphysics failure rate 30% → 10%",
+      "38 medals in 49 competitions"
+    ],
+    "imgsNoDims": [],
+    "barTransform": "matrix(0.333333, 0, 0, 1, 0, 0)"
+  },
+  "terminal": {
+    "role": "dialog",
+    "modal": "true",
+    "label": "Terminal"
+  },
+  "help": [
+    "  Fun:",
+    "    neofetch       System info",
+    "    sudo           Run with superuser privileges",
+    "    matrix         Enter the Matrix",
+    "    cowsay         ASCII cow says your message",
+    "    fortune        Random programming quote",
+    "    theme          Switch theme: theme dark | light | toggle",
+    "    ascii          ASCII art of name",
+    "    sound          Sound settings",
+    "  Utility:",
+    "    help           Show available commands",
+    "    clear          Clear terminal",
+    "    history        Show command history",
+    "  AI:",
+    "    ai             Enter AI chat mode (or: ai <message> for one-shot)",
+    "    chat           Enter AI chat mode",
+    "Type \"ai <message>\" to chat with an AI that knows about Gabriel.",
+    "gabriel@portfolio:~$"
+  ],
+  "now": [
+    "    cowsay         ASCII cow says your message",
+    "    fortune        Random programming quote",
+    "    theme          Switch theme: theme dark | light | toggle",
+    "    ascii          ASCII art of name",
+    "    sound          Sound settings",
+    "  Utility:",
+    "    help           Show available commands",
+    "    clear          Clear terminal",
+    "    history        Show command history",
+    "  AI:",
+    "    ai             Enter AI chat mode (or: ai <message> for one-shot)",
+    "    chat           Enter AI chat mode",
+    "Type \"ai <message>\" to chat with an AI that knows about Gabriel.",
+    "gabriel@portfolio:~$ now",
+    "building HIBEEX",
+    "15:21 in São Paulo",
+    "live data: open the By the Numbers panel.",
+    "gabriel@portfolio:~$"
+  ],
+  "stats": [
+    "Type \"ai <message>\" to chat with an AI that knows about Gabriel.",
+    "gabriel@portfolio:~$ now",
+    "building HIBEEX",
+    "15:21 in São Paulo",
+    "live data: open the By the Numbers panel.",
+    "gabriel@portfolio:~$ stats",
+    "By the Numbers",
+    "  39       olympiad medals  19 gold · 2 international",
+    "  3,392    students reached  Projeto Candela",
+    "  49       competitions",
+    "  28       public schools",
+    "  6        startups in the Canastra AI Residency",
+    "  1510     SAT / 1600  Top 1% Brazil",
+    "  0.7%     acceptance rate, Fundação Estudar",
+    "  121      laptops",
+    "  21       states",
+    "live data: open the By the Numbers panel.",
+    "gabriel@portfolio:~$"
+  ],
+  "projectsCmd": [
+    "  39       olympiad medals  19 gold · 2 international",
+    "  3,392    students reached  Projeto Candela",
+    "  49       competitions",
+    "  28       public schools",
+    "  6        startups in the Canastra AI Residency",
+    "  1510     SAT / 1600  Top 1% Brazil",
+    "  0.7%     acceptance rate, Fundação Estudar",
+    "  121      laptops",
+    "  21       states",
+    "live data: open the By the Numbers panel.",
+    "gabriel@portfolio:~$ projects",
+    "Projects (4)",
+    "  hibeex     HIBEEX — Company",
+    "  candela    Projeto Candela — Project",
+    "  medals     39 Olympiad Medals — Competitions",
+    "  gsat       GSAT Education — Company",
+    "Type open <slug> to go to a project page.",
+    "gabriel@portfolio:~$"
+  ],
+  "sound": [
+    "  49       competitions",
+    "  28       public schools",
+    "  6        startups in the Canastra AI Residency",
+    "  1510     SAT / 1600  Top 1% Brazil",
+    "  0.7%     acceptance rate, Fundação Estudar",
+    "  121      laptops",
+    "  21       states",
+    "live data: open the By the Numbers panel.",
+    "gabriel@portfolio:~$ projects",
+    "Projects (4)",
+    "  hibeex     HIBEEX — Company",
+    "  candela    Projeto Candela — Project",
+    "  medals     39 Olympiad Medals — Competitions",
+    "  gsat       GSAT Education — Company",
+    "Type open <slug> to go to a project page.",
+    "gabriel@portfolio:~$ sound",
+    "no sound system on this site yet.",
+    "gabriel@portfolio:~$"
+  ],
+  "focusBefore": "xterm-helper-textarea",
+  "afterEscape": {
+    "open": false,
+    "focus": "terminal-launch",
+    "focusText": "> Open terminal Ctrl+K"
+  },
+  "mobileNumbers": {
+    "h": 1232,
+    "chars": 555,
+    "thumb": "34x24",
+    "overflow": false
+  },
+  "consoleErrors": []
+}

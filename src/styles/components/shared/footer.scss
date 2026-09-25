@@ -38,6 +38,28 @@
     font-size: 12px;
   }
 
+  &__freshness {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0;
+    font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+    font-size: 11px;
+    letter-spacing: 0.02em;
+    color: #a8a8b8; // 6.8:1 on the dark footer
+  }
+
+  &__freshness-link {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid rgba($white, 0.25);
+
+    &:hover,
+    &:focus-visible { color: $white; }
+  }
+
   .links {
     display: flex;
     gap: 12px;
@@ -69,6 +91,11 @@
     &__cta-text { color: rgba($black, 0.65); }
     &__cta-link { color: $black; &:hover { color: var(--accent); } }
     &__copy { color: rgba($black, 0.55); }
+    &__freshness { color: rgba($black, 0.6); }
+    &__freshness-link {
+      border-bottom-color: rgba($black, 0.25);
+      &:hover, &:focus-visible { color: $black; }
+    }
 
     .links {
       a {

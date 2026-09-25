@@ -263,3 +263,79 @@
     font-size: 16px;
   }
 }
+
+// ── Card link, "latest" tag and the first-page preview ─────────────────────
+.research-card {
+  position: relative;
+
+  &__link {
+    color: inherit;
+    text-decoration: none;
+
+    // Stretches over the card: the whole card opens the PDF, with real link text.
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 16px;
+      z-index: 1;
+    }
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &:focus-visible::after {
+      outline: 2px solid var(--focus-ring);
+      outline-offset: 3px;
+    }
+  }
+
+  &__latest {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: var(--accent-decor);
+    color: #fff;
+  }
+
+  &__preview {
+    position: absolute;
+    top: 52px;
+    right: 24px;
+    z-index: 3;
+    width: 248px;
+    height: 350px;
+    object-fit: contain;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
+    opacity: 0;
+    transform: translateY(-6px);
+    transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+    pointer-events: none;
+  }
+
+  &:hover &__preview,
+  &:focus-within &__preview {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .research-card__preview {
+    transition: none;
+  }
+}
+
+// No hover on touch, and the popover would cover the text.
+@media (max-width: 900px) {
+  .research-card__preview {
+    display: none;
+  }
+}

@@ -1,6 +1,8 @@
 import createGlobe from 'cobe';
 import { AnimatePresence, motion } from 'motion/react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { config, useClock } from '../../lib/data';
+import { usePageVisible, useReducedMotion } from '../../lib/motion';
 import { useThemeStore } from '../../store/themeStore';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -93,12 +95,22 @@ function locationToAngles(lat: number, lon: number): [number, number] {
   ];
 }
 
-function GlobeCanvas({ selected, darkMode }: { selected: City | null; darkMode?: boolean }) {
+function GlobeCanvas({
+  selected,
+  darkMode,
+  onPainted,
+}: {
+  selected: City | null;
+  darkMode?: boolean;
+  onPainted: () => void;
+}) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const focusRef = useRef<[number, number] | null>(null);
   const pointerInteracting = useRef<{ x: number; y: number } | null>(null);
   const pointerMovement = useRef({ x: 0, y: 0 });
   const foldDrag = useRef<(() => void) | null>(null);
+  const onPaintedRef = useRef(onPainted);
+  onPaintedRef.current = onPainted;
 
   useEffect(() => {
     foldDrag.current?.();
@@ -208,7 +220,10 @@ function GlobeCanvas({ selected, darkMode }: { selected: City | null; darkMode?:
       });
       // The observer may already have reported us off-screen before this ran
       globe.toggle(isInView);
-      setTimeout(() => { if (canvas) canvas.style.opacity = '1'; });
+      setTimeout(() => {
+        if (canvas) canvas.style.opacity = '1';
+        onPaintedRef.current();
+      });
     };
 
     if (canvas.offsetWidth > 0) {
@@ -242,7 +257,25 @@ function GlobeCanvas({ selected, darkMode }: { selected: City | null; darkMode?:
   return <canvas ref={canvasRef} className="globe-canvas" onPointerDown={onPointerDown} aria-hidden="true" />;
 }
 
-function CityPanel({ city, onClose }: { city: City; onClose: () => void }) {
+const CITY_TZ: Record<string, string> = Object.fromEntries(
+  config.cities.map((c) => [c.id, c.tz]),
+);
+
+// Mounted only while the section is on screen: the shared clock ticks once a second.
+function CityClock({ tz }: { tz: string }) {
+  const { hhmm } = useClock(tz);
+  return <>{hhmm} local</>;
+}
+
+function CityPanel({
+  city,
+  onClose,
+  showClock,
+}: {
+  city: City;
+  onClose: () => void;
+  showClock: boolean;
+}) {
   const galleryItems = useMemo(() => {
     const entries = CITY_PHOTO_MANIFEST[city.id] ?? [];
     return entries.map(entry => {
@@ -257,13 +290,15 @@ function CityPanel({ city, onClose }: { city: City; onClose: () => void }) {
     });
   }, [city.id, city.name]);
 
+  const reduced = useReducedMotion();
+
   return (
     <motion.div
       className="city-panel"
-      initial={{ opacity: 0, x: 20 }}
+      initial={reduced ? false : { opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: 20 }}
-      transition={{ duration: 0.35, ease: 'easeOut' }}
+      exit={reduced ? { opacity: 1 } : { opacity: 0, x: 20 }}
+      transition={{ duration: reduced ? 0 : 0.35, ease: 'easeOut' }}
     >
       <button className="city-panel__close" onClick={onClose} aria-label="Close">✕</button>
 
@@ -271,6 +306,9 @@ function CityPanel({ city, onClose }: { city: City; onClose: () => void }) {
         <div className="city-panel__meta">
           <p className="city-panel__location">{city.name}</p>
           <span className="city-panel__coords">{city.coords}</span>
+          <span className="city-panel__time">
+            {showClock && <CityClock tz={CITY_TZ[city.id] ?? config.location.tz} />}
+          </span>
         </div>
         <h3 className="city-panel__headline">{city.headline}</h3>
         {city.story.map((para, i) => (
@@ -279,6 +317,7 @@ function CityPanel({ city, onClose }: { city: City; onClose: () => void }) {
       </div>
 
       {galleryItems.length > 0 && (
+        /* trigger="hover" opens on hover; the panels also open on focus (keyboard). */
         <AccordionGallery
           items={galleryItems as any}
           height={320}
@@ -331,11 +370,16 @@ const skipGlobe =
 const AUTOPLAY_MS = 7000;
 
 function BackgroundGlobe() {
-  const [selected, setSelected] = useState<City | null>(null);
+  // The first city is selected from the start: the text is in the DOM before any
+  // scrolling, observer or WebGL context.
+  const [selected, setSelected] = useState<City | null>(CITIES[0]);
   const [pinned, setPinned] = useState(false); // a click stops the tour
   const [inView, setInView] = useState(false);
+  const [globePainted, setGlobePainted] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
   const { darkMode } = useThemeStore();
+  const reduced = useReducedMotion();
+  const pageVisible = usePageVisible();
 
   useEffect(() => {
     const el = sectionRef.current;
@@ -345,15 +389,17 @@ function BackgroundGlobe() {
     return () => io.disconnect();
   }, []);
 
-  // Guided tour: open the first city when the section arrives, then advance every few seconds
+  const onPainted = useCallback(() => setGlobePainted(true), []);
+
+  // Guided tour: advances every few seconds while the section is on screen and
+  // nobody has taken over. Off-screen, hidden tab or reduced motion: it stays put.
   useEffect(() => {
-    if (!inView || pinned) return;
-    setSelected((prev) => prev ?? CITIES[0]);
+    if (!inView || pinned || reduced || !pageVisible) return;
     const id = setInterval(() => {
       setSelected((prev) => CITIES[(CITIES.findIndex((c) => c.id === prev?.id) + 1) % CITIES.length]);
     }, AUTOPLAY_MS);
     return () => clearInterval(id);
-  }, [inView, pinned]);
+  }, [inView, pinned, reduced, pageVisible]);
 
   const handleSelect = (city: City) => {
     setPinned(true);
@@ -376,7 +422,21 @@ function BackgroundGlobe() {
         {!skipGlobe && (
           <div className="globe-column">
             <div className="globe-wrap">
-              <GlobeCanvas selected={selected} darkMode={darkMode} />
+              {/* Static poster first; the live globe fades in over it once it paints. */}
+              <img
+                className="globe-poster"
+                src={darkMode ? '/background/globe-poster-dark.webp' : '/background/globe-poster.webp'}
+                alt=""
+                width={480}
+                height={480}
+                loading="lazy"
+                decoding="async"
+                aria-hidden="true"
+                data-hidden={globePainted ? 'true' : undefined}
+              />
+              {!reduced && (
+                <GlobeCanvas selected={selected} darkMode={darkMode} onPainted={onPainted} />
+              )}
             </div>
           </div>
         )}
@@ -384,13 +444,22 @@ function BackgroundGlobe() {
         {/* ── Panel column ── */}
         <AnimatePresence>
           {selected && (
-            <CityPanel key={selected.id} city={selected} onClose={handleClose} />
+            <CityPanel
+              key={selected.id}
+              city={selected}
+              onClose={handleClose}
+              showClock={inView}
+            />
           )}
         </AnimatePresence>
       </div>
 
       {/* ── Horizontal timeline ── */}
-      <CityTimeline selected={selected} onSelect={handleSelect} autoplay={inView && !pinned} />
+      <CityTimeline
+        selected={selected}
+        onSelect={handleSelect}
+        autoplay={inView && !pinned && !reduced && pageVisible}
+      />
     </div>
   );
 }

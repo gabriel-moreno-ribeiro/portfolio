@@ -12,6 +12,8 @@ import {
   streamAiResponse,
   CommandContext,
 } from "../../constants/terminal/commands";
+// Side-effect import: registers `now`, `stats`, `open`, `sound` … through registerCommands().
+import "../../constants/terminal/liveCommands";
 import TerminalHeader from "./TerminalHeader";
 import MatrixRain from "./MatrixRain";
 import { registerTerminalInstance } from "../../services/terminalBridge";
@@ -57,6 +59,10 @@ function Terminal({ onClose, hideHeader = false, transferBuffer, transferState }
   const busyRef = useRef(false);
   const chatModeRef = useRef(false);
   const chatHistoryRef = useRef<{ role: string; content: string }[]>([]);
+  // The element that had focus when the terminal opened: focus goes back to it on close.
+  const openerRef = useRef<HTMLElement | null>(null);
+  const closeRef = useRef(onClose);
+  closeRef.current = onClose;
   const [isExpanded, setIsExpanded] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
 
@@ -250,8 +256,23 @@ function Terminal({ onClose, hideHeader = false, transferBuffer, transferState }
 
     const fitAddon = new FitAddon();
     term.loadAddon(fitAddon);
+
+    const opener = document.activeElement;
+    openerRef.current = opener instanceof HTMLElement ? opener : null;
+
     term.open(termRef.current);
     term.focus();
+
+    // The helper textarea swallows Escape before it reaches the window listener, so the
+    // dialog would trap the keyboard. Handle it here and let the window close.
+    term.attachCustomKeyEventHandler((event) => {
+      if (event.type === "keydown" && event.key === "Escape") {
+        event.preventDefault();
+        closeRef.current?.();
+        return false;
+      }
+      return true;
+    });
 
     xtermRef.current = term;
     fitAddonRef.current = fitAddon;
@@ -440,6 +461,12 @@ function Terminal({ onClose, hideHeader = false, transferBuffer, transferState }
       xtermRef.current = null;
       fitAddonRef.current = null;
       registerTerminalInstance(null);
+
+      // Give focus back to whatever opened the terminal, but only if focus was still inside.
+      const active = document.activeElement;
+      const wasInside = !active || active === document.body || !!container?.contains(active);
+      const returnTo = openerRef.current;
+      if (returnTo && wasInside && document.contains(returnTo)) returnTo.focus();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

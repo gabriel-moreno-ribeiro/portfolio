@@ -426,10 +426,16 @@ function DraggableWindow({
   if (!win || win.status === "minimized") return null;
 
   const isMaximized = win.status === "maximized";
+  // The terminal is the one window that behaves like a modal dialog (Ctrl+K opens it,
+  // Escape closes it, focus goes back to the opener).
+  const isDialog = windowId === "terminal";
 
   return (
     <motion.div
       ref={windowRef}
+      role={isDialog ? "dialog" : undefined}
+      aria-modal={isDialog ? true : undefined}
+      aria-label={isDialog ? title : undefined}
       className={`draggable-window ${isMaximized ? "draggable-window--maximized" : ""} ${isMobile ? "draggable-window--mobile" : ""} ${className}`}
       style={{
         x: isMaximized ? 0 : x,

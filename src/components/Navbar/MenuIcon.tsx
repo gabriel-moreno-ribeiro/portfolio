@@ -8,8 +8,13 @@ interface MenuIconProps {
 
 const MenuIcon: React.FC<MenuIconProps> = ({ isHovered, setIsHovered }) => {
   return (
-    <motion.div
+    // A button, not a div: the navbar itself is no longer a tab stop, so this is how
+    // keyboard visitors open the menu (focusing it expands the pill).
+    <motion.button
+      type="button"
       className="menu-icon"
+      aria-expanded={isHovered}
+      aria-label={isHovered ? "Close menu" : "Open menu"}
       layout
       transition={{ type: "spring", stiffness: 200, damping: 25 }}
       onClick={() => {
@@ -28,7 +33,7 @@ const MenuIcon: React.FC<MenuIconProps> = ({ isHovered, setIsHovered }) => {
         animate={isHovered ? { rotate: -45, y: 0 } : { rotate: 0, y: 4 }}
         transition={{ duration: 0.3 }}
       />
-    </motion.div>
+    </motion.button>
   );
 };
 

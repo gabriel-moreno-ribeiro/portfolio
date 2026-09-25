@@ -32,6 +32,14 @@
     }
   }
 
+  &__clock {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    color: var(--fg-muted);
+    margin: -18px 0 24px;
+  }
+
   &__lead {
     font-size: 17px;
     line-height: 1.6;
@@ -167,10 +175,16 @@
         opacity: 0.6;
       }
 
+      // O `outline: none` daqui matava o anel global (globals.scss). Agora o foco é visível.
       &:focus {
-        outline: none;
-        border-color: $primary-orange;
-        box-shadow: 0 0 0 3px rgba($primary-orange, 0.35); // focus ring readable at a glance (was 0.18)
+        border-color: var(--accent);
+      }
+
+      &:focus-visible {
+        border-color: var(--accent);
+        border-radius: 12px; // a regra global zera o raio; aqui ele volta
+        outline: 3px solid var(--focus-ring);
+        outline-offset: 2px;
       }
     }
 
@@ -224,6 +238,12 @@
     &:disabled {
       opacity: 0.6;
       cursor: not-allowed;
+    }
+
+    &:focus-visible {
+      border-radius: 36px; // a regra global zera o raio da pílula
+      outline: 3px solid var(--focus-ring);
+      outline-offset: 3px;
     }
   }
 

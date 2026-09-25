@@ -63,11 +63,16 @@ useLocalData(): { experience, numbers, skills, gallery, press, changelog, now, c
 formatRelative(iso: string | number, now?: number): string          // "2h ago", "3 days ago"
 renderEmphasis(text: string): ReactNode
 export const config: SiteConfig                    // também exportado direto
+getSnapshot(): Snapshot   // { local, github|null, weather|null, clock } — síncrono, sem fetch; para código não-React (terminal). Adicionado na Fase 3.
 ```
 
 `DataResult<T>`: `{ data: T | null; source: 'live'|'mock'|'local'; status:
 'idle'|'loading'|'ready'|'error'; updatedAt: number | null; stale: boolean; error: string | null;
-refresh(): void }`. Hook genérico interno: `useData<T>(key, fetcher, { refreshMs, mock })`
+refresh(): void }`. **Semântica (decidida na Fase 3):** `data` decide o que renderizar — com erro e
+sem cache, `data` é o mock e `status` é `'error'`; o componente escolhe o estado do widget por
+`data ? 'ready' : status`, e usa `source`/`stale`/`error` só no selo. `commitsThisYear` e
+`calendar` podem ser `null` (desconhecido): tratar. `<LivePulse source="mock">` mostra "demo" só
+em dev; em produção não renderiza selo. Hook genérico interno: `useData<T>(key, fetcher, { refreshMs, mock })`
 com SWR, backoff 30 s→5 min, pausa em `document.hidden`, refresh imediato ao voltar se vencido.
 
 ## 4. Motion (`src/lib/motion/index.ts`) — sobre `motion/react`

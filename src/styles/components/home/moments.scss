@@ -5,24 +5,43 @@
   overflow: hidden;
 }
 
-.moments__eyebrow {
+// City names, but real filters now.
+.moments__filters {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  flex-wrap: wrap;
+  gap: 8px 12px;
   margin: 0 0 22px;
   padding: 0 16px;
+}
+
+.moments__filter {
+  background: none;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  padding: 3px 2px;
+  font-family: inherit;
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--fg-muted);
-  text-align: center;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 0.2s ease, border-color 0.2s ease;
 
-  i {
-    width: 22px;
-    height: 1px;
-    background: var(--accent-decor);
+  &:hover { color: var(--accent); }
+
+  &:focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 3px;
+    border-radius: 3px;
+  }
+
+  &[aria-pressed="true"] {
+    color: var(--accent);
+    border-bottom-color: var(--accent-decor);
   }
 }
 
@@ -37,6 +56,9 @@
 
   & + & { margin-top: 4px; }
 }
+
+// Nothing scrolls off-screen or on a hidden tab.
+.moments--paused .moments__track { animation-play-state: paused; }
 
 .moments__track {
   display: flex;
@@ -95,7 +117,12 @@
 
 @media screen and (max-width: 700px) {
   .moments { margin: 0 0 8px; }
-  .moments__eyebrow { display: none; }
+  .moments__filters {
+    gap: 6px 10px;
+    margin-bottom: 14px;
+    padding: 0 12px;
+  }
+  .moments__filter { font-size: 10px; letter-spacing: 0.12em; }
   .moments__row { -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 6%, #000 94%, transparent 100%); mask-image: linear-gradient(to right, transparent 0%, #000 6%, #000 94%, transparent 100%); }
   .moments__track { gap: 12px; padding-right: 12px; animation-duration: 60s !important; }
   .moments__item {

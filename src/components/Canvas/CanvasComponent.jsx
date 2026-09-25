@@ -1,26 +1,64 @@
 import { OrbitControls, useGLTF } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { usePageVisible } from "../../lib/motion";
 import { useInputSourceStore } from "../../store/inputSourceStore";
 import { useThemeStore } from "../../store/themeStore";
 
 useGLTF.setDecoderPath("https://www.gstatic.com/draco/versioned/decoders/1.5.7/");
 
+// The GLB has no animation tracks and no separate eye meshes, so "sleep" is done
+// on the group: after 30s without input it tilts forward and bobs; the first input
+// wakes it with a short startle.
+const IDLE_MS = 30_000;
+const SLEEP_TILT = (8 * Math.PI) / 180;
+const BOB_PERIOD_S = 2;
+const STARTLE_MS = 300;
+const INPUT_EVENTS = ["mousemove", "scroll", "keydown", "pointerdown", "touchstart"];
+
 function Model({ onReady, ...props }) {
   const { scene } = useGLTF("/assets/3d/robot.glb");
   const group = useRef();
+  const lastInput = useRef(0);
+  const wokeAt = useRef(-Infinity);
+  const baseY = useRef(props.position?.[1] ?? 0);
 
   useEffect(() => {
     // Model is mounted = GLB is loaded and scene is ready
     onReady?.();
   }, []);
 
-  useFrame(() => {
+  useEffect(() => {
+    lastInput.current = performance.now();
+    const bump = () => {
+      const now = performance.now();
+      if (now - lastInput.current > IDLE_MS) wokeAt.current = now;
+      lastInput.current = now;
+    };
+    INPUT_EVENTS.forEach((ev) => window.addEventListener(ev, bump, { passive: true }));
+    return () => INPUT_EVENTS.forEach((ev) => window.removeEventListener(ev, bump));
+  }, []);
+
+  useFrame((state) => {
+    const g = group.current;
+    if (!g) return;
+    const t = state.clock.getElapsedTime();
+    const now = performance.now();
+    const asleep = now - lastInput.current > IDLE_MS;
+    const startle = Math.max(0, 1 - (now - wokeAt.current) / STARTLE_MS);
+
     const { headPosition } = useInputSourceStore.getState();
-    group.current.rotation.y +=
-      (headPosition.x * 0.4 - group.current.rotation.y) * 0.2;
-    group.current.rotation.x +=
-      (headPosition.y * 0.4 - group.current.rotation.x) * 0.2;
+    let targetY = asleep ? 0 : headPosition.x * 0.4;
+    let targetX = asleep ? SLEEP_TILT : headPosition.y * 0.4;
+    // Waking up: a short flinch backwards before the head settles on the cursor.
+    if (startle > 0) targetX -= startle * 0.14;
+
+    const damp = asleep ? 0.03 : startle > 0 ? 0.35 : 0.2;
+    g.rotation.y += (targetY - g.rotation.y) * damp;
+    g.rotation.x += (targetX - g.rotation.x) * damp;
+
+    const bob = asleep ? Math.sin((t * 2 * Math.PI) / BOB_PERIOD_S) * 0.04 : 0;
+    g.position.y += (baseY.current + bob - g.position.y) * 0.05;
   });
 
   return (
@@ -34,11 +72,12 @@ useGLTF.preload("/assets/3d/robot.glb");
 
 export default function CanvasComponent({ onReady }) {
   const { darkMode } = useThemeStore();
+  const pageVisible = usePageVisible();
   const ioRef = useRef(null);
   const [inView, setInView] = useState(true);
 
   // The robot damps toward the cursor every frame, so it cannot run on demand.
-  // Stop the loop outright while it is scrolled out of view.
+  // Stop the loop outright while it is scrolled out of view or the tab is hidden.
   // Canvas only mounts the <canvas> once it has measured itself, so hook the
   // observer up from a callback ref rather than an effect.
   const observeCanvas = useCallback((el) => {
@@ -61,7 +100,7 @@ export default function CanvasComponent({ onReady }) {
       className="robot-canvas"
       data-drag-me={true}
       dpr={[1, 1.5]}
-      frameloop={inView ? "always" : "never"}
+      frameloop={inView && pageVisible ? "always" : "never"}
       gl={{ alpha: true, antialias: true, powerPreference: "high-performance" }}
       style={{ background: "transparent" }}
     >

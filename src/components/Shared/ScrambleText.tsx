@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { usePageVisible, useReducedMotion } from "../../lib/motion";
 
 const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
@@ -7,6 +8,8 @@ interface ScrambleTextProps {
   speed?: number;
   pauseDuration?: number;
   style?: React.CSSProperties;
+  /** Off-screen callers pass false: the timers stop instead of scrambling for nobody. */
+  enabled?: boolean;
 }
 
 // Scramble decode: all chars random at once, reveals left-to-right.
@@ -16,7 +19,10 @@ function ScrambleText({
   speed = 40,
   pauseDuration = 2200,
   style,
+  enabled = true,
 }: ScrambleTextProps) {
+  const reduced = useReducedMotion();
+  const pageVisible = usePageVisible();
   const [display, setDisplay] = useState(texts[0]);
   const indexRef = useRef(0);
   const timeoutRef = useRef<ReturnType<typeof setTimeout>>(undefined);
@@ -49,6 +55,8 @@ function ScrambleText({
   );
 
   useEffect(() => {
+    // Nothing cycles with the tab hidden, out of view, or under reduced motion.
+    if (reduced || !pageVisible || !enabled) return;
     const cycle = () => {
       indexRef.current = (indexRef.current + 1) % texts.length;
       scrambleTo(texts[indexRef.current]);
@@ -60,8 +68,10 @@ function ScrambleText({
     return () => {
       clearTimeout(timeoutRef.current);
       clearInterval(intervalRef.current);
+      // Never leave a half-scrambled word on screen when the timers stop.
+      setDisplay(texts[indexRef.current]);
     };
-  }, [texts, speed, pauseDuration, scrambleTo]);
+  }, [texts, speed, pauseDuration, scrambleTo, reduced, pageVisible, enabled]);
 
   return (
     <>
