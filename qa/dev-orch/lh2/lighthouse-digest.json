@@ -1,0 +1,224 @@
+{
+  "generatedAt": "2026-09-25T19:50:11.604Z",
+  "url": "http://localhost:4173/",
+  "runs": {
+    "desktop": {
+      "name": "desktop",
+      "ok": true,
+      "ms": 23455,
+      "lighthouseVersion": "13.5.0",
+      "formFactor": "desktop",
+      "throttling": "simulate",
+      "scores": {
+        "performance": 92,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "FCP": 640,
+        "LCP": 1491,
+        "CLS": 0,
+        "TBT": 111,
+        "SpeedIndex": 1498,
+        "TTI": 1500,
+        "LCPelement": null,
+        "totalByteWeight": 1003275,
+        "totalByteWeightDisplay": "Total size was 980 KiB",
+        "mainThreadWorkMs": 951,
+        "bootupTimeMs": 392,
+        "domSize": null
+      },
+      "unusedJavascript": [
+        {
+          "url": "http://localhost:4173/assets/index-CdbhrsXv.js",
+          "totalKB": 73.2,
+          "wastedKB": 35.5,
+          "wastedPct": 48
+        },
+        {
+          "url": "http://localhost:4173/assets/posthog-6pwzbHJx.js",
+          "totalKB": 56.8,
+          "wastedKB": 30,
+          "wastedPct": 53
+        },
+        {
+          "url": "http://localhost:4173/assets/vendor-react-5tBKz8g6.js",
+          "totalKB": 61.1,
+          "wastedKB": 21.3,
+          "wastedPct": 35
+        },
+        {
+          "url": "http://localhost:4173/assets/gsap-DHgtL2rv.js",
+          "totalKB": 39.3,
+          "wastedKB": 20.1,
+          "wastedPct": 51
+        }
+      ],
+      "properlySizeImages": [],
+      "unsizedImages": [],
+      "offscreenImages": [],
+      "largestResources": [
+        {
+          "type": "total",
+          "requests": 33,
+          "kb": 964.5
+        },
+        {
+          "type": "image",
+          "requests": 15,
+          "kb": 529.8
+        },
+        {
+          "type": "script",
+          "requests": 8,
+          "kb": 279
+        },
+        {
+          "type": "font",
+          "requests": 3,
+          "kb": 110.4
+        },
+        {
+          "type": "other",
+          "requests": 4,
+          "kb": 27.1
+        },
+        {
+          "type": "stylesheet",
+          "requests": 2,
+          "kb": 15.1
+        },
+        {
+          "type": "document",
+          "requests": 1,
+          "kb": 3
+        },
+        {
+          "type": "media",
+          "requests": 0,
+          "kb": 0
+        },
+        {
+          "type": "third-party",
+          "requests": 3,
+          "kb": 2.5
+        }
+      ],
+      "failedAudits": [
+        "llms-txt",
+        "ard-schema"
+      ],
+      "a11yFailures": []
+    },
+    "mobile": {
+      "name": "mobile",
+      "ok": true,
+      "ms": 18702,
+      "lighthouseVersion": "13.5.0",
+      "formFactor": "mobile",
+      "throttling": "simulate",
+      "scores": {
+        "performance": 62,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "FCP": 2726,
+        "LCP": 5323,
+        "CLS": 0,
+        "TBT": 510,
+        "SpeedIndex": 3289,
+        "TTI": 5794,
+        "LCPelement": null,
+        "totalByteWeight": 961866,
+        "totalByteWeightDisplay": "Total size was 939 KiB",
+        "mainThreadWorkMs": 2798,
+        "bootupTimeMs": 1326,
+        "domSize": null
+      },
+      "unusedJavascript": [
+        {
+          "url": "http://localhost:4173/assets/index-CdbhrsXv.js",
+          "totalKB": 73.2,
+          "wastedKB": 35.7,
+          "wastedPct": 49
+        },
+        {
+          "url": "http://localhost:4173/assets/posthog-6pwzbHJx.js",
+          "totalKB": 56.8,
+          "wastedKB": 30.1,
+          "wastedPct": 53
+        },
+        {
+          "url": "http://localhost:4173/assets/vendor-react-5tBKz8g6.js",
+          "totalKB": 61.1,
+          "wastedKB": 21.7,
+          "wastedPct": 36
+        },
+        {
+          "url": "http://localhost:4173/assets/motion-CDmMuYs6.js",
+          "totalKB": 42.8,
+          "wastedKB": 20.3,
+          "wastedPct": 47
+        }
+      ],
+      "properlySizeImages": [],
+      "unsizedImages": [],
+      "offscreenImages": [],
+      "largestResources": [
+        {
+          "type": "total",
+          "requests": 34,
+          "kb": 924
+        },
+        {
+          "type": "image",
+          "requests": 14,
+          "kb": 476.7
+        },
+        {
+          "type": "script",
+          "requests": 9,
+          "kb": 290.3
+        },
+        {
+          "type": "font",
+          "requests": 3,
+          "kb": 110.4
+        },
+        {
+          "type": "other",
+          "requests": 4,
+          "kb": 27.1
+        },
+        {
+          "type": "stylesheet",
+          "requests": 3,
+          "kb": 16.5
+        },
+        {
+          "type": "document",
+          "requests": 1,
+          "kb": 3
+        },
+        {
+          "type": "media",
+          "requests": 0,
+          "kb": 0
+        },
+        {
+          "type": "third-party",
+          "requests": 3,
+          "kb": 2.5
+        }
+      ],
+      "failedAudits": [
+        "llms-txt",
+        "ard-schema"
+      ],
+      "a11yFailures": []
+    }
+  }
+}

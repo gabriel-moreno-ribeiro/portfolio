@@ -7,7 +7,7 @@
  */
 import { chromium } from 'playwright';
 
-const URL = process.argv[2] ?? 'http://localhost:5173/';
+const TARGET = process.argv[2] ?? 'http://localhost:5173/';
 const SHOTS = process.env.TMP ? `${process.env.TMP}/expshot` : '.';
 const b = await chromium.launch();
 const errs = [];
@@ -20,7 +20,7 @@ const watch = (p, tag) => {
 let ctx = await b.newContext({ viewport: { width: 1440, height: 900 } });
 let p = await ctx.newPage();
 watch(p, 'light');
-await p.goto(URL, { waitUntil: 'networkidle' });
+await p.goto(TARGET, { waitUntil: 'networkidle' });
 await p.waitForSelector('#work-experience .exp__stops li');
 await p.waitForTimeout(1200);
 
@@ -61,8 +61,10 @@ await ctx.close();
 ctx = await b.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2 });
 p = await ctx.newPage();
 watch(p, 'mobile');
-await p.goto(URL, { waitUntil: 'networkidle' });
-await p.waitForTimeout(1200);
+await p.goto(TARGET, { waitUntil: 'networkidle' });
+await p.waitForSelector('#work-experience .exp__poster', { timeout: 20000 });
+await p.evaluate(() => { const r = document.querySelector('#work-experience').getBoundingClientRect(); scrollTo(0, r.top + scrollY + 600); });
+await p.waitForTimeout(1500);
 const mbox = await p.evaluate(() => { const r = document.querySelector('#work-experience').getBoundingClientRect(); return { top: r.top + scrollY, h: r.height }; });
 for (const frac of [0.1, 0.5, 0.95]) {
   await p.evaluate((y) => scrollTo(0, Math.max(0, y)), mbox.top + frac * (mbox.h - 844));
@@ -75,7 +77,7 @@ await ctx.close();
 ctx = await b.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: 'reduce' });
 p = await ctx.newPage();
 watch(p, 'reduced');
-await p.goto(URL, { waitUntil: 'networkidle' });
+await p.goto(TARGET, { waitUntil: 'networkidle' });
 await p.waitForTimeout(1500);
 console.log('reduced-motion:', JSON.stringify(await p.evaluate(() => {
   const sec = document.querySelector('#work-experience');
@@ -94,9 +96,18 @@ await ctx.close();
 ctx = await b.newContext({ viewport: { width: 1440, height: 900 } });
 p = await ctx.newPage();
 watch(p, 'no2d');
-await p.addInitScript(() => { const o = HTMLCanvasElement.prototype.getContext; HTMLCanvasElement.prototype.getContext = function (t, ...a) { return t === '2d' ? null : o.call(this, t, ...a); }; });
-await p.goto(URL, { waitUntil: 'networkidle' });
-await p.waitForTimeout(1200);
+// Só o canvas do carro perde o 2d: anular getContext('2d') na página toda quebra o
+// terminal e os outros widgets e a seção nem chega a montar.
+await p.addInitScript(() => {
+  const o = HTMLCanvasElement.prototype.getContext;
+  HTMLCanvasElement.prototype.getContext = function (t, ...a) {
+    return t === '2d' && this.classList.contains('exp__sprite') ? null : o.call(this, t, ...a);
+  };
+});
+await p.goto(TARGET, { waitUntil: 'networkidle' });
+await p.waitForSelector('#work-experience .exp__poster', { timeout: 20000 });
+await p.evaluate(() => { const r = document.querySelector('#work-experience').getBoundingClientRect(); scrollTo(0, r.top + scrollY + 600); });
+await p.waitForTimeout(1500);
 console.log('sem canvas 2D:', JSON.stringify(await p.evaluate(() => ({
   posterVisivel: !document.querySelector('.exp__poster').classList.contains('is-hidden'),
   carTransform: document.querySelector('.exp__car').style.transform,

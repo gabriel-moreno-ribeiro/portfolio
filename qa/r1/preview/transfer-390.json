@@ -1,0 +1,215 @@
+{
+  "viewport": "390x844",
+  "baseUrl": "http://localhost:4173",
+  "phase": "normal motion: initial load + one full slow scroll + experience steps + second slow scroll",
+  "method": "Playwright requestfinished -> request.sizes().responseBodySize (encoded over-the-wire body), falling back to the content-length header. wireBytes = body + response headers.",
+  "caveat": "Vite DEV server serves unminified, ungzipped ES modules; absolute numbers are far above production. Compare only against other runs of this same script on the dev server.",
+  "totalRequests": 123,
+  "totalBodyBytes": 3994103,
+  "totalBodyKB": 3900.5,
+  "totalBodyMB": 3.81,
+  "totalWireBytes": 4027367,
+  "totalWireKB": 3933,
+  "byType": {
+    "document": {
+      "requests": 1,
+      "bodyBytes": 2855,
+      "wireBytes": 3118,
+      "bodyKB": 2.8
+    },
+    "stylesheet": {
+      "requests": 4,
+      "bodyBytes": 17891,
+      "wireBytes": 19276,
+      "bodyKB": 17.5
+    },
+    "script": {
+      "requests": 19,
+      "bodyBytes": 402125,
+      "wireBytes": 408461,
+      "bodyKB": 392.7
+    },
+    "font": {
+      "requests": 4,
+      "bodyBytes": 188288,
+      "wireBytes": 189568,
+      "bodyKB": 183.9
+    },
+    "image": {
+      "requests": 88,
+      "bodyBytes": 3358711,
+      "wireBytes": 3382246,
+      "bodyKB": 3280
+    },
+    "fetch/xhr": {
+      "requests": 7,
+      "bodyBytes": 24233,
+      "wireBytes": 24698,
+      "bodyKB": 23.7
+    }
+  },
+  "top20Heaviest": [
+    {
+      "kb": 287.6,
+      "type": "image",
+      "status": 200,
+      "url": "/assets/hero-slideshow/8-1920.avif"
+    },
+    {
+      "kb": 253,
+      "type": "image",
+      "status": 200,
+      "url": "/work/candela/03.webp"
+    },
+    {
+      "kb": 203.9,
+      "type": "image",
+      "status": 200,
+      "url": "/assets/hero-slideshow/6-1920.avif"
+    },
+    {
+      "kb": 188.8,
+      "type": "image",
+      "status": 200,
+      "url": "/assets/hero-slideshow/4-1920.avif"
+    },
+    {
+      "kb": 168.5,
+      "type": "image",
+      "status": 200,
+      "url": "/work/candela/04.webp"
+    },
+    {
+      "kb": 160.6,
+      "type": "image",
+      "status": 200,
+      "url": "/work/candela/08.webp"
+    },
+    {
+      "kb": 145.8,
+      "type": "image",
+      "status": 200,
+      "url": "/work/candela/05.webp"
+    },
+    {
+      "kb": 145.2,
+      "type": "image",
+      "status": 200,
+      "url": "/work/candela/02.webp"
+    },
+    {
+      "kb": 138.3,
+      "type": "image",
+      "status": 200,
+      "url": "/work/candela/01.webp"
+    },
+    {
+      "kb": 137.7,
+      "type": "image",
+      "status": 200,
+      "url": "/work/candela/07.webp"
+    },
+    {
+      "kb": 135.7,
+      "type": "image",
+      "status": 200,
+      "url": "/work/candela/06.webp"
+    },
+    {
+      "kb": 131.9,
+      "type": "image",
+      "status": 200,
+      "url": "/background/missao-velha/01.webp"
+    },
+    {
+      "kb": 118.7,
+      "type": "image",
+      "status": 200,
+      "url": "/work/hibeex/02.webp"
+    },
+    {
+      "kb": 99,
+      "type": "image",
+      "status": 200,
+      "url": "/work/hibeex/01.webp"
+    },
+    {
+      "kb": 89.5,
+      "type": "image",
+      "status": 200,
+      "url": "/assets/hero-slideshow/7-1920.avif"
+    },
+    {
+      "kb": 83.6,
+      "type": "image",
+      "status": 200,
+      "url": "/background/missao-velha/02.webp"
+    },
+    {
+      "kb": 74.5,
+      "type": "font",
+      "status": 200,
+      "url": "/assets/dm-sans-latin-opsz-italic-C8i6y2Ft.woff2"
+    },
+    {
+      "kb": 73.1,
+      "type": "script",
+      "status": 200,
+      "url": "/assets/index-tpgUFoHI.js"
+    },
+    {
+      "kb": 70.9,
+      "type": "image",
+      "status": 200,
+      "url": "/work/hibeex/03.webp"
+    },
+    {
+      "kb": 70.1,
+      "type": "image",
+      "status": 200,
+      "url": "/assets/hero-slideshow/3-1920.avif"
+    }
+  ],
+  "thirdParty": [
+    {
+      "kb": 1.2,
+      "type": "fetch",
+      "url": "https://api.github.com/rate_limit"
+    },
+    {
+      "kb": 1.7,
+      "type": "fetch",
+      "url": "https://api.github.com/users/gabriel-moreno-ribeiro"
+    },
+    {
+      "kb": 4.4,
+      "type": "fetch",
+      "url": "https://api.github.com/users/gabriel-moreno-ribeiro/repos?sort=pushed&per_page=5"
+    },
+    {
+      "kb": 2.4,
+      "type": "fetch",
+      "url": "https://api.github.com/repos/gabriel-moreno-ribeiro/portfolio/commits?per_page=1"
+    },
+    {
+      "kb": 11.5,
+      "type": "fetch",
+      "url": "https://api.github.com/users/gabriel-moreno-ribeiro/events/public?per_page=100"
+    },
+    {
+      "kb": 2.2,
+      "type": "fetch",
+      "url": "https://api.github.com/repos/gabriel-moreno-ribeiro/gabriel-moreno-ribeiro/commits?per_page=1"
+    },
+    {
+      "kb": 1,
+      "type": "script",
+      "url": "https://us-assets.i.posthog.com/array/phc_cgNNpL9lqLK50jeJICAV6xcGZDmuDnuPVxPeG8Ieg6m/config.js"
+    },
+    {
+      "kb": 0.3,
+      "type": "fetch",
+      "url": "https://api.open-meteo.com/v1/forecast?latitude=-23.5505&longitude=-46.6333&current=temperature_2m,weather_code,is_day&timezone=auto"
+    }
+  ]
+}

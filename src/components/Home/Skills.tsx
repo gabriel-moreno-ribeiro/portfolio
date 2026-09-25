@@ -57,7 +57,7 @@ function Skills() {
     createToolbox({
       canvas,
       items: itemsRef.current,
-      size: box.clientWidth < 560 ? 48 : 72,
+      size: box.clientWidth < 560 ? 48 : 64,
       onHover: (name, x, y) => setTip(name ? { name, x, y } : null),
     })
       .then((toolbox) => {
@@ -117,7 +117,7 @@ function Skills() {
               data-lit={item.lit ? "true" : undefined}
               data-card={item.card ? "true" : undefined}
             >
-              <img className="skills__icon" src={item.src} width={72} height={72} alt="" loading="lazy" />
+              <img className="skills__icon" src={item.src} width={64} height={64} alt="" loading="lazy" />
               <span className="skills__name">{item.name}</span>
             </li>
           ))}

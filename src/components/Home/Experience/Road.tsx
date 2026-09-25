@@ -1,3 +1,4 @@
+import { memo } from 'react';
 // Estrada decorativa: traço creme-escuro, linha central tracejada laranja e marcos de km.
 // Puramente visual — `aria-hidden`. O conteúdo real está no `<ol>` ao lado.
 interface RoadMarker {
@@ -19,7 +20,7 @@ interface RoadProps {
   narrow: boolean;
 }
 
-export default function Road({ d, width, height, markers, narrow }: RoadProps) {
+function Road({ d, width, height, markers, narrow }: RoadProps) {
   if (!d || width <= 0 || height <= 0) return null;
   const lane = narrow ? 18 : 46;
   return (
@@ -61,4 +62,5 @@ export default function Road({ d, width, height, markers, narrow }: RoadProps) {
   );
 }
 
+export default memo(Road);
 export type { RoadMarker };

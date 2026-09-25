@@ -1,0 +1,485 @@
+{
+  "generatedAt": "2026-09-25T19:08:30.224Z",
+  "url": "http://localhost:5173/",
+  "viewport": "1440x900",
+  "state": "after full slow scroll, back at top",
+  "axeVersion": "4.13.0",
+  "tags": [
+    "wcag2a",
+    "wcag2aa",
+    "wcag21a",
+    "wcag21aa",
+    "best-practice"
+  ],
+  "counts": {
+    "violations": 1,
+    "violationNodes": 11,
+    "passes": 46,
+    "incomplete": 1,
+    "critical": 0,
+    "serious": 1,
+    "moderate": 0,
+    "minor": 0
+  },
+  "byImpact": {
+    "critical": [],
+    "serious": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=playwright",
+        "nodes": 11,
+        "exampleSelector": ".project-live__key",
+        "exampleHtml": "<span class=\"project-live__key\">last shipped</span>",
+        "allSelectors": [
+          ".project-live__key",
+          ".project-live__rel",
+          ".featured-card--chips > .featured-card__body > .featured-tags > span:nth-child(1)",
+          ".featured-card--chips > .featured-card__body > .featured-tags > span:nth-child(2)",
+          ".featured-card--chips > .featured-card__body > .featured-tags > span:nth-child(3)",
+          ".stat-tile--hero > .stat-tile__sub",
+          ".stat-tile--lg.stat-tile.hl-reveal:nth-child(2) > .stat-tile__sub",
+          ".stat-tile--md.stat-tile.hl-reveal:nth-child(6) > .stat-tile__sub",
+          ".now-tile__sub",
+          ".research-card__latest",
+          ".footer__freshness-pulse > .hl-live__text"
+        ],
+        "failureSummary": "Fix any of the following: Element has insufficient color contrast of 3.49 (foreground color: #878584, background color: #fff8f4, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio of 4.5:1"
+      }
+    ],
+    "moderate": [],
+    "minor": [],
+    "null": []
+  },
+  "incomplete": [
+    {
+      "id": "color-contrast",
+      "impact": "serious",
+      "nodes": 24,
+      "exampleSelector": ".section-rail__item--active > .section-rail__label"
+    }
+  ],
+  "notes": [],
+  "raw": [
+    {
+      "id": "color-contrast",
+      "impact": "serious",
+      "tags": [
+        "cat.color",
+        "wcag2aa",
+        "wcag143",
+        "TTv5",
+        "TT13.c",
+        "EN-301-549",
+        "EN-9.1.4.3",
+        "ACT",
+        "RGAAv4",
+        "RGAA-3.2.1"
+      ],
+      "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+      "help": "Elements must meet minimum color contrast ratio thresholds",
+      "helpUrl": "https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=playwright",
+      "nodes": [
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#878584",
+                "bgColor": "#fff8f4",
+                "contrastRatio": 3.49,
+                "fontSize": "9.8pt (13px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<body>",
+                  "target": [
+                    "body"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 3.49 (foreground color: #878584, background color: #fff8f4, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<span class=\"project-live__key\">last shipped</span>",
+          "target": [
+            ".project-live__key"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.49 (foreground color: #878584, background color: #fff8f4, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#878584",
+                "bgColor": "#fff8f4",
+                "contrastRatio": 3.49,
+                "fontSize": "9.8pt (13px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<body>",
+                  "target": [
+                    "body"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 3.49 (foreground color: #878584, background color: #fff8f4, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<span class=\"project-live__rel\"> · 6 days ago</span>",
+          "target": [
+            ".project-live__rel"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.49 (foreground color: #878584, background color: #fff8f4, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#c07955",
+                "bgColor": "#feede3",
+                "contrastRatio": 3.01,
+                "fontSize": "9.0pt (12px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<span>19 gold</span>",
+                  "target": [
+                    ".featured-card--chips > .featured-card__body > .featured-tags > span:nth-child(1)"
+                  ]
+                },
+                {
+                  "html": "<body>",
+                  "target": [
+                    "body"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 3.01 (foreground color: #c07955, background color: #feede3, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<span>19 gold</span>",
+          "target": [
+            ".featured-card--chips > .featured-card__body > .featured-tags > span:nth-child(1)"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.01 (foreground color: #c07955, background color: #feede3, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#c07955",
+                "bgColor": "#feede3",
+                "contrastRatio": 3.01,
+                "fontSize": "9.0pt (12px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<span>2 international</span>",
+                  "target": [
+                    ".featured-card--chips > .featured-card__body > .featured-tags > span:nth-child(2)"
+                  ]
+                },
+                {
+                  "html": "<body>",
+                  "target": [
+                    "body"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 3.01 (foreground color: #c07955, background color: #feede3, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<span>2 international</span>",
+          "target": [
+            ".featured-card--chips > .featured-card__body > .featured-tags > span:nth-child(2)"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.01 (foreground color: #c07955, background color: #feede3, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#c07955",
+                "bgColor": "#feede3",
+                "contrastRatio": 3.01,
+                "fontSize": "9.0pt (12px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<span>1st IFT-UNESP</span>",
+                  "target": [
+                    ".featured-card--chips > .featured-card__body > .featured-tags > span:nth-child(3)"
+                  ]
+                },
+                {
+                  "html": "<body>",
+                  "target": [
+                    "body"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 3.01 (foreground color: #c07955, background color: #feede3, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<span>1st IFT-UNESP</span>",
+          "target": [
+            ".featured-card--chips > .featured-card__body > .featured-tags > span:nth-child(3)"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.01 (foreground color: #c07955, background color: #feede3, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#7f7f7f",
+                "bgColor": "#ffffff",
+                "contrastRatio": 4,
+                "fontSize": "9.0pt (12px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<li class=\"hl-reveal stat-tile stat-tile--hero\" data-mode=\"shown\" style=\"opacity: 1; transform: translate3d(0px, 0px, 0px); transition-delay: 0s;\">",
+                  "target": [
+                    ".stat-tile--hero"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 4 (foreground color: #7f7f7f, background color: #ffffff, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<span class=\"stat-tile__sub\">19 gold · 2 international</span>",
+          "target": [
+            ".stat-tile--hero > .stat-tile__sub"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4 (foreground color: #7f7f7f, background color: #ffffff, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#7f7f7f",
+                "bgColor": "#ffffff",
+                "contrastRatio": 4,
+                "fontSize": "9.0pt (12px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<li class=\"hl-reveal stat-tile stat-tile--lg\" data-mode=\"shown\" style=\"opacity: 1; transform: translate3d(0px, 0px, 0px); transition-delay: 0.04s;\">",
+                  "target": [
+                    ".stat-tile--lg.stat-tile.hl-reveal:nth-child(2)"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 4 (foreground color: #7f7f7f, background color: #ffffff, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<span class=\"stat-tile__sub\">Projeto Candela</span>",
+          "target": [
+            ".stat-tile--lg.stat-tile.hl-reveal:nth-child(2) > .stat-tile__sub"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4 (foreground color: #7f7f7f, background color: #ffffff, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#7f7f7f",
+                "bgColor": "#ffffff",
+                "contrastRatio": 4,
+                "fontSize": "9.0pt (12px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<li class=\"hl-reveal stat-tile stat-tile--md\" data-mode=\"shown\" style=\"opacity: 1; transform: translate3d(0px, 0px, 0px); transition-delay: 0.2s;\">",
+                  "target": [
+                    ".stat-tile--md.stat-tile.hl-reveal:nth-child(6)"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 4 (foreground color: #7f7f7f, background color: #ffffff, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<span class=\"stat-tile__sub\">Top 1% Brazil</span>",
+          "target": [
+            ".stat-tile--md.stat-tile.hl-reveal:nth-child(6) > .stat-tile__sub"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4 (foreground color: #7f7f7f, background color: #ffffff, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#7f7f7f",
+                "bgColor": "#ffffff",
+                "contrastRatio": 4,
+                "fontSize": "8.3pt (11px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<li class=\"hl-reveal now-tile\" data-mode=\"shown\" style=\"opacity: 1; transform: translate3d(0px, 0px, 0px); transition-delay: 0.48s;\">",
+                  "target": [
+                    ".now-tile.hl-reveal[data-mode=\"shown\"]:nth-child(4)"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 4 (foreground color: #7f7f7f, background color: #ffffff, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<p class=\"now-tile__sub\">light drizzle</p>",
+          "target": [
+            ".now-tile__sub"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4 (foreground color: #7f7f7f, background color: #ffffff, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#ffffff",
+                "bgColor": "#f0732d",
+                "contrastRatio": 2.91,
+                "fontSize": "8.3pt (11px)",
+                "fontWeight": "bold",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<span class=\"research-card__latest\">latest</span>",
+                  "target": [
+                    ".research-card__latest"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 2.91 (foreground color: #ffffff, background color: #f0732d, font size: 8.3pt (11px), font weight: bold). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<span class=\"research-card__latest\">latest</span>",
+          "target": [
+            ".research-card__latest"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 2.91 (foreground color: #ffffff, background color: #f0732d, font size: 8.3pt (11px), font weight: bold). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#5f5f5f",
+                "bgColor": "#292828",
+                "contrastRatio": 2.3,
+                "fontSize": "9.0pt (12px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<footer class=\"footer\">",
+                  "target": [
+                    "footer"
+                  ]
+                },
+                {
+                  "html": "<body>",
+                  "target": [
+                    "body"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 2.3 (foreground color: #5f5f5f, background color: #292828, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<span class=\"hl-live__text\">demo</span>",
+          "target": [
+            ".footer__freshness-pulse > .hl-live__text"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 2.3 (foreground color: #5f5f5f, background color: #292828, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+        }
+      ]
+    }
+  ]
+}

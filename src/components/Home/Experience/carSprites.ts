@@ -1,5 +1,5 @@
 // GERADO por scripts/render-car-sprites.mjs. Não editar à mão.
-// 48 yaws da D-20 (public/assets/3d/d20.glb), câmera ortográfica elevada 40°.
+// 48 yaws da D-20 (scripts/assets/d20.glb), câmera ortográfica elevada 40°.
 // `heading` = direção de tela (graus, 0 = +x, horário) do eixo frontal do carro naquele yaw:
 // o componente escolhe o frame cujo `heading` está mais perto da tangente do path.
 // Âncoras em pixels do sprite (origem: canto superior esquerdo do frame).

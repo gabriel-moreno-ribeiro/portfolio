@@ -1,0 +1,2383 @@
+{
+  "viewport": "1440x900",
+  "tabsPressed": 80,
+  "loopedBackAtTab": null,
+  "focusableInvisible": [],
+  "focusOutsideViewport": [
+    {
+      "tab": 25,
+      "tag": "div",
+      "text": "Projeto Candela at Fundação Estudar · São Pau",
+      "scrollY": 0,
+      "rect": {
+        "x": 36,
+        "y": 1137,
+        "w": 1368,
+        "h": 288
+      }
+    },
+    {
+      "tab": 26,
+      "tag": "button",
+      "text": "✕",
+      "scrollY": 107,
+      "rect": {
+        "x": 1147,
+        "y": 1532,
+        "w": 30,
+        "h": 25
+      }
+    },
+    {
+      "tab": 27,
+      "tag": "div",
+      "text": null,
+      "scrollY": 134,
+      "rect": {
+        "x": 795,
+        "y": 1834,
+        "w": 201,
+        "h": 320
+      }
+    },
+    {
+      "tab": 28,
+      "tag": "div",
+      "text": null,
+      "scrollY": 348,
+      "rect": {
+        "x": 902,
+        "y": 1620,
+        "w": 118,
+        "h": 321
+      }
+    },
+    {
+      "tab": 29,
+      "tag": "div",
+      "text": null,
+      "scrollY": 788,
+      "rect": {
+        "x": 964,
+        "y": 1180,
+        "w": 80,
+        "h": 321
+      }
+    },
+    {
+      "tab": 35,
+      "tag": "button",
+      "text": null,
+      "scrollY": 1389,
+      "rect": {
+        "x": 529,
+        "y": 996,
+        "w": 22,
+        "h": 22
+      }
+    },
+    {
+      "tab": 36,
+      "tag": "button",
+      "text": null,
+      "scrollY": 1389,
+      "rect": {
+        "x": 649,
+        "y": 996,
+        "w": 22,
+        "h": 22
+      }
+    },
+    {
+      "tab": 37,
+      "tag": "button",
+      "text": null,
+      "scrollY": 1400,
+      "rect": {
+        "x": 769,
+        "y": 985,
+        "w": 22,
+        "h": 22
+      }
+    },
+    {
+      "tab": 40,
+      "tag": "button",
+      "text": null,
+      "scrollY": 1873,
+      "rect": {
+        "x": 225,
+        "y": 1005,
+        "w": 34,
+        "h": 34
+      }
+    },
+    {
+      "tab": 41,
+      "tag": "button",
+      "text": null,
+      "scrollY": 1873,
+      "rect": {
+        "x": 685,
+        "y": 1005,
+        "w": 34,
+        "h": 34
+      }
+    },
+    {
+      "tab": 42,
+      "tag": "button",
+      "text": null,
+      "scrollY": 1903,
+      "rect": {
+        "x": 378,
+        "y": 1116,
+        "w": 44,
+        "h": 28
+      }
+    },
+    {
+      "tab": 43,
+      "tag": "button",
+      "text": null,
+      "scrollY": 1903,
+      "rect": {
+        "x": 426,
+        "y": 1115,
+        "w": 44,
+        "h": 28
+      }
+    },
+    {
+      "tab": 44,
+      "tag": "button",
+      "text": null,
+      "scrollY": 1903,
+      "rect": {
+        "x": 474,
+        "y": 1115,
+        "w": 44,
+        "h": 28
+      }
+    },
+    {
+      "tab": 45,
+      "tag": "button",
+      "text": null,
+      "scrollY": 1903,
+      "rect": {
+        "x": 522,
+        "y": 1115,
+        "w": 44,
+        "h": 28
+      }
+    },
+    {
+      "tab": 47,
+      "tag": "a",
+      "text": "latest commit: portfolio",
+      "scrollY": 1903,
+      "rect": {
+        "x": 757,
+        "y": 1016,
+        "w": 181,
+        "h": 24
+      }
+    },
+    {
+      "tab": 48,
+      "tag": "button",
+      "text": null,
+      "scrollY": 1903,
+      "rect": {
+        "x": 225,
+        "y": 1367,
+        "w": 34,
+        "h": 34
+      }
+    },
+    {
+      "tab": 49,
+      "tag": "button",
+      "text": null,
+      "scrollY": 1903,
+      "rect": {
+        "x": 685,
+        "y": 1367,
+        "w": 34,
+        "h": 34
+      }
+    },
+    {
+      "tab": 50,
+      "tag": "button",
+      "text": null,
+      "scrollY": 1903,
+      "rect": {
+        "x": 282,
+        "y": 1508,
+        "w": 44,
+        "h": 28
+      }
+    },
+    {
+      "tab": 51,
+      "tag": "button",
+      "text": null,
+      "scrollY": 1903,
+      "rect": {
+        "x": 330,
+        "y": 1508,
+        "w": 44,
+        "h": 28
+      }
+    },
+    {
+      "tab": 52,
+      "tag": "button",
+      "text": null,
+      "scrollY": 1903,
+      "rect": {
+        "x": 378,
+        "y": 1508,
+        "w": 44,
+        "h": 28
+      }
+    },
+    {
+      "tab": 53,
+      "tag": "button",
+      "text": null,
+      "scrollY": 1903,
+      "rect": {
+        "x": 426,
+        "y": 1506,
+        "w": 44,
+        "h": 28
+      }
+    },
+    {
+      "tab": 54,
+      "tag": "button",
+      "text": null,
+      "scrollY": 1903,
+      "rect": {
+        "x": 474,
+        "y": 1506,
+        "w": 44,
+        "h": 28
+      }
+    },
+    {
+      "tab": 61,
+      "tag": "a",
+      "text": "portfolio",
+      "scrollY": 2973,
+      "rect": {
+        "x": 211,
+        "y": 1490,
+        "w": 75,
+        "h": 24
+      }
+    },
+    {
+      "tab": 62,
+      "tag": "a",
+      "text": "ORCID: 0009-0009-2574-6646",
+      "scrollY": 3024,
+      "rect": {
+        "x": 192,
+        "y": 1715,
+        "w": 1056,
+        "h": 20
+      }
+    },
+    {
+      "tab": 63,
+      "tag": "a",
+      "text": "Low-Cost Physics Lab Kits for Public Schools",
+      "scrollY": 3071,
+      "rect": {
+        "x": 421,
+        "y": 2305,
+        "w": 394,
+        "h": 24
+      }
+    },
+    {
+      "tab": 64,
+      "tag": "button",
+      "text": "used in HIBEEX",
+      "scrollY": 3102,
+      "rect": {
+        "x": 1119,
+        "y": 2702,
+        "w": 129,
+        "h": 30
+      }
+    },
+    {
+      "tab": 65,
+      "tag": "a",
+      "text": "HIBEEX",
+      "scrollY": 3239,
+      "rect": {
+        "x": 164,
+        "y": 3193,
+        "w": 61,
+        "h": 29
+      }
+    },
+    {
+      "tab": 66,
+      "tag": "a",
+      "text": "GSAT Education",
+      "scrollY": 4930,
+      "rect": {
+        "x": 233,
+        "y": 1502,
+        "w": 113,
+        "h": 29
+      }
+    },
+    {
+      "tab": 71,
+      "tag": "a",
+      "text": "HIBEEX",
+      "scrollY": 6018,
+      "rect": {
+        "x": 610,
+        "y": 3554,
+        "w": 83,
+        "h": 32
+      }
+    },
+    {
+      "tab": 72,
+      "tag": "a",
+      "text": "Let’s talk ↓",
+      "scrollY": 6060,
+      "rect": {
+        "x": 610,
+        "y": 3739,
+        "w": 122,
+        "h": 39
+      }
+    },
+    {
+      "tab": 73,
+      "tag": "a",
+      "text": "Emailme@gabrielmr.com",
+      "scrollY": 6102,
+      "rect": {
+        "x": 182,
+        "y": 4382,
+        "w": 475,
+        "h": 61
+      }
+    },
+    {
+      "tab": 74,
+      "tag": "a",
+      "text": "Book a callcal.com/gabrielmribeiro",
+      "scrollY": 6143,
+      "rect": {
+        "x": 182,
+        "y": 4408,
+        "w": 475,
+        "h": 61
+      }
+    },
+    {
+      "tab": 75,
+      "tag": "a",
+      "text": "LinkedIngabriel-moreno-ribeiro",
+      "scrollY": 6184,
+      "rect": {
+        "x": 182,
+        "y": 4433,
+        "w": 475,
+        "h": 61
+      }
+    },
+    {
+      "tab": 76,
+      "tag": "a",
+      "text": "GitHubgabriel-moreno-ribeiro",
+      "scrollY": 6373,
+      "rect": {
+        "x": 182,
+        "y": 4311,
+        "w": 475,
+        "h": 61
+      }
+    },
+    {
+      "tab": 77,
+      "tag": "input",
+      "text": null,
+      "scrollY": 6493,
+      "rect": {
+        "x": 746,
+        "y": 3864,
+        "w": 225,
+        "h": 46
+      }
+    },
+    {
+      "tab": 78,
+      "tag": "input",
+      "text": null,
+      "scrollY": 6870,
+      "rect": {
+        "x": 988,
+        "y": 3487,
+        "w": 225,
+        "h": 46
+      }
+    },
+    {
+      "tab": 79,
+      "tag": "textarea",
+      "text": null,
+      "scrollY": 7058,
+      "rect": {
+        "x": 746,
+        "y": 3389,
+        "w": 467,
+        "h": 139
+      }
+    },
+    {
+      "tab": 80,
+      "tag": "button",
+      "text": "Send message",
+      "scrollY": 7109,
+      "rect": {
+        "x": 746,
+        "y": 3494,
+        "w": 186,
+        "h": 48
+      }
+    }
+  ],
+  "noVisibleOutline": [
+    {
+      "tab": 27,
+      "tag": "div",
+      "cls": "ag-panel ag-panel--active",
+      "text": null
+    },
+    {
+      "tab": 28,
+      "tag": "div",
+      "cls": "ag-panel ag-panel--active",
+      "text": null
+    },
+    {
+      "tab": 29,
+      "tag": "div",
+      "cls": "ag-panel ag-panel--active",
+      "text": null
+    },
+    {
+      "tab": 30,
+      "tag": "div",
+      "cls": "ag-panel ag-panel--active",
+      "text": null
+    },
+    {
+      "tab": 31,
+      "tag": "div",
+      "cls": "ag-panel ag-panel--active",
+      "text": null
+    },
+    {
+      "tab": 32,
+      "tag": "div",
+      "cls": "ag-panel ag-panel--active",
+      "text": null
+    },
+    {
+      "tab": 33,
+      "tag": "div",
+      "cls": "ag-panel ag-panel--active",
+      "text": null
+    },
+    {
+      "tab": 34,
+      "tag": "div",
+      "cls": "ag-panel ag-panel--active",
+      "text": null
+    }
+  ],
+  "sectionsReached": [
+    "nav.section-rail",
+    "nav.navbar",
+    "#main-content",
+    "#moments",
+    "#background",
+    "#work",
+    "#numbers",
+    "#research",
+    "#skills",
+    "nav.exp__index",
+    "#exp-hibeex",
+    "#contact",
+    "#contact-name",
+    "#contact-email",
+    "#contact-message"
+  ],
+  "ctrlK": {
+    "before": {
+      "dialogs": 0,
+      "terminalish": 2,
+      "bodyChildren": 4,
+      "visibleOverlay": [
+        {
+          "tag": "button",
+          "id": null,
+          "cls": "terminal-fab",
+          "w": 42,
+          "h": 42
+        }
+      ],
+      "activeEl": "button.contact-section__submit"
+    },
+    "after": {
+      "dialogs": 1,
+      "terminalish": 5,
+      "bodyChildren": 4,
+      "visibleOverlay": [
+        {
+          "tag": "button",
+          "id": null,
+          "cls": "terminal-fab",
+          "w": 42,
+          "h": 42
+        },
+        {
+          "tag": "div",
+          "id": null,
+          "cls": "draggable-window   ",
+          "w": 962,
+          "h": 436
+        },
+        {
+          "tag": "div",
+          "id": null,
+          "cls": "draggable-window__body",
+          "w": 960,
+          "h": 400
+        },
+        {
+          "tag": "div",
+          "id": null,
+          "cls": "terminal-window  ",
+          "w": 960,
+          "h": 400
+        },
+        {
+          "tag": "div",
+          "id": null,
+          "cls": "terminal-body",
+          "w": 960,
+          "h": 400
+        },
+        {
+          "tag": "div",
+          "id": null,
+          "cls": "terminal xterm xterm-dom-renderer-owner-1 focus",
+          "w": 960,
+          "h": 384
+        }
+      ],
+      "activeEl": "textarea.xterm-helper-textarea"
+    },
+    "opened": true,
+    "attempts": [
+      {
+        "combo": "Control+K",
+        "opened": true
+      }
+    ],
+    "keydownEventsSeenByPage": [
+      {
+        "key": "Control",
+        "code": "ControlLeft",
+        "ctrl": true,
+        "meta": false,
+        "shift": false,
+        "defaultPrevented": false
+      },
+      {
+        "key": "K",
+        "code": "KeyK",
+        "ctrl": true,
+        "meta": false,
+        "shift": false,
+        "defaultPrevented": false
+      }
+    ]
+  },
+  "focusTrapAfterCtrlK": {
+    "taggedTabs": [
+      {
+        "tag": "textarea",
+        "cls": "xterm-helper-textarea",
+        "insideOverlay": true
+      },
+      {
+        "tag": "textarea",
+        "cls": "xterm-helper-textarea",
+        "insideOverlay": true
+      },
+      {
+        "tag": "textarea",
+        "cls": "xterm-helper-textarea",
+        "insideOverlay": true
+      },
+      {
+        "tag": "textarea",
+        "cls": "xterm-helper-textarea",
+        "insideOverlay": true
+      },
+      {
+        "tag": "textarea",
+        "cls": "xterm-helper-textarea",
+        "insideOverlay": true
+      },
+      {
+        "tag": "textarea",
+        "cls": "xterm-helper-textarea",
+        "insideOverlay": true
+      }
+    ],
+    "escapesOverlay": false
+  },
+  "escape": {
+    "after": {
+      "dialogs": 0,
+      "terminalish": 2,
+      "bodyChildren": 4,
+      "visibleOverlay": [
+        {
+          "tag": "button",
+          "id": null,
+          "cls": "terminal-fab",
+          "w": 42,
+          "h": 42
+        }
+      ],
+      "activeEl": "button.contact-section__submit"
+    },
+    "closed": true,
+    "retryWithFocusOnBody": {
+      "activeElementBefore": "body",
+      "after": {
+        "dialogs": 0,
+        "terminalish": 2,
+        "bodyChildren": 4,
+        "visibleOverlay": [
+          {
+            "tag": "button",
+            "id": null,
+            "cls": "terminal-fab",
+            "w": 42,
+            "h": 42
+          }
+        ],
+        "activeEl": "body."
+      },
+      "closed": true
+    },
+    "escapeEventsSeenByWindow": [
+      {
+        "target": "body.",
+        "defaultPrevented": false
+      }
+    ]
+  },
+  "order": [
+    {
+      "tab": 1,
+      "tag": "a",
+      "id": null,
+      "cls": "skip-link",
+      "aria": null,
+      "href": "#main-content",
+      "text": "Skip to content",
+      "rect": {
+        "x": 16,
+        "y": 0,
+        "w": 146,
+        "h": 46
+      },
+      "inViewport": true,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "scrollY": 0,
+      "section": null
+    },
+    {
+      "tab": 2,
+      "tag": "button",
+      "id": null,
+      "cls": "section-rail__item section-rail__item--active",
+      "aria": null,
+      "href": null,
+      "text": "Top",
+      "rect": {
+        "x": 28,
+        "y": 355,
+        "w": 45,
+        "h": 22
+      },
+      "inViewport": true,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "2px",
+      "scrollY": 0,
+      "section": "nav.section-rail"
+    },
+    {
+      "tab": 3,
+      "tag": "button",
+      "id": null,
+      "cls": "section-rail__item",
+      "aria": null,
+      "href": null,
+      "text": "Origins",
+      "rect": {
+        "x": 28,
+        "y": 383,
+        "w": 71,
+        "h": 22
+      },
+      "inViewport": true,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "2px",
+      "scrollY": 0,
+      "section": "nav.section-rail"
+    },
+    {
+      "tab": 4,
+      "tag": "button",
+      "id": null,
+      "cls": "section-rail__item",
+      "aria": null,
+      "href": null,
+      "text": "Cool Things",
+      "rect": {
+        "x": 28,
+        "y": 411,
+        "w": 105,
+        "h": 22
+      },
+      "inViewport": true,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "2px",
+      "scrollY": 0,
+      "section": "nav.section-rail"
+    },
+    {
+      "tab": 5,
+      "tag": "button",
+      "id": null,
+      "cls": "section-rail__item",
+      "aria": null,
+      "href": null,
+      "text": "Research",
+      "rect": {
+        "x": 28,
+        "y": 439,
+        "w": 85,
+        "h": 22
+      },
+      "inViewport": true,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "2px",
+      "scrollY": 0,
+      "section": "nav.section-rail"
+    },
+    {
+      "tab": 6,
+      "tag": "button",
+      "id": null,
+      "cls": "section-rail__item",
+      "aria": null,
+      "href": null,
+      "text": "Skills",
+      "rect": {
+        "x": 28,
+        "y": 467,
+        "w": 61,
+        "h": 22
+      },
+      "inViewport": true,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "2px",
+      "scrollY": 0,
+      "section": "nav.section-rail"
+    },
+    {
+      "tab": 7,
+      "tag": "button",
+      "id": null,
+      "cls": "section-rail__item",
+      "aria": null,
+      "href": null,
+      "text": "Experience",
+      "rect": {
+        "x": 28,
+        "y": 495,
+        "w": 95,
+        "h": 22
+      },
+      "inViewport": true,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "2px",
+      "scrollY": 0,
+      "section": "nav.section-rail"
+    },
+    {
+      "tab": 8,
+      "tag": "button",
+      "id": null,
+      "cls": "section-rail__item",
+      "aria": null,
+      "href": null,
+      "text": "Contact",
+      "rect": {
+        "x": 28,
+        "y": 523,
+        "w": 79,
+        "h": 22
+      },
+      "inViewport": true,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "2px",
+      "scrollY": 0,
+      "section": "nav.section-rail"
+    },
+    {
+      "tab": 9,
+      "tag": "button",
+      "id": null,
+      "cls": "menu-icon",
+      "aria": "Close menu",
+      "href": null,
+      "text": null,
+      "rect": {
+        "x": 484,
+        "y": 34,
+        "w": 16,
+        "h": 16
+      },
+      "inViewport": true,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "2px",
+      "scrollY": 0,
+      "section": "nav.navbar"
+    },
+    {
+      "tab": 10,
+      "tag": "button",
+      "id": null,
+      "cls": null,
+      "aria": null,
+      "href": null,
+      "text": "Home.",
+      "rect": {
+        "x": 580,
+        "y": 29,
+        "w": 52,
+        "h": 25
+      },
+      "inViewport": true,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "scrollY": 0,
+      "section": "nav.navbar"
+    },
+    {
+      "tab": 11,
+      "tag": "button",
+      "id": null,
+      "cls": null,
+      "aria": null,
+      "href": null,
+      "text": "Library.",
+      "rect": {
+        "x": 699,
+        "y": 29,
+        "w": 59,
+        "h": 25
+      },
+      "inViewport": true,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "scrollY": 0,
+      "section": "nav.navbar"
+    },
+    {
+      "tab": 12,
+      "tag": "button",
+      "id": null,
+      "cls": null,
+      "aria": null,
+      "href": null,
+      "text": "News.",
+      "rect": {
+        "x": 794,
+        "y": 29,
+        "w": 50,
+        "h": 25
+      },
+      "inViewport": true,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "scrollY": 0,
+      "section": "nav.navbar"
+    },
+    {
+      "tab": 13,
+      "tag": "button",
+      "id": null,
+      "cls": null,
+      "aria": null,
+      "href": null,
+      "text": "Story.",
+      "rect": {
+        "x": 869,
+        "y": 29,
+        "w": 47,
+        "h": 25
+      },
+      "inViewport": true,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "scrollY": 0,
+      "section": "nav.navbar"
+    },
+    {
+      "tab": 14,
+      "tag": "button",
+      "id": null,
+      "cls": null,
+      "aria": null,
+      "href": null,
+      "text": "LinkedIn.",
+      "rect": {
+        "x": 931,
+        "y": 29,
+        "w": 70,
+        "h": 25
+      },
+      "inViewport": true,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "scrollY": 0,
+      "section": "nav.navbar"
+    },
+    {
+      "tab": 15,
+      "tag": "button",
+      "id": null,
+      "cls": null,
+      "aria": null,
+      "href": null,
+      "text": "GitHub.",
+      "rect": {
+        "x": 1013,
+        "y": 29,
+        "w": 61,
+        "h": 25
+      },
+      "inViewport": true,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "scrollY": 0,
+      "section": "nav.navbar"
+    },
+    {
+      "tab": 16,
+      "tag": "button",
+      "id": null,
+      "cls": "btn primary",
+      "aria": null,
+      "href": null,
+      "text": "See Work",
+      "rect": {
+        "x": 536,
+        "y": 617,
+        "w": 169,
+        "h": 56
+      },
+      "inViewport": true,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "scrollY": 0,
+      "section": "#main-content"
+    },
+    {
+      "tab": 17,
+      "tag": "button",
+      "id": null,
+      "cls": "btn outline",
+      "aria": null,
+      "href": null,
+      "text": "Book a Call",
+      "rect": {
+        "x": 721,
+        "y": 617,
+        "w": 183,
+        "h": 56
+      },
+      "inViewport": true,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "scrollY": 0,
+      "section": "#main-content"
+    },
+    {
+      "tab": 18,
+      "tag": "a",
+      "id": null,
+      "cls": "hero-latest__link",
+      "aria": null,
+      "href": "https://www.hibeex.com.br/",
+      "text": "HIBEEX selected for the Canastra Ventures AI ",
+      "rect": {
+        "x": 492,
+        "y": 721,
+        "w": 362,
+        "h": 23
+      },
+      "inViewport": true,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "scrollY": 0,
+      "section": "#main-content"
+    },
+    {
+      "tab": 19,
+      "tag": "button",
+      "id": null,
+      "cls": "moments__filter",
+      "aria": null,
+      "href": null,
+      "text": "All",
+      "rect": {
+        "x": 507,
+        "y": 802,
+        "w": 30,
+        "h": 21
+      },
+      "inViewport": true,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "2px",
+      "scrollY": 0,
+      "section": "#moments"
+    },
+    {
+      "tab": 20,
+      "tag": "button",
+      "id": null,
+      "cls": "moments__filter",
+      "aria": null,
+      "href": null,
+      "text": "Missão Velha",
+      "rect": {
+        "x": 549,
+        "y": 802,
+        "w": 107,
+        "h": 21
+      },
+      "inViewport": true,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "2px",
+      "scrollY": 0,
+      "section": "#moments"
+    },
+    {
+      "tab": 21,
+      "tag": "button",
+      "id": null,
+      "cls": "moments__filter",
+      "aria": null,
+      "href": null,
+      "text": "Salvador",
+      "rect": {
+        "x": 668,
+        "y": 802,
+        "w": 76,
+        "h": 21
+      },
+      "inViewport": true,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "2px",
+      "scrollY": 0,
+      "section": "#moments"
+    },
+    {
+      "tab": 22,
+      "tag": "button",
+      "id": null,
+      "cls": "moments__filter",
+      "aria": null,
+      "href": null,
+      "text": "Fortaleza",
+      "rect": {
+        "x": 757,
+        "y": 802,
+        "w": 83,
+        "h": 21
+      },
+      "inViewport": true,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "2px",
+      "scrollY": 0,
+      "section": "#moments"
+    },
+    {
+      "tab": 23,
+      "tag": "button",
+      "id": null,
+      "cls": "moments__filter",
+      "aria": null,
+      "href": null,
+      "text": "São Paulo",
+      "rect": {
+        "x": 852,
+        "y": 802,
+        "w": 81,
+        "h": 21
+      },
+      "inViewport": true,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "2px",
+      "scrollY": 0,
+      "section": "#moments"
+    },
+    {
+      "tab": 24,
+      "tag": "div",
+      "id": null,
+      "cls": "moments__row",
+      "aria": "Photos, first row",
+      "href": null,
+      "text": "Waterfall with the family · Missão VelhaPinea",
+      "rect": {
+        "x": 36,
+        "y": 845,
+        "w": 1368,
+        "h": 288
+      },
+      "inViewport": true,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "scrollY": 0,
+      "section": "#moments"
+    },
+    {
+      "tab": 25,
+      "tag": "div",
+      "id": null,
+      "cls": "moments__row moments__row--reverse",
+      "aria": "Photos, second row",
+      "href": null,
+      "text": "Projeto Candela at Fundação Estudar · São Pau",
+      "rect": {
+        "x": 36,
+        "y": 1137,
+        "w": 1368,
+        "h": 288
+      },
+      "inViewport": false,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "scrollY": 0,
+      "section": "#moments"
+    },
+    {
+      "tab": 26,
+      "tag": "button",
+      "id": null,
+      "cls": "city-panel__close",
+      "aria": "Close",
+      "href": null,
+      "text": "✕",
+      "rect": {
+        "x": 1147,
+        "y": 1532,
+        "w": 30,
+        "h": 25
+      },
+      "inViewport": false,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "scrollY": 107,
+      "section": "#background"
+    },
+    {
+      "tab": 27,
+      "tag": "div",
+      "id": null,
+      "cls": "ag-panel ag-panel--active",
+      "aria": "Missão Velha",
+      "href": null,
+      "text": null,
+      "rect": {
+        "x": 795,
+        "y": 1834,
+        "w": 201,
+        "h": 320
+      },
+      "inViewport": false,
+      "visible": true,
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "scrollY": 134,
+      "section": "#background"
+    },
+    {
+      "tab": 28,
+      "tag": "div",
+      "id": null,
+      "cls": "ag-panel ag-panel--active",
+      "aria": "Missão Velha",
+      "href": null,
+      "text": null,
+      "rect": {
+        "x": 902,
+        "y": 1620,
+        "w": 118,
+        "h": 321
+      },
+      "inViewport": false,
+      "visible": true,
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "scrollY": 348,
+      "section": "#background"
+    },
+    {
+      "tab": 29,
+      "tag": "div",
+      "id": null,
+      "cls": "ag-panel ag-panel--active",
+      "aria": "Missão Velha",
+      "href": null,
+      "text": null,
+      "rect": {
+        "x": 964,
+        "y": 1180,
+        "w": 80,
+        "h": 321
+      },
+      "inViewport": false,
+      "visible": true,
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "scrollY": 788,
+      "section": "#background"
+    },
+    {
+      "tab": 30,
+      "tag": "div",
+      "id": null,
+      "cls": "ag-panel ag-panel--active",
+      "aria": "Missão Velha",
+      "href": null,
+      "text": null,
+      "rect": {
+        "x": 958,
+        "y": 761,
+        "w": 111,
+        "h": 321
+      },
+      "inViewport": true,
+      "visible": true,
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "scrollY": 1207,
+      "section": "#background"
+    },
+    {
+      "tab": 31,
+      "tag": "div",
+      "id": null,
+      "cls": "ag-panel ag-panel--active",
+      "aria": "Missão Velha",
+      "href": null,
+      "text": null,
+      "rect": {
+        "x": 998,
+        "y": 761,
+        "w": 95,
+        "h": 321
+      },
+      "inViewport": true,
+      "visible": true,
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "scrollY": 1207,
+      "section": "#background"
+    },
+    {
+      "tab": 32,
+      "tag": "div",
+      "id": null,
+      "cls": "ag-panel ag-panel--active",
+      "aria": "Missão Velha",
+      "href": null,
+      "text": null,
+      "rect": {
+        "x": 1000,
+        "y": 630,
+        "w": 117,
+        "h": 321
+      },
+      "inViewport": true,
+      "visible": true,
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "scrollY": 1338,
+      "section": "#background"
+    },
+    {
+      "tab": 33,
+      "tag": "div",
+      "id": null,
+      "cls": "ag-panel ag-panel--active",
+      "aria": "Missão Velha",
+      "href": null,
+      "text": null,
+      "rect": {
+        "x": 1018,
+        "y": 582,
+        "w": 123,
+        "h": 321
+      },
+      "inViewport": true,
+      "visible": true,
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "scrollY": 1386,
+      "section": "#background"
+    },
+    {
+      "tab": 34,
+      "tag": "div",
+      "id": null,
+      "cls": "ag-panel ag-panel--active",
+      "aria": "Missão Velha",
+      "href": null,
+      "text": null,
+      "rect": {
+        "x": 1049,
+        "y": 579,
+        "w": 116,
+        "h": 321
+      },
+      "inViewport": true,
+      "visible": true,
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "scrollY": 1389,
+      "section": "#background"
+    },
+    {
+      "tab": 35,
+      "tag": "button",
+      "id": null,
+      "cls": "city-timeline__dot city-timeline__dot--active",
+      "aria": "Missão Velha, Ceará",
+      "href": null,
+      "text": null,
+      "rect": {
+        "x": 529,
+        "y": 996,
+        "w": 22,
+        "h": 22
+      },
+      "inViewport": false,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "scrollY": 1389,
+      "section": "#background"
+    },
+    {
+      "tab": 36,
+      "tag": "button",
+      "id": null,
+      "cls": "city-timeline__dot",
+      "aria": "Salvador, Bahia",
+      "href": null,
+      "text": null,
+      "rect": {
+        "x": 649,
+        "y": 996,
+        "w": 22,
+        "h": 22
+      },
+      "inViewport": false,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "scrollY": 1389,
+      "section": "#background"
+    },
+    {
+      "tab": 37,
+      "tag": "button",
+      "id": null,
+      "cls": "city-timeline__dot",
+      "aria": "Fortaleza, Ceará",
+      "href": null,
+      "text": null,
+      "rect": {
+        "x": 769,
+        "y": 985,
+        "w": 22,
+        "h": 22
+      },
+      "inViewport": false,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "scrollY": 1400,
+      "section": "#background"
+    },
+    {
+      "tab": 38,
+      "tag": "button",
+      "id": null,
+      "cls": "city-timeline__dot",
+      "aria": "São Paulo, SP",
+      "href": null,
+      "text": null,
+      "rect": {
+        "x": 889,
+        "y": 760,
+        "w": 22,
+        "h": 22
+      },
+      "inViewport": true,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "scrollY": 1625,
+      "section": "#background"
+    },
+    {
+      "tab": 39,
+      "tag": "button",
+      "id": null,
+      "cls": "terminal-launch",
+      "aria": null,
+      "href": null,
+      "text": "> Open terminal Ctrl+K",
+      "rect": {
+        "x": 614,
+        "y": 769,
+        "w": 211,
+        "h": 35
+      },
+      "inViewport": true,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "scrollY": 1873,
+      "section": "#work"
+    },
+    {
+      "tab": 40,
+      "tag": "button",
+      "id": null,
+      "cls": "carousel-arrow left",
+      "aria": "Previous photo",
+      "href": null,
+      "text": null,
+      "rect": {
+        "x": 225,
+        "y": 1005,
+        "w": 34,
+        "h": 34
+      },
+      "inViewport": false,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "scrollY": 1873,
+      "section": "#work"
+    },
+    {
+      "tab": 41,
+      "tag": "button",
+      "id": null,
+      "cls": "carousel-arrow right",
+      "aria": "Next photo",
+      "href": null,
+      "text": null,
+      "rect": {
+        "x": 685,
+        "y": 1005,
+        "w": 34,
+        "h": 34
+      },
+      "inViewport": false,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "scrollY": 1873,
+      "section": "#work"
+    },
+    {
+      "tab": 42,
+      "tag": "button",
+      "id": null,
+      "cls": "carousel-thumb is-active",
+      "aria": "Photo 1 of 4",
+      "href": null,
+      "text": null,
+      "rect": {
+        "x": 378,
+        "y": 1116,
+        "w": 44,
+        "h": 28
+      },
+      "inViewport": false,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "2px",
+      "scrollY": 1903,
+      "section": "#work"
+    },
+    {
+      "tab": 43,
+      "tag": "button",
+      "id": null,
+      "cls": "carousel-thumb",
+      "aria": "Photo 2 of 4",
+      "href": null,
+      "text": null,
+      "rect": {
+        "x": 426,
+        "y": 1115,
+        "w": 44,
+        "h": 28
+      },
+      "inViewport": false,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "2px",
+      "scrollY": 1903,
+      "section": "#work"
+    },
+    {
+      "tab": 44,
+      "tag": "button",
+      "id": null,
+      "cls": "carousel-thumb",
+      "aria": "Photo 3 of 4",
+      "href": null,
+      "text": null,
+      "rect": {
+        "x": 474,
+        "y": 1115,
+        "w": 44,
+        "h": 28
+      },
+      "inViewport": false,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "2px",
+      "scrollY": 1903,
+      "section": "#work"
+    },
+    {
+      "tab": 45,
+      "tag": "button",
+      "id": null,
+      "cls": "carousel-thumb",
+      "aria": "Photo 4 of 4",
+      "href": null,
+      "text": null,
+      "rect": {
+        "x": 522,
+        "y": 1115,
+        "w": 44,
+        "h": 28
+      },
+      "inViewport": false,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "2px",
+      "scrollY": 1903,
+      "section": "#work"
+    },
+    {
+      "tab": 46,
+      "tag": "a",
+      "id": null,
+      "cls": "featured-card__link",
+      "aria": null,
+      "href": "/work/hibeex",
+      "text": "HIBEEX",
+      "rect": {
+        "x": 757,
+        "y": 870,
+        "w": 69,
+        "h": 26
+      },
+      "inViewport": true,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "scrollY": 1903,
+      "section": "#work"
+    },
+    {
+      "tab": 47,
+      "tag": "a",
+      "id": null,
+      "cls": "project-live__link",
+      "aria": null,
+      "href": "https://github.com/gabriel-moreno-ribeiro/portfolio/commit/eafea4a1c9d0f3b27a5e8c41d6b0f79a2c3e5d18",
+      "text": "latest commit: portfolio",
+      "rect": {
+        "x": 757,
+        "y": 1016,
+        "w": 181,
+        "h": 24
+      },
+      "inViewport": false,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "2px",
+      "scrollY": 1903,
+      "section": "#work"
+    },
+    {
+      "tab": 48,
+      "tag": "button",
+      "id": null,
+      "cls": "carousel-arrow left",
+      "aria": "Previous photo",
+      "href": null,
+      "text": null,
+      "rect": {
+        "x": 225,
+        "y": 1367,
+        "w": 34,
+        "h": 34
+      },
+      "inViewport": false,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "scrollY": 1903,
+      "section": "#work"
+    },
+    {
+      "tab": 49,
+      "tag": "button",
+      "id": null,
+      "cls": "carousel-arrow right",
+      "aria": "Next photo",
+      "href": null,
+      "text": null,
+      "rect": {
+        "x": 685,
+        "y": 1367,
+        "w": 34,
+        "h": 34
+      },
+      "inViewport": false,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "scrollY": 1903,
+      "section": "#work"
+    },
+    {
+      "tab": 50,
+      "tag": "button",
+      "id": null,
+      "cls": "carousel-thumb is-active",
+      "aria": "Photo 1 of 8",
+      "href": null,
+      "text": null,
+      "rect": {
+        "x": 282,
+        "y": 1508,
+        "w": 44,
+        "h": 28
+      },
+      "inViewport": false,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "2px",
+      "scrollY": 1903,
+      "section": "#work"
+    },
+    {
+      "tab": 51,
+      "tag": "button",
+      "id": null,
+      "cls": "carousel-thumb",
+      "aria": "Photo 2 of 8",
+      "href": null,
+      "text": null,
+      "rect": {
+        "x": 330,
+        "y": 1508,
+        "w": 44,
+        "h": 28
+      },
+      "inViewport": false,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "2px",
+      "scrollY": 1903,
+      "section": "#work"
+    },
+    {
+      "tab": 52,
+      "tag": "button",
+      "id": null,
+      "cls": "carousel-thumb",
+      "aria": "Photo 3 of 8",
+      "href": null,
+      "text": null,
+      "rect": {
+        "x": 378,
+        "y": 1508,
+        "w": 44,
+        "h": 28
+      },
+      "inViewport": false,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "2px",
+      "scrollY": 1903,
+      "section": "#work"
+    },
+    {
+      "tab": 53,
+      "tag": "button",
+      "id": null,
+      "cls": "carousel-thumb",
+      "aria": "Photo 4 of 8",
+      "href": null,
+      "text": null,
+      "rect": {
+        "x": 426,
+        "y": 1506,
+        "w": 44,
+        "h": 28
+      },
+      "inViewport": false,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "2px",
+      "scrollY": 1903,
+      "section": "#work"
+    },
+    {
+      "tab": 54,
+      "tag": "button",
+      "id": null,
+      "cls": "carousel-thumb",
+      "aria": "Photo 5 of 8",
+      "href": null,
+      "text": null,
+      "rect": {
+        "x": 474,
+        "y": 1506,
+        "w": 44,
+        "h": 28
+      },
+      "inViewport": false,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "2px",
+      "scrollY": 1903,
+      "section": "#work"
+    },
+    {
+      "tab": 55,
+      "tag": "button",
+      "id": null,
+      "cls": "carousel-thumb",
+      "aria": "Photo 6 of 8",
+      "href": null,
+      "text": null,
+      "rect": {
+        "x": 522,
+        "y": 801,
+        "w": 44,
+        "h": 28
+      },
+      "inViewport": true,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "2px",
+      "scrollY": 2608,
+      "section": "#work"
+    },
+    {
+      "tab": 56,
+      "tag": "button",
+      "id": null,
+      "cls": "carousel-thumb",
+      "aria": "Photo 7 of 8",
+      "href": null,
+      "text": null,
+      "rect": {
+        "x": 570,
+        "y": 578,
+        "w": 44,
+        "h": 28
+      },
+      "inViewport": true,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "2px",
+      "scrollY": 2831,
+      "section": "#work"
+    },
+    {
+      "tab": 57,
+      "tag": "button",
+      "id": null,
+      "cls": "carousel-thumb",
+      "aria": "Photo 8 of 8",
+      "href": null,
+      "text": null,
+      "rect": {
+        "x": 618,
+        "y": 480,
+        "w": 44,
+        "h": 28
+      },
+      "inViewport": true,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "2px",
+      "scrollY": 2929,
+      "section": "#work"
+    },
+    {
+      "tab": 58,
+      "tag": "a",
+      "id": null,
+      "cls": "featured-card__link",
+      "aria": null,
+      "href": "/work/candela",
+      "text": "Projeto Candela",
+      "rect": {
+        "x": 757,
+        "y": 205,
+        "w": 156,
+        "h": 26
+      },
+      "inViewport": true,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "scrollY": 2973,
+      "section": "#work"
+    },
+    {
+      "tab": 59,
+      "tag": "a",
+      "id": null,
+      "cls": "featured-card__link",
+      "aria": null,
+      "href": "/work/medals",
+      "text": "39 Olympiad Medals",
+      "rect": {
+        "x": 215,
+        "y": 546,
+        "w": 199,
+        "h": 26
+      },
+      "inViewport": true,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "scrollY": 2973,
+      "section": "#work"
+    },
+    {
+      "tab": 60,
+      "tag": "a",
+      "id": null,
+      "cls": "featured-card__link",
+      "aria": null,
+      "href": "/work/gsat",
+      "text": "GSAT Education",
+      "rect": {
+        "x": 755,
+        "y": 546,
+        "w": 156,
+        "h": 26
+      },
+      "inViewport": true,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "scrollY": 2973,
+      "section": "#work"
+    },
+    {
+      "tab": 61,
+      "tag": "a",
+      "id": null,
+      "cls": "now-tile__link",
+      "aria": null,
+      "href": "https://github.com/gabriel-moreno-ribeiro/portfolio/commit/eafea4a1c9d0f3b27a5e8c41d6b0f79a2c3e5d18",
+      "text": "portfolio",
+      "rect": {
+        "x": 211,
+        "y": 1490,
+        "w": 75,
+        "h": 24
+      },
+      "inViewport": false,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "2px",
+      "scrollY": 2973,
+      "section": "#numbers"
+    },
+    {
+      "tab": 62,
+      "tag": "a",
+      "id": null,
+      "cls": "research-section__orcid",
+      "aria": null,
+      "href": "https://orcid.org/0009-0009-2574-6646",
+      "text": "ORCID: 0009-0009-2574-6646",
+      "rect": {
+        "x": 192,
+        "y": 1715,
+        "w": 1056,
+        "h": 20
+      },
+      "inViewport": false,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "scrollY": 3024,
+      "section": "#research"
+    },
+    {
+      "tab": 63,
+      "tag": "a",
+      "id": null,
+      "cls": "research-card__link",
+      "aria": null,
+      "href": "/research/projeto-candela/paper.pdf",
+      "text": "Low-Cost Physics Lab Kits for Public Schools",
+      "rect": {
+        "x": 421,
+        "y": 2305,
+        "w": 394,
+        "h": 24
+      },
+      "inViewport": false,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "scrollY": 3071,
+      "section": "#research"
+    },
+    {
+      "tab": 64,
+      "tag": "button",
+      "id": null,
+      "cls": "skills__chip",
+      "aria": null,
+      "href": null,
+      "text": "used in HIBEEX",
+      "rect": {
+        "x": 1119,
+        "y": 2702,
+        "w": 129,
+        "h": 30
+      },
+      "inViewport": false,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "scrollY": 3102,
+      "section": "#skills"
+    },
+    {
+      "tab": 65,
+      "tag": "a",
+      "id": null,
+      "cls": null,
+      "aria": null,
+      "href": "#exp-hibeex",
+      "text": "HIBEEX",
+      "rect": {
+        "x": 164,
+        "y": 3193,
+        "w": 61,
+        "h": 29
+      },
+      "inViewport": false,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "scrollY": 3239,
+      "section": "nav.exp__index"
+    },
+    {
+      "tab": 66,
+      "tag": "a",
+      "id": null,
+      "cls": null,
+      "aria": null,
+      "href": "#exp-gsat",
+      "text": "GSAT Education",
+      "rect": {
+        "x": 233,
+        "y": 1502,
+        "w": 113,
+        "h": 29
+      },
+      "inViewport": false,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "scrollY": 4930,
+      "section": "nav.exp__index"
+    },
+    {
+      "tab": 67,
+      "tag": "a",
+      "id": null,
+      "cls": null,
+      "aria": null,
+      "href": "#exp-fintech-rct",
+      "text": "Fintech Savings RCT",
+      "rect": {
+        "x": 354,
+        "y": 678,
+        "w": 145,
+        "h": 29
+      },
+      "inViewport": true,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "scrollY": 5754,
+      "section": "nav.exp__index"
+    },
+    {
+      "tab": 68,
+      "tag": "a",
+      "id": null,
+      "cls": null,
+      "aria": null,
+      "href": "#exp-estudar",
+      "text": "Fundação Estudar",
+      "rect": {
+        "x": 507,
+        "y": 436,
+        "w": 126,
+        "h": 29
+      },
+      "inViewport": true,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "scrollY": 5996,
+      "section": "nav.exp__index"
+    },
+    {
+      "tab": 69,
+      "tag": "a",
+      "id": null,
+      "cls": null,
+      "aria": null,
+      "href": "#exp-olympic-club",
+      "text": "Olympic Club - Colégio Militar",
+      "rect": {
+        "x": 641,
+        "y": 436,
+        "w": 217,
+        "h": 29
+      },
+      "inViewport": true,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "scrollY": 5996,
+      "section": "nav.exp__index"
+    },
+    {
+      "tab": 70,
+      "tag": "a",
+      "id": null,
+      "cls": null,
+      "aria": null,
+      "href": "#exp-principia",
+      "text": "Instituto Principia",
+      "rect": {
+        "x": 866,
+        "y": 436,
+        "w": 145,
+        "h": 29
+      },
+      "inViewport": true,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "scrollY": 5996,
+      "section": "nav.exp__index"
+    },
+    {
+      "tab": 71,
+      "tag": "a",
+      "id": null,
+      "cls": null,
+      "aria": null,
+      "href": "https://www.hibeex.com.br/",
+      "text": "HIBEEX",
+      "rect": {
+        "x": 610,
+        "y": 3554,
+        "w": 83,
+        "h": 32
+      },
+      "inViewport": false,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "scrollY": 6018,
+      "section": "#exp-hibeex"
+    },
+    {
+      "tab": 72,
+      "tag": "a",
+      "id": null,
+      "cls": "exp__card-cta",
+      "aria": null,
+      "href": "#contact",
+      "text": "Let’s talk ↓",
+      "rect": {
+        "x": 610,
+        "y": 3739,
+        "w": 122,
+        "h": 39
+      },
+      "inViewport": false,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "scrollY": 6060,
+      "section": "#exp-hibeex"
+    },
+    {
+      "tab": 73,
+      "tag": "a",
+      "id": null,
+      "cls": "contact-section__channel",
+      "aria": null,
+      "href": "mailto:me@gabrielmr.com",
+      "text": "Emailme@gabrielmr.com",
+      "rect": {
+        "x": 182,
+        "y": 4382,
+        "w": 475,
+        "h": 61
+      },
+      "inViewport": false,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "scrollY": 6102,
+      "section": "#contact"
+    },
+    {
+      "tab": 74,
+      "tag": "a",
+      "id": null,
+      "cls": "contact-section__channel",
+      "aria": null,
+      "href": "https://cal.com/gabrielmribeiro",
+      "text": "Book a callcal.com/gabrielmribeiro",
+      "rect": {
+        "x": 182,
+        "y": 4408,
+        "w": 475,
+        "h": 61
+      },
+      "inViewport": false,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "scrollY": 6143,
+      "section": "#contact"
+    },
+    {
+      "tab": 75,
+      "tag": "a",
+      "id": null,
+      "cls": "contact-section__channel",
+      "aria": null,
+      "href": "https://linkedin.com/in/gabriel-moreno-ribeiro",
+      "text": "LinkedIngabriel-moreno-ribeiro",
+      "rect": {
+        "x": 182,
+        "y": 4433,
+        "w": 475,
+        "h": 61
+      },
+      "inViewport": false,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "scrollY": 6184,
+      "section": "#contact"
+    },
+    {
+      "tab": 76,
+      "tag": "a",
+      "id": null,
+      "cls": "contact-section__channel",
+      "aria": null,
+      "href": "https://github.com/gabriel-moreno-ribeiro",
+      "text": "GitHubgabriel-moreno-ribeiro",
+      "rect": {
+        "x": 182,
+        "y": 4311,
+        "w": 475,
+        "h": 61
+      },
+      "inViewport": false,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "scrollY": 6373,
+      "section": "#contact"
+    },
+    {
+      "tab": 77,
+      "tag": "input",
+      "id": "contact-name",
+      "cls": null,
+      "aria": null,
+      "href": null,
+      "text": null,
+      "rect": {
+        "x": 746,
+        "y": 3864,
+        "w": 225,
+        "h": 46
+      },
+      "inViewport": false,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "scrollY": 6493,
+      "section": "#contact-name"
+    },
+    {
+      "tab": 78,
+      "tag": "input",
+      "id": "contact-email",
+      "cls": null,
+      "aria": null,
+      "href": null,
+      "text": null,
+      "rect": {
+        "x": 988,
+        "y": 3487,
+        "w": 225,
+        "h": 46
+      },
+      "inViewport": false,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "scrollY": 6870,
+      "section": "#contact-email"
+    },
+    {
+      "tab": 79,
+      "tag": "textarea",
+      "id": "contact-message",
+      "cls": null,
+      "aria": null,
+      "href": null,
+      "text": null,
+      "rect": {
+        "x": 746,
+        "y": 3389,
+        "w": 467,
+        "h": 139
+      },
+      "inViewport": false,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "scrollY": 7058,
+      "section": "#contact-message"
+    },
+    {
+      "tab": 80,
+      "tag": "button",
+      "id": null,
+      "cls": "contact-section__submit",
+      "aria": null,
+      "href": null,
+      "text": "Send message",
+      "rect": {
+        "x": 746,
+        "y": 3494,
+        "w": 186,
+        "h": 48
+      },
+      "inViewport": false,
+      "visible": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "scrollY": 7109,
+      "section": "#contact"
+    }
+  ]
+}

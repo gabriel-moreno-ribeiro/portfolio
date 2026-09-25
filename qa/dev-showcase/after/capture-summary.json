@@ -1,0 +1,357 @@
+{
+  "generatedAt": "2026-09-25T19:29:24.392Z",
+  "baseUrl": "http://localhost:4173",
+  "outDir": "C:\\portfolio-gabriel\\qa\\dev-showcase\\after",
+  "playwright": "1.61.1",
+  "viewports": [
+    {
+      "viewport": "1440x900",
+      "loadMs": 4411,
+      "scrollInfo": {
+        "steps": 34,
+        "finalY": 10156,
+        "docHeight": 11056,
+        "innerHeight": 900
+      },
+      "experience": {
+        "selector": "#work-experience",
+        "via": "section owning heading matching /experience/i",
+        "heading": "Professional Experience."
+      },
+      "experienceGeometry": {
+        "sectionTop": 6232,
+        "sectionHeight": 4001,
+        "innerHeight": 900,
+        "docMaxScroll": 10156,
+        "scrollStart": 6232,
+        "scrollEnd": 9333
+      },
+      "canvases": {
+        "normal": {
+          "elements": 4,
+          "webgl": 2,
+          "ctx2d": 2,
+          "noneObserved": 0,
+          "detachedWebGL": 0,
+          "contextTypes": [
+            "webgl2",
+            "2d"
+          ],
+          "detail": [
+            {
+              "w": 300,
+              "h": 300,
+              "cssW": 300,
+              "cssH": 300,
+              "cls": "",
+              "parent": "div.",
+              "ctx": "webgl"
+            },
+            {
+              "w": 960,
+              "h": 960,
+              "cssW": 480,
+              "cssH": 480,
+              "cls": "globe-canvas",
+              "parent": "div.globe-wrap",
+              "ctx": "webgl"
+            },
+            {
+              "w": 1054,
+              "h": 240,
+              "cssW": 1054,
+              "cssH": 240,
+              "cls": "skills__canvas",
+              "parent": "div.skills__box",
+              "ctx": "2d"
+            },
+            {
+              "w": 132,
+              "h": 132,
+              "cssW": 132,
+              "cssH": 132,
+              "cls": "exp__sprite",
+              "parent": "div.exp__car-shake",
+              "ctx": "2d"
+            }
+          ]
+        },
+        "reducedMotion": {
+          "elements": 2,
+          "webgl": 0
+        }
+      },
+      "transfer": {
+        "totalRequests": 138,
+        "totalBodyKB": 4917,
+        "byType": {
+          "document": {
+            "requests": 1,
+            "bodyBytes": 2856,
+            "wireBytes": 3119,
+            "bodyKB": 2.8
+          },
+          "stylesheet": {
+            "requests": 4,
+            "bodyBytes": 18010,
+            "wireBytes": 19395,
+            "bodyKB": 17.6
+          },
+          "script": {
+            "requests": 24,
+            "bodyBytes": 784786,
+            "wireBytes": 792301,
+            "bodyKB": 766.4
+          },
+          "font": {
+            "requests": 4,
+            "bodyBytes": 188288,
+            "wireBytes": 189568,
+            "bodyKB": 183.9
+          },
+          "image": {
+            "requests": 98,
+            "bodyBytes": 3834583,
+            "wireBytes": 3860659,
+            "bodyKB": 3744.7
+          },
+          "fetch/xhr": {
+            "requests": 7,
+            "bodyBytes": 206451,
+            "wireBytes": 207323,
+            "bodyKB": 201.6
+          }
+        }
+      },
+      "consoleErrors": 0,
+      "consoleWarnings": 0,
+      "failedRequests": 0,
+      "shots": [
+        {
+          "name": "home-1440-top.png",
+          "ok": true,
+          "bytes": 3334979
+        },
+        {
+          "name": "home-1440-scrolled.png",
+          "ok": true,
+          "bytes": 4127039
+        },
+        {
+          "name": "experience-1440-25.png",
+          "ok": true,
+          "bytes": 108559
+        },
+        {
+          "name": "experience-1440-50.png",
+          "ok": true,
+          "bytes": 126015
+        },
+        {
+          "name": "experience-1440-100.png",
+          "ok": true,
+          "bytes": 100289
+        },
+        {
+          "name": "home-1440-rm-top.png",
+          "ok": true,
+          "bytes": 3637387
+        },
+        {
+          "name": "home-1440-rm-scrolled.png",
+          "ok": true,
+          "bytes": 4910221
+        }
+      ],
+      "notes": []
+    },
+    {
+      "viewport": "390x844",
+      "loadMs": 3314,
+      "scrollInfo": {
+        "steps": 38,
+        "finalY": 11393,
+        "docHeight": 12237,
+        "innerHeight": 844
+      },
+      "experience": {
+        "selector": "#work-experience",
+        "via": "section owning heading matching /experience/i",
+        "heading": "Professional Experience."
+      },
+      "experienceGeometry": {
+        "sectionTop": 7580,
+        "sectionHeight": 3217,
+        "innerHeight": 844,
+        "docMaxScroll": 11393,
+        "scrollStart": 7580,
+        "scrollEnd": 9953
+      },
+      "canvases": {
+        "normal": {
+          "elements": 2,
+          "webgl": 0,
+          "ctx2d": 2,
+          "noneObserved": 0,
+          "detachedWebGL": 0,
+          "contextTypes": [
+            "2d"
+          ],
+          "detail": [
+            {
+              "w": 632,
+              "h": 900,
+              "cssW": 316,
+              "cssH": 450,
+              "cls": "skills__canvas",
+              "parent": "div.skills__box",
+              "ctx": "2d"
+            },
+            {
+              "w": 104,
+              "h": 104,
+              "cssW": 52,
+              "cssH": 52,
+              "cls": "exp__sprite",
+              "parent": "div.exp__car-shake",
+              "ctx": "2d"
+            }
+          ]
+        },
+        "reducedMotion": {
+          "elements": 2,
+          "webgl": 0
+        }
+      },
+      "transfer": {
+        "totalRequests": 108,
+        "totalBodyKB": 2464.2,
+        "byType": {
+          "document": {
+            "requests": 1,
+            "bodyBytes": 2856,
+            "wireBytes": 3119,
+            "bodyKB": 2.8
+          },
+          "stylesheet": {
+            "requests": 4,
+            "bodyBytes": 18010,
+            "wireBytes": 19395,
+            "bodyKB": 17.6
+          },
+          "script": {
+            "requests": 19,
+            "bodyBytes": 402254,
+            "wireBytes": 408590,
+            "bodyKB": 392.8
+          },
+          "font": {
+            "requests": 4,
+            "bodyBytes": 188288,
+            "wireBytes": 189568,
+            "bodyKB": 183.9
+          },
+          "image": {
+            "requests": 78,
+            "bodyBytes": 1910367,
+            "wireBytes": 1931208,
+            "bodyKB": 1865.6
+          },
+          "fetch/xhr": {
+            "requests": 2,
+            "bodyBytes": 1530,
+            "wireBytes": 1995,
+            "bodyKB": 1.5
+          }
+        }
+      },
+      "consoleErrors": 0,
+      "consoleWarnings": 0,
+      "failedRequests": 0,
+      "shots": [
+        {
+          "name": "home-390-top.png",
+          "ok": true,
+          "bytes": 2682791
+        },
+        {
+          "name": "home-390-scrolled.png",
+          "ok": true,
+          "bytes": 5618065
+        },
+        {
+          "name": "experience-390-25.png",
+          "ok": true,
+          "bytes": 131058
+        },
+        {
+          "name": "experience-390-50.png",
+          "ok": true,
+          "bytes": 137984
+        },
+        {
+          "name": "experience-390-100.png",
+          "ok": true,
+          "bytes": 118706
+        },
+        {
+          "name": "home-390-rm-top.png",
+          "ok": true,
+          "bytes": 3897372
+        },
+        {
+          "name": "home-390-rm-scrolled.png",
+          "ok": true,
+          "bytes": 5731473
+        }
+      ],
+      "notes": []
+    }
+  ],
+  "keyboard": {
+    "tabsPressed": 80,
+    "loopedBackAtTab": null,
+    "ctrlKOpened": true,
+    "ctrlKAttempts": [
+      {
+        "combo": "Control+K",
+        "opened": true
+      }
+    ],
+    "escapeClosed": true,
+    "invisibleFocusables": 0,
+    "sectionsReached": [
+      "nav.section-rail",
+      "nav.navbar",
+      "#main-content",
+      "#moments",
+      "#background",
+      "#work",
+      "#numbers",
+      "#research",
+      "#skills",
+      "nav.exp__index",
+      "#exp-hibeex",
+      "#contact",
+      "#contact-name",
+      "#contact-email",
+      "#contact-message"
+    ]
+  },
+  "cpu": {
+    "390": {
+      "framesOver50ms": 6,
+      "longestMs": 178,
+      "entryType": "long-animation-frame",
+      "rafFps": 49,
+      "rafMax": 183
+    },
+    "1440": {
+      "framesOver50ms": 17,
+      "longestMs": 1050,
+      "entryType": "long-animation-frame",
+      "rafFps": 24,
+      "rafMax": 1033
+    }
+  }
+}

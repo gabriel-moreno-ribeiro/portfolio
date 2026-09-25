@@ -1,0 +1,55 @@
+{
+  "viewport": "390x844",
+  "cpuThrottlingRate": 4,
+  "entryType": "long-animation-frame",
+  "selector": "#work-experience",
+  "geometry": {
+    "sectionTop": 7566,
+    "sectionHeight": 3241,
+    "innerHeight": 844,
+    "docMaxScroll": 11403,
+    "scrollStart": 7566,
+    "scrollEnd": 9962
+  },
+  "scrollSteps": 40,
+  "stepDelayMs": 100,
+  "observedWindowMs": 4792,
+  "framesOver50ms": 4,
+  "framesOver100ms": 3,
+  "longestMs": 162,
+  "totalBlockingMs": 234,
+  "top10": [
+    {
+      "name": "long-animation-frame",
+      "start": 4326,
+      "duration": 162,
+      "blocking": 32
+    },
+    {
+      "name": "long-animation-frame",
+      "start": 4584,
+      "duration": 118,
+      "blocking": 32
+    },
+    {
+      "name": "long-animation-frame",
+      "start": 4215,
+      "duration": 101,
+      "blocking": 0
+    },
+    {
+      "name": "long-animation-frame",
+      "start": 7444,
+      "duration": 53,
+      "blocking": 0
+    }
+  ],
+  "rafStats": {
+    "frames": 244,
+    "framesOver50ms": 4,
+    "maxFrameMs": 167,
+    "medianFrameMs": 17,
+    "p95FrameMs": 33,
+    "effectiveFps": 51
+  }
+}

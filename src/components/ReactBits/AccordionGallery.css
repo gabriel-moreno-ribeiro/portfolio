@@ -28,6 +28,9 @@
   display: block;
   text-decoration: none;
   outline: none;
+  padding: 0;
+  border: 0;
+  font: inherit;
   transform-style: preserve-3d;
   transform-origin: center center;
   background: #0a0713;
@@ -152,4 +155,10 @@
 
 @media (prefers-reduced-motion: reduce) {
   .ag-panel, .ag-panel__media { will-change: auto; }
+}
+
+/* Focusable panels need a visible ring: `outline: none` above left keyboard users blind. */
+.ag-panel:focus-visible {
+  outline: 2px solid var(--focus-ring, #b8501a);
+  outline-offset: 2px;
 }

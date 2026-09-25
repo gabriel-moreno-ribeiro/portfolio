@@ -1,0 +1,713 @@
+{
+  "stickerStage": {
+    "rect": {
+      "x": 0,
+      "y": 0,
+      "w": 1440,
+      "h": 900
+    },
+    "pointerEvents": "none",
+    "zIndex": "200",
+    "childCount": 1,
+    "kids": [
+      {
+        "tag": "div",
+        "cls": "draggable ",
+        "src": null,
+        "alt": null,
+        "rect": {
+          "x": 32,
+          "y": 368,
+          "w": 130,
+          "h": 500
+        },
+        "bg": "rgba(0, 0, 0, 0)",
+        "bgImg": "none",
+        "filter": "none",
+        "opacity": "1",
+        "mixBlend": "normal",
+        "naturalW": null,
+        "complete": null
+      },
+      {
+        "tag": "svg",
+        "cls": "[object SVGAnimatedString]",
+        "src": null,
+        "alt": null,
+        "rect": {
+          "x": 32,
+          "y": 385,
+          "w": 0,
+          "h": 0
+        },
+        "bg": "rgba(0, 0, 0, 0)",
+        "bgImg": "none",
+        "filter": "none",
+        "opacity": "1",
+        "mixBlend": "normal",
+        "naturalW": null,
+        "complete": null
+      },
+      {
+        "tag": "defs",
+        "cls": "[object SVGAnimatedString]",
+        "src": null,
+        "alt": null,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "bg": "rgba(0, 0, 0, 0)",
+        "bgImg": "none",
+        "filter": "none",
+        "opacity": "1",
+        "mixBlend": "normal",
+        "naturalW": null,
+        "complete": null
+      },
+      {
+        "tag": "filter",
+        "cls": "[object SVGAnimatedString]",
+        "src": null,
+        "alt": null,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "bg": "rgba(0, 0, 0, 0)",
+        "bgImg": "none",
+        "filter": "none",
+        "opacity": "1",
+        "mixBlend": "normal",
+        "naturalW": null,
+        "complete": null
+      },
+      {
+        "tag": "fegaussianblur",
+        "cls": "[object SVGAnimatedString]",
+        "src": null,
+        "alt": null,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "bg": "rgba(0, 0, 0, 0)",
+        "bgImg": "none",
+        "filter": "none",
+        "opacity": "1",
+        "mixBlend": "normal",
+        "naturalW": null,
+        "complete": null
+      },
+      {
+        "tag": "fespecularlighting",
+        "cls": "[object SVGAnimatedString]",
+        "src": null,
+        "alt": null,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "bg": "rgba(0, 0, 0, 0)",
+        "bgImg": "none",
+        "filter": "none",
+        "opacity": "1",
+        "mixBlend": "normal",
+        "naturalW": null,
+        "complete": null
+      },
+      {
+        "tag": "fepointlight",
+        "cls": "[object SVGAnimatedString]",
+        "src": null,
+        "alt": null,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "bg": "rgba(0, 0, 0, 0)",
+        "bgImg": "none",
+        "filter": "none",
+        "opacity": "1",
+        "mixBlend": "normal",
+        "naturalW": null,
+        "complete": null
+      },
+      {
+        "tag": "fecomposite",
+        "cls": "[object SVGAnimatedString]",
+        "src": null,
+        "alt": null,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "bg": "rgba(0, 0, 0, 0)",
+        "bgImg": "none",
+        "filter": "none",
+        "opacity": "1",
+        "mixBlend": "normal",
+        "naturalW": null,
+        "complete": null
+      },
+      {
+        "tag": "fecomposite",
+        "cls": "[object SVGAnimatedString]",
+        "src": null,
+        "alt": null,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "bg": "rgba(0, 0, 0, 0)",
+        "bgImg": "none",
+        "filter": "none",
+        "opacity": "1",
+        "mixBlend": "normal",
+        "naturalW": null,
+        "complete": null
+      },
+      {
+        "tag": "filter",
+        "cls": "[object SVGAnimatedString]",
+        "src": null,
+        "alt": null,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "bg": "rgba(0, 0, 0, 0)",
+        "bgImg": "none",
+        "filter": "none",
+        "opacity": "1",
+        "mixBlend": "normal",
+        "naturalW": null,
+        "complete": null
+      },
+      {
+        "tag": "fegaussianblur",
+        "cls": "[object SVGAnimatedString]",
+        "src": null,
+        "alt": null,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "bg": "rgba(0, 0, 0, 0)",
+        "bgImg": "none",
+        "filter": "none",
+        "opacity": "1",
+        "mixBlend": "normal",
+        "naturalW": null,
+        "complete": null
+      },
+      {
+        "tag": "fespecularlighting",
+        "cls": "[object SVGAnimatedString]",
+        "src": null,
+        "alt": null,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "bg": "rgba(0, 0, 0, 0)",
+        "bgImg": "none",
+        "filter": "none",
+        "opacity": "1",
+        "mixBlend": "normal",
+        "naturalW": null,
+        "complete": null
+      },
+      {
+        "tag": "fepointlight",
+        "cls": "[object SVGAnimatedString]",
+        "src": null,
+        "alt": null,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "bg": "rgba(0, 0, 0, 0)",
+        "bgImg": "none",
+        "filter": "none",
+        "opacity": "1",
+        "mixBlend": "normal",
+        "naturalW": null,
+        "complete": null
+      },
+      {
+        "tag": "fecomposite",
+        "cls": "[object SVGAnimatedString]",
+        "src": null,
+        "alt": null,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "bg": "rgba(0, 0, 0, 0)",
+        "bgImg": "none",
+        "filter": "none",
+        "opacity": "1",
+        "mixBlend": "normal",
+        "naturalW": null,
+        "complete": null
+      },
+      {
+        "tag": "fecomposite",
+        "cls": "[object SVGAnimatedString]",
+        "src": null,
+        "alt": null,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "bg": "rgba(0, 0, 0, 0)",
+        "bgImg": "none",
+        "filter": "none",
+        "opacity": "1",
+        "mixBlend": "normal",
+        "naturalW": null,
+        "complete": null
+      },
+      {
+        "tag": "filter",
+        "cls": "[object SVGAnimatedString]",
+        "src": null,
+        "alt": null,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "bg": "rgba(0, 0, 0, 0)",
+        "bgImg": "none",
+        "filter": "none",
+        "opacity": "1",
+        "mixBlend": "normal",
+        "naturalW": null,
+        "complete": null
+      },
+      {
+        "tag": "fedropshadow",
+        "cls": "[object SVGAnimatedString]",
+        "src": null,
+        "alt": null,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "bg": "rgba(0, 0, 0, 0)",
+        "bgImg": "none",
+        "filter": "none",
+        "opacity": "1",
+        "mixBlend": "normal",
+        "naturalW": null,
+        "complete": null
+      },
+      {
+        "tag": "filter",
+        "cls": "[object SVGAnimatedString]",
+        "src": null,
+        "alt": null,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "bg": "rgba(0, 0, 0, 0)",
+        "bgImg": "none",
+        "filter": "none",
+        "opacity": "1",
+        "mixBlend": "normal",
+        "naturalW": null,
+        "complete": null
+      },
+      {
+        "tag": "feoffset",
+        "cls": "[object SVGAnimatedString]",
+        "src": null,
+        "alt": null,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "bg": "rgba(0, 0, 0, 0)",
+        "bgImg": "none",
+        "filter": "none",
+        "opacity": "1",
+        "mixBlend": "normal",
+        "naturalW": null,
+        "complete": null
+      },
+      {
+        "tag": "feflood",
+        "cls": "[object SVGAnimatedString]",
+        "src": null,
+        "alt": null,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "bg": "rgba(0, 0, 0, 0)",
+        "bgImg": "none",
+        "filter": "none",
+        "opacity": "1",
+        "mixBlend": "normal",
+        "naturalW": null,
+        "complete": null
+      }
+    ]
+  },
+  "overlaps1440": {
+    "fixedVisible": [
+      {
+        "sel": "nav.section-rail",
+        "text": "TopOriginsCool ThingsResearchSkillsExperienc",
+        "rect": {
+          "x": 28,
+          "y": 355,
+          "w": 105,
+          "h": 190
+        }
+      },
+      {
+        "sel": "nav.navbar",
+        "text": "Gabriel Moreno Ribeiro.reading Made in Ameri",
+        "rect": {
+          "x": 465,
+          "y": 16,
+          "w": 510,
+          "h": 51
+        }
+      },
+      {
+        "sel": "div.sticker-stage",
+        "text": "",
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 1440,
+          "h": 900
+        }
+      },
+      {
+        "sel": "button.handsfree-button",
+        "text": "",
+        "rect": {
+          "x": 1320,
+          "y": 16,
+          "w": 44,
+          "h": 44
+        }
+      },
+      {
+        "sel": "button.toggle-button",
+        "text": "",
+        "rect": {
+          "x": 1380,
+          "y": 16,
+          "w": 44,
+          "h": 44
+        }
+      },
+      {
+        "sel": "button.terminal-fab",
+        "text": "",
+        "rect": {
+          "x": 1382,
+          "y": 842,
+          "w": 42,
+          "h": 42
+        }
+      },
+      {
+        "sel": "button.back-to-top",
+        "text": "",
+        "rect": {
+          "x": 1308,
+          "y": 834,
+          "w": 50,
+          "h": 50
+        }
+      }
+    ],
+    "hits": [
+      {
+        "fixed": "nav.navbar",
+        "fixedText": "Gabriel Moreno Ribeiro.reading Made in A",
+        "card": "2025Fundação EstudarScholar - PREP Progr",
+        "overlapPx": "178x21",
+        "area": 3738
+      },
+      {
+        "fixed": "div.sticker-stage",
+        "fixedText": "",
+        "card": "2025Fundação EstudarScholar - PREP Progr",
+        "overlapPx": "483x207",
+        "area": 100022
+      },
+      {
+        "fixed": "div.sticker-stage",
+        "fixedText": "",
+        "card": "2025Fintech Savings RCTIndependent Resea",
+        "overlapPx": "483x256",
+        "area": 123770
+      }
+    ]
+  },
+  "expCtaDark": {
+    "sel": "a.exp__card-cta is-on",
+    "text": "Let’s talk ↓",
+    "color": "rgb(240, 115, 45)",
+    "bg": "rgba(0, 0, 0, 0)",
+    "borderTop": "1px solid rgb(240, 115, 45)",
+    "zIndex": "auto",
+    "position": "static",
+    "opacity": "1",
+    "fontFamily": "ui-monospace, \"SF Mono\", Menlo, Consolas",
+    "rect": {
+      "x": 610,
+      "y": 305,
+      "w": 122,
+      "h": 39
+    },
+    "hibeexCardRect": {
+      "x": 160,
+      "y": -80,
+      "w": 910,
+      "h": 560
+    },
+    "overlapsCard": true,
+    "elementAtCenter": "a.exp__card-cta is-on"
+  },
+  "expCtaLight": null,
+  "aboveFoldClaims1440": {
+    "researchCardCount": 3,
+    "researchCards": [
+      {
+        "txt": "Behavioral Economics2025latestIm",
+        "top": 4812,
+        "h": 225,
+        "opacity": "0",
+        "transform": "matrix(1, 0, 0, 1, 0, 16)",
+        "visibility": "visible",
+        "display": "grid",
+        "clip": "none"
+      },
+      {
+        "txt": "Physical Chemistry2023-2025Model",
+        "top": 5069,
+        "h": 223,
+        "opacity": "0",
+        "transform": "matrix(1, 0, 0, 1, 0, 16)",
+        "visibility": "visible",
+        "display": "grid",
+        "clip": "none"
+      },
+      {
+        "txt": "Physics Education2023-2024 Read ",
+        "top": 5324,
+        "h": 305,
+        "opacity": "0",
+        "transform": "matrix(1, 0, 0, 1, 0, 16)",
+        "visibility": "visible",
+        "display": "grid",
+        "clip": "none"
+      }
+    ],
+    "numbersPanel": {
+      "top": 3858,
+      "h": 626,
+      "opacity": "1",
+      "transform": "none",
+      "visibility": "visible",
+      "display": "flex",
+      "clip": "none"
+    },
+    "numbersTiles": [
+      {
+        "txt": "0olympiad medals19 gold · 2 internationa",
+        "top": 3948,
+        "h": 221,
+        "opacity": "0",
+        "transform": "matrix(1, 0, 0, 1, 0, 16)",
+        "visibility": "visible",
+        "display": "flex",
+        "clip": "none"
+      },
+      {
+        "txt": "",
+        "top": 3965,
+        "h": 72,
+        "opacity": "1",
+        "transform": "none",
+        "visibility": "visible",
+        "display": "flex",
+        "clip": "none"
+      },
+      {
+        "txt": "0",
+        "top": 4043,
+        "h": 59,
+        "opacity": "1",
+        "transform": "none",
+        "visibility": "visible",
+        "display": "block",
+        "clip": "none"
+      },
+      {
+        "txt": "olympiad medals",
+        "top": 4107,
+        "h": 22,
+        "opacity": "1",
+        "transform": "none",
+        "visibility": "visible",
+        "display": "block",
+        "clip": "none"
+      },
+      {
+        "txt": "19 gold · 2 international",
+        "top": 4135,
+        "h": 16,
+        "opacity": "0.8",
+        "transform": "none",
+        "visibility": "visible",
+        "display": "block",
+        "clip": "none"
+      }
+    ],
+    "scrollY": 0,
+    "innerHeight": 900
+  },
+  "overlaps390": {
+    "odometer": {
+      "rect": {
+        "x": 16,
+        "y": 76,
+        "w": 358,
+        "h": 33
+      },
+      "zIndex": "5",
+      "position": "sticky",
+      "text": "2024stop 2/6 · Olympic Club - Colégio Militar",
+      "elementAtTopCenter": "strong.",
+      "overlapWithNavbar": {
+        "ox": 254,
+        "oy": 0,
+        "area": 0
+      }
+    },
+    "navbar": {
+      "rect": {
+        "x": 16,
+        "y": 16,
+        "w": 254,
+        "h": 48
+      },
+      "z": "9998"
+    },
+    "stickyCTA": {
+      "rect": {
+        "x": 0,
+        "y": 755,
+        "w": 390,
+        "h": 89
+      },
+      "z": "900",
+      "viewportSharePct": 10.5
+    },
+    "cardsInView": [
+      {
+        "id": "exp-principia",
+        "rect": {
+          "x": 16,
+          "y": -179,
+          "w": 358,
+          "h": 420
+        },
+        "clippedByCTA": {
+          "ox": 358,
+          "oy": 0,
+          "area": 0
+        },
+        "clippedByNav": {
+          "ox": 254,
+          "oy": 48,
+          "area": 12192
+        }
+      },
+      {
+        "id": "exp-olympic-club",
+        "rect": {
+          "x": 16,
+          "y": 241,
+          "w": 358,
+          "h": 420
+        },
+        "clippedByCTA": {
+          "ox": 358,
+          "oy": 0,
+          "area": 0
+        },
+        "clippedByNav": {
+          "ox": 254,
+          "oy": 0,
+          "area": 0
+        }
+      },
+      {
+        "id": "exp-estudar",
+        "rect": {
+          "x": 16,
+          "y": 661,
+          "w": 358,
+          "h": 420
+        },
+        "clippedByCTA": {
+          "ox": 358,
+          "oy": 89,
+          "area": 31862
+        },
+        "clippedByNav": {
+          "ox": 254,
+          "oy": 0,
+          "area": 0
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,220 @@
+{
+  "viewport": "1440x900",
+  "baseUrl": "http://localhost:4173",
+  "phase": "normal motion: initial load + one full slow scroll + experience steps + second slow scroll",
+  "method": "Playwright requestfinished -> request.sizes().responseBodySize (encoded over-the-wire body), falling back to the content-length header. wireBytes = body + response headers.",
+  "caveat": "Vite DEV server serves unminified, ungzipped ES modules; absolute numbers are far above production. Compare only against other runs of this same script on the dev server.",
+  "totalRequests": 138,
+  "totalBodyBytes": 5034974,
+  "totalBodyKB": 4917,
+  "totalBodyMB": 4.8,
+  "totalWireBytes": 5072365,
+  "totalWireKB": 4953.5,
+  "byType": {
+    "document": {
+      "requests": 1,
+      "bodyBytes": 2856,
+      "wireBytes": 3119,
+      "bodyKB": 2.8
+    },
+    "stylesheet": {
+      "requests": 4,
+      "bodyBytes": 18010,
+      "wireBytes": 19395,
+      "bodyKB": 17.6
+    },
+    "script": {
+      "requests": 24,
+      "bodyBytes": 784786,
+      "wireBytes": 792301,
+      "bodyKB": 766.4
+    },
+    "font": {
+      "requests": 4,
+      "bodyBytes": 188288,
+      "wireBytes": 189568,
+      "bodyKB": 183.9
+    },
+    "image": {
+      "requests": 98,
+      "bodyBytes": 3834583,
+      "wireBytes": 3860659,
+      "bodyKB": 3744.7
+    },
+    "fetch/xhr": {
+      "requests": 7,
+      "bodyBytes": 206451,
+      "wireBytes": 207323,
+      "bodyKB": 201.6
+    }
+  },
+  "top20Heaviest": [
+    {
+      "kb": 253,
+      "type": "image",
+      "status": 200,
+      "url": "/work/candela/03.webp"
+    },
+    {
+      "kb": 203.9,
+      "type": "image",
+      "status": 200,
+      "url": "/assets/hero-slideshow/6-1920.avif"
+    },
+    {
+      "kb": 188.8,
+      "type": "image",
+      "status": 200,
+      "url": "/assets/hero-slideshow/4-1920.avif"
+    },
+    {
+      "kb": 180.3,
+      "type": "script",
+      "status": 200,
+      "url": "/assets/three-Cau--iyM.js"
+    },
+    {
+      "kb": 180,
+      "type": "image",
+      "status": 200,
+      "url": "/background/missao-velha/05.webp"
+    },
+    {
+      "kb": 179.5,
+      "type": "image",
+      "status": 200,
+      "url": "/assets/hero-slideshow/1-1920.avif"
+    },
+    {
+      "kb": 168.5,
+      "type": "image",
+      "status": 200,
+      "url": "/work/candela/04.webp"
+    },
+    {
+      "kb": 160.6,
+      "type": "image",
+      "status": 200,
+      "url": "/work/candela/08.webp"
+    },
+    {
+      "kb": 145.8,
+      "type": "image",
+      "status": 200,
+      "url": "/work/candela/05.webp"
+    },
+    {
+      "kb": 145.2,
+      "type": "image",
+      "status": 200,
+      "url": "/work/candela/02.webp"
+    },
+    {
+      "kb": 138.3,
+      "type": "image",
+      "status": 200,
+      "url": "/work/candela/01.webp"
+    },
+    {
+      "kb": 137.7,
+      "type": "image",
+      "status": 200,
+      "url": "/work/candela/07.webp"
+    },
+    {
+      "kb": 135.7,
+      "type": "image",
+      "status": 200,
+      "url": "/work/candela/06.webp"
+    },
+    {
+      "kb": 131.9,
+      "type": "image",
+      "status": 200,
+      "url": "/background/missao-velha/01.webp"
+    },
+    {
+      "kb": 118.7,
+      "type": "image",
+      "status": 200,
+      "url": "/work/hibeex/02.webp"
+    },
+    {
+      "kb": 100.9,
+      "type": "fetch",
+      "status": 200,
+      "url": "/assets/3d/robot.glb"
+    },
+    {
+      "kb": 99,
+      "type": "image",
+      "status": 200,
+      "url": "/work/hibeex/01.webp"
+    },
+    {
+      "kb": 91.7,
+      "type": "image",
+      "status": 200,
+      "url": "/moments/ssa02.webp"
+    },
+    {
+      "kb": 87.3,
+      "type": "fetch",
+      "status": 200,
+      "url": "https://www.gstatic.com/draco/versioned/decoders/1.5.7/draco_decoder.wasm"
+    },
+    {
+      "kb": 83.6,
+      "type": "image",
+      "status": 200,
+      "url": "/background/missao-velha/02.webp"
+    }
+  ],
+  "thirdParty": [
+    {
+      "kb": 1.2,
+      "type": "fetch",
+      "url": "https://api.github.com/rate_limit"
+    },
+    {
+      "kb": 0.1,
+      "type": "fetch",
+      "url": "blob:http://localhost:4173/d79aae6b-c67b-46bd-8f07-dc147654e56c"
+    },
+    {
+      "kb": 0.1,
+      "type": "fetch",
+      "url": "blob:http://localhost:4173/677e47ba-814f-40a5-83ae-e8ed14dd4ecf"
+    },
+    {
+      "kb": 1,
+      "type": "script",
+      "url": "https://us-assets.i.posthog.com/array/phc_cgNNpL9lqLK50jeJICAV6xcGZDmuDnuPVxPeG8Ieg6m/config.js"
+    },
+    {
+      "kb": 87.3,
+      "type": "fetch",
+      "url": "https://www.gstatic.com/draco/versioned/decoders/1.5.7/draco_decoder.wasm"
+    },
+    {
+      "kb": 11.7,
+      "type": "fetch",
+      "url": "https://www.gstatic.com/draco/versioned/decoders/1.5.7/draco_wasm_wrapper.js"
+    },
+    {
+      "kb": 0.3,
+      "type": "fetch",
+      "url": "https://api.open-meteo.com/v1/forecast?latitude=-23.5505&longitude=-46.6333&current=temperature_2m,weather_code,is_day&timezone=auto"
+    },
+    {
+      "kb": 59.4,
+      "type": "script",
+      "url": "blob:http://localhost:4173/d7618af4-9c34-41ee-a243-a4241339869a"
+    },
+    {
+      "kb": 59.4,
+      "type": "script",
+      "url": "blob:http://localhost:4173/d7618af4-9c34-41ee-a243-a4241339869a"
+    }
+  ]
+}

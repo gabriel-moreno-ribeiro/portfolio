@@ -1,0 +1,214 @@
+{
+  "viewport": "1440x900",
+  "baseUrl": "http://localhost:5173",
+  "phase": "normal motion: initial load + one full slow scroll + experience steps + second slow scroll",
+  "method": "Playwright requestfinished -> request.sizes().responseBodySize (encoded over-the-wire body), falling back to the content-length header. wireBytes = body + response headers.",
+  "caveat": "Vite DEV server serves unminified, ungzipped ES modules; absolute numbers are far above production. Compare only against other runs of this same script on the dev server.",
+  "totalRequests": 298,
+  "totalBodyBytes": 22224701,
+  "totalBodyKB": 21703.8,
+  "totalBodyMB": 21.2,
+  "totalWireBytes": 22307107,
+  "totalWireKB": 21784.3,
+  "byType": {
+    "document": {
+      "requests": 1,
+      "bodyBytes": 9277,
+      "wireBytes": 9532,
+      "bodyKB": 9.1
+    },
+    "script": {
+      "requests": 171,
+      "bodyBytes": 17407726,
+      "wireBytes": 17457284,
+      "bodyKB": 16999.7
+    },
+    "font": {
+      "requests": 4,
+      "bodyBytes": 188288,
+      "wireBytes": 189568,
+      "bodyKB": 183.9
+    },
+    "image": {
+      "requests": 115,
+      "bodyBytes": 4412958,
+      "wireBytes": 4443399,
+      "bodyKB": 4309.5
+    },
+    "fetch/xhr": {
+      "requests": 7,
+      "bodyBytes": 206452,
+      "wireBytes": 207324,
+      "bodyKB": 201.6
+    }
+  },
+  "top20Heaviest": [
+    {
+      "kb": 3679.8,
+      "type": "script",
+      "status": 200,
+      "url": "/node_modules/.vite/deps/@react-three_drei.js?v=43f1ac73"
+    },
+    {
+      "kb": 2092.9,
+      "type": "script",
+      "status": 200,
+      "url": "/node_modules/.vite/deps/react-icons_ri.js?v=43f1ac73"
+    },
+    {
+      "kb": 1727.4,
+      "type": "script",
+      "status": 200,
+      "url": "/node_modules/.vite/deps/react-icons_fa6.js?v=43f1ac73"
+    },
+    {
+      "kb": 1217.9,
+      "type": "script",
+      "status": 200,
+      "url": "/node_modules/.vite/deps/chunk-BV42CLSU.js?v=43f1ac73"
+    },
+    {
+      "kb": 1090.9,
+      "type": "script",
+      "status": 200,
+      "url": "/node_modules/.vite/deps/chunk-OAEA5FZL.js?v=43f1ac73"
+    },
+    {
+      "kb": 970,
+      "type": "script",
+      "status": 200,
+      "url": "/node_modules/.vite/deps/chunk-6ER7OG3O.js?v=43f1ac73"
+    },
+    {
+      "kb": 894.4,
+      "type": "script",
+      "status": 200,
+      "url": "/node_modules/.vite/deps/react-icons_io5.js?v=43f1ac73"
+    },
+    {
+      "kb": 665.3,
+      "type": "script",
+      "status": 200,
+      "url": "/node_modules/.vite/deps/zod.js?v=43f1ac73"
+    },
+    {
+      "kb": 457.2,
+      "type": "script",
+      "status": 200,
+      "url": "/node_modules/.vite/deps/react-router-dom.js?v=43f1ac73"
+    },
+    {
+      "kb": 455.8,
+      "type": "script",
+      "status": 200,
+      "url": "/node_modules/.vite/deps/gsap_all.js?v=43f1ac73"
+    },
+    {
+      "kb": 443.1,
+      "type": "script",
+      "status": 200,
+      "url": "/node_modules/.vite/deps/chunk-ZX5JFR2F.js?v=43f1ac73"
+    },
+    {
+      "kb": 411.1,
+      "type": "script",
+      "status": 200,
+      "url": "/node_modules/.vite/deps/motion_react.js?v=43f1ac73"
+    },
+    {
+      "kb": 287.6,
+      "type": "image",
+      "status": 200,
+      "url": "/assets/hero-slideshow/8-1920.avif"
+    },
+    {
+      "kb": 253,
+      "type": "image",
+      "status": 200,
+      "url": "/work/candela/03.webp"
+    },
+    {
+      "kb": 237.5,
+      "type": "script",
+      "status": 200,
+      "url": "/node_modules/.vite/deps/posthog-js.js?v=43f1ac73"
+    },
+    {
+      "kb": 234.5,
+      "type": "script",
+      "status": 200,
+      "url": "/node_modules/.vite/deps/matter-js.js?v=43f1ac73"
+    },
+    {
+      "kb": 203.9,
+      "type": "image",
+      "status": 200,
+      "url": "/assets/hero-slideshow/6-1920.avif"
+    },
+    {
+      "kb": 188.8,
+      "type": "image",
+      "status": 200,
+      "url": "/assets/hero-slideshow/4-1920.avif"
+    },
+    {
+      "kb": 180,
+      "type": "image",
+      "status": 200,
+      "url": "/background/missao-velha/05.webp"
+    },
+    {
+      "kb": 179.5,
+      "type": "image",
+      "status": 200,
+      "url": "/assets/hero-slideshow/1-1920.avif"
+    }
+  ],
+  "thirdParty": [
+    {
+      "kb": 1.2,
+      "type": "fetch",
+      "url": "https://api.github.com/rate_limit"
+    },
+    {
+      "kb": 0.3,
+      "type": "fetch",
+      "url": "https://api.open-meteo.com/v1/forecast?latitude=-23.5505&longitude=-46.6333&current=temperature_2m,weather_code,is_day&timezone=auto"
+    },
+    {
+      "kb": 1,
+      "type": "script",
+      "url": "https://us-assets.i.posthog.com/array/phc_cgNNpL9lqLK50jeJICAV6xcGZDmuDnuPVxPeG8Ieg6m/config.js"
+    },
+    {
+      "kb": 0.1,
+      "type": "fetch",
+      "url": "blob:http://localhost:5173/506d6f89-b9d7-46e0-8446-342036e8cc8b"
+    },
+    {
+      "kb": 0.1,
+      "type": "fetch",
+      "url": "blob:http://localhost:5173/22c1d083-2c01-4692-99e1-d38597937db9"
+    },
+    {
+      "kb": 87.3,
+      "type": "fetch",
+      "url": "https://www.gstatic.com/draco/versioned/decoders/1.5.7/draco_decoder.wasm"
+    },
+    {
+      "kb": 11.7,
+      "type": "fetch",
+      "url": "https://www.gstatic.com/draco/versioned/decoders/1.5.7/draco_wasm_wrapper.js"
+    },
+    {
+      "kb": 62.3,
+      "type": "script",
+      "url": "blob:http://localhost:5173/30b81433-53fa-45ae-a392-0095d75ab1a5"
+    },
+    {
+      "kb": 62.3,
+      "type": "script",
+      "url": "blob:http://localhost:5173/30b81433-53fa-45ae-a392-0095d75ab1a5"
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "generatedAt": "2026-09-25T19:32:40.306Z",
+  "url": "http://localhost:4173/",
+  "viewport": "1440x900",
+  "state": "after full slow scroll, back at top",
+  "axeVersion": "4.13.0",
+  "tags": [
+    "wcag2a",
+    "wcag2aa",
+    "wcag21a",
+    "wcag21aa",
+    "best-practice"
+  ],
+  "counts": {
+    "violations": 0,
+    "violationNodes": 0,
+    "passes": 46,
+    "incomplete": 1,
+    "critical": 0,
+    "serious": 0,
+    "moderate": 0,
+    "minor": 0
+  },
+  "byImpact": {
+    "critical": [],
+    "serious": [],
+    "moderate": [],
+    "minor": [],
+    "null": []
+  },
+  "incomplete": [
+    {
+      "id": "color-contrast",
+      "impact": "serious",
+      "nodes": 24,
+      "exampleSelector": ".section-rail__item--active > .section-rail__label"
+    }
+  ],
+  "notes": [],
+  "raw": []
+}

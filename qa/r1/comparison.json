@@ -1,0 +1,125 @@
+{
+  "round": "r1",
+  "generatedAt": "2026-09-25",
+  "commit": "9777d0b",
+  "branch": "feat/home-alive",
+  "baseline": "qa/baseline (f32a4c5)",
+  "servers": { "dev": "http://localhost:5173", "preview": "http://localhost:4173" },
+  "tools": { "playwright": "1.61.1", "lighthouse": "13.5.0", "axe": "4.13.0" },
+  "gates": {
+    "typecheck": { "cmd": "npx tsc --noEmit", "exit": 0, "diagnostics": 0, "ms": 13591, "baselineMs": 8580 },
+    "build": { "cmd": "npm run build", "exit": 0, "wallMs": 48284, "viteReportedMs": 21930, "baselineMs": 24880, "warning": "chunks > 500 kB after minification (three 717.07 kB / gzip 184.51 kB)" },
+    "lint": { "exists": false, "note": "no lint script in package.json and no eslint config in the repo" }
+  },
+  "comparison": {
+    "lighthouse_dev": {
+      "desktop": { "perf": [35, 28], "a11y": [97, 97], "bp": [100, 96], "seo": [100, 100], "LCP": [8574, 11785], "CLS": [0, 0], "TBT": [859, 1421], "SI": [4268, 5701], "TTI": [13442, 17763], "totalKiB": [16790, 20195], "mainThreadMs": [3427, 5199], "bootupMs": [2136, 3582] },
+      "mobile": { "perf": [31, 25], "a11y": [97, 97], "bp": [100, 100], "seo": [100, 100], "FCP": [12332, 7267], "LCP": [55336, 61345], "CLS": [0.002, 0.002], "TBT": [1218, 4053], "SI": [17865, 17733], "TTI": [55524, 62277], "totalKiB": [9944, 12656], "mainThreadMs": [5807, 13808], "bootupMs": [2314, 6027] }
+    },
+    "lighthouse_preview": {
+      "note": "no baseline exists (baseline only measured dev); these are the numbers the >=90 desktop / >=80 mobile perf and >=95 a11y goals apply to",
+      "desktop": { "perf": 43, "a11y": 97, "bp": 96, "seo": 100, "FCP": 647, "LCP": 3683, "CLS": 0, "TBT": 2869, "SI": 2879, "TTI": 4405, "totalKiB": 4100, "mainThreadMs": 5925, "bootupMs": 4886, "goalPerf90": "FAIL", "goalA11y95": "PASS" },
+      "mobile": { "perf": 47, "a11y": 97, "bp": 100, "seo": 100, "FCP": 2767, "LCP": 7127, "CLS": 0.001, "TBT": 1174, "SI": 3880, "TTI": 12437, "totalKiB": 2791, "mainThreadMs": 5080, "bootupMs": 2189, "goalPerf80": "FAIL", "goalA11y95": "PASS" }
+    },
+    "transferWeight": {
+      "method": "Playwright requestfinished -> request.sizes().responseBodySize, after initial load + one full slow scroll + the three Experience steps + a second slow scroll",
+      "dev_1440": { "requests": [207, 298], "MB": [21.39, 21.2] },
+      "dev_390": { "requests": [158, 269], "MB": [10.44, 13.6] },
+      "preview_1440": { "requests": 147, "KB": 5268.8, "MB": 5.15, "byType": { "image": "101 req / 4073.4 KB", "script": "24 req / 766.3 KB", "fetch/xhr": "13 req / 225.0 KB", "font": "4 req / 183.9 KB", "stylesheet": "4 req / 17.5 KB", "document": "1 req / 2.8 KB" }, "thirdParty": "15 req / 243.9 KB" },
+      "preview_390": { "requests": 123, "KB": 3900.5, "MB": 3.81, "byType": { "image": "88 req / 3280.0 KB", "script": "19 req / 392.7 KB", "font": "4 req / 183.9 KB", "fetch/xhr": "7 req / 23.7 KB", "stylesheet": "4 req / 17.5 KB", "document": "1 req / 2.8 KB" }, "thirdParty": "8 req / 24.7 KB" },
+      "dist": { "assetsKB": [5956.3, 6388.6], "assetsFiles": [76, 127], "jsRawKB": [2717.7, 2860.7], "jsGzipKB": [833.4, 875.6], "cssKB": [116.2, 135.0], "webpFiles": [90, 143], "carSprites": "48 files / 249.7 KB", "shippedButUnusedByHome": "assets/3d/d20.glb 1180.5 KB + assets/3d/studio.hdr 413.5 KB" }
+    },
+    "experienceCpu4x": {
+      "1440": { "framesOver50ms": [45, 35], "framesOver100ms": [21, 25], "longestMs": [1570, 5109], "totalBlockingMs": [6259, 10456], "rafFps": [13, 10], "rafMaxMs": [1900, 5133], "rafP95Ms": [null, 300], "observedWindowMs": [12245, 16195], "sectionHeightPx": [2186, 4161] },
+      "390": { "framesOver50ms": [2, 20], "framesOver100ms": [1, 13], "longestMs": [197, 311], "totalBlockingMs": [150, 1832], "rafFps": [54, 21], "rafMaxMs": [217, 417], "observedWindowMs": [4927, 7929], "sectionHeightPx": [1844, 3161] }
+    },
+    "consoleErrors": { "dev_1440": [0, 0], "dev_390": [0, 0], "preview": [null, 0], "collectionValidated": true },
+    "failedRequests": { "dev_1440": [0, 0], "dev_390": [0, 0], "preview_1440": [null, 0], "preview_390": [null, 0] },
+    "axe": { "violations": [0, 1], "violationNodes": [0, 11], "passes": [46, 46], "incompleteNodes": [57, 24], "newViolation": { "id": "color-contrast", "impact": "serious", "ratio": 3.49, "need": 4.5, "fg": "#878584", "bg": "#fff8f4", "fontPx": 13, "selectors": [".project-live__key", ".project-live__rel", ".featured-card--chips > .featured-card__body > .featured-tags > span:nth-child(1)", ".featured-card--chips > .featured-card__body > .featured-tags > span:nth-child(2)", ".featured-card--chips > .featured-card__body > .featured-tags > span:nth-child(3)", ".stat-tile--hero > .stat-tile__sub", ".stat-tile--lg.stat-tile.hl-reveal:nth-child(2) > .stat-tile__sub", ".stat-tile--md.stat-tile.hl-reveal:nth-child(6) > .stat-tile__sub", ".now-tile__sub", ".research-card__latest", ".footer__freshness-pulse > .hl-live__text"] } },
+    "targetsUnder24px": { "rawBoxCount_1440": [12, 28], "rawBoxCount_390": [null, 22], "totalInteractive_1440": [null, 98], "lighthouseTargetSizeAudit": ["FAIL (12 nodes)", "PASS"], "worst": { ".menu-icon": "16x16", ".ag-panel": "19.1x320.2 x7", ".city-timeline__dot": "22x22 x4", ".section-rail__item": "44.9-104.7 x 22 x7", ".moments__filter": "29.8-107.4 x 21 x5", ".footer__freshness-link": "112.8x17.5", ".research-section__orcid": "1056x19.5", ".hero-latest__link": "362.5x23", ".footer__cta-link": "133.1x21" }, "gone": ".carousel-dots > button.dot 8x8 x12 (replaced by carousel-thumb >= 24px)" },
+    "imagesWithoutDimensions": { "1440": [2, 0], "390": [0, 0], "imgTotal_1440": [null, 90], "lighthouseUnsizedImages": ["2 (/hibeex.webp x2)", "0"], "newLighthouseFailure": { "id": "image-aspect-ratio", "score": 0, "nodes": 2, "detail": "img.sticker-image and img.flap-image (/hibeex.webp) declare width=469 height=469 but render 130x469 (0.28 vs 1.00)" } },
+    "heroHeightNormalVsReduce": { "1440": { "baseline": [703, 363], "r1": [737, 737] }, "390": { "baseline": [483, 483], "r1": [519, 519] }, "docHeightDeltaWithReduce_1440": [-340, 0], "docHeightDeltaWithReduce_390": [0, 0], "heroCanvasesUnderReduce_1440": [2, 0] },
+    "blankSectionsInNoScrollCapture": {
+      "method": "inkFraction of the section band in home-<w>-top.png (full-page, no scroll) vs home-<w>-scrolled.png",
+      "caveat": "full-page PNGs repeat page content in BOTH rounds; bands below the repeat point are unreliable. DOM opacity readings are the trustworthy signal.",
+      "1440": { "#numbers": [0.0512, 0.0078], "#research": [0.0007, 0.005], "#skills": [0.0707, 0.0249], "#work": [0.2239, 0.154], "#background": [0.0196, 0.1204] },
+      "1440_afterScroll": { "#numbers": [0.0817, 0.0792], "#research": [0.0681, 0.0715], "#skills": [0.052, 0.0733] },
+      "domEvidenceAtScrollY0_1440": { "#research .research-card x3": "opacity 0, translateY(16px)", "#numbers .stat-tile--hero": "opacity 0, translateY(16px), value text '0'" },
+      "countUp": { "normal": "0 at t=0, 19 at +150ms, 37 at +600ms, 39 stable from +1000ms", "reducedMotion": "39 at t=0 (correct)", "baseline": "'SAT 400' at capture, stable at 1510 only after 2 s" }
+    },
+    "canvasWebgl": {
+      "1440_normal": { "baseline": "4 canvas / 3 webgl2 / 1 2d", "r1": "4 canvas / 2 webgl2 / 2 2d" },
+      "1440_reduce": { "baseline": "3 canvas / 2 webgl", "r1": "2 canvas / 0 webgl" },
+      "390_normal": { "baseline": "0 canvas / 0 webgl", "r1": "2 canvas / 0 webgl" },
+      "r1_detail_1440": ["webgl 300x300 (hero robot, div parent)", "webgl 960x960 canvas.globe-canvas in div.globe-wrap (css 480x480)", "2d 1054x396 canvas.skills__canvas in div.skills__box", "2d 132x132 canvas.exp__sprite in div.exp__car-shake"],
+      "r1_detail_390": ["2d 632x900 canvas.skills__canvas (css 316x450)", "2d 104x104 canvas.exp__sprite (css 52x52)"],
+      "preview": "identical to dev at both viewports",
+      "experienceIsWebglFree": true
+    },
+    "keyboard": { "tabsPressed": [72, 80], "loopedBackAtTab": [72, null], "totalInteractive_1440": [null, 98], "experienceFocusables": [0, 8], "terminalRoleDialog": [false, true], "controlKUppercaseOpens": [false, true], "escapeClosesWithFocusInXterm": [false, true], "focusRestoredOnClose": [false, "button.contact-section__submit"], "focusablesWithoutOutline": [1, 8], "focusStopsOutsideViewport": [null, 34] },
+    "hiddenTab": { "rafScheduledPer5s": { "visible": 67, "hidden": 3 }, "intervalFiresPer5s": { "visible": 32, "hidden": 7 }, "networkRequestsPer5sHidden": 0 },
+    "skillsIdle": { "parkedMs": 8000, "windowMs": 2000, "pageRafScheduled_1440": 0, "pageRafScheduled_390": 0, "canvasPixelChangedFraction": 0, "intervalFiresInWindow": [5, 6], "touchScroll390_outsideCanvas": "+65 px", "touchScroll390_overCanvas": "+225 px", "verdict": "matter-js loop stops after settle; page still scrolls from touch anywhere" }
+  },
+  "problems": [
+    { "n": 1, "problem": "Lighthouse performance on the PRODUCTION build misses both goals: desktop 43 (goal >=90), mobile 47 (goal >=80). Desktop TBT 2869 ms, bootup 4886 ms, main thread 5925 ms.", "sev": "bloqueia", "section": "whole page", "where": "http://localhost:4173/", "repro": "node qa/scripts/lighthouse.mjs qa/r1/lh-preview http://localhost:4173 -> qa/r1/lh-preview/lighthouse-digest.json" },
+    { "n": 2, "problem": "Experience under CPU 4x at 1440 has one 5109 ms long-animation-frame (baseline max 1570 ms); 25 frames > 100 ms, total blocking 10456 ms, 10 fps effective.", "sev": "bloqueia", "section": "Experience", "where": "#work-experience, scroll 6231 -> 9492", "repro": "QA_ONLY=cpu node qa/scripts/capture.mjs qa/r1 -> qa/r1/experience-cpu4x-1440.json" },
+    { "n": 3, "problem": "Experience under CPU 4x at 390 regressed 10x: 20 frames > 50 ms (baseline 2), blocking 1832 ms (baseline 150), 21 fps (baseline 54).", "sev": "bloqueia", "section": "Experience", "where": "#work-experience, scroll 7528 -> 9844", "repro": "qa/r1/experience-cpu4x-390.json" },
+    { "n": 4, "problem": "New axe violation: 11 nodes of serious color-contrast at 3.49:1 (#878584 on #fff8f4, 13 px). Baseline had 0 violations. Same audit drops Lighthouse a11y off 100.", "sev": "importante", "section": "Cool Things / By the Numbers / Research / Footer", "where": ".project-live__key, .project-live__rel, .featured-tags > span x3, .stat-tile__sub x3, .now-tile__sub, .research-card__latest, .footer__freshness-pulse > .hl-live__text", "repro": "node qa/scripts/axe.mjs qa/r1 http://localhost:5173 -> qa/r1/axe.json" },
+    { "n": 5, "problem": "Production transfer is 77-84% images: 5.15 MB / 147 req at 1440 and 3.81 MB / 123 req at 390. A 390 px viewport still downloads /assets/hero-slideshow/8-1920.avif (287.6 KB) and 8 full-size /work/candela/*.webp (~1.2 MB).", "sev": "importante", "section": "Hero / Cool Things", "where": "/assets/hero-slideshow/*-1920.avif, /work/candela/0*.webp", "repro": "QA_ONLY=shots node qa/scripts/capture.mjs qa/r1/preview http://localhost:4173 -> qa/r1/preview/transfer-390.json" },
+    { "n": 6, "problem": "The fixed HIBEEX sticker paints as an opaque black silhouette at both themes, right under the section rail, over every section including Experience.", "sev": "importante", "section": "global overlay", "where": "div.sticker-stage > div.draggable (130x500 @32,368, fixed, z 200) > div.sticker-lighting > img.sticker-image (/hibeex.webp) with an SVG feGaussianBlur+feSpecularLighting+feComposite filter", "repro": "any 1440 capture, e.g. qa/r1/experience-1440-25.png at x 48-144 / y 504-672; zoom in qa/r1/crops/zoom-sticker.png. Present in the baseline captures too." },
+    { "n": 7, "problem": "New Lighthouse best-practices failure image-aspect-ratio (desktop 100 -> 96): the same sticker declares width=469 height=469 but renders 130x469 (0.28 vs 1.00).", "sev": "importante", "section": "global overlay", "where": "img.sticker-image and img.flap-image, both /hibeex.webp", "repro": "qa/r1/lh-dev/lighthouse-desktop.json -> audits['image-aspect-ratio']" },
+    { "n": 8, "problem": "Fixed chrome clips Experience card content. 1440 @50%: nav.navbar covers the Fundacao Estudar card 178x21 px; the tip toast sits over the Fintech RCT card. 390 @25%: nav.mobile-sticky-cta (10.5% of the viewport) clips #exp-estudar by 358x89 px = 31862 px2 and nav.navbar clips #exp-principia by 254x48 px.", "sev": "importante", "section": "Experience", "where": "nav.navbar (z 9998), nav.mobile-sticky-cta (z 900), button.tip-toast", "repro": "node qa/r1/_probe2.mjs -> qa/r1/probe2.json (overlaps1440.hits, overlaps390); see qa/r1/experience-390-50.png and qa/r1/experience-1440-50.png" },
+    { "n": 9, "problem": "The sticky odometer row renders under the navbar pill at 390 and its text is clipped.", "sev": "importante", "section": "Experience", "where": "span.exp__odo-stop / .exp__odo (358x33, position sticky, z-index 5) vs nav.navbar (254x48, z 9998)", "repro": "qa/r1/experience-390-50.png (top edge) and qa/r1/experience-dark-390-25.png" },
+    { "n": 10, "problem": "8 focusable divs with outline: none and no accessible name in Origins; 34 of 80 tab stops land outside the viewport without the page scrolling (e.g. tabs 25-38 focus elements at y 1137-2288 while scrollY stays 0); the skip link stays at y=-9999 while focused.", "sev": "importante", "section": "Origins / global", "where": "div.ag-panel.ag-panel--active x8 (19.1x320.2 px each), a.skip-link", "repro": "QA_ONLY=keyboard node qa/scripts/capture.mjs qa/r1 -> qa/r1/keyboard.json (noVisibleOutline, focusOutsideViewport, order[1])" },
+    { "n": 11, "problem": "28 interactive targets smaller than 24x24 CSS px at 1440 (22 at 390) vs 12 in the baseline. Smallest: button.menu-icon 16x16 and 7x div.ag-panel 19.1 px wide. Lighthouse target-size now passes (spacing credit), axe does not flag it.", "sev": "importante", "section": "Navbar / Section rail / Moments / Origins / Research / Footer", "where": ".menu-icon 16x16, .ag-panel 19.1x320.2 x7, .city-timeline__dot 22x22 x4, .section-rail__item h22 x7, .moments__filter h21 x5, .footer__freshness-link 112.8x17.5", "repro": "node qa/scripts/r1-extras.mjs qa/r1 -> qa/r1/r1-extras.json (smallTargets); exact sizes in qa/r1/probe3.json" },
+    { "n": 12, "problem": "The Experience CTA link paints with UA default styling (blue, underlined, no pill) in the dark-theme capture at 100% of the section scroll, overlapping the HIBEEX card's last bullet and bottom border. A scripted computed-style read of the same element returns white pre-.is-on and orange post-.is-on, so a developer must confirm on a real theme toggle.", "sev": "importante", "section": "Experience", "where": "a.exp__card-cta / a.exp__cta, text 'Let\u2019s talk \u2193'", "repro": "qa/r1/experience-dark-1440-100.png, zoom qa/r1/crops/zoom-dark-cta.png; style timeline in qa/r1/probe3.json (expLinks_dark)" },
+    { "n": 13, "problem": "Lighthouse dev regressed against the baseline on both form factors: desktop perf 35 -> 28 (LCP 8574 -> 11785, TBT 859 -> 1421, bootup 2136 -> 3582), mobile 31 -> 25 (TBT 1218 -> 4053 = 3.3x, main thread 5807 -> 13808).", "sev": "importante", "section": "whole page", "where": "http://localhost:5173/", "repro": "node qa/scripts/lighthouse.mjs qa/r1/lh-dev http://localhost:5173 -> qa/r1/lh-dev/lighthouse-digest.json" },
+    { "n": 14, "problem": "Document height grew 15% at 1440 (9730 -> 11215 px) and 32% at 390 (9221 -> 12129 px); the Experience section alone went 2186 -> 4161 px (1440) and 1844 -> 3161 px (390). Experience viewport ink at 1440 is 6.6 / 6.9 / 5.8 % at 25/50/100 (baseline 3.9 / 6.1 / 9.2), i.e. the 100% state is emptier than before: the lower ~600 px is bare road.", "sev": "cosmetico", "section": "Experience", "where": "#work-experience", "repro": "qa/r1/section-report.json + qa/r1/experience-1440-100.png" },
+    { "n": 15, "problem": "In #skills the 17 physics icons settle into the bottom 120 px of a 242 px box: upper half ink 0.78%, lower half 42.6%. About 60% of the box is empty and the bottom row sits on/over the box border.", "sev": "cosmetico", "section": "Skills", "where": "div.skills__box / canvas.skills__canvas (1054x396)", "repro": "node qa/scripts/r1-extras.mjs -> qa/r1/skills-idle-1440.png" },
+    { "n": 16, "problem": "The count-up in By the Numbers starts at 0 and only stabilizes after ~1000 ms, so any capture inside that window shows wrong numbers (hero tile reads '0' at t=0, '19' at +150 ms). Correct under prefers-reduced-motion (39 immediately).", "sev": "cosmetico", "section": "By the Numbers", "where": "#numbers .stat-tile--hero .stat-tile__value", "repro": "node qa/r1/_probe3.mjs -> qa/r1/probe3.json (countUpNormal)" },
+    { "n": 17, "problem": "dist/ still ships assets/3d/d20.glb (1180.5 KB) and assets/3d/studio.hdr (413.5 KB) although the Home no longer requests them (the 1180 KB d20.glb fetch present in the baseline is gone from the network log).", "sev": "cosmetico", "section": "build output", "where": "dist/assets/3d/", "repro": "node qa/scripts/dist-weight.mjs qa/r1 -> qa/r1/dist-weight.json; absence of the fetch in qa/r1/transfer-1440.json" },
+    { "n": 18, "problem": "3 layout shifts attributed to web font loads (CLS still 0 overall): main#main-content > nav.section-rail > ul > li (CONTACT), span.role-suffix, span.hero-status__text.", "sev": "cosmetico", "section": "Section rail / Hero", "where": "dm-sans-latin-opsz-normal.woff2, dm-serif-display-latin-400-normal.woff2", "repro": "qa/r1/lh-dev/lighthouse-desktop.json -> audits['layout-shifts']" }
+  ],
+  "fixedSinceBaseline": [
+    "Terminal overlay now has role=dialog (0 -> 1 [role=dialog]).",
+    "Escape closes the terminal with focus inside the xterm and restores focus to button.contact-section__submit (baseline: did not close).",
+    "Control+K with an uppercase K opens the terminal (baseline: only lowercase k).",
+    "Experience is reachable by keyboard: 8 focusables inside #work-experience (baseline 0), nav.exp__index + a.exp__cta in the tab order.",
+    "Hero keeps the same height under prefers-reduced-motion: 737 px vs 737 px at 1440 (baseline 703 -> 363) and 519 vs 519 at 390; document height delta 0 px (baseline -340 px).",
+    "Under reduce, 1440 drops to 2 canvases / 0 WebGL (baseline 3 / 2).",
+    "Experience has no WebGL: the car is a 2D sprite canvas 132x132 plus an img[src*='/assets/car/'] poster with width/height attributes.",
+    "0 images without intrinsic dimensions (baseline 2); Lighthouse unsized-images passes.",
+    "Lighthouse target-size passes (baseline failed with 12 nodes of 8x8 .carousel-dots > button.dot).",
+    "The 1180.5 KB /assets/3d/d20.glb fetch is gone from the Home network log; fetch/xhr at 1440 dropped from 18 req / 2921 KB to 7 req / 202 KB.",
+    "Full-page PNG width now matches the viewport (horizontal overflow 0 px; baseline +64 px at 1440 and +105 px at 390).",
+    "Mobile no longer renders an empty Skills stub: #skills is 654 px tall with 17 li and a 2D canvas (baseline 98 px).",
+    "axe incomplete contrast nodes 57 -> 24.",
+    "0 console errors, 0 warnings, 0 failed requests on both dev and preview (collection validated by console-probe.mjs)."
+  ],
+  "caveats": [
+    "Full-page PNGs repeat page content. Normalized row autocorrelation: baseline home-390-top 0.955 at lag 47.7% of image height; r1 home-390-top 1.008 at 67.5%; r1 home-1440-scrolled 1.476 at 72.1%; baseline home-1440-scrolled 0.227 (no repeat). Per-section band stats taken from full-page PNGs below the repeat point are unreliable in BOTH rounds.",
+    "section-diff measures the document at 11215 px (1440) while the full-page PNG is 11370 px tall, so band offsets drift up to 155 px. That is why crops/1440-_contact-scrolled.png shows the Cool Things heading and #contact reads ink 0.045.",
+    "The globe canvas does not repaint inside a full-page screenshot (rAF only runs while visible): probe-extras shows canvas1 fullPage std 0 vs inViewport std 124.18. Judge it only from viewport captures.",
+    "Dark-theme captures force document.documentElement.setAttribute('data-theme','dark'), which bypasses the app's theme store; the theme toggle icon therefore still shows a moon and is not a finding.",
+    "The keyboard audit stops after 80 Tab presses (script cap) and never looped back to body; there are 98 interactive elements at 1440, so the tail of the tab order (footer, fixed buttons) was not traversed. Baseline looped at 72.",
+    "The hidden-tab probe overrides document.hidden with a getter; Chromium's own background throttling is not applied, so it measures only whether the app pauses itself. The intervalsAlive counter goes negative (clearInterval calls for ids created before instrumentation) and should be ignored; use intervalFires.",
+    "Transfer numbers are cumulative over initial load + one full slow scroll + the three Experience steps + a second slow scroll, not initial load only.",
+    "Lighthouse on the dev server uses unminified ungzipped ES modules and 'simulate' throttling; only the preview numbers are comparable to production."
+  ],
+  "scriptChanges": [
+    "qa/scripts/section-diff.mjs: the .left-column/.right-column probe no longer matches anything, so it was replaced by experienceAnatomy - legacyLeftColumn/legacyRightColumn are reported as null (a regression back to them stays visible) plus section, stopList, stops[6], stopNav, road, carCanvas, carPoster (src/natural size/width+height attrs), odometer (position/text), focusablesInside, canvases. The report key experienceColumns was renamed experienceAnatomy.",
+    "qa/scripts/r1-extras.mjs (new, reusable): dark-theme Experience shots at 25/50/100 for both viewports; #skills idle cost (8 s park then a 2 s window counting page-scheduled rAF, interval fires and canvas pixel change, with window.requestAnimationFrame/setInterval/setTimeout instrumented at document start so the probe's own frames are not counted); touch-drag scroll test inside and outside the canvas at 390; hidden-tab counters; hero height normal vs reduce; every interactive target < 24x24; images without intrinsic dimensions.",
+    "qa/scripts/capture.mjs: NOT changed. findExperience already resolves #work-experience from the 'Professional Experience.' heading, and cpuAudit already scrolls scrollStart -> scrollEnd, i.e. the whole section (4161 px at 1440, 3161 px at 390).",
+    "qa/scripts/probe-extras.mjs: NOT changed, but its count-up heuristic (a text search for 'By the Numbers' on an element 60-600 px tall) no longer matches the rebuilt #numbers and reports 'By the Numbers block not found'. The replacement measurement lives in qa/r1/_probe3.mjs (countUpNormal / countUpReduced).",
+    "qa/r1/_probe2.mjs (new, one-off): sticker-stage anatomy, fixed-overlay vs Experience-card intersection areas at 1440 and 390, dark .exp__cta computed style, opacity of the Research cards and Numbers tiles at scrollY 0.",
+    "qa/r1/_probe3.mjs (new, one-off): count-up over time normal vs reduce, .exp__card-cta style timeline per theme at 25/50/75/100, exact sizes of every sub-24 px target."
+  ],
+  "artifacts": {
+    "root": "C:\\portfolio-gabriel\\qa\\r1",
+    "screenshots": ["home-{1440,390}-{top,scrolled,rm-top,rm-scrolled}.png", "experience-{1440,390}-{25,50,100}.png", "experience-dark-{1440,390}-{25,50,100}.png", "skills-idle-{1440,390}.png", "keyboard-ctrlk.png", "keyboard-after-escape.png", "preview/home-*.png", "preview/experience-*.png"],
+    "crops": ["crops/sheet-home-1440-top.png", "crops/sheet-home-1440-scrolled.png", "crops/sheet-BASELINE-home-1440-top.png", "crops/zoom-dark-cta.png", "crops/zoom-light-cta.png", "crops/zoom-sticker.png", "crops/<w>-<section>-scrolled.png", "crops/canvas<i>-inviewport.png"],
+    "json": ["capture-summary.json", "console-{1440,390}.json", "failed-requests-{1440,390}.json", "transfer-{1440,390}.json", "experience-cpu4x-{1440,390}.json", "keyboard.json", "section-report.json", "sections-{1440,390}{,-rm}.json", "probe-extras.json", "r1-extras.json", "probe2.json", "probe3.json", "axe.json", "dist-weight.json", "comparison.json", "preview/transfer-{1440,390}.json", "preview/capture-summary-shots.json", "lh-dev/lighthouse-digest.json", "lh-preview/lighthouse-digest.json"],
+    "lighthouse": ["lh-dev/lighthouse-{desktop,mobile}.{json,html}", "lh-preview/lighthouse-{desktop,mobile}.{json,html}"],
+    "logs": ["typecheck.log", "typecheck-status.txt", "build.log", "build-status.txt", "capture-run.log", "section-diff-run.log", "r1-extras-run.log", "chain-run.log", "lh-dev/run.log", "lh-preview/run.log"]
+  }
+}

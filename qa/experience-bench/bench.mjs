@@ -32,8 +32,7 @@ const HTML = `<!doctype html><html><head><meta charset="utf-8">
 
 function resolveFile(pathname) {
   if (pathname.startsWith('/three/')) return path.join(ROOT, 'node_modules/three', pathname.slice(7));
-  if (pathname === '/model.glb') return path.join(ROOT, 'public/assets/3d/d20.glb');
-  if (pathname === '/studio.hdr') return path.join(ROOT, 'public/assets/3d/studio.hdr');
+  if (pathname === '/model.glb') return path.join(ROOT, 'scripts/assets/d20.glb');
   if (pathname.startsWith('/car/')) return path.join(ROOT, 'public/assets/car', pathname.slice(5));
   return null;
 }

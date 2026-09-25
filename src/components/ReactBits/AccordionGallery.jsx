@@ -137,15 +137,16 @@ const AccordionGallery = ({
         '--ag-radius': `${radius}px`,
         height: vertical ? `${Math.round(height * 1.6)}px` : `${height}px`
       }}
-      role="list"
+      role="group"
       aria-label="Photo gallery"
     >
       {items.map((item, i) => {
         const isActive = i === active;
-        const Tag = item.href ? 'a' : 'div';
+        const Tag = item.href ? 'a' : 'button';
         return (
           <Tag
             key={i}
+            type={item.href ? undefined : 'button'}
             ref={el => (panelRefs.current[i] = el)}
             className={`ag-panel${isActive ? ' ag-panel--active' : ''}`}
             style={{ borderRadius: `${radius}px` }}
@@ -154,10 +155,8 @@ const AccordionGallery = ({
             onMouseEnter={() => handleEnter(i)}
             onFocus={() => setActive(i)}
             onKeyDown={e => handleKeyDown(i, e)}
-            role="listitem"
-            tabIndex={0}
             aria-current={isActive ? 'true' : undefined}
-            aria-label={item.label}
+            aria-label={item.alt || item.label || `Photo ${i + 1} of ${count}`}
           >
             <span className="ag-panel__frame">
               <span className="ag-panel__media" ref={el => (mediaRefs.current[i] = el)}>

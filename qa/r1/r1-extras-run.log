@@ -1,0 +1,45 @@
+--- dark-theme experience ---
+  1440x900 theme null->dark bodyBg=rgb(10, 10, 26) expBg=rgba(0, 0, 0, 0) shots=experience-dark-1440-25.png,experience-dark-1440-50.png,experience-dark-1440-100.png
+  390x844 theme null->dark bodyBg=rgb(10, 10, 26) expBg=rgba(0, 0, 0, 0) shots=experience-dark-390-25.png,experience-dark-390-50.png,experience-dark-390-100.png
+--- #skills idle (8s park, 2s window) ---
+  1440x900 idle pageRaf=0 intervalFires=5 canvasChanged=0 touchOutside=null touchInside=null
+  390x844 idle pageRaf=0 intervalFires=6 canvasChanged=0 touchOutside={"startX":40,"startY":84,"scrollYBefore":6790,"scrollYAfter":6855,"deltaY":65,"scrolled":true} touchInside={"startX":195,"startY":448,"scrollYBefore":6790,"scrollYAfter":7015,"deltaY":225,"scrolled":true}
+--- hidden tab ---
+  {
+ "viewport": "1440x900",
+ "method": "document.hidden/visibilityState overridden with a getter + visibilitychange/blur/pagehide dispatched; Chromium background throttling is NOT applied, so this measures only whether the app itself pauses",
+ "windowMs": 5000,
+ "whileVisible": {
+  "rafScheduled": 67,
+  "intervalFires": 32,
+  "timeoutFires": 3,
+  "intervalsAlive": -1
+ },
+ "hiddenState": {
+  "hidden": true,
+  "visibilityState": "hidden"
+ },
+ "whileHidden": {
+  "rafScheduled": 3,
+  "intervalFires": 7,
+  "timeoutFires": 1,
+  "intervalsAlive": -4
+ },
+ "requestsWhileHidden": {
+  "count": 0,
+  "byType": {},
+  "urls": []
+ },
+ "verdict": "rAF keeps running with the tab hidden (3 scheduled in 5s)"
+}
+--- hero height ---
+  1440x900 reduce=false hero={"sel":"div.hero-section","h":737,"w":1368,"top":32} canvases=1 doc=11215
+  1440x900 reduce=true hero={"sel":"div.hero-section","h":737,"w":1368,"top":32} canvases=0 doc=11215
+  390x844 reduce=false hero={"sel":"div.hero-section","h":519,"w":358,"top":104} canvases=0 doc=12129
+  390x844 reduce=true hero={"sel":"div.hero-section","h":519,"w":358,"top":104} canvases=0 doc=12129
+--- targets < 24px ---
+  1440x900 28/98 {"button.section-rail__item.section-rail__item--active":1,"button.section-rail__item":6,"button.menu-icon":1,"a.hero-latest__link":1,"button.moments__filter":5,"div.ag-panel":7,"button.city-timeline__dot.city-timeline__dot--active":1,"button.city-timeline__dot":3,"a.research-section__orcid":1,"a.footer__cta-link":1,"a.footer__freshness-link":1}
+  390x844 22/99 {"button.menu-icon":1,"button":6,"button.navbar-toggle-btn":2,"a.hero-latest__link":1,"button.moments__filter":5,"button.city-timeline__dot.city-timeline__dot--active":1,"button.city-timeline__dot":3,"a.research-section__orcid":1,"a.footer__cta-link":1,"a.footer__freshness-link":1}
+--- unsized images ---
+  1440x900 0/90 []
+  390x844 0/87 []

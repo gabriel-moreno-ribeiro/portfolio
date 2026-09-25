@@ -1,0 +1,329 @@
+{
+  "docHeight": 12129,
+  "viewportW": 390,
+  "dpr": 2,
+  "horizontalOverflow": {
+    "innerWidth": 390,
+    "docScrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflowPx": 0,
+    "offenderCount": 135,
+    "offenders": [
+      {
+        "label": "div.moments__track",
+        "left": -148,
+        "right": 3933,
+        "w": 4082
+      },
+      {
+        "label": "figure.moments__item",
+        "left": -151,
+        "right": 83,
+        "w": 233
+      },
+      {
+        "label": "img",
+        "left": -145,
+        "right": 59,
+        "w": 204
+      },
+      {
+        "label": "figcaption",
+        "left": -141,
+        "right": 76,
+        "w": 217
+      },
+      {
+        "label": "figure.moments__item",
+        "left": 316,
+        "right": 529,
+        "w": 213
+      },
+      {
+        "label": "img",
+        "left": 322,
+        "right": 523,
+        "w": 201
+      },
+      {
+        "label": "figcaption",
+        "left": 322,
+        "right": 522,
+        "w": 200
+      },
+      {
+        "label": "figure.moments__item",
+        "left": 538,
+        "right": 754,
+        "w": 216
+      },
+      {
+        "label": "img",
+        "left": 545,
+        "right": 748,
+        "w": 203
+      },
+      {
+        "label": "figcaption",
+        "left": 544,
+        "right": 745,
+        "w": 200
+      },
+      {
+        "label": "figure.moments__item",
+        "left": 762,
+        "right": 979,
+        "w": 217
+      },
+      {
+        "label": "img",
+        "left": 768,
+        "right": 972,
+        "w": 204
+      },
+      {
+        "label": "figcaption",
+        "left": 772,
+        "right": 972,
+        "w": 200
+      },
+      {
+        "label": "figure.moments__item",
+        "left": 988,
+        "right": 1201,
+        "w": 213
+      },
+      {
+        "label": "img",
+        "left": 994,
+        "right": 1195,
+        "w": 201
+      }
+    ]
+  },
+  "sections": [
+    {
+      "label": "div.hero-section",
+      "tag": "div",
+      "top": 104,
+      "height": 519,
+      "heading": "Gabriel Moreno Ribeiro.",
+      "textChars": 242,
+      "imgs": 0,
+      "canvases": 0
+    },
+    {
+      "label": "#moments",
+      "tag": "section",
+      "top": 647,
+      "height": 489,
+      "heading": null,
+      "textChars": 1023,
+      "imgs": 34,
+      "canvases": 0
+    },
+    {
+      "label": "#background",
+      "tag": "div",
+      "top": 1168,
+      "height": 882,
+      "heading": "Where I Come From.",
+      "textChars": 476,
+      "imgs": 8,
+      "canvases": 0
+    },
+    {
+      "label": "#work",
+      "tag": "div",
+      "top": 2074,
+      "height": 1831,
+      "heading": "Cool Things",
+      "textChars": 811,
+      "imgs": 14,
+      "canvases": 0
+    },
+    {
+      "label": "#numbers",
+      "tag": "div",
+      "top": 3961,
+      "height": 1179,
+      "heading": "By the Numbers",
+      "textChars": 450,
+      "imgs": 9,
+      "canvases": 0
+    },
+    {
+      "label": "#research",
+      "tag": "section",
+      "top": 5196,
+      "height": 1630,
+      "heading": "Research",
+      "textChars": 927,
+      "imgs": 2,
+      "canvases": 0
+    },
+    {
+      "label": "#skills",
+      "tag": "section",
+      "top": 6850,
+      "height": 654,
+      "heading": "Some of the languages & tools I build with.",
+      "textChars": 169,
+      "imgs": 17,
+      "canvases": 1
+    },
+    {
+      "label": "#work-experience",
+      "tag": "section",
+      "top": 7528,
+      "height": 3161,
+      "heading": "Professional Experience.",
+      "textChars": 1271,
+      "imgs": 1,
+      "canvases": 1
+    },
+    {
+      "label": "#contact",
+      "tag": "section",
+      "top": 10728,
+      "height": 936,
+      "heading": "Let's talk.",
+      "textChars": 237,
+      "imgs": 0,
+      "canvases": 0
+    },
+    {
+      "label": "footer.footer",
+      "tag": "footer",
+      "top": 11712,
+      "height": 239,
+      "heading": null,
+      "textChars": 164,
+      "imgs": 0,
+      "canvases": 0
+    }
+  ],
+  "experienceColumns": {
+    "legacyLeftColumn": null,
+    "legacyRightColumn": null,
+    "section": {
+      "top": 7528,
+      "left": 16,
+      "w": 358,
+      "h": 3161
+    },
+    "stopList": {
+      "top": 7808,
+      "left": 16,
+      "w": 358,
+      "h": 2640,
+      "stops": 20
+    },
+    "stops": [
+      {
+        "id": "exp-principia",
+        "textChars": 223,
+        "top": 7928,
+        "left": 16,
+        "w": 358,
+        "h": 420
+      },
+      {
+        "id": "exp-olympic-club",
+        "textChars": 170,
+        "top": 8348,
+        "left": 16,
+        "w": 358,
+        "h": 420
+      },
+      {
+        "id": "exp-estudar",
+        "textChars": 166,
+        "top": 8768,
+        "left": 16,
+        "w": 358,
+        "h": 420
+      },
+      {
+        "id": "exp-fintech-rct",
+        "textChars": 183,
+        "top": 9188,
+        "left": 16,
+        "w": 358,
+        "h": 420
+      },
+      {
+        "id": "exp-gsat",
+        "textChars": 133,
+        "top": 9608,
+        "left": 16,
+        "w": 358,
+        "h": 420
+      },
+      {
+        "id": "exp-hibeex",
+        "textChars": 230,
+        "top": 10028,
+        "left": 16,
+        "w": 358,
+        "h": 420
+      }
+    ],
+    "stopNav": {
+      "top": 7665,
+      "left": 20,
+      "w": 350,
+      "h": 132
+    },
+    "road": {
+      "top": 7528,
+      "left": 16,
+      "w": 358,
+      "h": 3161
+    },
+    "carCanvas": {
+      "top": 10133,
+      "left": 13,
+      "w": 52,
+      "h": 52,
+      "bitmap": "104x104"
+    },
+    "carPoster": {
+      "top": 10133,
+      "left": 13,
+      "w": 52,
+      "h": 52,
+      "src": "/assets/car/car-00.webp",
+      "naturalW": 256,
+      "naturalH": 256,
+      "hasAttrDims": true
+    },
+    "odometer": {
+      "top": 7815,
+      "left": 16,
+      "w": 358,
+      "h": 33,
+      "position": "sticky",
+      "text": "2026stop 6/6 · HIBEEX"
+    },
+    "focusablesInside": 8,
+    "canvases": 1
+  },
+  "fixedOverlays": [
+    {
+      "label": "nav.navbar",
+      "h": 48,
+      "w": 254
+    },
+    {
+      "label": "button.toggle-button",
+      "h": 44,
+      "w": 44
+    },
+    {
+      "label": "nav.mobile-sticky-cta",
+      "h": 89,
+      "w": 390
+    }
+  ]
+}

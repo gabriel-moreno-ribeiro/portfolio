@@ -1,0 +1,1934 @@
+{
+  "generatedAt": "2026-09-25T18:58:24.879Z",
+  "method": "full-page PNGs sliced into per-section bands; std = greyscale stddev, inkFraction = share of pixels >12 grey levels from the band modal value (a band that renders nothing sits near std<6 / ink<0.02)",
+  "viewports": {
+    "390": {
+      "docHeight": 12129,
+      "docHeightReducedMotion": 12129,
+      "docHeightDeltaWithReduce": 0,
+      "dpr": 2,
+      "horizontalOverflow": {
+        "innerWidth": 390,
+        "docScrollWidth": 390,
+        "bodyScrollWidth": 390,
+        "overflowPx": 0,
+        "offenderCount": 135,
+        "offenders": [
+          {
+            "label": "div.moments__track",
+            "left": -148,
+            "right": 3933,
+            "w": 4082
+          },
+          {
+            "label": "figure.moments__item",
+            "left": -151,
+            "right": 83,
+            "w": 233
+          },
+          {
+            "label": "img",
+            "left": -145,
+            "right": 59,
+            "w": 204
+          },
+          {
+            "label": "figcaption",
+            "left": -141,
+            "right": 76,
+            "w": 217
+          },
+          {
+            "label": "figure.moments__item",
+            "left": 316,
+            "right": 529,
+            "w": 213
+          },
+          {
+            "label": "img",
+            "left": 322,
+            "right": 523,
+            "w": 201
+          },
+          {
+            "label": "figcaption",
+            "left": 322,
+            "right": 522,
+            "w": 200
+          },
+          {
+            "label": "figure.moments__item",
+            "left": 538,
+            "right": 754,
+            "w": 216
+          },
+          {
+            "label": "img",
+            "left": 545,
+            "right": 748,
+            "w": 203
+          },
+          {
+            "label": "figcaption",
+            "left": 544,
+            "right": 745,
+            "w": 200
+          },
+          {
+            "label": "figure.moments__item",
+            "left": 762,
+            "right": 979,
+            "w": 217
+          },
+          {
+            "label": "img",
+            "left": 768,
+            "right": 972,
+            "w": 204
+          },
+          {
+            "label": "figcaption",
+            "left": 772,
+            "right": 972,
+            "w": 200
+          },
+          {
+            "label": "figure.moments__item",
+            "left": 988,
+            "right": 1201,
+            "w": 213
+          },
+          {
+            "label": "img",
+            "left": 994,
+            "right": 1195,
+            "w": 201
+          }
+        ]
+      },
+      "imageInfo": {
+        "top": {
+          "scale": 2,
+          "width": 780,
+          "height": 24258,
+          "cssWidth": 390,
+          "cssHeight": 12129,
+          "horizontalOverflowPx": 0
+        },
+        "scrolled": {
+          "scale": 2,
+          "width": 780,
+          "height": 24286,
+          "cssWidth": 390,
+          "cssHeight": 12143,
+          "horizontalOverflowPx": 0
+        },
+        "rmTop": {
+          "scale": 2,
+          "width": 780,
+          "height": 24258,
+          "cssWidth": 390,
+          "cssHeight": 12129,
+          "horizontalOverflowPx": 0
+        },
+        "rmScrolled": {
+          "scale": 2,
+          "width": 780,
+          "height": 24286,
+          "cssWidth": 390,
+          "cssHeight": 12143,
+          "horizontalOverflowPx": 0
+        }
+      },
+      "experienceAnatomy": {
+        "legacyLeftColumn": null,
+        "legacyRightColumn": null,
+        "section": {
+          "top": 7528,
+          "left": 16,
+          "w": 358,
+          "h": 3161
+        },
+        "stopList": {
+          "top": 7808,
+          "left": 16,
+          "w": 358,
+          "h": 2640,
+          "stops": 20
+        },
+        "stops": [
+          {
+            "id": "exp-principia",
+            "textChars": 223,
+            "top": 7928,
+            "left": 16,
+            "w": 358,
+            "h": 420
+          },
+          {
+            "id": "exp-olympic-club",
+            "textChars": 170,
+            "top": 8348,
+            "left": 16,
+            "w": 358,
+            "h": 420
+          },
+          {
+            "id": "exp-estudar",
+            "textChars": 166,
+            "top": 8768,
+            "left": 16,
+            "w": 358,
+            "h": 420
+          },
+          {
+            "id": "exp-fintech-rct",
+            "textChars": 183,
+            "top": 9188,
+            "left": 16,
+            "w": 358,
+            "h": 420
+          },
+          {
+            "id": "exp-gsat",
+            "textChars": 133,
+            "top": 9608,
+            "left": 16,
+            "w": 358,
+            "h": 420
+          },
+          {
+            "id": "exp-hibeex",
+            "textChars": 230,
+            "top": 10028,
+            "left": 16,
+            "w": 358,
+            "h": 420
+          }
+        ],
+        "stopNav": {
+          "top": 7665,
+          "left": 20,
+          "w": 350,
+          "h": 132
+        },
+        "road": {
+          "top": 7528,
+          "left": 16,
+          "w": 358,
+          "h": 3161
+        },
+        "carCanvas": {
+          "top": 10133,
+          "left": 13,
+          "w": 52,
+          "h": 52,
+          "bitmap": "104x104"
+        },
+        "carPoster": {
+          "top": 10133,
+          "left": 13,
+          "w": 52,
+          "h": 52,
+          "src": "/assets/car/car-00.webp",
+          "naturalW": 256,
+          "naturalH": 256,
+          "hasAttrDims": true
+        },
+        "odometer": {
+          "top": 7815,
+          "left": 16,
+          "w": 358,
+          "h": 33,
+          "position": "sticky",
+          "text": "2026stop 6/6 · HIBEEX"
+        },
+        "focusablesInside": 8,
+        "canvases": 1
+      },
+      "fixedOverlays": [
+        {
+          "label": "nav.navbar",
+          "h": 48,
+          "w": 254
+        },
+        {
+          "label": "button.toggle-button",
+          "h": 44,
+          "w": 44
+        },
+        {
+          "label": "nav.mobile-sticky-cta",
+          "h": 89,
+          "w": 390
+        }
+      ],
+      "sections": [
+        {
+          "label": "div.hero-section",
+          "heading": "Gabriel Moreno Ribeiro.",
+          "cssTop": 104,
+          "cssHeight": 519,
+          "textChars": 242,
+          "imgs": 0,
+          "canvases": 0,
+          "states": {
+            "top": {
+              "imgHeight": 24258,
+              "bandPx": 1038,
+              "mean": 232.8,
+              "std": 50.84,
+              "inkFraction": 0.1378,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 319
+            },
+            "scrolled": {
+              "imgHeight": 24286,
+              "bandPx": 1038,
+              "mean": 232.7,
+              "std": 51.02,
+              "inkFraction": 0.1392,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 319
+            },
+            "rmTop": {
+              "imgHeight": 24258,
+              "bandPx": 1038,
+              "mean": 232.8,
+              "std": 50.85,
+              "inkFraction": 0.1382,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 319
+            },
+            "rmScrolled": {
+              "imgHeight": 24286,
+              "bandPx": 1038,
+              "mean": 232.8,
+              "std": 50.85,
+              "inkFraction": 0.1382,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 319
+            }
+          },
+          "diffs": {
+            "topVsScrolled": {
+              "meanAbsDiff": 1.54,
+              "changedFraction": 0.0168
+            },
+            "scrolledVsRmScrolled": {
+              "meanAbsDiff": 1.52,
+              "changedFraction": 0.0167
+            },
+            "topVsRmTop": {
+              "meanAbsDiff": 1.26,
+              "changedFraction": 0.0114
+            }
+          },
+          "rmGeometry": {
+            "top": 104,
+            "height": 519
+          }
+        },
+        {
+          "label": "#moments",
+          "heading": null,
+          "cssTop": 647,
+          "cssHeight": 489,
+          "textChars": 1023,
+          "imgs": 34,
+          "canvases": 0,
+          "states": {
+            "top": {
+              "imgHeight": 24258,
+              "bandPx": 978,
+              "mean": 205.2,
+              "std": 60.7,
+              "inkFraction": 0.4692,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 301
+            },
+            "scrolled": {
+              "imgHeight": 24286,
+              "bandPx": 978,
+              "mean": 187.1,
+              "std": 73.63,
+              "inkFraction": 0.5433,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 301
+            },
+            "rmTop": {
+              "imgHeight": 24258,
+              "bandPx": 978,
+              "mean": 195,
+              "std": 72.47,
+              "inkFraction": 0.511,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 301
+            },
+            "rmScrolled": {
+              "imgHeight": 24286,
+              "bandPx": 978,
+              "mean": 195,
+              "std": 72.47,
+              "inkFraction": 0.511,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 301
+            }
+          },
+          "diffs": {
+            "topVsScrolled": {
+              "meanAbsDiff": 44.51,
+              "changedFraction": 0.4708
+            },
+            "scrolledVsRmScrolled": {
+              "meanAbsDiff": 45.66,
+              "changedFraction": 0.4652
+            },
+            "topVsRmTop": {
+              "meanAbsDiff": 43.25,
+              "changedFraction": 0.4988
+            }
+          },
+          "rmGeometry": {
+            "top": 647,
+            "height": 489
+          }
+        },
+        {
+          "label": "#background",
+          "heading": "Where I Come From.",
+          "cssTop": 1168,
+          "cssHeight": 882,
+          "textChars": 476,
+          "imgs": 8,
+          "canvases": 0,
+          "states": {
+            "top": {
+              "imgHeight": 24258,
+              "bandPx": 1764,
+              "mean": 206.9,
+              "std": 85.35,
+              "inkFraction": 0.2325,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 543
+            },
+            "scrolled": {
+              "imgHeight": 24286,
+              "bandPx": 1764,
+              "mean": 223.3,
+              "std": 60.26,
+              "inkFraction": 0.1918,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 543
+            },
+            "rmTop": {
+              "imgHeight": 24258,
+              "bandPx": 1764,
+              "mean": 206.9,
+              "std": 85.35,
+              "inkFraction": 0.2324,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 543
+            },
+            "rmScrolled": {
+              "imgHeight": 24286,
+              "bandPx": 1764,
+              "mean": 223.4,
+              "std": 60.27,
+              "inkFraction": 0.1916,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 543
+            }
+          },
+          "diffs": {
+            "topVsScrolled": {
+              "meanAbsDiff": 16.52,
+              "changedFraction": 0.135
+            },
+            "scrolledVsRmScrolled": {
+              "meanAbsDiff": 0.07,
+              "changedFraction": 0
+            },
+            "topVsRmTop": {
+              "meanAbsDiff": 0.01,
+              "changedFraction": 0
+            }
+          },
+          "rmGeometry": {
+            "top": 1168,
+            "height": 882
+          }
+        },
+        {
+          "label": "#work",
+          "heading": "Cool Things",
+          "cssTop": 2074,
+          "cssHeight": 1831,
+          "textChars": 811,
+          "imgs": 14,
+          "canvases": 0,
+          "states": {
+            "top": {
+              "imgHeight": 24258,
+              "bandPx": 3662,
+              "mean": 240.8,
+              "std": 26.02,
+              "inkFraction": 0.0962,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 1127
+            },
+            "scrolled": {
+              "imgHeight": 24286,
+              "bandPx": 3662,
+              "mean": 225.1,
+              "std": 55.9,
+              "inkFraction": 0.2149,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 1127
+            },
+            "rmTop": {
+              "imgHeight": 24258,
+              "bandPx": 3662,
+              "mean": 240.7,
+              "std": 26.09,
+              "inkFraction": 0.1015,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 1127
+            },
+            "rmScrolled": {
+              "imgHeight": 24286,
+              "bandPx": 3662,
+              "mean": 225.1,
+              "std": 55.93,
+              "inkFraction": 0.2201,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 1127
+            }
+          },
+          "diffs": {
+            "topVsScrolled": {
+              "meanAbsDiff": 16.16,
+              "changedFraction": 0.138
+            },
+            "scrolledVsRmScrolled": {
+              "meanAbsDiff": 0.12,
+              "changedFraction": 0.0011
+            },
+            "topVsRmTop": {
+              "meanAbsDiff": 0.4,
+              "changedFraction": 0.0072
+            }
+          },
+          "rmGeometry": {
+            "top": 2074,
+            "height": 1831
+          }
+        },
+        {
+          "label": "#numbers",
+          "heading": "By the Numbers",
+          "cssTop": 3961,
+          "cssHeight": 1179,
+          "textChars": 450,
+          "imgs": 9,
+          "canvases": 0,
+          "states": {
+            "top": {
+              "imgHeight": 24258,
+              "bandPx": 2358,
+              "mean": 224.7,
+              "std": 54.22,
+              "inkFraction": 0.2295,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 726
+            },
+            "scrolled": {
+              "imgHeight": 24286,
+              "bandPx": 2358,
+              "mean": 218,
+              "std": 62.5,
+              "inkFraction": 0.2608,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 726
+            },
+            "rmTop": {
+              "imgHeight": 24258,
+              "bandPx": 2358,
+              "mean": 219.3,
+              "std": 63.2,
+              "inkFraction": 0.2529,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 726
+            },
+            "rmScrolled": {
+              "imgHeight": 24286,
+              "bandPx": 2358,
+              "mean": 219.3,
+              "std": 63.2,
+              "inkFraction": 0.253,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 726
+            }
+          },
+          "diffs": {
+            "topVsScrolled": {
+              "meanAbsDiff": 16.28,
+              "changedFraction": 0.1734
+            },
+            "scrolledVsRmScrolled": {
+              "meanAbsDiff": 16.31,
+              "changedFraction": 0.1631
+            },
+            "topVsRmTop": {
+              "meanAbsDiff": 16.75,
+              "changedFraction": 0.1793
+            }
+          },
+          "rmGeometry": {
+            "top": 3961,
+            "height": 1179
+          }
+        },
+        {
+          "label": "#research",
+          "heading": "Research",
+          "cssTop": 5196,
+          "cssHeight": 1630,
+          "textChars": 927,
+          "imgs": 2,
+          "canvases": 0,
+          "states": {
+            "top": {
+              "imgHeight": 24258,
+              "bandPx": 3260,
+              "mean": 222.5,
+              "std": 67.16,
+              "inkFraction": 0.172,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 1003
+            },
+            "scrolled": {
+              "imgHeight": 24286,
+              "bandPx": 3260,
+              "mean": 219.8,
+              "std": 64.35,
+              "inkFraction": 0.2215,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 1003
+            },
+            "rmTop": {
+              "imgHeight": 24258,
+              "bandPx": 3260,
+              "mean": 222.5,
+              "std": 67.15,
+              "inkFraction": 0.1724,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 1003
+            },
+            "rmScrolled": {
+              "imgHeight": 24286,
+              "bandPx": 3260,
+              "mean": 219.7,
+              "std": 64.35,
+              "inkFraction": 0.2217,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 1003
+            }
+          },
+          "diffs": {
+            "topVsScrolled": {
+              "meanAbsDiff": 20.86,
+              "changedFraction": 0.1566
+            },
+            "scrolledVsRmScrolled": {
+              "meanAbsDiff": 0.32,
+              "changedFraction": 0.0055
+            },
+            "topVsRmTop": {
+              "meanAbsDiff": 0.35,
+              "changedFraction": 0.0063
+            }
+          },
+          "rmGeometry": {
+            "top": 5196,
+            "height": 1630
+          }
+        },
+        {
+          "label": "#skills",
+          "heading": "Some of the languages & tools I build with.",
+          "cssTop": 6850,
+          "cssHeight": 654,
+          "textChars": 169,
+          "imgs": 17,
+          "canvases": 1,
+          "states": {
+            "top": {
+              "imgHeight": 24258,
+              "bandPx": 1308,
+              "mean": 239.8,
+              "std": 27.67,
+              "inkFraction": 0.0942,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 402
+            },
+            "scrolled": {
+              "imgHeight": 24286,
+              "bandPx": 1308,
+              "mean": 225,
+              "std": 51.42,
+              "inkFraction": 0.2485,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 402
+            },
+            "rmTop": {
+              "imgHeight": 24258,
+              "bandPx": 1308,
+              "mean": 239.9,
+              "std": 27.53,
+              "inkFraction": 0.0944,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 402
+            },
+            "rmScrolled": {
+              "imgHeight": 24286,
+              "bandPx": 1308,
+              "mean": 225,
+              "std": 51.4,
+              "inkFraction": 0.2484,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 402
+            }
+          },
+          "diffs": {
+            "topVsScrolled": {
+              "meanAbsDiff": 15.86,
+              "changedFraction": 0.1699
+            },
+            "scrolledVsRmScrolled": {
+              "meanAbsDiff": 0.05,
+              "changedFraction": 0
+            },
+            "topVsRmTop": {
+              "meanAbsDiff": 0.51,
+              "changedFraction": 0.0076
+            }
+          },
+          "rmGeometry": {
+            "top": 6850,
+            "height": 654
+          }
+        },
+        {
+          "label": "#work-experience",
+          "heading": "Professional Experience.",
+          "cssTop": 7528,
+          "cssHeight": 3161,
+          "textChars": 1271,
+          "imgs": 1,
+          "canvases": 1,
+          "states": {
+            "top": {
+              "imgHeight": 24258,
+              "bandPx": 6322,
+              "mean": 225.3,
+              "std": 59.71,
+              "inkFraction": 0.1853,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 1945
+            },
+            "scrolled": {
+              "imgHeight": 24286,
+              "bandPx": 6322,
+              "mean": 220.5,
+              "std": 62.35,
+              "inkFraction": 0.2258,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 1945
+            },
+            "rmTop": {
+              "imgHeight": 24258,
+              "bandPx": 6322,
+              "mean": 223.1,
+              "std": 63.04,
+              "inkFraction": 0.1979,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 1945
+            },
+            "rmScrolled": {
+              "imgHeight": 24286,
+              "bandPx": 6322,
+              "mean": 221.7,
+              "std": 61.53,
+              "inkFraction": 0.2235,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 1945
+            }
+          },
+          "diffs": {
+            "topVsScrolled": {
+              "meanAbsDiff": 18.36,
+              "changedFraction": 0.1653
+            },
+            "scrolledVsRmScrolled": {
+              "meanAbsDiff": 7.09,
+              "changedFraction": 0.0761
+            },
+            "topVsRmTop": {
+              "meanAbsDiff": 7.43,
+              "changedFraction": 0.0874
+            }
+          },
+          "rmGeometry": {
+            "top": 7528,
+            "height": 3161
+          }
+        },
+        {
+          "label": "#contact",
+          "heading": "Let's talk.",
+          "cssTop": 10728,
+          "cssHeight": 936,
+          "textChars": 237,
+          "imgs": 0,
+          "canvases": 0,
+          "states": {
+            "top": {
+              "imgHeight": 24258,
+              "bandPx": 1872,
+              "mean": 240.1,
+              "std": 26.61,
+              "inkFraction": 0.1138,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 576
+            },
+            "scrolled": {
+              "imgHeight": 24286,
+              "bandPx": 1872,
+              "mean": 229.7,
+              "std": 45.53,
+              "inkFraction": 0.221,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 576
+            },
+            "rmTop": {
+              "imgHeight": 24258,
+              "bandPx": 1872,
+              "mean": 240.1,
+              "std": 26.51,
+              "inkFraction": 0.1141,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 576
+            },
+            "rmScrolled": {
+              "imgHeight": 24286,
+              "bandPx": 1872,
+              "mean": 229.7,
+              "std": 45.52,
+              "inkFraction": 0.2209,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 576
+            }
+          },
+          "diffs": {
+            "topVsScrolled": {
+              "meanAbsDiff": 11.02,
+              "changedFraction": 0.1198
+            },
+            "scrolledVsRmScrolled": {
+              "meanAbsDiff": 0.05,
+              "changedFraction": 0
+            },
+            "topVsRmTop": {
+              "meanAbsDiff": 0.36,
+              "changedFraction": 0.0052
+            }
+          },
+          "rmGeometry": {
+            "top": 10728,
+            "height": 936
+          }
+        },
+        {
+          "label": "footer.footer",
+          "heading": null,
+          "cssTop": 11712,
+          "cssHeight": 239,
+          "textChars": 164,
+          "imgs": 0,
+          "canvases": 0,
+          "states": {
+            "top": {
+              "imgHeight": 24258,
+              "bandPx": 478,
+              "mean": 242.1,
+              "std": 26.96,
+              "inkFraction": 0.0769,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 147
+            },
+            "scrolled": {
+              "imgHeight": 24286,
+              "bandPx": 478,
+              "mean": 242.1,
+              "std": 26.96,
+              "inkFraction": 0.0769,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 147
+            },
+            "rmTop": {
+              "imgHeight": 24258,
+              "bandPx": 478,
+              "mean": 241.6,
+              "std": 27.83,
+              "inkFraction": 0.1165,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 147
+            },
+            "rmScrolled": {
+              "imgHeight": 24286,
+              "bandPx": 478,
+              "mean": 241.6,
+              "std": 27.83,
+              "inkFraction": 0.1165,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 147
+            }
+          },
+          "diffs": {
+            "topVsScrolled": {
+              "meanAbsDiff": 0,
+              "changedFraction": 0
+            },
+            "scrolledVsRmScrolled": {
+              "meanAbsDiff": 0.59,
+              "changedFraction": 0.0108
+            },
+            "topVsRmTop": {
+              "meanAbsDiff": 0.59,
+              "changedFraction": 0.0108
+            }
+          },
+          "rmGeometry": {
+            "top": 11712,
+            "height": 239
+          }
+        }
+      ]
+    },
+    "1440": {
+      "docHeight": 11215,
+      "docHeightReducedMotion": 11215,
+      "docHeightDeltaWithReduce": 0,
+      "dpr": 1,
+      "horizontalOverflow": {
+        "innerWidth": 1440,
+        "docScrollWidth": 1440,
+        "bodyScrollWidth": 1440,
+        "overflowPx": 0,
+        "offenderCount": 87,
+        "offenders": [
+          {
+            "label": "div.moments__track",
+            "left": -134,
+            "right": 5878,
+            "w": 6012
+          },
+          {
+            "label": "figure.moments__item",
+            "left": -138,
+            "right": 185,
+            "w": 322
+          },
+          {
+            "label": "img",
+            "left": -129,
+            "right": 176,
+            "w": 305
+          },
+          {
+            "label": "figcaption",
+            "left": -124,
+            "right": 177,
+            "w": 300
+          },
+          {
+            "label": "figure.moments__item",
+            "left": 1198,
+            "right": 1521,
+            "w": 322
+          },
+          {
+            "label": "img",
+            "left": 1207,
+            "right": 1512,
+            "w": 305
+          },
+          {
+            "label": "figcaption",
+            "left": 1212,
+            "right": 1513,
+            "w": 300
+          },
+          {
+            "label": "figure.moments__item",
+            "left": 1535,
+            "right": 1853,
+            "w": 318
+          },
+          {
+            "label": "img",
+            "left": 1543,
+            "right": 1844,
+            "w": 302
+          },
+          {
+            "label": "figcaption",
+            "left": 1543,
+            "right": 1843,
+            "w": 300
+          },
+          {
+            "label": "figure.moments__item",
+            "left": 1866,
+            "right": 2189,
+            "w": 322
+          },
+          {
+            "label": "img",
+            "left": 1875,
+            "right": 2180,
+            "w": 305
+          },
+          {
+            "label": "figcaption",
+            "left": 1880,
+            "right": 2181,
+            "w": 300
+          },
+          {
+            "label": "figure.moments__item",
+            "left": 2201,
+            "right": 2522,
+            "w": 321
+          },
+          {
+            "label": "img",
+            "left": 2210,
+            "right": 2514,
+            "w": 305
+          }
+        ]
+      },
+      "imageInfo": {
+        "top": {
+          "scale": 1,
+          "width": 1440,
+          "height": 11371,
+          "cssWidth": 1440,
+          "cssHeight": 11371,
+          "horizontalOverflowPx": 0
+        },
+        "scrolled": {
+          "scale": 1,
+          "width": 1440,
+          "height": 11370,
+          "cssWidth": 1440,
+          "cssHeight": 11370,
+          "horizontalOverflowPx": 0
+        },
+        "rmTop": {
+          "scale": 1,
+          "width": 1440,
+          "height": 11266,
+          "cssWidth": 1440,
+          "cssHeight": 11266,
+          "horizontalOverflowPx": 0
+        },
+        "rmScrolled": {
+          "scale": 1,
+          "width": 1440,
+          "height": 11214,
+          "cssWidth": 1440,
+          "cssHeight": 11214,
+          "horizontalOverflowPx": 0
+        }
+      },
+      "experienceAnatomy": {
+        "legacyLeftColumn": null,
+        "legacyRightColumn": null,
+        "section": {
+          "top": 6231,
+          "left": 160,
+          "w": 1120,
+          "h": 4161
+        },
+        "stopList": {
+          "top": 6472,
+          "left": 160,
+          "w": 1120,
+          "h": 3500,
+          "stops": 20
+        },
+        "stops": [
+          {
+            "id": "exp-principia",
+            "textChars": 223,
+            "top": 6612,
+            "left": 160,
+            "w": 1120,
+            "h": 560
+          },
+          {
+            "id": "exp-olympic-club",
+            "textChars": 170,
+            "top": 7172,
+            "left": 160,
+            "w": 1120,
+            "h": 560
+          },
+          {
+            "id": "exp-estudar",
+            "textChars": 166,
+            "top": 7732,
+            "left": 160,
+            "w": 1120,
+            "h": 560
+          },
+          {
+            "id": "exp-fintech-rct",
+            "textChars": 183,
+            "top": 8292,
+            "left": 160,
+            "w": 1120,
+            "h": 560
+          },
+          {
+            "id": "exp-gsat",
+            "textChars": 133,
+            "top": 8852,
+            "left": 160,
+            "w": 1120,
+            "h": 560
+          },
+          {
+            "id": "exp-hibeex",
+            "textChars": 230,
+            "top": 9412,
+            "left": 160,
+            "w": 1120,
+            "h": 560
+          }
+        ],
+        "stopNav": {
+          "top": 6430,
+          "left": 164,
+          "w": 847,
+          "h": 29
+        },
+        "road": {
+          "top": 6231,
+          "left": 160,
+          "w": 1120,
+          "h": 4161
+        },
+        "carCanvas": {
+          "top": 9626,
+          "left": 452,
+          "w": 132,
+          "h": 132,
+          "bitmap": "132x132"
+        },
+        "carPoster": {
+          "top": 9626,
+          "left": 452,
+          "w": 132,
+          "h": 132,
+          "src": "/assets/car/car-00.webp",
+          "naturalW": 256,
+          "naturalH": 256,
+          "hasAttrDims": true
+        },
+        "odometer": {
+          "top": 6477,
+          "left": 1104,
+          "w": 174,
+          "h": 33,
+          "position": "sticky",
+          "text": "2026stop 6/6 · HIBEEX"
+        },
+        "focusablesInside": 8,
+        "canvases": 1
+      },
+      "fixedOverlays": [
+        {
+          "label": "div.hero-slideshow",
+          "h": 450,
+          "w": 1440
+        },
+        {
+          "label": "nav.section-rail",
+          "h": 190,
+          "w": 105
+        },
+        {
+          "label": "nav.navbar",
+          "h": 51,
+          "w": 510
+        },
+        {
+          "label": "div.sticker-stage",
+          "h": 900,
+          "w": 1440
+        },
+        {
+          "label": "button.handsfree-button",
+          "h": 44,
+          "w": 44
+        },
+        {
+          "label": "button.toggle-button",
+          "h": 44,
+          "w": 44
+        },
+        {
+          "label": "button.terminal-fab",
+          "h": 42,
+          "w": 42
+        }
+      ],
+      "sections": [
+        {
+          "label": "div.hero-section",
+          "heading": "Gabriel Moreno Ribeiro.",
+          "cssTop": 32,
+          "cssHeight": 737,
+          "textChars": 227,
+          "imgs": 1,
+          "canvases": 1,
+          "states": {
+            "top": {
+              "imgHeight": 11371,
+              "bandPx": 737,
+              "mean": 223.1,
+              "std": 42.55,
+              "inkFraction": 0.4059,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 123
+            },
+            "scrolled": {
+              "imgHeight": 11370,
+              "bandPx": 737,
+              "mean": 220.5,
+              "std": 43,
+              "inkFraction": 0.4434,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 123
+            },
+            "rmTop": {
+              "imgHeight": 11266,
+              "bandPx": 737,
+              "mean": 206.7,
+              "std": 55.42,
+              "inkFraction": 0.4907,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 123
+            },
+            "rmScrolled": {
+              "imgHeight": 11214,
+              "bandPx": 737,
+              "mean": 206.3,
+              "std": 55.83,
+              "inkFraction": 0.4907,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 123
+            }
+          },
+          "diffs": {
+            "topVsScrolled": {
+              "meanAbsDiff": 7.05,
+              "changedFraction": 0.149
+            },
+            "scrolledVsRmScrolled": {
+              "meanAbsDiff": 16.91,
+              "changedFraction": 0.2908
+            },
+            "topVsRmTop": {
+              "meanAbsDiff": 19.2,
+              "changedFraction": 0.3344
+            }
+          },
+          "rmGeometry": {
+            "top": 32,
+            "height": 737
+          }
+        },
+        {
+          "label": "#moments",
+          "heading": null,
+          "cssTop": 802,
+          "cssHeight": 623,
+          "textChars": 1023,
+          "imgs": 34,
+          "canvases": 0,
+          "states": {
+            "top": {
+              "imgHeight": 11371,
+              "bandPx": 623,
+              "mean": 192.9,
+              "std": 71.45,
+              "inkFraction": 0.5526,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 104
+            },
+            "scrolled": {
+              "imgHeight": 11370,
+              "bandPx": 623,
+              "mean": 176.4,
+              "std": 79.48,
+              "inkFraction": 0.631,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 104
+            },
+            "rmTop": {
+              "imgHeight": 11266,
+              "bandPx": 623,
+              "mean": 186.6,
+              "std": 70.09,
+              "inkFraction": 0.6393,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 104
+            },
+            "rmScrolled": {
+              "imgHeight": 11214,
+              "bandPx": 623,
+              "mean": 186.6,
+              "std": 70.1,
+              "inkFraction": 0.6391,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 104
+            }
+          },
+          "diffs": {
+            "topVsScrolled": {
+              "meanAbsDiff": 59.82,
+              "changedFraction": 0.6199
+            },
+            "scrolledVsRmScrolled": {
+              "meanAbsDiff": 57.96,
+              "changedFraction": 0.5958
+            },
+            "topVsRmTop": {
+              "meanAbsDiff": 50.29,
+              "changedFraction": 0.5978
+            }
+          },
+          "rmGeometry": {
+            "top": 802,
+            "height": 623
+          }
+        },
+        {
+          "label": "#background",
+          "heading": "Where I Come From.",
+          "cssTop": 1474,
+          "cssHeight": 1041,
+          "textChars": 476,
+          "imgs": 9,
+          "canvases": 1,
+          "states": {
+            "top": {
+              "imgHeight": 11371,
+              "bandPx": 1041,
+              "mean": 229.5,
+              "std": 60.76,
+              "inkFraction": 0.1204,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 174
+            },
+            "scrolled": {
+              "imgHeight": 11370,
+              "bandPx": 1041,
+              "mean": 232.7,
+              "std": 51.62,
+              "inkFraction": 0.1204,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 174
+            },
+            "rmTop": {
+              "imgHeight": 11266,
+              "bandPx": 1041,
+              "mean": 229.5,
+              "std": 60.72,
+              "inkFraction": 0.1204,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 174
+            },
+            "rmScrolled": {
+              "imgHeight": 11214,
+              "bandPx": 1041,
+              "mean": 231.8,
+              "std": 51.69,
+              "inkFraction": 0.152,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 174
+            }
+          },
+          "diffs": {
+            "topVsScrolled": {
+              "meanAbsDiff": 3.12,
+              "changedFraction": 0.0453
+            },
+            "scrolledVsRmScrolled": {
+              "meanAbsDiff": 1.37,
+              "changedFraction": 0.0233
+            },
+            "topVsRmTop": {
+              "meanAbsDiff": 0.03,
+              "changedFraction": 0
+            }
+          },
+          "rmGeometry": {
+            "top": 1474,
+            "height": 1041
+          }
+        },
+        {
+          "label": "#work",
+          "heading": "Cool Things",
+          "cssTop": 2540,
+          "cssHeight": 1228,
+          "textChars": 811,
+          "imgs": 14,
+          "canvases": 0,
+          "states": {
+            "top": {
+              "imgHeight": 11371,
+              "bandPx": 1228,
+              "mean": 229.6,
+              "std": 52.26,
+              "inkFraction": 0.154,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 205
+            },
+            "scrolled": {
+              "imgHeight": 11370,
+              "bandPx": 1228,
+              "mean": 222.3,
+              "std": 59.05,
+              "inkFraction": 0.2365,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 205
+            },
+            "rmTop": {
+              "imgHeight": 11266,
+              "bandPx": 1228,
+              "mean": 222.2,
+              "std": 59.19,
+              "inkFraction": 0.2368,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 205
+            },
+            "rmScrolled": {
+              "imgHeight": 11214,
+              "bandPx": 1228,
+              "mean": 222.3,
+              "std": 59.05,
+              "inkFraction": 0.2368,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 205
+            }
+          },
+          "diffs": {
+            "topVsScrolled": {
+              "meanAbsDiff": 7.87,
+              "changedFraction": 0.0823
+            },
+            "scrolledVsRmScrolled": {
+              "meanAbsDiff": 0.03,
+              "changedFraction": 0.0003
+            },
+            "topVsRmTop": {
+              "meanAbsDiff": 7.95,
+              "changedFraction": 0.0827
+            }
+          },
+          "rmGeometry": {
+            "top": 2540,
+            "height": 1228
+          }
+        },
+        {
+          "label": "#numbers",
+          "heading": "By the Numbers",
+          "cssTop": 3858,
+          "cssHeight": 626,
+          "textChars": 450,
+          "imgs": 9,
+          "canvases": 0,
+          "states": {
+            "top": {
+              "imgHeight": 11371,
+              "bandPx": 626,
+              "mean": 248.3,
+              "std": 8.88,
+              "inkFraction": 0.0078,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 104
+            },
+            "scrolled": {
+              "imgHeight": 11370,
+              "bandPx": 626,
+              "mean": 243.8,
+              "std": 32.63,
+              "inkFraction": 0.0792,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 104
+            },
+            "rmTop": {
+              "imgHeight": 11266,
+              "bandPx": 626,
+              "mean": 244.3,
+              "std": 32.19,
+              "inkFraction": 0.0727,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 104
+            },
+            "rmScrolled": {
+              "imgHeight": 11214,
+              "bandPx": 626,
+              "mean": 243.8,
+              "std": 32.64,
+              "inkFraction": 0.0794,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 104
+            }
+          },
+          "diffs": {
+            "topVsScrolled": {
+              "meanAbsDiff": 9.6,
+              "changedFraction": 0.0661
+            },
+            "scrolledVsRmScrolled": {
+              "meanAbsDiff": 0.04,
+              "changedFraction": 0.0003
+            },
+            "topVsRmTop": {
+              "meanAbsDiff": 9.22,
+              "changedFraction": 0.0608
+            }
+          },
+          "rmGeometry": {
+            "top": 3858,
+            "height": 626
+          }
+        },
+        {
+          "label": "#research",
+          "heading": "Research",
+          "cssTop": 4573,
+          "cssHeight": 1120,
+          "textChars": 927,
+          "imgs": 2,
+          "canvases": 0,
+          "states": {
+            "top": {
+              "imgHeight": 11371,
+              "bandPx": 1120,
+              "mean": 248.5,
+              "std": 8.1,
+              "inkFraction": 0.005,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 187
+            },
+            "scrolled": {
+              "imgHeight": 11370,
+              "bandPx": 1120,
+              "mean": 244.6,
+              "std": 15.85,
+              "inkFraction": 0.0715,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 187
+            },
+            "rmTop": {
+              "imgHeight": 11266,
+              "bandPx": 1120,
+              "mean": 244.3,
+              "std": 15.67,
+              "inkFraction": 0.0689,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 187
+            },
+            "rmScrolled": {
+              "imgHeight": 11214,
+              "bandPx": 1120,
+              "mean": 244.6,
+              "std": 15.85,
+              "inkFraction": 0.0715,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 187
+            }
+          },
+          "diffs": {
+            "topVsScrolled": {
+              "meanAbsDiff": 4.32,
+              "changedFraction": 0.0602
+            },
+            "scrolledVsRmScrolled": {
+              "meanAbsDiff": 0,
+              "changedFraction": 0
+            },
+            "topVsRmTop": {
+              "meanAbsDiff": 4.38,
+              "changedFraction": 0.0579
+            }
+          },
+          "rmGeometry": {
+            "top": 4573,
+            "height": 1120
+          }
+        },
+        {
+          "label": "#skills",
+          "heading": "Some of the languages & tools I build with.",
+          "cssTop": 5717,
+          "cssHeight": 488,
+          "textChars": 169,
+          "imgs": 17,
+          "canvases": 1,
+          "states": {
+            "top": {
+              "imgHeight": 11371,
+              "bandPx": 488,
+              "mean": 250.2,
+              "std": 10.87,
+              "inkFraction": 0.0249,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 81
+            },
+            "scrolled": {
+              "imgHeight": 11370,
+              "bandPx": 488,
+              "mean": 242.9,
+              "std": 37.75,
+              "inkFraction": 0.0733,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 81
+            },
+            "rmTop": {
+              "imgHeight": 11266,
+              "bandPx": 488,
+              "mean": 249.4,
+              "std": 10.67,
+              "inkFraction": 0.0252,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 81
+            },
+            "rmScrolled": {
+              "imgHeight": 11214,
+              "bandPx": 488,
+              "mean": 236.1,
+              "std": 48.62,
+              "inkFraction": 0.1096,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 81
+            }
+          },
+          "diffs": {
+            "topVsScrolled": {
+              "meanAbsDiff": 8.62,
+              "changedFraction": 0.0707
+            },
+            "scrolledVsRmScrolled": {
+              "meanAbsDiff": 19.13,
+              "changedFraction": 0.1309
+            },
+            "topVsRmTop": {
+              "meanAbsDiff": 1.72,
+              "changedFraction": 0.0192
+            }
+          },
+          "rmGeometry": {
+            "top": 5717,
+            "height": 488
+          }
+        },
+        {
+          "label": "#work-experience",
+          "heading": "Professional Experience.",
+          "cssTop": 6231,
+          "cssHeight": 4161,
+          "textChars": 1313,
+          "imgs": 1,
+          "canvases": 1,
+          "states": {
+            "top": {
+              "imgHeight": 11371,
+              "bandPx": 4161,
+              "mean": 230.9,
+              "std": 47.37,
+              "inkFraction": 0.2123,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 694
+            },
+            "scrolled": {
+              "imgHeight": 11370,
+              "bandPx": 4161,
+              "mean": 228.8,
+              "std": 49.22,
+              "inkFraction": 0.2293,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 694
+            },
+            "rmTop": {
+              "imgHeight": 11266,
+              "bandPx": 4161,
+              "mean": 227,
+              "std": 51.1,
+              "inkFraction": 0.2417,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 694
+            },
+            "rmScrolled": {
+              "imgHeight": 11214,
+              "bandPx": 4161,
+              "mean": 227.5,
+              "std": 48.94,
+              "inkFraction": 0.2496,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 694
+            }
+          },
+          "diffs": {
+            "topVsScrolled": {
+              "meanAbsDiff": 10.73,
+              "changedFraction": 0.1339
+            },
+            "scrolledVsRmScrolled": {
+              "meanAbsDiff": 13.81,
+              "changedFraction": 0.194
+            },
+            "topVsRmTop": {
+              "meanAbsDiff": 12.85,
+              "changedFraction": 0.1961
+            }
+          },
+          "rmGeometry": {
+            "top": 6231,
+            "height": 4161
+          }
+        },
+        {
+          "label": "#contact",
+          "heading": "Let's talk.",
+          "cssTop": 10457,
+          "cssHeight": 445,
+          "textChars": 237,
+          "imgs": 0,
+          "canvases": 0,
+          "states": {
+            "top": {
+              "imgHeight": 11371,
+              "bandPx": 445,
+              "mean": 244.5,
+              "std": 26.76,
+              "inkFraction": 0.045,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 74
+            },
+            "scrolled": {
+              "imgHeight": 11370,
+              "bandPx": 445,
+              "mean": 244.5,
+              "std": 26.26,
+              "inkFraction": 0.045,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 74
+            },
+            "rmTop": {
+              "imgHeight": 11266,
+              "bandPx": 445,
+              "mean": 244.5,
+              "std": 26.75,
+              "inkFraction": 0.045,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 74
+            },
+            "rmScrolled": {
+              "imgHeight": 11214,
+              "bandPx": 445,
+              "mean": 244.5,
+              "std": 26.26,
+              "inkFraction": 0.045,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 74
+            }
+          },
+          "diffs": {
+            "topVsScrolled": {
+              "meanAbsDiff": 0.06,
+              "changedFraction": 0.0007
+            },
+            "scrolledVsRmScrolled": {
+              "meanAbsDiff": 0.01,
+              "changedFraction": 0
+            },
+            "topVsRmTop": {
+              "meanAbsDiff": 0.01,
+              "changedFraction": 0
+            }
+          },
+          "rmGeometry": {
+            "top": 10457,
+            "height": 445
+          }
+        },
+        {
+          "label": "footer.footer",
+          "heading": null,
+          "cssTop": 10951,
+          "cssHeight": 224,
+          "textChars": 164,
+          "imgs": 0,
+          "canvases": 0,
+          "states": {
+            "top": {
+              "imgHeight": 11371,
+              "bandPx": 224,
+              "mean": 185.6,
+              "std": 88.25,
+              "inkFraction": 0.4256,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 37
+            },
+            "scrolled": {
+              "imgHeight": 11370,
+              "bandPx": 224,
+              "mean": 185.7,
+              "std": 88.13,
+              "inkFraction": 0.4253,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 37
+            },
+            "rmTop": {
+              "imgHeight": 11266,
+              "bandPx": 224,
+              "mean": 185.7,
+              "std": 88.21,
+              "inkFraction": 0.4253,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 37
+            },
+            "rmScrolled": {
+              "imgHeight": 11214,
+              "bandPx": 224,
+              "mean": 185.7,
+              "std": 88.13,
+              "inkFraction": 0.4253,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 37
+            }
+          },
+          "diffs": {
+            "topVsScrolled": {
+              "meanAbsDiff": 0.41,
+              "changedFraction": 0.0001
+            },
+            "scrolledVsRmScrolled": {
+              "meanAbsDiff": 0,
+              "changedFraction": 0
+            },
+            "topVsRmTop": {
+              "meanAbsDiff": 0.18,
+              "changedFraction": 0.0001
+            }
+          },
+          "rmGeometry": {
+            "top": 10951,
+            "height": 224
+          }
+        }
+      ]
+    }
+  }
+}

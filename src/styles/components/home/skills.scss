@@ -58,8 +58,9 @@
 
   &__box {
     position: relative;
-    // Alta o bastante para a queda ler, baixa o bastante para a grade estática não boiar.
-    height: clamp(360px, 44vh, 480px);
+    // Abaixo de 1101px a grade precisa de 3+ fileiras: a caixa segue a grade para nada ser cortado.
+    height: auto;
+    min-height: 200px;
     border: 1px solid var(--border);
     border-radius: 24px;
     background-color: var(--surface);
@@ -71,12 +72,12 @@
   &__grid {
     list-style: none;
     margin: 0;
-    padding: 32px 24px;
+    padding: 18px 24px;
     height: 100%;
     box-sizing: border-box;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-    gap: 24px 12px;
+    gap: 18px 12px;
     align-content: center;
     justify-items: center;
     transition: opacity 0.3s;
@@ -92,9 +93,9 @@
   }
 
   &__icon {
-    width: 72px;
-    height: 72px;
-    border-radius: 16px;
+    width: 64px;
+    height: 64px;
+    border-radius: 14px;
     object-fit: contain;
     display: block;
     box-sizing: border-box;
@@ -102,7 +103,7 @@
 
   // Devicon é SVG "pelado": ganha o mesmo card que o canvas desenha.
   &__item[data-card] &__icon {
-    padding: 13px;
+    padding: 12px;
     background-color: var(--bg);
     border: 1px solid var(--border);
   }
@@ -111,6 +112,8 @@
     font-size: 12px;
     line-height: 1.2;
     color: var(--fg-muted);
+    // Uma linha sempre: a altura da fileira fica previsível e a caixa não estoura.
+    white-space: nowrap;
   }
 
   &__grid.is-filtered {
@@ -166,6 +169,20 @@
   }
 }
 
+// A partir daqui a grade cabe em 9 colunas (2 fileiras para os 17): a caixa encolhe até a pilha
+// preenchê-la. Abaixo disso ela volta a seguir a grade, para nada ser cortado.
+@media screen and (min-width: 1180px) {
+  // 9 colunas fixas: 17 itens = 2 fileiras sempre, então a altura travada nunca corta nada.
+  .skills__grid {
+    grid-template-columns: repeat(9, minmax(0, 1fr));
+  }
+
+  .skills__box {
+    height: clamp(240px, 26vh, 300px);
+    min-height: 0;
+  }
+}
+
 @media screen and (max-width: 900px) {
   .skills {
     padding: 56px 32px;
@@ -179,12 +196,6 @@
     &__lead {
       font-size: 20px;
       max-width: none;
-    }
-
-    // A caixa passa a ter a altura da grade: nada de seção vazia no telefone.
-    &__box {
-      height: auto;
-      min-height: 320px;
     }
 
     &__grid {
@@ -201,6 +212,7 @@
 
     &__name {
       font-size: 11px;
+      white-space: normal;
     }
 
     &__item[data-card] &__icon {

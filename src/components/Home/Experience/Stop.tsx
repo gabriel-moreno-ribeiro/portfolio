@@ -1,18 +1,24 @@
+import { memo } from 'react';
 import { renderEmphasis, type ExperienceEntry } from '../../../lib/data';
 
 interface StopProps {
   entry: ExperienceEntry;
   side: 'left' | 'right';
-  /** Card sob o farol: o carro está nesta parada. */
-  lit: boolean;
+  /** Última parada: ganha o link de contato como última linha do card. */
+  cta?: boolean;
 }
 
-export default function Stop({ entry, side, lit }: StopProps) {
+/**
+ * `is-lit` (card sob o farol) e `is-on` no CTA são escritos no DOM pelo Experience.
+ * `memo`: nenhuma prop muda depois da 1ª montagem, e o Experience re-renderiza quando o
+ * `useVisible` dispara — sem isso os 6 cards eram remontados no meio do scroll.
+ */
+function Stop({ entry, side, cta }: StopProps) {
   const present = entry.end === 'present';
   return (
     <li
       id={`exp-${entry.id}`}
-      className={`exp__stop exp__stop--${side}${lit ? ' is-lit' : ''}`}
+      className={`exp__stop exp__stop--${side}`}
       tabIndex={-1}
     >
       <article className="exp__card">
@@ -40,7 +46,14 @@ export default function Stop({ entry, side, lit }: StopProps) {
             <li key={i}>{renderEmphasis(b)}</li>
           ))}
         </ul>
+        {cta && (
+          <a className="exp__card-cta" href="#contact">
+            Let&rsquo;s talk <span aria-hidden="true">&darr;</span>
+          </a>
+        )}
       </article>
     </li>
   );
 }
+
+export default memo(Stop);

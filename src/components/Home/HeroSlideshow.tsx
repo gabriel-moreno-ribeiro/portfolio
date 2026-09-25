@@ -38,18 +38,21 @@ function HeroSlideshow() {
   }, []);
 
   useEffect(() => {
-    if (SLIDES.length < 2 || reduced || !pageVisible || !onScreen) return;
+    if (skipSlideshow || SLIDES.length < 2 || reduced || !pageVisible || !onScreen) return;
     const timer = setInterval(advance, SLIDE_DURATION);
     return () => clearInterval(timer);
   }, [advance, reduced, pageVisible, onScreen]);
 
-  // Warm the next slide so the crossfade never waits on the network
+  // Warm the next slide so the crossfade never waits on the network.
+  // Below 768px there is no slideshow at all, so nothing is fetched: these are
+  // 1920px-wide desktop stills and a phone was downloading them for nothing.
   useEffect(() => {
-    if (reduced) return;
+    if (skipSlideshow || reduced) return;
     new Image().src = SLIDES[(index + 1) % SLIDES.length];
   }, [index, reduced]);
 
   useEffect(() => {
+    if (skipSlideshow) return;
     const apply = () => {
       rafRef.current = 0;
       const el = rootRef.current;

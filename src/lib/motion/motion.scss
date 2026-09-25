@@ -64,6 +64,12 @@
   line-height: 1;
   white-space: nowrap;
 
+  &__text {
+    // Contraste AA: cor cheia do token, sem opacidade (QA r1: 3,49:1 -> falha).
+    color: var(--fg-muted);
+    opacity: 1;
+  }
+
   &__dot {
     flex: 0 0 auto;
     width: 6px;

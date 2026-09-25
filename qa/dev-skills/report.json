@@ -1,219 +1,314 @@
 {
   "base": "http://localhost:5173",
-  "at": "2026-09-25T18:43:11.093Z",
+  "at": "2026-09-25T19:03:46.964Z",
   "runs": [
     {
       "viewport": 1440,
-      "bootMs": 917,
-      "dropMs": 6081,
-      "frames": 221,
-      "stepMax": 22,
-      "stepAvg": 2.49,
+      "bootMs": 1441,
+      "dropMs": 7703,
+      "frames": 312,
+      "stepMax": 27.2,
+      "stepAvg": 3.35,
       "rafStopped": true,
       "framesFrozenAfterSettle": true,
       "framesBeforeAfter": [
-        221,
-        221
+        312,
+        312
       ],
       "longFrames": {
         "duringDrop": [
           {
-            "type": "long-animation-frame",
-            "d": 58,
-            "at": 3436
+            "type": "longtask",
+            "d": 106,
+            "at": 8818
           },
           {
             "type": "longtask",
-            "d": 833,
-            "at": 3701
-          },
-          {
-            "type": "longtask",
-            "d": 77,
-            "at": 4538
-          },
-          {
-            "type": "longtask",
-            "d": 119,
-            "at": 4625
+            "d": 102,
+            "at": 8926
           },
           {
             "type": "longtask",
             "d": 56,
-            "at": 4800
+            "at": 9029
           },
           {
             "type": "longtask",
-            "d": 309,
-            "at": 4907
+            "d": 275,
+            "at": 9116
           },
           {
             "type": "long-animation-frame",
-            "d": 868,
-            "at": 3698
-          },
-          {
-            "type": "longtask",
-            "d": 208,
-            "at": 5278
-          },
-          {
-            "type": "longtask",
-            "d": 60,
-            "at": 5509
+            "d": 95,
+            "at": 8637
           },
           {
             "type": "long-animation-frame",
-            "d": 213,
-            "at": 4616
+            "d": 97,
+            "at": 8741
           },
           {
             "type": "long-animation-frame",
-            "d": 64,
-            "at": 4856
+            "d": 141,
+            "at": 8925
           },
           {
             "type": "long-animation-frame",
-            "d": 218,
-            "at": 5272
+            "d": 330,
+            "at": 9086
           },
           {
             "type": "long-animation-frame",
-            "d": 83,
-            "at": 5503
-          },
-          {
-            "type": "long-animation-frame",
-            "d": 65,
-            "at": 5631
-          },
-          {
-            "type": "longtask",
-            "d": 764,
-            "at": 5773
-          },
-          {
-            "type": "longtask",
-            "d": 76,
-            "at": 6537
-          },
-          {
-            "type": "longtask",
-            "d": 269,
-            "at": 6662
-          },
-          {
-            "type": "long-animation-frame",
-            "d": 790,
-            "at": 5768
-          },
-          {
-            "type": "long-animation-frame",
-            "d": 324,
-            "at": 6614
-          },
-          {
-            "type": "longtask",
-            "d": 83,
-            "at": 7048
-          },
-          {
-            "type": "long-animation-frame",
-            "d": 66,
-            "at": 6959
-          },
-          {
-            "type": "long-animation-frame",
-            "d": 102,
-            "at": 7038
-          },
-          {
-            "type": "longtask",
-            "d": 75,
-            "at": 7229
-          },
-          {
-            "type": "long-animation-frame",
-            "d": 64,
-            "at": 7151
-          },
-          {
-            "type": "longtask",
-            "d": 53,
-            "at": 7518
-          },
-          {
-            "type": "long-animation-frame",
-            "d": 113,
-            "at": 7222
-          },
-          {
-            "type": "long-animation-frame",
-            "d": 125,
-            "at": 7377
-          },
-          {
-            "type": "long-animation-frame",
-            "d": 76,
-            "at": 7509
-          },
-          {
-            "type": "long-animation-frame",
-            "d": 80,
-            "at": 7725
-          },
-          {
-            "type": "long-animation-frame",
-            "d": 66,
-            "at": 7820
-          },
-          {
-            "type": "long-animation-frame",
-            "d": 61,
-            "at": 8079
-          },
-          {
-            "type": "long-animation-frame",
-            "d": 124,
-            "at": 8150
+            "d": 170,
+            "at": 9433
           },
           {
             "type": "long-animation-frame",
             "d": 84,
-            "at": 8733
+            "at": 9615
           },
           {
             "type": "longtask",
-            "d": 83,
-            "at": 8921
+            "d": 5951,
+            "at": 9892
           },
           {
             "type": "longtask",
-            "d": 1115,
-            "at": 9032
+            "d": 215,
+            "at": 15869
+          },
+          {
+            "type": "longtask",
+            "d": 65,
+            "at": 16285
+          },
+          {
+            "type": "longtask",
+            "d": 54,
+            "at": 16367
           },
           {
             "type": "long-animation-frame",
-            "d": 87,
-            "at": 8921
+            "d": 70,
+            "at": 9788
+          },
+          {
+            "type": "longtask",
+            "d": 55,
+            "at": 16448
+          },
+          {
+            "type": "longtask",
+            "d": 470,
+            "at": 16504
+          },
+          {
+            "type": "longtask",
+            "d": 116,
+            "at": 17079
+          },
+          {
+            "type": "longtask",
+            "d": 305,
+            "at": 17230
           },
           {
             "type": "long-animation-frame",
-            "d": 367,
-            "at": 9019
+            "d": 6115,
+            "at": 9891
+          },
+          {
+            "type": "long-animation-frame",
+            "d": 247,
+            "at": 16084
+          },
+          {
+            "type": "long-animation-frame",
+            "d": 179,
+            "at": 16350
+          },
+          {
+            "type": "long-animation-frame",
+            "d": 151,
+            "at": 16975
+          },
+          {
+            "type": "longtask",
+            "d": 1334,
+            "at": 17598
+          },
+          {
+            "type": "longtask",
+            "d": 69,
+            "at": 19009
+          },
+          {
+            "type": "longtask",
+            "d": 68,
+            "at": 19084
+          },
+          {
+            "type": "long-animation-frame",
+            "d": 355,
+            "at": 17196
+          },
+          {
+            "type": "long-animation-frame",
+            "d": 1344,
+            "at": 17596
+          },
+          {
+            "type": "longtask",
+            "d": 96,
+            "at": 19291
+          },
+          {
+            "type": "long-animation-frame",
+            "d": 118,
+            "at": 19001
+          },
+          {
+            "type": "long-animation-frame",
+            "d": 112,
+            "at": 19152
+          },
+          {
+            "type": "long-animation-frame",
+            "d": 128,
+            "at": 19267
+          },
+          {
+            "type": "longtask",
+            "d": 113,
+            "at": 19553
+          },
+          {
+            "type": "longtask",
+            "d": 337,
+            "at": 19891
+          },
+          {
+            "type": "longtask",
+            "d": 349,
+            "at": 20391
+          },
+          {
+            "type": "long-animation-frame",
+            "d": 120,
+            "at": 19666
+          },
+          {
+            "type": "long-animation-frame",
+            "d": 509,
+            "at": 19824
+          },
+          {
+            "type": "long-animation-frame",
+            "d": 403,
+            "at": 20352
+          },
+          {
+            "type": "long-animation-frame",
+            "d": 107,
+            "at": 20767
+          },
+          {
+            "type": "longtask",
+            "d": 67,
+            "at": 21094
+          },
+          {
+            "type": "long-animation-frame",
+            "d": 183,
+            "at": 21006
+          },
+          {
+            "type": "longtask",
+            "d": 91,
+            "at": 21919
+          },
+          {
+            "type": "long-animation-frame",
+            "d": 98,
+            "at": 21918
+          },
+          {
+            "type": "longtask",
+            "d": 64,
+            "at": 22865
+          },
+          {
+            "type": "long-animation-frame",
+            "d": 70,
+            "at": 22863
+          },
+          {
+            "type": "longtask",
+            "d": 51,
+            "at": 23513
+          },
+          {
+            "type": "longtask",
+            "d": 55,
+            "at": 23648
+          },
+          {
+            "type": "longtask",
+            "d": 72,
+            "at": 23727
+          },
+          {
+            "type": "longtask",
+            "d": 63,
+            "at": 24034
+          },
+          {
+            "type": "long-animation-frame",
+            "d": 67,
+            "at": 23908
+          },
+          {
+            "type": "longtask",
+            "d": 61,
+            "at": 24228
+          },
+          {
+            "type": "longtask",
+            "d": 58,
+            "at": 24321
+          },
+          {
+            "type": "longtask",
+            "d": 70,
+            "at": 24388
+          },
+          {
+            "type": "longtask",
+            "d": 69,
+            "at": 24568
+          },
+          {
+            "type": "longtask",
+            "d": 51,
+            "at": 24642
+          },
+          {
+            "type": "longtask",
+            "d": 65,
+            "at": 24851
           }
         ],
-        "total": 39,
-        "worstMs": 1115
+        "total": 56,
+        "worstMs": 6115
       },
-      "boxHeight": 398,
-      "gridCount": 16,
+      "boxHeight": 242,
+      "gridCount": 17,
       "physicsOn": true,
-      "tip": "JavaScript",
+      "tip": "Tailwind CSS",
       "wokeOnDrag": {
-        "target": "postgresql",
+        "target": "django",
         "wokeLoop": true,
-        "movedPx": 254
+        "movedPx": 253
       },
       "touchScroll": null,
       "touchDrag": null,
@@ -224,102 +319,105 @@
         }
       ],
       "console": [
-        "error: Failed to load resource: the server responded with a status of 403 ()",
-        "error: Failed to load resource: the server responded with a status of 403 ()",
-        "error: Failed to load resource: the server responded with a status of 403 ()",
-        "error: Failed to load resource: the server responded with a status of 403 ()",
-        "warning: [.WebGL-0x4f3c03d4ce00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
-        "warning: [.WebGL-0x4f3c03d53400]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
-        "warning: [.WebGL-0x4f3c03d53400]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
-        "warning: [.WebGL-0x4f3c03d53400]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)"
+        "warning: [.WebGL-0x155403de8e00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels"
       ]
     },
     {
       "viewport": 390,
-      "bootMs": 330,
-      "dropMs": 4073,
-      "frames": 170,
-      "stepMax": 15.6,
-      "stepAvg": 2.19,
+      "bootMs": 612,
+      "dropMs": 5417,
+      "frames": 225,
+      "stepMax": 18.2,
+      "stepAvg": 2.26,
       "rafStopped": true,
       "framesFrozenAfterSettle": true,
       "framesBeforeAfter": [
-        170,
-        170
+        225,
+        225
       ],
       "longFrames": {
         "duringDrop": [
           {
-            "type": "long-animation-frame",
-            "d": 739,
-            "at": 2919
-          },
-          {
-            "type": "long-animation-frame",
-            "d": 108,
-            "at": 3708
-          },
-          {
-            "type": "long-animation-frame",
-            "d": 58,
-            "at": 3885
-          },
-          {
-            "type": "long-animation-frame",
-            "d": 66,
-            "at": 4027
-          },
-          {
-            "type": "long-animation-frame",
-            "d": 79,
-            "at": 4104
-          },
-          {
             "type": "longtask",
-            "d": 128,
-            "at": 4253
-          },
-          {
-            "type": "longtask",
-            "d": 215,
-            "at": 4414
+            "d": 89,
+            "at": 4024
           },
           {
             "type": "long-animation-frame",
-            "d": 257,
-            "at": 4381
+            "d": 1140,
+            "at": 2760
           },
           {
             "type": "long-animation-frame",
-            "d": 58,
-            "at": 4699
+            "d": 134,
+            "at": 3957
           },
           {
             "type": "long-animation-frame",
-            "d": 92,
-            "at": 4852
-          },
-          {
-            "type": "longtask",
-            "d": 82,
-            "at": 5690
+            "d": 52,
+            "at": 4153
           },
           {
             "type": "long-animation-frame",
             "d": 86,
-            "at": 5690
+            "at": 4304
           },
           {
             "type": "longtask",
-            "d": 63,
-            "at": 7341
+            "d": 79,
+            "at": 4413
+          },
+          {
+            "type": "longtask",
+            "d": 52,
+            "at": 4548
+          },
+          {
+            "type": "longtask",
+            "d": 141,
+            "at": 4713
+          },
+          {
+            "type": "long-animation-frame",
+            "d": 113,
+            "at": 4400
+          },
+          {
+            "type": "long-animation-frame",
+            "d": 71,
+            "at": 4601
+          },
+          {
+            "type": "long-animation-frame",
+            "d": 260,
+            "at": 4684
+          },
+          {
+            "type": "long-animation-frame",
+            "d": 73,
+            "at": 4959
+          },
+          {
+            "type": "long-animation-frame",
+            "d": 52,
+            "at": 5040
+          },
+          {
+            "type": "long-animation-frame",
+            "d": 125,
+            "at": 5127
+          },
+          {
+            "type": "longtask",
+            "d": 54,
+            "at": 6402
           }
         ],
-        "total": 15,
-        "worstMs": 739
+        "total": 34,
+        "worstMs": 1140
       },
-      "boxHeight": 367,
-      "gridCount": 16,
+      "boxHeight": 452,
+      "gridCount": 17,
       "physicsOn": true,
       "tip": null,
       "wokeOnDrag": null,
@@ -334,19 +432,19 @@
         }
       },
       "touchDrag": {
-        "target": "postgresql",
+        "target": "django",
         "wokeLoop": true,
         "pageStayed": true,
         "from": {
-          "x": 29,
-          "y": 256
+          "x": 259,
+          "y": 379
         },
         "peak": {
-          "id": "postgresql",
-          "x": 196,
-          "y": 62
+          "id": "django",
+          "x": 346,
+          "y": 188
         },
-        "movedPx": 256
+        "movedPx": 210
       },
       "matter": [
         {
@@ -354,19 +452,14 @@
           "bytes": 240127
         }
       ],
-      "console": [
-        "error: Failed to load resource: the server responded with a status of 403 ()",
-        "error: Failed to load resource: the server responded with a status of 403 ()",
-        "error: Failed to load resource: the server responded with a status of 403 ()",
-        "error: Failed to load resource: the server responded with a status of 403 ()"
-      ]
+      "console": []
     }
   ],
   "fallbacks": [
     {
       "name": "rm-1440",
-      "sectionHeight": 644,
-      "gridCount": 16,
+      "sectionHeight": 488,
+      "gridCount": 17,
       "namesVisible": true,
       "physicsOn": false,
       "gridOpacity": "1",
@@ -374,8 +467,8 @@
     },
     {
       "name": "rm-390",
-      "sectionHeight": 569,
-      "gridCount": 16,
+      "sectionHeight": 654,
+      "gridCount": 17,
       "namesVisible": true,
       "physicsOn": false,
       "gridOpacity": "1",
@@ -383,8 +476,8 @@
     },
     {
       "name": "nocanvas-390",
-      "sectionHeight": 569,
-      "gridCount": 16,
+      "sectionHeight": 654,
+      "gridCount": 17,
       "namesVisible": true,
       "physicsOn": false,
       "gridOpacity": "1",
