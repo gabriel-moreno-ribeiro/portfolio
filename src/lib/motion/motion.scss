@@ -1,0 +1,118 @@
+// Estilos das primitivas de motion. Só transform e opacity animam.
+// Importado uma única vez por src/lib/motion/index.ts.
+
+/* Ticker ------------------------------------------------------------------ */
+.hl-ticker {
+  overflow: hidden;
+
+  &__track {
+    display: flex;
+    width: max-content;
+    animation-name: hl-ticker-scroll;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+
+  &__copy {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+  }
+
+  &[data-pause-hover='true']:hover &__track,
+  &[data-pause-hover='true']:focus-within &__track {
+    animation-play-state: paused !important;
+  }
+
+  &[data-reduced='true'] {
+    overflow-x: auto;
+
+    .hl-ticker__track {
+      animation: none;
+      transform: none;
+    }
+  }
+}
+
+@keyframes hl-ticker-scroll {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+/* Reveal ------------------------------------------------------------------ */
+.hl-reveal {
+  transition:
+    opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+
+  &[data-mode='hidden'] {
+    will-change: opacity, transform;
+  }
+}
+
+/* LivePulse --------------------------------------------------------------- */
+.hl-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  color: var(--fg-muted);
+  font-size: 0.75rem;
+  line-height: 1;
+  white-space: nowrap;
+
+  &__dot {
+    flex: 0 0 auto;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--fg-muted);
+  }
+
+  &[data-source='live'] &__dot {
+    background: var(--accent);
+  }
+
+  &[data-pulse='true'] &__dot {
+    animation: hl-live-pulse 2s ease-in-out infinite;
+  }
+}
+
+@keyframes hl-live-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.7);
+    opacity: 0.45;
+  }
+}
+
+/* WidgetState — grade 1×1: os estados se sobrepõem e a altura não colapsa ---- */
+.hl-widget {
+  display: grid;
+  grid-template-columns: 1fr;
+
+  &__layer {
+    grid-area: 1 / 1 / 2 / 2;
+    min-width: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hl-ticker__track,
+  .hl-live__dot {
+    animation: none !important;
+  }
+
+  .hl-reveal {
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

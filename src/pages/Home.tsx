@@ -1,7 +1,8 @@
-import { lazy, Suspense, useEffect, useState } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import Hero from "../components/Home/Hero";
 import MomentsStrip from "../components/Home/MomentsStrip";
+import SectionRail from "../components/Home/SectionRail";
 import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Shared/Footer";
 import { scrollToComponent } from "../utils/scrollToComponent";
@@ -11,55 +12,34 @@ const Skills = lazy(() => import("../components/Home/Skills"));
 const FindMyWork = lazy(() => import("../components/Home/FindMyWork"));
 const Research = lazy(() => import("../components/Home/Research"));
 const NumbersAndStats = lazy(() => import("../components/Home/Numbers"));
-const HorizontalSkillsWrapper = lazy(() => import("../components/Home/HorizontalSkillsWrapper"));
-const WorkExperience = lazy(() => import("../components/Home/WorkExperience"));
+const Experience = lazy(() => import("../components/Home/Experience/Experience"));
 const ContactSection = lazy(() => import("../components/Home/ContactSection"));
 // @ts-ignore
 const StickerPeel = lazy(() => import("../components/ReactBits/StickerPeel"));
 
 // "Experience" (not "Professional Experience"): the longest label must fit the 194px gutter left of the content column at 1440.
-const NAV_SECTIONS = ['Top', 'Origins', 'Cool Things', 'Research', 'Skills', 'Experience', 'Contact'];
-const NAV_IDS      = ['main-content', 'background', 'work', 'research', 'skills', 'work-experience', 'contact'];
+const SECTIONS = [
+  { id: 'main-content', label: 'Top' },
+  { id: 'background', label: 'Origins' },
+  { id: 'work', label: 'Cool Things' },
+  { id: 'research', label: 'Research' },
+  { id: 'skills', label: 'Skills' },
+  { id: 'work-experience', label: 'Experience' },
+  { id: 'contact', label: 'Contact' },
+];
 
-// A section is "current" once its top crosses this line of the viewport.
-const ACTIVE_LINE = 0.4;
 // Gap left above a section reached through a URL hash (clears the navbar).
 const HASH_OFFSET = 90;
 const STOP_EVENTS = ['wheel', 'touchstart', 'keydown'];
 
-function Home() {
-  const [activeNav, setActiveNav] = useState(0);
-  const location = useLocation();
+// Lazy sections reserve roughly their final height, so the document doesn't
+// grow in jumps as chunks arrive and nothing below reads as "blank" meanwhile.
+function Reserve({ height }: { height: number }) {
+  return <div style={{ minHeight: height }} aria-hidden="true" />;
+}
 
-  // Sections are lazy-loaded, so look them up on every scroll instead of
-  // observing a snapshot of the DOM taken at mount.
-  useEffect(() => {
-    let raf = 0;
-    const update = () => {
-      raf = 0;
-      const line = window.innerHeight * ACTIVE_LINE;
-      let idx = 0;
-      for (let i = 1; i < NAV_IDS.length; i++) {
-        const el = document.getElementById(NAV_IDS[i]);
-        if (el && el.getBoundingClientRect().top <= line) idx = i;
-      }
-      const atBottom =
-        window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
-      if (atBottom) idx = NAV_IDS.length - 1;
-      setActiveNav(idx);
-    };
-    const schedule = () => {
-      if (!raf) raf = requestAnimationFrame(update);
-    };
-    update();
-    window.addEventListener('scroll', schedule, { passive: true });
-    window.addEventListener('resize', schedule, { passive: true });
-    return () => {
-      window.removeEventListener('scroll', schedule);
-      window.removeEventListener('resize', schedule);
-      cancelAnimationFrame(raf);
-    };
-  }, []);
+function Home() {
+  const location = useLocation();
 
   // /#contact (and the old /contact URL). In-page: smooth scroll. On a fresh
   // load the target is lazy and the sections above it keep growing as they
@@ -98,53 +78,32 @@ function Home() {
     return stop;
   }, [location.hash, location.key]);
 
-  const handleNavClick = (index: number) => {
-    scrollToComponent(NAV_IDS[index], 60);
-  };
-
   return (
     <main className="home-wrapper" id="main-content">
-      {/* Fixed side navigation */}
-      <nav className="home-sidenav" aria-label="Page sections">
-        {NAV_SECTIONS.map((label, i) => (
-          <button
-            key={label}
-            className={`sidenav-item ${activeNav === i ? 'sidenav-item--active' : ''}`}
-            onClick={() => handleNavClick(i)}
-            aria-label={`Go to ${label} section`}
-            aria-current={activeNav === i ? 'true' : undefined}
-          >
-            <span className="sidenav-item__line" />
-            <span className="sidenav-item__label" aria-hidden="true">{label}</span>
-          </button>
-        ))}
-      </nav>
+      <SectionRail sections={SECTIONS} />
 
       <Navbar />
       <Hero />
       <MomentsStrip />
-      <Suspense fallback={<div style={{ minHeight: 700 }} />}>
+      <Suspense fallback={<Reserve height={700} />}>
         <BackgroundGlobe />
       </Suspense>
-      <Suspense fallback={null}>
+      <Suspense fallback={<Reserve height={900} />}>
         <FindMyWork />
       </Suspense>
-      <Suspense fallback={null}>
+      <Suspense fallback={<Reserve height={720} />}>
         <NumbersAndStats />
       </Suspense>
-      <Suspense fallback={null}>
+      <Suspense fallback={<Reserve height={640} />}>
         <Research />
       </Suspense>
-      <Suspense fallback={null}>
+      <Suspense fallback={<Reserve height={560} />}>
         <Skills />
       </Suspense>
-      <Suspense fallback={null}>
-        <HorizontalSkillsWrapper />
+      <Suspense fallback={<Reserve height={3400} />}>
+        <Experience />
       </Suspense>
-      <Suspense fallback={null}>
-        <WorkExperience />
-      </Suspense>
-      <Suspense fallback={null}>
+      <Suspense fallback={<Reserve height={720} />}>
         <ContactSection />
       </Suspense>
       <Footer />

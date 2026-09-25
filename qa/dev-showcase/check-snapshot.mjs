@@ -1,0 +1,22 @@
+import { chromium } from 'playwright';
+const browser = await chromium.launch();
+const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+await page.goto('http://localhost:5173', { waitUntil: 'networkidle' });
+await page.waitForTimeout(1500);
+await page.keyboard.press('Control+K');
+await page.waitForTimeout(2500);
+const run = async (cmd) => { await page.keyboard.type(cmd); await page.keyboard.press('Enter'); await page.waitForTimeout(700);
+  return page.evaluate(() => [...document.querySelectorAll('.xterm-rows > div')].map(d => (d.textContent||'').replace(/ /g,' ').trimEnd()).filter(r=>r.trim()).slice(-8)); };
+const now = await run('now');
+await run('clear');
+const stats = await run('stats');
+await page.keyboard.press('Escape');
+await page.waitForTimeout(400);
+await page.locator('.find-my-work').scrollIntoViewIfNeeded();
+await page.waitForTimeout(500);
+const candela = await page.evaluate(() => {
+  const cards = [...document.querySelectorAll('.featured-card')];
+  return cards.map(c => ({ title: c.querySelector('h2')?.textContent, tags: [...c.querySelectorAll('.featured-tags span')].map(s=>s.textContent) }));
+});
+console.log(JSON.stringify({ now, stats, candela }, null, 1));
+await browser.close();

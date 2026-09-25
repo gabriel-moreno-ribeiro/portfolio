@@ -1,6 +1,6 @@
-import { motion, useInView } from 'motion/react';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { FiChevronLeft, FiChevronRight, FiFileText } from 'react-icons/fi';
+import { Reveal } from '../../lib/motion';
 
 interface ResearchItem {
   slug: string;
@@ -54,6 +54,12 @@ const researchItems: ResearchItem[] = [
   },
 ];
 
+/** Index of the most recent paper (last year mentioned in `year` wins; ties go to the first). */
+const latestIndex = researchItems.reduce((best, item, i, all) => {
+  const yearOf = (v: string) => Number(v.slice(-4));
+  return yearOf(item.year) > yearOf(all[best].year) ? i : best;
+}, 0);
+
 function ResearchMediaCarousel({ slug, title }: { slug: string; title: string }) {
   const available = RESEARCH_MEDIA_MANIFEST[slug] ?? [];
   const [idx, setIdx] = useState(0);
@@ -68,16 +74,24 @@ function ResearchMediaCarousel({ slug, title }: { slug: string; title: string })
   return (
     <div className="research-media">
       {current.endsWith('.mp4') ? (
-        <video key={src} src={src} controls playsInline />
+        <video key={src} src={src} controls playsInline width={210} height={297} />
       ) : (
-        <img key={src} src={src} alt={`Research image for ${title}`} loading="lazy" />
+        <img
+          key={src}
+          src={src}
+          alt={`First page of the paper: ${title}`}
+          width={210}
+          height={297}
+          loading="lazy"
+          decoding="async"
+        />
       )}
       {available.length > 1 && (
         <>
-          <button className="carousel-arrow left" onClick={prev} aria-label="Previous">
+          <button className="carousel-arrow left" onClick={prev} aria-label="Previous page">
             <FiChevronLeft />
           </button>
-          <button className="carousel-arrow right" onClick={next} aria-label="Next">
+          <button className="carousel-arrow right" onClick={next} aria-label="Next page">
             <FiChevronRight />
           </button>
         </>
@@ -86,41 +100,44 @@ function ResearchMediaCarousel({ slug, title }: { slug: string; title: string })
   );
 }
 
-function ResearchCard({ item, index }: { item: ResearchItem; index: number }) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '0px 0px -80px 0px' });
-  const hasMedia = (RESEARCH_MEDIA_MANIFEST[item.slug] ?? []).length > 0;
-
-  const handleClick = () => {
-    if (item.pdf) window.open(item.pdf, '_blank', 'noopener');
-  };
-
-  const interactive = !!item.pdf;
+function ResearchCard({ item, index, isLatest }: { item: ResearchItem; index: number; isLatest: boolean }) {
+  const media = RESEARCH_MEDIA_MANIFEST[item.slug] ?? [];
+  const hasMedia = media.length > 0;
+  // First page preview, shown on hover/focus over a card that links to a PDF.
+  const preview = item.pdf && hasMedia ? `/research/${item.slug}/${media[0]}` : null;
 
   return (
-    <motion.div
-      ref={ref}
-      className={`research-card ${interactive ? 'research-card--clickable' : ''} ${!hasMedia ? 'research-card--no-media' : ''}`}
-      initial={{ opacity: 0, y: 40 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      onClick={interactive ? handleClick : undefined}
-      role={interactive ? 'button' : undefined}
-      tabIndex={interactive ? 0 : undefined}
-      onKeyDown={interactive ? (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleClick(); } } : undefined}
+    <Reveal
+      as="article"
+      delay={index * 0.06}
+      className={`research-card ${item.pdf ? 'research-card--clickable' : ''} ${!hasMedia ? 'research-card--no-media' : ''}`}
     >
       <ResearchMediaCarousel slug={item.slug} title={item.title} />
       <div className="research-card__content">
         <div className="research-card__header">
           <span className="research-card__field">{item.field}</span>
           <span className="research-card__year">{item.year}</span>
+          {isLatest && <span className="research-card__latest">latest</span>}
           {item.pdf && (
-            <span className="research-card__pdf">
+            <span className="research-card__pdf" aria-hidden="true">
               <FiFileText /> Read Paper
             </span>
           )}
         </div>
-        <h3 className="research-card__title">{item.title}</h3>
+        <h3 className="research-card__title">
+          {item.pdf ? (
+            <a
+              className="research-card__link"
+              href={item.pdf}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {item.title}
+            </a>
+          ) : (
+            item.title
+          )}
+        </h3>
         {item.advisor && (
           <p className="research-card__advisor">Advisor: {item.advisor}</p>
         )}
@@ -131,7 +148,19 @@ function ResearchCard({ item, index }: { item: ResearchItem; index: number }) {
           ))}
         </div>
       </div>
-    </motion.div>
+      {preview && (
+        <img
+          className="research-card__preview"
+          src={preview}
+          alt=""
+          aria-hidden="true"
+          width={248}
+          height={350}
+          loading="lazy"
+          decoding="async"
+        />
+      )}
+    </Reveal>
   );
 }
 
@@ -151,7 +180,7 @@ function Research() {
       </a>
       <div className="research-grid">
         {researchItems.map((item, i) => (
-          <ResearchCard key={item.slug} item={item} index={i} />
+          <ResearchCard key={item.slug} item={item} index={i} isLatest={i === latestIndex} />
         ))}
       </div>
     </section>

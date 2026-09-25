@@ -1,0 +1,405 @@
+{
+  "base": "http://localhost:5173",
+  "at": "2026-09-25T18:43:11.093Z",
+  "runs": [
+    {
+      "viewport": 1440,
+      "bootMs": 917,
+      "dropMs": 6081,
+      "frames": 221,
+      "stepMax": 22,
+      "stepAvg": 2.49,
+      "rafStopped": true,
+      "framesFrozenAfterSettle": true,
+      "framesBeforeAfter": [
+        221,
+        221
+      ],
+      "longFrames": {
+        "duringDrop": [
+          {
+            "type": "long-animation-frame",
+            "d": 58,
+            "at": 3436
+          },
+          {
+            "type": "longtask",
+            "d": 833,
+            "at": 3701
+          },
+          {
+            "type": "longtask",
+            "d": 77,
+            "at": 4538
+          },
+          {
+            "type": "longtask",
+            "d": 119,
+            "at": 4625
+          },
+          {
+            "type": "longtask",
+            "d": 56,
+            "at": 4800
+          },
+          {
+            "type": "longtask",
+            "d": 309,
+            "at": 4907
+          },
+          {
+            "type": "long-animation-frame",
+            "d": 868,
+            "at": 3698
+          },
+          {
+            "type": "longtask",
+            "d": 208,
+            "at": 5278
+          },
+          {
+            "type": "longtask",
+            "d": 60,
+            "at": 5509
+          },
+          {
+            "type": "long-animation-frame",
+            "d": 213,
+            "at": 4616
+          },
+          {
+            "type": "long-animation-frame",
+            "d": 64,
+            "at": 4856
+          },
+          {
+            "type": "long-animation-frame",
+            "d": 218,
+            "at": 5272
+          },
+          {
+            "type": "long-animation-frame",
+            "d": 83,
+            "at": 5503
+          },
+          {
+            "type": "long-animation-frame",
+            "d": 65,
+            "at": 5631
+          },
+          {
+            "type": "longtask",
+            "d": 764,
+            "at": 5773
+          },
+          {
+            "type": "longtask",
+            "d": 76,
+            "at": 6537
+          },
+          {
+            "type": "longtask",
+            "d": 269,
+            "at": 6662
+          },
+          {
+            "type": "long-animation-frame",
+            "d": 790,
+            "at": 5768
+          },
+          {
+            "type": "long-animation-frame",
+            "d": 324,
+            "at": 6614
+          },
+          {
+            "type": "longtask",
+            "d": 83,
+            "at": 7048
+          },
+          {
+            "type": "long-animation-frame",
+            "d": 66,
+            "at": 6959
+          },
+          {
+            "type": "long-animation-frame",
+            "d": 102,
+            "at": 7038
+          },
+          {
+            "type": "longtask",
+            "d": 75,
+            "at": 7229
+          },
+          {
+            "type": "long-animation-frame",
+            "d": 64,
+            "at": 7151
+          },
+          {
+            "type": "longtask",
+            "d": 53,
+            "at": 7518
+          },
+          {
+            "type": "long-animation-frame",
+            "d": 113,
+            "at": 7222
+          },
+          {
+            "type": "long-animation-frame",
+            "d": 125,
+            "at": 7377
+          },
+          {
+            "type": "long-animation-frame",
+            "d": 76,
+            "at": 7509
+          },
+          {
+            "type": "long-animation-frame",
+            "d": 80,
+            "at": 7725
+          },
+          {
+            "type": "long-animation-frame",
+            "d": 66,
+            "at": 7820
+          },
+          {
+            "type": "long-animation-frame",
+            "d": 61,
+            "at": 8079
+          },
+          {
+            "type": "long-animation-frame",
+            "d": 124,
+            "at": 8150
+          },
+          {
+            "type": "long-animation-frame",
+            "d": 84,
+            "at": 8733
+          },
+          {
+            "type": "longtask",
+            "d": 83,
+            "at": 8921
+          },
+          {
+            "type": "longtask",
+            "d": 1115,
+            "at": 9032
+          },
+          {
+            "type": "long-animation-frame",
+            "d": 87,
+            "at": 8921
+          },
+          {
+            "type": "long-animation-frame",
+            "d": 367,
+            "at": 9019
+          }
+        ],
+        "total": 39,
+        "worstMs": 1115
+      },
+      "boxHeight": 398,
+      "gridCount": 16,
+      "physicsOn": true,
+      "tip": "JavaScript",
+      "wokeOnDrag": {
+        "target": "postgresql",
+        "wokeLoop": true,
+        "movedPx": 254
+      },
+      "touchScroll": null,
+      "touchDrag": null,
+      "matter": [
+        {
+          "url": "/node_modules/.vite/deps/matter-js.js?v=43f1ac73",
+          "bytes": 240127
+        }
+      ],
+      "console": [
+        "error: Failed to load resource: the server responded with a status of 403 ()",
+        "error: Failed to load resource: the server responded with a status of 403 ()",
+        "error: Failed to load resource: the server responded with a status of 403 ()",
+        "error: Failed to load resource: the server responded with a status of 403 ()",
+        "warning: [.WebGL-0x4f3c03d4ce00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+        "warning: [.WebGL-0x4f3c03d53400]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+        "warning: [.WebGL-0x4f3c03d53400]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+        "warning: [.WebGL-0x4f3c03d53400]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)"
+      ]
+    },
+    {
+      "viewport": 390,
+      "bootMs": 330,
+      "dropMs": 4073,
+      "frames": 170,
+      "stepMax": 15.6,
+      "stepAvg": 2.19,
+      "rafStopped": true,
+      "framesFrozenAfterSettle": true,
+      "framesBeforeAfter": [
+        170,
+        170
+      ],
+      "longFrames": {
+        "duringDrop": [
+          {
+            "type": "long-animation-frame",
+            "d": 739,
+            "at": 2919
+          },
+          {
+            "type": "long-animation-frame",
+            "d": 108,
+            "at": 3708
+          },
+          {
+            "type": "long-animation-frame",
+            "d": 58,
+            "at": 3885
+          },
+          {
+            "type": "long-animation-frame",
+            "d": 66,
+            "at": 4027
+          },
+          {
+            "type": "long-animation-frame",
+            "d": 79,
+            "at": 4104
+          },
+          {
+            "type": "longtask",
+            "d": 128,
+            "at": 4253
+          },
+          {
+            "type": "longtask",
+            "d": 215,
+            "at": 4414
+          },
+          {
+            "type": "long-animation-frame",
+            "d": 257,
+            "at": 4381
+          },
+          {
+            "type": "long-animation-frame",
+            "d": 58,
+            "at": 4699
+          },
+          {
+            "type": "long-animation-frame",
+            "d": 92,
+            "at": 4852
+          },
+          {
+            "type": "longtask",
+            "d": 82,
+            "at": 5690
+          },
+          {
+            "type": "long-animation-frame",
+            "d": 86,
+            "at": 5690
+          },
+          {
+            "type": "longtask",
+            "d": 63,
+            "at": 7341
+          }
+        ],
+        "total": 15,
+        "worstMs": 739
+      },
+      "boxHeight": 367,
+      "gridCount": 16,
+      "physicsOn": true,
+      "tip": null,
+      "wokeOnDrag": null,
+      "touchScroll": {
+        "control": {
+          "delta": 185,
+          "scrolled": true
+        },
+        "boxTop": {
+          "delta": 185,
+          "scrolled": true
+        }
+      },
+      "touchDrag": {
+        "target": "postgresql",
+        "wokeLoop": true,
+        "pageStayed": true,
+        "from": {
+          "x": 29,
+          "y": 256
+        },
+        "peak": {
+          "id": "postgresql",
+          "x": 196,
+          "y": 62
+        },
+        "movedPx": 256
+      },
+      "matter": [
+        {
+          "url": "/node_modules/.vite/deps/matter-js.js?v=43f1ac73",
+          "bytes": 240127
+        }
+      ],
+      "console": [
+        "error: Failed to load resource: the server responded with a status of 403 ()",
+        "error: Failed to load resource: the server responded with a status of 403 ()",
+        "error: Failed to load resource: the server responded with a status of 403 ()",
+        "error: Failed to load resource: the server responded with a status of 403 ()"
+      ]
+    }
+  ],
+  "fallbacks": [
+    {
+      "name": "rm-1440",
+      "sectionHeight": 644,
+      "gridCount": 16,
+      "namesVisible": true,
+      "physicsOn": false,
+      "gridOpacity": "1",
+      "errors": []
+    },
+    {
+      "name": "rm-390",
+      "sectionHeight": 569,
+      "gridCount": 16,
+      "namesVisible": true,
+      "physicsOn": false,
+      "gridOpacity": "1",
+      "errors": []
+    },
+    {
+      "name": "nocanvas-390",
+      "sectionHeight": 569,
+      "gridCount": 16,
+      "namesVisible": true,
+      "physicsOn": false,
+      "gridOpacity": "1",
+      "errors": []
+    }
+  ],
+  "decision": {
+    "choice": "fisica (matter-js)",
+    "why": "Sob CPU 4x, o custo real de um passo (Engine.update + draw) ficou em ~2,2-2,5 ms de media e nunca passou de ~22 ms. Os frames > 50 ms medidos na pagina durante a queda vem do resto da Home (globo WebGL, R3F, timers das outras secoes) e da avaliacao do modulo do matter, nao do loop da secao. Plano B (orbita) nao foi necessario.",
+    "reductionsApplied": [
+      "os 16 caem em 2 levas",
+      "timestep fixo de 1000/60",
+      "positionIterations 4",
+      "sleeping + rAF que para ao assentar"
+    ],
+    "matterChunkProd": "84.7 KB min / 26.9 KB gzip (assets/matter-*.js)"
+  }
+}

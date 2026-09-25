@@ -32,11 +32,47 @@ export interface CommandContext {
   rawInput: string;
 }
 
-interface CommandDefinition {
+export interface CommandDefinition {
   name: string;
   description: string;
   execute: (ctx: CommandContext) => void | Promise<void>;
 }
+
+export type TerminalCategory =
+  | "Utility"
+  | "Portfolio"
+  | "File System"
+  | "Fun"
+  | "AI"
+  | "Live";
+
+/** A command plus the `help` section it belongs to (CONTRACTS.md §5). */
+export interface TerminalCommand extends CommandDefinition {
+  category: TerminalCategory;
+}
+
+// Order of the sections printed by `help`.
+const CATEGORY_ORDER: TerminalCategory[] = [
+  "Portfolio",
+  "Live",
+  "File System",
+  "Fun",
+  "Utility",
+  "AI",
+];
+
+// name -> section. `registerCommands` adds to it; anything missing falls into Utility.
+const categoryMap: Record<string, TerminalCategory> = {
+  about: "Portfolio", skills: "Portfolio", experience: "Portfolio",
+  projects: "Portfolio", contact: "Portfolio", resume: "Portfolio",
+  education: "Portfolio", socials: "Portfolio", whoami: "Portfolio",
+  ls: "File System", cd: "File System", cat: "File System",
+  pwd: "File System", tree: "File System",
+  neofetch: "Fun", sudo: "Fun", matrix: "Fun", cowsay: "Fun",
+  fortune: "Fun", theme: "Fun", ascii: "Fun",
+  help: "Utility", clear: "Utility", history: "Utility",
+  ai: "AI", chat: "AI",
+};
 
 function treeNode(
   node: FileSystemNode,
@@ -63,24 +99,8 @@ const commands: CommandDefinition[] = [
     name: "help",
     description: "Show available commands",
     execute: (ctx) => {
-      const grouped: Record<string, CommandDefinition[]> = {
-        Portfolio: [],
-        "File System": [],
-        Fun: [],
-        Utility: [],
-        AI: [],
-      };
-      const categoryMap: Record<string, string> = {
-        about: "Portfolio", skills: "Portfolio", experience: "Portfolio",
-        projects: "Portfolio", contact: "Portfolio", resume: "Portfolio",
-        education: "Portfolio", socials: "Portfolio", whoami: "Portfolio",
-        ls: "File System", cd: "File System", cat: "File System",
-        pwd: "File System", tree: "File System",
-        neofetch: "Fun", sudo: "Fun", matrix: "Fun", cowsay: "Fun",
-        fortune: "Fun", theme: "Fun", ascii: "Fun",
-        help: "Utility", clear: "Utility", history: "Utility",
-        ai: "AI", chat: "AI",
-      };
+      const grouped = {} as Record<TerminalCategory, CommandDefinition[]>;
+      for (const category of CATEGORY_ORDER) grouped[category] = [];
       for (const cmd of commands) {
         const cat = categoryMap[cmd.name] || "Utility";
         grouped[cat]?.push(cmd);
@@ -447,6 +467,21 @@ for (const cmd of commands) {
 }
 
 export { commandRegistry, commands };
+
+/**
+ * Adds (or replaces) commands at runtime. Keeps the `commands` array, the registry used to
+ * run and autocomplete, and the `help` sections in sync — nothing is edited by hand.
+ */
+export function registerCommands(cmds: TerminalCommand[]): void {
+  for (const { category, ...definition } of cmds) {
+    const previous = commandRegistry.get(definition.name);
+    const at = previous ? commands.indexOf(previous) : -1;
+    if (at >= 0) commands[at] = definition;
+    else commands.push(definition);
+    commandRegistry.set(definition.name, definition);
+    categoryMap[definition.name] = category;
+  }
+}
 
 // Input parser
 export function parseInput(raw: string): {

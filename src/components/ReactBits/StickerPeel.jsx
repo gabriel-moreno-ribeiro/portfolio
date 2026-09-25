@@ -136,12 +136,12 @@ const StickerPeel = ({
       <div className="sticker-container" ref={containerRef}>
         <div className="sticker-main">
           <div className="sticker-lighting">
-            <img src={imageSrc} alt="HIBEEX sticker" className="sticker-image" draggable="false" onContextMenu={e => e.preventDefault()} />
+            <img src={imageSrc} alt="HIBEEX sticker" className="sticker-image" width={469} height={469} draggable="false" onContextMenu={e => e.preventDefault()} />
           </div>
         </div>
         <div className="flap">
           <div className="flap-lighting">
-            <img src={imageSrc} alt="" className="flap-image" draggable="false" onContextMenu={e => e.preventDefault()} />
+            <img src={imageSrc} alt="" className="flap-image" width={469} height={469} draggable="false" onContextMenu={e => e.preventDefault()} />
           </div>
         </div>
       </div>

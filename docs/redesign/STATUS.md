@@ -4,9 +4,9 @@
 |---|---|---|---|
 | 0 · setup | **concluída** | `feat(home): fase 0` | branch, 7 agentes, docs, CLAUDE.md |
 | 0.5 · recuperação | **concluída** | `6eb9e25` | 14 arquivos restaurados do deploy |
-| 1 · auditoria e baseline | pendente | — | — |
-| 2 · plano e contratos | pendente | — | — |
-| 3 · build paralelo | pendente | — | — |
+| 1 · auditoria e baseline | **concluída** | `1ea6acf` | Explore → PLAN.md §Fase 1; baseline em `qa/baseline/REPORT.md` |
+| 2 · plano e contratos | **concluída** | `961820d` | PLAN, CONTRACTS, tipos, 8 JSONs, stubs, config compartilhada |
+| 3 · build paralelo | em curso | — | platform ✔; experience ✔ (sprites: 0 frames > 50 ms vs 17 do GLB; 52 ms vs 801 ms; 250 KB vs 3 MB); showcase ✔ (terminal destravado: Escape, dialog, Ctrl+K); hero, skills rodando; follow-ups: getSnapshot (platform) e tags do Candela (showcase) |
 | 4 · integração | pendente | — | — |
 | 5 · QA em loop | pendente | — | — |
 | 6 · entrega | pendente | — | — |
@@ -93,3 +93,17 @@ e auditar o estado atual daria um retrato errado.
    passa `model: opus` (o Opus disponível), sem alterar os arquivos em `.claude/agents/`, que
    voltam a valer como escritos depois de um `claude update`. Vale para os cinco operários e o
    QA; o `runner` (haiku) e o Explore não são afetados.
+
+## Fase 3 — decisões tomadas nos relatórios
+
+- **platform**: `topRepos` recusado (fora da spec). Semântica de erro sem cache (`data` = mock,
+  `status: 'error'`) mantida e escrita no CONTRACTS §3.
+- **experience**: técnica do carro = **sprites** (48 WebP 256×256, 250 KB), por medição em CPU 4×:
+  GLB 17 frames > 50 ms e 801 ms até o 1º frame (mobile) vs sprites 0 e 52 ms. Correção à
+  auditoria: o GLB tem as quatro rodas num nó só. Pisca-alerta acende quando o carro estaciona na
+  última parada (não em `progress > 0,97`, que deixava trecho morto). `qa/experience-bench/` fica.
+  Remoção dos arquivos antigos (WorkExperience, PartsAssemblingCanvas, D20Truck,
+  workExperience.scss + linha do index.scss) é feita na integração.
+- **showcase**: `getSnapshot()` aprovado e adicionado ao CONTRACTS §3 (platform implementa).
+  Tags duplicadas do Candela cortadas no componente, não em `projects.ts` (fonte de `/work`).
+  Caixas de altura reservada nos `Suspense` da Home: o orquestrador faz na integração.

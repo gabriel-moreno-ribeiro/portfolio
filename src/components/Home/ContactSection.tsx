@@ -1,5 +1,6 @@
 import { FormEvent, useState } from 'react';
 import { FiArrowUpRight, FiCalendar, FiCheck, FiGithub, FiLinkedin, FiMail, FiSend } from 'react-icons/fi';
+import { config, useClock } from '../../lib/data';
 
 interface FormErrors {
   name?: string;
@@ -17,6 +18,7 @@ const channels = [
 ];
 
 function ContactSection() {
+  const { hhmm } = useClock(config.location.tz);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
@@ -83,6 +85,9 @@ function ContactSection() {
         <p className="contact-section__lead">
           Building something, hiring, or just curious? Write to me.
         </p>
+        <p className="contact-section__clock" aria-live="off">
+          {hhmm} here &middot; I usually reply within a day
+        </p>
         <ul className="contact-section__channels">
           {channels.map(({ label, value, href, Icon }) => (
             <li key={label}>
@@ -126,8 +131,14 @@ function ContactSection() {
                   onChange={e => { setName(e.target.value); setErrors(prev => ({ ...prev, name: undefined })); }}
                   placeholder="Your name"
                   autoComplete="name"
+                  aria-invalid={errors.name ? true : undefined}
+                  aria-describedby={errors.name ? 'contact-name-error' : undefined}
                 />
-                {errors.name && <span className="contact-section__error">{errors.name}</span>}
+                {errors.name && (
+                  <span className="contact-section__error" id="contact-name-error" role="alert">
+                    {errors.name}
+                  </span>
+                )}
               </div>
 
               <div className={`contact-section__field ${errors.email ? 'contact-section__field--error' : ''}`}>
@@ -139,8 +150,14 @@ function ContactSection() {
                   onChange={e => { setEmail(e.target.value); setErrors(prev => ({ ...prev, email: undefined })); }}
                   placeholder="you@example.com"
                   autoComplete="email"
+                  aria-invalid={errors.email ? true : undefined}
+                  aria-describedby={errors.email ? 'contact-email-error' : undefined}
                 />
-                {errors.email && <span className="contact-section__error">{errors.email}</span>}
+                {errors.email && (
+                  <span className="contact-section__error" id="contact-email-error" role="alert">
+                    {errors.email}
+                  </span>
+                )}
               </div>
             </div>
 
@@ -152,13 +169,19 @@ function ContactSection() {
                 onChange={e => { setMessage(e.target.value); setErrors(prev => ({ ...prev, message: undefined })); }}
                 placeholder="What are you working on?"
                 rows={5}
+                aria-invalid={errors.message ? true : undefined}
+                aria-describedby={errors.message ? 'contact-message-error' : undefined}
               />
-              {errors.message && <span className="contact-section__error">{errors.message}</span>}
+              {errors.message && (
+                <span className="contact-section__error" id="contact-message-error" role="alert">
+                  {errors.message}
+                </span>
+              )}
             </div>
 
             <div className="contact-section__actions">
-              <button type="submit" className="contact-section__submit" disabled={submitting}>
-                {submitting ? 'Sending...' : <>Send message <FiSend /></>}
+              <button type="submit" className="contact-section__submit" disabled={submitting} aria-busy={submitting}>
+                {submitting ? 'Sending…' : <>Send message <FiSend /></>}
               </button>
             </div>
           </form>

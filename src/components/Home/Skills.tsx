@@ -1,146 +1,136 @@
-import { useInView } from "motion/react";
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import l_icon1 from "../../assets/skills/light/icon1.webp";
-import l_icon2 from "../../assets/skills/light/icon2.webp";
-import l_icon3 from "../../assets/skills/light/icon3.webp";
-import l_icon4 from "../../assets/skills/light/icon4.webp";
-import l_icon5 from "../../assets/skills/light/icon5.webp";
-import l_icon6 from "../../assets/skills/light/icon6.webp";
-import l_icon7 from "../../assets/skills/light/icon7.webp";
-import l_icon8 from "../../assets/skills/light/icon8.webp";
-import l_icon9 from "../../assets/skills/light/icon9.webp";
-import l_icon10 from "../../assets/skills/light/icon10.webp";
-
-import d_icon1 from "../../assets/skills/dark/icon1.webp";
-import d_icon2 from "../../assets/skills/dark/icon2.webp";
-import d_icon3 from "../../assets/skills/dark/icon3.webp";
-import d_icon4 from "../../assets/skills/dark/icon4.webp";
-import d_icon5 from "../../assets/skills/dark/icon5.webp";
-import d_icon6 from "../../assets/skills/dark/icon6.webp";
-import d_icon7 from "../../assets/skills/dark/icon7.webp";
-import d_icon8 from "../../assets/skills/dark/icon8.webp";
-import d_icon9 from "../../assets/skills/dark/icon9.webp";
-import d_icon10 from "../../assets/skills/dark/icon10.webp";
-import python from "../../assets/skills/devicon/python.svg";
-import docker from "../../assets/skills/devicon/docker.svg";
-import git from "../../assets/skills/devicon/git.svg";
-import figma from "../../assets/skills/devicon/figma.svg";
-import postgresql from "../../assets/skills/devicon/postgresql.svg";
-import tailwindcss from "../../assets/skills/devicon/tailwindcss.svg";
-import useIsMobile from "../../hooks/useIsMobile";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useLocalData } from "../../lib/data";
+import { useReducedMotion, useVisible } from "../../lib/motion";
 import { useThemeStore } from "../../store/themeStore";
-import SkillsCanvas from "./SkillsCanvas";
+import { canvasReady, createToolbox, type Toolbox, type ToolboxItem } from "./skillsPhysics";
 
-const extraIcons = [python, docker, git, figma, postgresql, tailwindcss];
+// `skills.json` guarda o caminho relativo; o Vite resolve a URL final.
+const ICON_URLS = import.meta.glob("../../assets/skills/**/*.{webp,svg}", {
+  eager: true,
+  query: "?url",
+  import: "default",
+}) as Record<string, string>;
 
-const BUILTIN_COUNT = 10;
+const urlFor = (path: string): string => ICON_URLS[`../../assets/skills/${path}`] ?? "";
 
-const lightIcons = [
-  l_icon1, l_icon2, l_icon3, l_icon4, l_icon5,
-  l_icon6, l_icon7, l_icon8, l_icon9, l_icon10,
-  ...extraIcons,
-];
+const HIBEEX = "hibeex";
 
-const darkIcons = [
-  d_icon1, d_icon2, d_icon3, d_icon4, d_icon5,
-  d_icon6, d_icon7, d_icon8, d_icon9, d_icon10,
-  ...extraIcons,
-];
+function Skills() {
+  const { skills } = useLocalData();
+  const darkMode = useThemeStore((s) => s.darkMode);
+  const reduced = useReducedMotion();
 
-// |x| stays under ~560 so at 1440px nothing clips on the right or lands on the side nav (left gutter ≈ 195px).
-const deskstopFinalPositions = [
-  { x: -440, y: 0 },
-  { x: 520, y: 90 },
-  { x: 540, y: -60 },
-  { x: -470, y: -170 },
-  { x: -470, y: 240 },
-  { x: 100, y: -250 },
-  { x: -400, y: -300 },
-  { x: 420, y: 220 },
-  { x: -300, y: 0 },
-  { x: 300, y: 0 },
-  // extras
-  { x: -150, y: -350 },
-  { x: 400, y: -180 },
-  { x: -330, y: 130 },
-  { x: 560, y: 300 },
-  { x: -60, y: 260 },
-  { x: 430, y: 350 },
-];
+  const sectionRef = useRef<HTMLElement>(null);
+  const boxRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const toolboxRef = useRef<Toolbox | null>(null);
 
-const mobileFinalPositions = [
-  { x: -100, y: 120 },
-  { x: 150, y: 110 },
-  { x: 120, y: -150 },
-  { x: -120, y: -275 },
-  { x: 0, y: 325 },
-  { x: 10, y: -280 },
-  { x: -100, y: -150 },
-  { x: 5, y: 150 },
-  { x: -150, y: 300 },
-  { x: 150, y: 380 },
-  // extras
-  { x: -145, y: 65 },
-  { x: 145, y: 30 },
-  { x: -60, y: 225 },
-  { x: -145, y: 185 },
-  { x: 145, y: -235 },
-  { x: -60, y: -335 },
-];
+  // Um observer para nascer (uma vez só, a queda não se repete) e outro para ligar/desligar o loop.
+  const entered = useVisible(sectionRef, { rootMargin: "200px 0px", once: true });
+  const onScreen = useVisible(sectionRef, { rootMargin: "0px" });
 
-const Skills: React.FC = () => {
-  const isMobile = useIsMobile();
-  const { darkMode } = useThemeStore();
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, {
-    margin: "0px 0px -40% 0px",
-    amount: 0.1,
-    once: true,
-  });
+  const [lit, setLit] = useState(false);
+  const [running, setRunning] = useState(false);
+  const [tip, setTip] = useState<{ name: string; x: number; y: number } | null>(null);
 
-  const [vpWidth, setVpWidth] = useState(
-    typeof window !== "undefined" ? window.innerWidth : 1400
+  const items = useMemo<ToolboxItem[]>(
+    () =>
+      skills.map((skill) => ({
+        id: skill.id,
+        name: skill.name || "Tool",
+        src: urlFor(typeof skill.icon === "string" ? skill.icon : darkMode ? skill.icon.dark : skill.icon.light),
+        card: typeof skill.icon === "string",
+        lit: skill.projects.includes(HIBEEX),
+      })),
+    [skills, darkMode],
   );
+  const itemsRef = useRef(items);
+  itemsRef.current = items;
+
   useEffect(() => {
-    const onResize = () => setVpWidth(window.innerWidth);
-    window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
-  }, []);
+    if (reduced || !entered) return;
+    const canvas = canvasRef.current;
+    const box = boxRef.current;
+    if (!canvas || !box || !canvasReady()) return;
 
-  const finalPositions = useMemo(() => {
-    if (isMobile) return mobileFinalPositions;
-    const scale = Math.max(1, vpWidth / 1400);
-    return deskstopFinalPositions.map((p) => ({
-      x: p.x * scale,
-      y: p.y,
-    }));
-  }, [isMobile, vpWidth]);
+    let disposed = false;
+    createToolbox({
+      canvas,
+      items: itemsRef.current,
+      size: box.clientWidth < 560 ? 48 : 72,
+      onHover: (name, x, y) => setTip(name ? { name, x, y } : null),
+    })
+      .then((toolbox) => {
+        if (!toolbox) return;
+        if (disposed) {
+          toolbox.destroy();
+          return;
+        }
+        toolboxRef.current = toolbox;
+        setRunning(true);
+      })
+      .catch(() => undefined);
 
-  const iconUrls = darkMode ? darkIcons : lightIcons;
+    return () => {
+      disposed = true;
+      toolboxRef.current?.destroy();
+      toolboxRef.current = null;
+      setRunning(false);
+      setTip(null);
+    };
+  }, [reduced, entered]);
+
+  useEffect(() => {
+    toolboxRef.current?.setActive(onScreen);
+  }, [onScreen, running]);
+
+  useEffect(() => {
+    toolboxRef.current?.setItems(items);
+  }, [items]);
+
+  useEffect(() => {
+    toolboxRef.current?.setHighlight(lit);
+  }, [lit, running]);
 
   return (
-    <div className="skills-container" ref={ref} id="skills">
-      <p
-        className="main-text"
-        data-color-inverted={"true"}
-      >
-        Some of the languages <br />
-        & tools I build with.
-      </p>
-      {/* The physics playground needs a mouse and ~1000px of height; phones get the logo strip below instead. */}
-      {!isMobile && (
-        <SkillsCanvas
-          iconUrls={iconUrls}
-          finalPositions={finalPositions}
-          isMobile={isMobile}
-          triggerEntrance={inView}
-          cardStartIndex={BUILTIN_COUNT}
-          cardBg={darkMode ? "#16162e" : "#ffffff"}
-          cardBorder={darkMode ? "rgba(255,255,255,0.16)" : "rgba(0,0,0,0.08)"}
-        />
-      )}
-    </div>
+    <section className="skills" id="skills" ref={sectionRef} aria-labelledby="skills-title">
+      <div className="skills__head">
+        <h2 className="skills__lead" id="skills-title" data-color-inverted="true">
+          Some of the languages &amp; tools I build with.
+        </h2>
+        <button
+          type="button"
+          className="skills__chip"
+          aria-pressed={lit}
+          onClick={() => setLit((v) => !v)}
+        >
+          used in HIBEEX
+        </button>
+      </div>
+
+      <div className={`skills__box${running ? " is-physics" : ""}`} ref={boxRef}>
+        <ul className={`skills__grid${lit ? " is-filtered" : ""}`}>
+          {items.map((item) => (
+            <li
+              className="skills__item"
+              key={item.id}
+              data-lit={item.lit ? "true" : undefined}
+              data-card={item.card ? "true" : undefined}
+            >
+              <img className="skills__icon" src={item.src} width={72} height={72} alt="" loading="lazy" />
+              <span className="skills__name">{item.name}</span>
+            </li>
+          ))}
+        </ul>
+        <canvas className="skills__canvas" ref={canvasRef} aria-hidden="true" />
+        {tip && (
+          <span className="skills__tip" style={{ left: tip.x, top: tip.y }} aria-hidden="true">
+            {tip.name}
+          </span>
+        )}
+      </div>
+    </section>
   );
-};
+}
 
 export default Skills;
