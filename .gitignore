@@ -57,3 +57,5 @@ qa/**/*.png
 qa/**/*.html
 
 *.tsbuildinfo
+qa/**/lighthouse-desktop.json
+qa/**/lighthouse-mobile.json
