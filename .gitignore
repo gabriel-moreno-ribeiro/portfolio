@@ -46,3 +46,6 @@ yarn-error.log*
 /overnight/lighthouse
 /overnight/preview.log
 /overnight/build.log
+
+# temporario: recuperacao do working tree (remover depois)
+recovery-incoming/
