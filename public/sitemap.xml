@@ -25,6 +25,30 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://gabrielmr.com/work/hibeex</loc>
+    <lastmod>2026-09-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://gabrielmr.com/work/candela</loc>
+    <lastmod>2026-09-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://gabrielmr.com/work/medals</loc>
+    <lastmod>2026-09-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://gabrielmr.com/work/gsat</loc>
+    <lastmod>2026-09-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://gabrielmr.com/privacy</loc>
     <lastmod>2026-08-20</lastmod>
     <changefreq>yearly</changefreq>

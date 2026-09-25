@@ -20,7 +20,12 @@ function CustomMouse() {
     const el = ref.current;
     if (!el) return;
 
-    const set = (style: Partial<CSSStyleDeclaration>, html = "") => {
+    // Only touch the DOM when the cursor actually changes shape: mouseover
+    // fires on every element the pointer crosses.
+    let currentShape = "";
+    const set = (shape: string, style: Partial<CSSStyleDeclaration>, html = "") => {
+      if (shape === currentShape) return;
+      currentShape = shape;
       Object.assign(el.style, style);
       el.innerHTML = html;
     };
@@ -33,25 +38,25 @@ function CustomMouse() {
       el.style.display = hidden ? "none" : "";
     });
 
+    // Compositor-only move. Writing top/left forced a layout on every mousemove.
     const onMove = (e: MouseEvent) => {
-      el.style.top = `${e.pageY}px`;
-      el.style.left = `${e.pageX}px`;
+      el.style.transform = `translate3d(${e.pageX}px, ${e.pageY}px, 0) translate(-50%, -50%)`;
       if (hidden) { hidden = false; el.style.display = ""; }
     };
-    const onDown = () => set({ width: "50px", height: "50px", opacity: "0.5" });
-    const onUp = () => set({ width: "10px", height: "10px", opacity: "1" });
+    const onDown = () => set("down", { width: "50px", height: "50px", opacity: "0.5" });
+    const onUp = () => set("up", { width: "10px", height: "10px", opacity: "1" });
 
     // Event delegation: works for sections that mount later (lazy-loaded) too
     const onOver = (e: MouseEvent) => {
       const t = e.target as Element;
       if (t.closest("[data-click-me]")) {
-        set({ ...IDLE, width: "100px", height: "100px", backgroundColor: "rgba(0, 0, 0, 0.8)" }, "<p>Click Me!</p>");
+        set("click", { ...IDLE, width: "100px", height: "100px", backgroundColor: "rgba(0, 0, 0, 0.8)" }, "<p>Click Me!</p>");
       } else if (t.closest("[data-drag-me]")) {
-        set({ ...IDLE, width: "50px", height: "50px", backgroundColor: "var(--black)", backdropFilter: "blur(10px)", opacity: darkMode ? "0.25" : "0.8" });
+        set("drag", { ...IDLE, width: "50px", height: "50px", backgroundColor: "var(--black)", backdropFilter: "blur(10px)", opacity: darkMode ? "0.25" : "0.8" });
       } else if (t.closest("[data-color-inverted]")) {
-        set({ ...IDLE, width: "80px", height: "80px", mixBlendMode: "difference", filter: darkMode ? "" : "invert(1)" });
+        set("invert", { ...IDLE, width: "80px", height: "80px", mixBlendMode: "difference", filter: darkMode ? "" : "invert(1)" });
       } else {
-        set(IDLE);
+        set("idle", IDLE);
       }
     };
 

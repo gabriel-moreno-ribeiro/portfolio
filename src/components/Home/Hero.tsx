@@ -13,10 +13,25 @@ import { scrollToComponent } from '../../utils/scrollToComponent';
 import CommonButton from '../Shared/CommonButton';
 import ScrambleText from '../Shared/ScrambleText';
 
+// The robot pulls in three.js + react-three (~1MB parsed) and renders every
+// frame. Skip it outright on devices that would pay for it.
+function isLowPowerDevice() {
+  const nav = navigator as Navigator & {
+    deviceMemory?: number;
+    connection?: { saveData?: boolean };
+  };
+  if (nav.connection?.saveData) return true;
+  if (typeof nav.deviceMemory === 'number' && nav.deviceMemory <= 4) return true;
+  if (typeof nav.hardwareConcurrency === 'number' && nav.hardwareConcurrency <= 4)
+    return true;
+  return false;
+}
+
 const shouldSkip3D =
   typeof window !== 'undefined' &&
   (window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
-   window.innerWidth < 768);
+   window.innerWidth < 768 ||
+   isLowPowerDevice());
 
 const CanvasComponent = shouldSkip3D
   ? null
@@ -39,7 +54,23 @@ function Hero() {
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
   const [showRobot, setShowRobot] = useState(false);
   const [introDone, setIntroDone] = useState(false);
+  const [load3D, setLoad3D] = useState(false);
   const mountTimeRef = useRef(Date.now());
+
+  // Let text paint first: the 3D chunk is fetched once the main thread is idle.
+  useEffect(() => {
+    if (shouldSkip3D) return;
+    const w = window as Window & {
+      requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number;
+      cancelIdleCallback?: (id: number) => void;
+    };
+    if (w.requestIdleCallback) {
+      const id = w.requestIdleCallback(() => setLoad3D(true), { timeout: 2500 });
+      return () => w.cancelIdleCallback?.(id);
+    }
+    const id = window.setTimeout(() => setLoad3D(true), 1200);
+    return () => clearTimeout(id);
+  }, []);
 
   const handleRobotReady = useCallback(() => {
     if (shouldSkip3D) return;
@@ -76,7 +107,7 @@ function Hero() {
           transition={{ duration: 0.8, ease: 'easeOut' }}
         >
           <Suspense fallback={null}>
-            <CanvasComponent onReady={handleRobotReady} />
+            {load3D && <CanvasComponent onReady={handleRobotReady} />}
           </Suspense>
         </motion.div>
       )}
