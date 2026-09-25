@@ -99,14 +99,16 @@ function Hero() {
       : formatRelative(latest.date)
     : '';
 
-  // Under reduced motion the final state is the default: nothing starts at opacity 0.
-  const fadeIn = (delay: number, duration: number) =>
+  // The final state is the default: nothing in the hero starts transparent, because
+  // an invisible one-liner was the LCP element and pushed it to 1.9s. The entrance is
+  // a 10px rise (transform only) and the whole stagger fits in 0.3s.
+  const rise = (delay: number) =>
     reduced
-      ? { initial: false as const, animate: { opacity: 1 } }
+      ? { initial: false as const }
       : {
-          initial: { opacity: 0 },
-          animate: { opacity: 1 },
-          transition: { delay, duration, ease: 'easeOut' as const },
+          initial: { y: 10 },
+          animate: { y: 0 },
+          transition: { delay, duration: 0.35, ease: 'easeOut' as const },
         };
 
   return (
@@ -141,7 +143,7 @@ function Hero() {
       <div className="heading-section">
         <motion.div
           className="heading"
-          {...fadeIn(BG_SETTLE_DELAY, 0.6)}
+          {...rise(0)}
           data-color-inverted={'true'}
         >
           <h1 className="hero-name">
@@ -162,7 +164,7 @@ function Hero() {
             <span className="role-suffix">& Curious.</span>
           </div>
         </motion.div>
-        <motion.p className="desc" {...fadeIn(BG_SETTLE_DELAY + 0.2, 0.6)}>
+        <motion.p className="desc" {...rise(0.08)}>
           Building Backoffice AI for Small and Medium Businesses @ HIBEEX. Founder @ Projeto Candela.
         </motion.p>
         {/* Status line: building / reading / local time, from now.json and the clock. */}
@@ -170,7 +172,7 @@ function Hero() {
           <span className="hero-status__dot" aria-hidden="true" />
           <span className="hero-status__text">{nowLine.text}</span>
         </p>
-        <motion.div className="btn-flex" {...fadeIn(BG_SETTLE_DELAY + 0.5, 0.4)}>
+        <motion.div className="btn-flex" {...rise(0.16)}>
           {/* Two calls to action: the work first, then a call. LinkedIn lives in Contact and the footer. */}
           <CommonButton
             text="See Work"
@@ -187,7 +189,7 @@ function Hero() {
           />
         </motion.div>
         {latest && (
-          <motion.p className="hero-latest" {...fadeIn(BG_SETTLE_DELAY + 0.7, 0.6)}>
+          <motion.p className="hero-latest" {...rise(0.24)}>
             <span className="hero-latest__tag">latest</span>
             <a
               className="hero-latest__link"
