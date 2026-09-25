@@ -60,6 +60,10 @@
     &:focus-visible { color: $white; }
   }
 
+  // The live badge ships --fg-muted (#5f5f5f), which is meant for the page, not for
+  // this card. In the light theme the footer is a #111 card, so the text goes light.
+  .hl-live__text { color: rgba(255, 255, 255, 0.78); }
+
   .links {
     display: flex;
     gap: 12px;
@@ -92,6 +96,8 @@
     &__cta-link { color: $black; &:hover { color: var(--accent); } }
     &__copy { color: rgba($black, 0.55); }
     &__freshness { color: rgba($black, 0.6); }
+    // In the dark theme the footer flips to a #fff card, so the badge flips too.
+    .hl-live__text { color: rgba(17, 17, 17, 0.72); }
     &__freshness-link {
       border-bottom-color: rgba($black, 0.25);
       &:hover, &:focus-visible { color: $black; }
