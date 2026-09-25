@@ -120,71 +120,6 @@
       }
     }
 
-    // Live status line: mono, quiet, and the width is reserved so swapping the
-    // phrase never moves anything around it.
-    .hero-status {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      margin: -8px 0 0;
-      min-height: 18px;
-      font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-      font-size: 12px;
-      letter-spacing: 0.01em;
-      color: var(--fg-muted);
-
-      &__dot {
-        width: 6px;
-        height: 6px;
-        border-radius: 50%;
-        background: var(--accent-decor);
-        flex-shrink: 0;
-      }
-
-      &__text {
-        min-width: 34ch;
-        text-align: left;
-      }
-    }
-
-    // "latest": most recent press item, with a relative date.
-    .hero-latest {
-      display: flex;
-      align-items: baseline;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 24px;
-      width: 100%;
-      min-height: 48px;
-      font-size: 14px;
-      color: var(--fg-muted);
-
-      &__tag {
-        font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-        font-size: 10px;
-        font-weight: 600;
-        letter-spacing: 0.14em;
-        text-transform: uppercase;
-        color: var(--accent);
-        border: 1px solid var(--accent-decor);
-        border-radius: 999px;
-        padding: 2px 8px;
-      }
-
-      &__link {
-        color: var(--fg);
-        text-decoration: none;
-        border-bottom: 1px solid var(--accent-decor);
-        padding-bottom: 1px;
-
-        &:hover,
-        &:focus-visible { color: var(--accent); }
-      }
-
-      &__meta { font-size: 13px; }
-    }
   }
 }
 
@@ -215,17 +150,6 @@
         gap: 8px;
       }
 
-      .hero-status {
-        margin-top: -4px;
-        font-size: 11px;
-        &__text { min-width: 0; text-align: center; }
-      }
-
-      .hero-latest {
-        min-height: 72px;
-        font-size: 13px;
-        gap: 6px;
-      }
 
       .btn-flex {
         flex-wrap: wrap;

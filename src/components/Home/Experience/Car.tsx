@@ -31,6 +31,24 @@ function angleDelta(a: number, b: number): number {
   return Math.abs(((((a - b) % 360) + 540) % 360) - 180);
 }
 
+/** Diferença com sinal, caminho mais curto, em graus. */
+function shortestDelta(from: number, to: number): number {
+  return ((((to - from) % 360) + 540) % 360) - 180;
+}
+
+/**
+ * Amaciamento. O frame do sprite é discreto (7,5° de yaw), então tudo que é contínuo —
+ * inclinação, rodas, sombra, brilho e direção do cone — passa por lerp próprio, senão o
+ * movimento "degrau" do sprite contamina o resto e vira trepidação na curva.
+ */
+const FRAME_HYSTERESIS = 1.6; // graus a mais que o vizinho precisa ser melhor para trocar
+const K_ROLL = 0.12;
+const K_WHEEL = 0.2;
+const K_SHADE = 0.12;
+const K_BEAM = 0.22;
+const K_LAMP = 0.25;
+const SETTLED = 0.002;
+
 const FRAME_BY_DEG = (() => {
   const table = new Uint8Array(360);
   for (let deg = 0; deg < 360; deg++) {
@@ -85,8 +103,12 @@ function nearestReady(imgs: HTMLImageElement[], frame: number): HTMLImageElement
 }
 
 export interface CarHandle {
-  /** `y` = altura em px da seção; `speed` alimenta a opacidade da sombra. */
-  draw(y: number, speed: number): void;
+  /**
+   * `y` = altura em px da seção; `speed` = px de rolagem suavizada por quadro (alimenta
+   * a opacidade da sombra e o brilho do farol).
+   * Devolve `true` quando todos os lerps já assentaram (quem chama pode parar o rAF).
+   */
+  draw(y: number, speed: number): boolean;
 }
 
 interface CarProps {
@@ -108,15 +130,30 @@ const Car = forwardRef<CarHandle, CarProps>(function Car({ road, size, reduced, 
   const posterRef = useRef<HTMLImageElement>(null);
   const hazardRef = useRef<HTMLDivElement>(null);
   const imagesRef = useRef<HTMLImageElement[]>([]);
-  const drawRef = useRef<((y: number, speed: number) => void) | null>(null);
+  const drawRef = useRef<((y: number, speed: number) => boolean) | null>(null);
   const shadowRef = useRef<HTMLCanvasElement | null>(null);
-  const stateRef = useRef({ phase: 0, lastY: -1, lastAngle: 90, drawn: false, y: -1, speed: 0 });
+  const stateRef = useRef({
+    phase: 0,
+    lastY: -1,
+    lastAngle: 90,
+    frame: frameForHeading(90),
+    roll: 0,
+    wheelRate: 0,
+    shade: 0.16,
+    beam: 90,
+    beamK: 0.72,
+    lampX: 0,
+    lampY: 0,
+    drawn: false,
+    y: -1,
+    speed: 0,
+  });
 
   useImperativeHandle(ref, () => ({
     draw: (y, speed) => {
       stateRef.current.y = y;
       stateRef.current.speed = speed;
-      drawRef.current?.(y, speed);
+      return drawRef.current ? drawRef.current(y, speed) : true;
     },
   }), []);
 
@@ -182,37 +219,74 @@ const Car = forwardRef<CarHandle, CarProps>(function Car({ road, size, reduced, 
     }
     const s = px / FRAME_PX; // sprite px → px do canvas
     const pagePerSprite = size / FRAME_PX; // sprite px → px da página
-    const lookup = roadLookup(road.d);
+    const lookup = roadLookup(road);
     const st = stateRef.current;
     const shadow = shadowRef.current;
 
-    drawRef.current = (y: number, speed: number): void => {
-      const p = lookup.sampler.at(lookup.tAtY(y));
-      const frame = frameForHeading(p.angle);
+    drawRef.current = (y: number, speed: number): boolean => {
+      const p = lookup.sampleAtY(y);
+
+      // Frame do sprite com histerese: só troca quando o vizinho fica melhor que o atual por
+      // mais de FRAME_HYSTERESIS, e no máximo um frame por rAF. Sem isso a tangente oscilando
+      // em torno do meio-caminho entre dois yaws fazia o carro tremer na curva.
+      const want = frameForHeading(p.angle);
+      if (want !== st.frame) {
+        const n = FRAMES.length;
+        const dir = (((want - st.frame) % n) + n + n / 2) % n - n / 2;
+        const next = (st.frame + (dir > 0 ? 1 : -1) + n) % n;
+        if (angleDelta(FRAMES[next].heading, p.angle) + FRAME_HYSTERESIS < angleDelta(FRAMES[st.frame].heading, p.angle)) {
+          st.frame = next;
+        }
+      }
+      const frame = st.frame;
       const f = FRAMES[frame];
 
       wrap.style.transform = `translate3d(${(p.x - size / 2).toFixed(1)}px, ${(p.y - size / 2).toFixed(1)}px, 0)`;
 
-      // Apex do cone nos faróis daquele frame (não no centro do carro): amarra a luz à grade
-      // e deixa óbvio, num sprite de 132 px, qual ponta é a frente.
+      // Inclinação ∝ taxa de variação do ângulo, amaciada (não pula junto com o frame).
+      const dAngle = shortestDelta(st.lastAngle, p.angle);
+      st.lastAngle = p.angle;
+      const targetRoll = Math.max(-4, Math.min(4, dAngle * 0.8));
+      st.roll += (targetRoll - st.roll) * K_ROLL;
+      wrap.style.setProperty('--exp-roll', `${st.roll.toFixed(2)}deg`);
+
+      // Cone: aponta para o heading do frame DESENHADO (não para a tangente crua), com lerp —
+      // assim a luz nunca descasa do capô, e o apex acompanha os faróis sem saltar no troca-frame.
+      const lampX = ((f.anchors.lampL.x + f.anchors.lampR.x) / 2) * pagePerSprite;
+      const lampY = ((f.anchors.lampL.y + f.anchors.lampR.y) / 2) * pagePerSprite;
+      if (st.lampX === 0 && st.lampY === 0) {
+        st.lampX = lampX;
+        st.lampY = lampY;
+        st.beam = f.heading;
+      }
+      st.lampX += (lampX - st.lampX) * K_LAMP;
+      st.lampY += (lampY - st.lampY) * K_LAMP;
+      st.beam += shortestDelta(st.beam, f.heading) * K_BEAM;
+      const targetBeamK = 0.72 + Math.min(0.28, speed / 80);
+      st.beamK += (targetBeamK - st.beamK) * K_SHADE;
+      wrap.style.setProperty('--exp-beam-k', st.beamK.toFixed(3));
       if (beamRef.current) {
-        const lx = ((f.anchors.lampL.x + f.anchors.lampR.x) / 2) * pagePerSprite;
-        const ly = ((f.anchors.lampL.y + f.anchors.lampR.y) / 2) * pagePerSprite;
         beamRef.current.style.transform =
-          `translate(${lx.toFixed(1)}px, ${(ly - BEAM_H / 2).toFixed(1)}px) rotate(${p.angle.toFixed(1)}deg)`;
+          `translate(${st.lampX.toFixed(1)}px, ${(st.lampY - BEAM_H / 2).toFixed(1)}px) rotate(${st.beam.toFixed(1)}deg)`;
       }
 
-      // Inclinação nas curvas ∝ derivada do ângulo, limitada.
-      const dAngle = ((p.angle - st.lastAngle + 540) % 360) - 180;
-      st.lastAngle = p.angle;
-      const roll = Math.max(-4, Math.min(4, dAngle * 0.4));
-      wrap.style.setProperty('--exp-roll', `${roll.toFixed(2)}deg`);
-
-      // Rodas: fase ∝ deslocamento real, limitada por frame para o giro não virar ruído
-      // quando o scroll é rápido (efeito roda-de-carroça).
+      // Rodas: a taxa de giro também é amaciada, então o giro não engasga quando o frame troca.
       const travel = Math.abs(y - (st.lastY < 0 ? y : st.lastY));
       st.lastY = y;
-      st.phase += Math.min(0.7, travel / (WHEEL_R * pagePerSprite));
+      const targetRate = Math.min(0.7, travel / (WHEEL_R * pagePerSprite));
+      st.wheelRate += (targetRate - st.wheelRate) * K_WHEEL;
+      st.phase += st.wheelRate;
+
+      const targetShade = 0.16 + Math.min(0.16, speed / 120);
+      st.shade += (targetShade - st.shade) * K_SHADE;
+
+      const settled =
+        Math.abs(targetRoll - st.roll) < SETTLED &&
+        st.wheelRate < SETTLED &&
+        Math.abs(targetShade - st.shade) < SETTLED &&
+        Math.abs(targetBeamK - st.beamK) < SETTLED &&
+        Math.abs(shortestDelta(st.beam, f.heading)) < 0.05 &&
+        want === st.frame;
 
       if (hazardRef.current) {
         const { tailL, tailR } = f.anchors;
@@ -223,9 +297,9 @@ const Car = forwardRef<CarHandle, CarProps>(function Car({ road, size, reduced, 
         style.setProperty('--exp-tr-y', `${(tailR.y * pagePerSprite).toFixed(1)}px`);
       }
 
-      if (!ctx) return;
+      if (!ctx) return settled;
       const img = nearestReady(imagesRef.current, frame);
-      if (!img) return; // nada pronto ainda → fica o poster
+      if (!img) return settled; // nada pronto ainda → fica o poster
 
       ctx.clearRect(0, 0, px, px);
 
@@ -247,7 +321,7 @@ const Car = forwardRef<CarHandle, CarProps>(function Car({ road, size, reduced, 
         const cx = ((minX + maxX) / 2) * s;
         const cy = ((minY + maxY) / 2) * s + WHEEL_R * s * 0.55;
         ctx.save();
-        ctx.globalAlpha = 0.16 + Math.min(0.16, speed * 0.6);
+        ctx.globalAlpha = st.shade;
         ctx.drawImage(shadow, cx - rx, cy - ry, rx * 2, ry * 2);
         ctx.restore();
       }
@@ -276,6 +350,7 @@ const Car = forwardRef<CarHandle, CarProps>(function Car({ road, size, reduced, 
         st.drawn = true;
         posterRef.current?.classList.add('is-hidden');
       }
+      return settled;
     };
 
     if (st.y >= 0) drawRef.current(st.y, st.speed);

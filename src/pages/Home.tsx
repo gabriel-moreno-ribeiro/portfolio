@@ -11,6 +11,7 @@ import { NAVIGATE_EVENT, type NavigateDetail } from "../utils/scrollToComponent"
 
 const BackgroundGlobe = lazy(() => import("../components/Home/BackgroundGlobe"));
 const Skills = lazy(() => import("../components/Home/Skills"));
+const HorizontalSkillsWrapper = lazy(() => import("../components/Home/HorizontalSkillsWrapper"));
 const FindMyWork = lazy(() => import("../components/Home/FindMyWork"));
 const Research = lazy(() => import("../components/Home/Research"));
 const NumbersAndStats = lazy(() => import("../components/Home/Numbers"));
@@ -37,7 +38,7 @@ const RESERVE: Record<string, [desktop: number, mobile: number]> = {
   work: [1230, 1870],
   numbers: [630, 1180],
   research: [1120, 1630],
-  skills: [490, 650],
+  skills: [1300, 400],
   'work-experience': [4040, 3240],
   contact: [445, 940],
 };
@@ -190,6 +191,7 @@ function Home() {
       </LazySection>
       <LazySection id="skills" label="Skills" eager={mountAll}>
         <Skills />
+        <HorizontalSkillsWrapper />
       </LazySection>
       <LazySection id="work-experience" label="Professional experience" eager={mountAll}>
         <Experience />

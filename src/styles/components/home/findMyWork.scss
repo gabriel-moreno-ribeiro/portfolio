@@ -355,10 +355,6 @@
     opacity: 1;
   }
 
-  &__key {
-    color: var(--fg-muted);
-  }
-
   &__line strong,
   &__counts strong {
     color: var(--accent);
@@ -370,56 +366,8 @@
     color: var(--fg);
   }
 
-  &__rel {
-    color: var(--fg-muted);
-  }
-
-  // Above the card's stretched link so it stays clickable.
-  &__link {
-    position: relative;
-    z-index: 2;
-    align-self: flex-start;
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    min-height: 24px;
-    font-size: 12.5px;
-    font-weight: 600;
-    color: var(--accent);
-    text-decoration: none;
-
-    &:hover {
-      text-decoration: underline;
-    }
-
-    &:focus-visible {
-      outline: 2px solid var(--focus-ring);
-      outline-offset: 2px;
-      border-radius: 4px;
-    }
-  }
 }
 
-// 30% of the width shrinking to 10%: the fill's base width is the 30%.
-.failure-bar {
-  display: block;
-  width: 100%;
-  max-width: 260px;
-  height: 6px;
-  border-radius: 999px;
-  background: var(--border);
-  overflow: hidden;
-
-  &__fill {
-    display: block;
-    width: 30%;
-    height: 100%;
-    border-radius: 999px;
-    background: var(--accent-decor);
-    transform-origin: left center;
-    transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-}
 
 // Medal chips light up one after another when the card is hovered or focused.
 // Only the background layer fades: the label keeps full contrast at all times.
@@ -457,10 +405,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .failure-bar__fill {
-    transition: none;
-  }
-
   .featured-card--chips .featured-tags span::before {
     opacity: 1;
     transition: none;

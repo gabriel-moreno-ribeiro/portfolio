@@ -85,7 +85,6 @@ export default defineConfig({
           if (id.includes('node_modules/@react-three/')) return 'react-three';
           if (id.includes('node_modules/motion/') || id.includes('node_modules/framer-motion/')) return 'motion';
           if (id.includes('node_modules/gsap/')) return 'gsap';
-          if (id.includes('node_modules/matter-js/')) return 'matter';
           if (id.includes('node_modules/@mediapipe/')) return 'mediapipe';
           if (id.includes('node_modules/posthog-js/')) return 'posthog';
         },

@@ -9,7 +9,6 @@ import {
 } from 'react';
 import { FiArrowRight, FiCalendar } from 'react-icons/fi';
 import useIsMobile from '../../hooks/useIsMobile';
-import { formatRelative, useLocalData, useNowLine } from '../../lib/data';
 import { useReducedMotion, useVisible } from '../../lib/motion';
 import { scrollToComponent } from '../../utils/scrollToComponent';
 import CommonButton from '../Shared/CommonButton';
@@ -44,8 +43,6 @@ const BG_SETTLE_DELAY = 0.7;
 function Hero() {
   const isMobile = useIsMobile();
   const reduced = useReducedMotion();
-  const { press } = useLocalData();
-  const nowLine = useNowLine();
   const heroRef = useRef<HTMLDivElement>(null);
   const heroVisible = useVisible(heroRef, { threshold: 0.3 });
   const [showRobot, setShowRobot] = useState(false);
@@ -89,15 +86,6 @@ function Hero() {
       requestAnimationFrame(() => setShowRobot(true));
     }, remaining);
   }, []);
-
-  // "latest": the most recent entry of press.json. A bare YYYY date has no day to
-  // count from, so it shows the year instead of a relative time.
-  const latest = press[0];
-  const latestWhen = latest
-    ? /^\d{4}$/.test(latest.date)
-      ? latest.date
-      : formatRelative(latest.date)
-    : '';
 
   // The final state is the default: nothing in the hero starts transparent, because
   // an invisible one-liner was the LCP element and pushed it to 1.9s. The entrance is
@@ -167,11 +155,6 @@ function Hero() {
         <motion.p className="desc" {...rise(0.08)}>
           Building Backoffice AI for Small and Medium Businesses @ HIBEEX. Founder @ Projeto Candela.
         </motion.p>
-        {/* Status line: building / reading / local time, from now.json and the clock. */}
-        <p className="hero-status" aria-live="polite">
-          <span className="hero-status__dot" aria-hidden="true" />
-          <span className="hero-status__text">{nowLine.text}</span>
-        </p>
         <motion.div className="btn-flex" {...rise(0.16)}>
           {/* Two calls to action: the work first, then a call. LinkedIn lives in Contact and the footer. */}
           <CommonButton
@@ -188,22 +171,6 @@ function Hero() {
             onClick={() => window.open('https://cal.com/gabrielmribeiro', '_blank')}
           />
         </motion.div>
-        {latest && (
-          <motion.p className="hero-latest" {...rise(0.24)}>
-            <span className="hero-latest__tag">latest</span>
-            <a
-              className="hero-latest__link"
-              href={latest.url}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {latest.title}
-            </a>
-            <span className="hero-latest__meta">
-              {latest.outlet} · {latestWhen}
-            </span>
-          </motion.p>
-        )}
       </div>
     </div>
   );

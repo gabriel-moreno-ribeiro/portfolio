@@ -19,75 +19,24 @@ $exp-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   --exp-card-w: min(48%, 440px);
 }
 
-// ── Cabeçalho ────────────────────────────────────────────────────────────────
+// ── Cabeçalho: só o título ───────────────────────────────────────────────────
 .exp__head {
   position: relative;
   z-index: 3;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 24px 40px;
-  padding: 0 4px 8px;
-}
+  padding: 0 4px;
 
-.exp__title h2 {
-  margin: 0;
-  font-size: clamp(30px, 4.2vw, 48px);
-  font-weight: 700;
-  line-height: 1.05;
-  letter-spacing: -0.01em;
-
-  em {
-    font-family: var(--font-serif);
-    font-style: italic;
-    font-weight: 400;
-    color: var(--accent);
-  }
-}
-
-.exp__sub {
-  margin: 10px 0 0;
-  font-family: $exp-mono;
-  font-size: 12px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--fg-muted);
-}
-
-// Índice: navegação real, mais recente primeiro.
-.exp__index {
-  ul {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px 8px;
+  h2 {
     margin: 0;
-    padding: 0;
-    list-style: none;
-  }
+    font-size: clamp(30px, 4.2vw, 48px);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
 
-  a {
-    display: inline-block;
-    padding: 5px 10px;
-    border: 1px solid var(--border);
-    border-radius: 999px;
-    font-family: $exp-mono;
-    font-size: 11px;
-    letter-spacing: 0.04em;
-    color: var(--fg-muted);
-    text-decoration: none;
-    background: var(--surface);
-    transition: color 0.18s ease, border-color 0.18s ease;
-
-    &:hover,
-    &:focus-visible {
+    em {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-weight: 400;
       color: var(--accent);
-      border-color: var(--accent);
-    }
-
-    &[aria-current='true'] {
-      color: var(--accent);
-      border-color: var(--accent);
     }
   }
 }
@@ -101,7 +50,7 @@ $exp-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   z-index: 5;
   width: max-content;
   max-width: 100%;
-  margin: 10px 2px -38px auto;
+  margin: 14px 2px -38px auto;
   display: flex;
   align-items: baseline;
   gap: 8px;
@@ -233,14 +182,16 @@ $exp-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   width: 260px;
   height: 78px; // = BEAM_H em Car.tsx
   transform-origin: 0 50%;
-  opacity: 0.4;
+  // base por tema × fator escrito pelo JS (brilho acompanha a velocidade, com lerp)
+  --exp-beam-base: 0.42;
+  opacity: calc(var(--exp-beam-base) * var(--exp-beam-k, 0.72));
   filter: blur(5px); // tira a aresta dura do triângulo; estático, não anima
-  will-change: transform;
+  will-change: transform, opacity;
   pointer-events: none;
 }
 
 [data-theme='dark'] .exp__beam {
-  opacity: 0.7;
+  --exp-beam-base: 0.72;
 }
 
 .exp__hazard {
@@ -516,8 +467,7 @@ a.exp__card-cta:visited {
 @media (prefers-reduced-motion: reduce) {
   .exp__poster,
   .exp__card,
-  .exp__card-cta,
-  .exp__index a {
+  .exp__card-cta {
     transition: none;
   }
 

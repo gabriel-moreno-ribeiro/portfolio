@@ -155,3 +155,28 @@ CPU 4×) é o primeiro render do React de uma SPA renderizada no cliente; sem th
 Decisões de diretor de arte na Fase 5: cortado o botão flutuante "Let's talk" (virou linha do
 card); cortado o espaço vazio da caixa de Skills (398 → 240 px); sticker preto **é** o logo da
 abelha (RGB 8/8/8 no arquivo), não defeito; hover-preview do Research mantido.
+
+## Rodada de feedback do Gabriel (25/09, depois da entrega)
+
+Doze itens, seis por seletor e seis por área. As áreas foram casadas com os elementos reais por
+tamanho e posição (`.playwright-cli/match.mjs`) e leram-se, na ordem do scroll: Cool Things →
+By the Numbers → Skills → Experience. O item 9 (Skills) foi confirmado com ele.
+
+| Item | Decisão |
+|---|---|
+| nav pill com status | **cortado**; pílula como antes; investigar/corrigir o que ficava estranho ao abrir `/library` |
+| linha de status e "latest" do hero | **cortados**; hero = nome, roles, desc, botões |
+| filtros de cidade em Moments | **cortados**; eyebrow com os nomes como texto; legendas `o que · lugar · ano` ficam |
+| linha "last shipped" do HIBEEX e contadores/barra do Candela | **cortados**; tags do Candela voltam |
+| By the Numbers | **restaurado** o carrossel pré-reforma byte a byte (só o intervalo pausa fora da tela) |
+| Skills | **restaurado** byte a byte (ícones flutuantes + marquees); `matter-js` removido |
+| cabeçalho da Experience (subtítulo + índice) | **cortado**; fica só o título |
+| carro e estrada | aprovados ("gostei muito"); pedido: mais fluido → suavização, histerese de frame, lerps |
+| rodapé "last commit · site updated" | **cortado**, junto com o `useGitHub()` do rodapé |
+
+A camada de dados (`src/lib/data`), o `numbers.json`/`skills.json`/`press.json`/`changelog.json` e
+as primitivas de motion continuam no repo; na Home só a Experience, o Contact (relógio), o
+Origins (hora por cidade) e o terminal (`getSnapshot`) os consomem agora.
+
+Pedido final dele: colocar online para ver do celular → **preview da Vercel** (URL própria), sem
+tocar em gabrielmr.com.
