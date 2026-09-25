@@ -47,3 +47,7 @@ yarn-error.log*
 /overnight/preview.log
 /overnight/build.log
 
+
+# fotos soltas na raiz (nao sao do site; decidir destino)
+/*.jpeg
+/*.jpg

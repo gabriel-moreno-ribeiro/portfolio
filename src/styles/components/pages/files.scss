@@ -1,0 +1,223 @@
+// ── /files ────────────────────────────────────────────────────────────────────
+// A plain list of documents. Each row is the document on the left and the
+// copy-link button on the right, stacking on narrow screens.
+$files-text: 720px;
+
+.files {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  max-width: 1120px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 120px 24px 0;
+  color: var(--fg);
+}
+
+.files__header {
+  max-width: $files-text;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.files__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+
+  i {
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.5;
+  }
+}
+
+.files__title {
+  margin: 18px 0 0;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(42px, 6vw, 72px);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.files__summary {
+  max-width: 52ch;
+  margin: 20px 0 36px;
+  padding-bottom: 36px;
+  border-bottom: 1px solid var(--border);
+  font-size: 19px;
+  line-height: 1.5;
+  color: var(--fg-muted);
+}
+
+// ── Groups ────────────────────────────────────────────────────────────────────
+.files__body {
+  max-width: $files-text;
+  width: 100%;
+  margin: 0 auto;
+  padding-bottom: 96px;
+}
+
+.files__group {
+  & + & {
+    margin-top: 56px;
+  }
+
+  h2 {
+    margin: 0 0 4px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+  }
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  li {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--border);
+  }
+}
+
+.files__info {
+  min-width: 0;
+
+  p {
+    margin: 6px 0 0;
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--fg-muted);
+  }
+}
+
+.files__name {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--fg);
+  text-decoration: none;
+
+  svg {
+    flex-shrink: 0;
+    opacity: 0.45;
+    transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.25s;
+  }
+
+  &:hover,
+  &:focus-visible {
+    color: var(--accent);
+
+    svg {
+      opacity: 1;
+      transform: translate(2px, -2px);
+    }
+  }
+}
+
+.files__meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+
+  i {
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.6;
+  }
+}
+
+// ── Copy button ───────────────────────────────────────────────────────────────
+.files__copy {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 8px;
+  margin-top: 2px;
+  padding: 9px 16px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--fg-muted);
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: border-color 0.25s, color 0.25s, background 0.25s;
+
+  svg {
+    flex-shrink: 0;
+    font-size: 14px;
+  }
+
+  &:hover,
+  &:focus-visible {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  &.is-copied {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+}
+
+// Visually hidden, but read out when a link is copied.
+.files__status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@media (max-width: 600px) {
+  .files {
+    padding-top: 96px;
+  }
+
+  .files__group li {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+
+  .files__copy {
+    justify-content: center;
+  }
+}

@@ -1,0 +1,446 @@
+// ── /work/:slug ───────────────────────────────────────────────────────────────
+// Text sits in a 720px column; the hero, stats and photo grid use the full page.
+$project-text: 720px;
+
+.project {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  max-width: 1120px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 120px 24px 0;
+  color: var(--fg);
+}
+
+.project__header {
+  max-width: $project-text;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.project__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+
+  i {
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.5;
+  }
+}
+
+.project__title {
+  margin: 18px 0 0;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(42px, 6vw, 72px);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.project__summary {
+  max-width: 52ch;
+  margin: 20px 0 0;
+  font-size: 19px;
+  line-height: 1.5;
+  color: var(--fg-muted);
+}
+
+.project__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 24px;
+  padding-bottom: 36px;
+  border-bottom: 1px solid var(--border);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+
+  i {
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+}
+
+// ── Hero photo ────────────────────────────────────────────────────────────────
+.project__hero {
+  display: block;
+  width: 100%;
+  margin: 44px 0 0;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  overflow: hidden;
+  background: var(--surface);
+  cursor: zoom-in;
+
+  img {
+    display: block;
+    width: 100%;
+    max-height: 62vh;
+    object-fit: cover;
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  &:hover img,
+  &:focus-visible img {
+    transform: scale(1.02);
+  }
+}
+
+// ── Stats ─────────────────────────────────────────────────────────────────────
+.project__stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 20px 28px;
+  margin: 44px 0 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding-left: 16px;
+    border-left: 2px solid var(--accent-decor);
+  }
+
+  strong {
+    font-size: clamp(26px, 3vw, 34px);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  span {
+    font-size: 13.5px;
+    line-height: 1.4;
+    color: var(--fg-muted);
+  }
+}
+
+// ── Body copy ─────────────────────────────────────────────────────────────────
+.project__body {
+  max-width: $project-text;
+  width: 100%;
+  margin: 0 auto;
+  padding-top: 56px;
+}
+
+.project__section {
+  & + & {
+    margin-top: 40px;
+  }
+
+  h2 {
+    margin: 0 0 14px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  p {
+    margin: 0 0 16px;
+    font-size: 17.5px;
+    line-height: 1.65;
+    color: var(--fg);
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.project__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 40px;
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 18px;
+    border: 1.5px solid var(--fg);
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--fg);
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+
+    svg { transition: transform 0.2s; }
+
+    &:hover,
+    &:focus-visible {
+      background: var(--fg);
+      color: var(--bg);
+      svg { transform: translate(2px, -2px); }
+    }
+  }
+}
+
+// ── Photo grid ────────────────────────────────────────────────────────────────
+.project__gallery {
+  margin-top: 72px;
+
+  h2 {
+    margin: 0 0 20px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+}
+
+.project__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 18px;
+}
+
+.project__shot {
+  position: relative;
+  display: block;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--surface);
+  cursor: zoom-in;
+  text-align: left;
+
+  img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  // Two lines' worth, so captions of different lengths keep the rows even.
+  span {
+    display: block;
+    min-height: 2.8em;
+    padding: 10px 14px 12px;
+    font-size: 13px;
+    line-height: 1.4;
+    color: var(--fg-muted);
+    box-sizing: content-box;
+  }
+
+  &:hover img,
+  &:focus-visible img {
+    transform: scale(1.04);
+  }
+}
+
+// ── Lightbox ──────────────────────────────────────────────────────────────────
+.project-lightbox {
+  position: fixed;
+  inset: 0;
+  // Above the navbar and the floating buttons, which sit at 9998.
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+  background: rgba(0, 0, 0, 0.88);
+  backdrop-filter: blur(6px);
+  cursor: zoom-out;
+
+  &__figure {
+    max-width: min(1100px, 100%);
+    margin: 0;
+    text-align: center;
+    cursor: default;
+
+    img {
+      display: block;
+      max-width: 100%;
+      max-height: 78vh;
+      margin: 0 auto;
+      border-radius: 10px;
+      object-fit: contain;
+    }
+
+    figcaption {
+      margin-top: 14px;
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.72);
+    }
+  }
+
+  &__close,
+  &__nav {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.2s;
+
+    &:hover,
+    &:focus-visible {
+      background: rgba(255, 255, 255, 0.28);
+    }
+  }
+
+  &__close {
+    top: 20px;
+    right: 20px;
+    width: 42px;
+    height: 42px;
+    font-size: 20px;
+  }
+
+  &__nav {
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    font-size: 24px;
+
+    &.left { left: 20px; }
+    &.right { right: 20px; }
+  }
+}
+
+// ── More work ─────────────────────────────────────────────────────────────────
+.project__more {
+  margin-top: 80px;
+  margin-bottom: 64px;
+  padding-top: 36px;
+  border-top: 1px solid var(--border);
+
+  h2 {
+    margin: 0 0 18px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 14px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  a {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    height: 100%;
+    padding: 18px 44px 18px 18px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    color: var(--fg);
+    text-decoration: none;
+    box-sizing: border-box;
+    transition: border-color 0.2s, transform 0.2s;
+
+    strong { font-size: 16px; font-weight: 700; }
+    span { font-size: 13.5px; line-height: 1.45; color: var(--fg-muted); }
+
+    svg {
+      position: absolute;
+      top: 18px;
+      right: 16px;
+      color: var(--accent);
+      transition: transform 0.2s;
+    }
+
+    &:hover,
+    &:focus-visible {
+      border-color: var(--accent-decor);
+      transform: translateY(-2px);
+      svg { transform: translate(2px, -2px); }
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .project {
+    padding: 96px 16px 0;
+  }
+
+  .project__hero {
+    margin-top: 32px;
+    border-radius: 14px;
+
+    img { max-height: 46vh; }
+  }
+
+  .project__stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    margin-top: 32px;
+  }
+
+  .project__body {
+    padding-top: 40px;
+  }
+
+  .project__section p {
+    font-size: 16.5px;
+  }
+
+  .project__gallery {
+    margin-top: 52px;
+  }
+
+  .project__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .project-lightbox {
+    padding: 24px 12px;
+
+    &__nav { display: none; }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project__hero img,
+  .project__shot img,
+  .project__more a {
+    transition: none;
+  }
+
+  .project__hero:hover img,
+  .project__shot:hover img {
+    transform: none;
+  }
+}
