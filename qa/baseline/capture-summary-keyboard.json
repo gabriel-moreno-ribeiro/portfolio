@@ -1,0 +1,40 @@
+{
+  "generatedAt": "2026-09-25T17:44:47.221Z",
+  "baseUrl": "http://localhost:5173",
+  "outDir": "C:\\portfolio-gabriel\\qa\\baseline",
+  "playwright": "1.61.1",
+  "viewports": [],
+  "notes": [],
+  "keyboard": {
+    "tabsPressed": 72,
+    "loopedBackAtTab": 72,
+    "ctrlKOpened": true,
+    "ctrlKAttempts": [
+      {
+        "combo": "Control+K",
+        "opened": false
+      },
+      {
+        "combo": "Control+k",
+        "opened": true
+      }
+    ],
+    "escapeClosed": false,
+    "invisibleFocusables": 1,
+    "sectionsReached": [
+      "nav.home-sidenav",
+      "#main-content",
+      "#moments",
+      "#background",
+      "#work",
+      "#research",
+      "#contact",
+      "#contact-name",
+      "#contact-email",
+      "#contact-message",
+      "footer.footer",
+      "nav.links",
+      "#root"
+    ]
+  }
+}

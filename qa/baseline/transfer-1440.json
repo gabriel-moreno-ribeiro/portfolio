@@ -1,0 +1,269 @@
+{
+  "viewport": "1440x900",
+  "baseUrl": "http://localhost:5173",
+  "phase": "normal motion: initial load + one full slow scroll + experience steps + second slow scroll",
+  "method": "Playwright requestfinished -> request.sizes().responseBodySize (encoded over-the-wire body), falling back to the content-length header. wireBytes = body + response headers.",
+  "caveat": "Vite DEV server serves unminified, ungzipped ES modules; absolute numbers are far above production. Compare only against other runs of this same script on the dev server.",
+  "totalRequests": 207,
+  "totalBodyBytes": 22424372,
+  "totalBodyKB": 21898.8,
+  "totalBodyMB": 21.39,
+  "totalWireBytes": 22478685,
+  "totalWireKB": 21951.8,
+  "byType": {
+    "document": {
+      "requests": 1,
+      "bodyBytes": 9261,
+      "wireBytes": 9516,
+      "bodyKB": 9
+    },
+    "script": {
+      "requests": 129,
+      "bodyBytes": 16245283,
+      "wireBytes": 16282198,
+      "bodyKB": 15864.5
+    },
+    "font": {
+      "requests": 4,
+      "bodyBytes": 188288,
+      "wireBytes": 189568,
+      "bodyKB": 183.9
+    },
+    "image": {
+      "requests": 55,
+      "bodyBytes": 2990336,
+      "wireBytes": 3004500,
+      "bodyKB": 2920.3
+    },
+    "fetch/xhr": {
+      "requests": 18,
+      "bodyBytes": 2991204,
+      "wireBytes": 2992903,
+      "bodyKB": 2921.1
+    }
+  },
+  "top20Heaviest": [
+    {
+      "kb": 3679.8,
+      "type": "script",
+      "status": 200,
+      "url": "/node_modules/.vite/deps/@react-three_drei.js?v=a7881f6e"
+    },
+    {
+      "kb": 2092.9,
+      "type": "script",
+      "status": 200,
+      "url": "/node_modules/.vite/deps/react-icons_ri.js?v=645ee684"
+    },
+    {
+      "kb": 1727.4,
+      "type": "script",
+      "status": 200,
+      "url": "/node_modules/.vite/deps/react-icons_fa6.js?v=03c80e6e"
+    },
+    {
+      "kb": 1217.9,
+      "type": "script",
+      "status": 200,
+      "url": "/node_modules/.vite/deps/chunk-BV42CLSU.js?v=9a828b57"
+    },
+    {
+      "kb": 1180.5,
+      "type": "fetch",
+      "status": 200,
+      "url": "/assets/3d/d20.glb"
+    },
+    {
+      "kb": 1090.9,
+      "type": "script",
+      "status": 200,
+      "url": "/node_modules/.vite/deps/chunk-OAEA5FZL.js?v=9a828b57"
+    },
+    {
+      "kb": 970,
+      "type": "script",
+      "status": 200,
+      "url": "/node_modules/.vite/deps/chunk-6ER7OG3O.js?v=9a828b57"
+    },
+    {
+      "kb": 894.4,
+      "type": "script",
+      "status": 200,
+      "url": "/node_modules/.vite/deps/react-icons_io5.js?v=9a7b296f"
+    },
+    {
+      "kb": 457.2,
+      "type": "script",
+      "status": 200,
+      "url": "/node_modules/.vite/deps/react-router-dom.js?v=48be7086"
+    },
+    {
+      "kb": 455.8,
+      "type": "script",
+      "status": 200,
+      "url": "/node_modules/.vite/deps/gsap_all.js?v=b5d02edd"
+    },
+    {
+      "kb": 443.1,
+      "type": "script",
+      "status": 200,
+      "url": "/node_modules/.vite/deps/chunk-ZX5JFR2F.js?v=9a828b57"
+    },
+    {
+      "kb": 413.5,
+      "type": "fetch",
+      "status": 200,
+      "url": "/assets/3d/studio.hdr"
+    },
+    {
+      "kb": 411.1,
+      "type": "script",
+      "status": 200,
+      "url": "/node_modules/.vite/deps/motion_react.js?v=bb0e2363"
+    },
+    {
+      "kb": 287.6,
+      "type": "image",
+      "status": 200,
+      "url": "/assets/hero-slideshow/8-1920.avif"
+    },
+    {
+      "kb": 250,
+      "type": "fetch",
+      "status": 200,
+      "url": "blob:/0b148b71-8d2a-43f6-b5fa-7ddc4c4c5d59"
+    },
+    {
+      "kb": 237.5,
+      "type": "script",
+      "status": 200,
+      "url": "/node_modules/.vite/deps/posthog-js.js?v=38bbb979"
+    },
+    {
+      "kb": 203.9,
+      "type": "image",
+      "status": 200,
+      "url": "/assets/hero-slideshow/6-1920.avif"
+    },
+    {
+      "kb": 203.9,
+      "type": "image",
+      "status": 200,
+      "url": "/assets/hero-slideshow/6-1920.avif"
+    },
+    {
+      "kb": 188.8,
+      "type": "image",
+      "status": 200,
+      "url": "/assets/hero-slideshow/4-1920.avif"
+    },
+    {
+      "kb": 188.8,
+      "type": "image",
+      "status": 200,
+      "url": "/assets/hero-slideshow/4-1920.avif"
+    }
+  ],
+  "thirdParty": [
+    {
+      "kb": 0.1,
+      "type": "fetch",
+      "url": "blob:http://localhost:5173/06749683-6971-42f2-87ed-f45de9817453"
+    },
+    {
+      "kb": 0.1,
+      "type": "fetch",
+      "url": "blob:http://localhost:5173/2ece826d-9206-43ae-ba93-5956faa9c4db"
+    },
+    {
+      "kb": 11.7,
+      "type": "fetch",
+      "url": "https://www.gstatic.com/draco/versioned/decoders/1.5.7/draco_wasm_wrapper.js"
+    },
+    {
+      "kb": 87.3,
+      "type": "fetch",
+      "url": "https://www.gstatic.com/draco/versioned/decoders/1.5.7/draco_decoder.wasm"
+    },
+    {
+      "kb": 62.3,
+      "type": "script",
+      "url": "blob:http://localhost:5173/3a2e4304-5417-4b17-ba93-da2b88b5593f"
+    },
+    {
+      "kb": 62.3,
+      "type": "script",
+      "url": "blob:http://localhost:5173/3a2e4304-5417-4b17-ba93-da2b88b5593f"
+    },
+    {
+      "kb": 1,
+      "type": "script",
+      "url": "https://us-assets.i.posthog.com/array/phc_cgNNpL9lqLK50jeJICAV6xcGZDmuDnuPVxPeG8Ieg6m/config.js"
+    },
+    {
+      "kb": 62.3,
+      "type": "script",
+      "url": "blob:http://localhost:5173/3a2e4304-5417-4b17-ba93-da2b88b5593f"
+    },
+    {
+      "kb": 62.3,
+      "type": "script",
+      "url": "blob:http://localhost:5173/3a2e4304-5417-4b17-ba93-da2b88b5593f"
+    },
+    {
+      "kb": 88.5,
+      "type": "fetch",
+      "url": "blob:http://localhost:5173/6ef8bb09-ed74-4719-a453-e125c53f2d12"
+    },
+    {
+      "kb": 107.6,
+      "type": "fetch",
+      "url": "blob:http://localhost:5173/cb94845f-a351-4b3b-b476-44fed8ed198f"
+    },
+    {
+      "kb": 71.8,
+      "type": "fetch",
+      "url": "blob:http://localhost:5173/30571291-b7df-432f-857a-9bfaea7c77cd"
+    },
+    {
+      "kb": 54.5,
+      "type": "fetch",
+      "url": "blob:http://localhost:5173/0073991a-2c6a-4df6-8df9-0632bc6df3c3"
+    },
+    {
+      "kb": 86.7,
+      "type": "fetch",
+      "url": "blob:http://localhost:5173/2ac88208-e6a8-4fc9-a160-158e1923bcbe"
+    },
+    {
+      "kb": 72.4,
+      "type": "fetch",
+      "url": "blob:http://localhost:5173/02209c20-3c19-469e-8516-bc0047e36705"
+    },
+    {
+      "kb": 250,
+      "type": "fetch",
+      "url": "blob:http://localhost:5173/0b148b71-8d2a-43f6-b5fa-7ddc4c4c5d59"
+    },
+    {
+      "kb": 33.6,
+      "type": "fetch",
+      "url": "blob:http://localhost:5173/5f3b269d-2c43-45ba-a770-862d339fe269"
+    },
+    {
+      "kb": 111.3,
+      "type": "fetch",
+      "url": "blob:http://localhost:5173/2e1153a1-4e6b-4047-bd3b-b92e05bbd33f"
+    },
+    {
+      "kb": 117.7,
+      "type": "fetch",
+      "url": "blob:http://localhost:5173/4c928da7-fc28-4c92-b839-cd0cf2e98c29"
+    },
+    {
+      "kb": 133,
+      "type": "fetch",
+      "url": "blob:http://localhost:5173/b70a7b34-35d5-4601-9805-2fe91578adc3"
+    }
+  ]
+}

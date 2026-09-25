@@ -51,3 +51,7 @@ yarn-error.log*
 # fotos soltas na raiz (nao sao do site; decidir destino)
 /*.jpeg
 /*.jpg
+
+# QA: capturas e relatorios HTML ficam so em disco (dezenas de MB)
+qa/**/*.png
+qa/**/*.html
