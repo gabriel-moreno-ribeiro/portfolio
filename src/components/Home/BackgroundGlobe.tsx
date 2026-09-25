@@ -145,6 +145,8 @@ function GlobeCanvas({ selected, darkMode }: { selected: City | null; darkMode?:
     window.addEventListener('pointerup', onUp, { passive: true });
     window.addEventListener('pointercancel', onUp, { passive: true });
 
+    let isInView = true;
+
     const init = () => {
       const size = canvas.offsetWidth;
       if (size === 0 || globe) return;
@@ -184,8 +186,7 @@ function GlobeCanvas({ selected, darkMode }: { selected: City | null; darkMode?:
             const SLOW_RADIUS = 0.35;
             const normPhi = ((currentPhi % doublePi) + doublePi) % doublePi;
             let minDist = Infinity;
-            for (const city of CITIES) {
-              const [cityPhi] = locationToAngles(city.lat, city.lon);
+            for (const cityPhi of CITY_PHIS) {
               const d = Math.min(
                 Math.abs(normPhi - cityPhi),
                 doublePi - Math.abs(normPhi - cityPhi)
@@ -205,6 +206,8 @@ function GlobeCanvas({ selected, darkMode }: { selected: City | null; darkMode?:
           state.height = w * 2;
         },
       });
+      // The observer may already have reported us off-screen before this ran
+      globe.toggle(isInView);
       setTimeout(() => { if (canvas) canvas.style.opacity = '1'; });
     };
 
@@ -217,7 +220,18 @@ function GlobeCanvas({ selected, darkMode }: { selected: City | null; darkMode?:
       ro.observe(canvas);
     }
 
+    // cobe spins on its own rAF forever. Park it while the section is off-screen.
+    const io = new IntersectionObserver(
+      ([e]) => {
+        isInView = e.isIntersecting;
+        globe?.toggle(isInView);
+      },
+      { threshold: 0 }
+    );
+    io.observe(canvas);
+
     return () => {
+      io.disconnect();
       window.removeEventListener('pointermove', onMove);
       window.removeEventListener('pointerup', onUp);
       window.removeEventListener('pointercancel', onUp);
@@ -308,6 +322,8 @@ function CityTimeline({ selected, onSelect, autoplay }: { selected: City | null;
     </div>
   );
 }
+
+const CITY_PHIS = CITIES.map((c) => locationToAngles(c.lat, c.lon)[0]);
 
 const skipGlobe =
   typeof window !== 'undefined' && window.innerWidth < 768;

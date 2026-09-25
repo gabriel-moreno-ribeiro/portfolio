@@ -1,6 +1,6 @@
 import { OrbitControls, useGLTF } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useInputSourceStore } from "../../store/inputSourceStore";
 import { useThemeStore } from "../../store/themeStore";
 
@@ -34,12 +34,35 @@ useGLTF.preload("/assets/3d/robot.glb");
 
 export default function CanvasComponent({ onReady }) {
   const { darkMode } = useThemeStore();
+  const ioRef = useRef(null);
+  const [inView, setInView] = useState(true);
+
+  // The robot damps toward the cursor every frame, so it cannot run on demand.
+  // Stop the loop outright while it is scrolled out of view.
+  // Canvas only mounts the <canvas> once it has measured itself, so hook the
+  // observer up from a callback ref rather than an effect.
+  const observeCanvas = useCallback((el) => {
+    ioRef.current?.disconnect();
+    ioRef.current = null;
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => setInView(e.isIntersecting), {
+      threshold: 0,
+    });
+    io.observe(el);
+    ioRef.current = io;
+  }, []);
+
+  useEffect(() => () => ioRef.current?.disconnect(), []);
+
   return (
     <Canvas
+      ref={observeCanvas}
       camera={{ position: [0.4, 1.17, 11.35], fov: 25 }}
       className="robot-canvas"
       data-drag-me={true}
-      gl={{ alpha: true, antialias: true }}
+      dpr={[1, 1.5]}
+      frameloop={inView ? "always" : "never"}
+      gl={{ alpha: true, antialias: true, powerPreference: "high-performance" }}
       style={{ background: "transparent" }}
     >
       <ambientLight intensity={darkMode ? 0.25 : 1} />

@@ -53,7 +53,8 @@
   }
 
   .featured-card {
-    grid-column: span 2;
+    position: relative;
+    grid-column: span 3;
     border: 1px solid var(--grey, #e8ddd4);
     border-radius: 18px;
     padding: 20px;
@@ -61,13 +62,21 @@
     flex-direction: column;
     gap: 12px;
     text-align: left;
+    transition: border-color 0.2s, transform 0.2s;
 
-    &:first-child {
+    // Cards with photos take the full row, media beside the copy.
+    &--wide {
       grid-column: 1 / -1;
       display: grid;
       grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
       gap: 28px;
       align-items: center;
+    }
+
+    &:hover,
+    &:focus-within {
+      border-color: var(--primary-orange);
+      transform: translateY(-2px);
     }
 
     &__body {
@@ -81,6 +90,42 @@
       font-size: 20px;
       font-weight: 700;
       margin: 0;
+    }
+
+    // Stretches over the whole card so anywhere that is not a control navigates.
+    &__link {
+      color: inherit;
+      text-decoration: none;
+
+      &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 18px;
+        z-index: 1;
+      }
+
+      &:focus-visible::after {
+        outline: 2px solid var(--focus-ring);
+        outline-offset: 3px;
+      }
+    }
+
+    .featured-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 2px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--accent);
+
+      svg { transition: transform 0.2s; }
+    }
+
+    &:hover .featured-cta svg,
+    &:focus-within .featured-cta svg {
+      transform: translate(2px, -2px);
     }
 
     p {
@@ -104,26 +149,6 @@
         color: var(--accent-tag);
       }
     }
-
-    .featured-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      margin-top: 14px;
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--accent);
-      text-decoration: none;
-      transition: color 0.2s;
-
-      svg { transition: transform 0.2s; }
-
-      &:hover,
-      &:focus-visible {
-        color: var(--fg);
-        svg { transform: translate(2px, -2px); }
-      }
-    }
   }
 
   .media-carousel {
@@ -142,9 +167,12 @@
       display: block;
     }
 
+    // Above the card's stretched link, so the controls stay usable while a
+    // click on the photo itself still opens the project page.
     .carousel-arrow {
       position: absolute;
       top: 50%;
+      z-index: 2;
       transform: translateY(-50%);
       background: rgba(0, 0, 0, 0.45);
       color: #fff;
@@ -177,6 +205,7 @@
       bottom: 10px;
       left: 0;
       right: 0;
+      z-index: 2;
       display: flex;
       justify-content: center;
       gap: 6px;
@@ -184,6 +213,8 @@
       .dot {
         width: 8px;
         height: 8px;
+        padding: 0;
+        border: none;
         border-radius: 50%;
         background: rgba(255, 255, 255, 0.5);
         cursor: pointer;
@@ -242,21 +273,16 @@
     }
 
     .featured-card,
-    .featured-card:first-child {
+    .featured-card--wide {
       grid-column: auto;
       display: flex;
     }
   }
 }
 
-// Tablet: the three text cards go two per row instead of three narrow columns
+// Tablet: the photo cards stack their media above the copy
 @media screen and (min-width: 601px) and (max-width: 900px) {
-  .find-my-work .featured-card {
-    grid-column: span 3;
-
-    &:first-child {
-      grid-column: 1 / -1;
-      grid-template-columns: 1fr;
-    }
+  .find-my-work .featured-card--wide {
+    grid-template-columns: 1fr;
   }
 }

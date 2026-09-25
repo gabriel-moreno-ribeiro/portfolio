@@ -25,6 +25,8 @@ const LibraryPage = lazy(() => import("./pages/Library"));
 const BlogPage = lazy(() => import("./pages/Blog"));
 const NewsPage = lazy(() => import("./pages/News"));
 const StoryPage = lazy(() => import("./pages/Story"));
+const ProjectPage = lazy(() => import("./pages/Project"));
+const FilesPage = lazy(() => import("./pages/Files"));
 const ContactPage = lazy(() => import("./pages/Contact"));
 const ThankYouPage = lazy(() => import("./pages/ThankYou"));
 const NotFoundPage = lazy(() => import("./pages/NotFound"));
@@ -86,6 +88,8 @@ function AppContent() {
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/news" element={<NewsPage />} />
           <Route path="/story" element={<StoryPage />} />
+          <Route path="/work/:slug" element={<ProjectPage />} />
+          <Route path="/files" element={<FilesPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/obrigado" element={<ThankYouPage />} />
           <Route path="/" element={<Home />} />

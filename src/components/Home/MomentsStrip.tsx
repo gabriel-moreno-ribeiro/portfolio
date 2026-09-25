@@ -6,27 +6,28 @@ interface Moment {
   alt: string;
 }
 
+// Every caption follows the same shape: what the photo is · place · year.
 const ROW_ONE: Moment[] = [
-  { src: "/moments/mv01.webp", caption: "Cariri waterfalls · Missão Velha", alt: "Family at a waterfall in the Cariri valley" },
-  { src: "/moments/ssa01.webp", caption: "Salvador · childhood", alt: "Gabriel as a child in a pineapple costume" },
-  { src: "/moments/mv06.webp", caption: "São João · Ceará", alt: "Kids with cotton candy at a São João festival" },
-  { src: "/moments/ssa06.webp", caption: "Dunes · Bahia", alt: "A child sandboarding down a dune" },
-  { src: "/moments/mv04.webp", caption: "Missão Velha · every summer", alt: "Gabriel as a boy holding a can of juice at night" },
+  { src: "/moments/mv01.webp", caption: "Waterfall with the family · Missão Velha", alt: "Family at a waterfall in the Cariri valley" },
+  { src: "/moments/ssa01.webp", caption: "Pineapple costume · Salvador", alt: "Gabriel as a child in a pineapple costume" },
+  { src: "/moments/mv06.webp", caption: "São João festival · Missão Velha", alt: "Kids with cotton candy at a São João festival" },
+  { src: "/moments/ssa06.webp", caption: "Sandboarding the dunes · Salvador", alt: "A child sandboarding down a dune" },
+  { src: "/moments/mv04.webp", caption: "Summer break · Missão Velha", alt: "Gabriel as a boy holding a can of juice at night" },
   { src: "/moments/ssa05.webp", caption: "Festa junina · Salvador", alt: "Gabriel dressed for a festa junina" },
-  { src: "/moments/ssa02.webp", caption: "Backyard tree · Salvador", alt: "A child climbing a tree in a backyard" },
-  { src: "/moments/mv07.webp", caption: "Cousins · Missão Velha", alt: "Three kids laughing in the back of a car" },
-  { src: "/moments/ssa03.webp", caption: "Salvador · Bahia", alt: "Three kids on a rooftop in Salvador" },
+  { src: "/moments/ssa02.webp", caption: "Climbing the backyard tree · Salvador", alt: "A child climbing a tree in a backyard" },
+  { src: "/moments/mv07.webp", caption: "With my brothers · Missão Velha", alt: "Gabriel and his two brothers laughing in the back of a car" },
+  { src: "/moments/ssa03.webp", caption: "Rooftop afternoon · Salvador", alt: "Three kids on a rooftop in Salvador" },
 ];
 
 const ROW_TWO: Moment[] = [
-  { src: "/moments/for02.webp", caption: "Olympiad medals · Fortaleza", alt: "Gabriel smiling with olympiad medals" },
-  { src: "/moments/sp03.webp", caption: "HIBEEX co-founders · 2026", alt: "The two HIBEEX co-founders at a table" },
-  { src: "/moments/for01.webp", caption: "Fundação Estudar · 2025", alt: "Gabriel holding a Fundação Estudar certificate" },
-  { src: "/moments/hbx02.webp", caption: "WOW Aceleradora · São Paulo", alt: "The HIBEEX founders at the WOW accelerator" },
-  { src: "/moments/for04.webp", caption: "On stage · Fortaleza", alt: "Gabriel speaking with a microphone" },
-  { src: "/moments/sp01.webp", caption: "HIBEEX team · São Paulo", alt: "The HIBEEX team in an office at night" },
-  { src: "/moments/for03.webp", caption: "Fortaleza · 2024–2025", alt: "Gabriel and a friend holding award plaques" },
-  { src: "/moments/for05.webp", caption: "Fortaleza · 2024–2025", alt: "Gabriel with classmates" },
+  { src: "/moments/for02.webp", caption: "Projeto Candela at Fundação Estudar · São Paulo · 2025", alt: "Gabriel next to his Projeto Candela poster at the Fundação Estudar annual meeting" },
+  { src: "/moments/sp03.webp", caption: "HIBEEX co-founders · São Paulo · 2026", alt: "The two HIBEEX co-founders at a table" },
+  { src: "/moments/for01.webp", caption: "Graduation at Ari de Sá · Fortaleza · 2025", alt: "Gabriel holding his Ari de Sá graduation yearbook" },
+  { src: "/moments/hbx02.webp", caption: "WOW Aceleradora · São Paulo · 2026", alt: "The HIBEEX founders at the WOW accelerator" },
+  { src: "/moments/for04.webp", caption: "Talk about Projeto Candela · Fortaleza · 2025", alt: "Gabriel speaking with a microphone" },
+  { src: "/moments/sp01.webp", caption: "HIBEEX team at work · São Paulo · 2026", alt: "The HIBEEX team in an office at night" },
+  { src: "/moments/for03.webp", caption: "Graduation yearbooks · Fortaleza · 2025", alt: "Gabriel and a friend holding their Ari de Sá yearbooks" },
+  { src: "/moments/for05.webp", caption: "Award with the team · Fortaleza · 2025", alt: "Gabriel with classmates holding trophies" },
 ];
 
 function Row({ items, reverse, duration, priority }: { items: Moment[]; reverse?: boolean; duration: number; priority?: boolean }) {

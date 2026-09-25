@@ -1,79 +1,49 @@
 import { useEffect, useRef, useState } from "react";
 import { FiArrowUpRight, FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import { Link } from "react-router-dom";
+import { Project, projects } from "../../content/projects";
 import { toggleTerminalWindow } from "../../utils/terminalWindow";
 
-// Static manifest of media that actually exists in public/work/<slug>/.
-// Add entries here when uploading media — avoids speculative 404 probing.
-const WORK_MEDIA_MANIFEST: Record<string, string[]> = {
-  hibeex: ["01.webp", "02.webp", "03.webp", "04.webp"],
-};
-
-interface FeaturedItem {
-  slug: string;
-  title: string;
-  desc: string;
-  tags: string[];
-  link?: { href: string; label: string };
-}
-
-const featured: FeaturedItem[] = [
-  {
-    slug: "hibeex",
-    title: "HIBEEX: backoffice AI for SMBs",
-    desc: "Backoffice AI for small and medium businesses: raw data in, decisions out. One of 6 startups in the Canastra Ventures AI Residency.",
-    tags: ["TypeScript", "Next.js", "Supabase", "AWS", "AI/ML"],
-    link: { href: "https://www.hibeex.com.br/", label: "hibeex.com.br" },
-  },
-  {
-    slug: "candela",
-    title: "Projeto Candela",
-    desc: "Low-cost physics lab kits I built and delivered to 28 public schools. 3,392 students so far. Physics failure rates in those classes went from 30% to 10%.",
-    tags: ["3,392 students", "28 schools", "30% → 10%"],
-    link: { href: "/research/projeto-candela/paper.pdf", label: "Read the paper (PDF)" },
-  },
-  {
-    slug: "medals",
-    title: "39 Olympiad Medals (19 Gold)",
-    desc: "49 competitions in math, physics, chemistry and astronomy. 1st of 10,000+ at IFT-UNESP. Gold at ONNEQ. 1st at OBAQ.",
-    tags: ["19 gold", "2 international", "1st IFT-UNESP"],
-  },
-  {
-    slug: "gsat",
-    title: "GSAT Education",
-    desc: "A test-prep platform I built from scratch as founding CEO, November 2025 to May 2026.",
-    tags: ["React", "TypeScript", "Node.js", "EdTech"],
-  },
-];
-
-function MediaCarousel({ slug, title }: { slug: string; title: string }) {
-  const available = WORK_MEDIA_MANIFEST[slug] ?? [];
+function MediaCarousel({ project }: { project: Project }) {
+  const available = project.gallery ?? [];
   const [idx, setIdx] = useState(0);
+  const [inView, setInView] = useState(false);
   const timerRef = useRef<ReturnType<typeof setInterval>>(null);
+  const wrapRef = useRef<HTMLDivElement>(null);
 
   const restartTimer = () => {
     if (timerRef.current) clearInterval(timerRef.current);
-    if (available.length <= 1) return;
+    if (available.length <= 1 || !inView) return;
     timerRef.current = setInterval(() => setIdx((i) => (i + 1) % available.length), 4000);
   };
+
+  // Off-screen the rotation is invisible, and every tick pulls down another photo
+  useEffect(() => {
+    const el = wrapRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => setInView(e.isIntersecting), { threshold: 0 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   useEffect(() => {
     restartTimer();
     return () => { if (timerRef.current) clearInterval(timerRef.current); };
-  }, [available.length]);
+  }, [available.length, inView]);
 
   if (available.length === 0) return null;
 
   const current = available[idx % available.length];
-  const src = `/work/${slug}/${current}`;
+  const src = `/work/${project.slug}/${current}`;
   const prev = () => { setIdx((i) => (i - 1 + available.length) % available.length); restartTimer(); };
   const next = () => { setIdx((i) => (i + 1) % available.length); restartTimer(); };
 
   return (
-    <div className="media-carousel">
+    <div className="media-carousel" ref={wrapRef}>
       {current.endsWith(".mp4") ? (
         <video key={src} src={src} controls playsInline />
       ) : (
-        <img key={src} src={src} alt={title} loading="lazy" />
+        <img key={src} src={src} alt={project.captions?.[current] ?? project.title} loading="lazy" />
       )}
       {available.length > 1 && (
         <>
@@ -85,10 +55,12 @@ function MediaCarousel({ slug, title }: { slug: string; title: string }) {
           </button>
           <div className="carousel-dots">
             {available.map((f, i) => (
-              <span
+              <button
                 key={f}
+                type="button"
                 className={i === idx % available.length ? "dot active" : "dot"}
-                onClick={() => setIdx(i)}
+                onClick={() => { setIdx(i); restartTimer(); }}
+                aria-label={`Photo ${i + 1}`}
               />
             ))}
           </div>
@@ -98,23 +70,29 @@ function MediaCarousel({ slug, title }: { slug: string; title: string }) {
   );
 }
 
-function FeaturedCard({ item }: { item: FeaturedItem }) {
+// The whole card is one link target: the title anchor stretches over the card, so
+// the carousel controls stay clickable by sitting above it.
+function FeaturedCard({ project }: { project: Project }) {
+  const hasMedia = (project.gallery?.length ?? 0) > 0;
+
   return (
-    <div className="featured-card">
-      <MediaCarousel slug={item.slug} title={item.title} />
+    <div className={`featured-card${hasMedia ? " featured-card--wide" : ""}`}>
+      <MediaCarousel project={project} />
       <div className="featured-card__body">
-      <h2>{item.title}</h2>
-      <p>{item.desc}</p>
-      <div className="featured-tags">
-        {item.tags.map((tag) => (
-          <span key={tag}>{tag}</span>
-        ))}
-      </div>
-      {item.link && (
-        <a className="featured-link" href={item.link.href} target="_blank" rel="noopener noreferrer">
-          {item.link.label} <FiArrowUpRight aria-hidden="true" />
-        </a>
-      )}
+        <h2>
+          <Link to={`/work/${project.slug}`} className="featured-card__link">
+            {project.title}
+          </Link>
+        </h2>
+        <p>{project.cardDesc}</p>
+        <div className="featured-tags">
+          {project.tags.map((tag) => (
+            <span key={tag}>{tag}</span>
+          ))}
+        </div>
+        <span className="featured-cta" aria-hidden="true">
+          View project <FiArrowUpRight />
+        </span>
       </div>
     </div>
   );
@@ -133,8 +111,8 @@ function FindMyWork() {
         {"> Open terminal"} <kbd>Ctrl+K</kbd>
       </button>
       <div className="featured-grid">
-        {featured.map((item) => (
-          <FeaturedCard key={item.slug} item={item} />
+        {projects.map((project) => (
+          <FeaturedCard key={project.slug} project={project} />
         ))}
       </div>
     </div>

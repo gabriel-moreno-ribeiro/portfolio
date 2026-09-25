@@ -1,5 +1,5 @@
 import { Environment } from "@react-three/drei";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { Canvas, invalidate, useFrame, useThree } from "@react-three/fiber";
 import { Suspense, useEffect, useRef, useCallback } from "react";
 import { Vector3 } from "three";
 import { useThemeStore } from "../../store/themeStore";
@@ -35,6 +35,8 @@ function CameraSetup() {
     camera.position.copy(CAMERA_DIR).multiplyScalar(distance).add(TRUCK_CENTER);
     camera.lookAt(TRUCK_CENTER);
     camera.updateProjectionMatrix();
+    // Imperative camera change: demand a frame, nothing else will ask for one.
+    invalidate();
   }, [camera, size.width, size.height]);
   return null;
 }
@@ -45,6 +47,15 @@ export default function PartsAssemblingCanvas() {
   const containerRef = useRef(null);
   const { darkMode } = useThemeStore();
 
+  // Nothing here animates on its own: the truck is a pure function of scroll
+  // progress. Only ask for a frame when that number actually moves.
+  const setProgress = useCallback((value) => {
+    const next = REDUCED_MOTION ? 0 : Math.max(0, Math.min(1, value));
+    if (next === progressRef.current) return;
+    progressRef.current = next;
+    invalidate();
+  }, []);
+
   const updateProgress = useCallback(() => {
     const wrapper = document.getElementById("work-experience");
     if (!wrapper) return;
@@ -54,42 +65,53 @@ export default function PartsAssemblingCanvas() {
     const totalScroll = rect.height - wh;
 
     if (totalScroll <= 0) {
-      progressRef.current = 0;
+      setProgress(0);
       return;
     }
 
-    const scrolled = -rect.top;
-    const raw = scrolled / totalScroll;
-    progressRef.current = REDUCED_MOTION ? 0 : Math.max(0, Math.min(1, raw));
-  }, []);
+    setProgress(-rect.top / totalScroll);
+  }, [setProgress]);
 
   useEffect(() => {
+    // Coalesce scroll events into one measurement per frame: reading the
+    // wrapper's rect forces a layout.
+    let raf = 0;
+    const schedule = () => {
+      if (!raf) {
+        raf = requestAnimationFrame(() => {
+          raf = 0;
+          updateProgress();
+        });
+      }
+    };
+
     // Also listen the custom event as fallback (from GSAP ScrollTrigger)
     const handleCustom = (event) => {
       const val = event.detail;
-      if (typeof val === "number" && isFinite(val)) {
-        progressRef.current = REDUCED_MOTION ? 0 : Math.max(0, Math.min(1, val));
-      }
+      if (typeof val === "number" && isFinite(val)) setProgress(val);
     };
 
     // Compute initial progress immediately
     updateProgress();
 
-    window.addEventListener("scroll", updateProgress, { passive: true });
-    window.addEventListener("resize", updateProgress, { passive: true });
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule, { passive: true });
     document.addEventListener("scrollAnimationProgress", handleCustom);
 
     return () => {
-      window.removeEventListener("scroll", updateProgress);
-      window.removeEventListener("resize", updateProgress);
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
       document.removeEventListener("scrollAnimationProgress", handleCustom);
     };
-  }, [updateProgress]);
+  }, [updateProgress, setProgress]);
 
   return (
     <div className="parts-assembling" ref={containerRef} data-drag-me={true}>
       <Canvas
         camera={{ fov: CAMERA_FOV }}
+        dpr={[1, 1.5]}
+        frameloop="demand"
         gl={{ antialias: true, alpha: true }}
         style={{ width: "100%", height: "100%" }}
       >

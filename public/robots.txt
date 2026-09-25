@@ -1,6 +1,6 @@
 # https://www.robotstxt.org/robotstxt.html
 User-agent: *
-Disallow:
+Disallow: /files
 
 Sitemap: https://gabrielmr.com/sitemap.xml
 
