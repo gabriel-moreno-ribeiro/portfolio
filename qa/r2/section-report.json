@@ -1,0 +1,1861 @@
+{
+  "generatedAt": "2026-09-25T20:12:24.412Z",
+  "method": "full-page PNGs sliced into per-section bands; std = greyscale stddev, inkFraction = share of pixels >12 grey levels from the band modal value (a band that renders nothing sits near std<6 / ink<0.02)",
+  "viewports": {
+    "390": {
+      "docHeight": 12299,
+      "docHeightReducedMotion": 12299,
+      "docHeightDeltaWithReduce": 0,
+      "dpr": 2,
+      "horizontalOverflow": {
+        "innerWidth": 390,
+        "docScrollWidth": 390,
+        "bodyScrollWidth": 390,
+        "overflowPx": 0,
+        "offenderCount": 135,
+        "offenders": [
+          {
+            "label": "div.moments__track",
+            "left": -131,
+            "right": 3951,
+            "w": 4082
+          },
+          {
+            "label": "figure.moments__item",
+            "left": -133,
+            "right": 100,
+            "w": 233
+          },
+          {
+            "label": "img",
+            "left": -127,
+            "right": 77,
+            "w": 204
+          },
+          {
+            "label": "figcaption",
+            "left": -123,
+            "right": 94,
+            "w": 217
+          },
+          {
+            "label": "figure.moments__item",
+            "left": 333,
+            "right": 546,
+            "w": 213
+          },
+          {
+            "label": "img",
+            "left": 339,
+            "right": 540,
+            "w": 201
+          },
+          {
+            "label": "figcaption",
+            "left": 339,
+            "right": 539,
+            "w": 200
+          },
+          {
+            "label": "figure.moments__item",
+            "left": 556,
+            "right": 772,
+            "w": 216
+          },
+          {
+            "label": "img",
+            "left": 563,
+            "right": 766,
+            "w": 203
+          },
+          {
+            "label": "figcaption",
+            "left": 562,
+            "right": 762,
+            "w": 200
+          },
+          {
+            "label": "figure.moments__item",
+            "left": 780,
+            "right": 996,
+            "w": 217
+          },
+          {
+            "label": "img",
+            "left": 786,
+            "right": 989,
+            "w": 204
+          },
+          {
+            "label": "figcaption",
+            "left": 790,
+            "right": 990,
+            "w": 200
+          },
+          {
+            "label": "figure.moments__item",
+            "left": 1005,
+            "right": 1218,
+            "w": 213
+          },
+          {
+            "label": "img",
+            "left": 1011,
+            "right": 1212,
+            "w": 201
+          }
+        ]
+      },
+      "imageInfo": {
+        "top": {
+          "scale": 2,
+          "width": 780,
+          "height": 19150,
+          "cssWidth": 390,
+          "cssHeight": 9575,
+          "horizontalOverflowPx": 0
+        },
+        "scrolled": {
+          "scale": 2,
+          "width": 780,
+          "height": 24522,
+          "cssWidth": 390,
+          "cssHeight": 12261,
+          "horizontalOverflowPx": 0
+        },
+        "rmTop": {
+          "scale": 2,
+          "width": 780,
+          "height": 19150,
+          "cssWidth": 390,
+          "cssHeight": 9575,
+          "horizontalOverflowPx": 0
+        },
+        "rmScrolled": {
+          "scale": 2,
+          "width": 780,
+          "height": 24522,
+          "cssWidth": 390,
+          "cssHeight": 12261,
+          "horizontalOverflowPx": 0
+        }
+      },
+      "experienceAnatomy": {
+        "legacyLeftColumn": null,
+        "legacyRightColumn": null,
+        "section": {
+          "top": 7594,
+          "left": 16,
+          "w": 358,
+          "h": 3241
+        },
+        "stopList": {
+          "top": 7874,
+          "left": 16,
+          "w": 358,
+          "h": 2960,
+          "stops": 20
+        },
+        "stops": [
+          {
+            "id": "exp-principia",
+            "textChars": 223,
+            "top": 7994,
+            "left": 16,
+            "w": 358,
+            "h": 420
+          },
+          {
+            "id": "exp-olympic-club",
+            "textChars": 170,
+            "top": 8414,
+            "left": 16,
+            "w": 358,
+            "h": 420
+          },
+          {
+            "id": "exp-estudar",
+            "textChars": 166,
+            "top": 8834,
+            "left": 16,
+            "w": 358,
+            "h": 420
+          },
+          {
+            "id": "exp-fintech-rct",
+            "textChars": 183,
+            "top": 9254,
+            "left": 16,
+            "w": 358,
+            "h": 420
+          },
+          {
+            "id": "exp-gsat",
+            "textChars": 133,
+            "top": 9674,
+            "left": 16,
+            "w": 358,
+            "h": 420
+          },
+          {
+            "id": "exp-hibeex",
+            "textChars": 240,
+            "top": 10094,
+            "left": 16,
+            "w": 358,
+            "h": 420
+          }
+        ],
+        "stopNav": {
+          "top": 7731,
+          "left": 20,
+          "w": 350,
+          "h": 132
+        },
+        "road": {
+          "top": 7594,
+          "left": 16,
+          "w": 358,
+          "h": 3241
+        },
+        "carCanvas": {
+          "top": 10809,
+          "left": 12,
+          "w": 52,
+          "h": 52,
+          "bitmap": "104x104"
+        },
+        "carPoster": {
+          "top": 10809,
+          "left": 12,
+          "w": 52,
+          "h": 52,
+          "src": "/assets/car/car-00.webp",
+          "naturalW": 256,
+          "naturalH": 256,
+          "hasAttrDims": true
+        },
+        "odometer": {
+          "top": 7881,
+          "left": 16,
+          "w": 358,
+          "h": 33,
+          "position": "sticky",
+          "text": "2026stop 6/6 · HIBEEX"
+        },
+        "focusablesInside": 8,
+        "canvases": 1
+      },
+      "fixedOverlays": [
+        {
+          "label": "nav.navbar",
+          "h": 48,
+          "w": 254
+        },
+        {
+          "label": "button.toggle-button",
+          "h": 44,
+          "w": 44
+        },
+        {
+          "label": "nav.mobile-sticky-cta",
+          "h": 89,
+          "w": 390
+        }
+      ],
+      "sections": [
+        {
+          "label": "div.hero-section",
+          "heading": "Gabriel Moreno Ribeiro.",
+          "cssTop": 104,
+          "cssHeight": 519,
+          "textChars": 242,
+          "imgs": 0,
+          "canvases": 0,
+          "states": {
+            "top": {
+              "imgHeight": 19150,
+              "bandPx": 1038,
+              "mean": 232.8,
+              "std": 50.84,
+              "inkFraction": 0.1378,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 319
+            },
+            "scrolled": {
+              "imgHeight": 24522,
+              "bandPx": 1038,
+              "mean": 232.6,
+              "std": 50.9,
+              "inkFraction": 0.1406,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 319
+            },
+            "rmTop": {
+              "imgHeight": 19150,
+              "bandPx": 1038,
+              "mean": 232.8,
+              "std": 50.85,
+              "inkFraction": 0.1382,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 319
+            },
+            "rmScrolled": {
+              "imgHeight": 24522,
+              "bandPx": 1038,
+              "mean": 232.8,
+              "std": 50.85,
+              "inkFraction": 0.1382,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 319
+            }
+          },
+          "diffs": {
+            "topVsScrolled": {
+              "meanAbsDiff": 0.4,
+              "changedFraction": 0.0071
+            },
+            "scrolledVsRmScrolled": {
+              "meanAbsDiff": 1.67,
+              "changedFraction": 0.0185
+            },
+            "topVsRmTop": {
+              "meanAbsDiff": 1.26,
+              "changedFraction": 0.0114
+            }
+          },
+          "rmGeometry": {
+            "top": 104,
+            "height": 519
+          }
+        },
+        {
+          "label": "#moments",
+          "heading": null,
+          "cssTop": 647,
+          "cssHeight": 489,
+          "textChars": 1023,
+          "imgs": 34,
+          "canvases": 0,
+          "states": {
+            "top": {
+              "imgHeight": 19150,
+              "bandPx": 978,
+              "mean": 203.1,
+              "std": 63.84,
+              "inkFraction": 0.4716,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 301
+            },
+            "scrolled": {
+              "imgHeight": 24522,
+              "bandPx": 978,
+              "mean": 194.7,
+              "std": 66.08,
+              "inkFraction": 0.5536,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 301
+            },
+            "rmTop": {
+              "imgHeight": 19150,
+              "bandPx": 978,
+              "mean": 195,
+              "std": 72.47,
+              "inkFraction": 0.5111,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 301
+            },
+            "rmScrolled": {
+              "imgHeight": 24522,
+              "bandPx": 978,
+              "mean": 195,
+              "std": 72.47,
+              "inkFraction": 0.5111,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 301
+            }
+          },
+          "diffs": {
+            "topVsScrolled": {
+              "meanAbsDiff": 44.49,
+              "changedFraction": 0.4885
+            },
+            "scrolledVsRmScrolled": {
+              "meanAbsDiff": 49.27,
+              "changedFraction": 0.5075
+            },
+            "topVsRmTop": {
+              "meanAbsDiff": 40.8,
+              "changedFraction": 0.4875
+            }
+          },
+          "rmGeometry": {
+            "top": 647,
+            "height": 489
+          }
+        },
+        {
+          "label": "div",
+          "heading": "Where I Come From.",
+          "cssTop": 1168,
+          "cssHeight": 882,
+          "textChars": 476,
+          "imgs": 8,
+          "canvases": 0,
+          "states": {
+            "top": {
+              "imgHeight": 19150,
+              "bandPx": 1764,
+              "mean": 206.9,
+              "std": 85.35,
+              "inkFraction": 0.2325,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 543
+            },
+            "scrolled": {
+              "imgHeight": 24522,
+              "bandPx": 1764,
+              "mean": 223.3,
+              "std": 60.26,
+              "inkFraction": 0.1918,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 543
+            },
+            "rmTop": {
+              "imgHeight": 19150,
+              "bandPx": 1764,
+              "mean": 206.9,
+              "std": 85.35,
+              "inkFraction": 0.2324,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 543
+            },
+            "rmScrolled": {
+              "imgHeight": 24522,
+              "bandPx": 1764,
+              "mean": 223.4,
+              "std": 60.26,
+              "inkFraction": 0.1916,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 543
+            }
+          },
+          "diffs": {
+            "topVsScrolled": {
+              "meanAbsDiff": 16.52,
+              "changedFraction": 0.1351
+            },
+            "scrolledVsRmScrolled": {
+              "meanAbsDiff": 0.07,
+              "changedFraction": 0
+            },
+            "topVsRmTop": {
+              "meanAbsDiff": 0.01,
+              "changedFraction": 0
+            }
+          },
+          "rmGeometry": {
+            "top": 1168,
+            "height": 882
+          }
+        },
+        {
+          "label": "div",
+          "heading": "Cool Things",
+          "cssTop": 2074,
+          "cssHeight": 1869,
+          "textChars": 824,
+          "imgs": 4,
+          "canvases": 0,
+          "states": {
+            "top": {
+              "imgHeight": 19150,
+              "bandPx": 3738,
+              "mean": 249,
+              "std": 0.12,
+              "inkFraction": 0,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 1150
+            },
+            "scrolled": {
+              "imgHeight": 24522,
+              "bandPx": 3738,
+              "mean": 225.2,
+              "std": 56.06,
+              "inkFraction": 0.2177,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 1150
+            },
+            "rmTop": {
+              "imgHeight": 19150,
+              "bandPx": 1764,
+              "mean": 206.9,
+              "std": 85.35,
+              "inkFraction": 0.2324,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 543
+            },
+            "rmScrolled": {
+              "imgHeight": 24522,
+              "bandPx": 1764,
+              "mean": 223.4,
+              "std": 60.26,
+              "inkFraction": 0.1916,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 543
+            }
+          },
+          "diffs": {
+            "topVsScrolled": {
+              "meanAbsDiff": 24.46,
+              "changedFraction": 0.2513
+            },
+            "scrolledVsRmScrolled": {
+              "meanAbsDiff": 43.54,
+              "changedFraction": 0.3845
+            },
+            "topVsRmTop": {
+              "meanAbsDiff": 42.48,
+              "changedFraction": 0.255
+            }
+          },
+          "rmGeometry": {
+            "top": 1168,
+            "height": 882
+          }
+        },
+        {
+          "label": "div",
+          "heading": "By the Numbers",
+          "cssTop": 3967,
+          "cssHeight": 1271,
+          "textChars": 438,
+          "imgs": 9,
+          "canvases": 0,
+          "states": {
+            "top": {
+              "imgHeight": 19150,
+              "bandPx": 2542,
+              "mean": 224.2,
+              "std": 54.79,
+              "inkFraction": 0.2408,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 782
+            },
+            "scrolled": {
+              "imgHeight": 24522,
+              "bandPx": 2542,
+              "mean": 220.3,
+              "std": 57.79,
+              "inkFraction": 0.2777,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 782
+            },
+            "rmTop": {
+              "imgHeight": 19150,
+              "bandPx": 1764,
+              "mean": 206.9,
+              "std": 85.35,
+              "inkFraction": 0.2324,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 543
+            },
+            "rmScrolled": {
+              "imgHeight": 24522,
+              "bandPx": 1764,
+              "mean": 223.4,
+              "std": 60.26,
+              "inkFraction": 0.1916,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 543
+            }
+          },
+          "diffs": {
+            "topVsScrolled": {
+              "meanAbsDiff": 17.73,
+              "changedFraction": 0.1982
+            },
+            "scrolledVsRmScrolled": {
+              "meanAbsDiff": 37.88,
+              "changedFraction": 0.3773
+            },
+            "topVsRmTop": {
+              "meanAbsDiff": 45.78,
+              "changedFraction": 0.373
+            }
+          },
+          "rmGeometry": {
+            "top": 1168,
+            "height": 882
+          }
+        },
+        {
+          "label": "div",
+          "heading": "Research",
+          "cssTop": 5262,
+          "cssHeight": 1630,
+          "textChars": 927,
+          "imgs": 2,
+          "canvases": 0,
+          "states": {
+            "top": {
+              "imgHeight": 19150,
+              "bandPx": 3260,
+              "mean": 226.2,
+              "std": 66.19,
+              "inkFraction": 0.126,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 1003
+            },
+            "scrolled": {
+              "imgHeight": 24522,
+              "bandPx": 3260,
+              "mean": 219.7,
+              "std": 64.6,
+              "inkFraction": 0.2189,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 1003
+            },
+            "rmTop": {
+              "imgHeight": 19150,
+              "bandPx": 1764,
+              "mean": 206.9,
+              "std": 85.35,
+              "inkFraction": 0.2324,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 543
+            },
+            "rmScrolled": {
+              "imgHeight": 24522,
+              "bandPx": 1764,
+              "mean": 223.4,
+              "std": 60.26,
+              "inkFraction": 0.1916,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 543
+            }
+          },
+          "diffs": {
+            "topVsScrolled": {
+              "meanAbsDiff": 24.62,
+              "changedFraction": 0.2005
+            },
+            "scrolledVsRmScrolled": {
+              "meanAbsDiff": 34.2,
+              "changedFraction": 0.344
+            },
+            "topVsRmTop": {
+              "meanAbsDiff": 61.53,
+              "changedFraction": 0.3646
+            }
+          },
+          "rmGeometry": {
+            "top": 1168,
+            "height": 882
+          }
+        },
+        {
+          "label": "div",
+          "heading": "Some of the languages & tools I build with.",
+          "cssTop": 6916,
+          "cssHeight": 654,
+          "textChars": 169,
+          "imgs": 17,
+          "canvases": 1,
+          "states": {
+            "top": {
+              "imgHeight": 19150,
+              "bandPx": 1308,
+              "mean": 249,
+              "std": 0,
+              "inkFraction": 0,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 402
+            },
+            "scrolled": {
+              "imgHeight": 24522,
+              "bandPx": 1308,
+              "mean": 223.7,
+              "std": 52.73,
+              "inkFraction": 0.2661,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 402
+            },
+            "rmTop": {
+              "imgHeight": 19150,
+              "bandPx": 1764,
+              "mean": 206.9,
+              "std": 85.35,
+              "inkFraction": 0.2324,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 543
+            },
+            "rmScrolled": {
+              "imgHeight": 24522,
+              "bandPx": 1764,
+              "mean": 223.4,
+              "std": 60.26,
+              "inkFraction": 0.1916,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 543
+            }
+          },
+          "diffs": {
+            "topVsScrolled": {
+              "meanAbsDiff": 26.01,
+              "changedFraction": 0.2732
+            },
+            "scrolledVsRmScrolled": {
+              "meanAbsDiff": 46.41,
+              "changedFraction": 0.4254
+            },
+            "topVsRmTop": {
+              "meanAbsDiff": 42.48,
+              "changedFraction": 0.255
+            }
+          },
+          "rmGeometry": {
+            "top": 1168,
+            "height": 882
+          }
+        },
+        {
+          "label": "div",
+          "heading": "Professional Experience.",
+          "cssTop": 7594,
+          "cssHeight": 3241,
+          "textChars": 1271,
+          "imgs": 1,
+          "canvases": 1,
+          "states": {
+            "top": {
+              "imgHeight": 19150,
+              "bandPx": 3962,
+              "mean": 231.7,
+              "std": 47.55,
+              "inkFraction": 0.1639,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 1219
+            },
+            "scrolled": {
+              "imgHeight": 24522,
+              "bandPx": 6482,
+              "mean": 222.5,
+              "std": 59.33,
+              "inkFraction": 0.2275,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 1994
+            },
+            "rmTop": {
+              "imgHeight": 19150,
+              "bandPx": 1764,
+              "mean": 206.9,
+              "std": 85.35,
+              "inkFraction": 0.2324,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 543
+            },
+            "rmScrolled": {
+              "imgHeight": 24522,
+              "bandPx": 1764,
+              "mean": 223.4,
+              "std": 60.26,
+              "inkFraction": 0.1916,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 543
+            }
+          },
+          "diffs": {
+            "topVsScrolled": {
+              "meanAbsDiff": 34.4,
+              "changedFraction": 0.3805
+            },
+            "scrolledVsRmScrolled": {
+              "meanAbsDiff": 38.65,
+              "changedFraction": 0.3976
+            },
+            "topVsRmTop": {
+              "meanAbsDiff": 42.46,
+              "changedFraction": 0.3335
+            }
+          },
+          "rmGeometry": {
+            "top": 1168,
+            "height": 882
+          }
+        },
+        {
+          "label": "div",
+          "heading": "Let's talk.",
+          "cssTop": 10858,
+          "cssHeight": 976,
+          "textChars": 237,
+          "imgs": 0,
+          "canvases": 0,
+          "states": {
+            "top": null,
+            "scrolled": {
+              "imgHeight": 24522,
+              "bandPx": 1952,
+              "mean": 230.4,
+              "std": 45.5,
+              "inkFraction": 0.2153,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 601
+            },
+            "rmTop": {
+              "imgHeight": 19150,
+              "bandPx": 1764,
+              "mean": 206.9,
+              "std": 85.35,
+              "inkFraction": 0.2324,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 543
+            },
+            "rmScrolled": {
+              "imgHeight": 24522,
+              "bandPx": 1764,
+              "mean": 223.4,
+              "std": 60.26,
+              "inkFraction": 0.1916,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 543
+            }
+          },
+          "diffs": {
+            "topVsScrolled": null,
+            "scrolledVsRmScrolled": {
+              "meanAbsDiff": 35.2,
+              "changedFraction": 0.3253
+            },
+            "topVsRmTop": null
+          },
+          "rmGeometry": {
+            "top": 1168,
+            "height": 882
+          }
+        },
+        {
+          "label": "footer.footer",
+          "heading": null,
+          "cssTop": 11858,
+          "cssHeight": 264,
+          "textChars": 178,
+          "imgs": 0,
+          "canvases": 0,
+          "states": {
+            "top": null,
+            "scrolled": {
+              "imgHeight": 24522,
+              "bandPx": 528,
+              "mean": 242.3,
+              "std": 26.5,
+              "inkFraction": 0.1074,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 162
+            },
+            "rmTop": null,
+            "rmScrolled": {
+              "imgHeight": 24522,
+              "bandPx": 528,
+              "mean": 242.3,
+              "std": 26.48,
+              "inkFraction": 0.1072,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 162
+            }
+          },
+          "diffs": {
+            "topVsScrolled": null,
+            "scrolledVsRmScrolled": {
+              "meanAbsDiff": 0.05,
+              "changedFraction": 0
+            },
+            "topVsRmTop": null
+          },
+          "rmGeometry": {
+            "top": 11858,
+            "height": 264
+          }
+        }
+      ]
+    },
+    "1440": {
+      "docHeight": 11097,
+      "docHeightReducedMotion": 11097,
+      "docHeightDeltaWithReduce": 0,
+      "dpr": 1,
+      "horizontalOverflow": {
+        "innerWidth": 1440,
+        "docScrollWidth": 1440,
+        "bodyScrollWidth": 1440,
+        "overflowPx": 0,
+        "offenderCount": 87,
+        "offenders": [
+          {
+            "label": "div.moments__track",
+            "left": -148,
+            "right": 5864,
+            "w": 6012
+          },
+          {
+            "label": "figure.moments__item",
+            "left": -151,
+            "right": 171,
+            "w": 322
+          },
+          {
+            "label": "img",
+            "left": -143,
+            "right": 163,
+            "w": 305
+          },
+          {
+            "label": "figcaption",
+            "left": -137,
+            "right": 163,
+            "w": 300
+          },
+          {
+            "label": "figure.moments__item",
+            "left": 1185,
+            "right": 1507,
+            "w": 322
+          },
+          {
+            "label": "img",
+            "left": 1193,
+            "right": 1499,
+            "w": 305
+          },
+          {
+            "label": "figcaption",
+            "left": 1199,
+            "right": 1499,
+            "w": 300
+          },
+          {
+            "label": "figure.moments__item",
+            "left": 1521,
+            "right": 1839,
+            "w": 318
+          },
+          {
+            "label": "img",
+            "left": 1530,
+            "right": 1831,
+            "w": 302
+          },
+          {
+            "label": "figcaption",
+            "left": 1529,
+            "right": 1830,
+            "w": 300
+          },
+          {
+            "label": "figure.moments__item",
+            "left": 1853,
+            "right": 2175,
+            "w": 322
+          },
+          {
+            "label": "img",
+            "left": 1861,
+            "right": 2167,
+            "w": 305
+          },
+          {
+            "label": "figcaption",
+            "left": 1867,
+            "right": 2167,
+            "w": 300
+          },
+          {
+            "label": "figure.moments__item",
+            "left": 2188,
+            "right": 2509,
+            "w": 321
+          },
+          {
+            "label": "img",
+            "left": 2196,
+            "right": 2501,
+            "w": 305
+          }
+        ]
+      },
+      "imageInfo": {
+        "top": {
+          "scale": 1,
+          "width": 1440,
+          "height": 9553,
+          "cssWidth": 1440,
+          "cssHeight": 9553,
+          "horizontalOverflowPx": 0
+        },
+        "scrolled": {
+          "scale": 1,
+          "width": 1440,
+          "height": 11096,
+          "cssWidth": 1440,
+          "cssHeight": 11096,
+          "horizontalOverflowPx": 0
+        },
+        "rmTop": {
+          "scale": 1,
+          "width": 1440,
+          "height": 9553,
+          "cssWidth": 1440,
+          "cssHeight": 9553,
+          "horizontalOverflowPx": 0
+        },
+        "rmScrolled": {
+          "scale": 1,
+          "width": 1440,
+          "height": 11096,
+          "cssWidth": 1440,
+          "cssHeight": 11096,
+          "horizontalOverflowPx": 0
+        }
+      },
+      "experienceAnatomy": {
+        "legacyLeftColumn": null,
+        "legacyRightColumn": null,
+        "section": {
+          "top": 6233,
+          "left": 160,
+          "w": 1120,
+          "h": 4041
+        },
+        "stopList": {
+          "top": 6474,
+          "left": 160,
+          "w": 1120,
+          "h": 3800,
+          "stops": 20
+        },
+        "stops": [
+          {
+            "id": "exp-principia",
+            "textChars": 223,
+            "top": 6614,
+            "left": 160,
+            "w": 910,
+            "h": 560
+          },
+          {
+            "id": "exp-olympic-club",
+            "textChars": 170,
+            "top": 7174,
+            "left": 160,
+            "w": 910,
+            "h": 560
+          },
+          {
+            "id": "exp-estudar",
+            "textChars": 166,
+            "top": 7734,
+            "left": 160,
+            "w": 910,
+            "h": 560
+          },
+          {
+            "id": "exp-fintech-rct",
+            "textChars": 183,
+            "top": 8294,
+            "left": 160,
+            "w": 910,
+            "h": 560
+          },
+          {
+            "id": "exp-gsat",
+            "textChars": 133,
+            "top": 8854,
+            "left": 160,
+            "w": 910,
+            "h": 560
+          },
+          {
+            "id": "exp-hibeex",
+            "textChars": 240,
+            "top": 9414,
+            "left": 160,
+            "w": 910,
+            "h": 560
+          }
+        ],
+        "stopNav": {
+          "top": 6432,
+          "left": 164,
+          "w": 847,
+          "h": 29
+        },
+        "road": {
+          "top": 6233,
+          "left": 160,
+          "w": 1120,
+          "h": 4041
+        },
+        "carCanvas": {
+          "top": 10208,
+          "left": 452,
+          "w": 132,
+          "h": 132,
+          "bitmap": "132x132"
+        },
+        "carPoster": {
+          "top": 10208,
+          "left": 452,
+          "w": 132,
+          "h": 132,
+          "src": "/assets/car/car-00.webp",
+          "naturalW": 256,
+          "naturalH": 256,
+          "hasAttrDims": true
+        },
+        "odometer": {
+          "top": 6479,
+          "left": 1105,
+          "w": 173,
+          "h": 33,
+          "position": "sticky",
+          "text": "2026stop 6/6 · HIBEEX"
+        },
+        "focusablesInside": 8,
+        "canvases": 1
+      },
+      "fixedOverlays": [
+        {
+          "label": "div.hero-slideshow",
+          "h": 450,
+          "w": 1440
+        },
+        {
+          "label": "nav.section-rail",
+          "h": 190,
+          "w": 105
+        },
+        {
+          "label": "nav.navbar",
+          "h": 51,
+          "w": 510
+        },
+        {
+          "label": "div.sticker-stage",
+          "h": 900,
+          "w": 1440
+        },
+        {
+          "label": "button.handsfree-button",
+          "h": 44,
+          "w": 44
+        },
+        {
+          "label": "button.toggle-button",
+          "h": 44,
+          "w": 44
+        },
+        {
+          "label": "button.terminal-fab",
+          "h": 42,
+          "w": 42
+        },
+        {
+          "label": "button.tip-toast",
+          "h": 47,
+          "w": 245
+        }
+      ],
+      "sections": [
+        {
+          "label": "div.hero-section",
+          "heading": "Gabriel Moreno Ribeiro.",
+          "cssTop": 32,
+          "cssHeight": 737,
+          "textChars": 242,
+          "imgs": 1,
+          "canvases": 0,
+          "states": {
+            "top": {
+              "imgHeight": 9553,
+              "bandPx": 737,
+              "mean": 207.8,
+              "std": 54.34,
+              "inkFraction": 0.483,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 123
+            },
+            "scrolled": {
+              "imgHeight": 11096,
+              "bandPx": 737,
+              "mean": 207.8,
+              "std": 54.33,
+              "inkFraction": 0.4841,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 123
+            },
+            "rmTop": {
+              "imgHeight": 9553,
+              "bandPx": 737,
+              "mean": 207.8,
+              "std": 54.35,
+              "inkFraction": 0.4831,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 123
+            },
+            "rmScrolled": {
+              "imgHeight": 11096,
+              "bandPx": 737,
+              "mean": 207.8,
+              "std": 54.35,
+              "inkFraction": 0.4831,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 123
+            }
+          },
+          "diffs": {
+            "topVsScrolled": {
+              "meanAbsDiff": 0.09,
+              "changedFraction": 0.002
+            },
+            "scrolledVsRmScrolled": {
+              "meanAbsDiff": 0.46,
+              "changedFraction": 0.0069
+            },
+            "topVsRmTop": {
+              "meanAbsDiff": 0.37,
+              "changedFraction": 0.0049
+            }
+          },
+          "rmGeometry": {
+            "top": 32,
+            "height": 737
+          }
+        },
+        {
+          "label": "#moments",
+          "heading": null,
+          "cssTop": 802,
+          "cssHeight": 623,
+          "textChars": 1023,
+          "imgs": 34,
+          "canvases": 0,
+          "states": {
+            "top": {
+              "imgHeight": 9553,
+              "bandPx": 623,
+              "mean": 188.6,
+              "std": 68.19,
+              "inkFraction": 0.6317,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 104
+            },
+            "scrolled": {
+              "imgHeight": 11096,
+              "bandPx": 623,
+              "mean": 187.6,
+              "std": 71.22,
+              "inkFraction": 0.6466,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 104
+            },
+            "rmTop": {
+              "imgHeight": 9553,
+              "bandPx": 623,
+              "mean": 186.7,
+              "std": 70.14,
+              "inkFraction": 0.6363,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 104
+            },
+            "rmScrolled": {
+              "imgHeight": 11096,
+              "bandPx": 623,
+              "mean": 186.5,
+              "std": 70.11,
+              "inkFraction": 0.6409,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 104
+            }
+          },
+          "diffs": {
+            "topVsScrolled": {
+              "meanAbsDiff": 46.4,
+              "changedFraction": 0.5578
+            },
+            "scrolledVsRmScrolled": {
+              "meanAbsDiff": 52.48,
+              "changedFraction": 0.5986
+            },
+            "topVsRmTop": {
+              "meanAbsDiff": 46.15,
+              "changedFraction": 0.5578
+            }
+          },
+          "rmGeometry": {
+            "top": 802,
+            "height": 623
+          }
+        },
+        {
+          "label": "div",
+          "heading": "Where I Come From.",
+          "cssTop": 1474,
+          "cssHeight": 1041,
+          "textChars": 476,
+          "imgs": 9,
+          "canvases": 1,
+          "states": {
+            "top": {
+              "imgHeight": 9553,
+              "bandPx": 1041,
+              "mean": 249,
+              "std": 0,
+              "inkFraction": 0,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 174
+            },
+            "scrolled": {
+              "imgHeight": 11096,
+              "bandPx": 1041,
+              "mean": 213.5,
+              "std": 79.99,
+              "inkFraction": 0.2002,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 174
+            },
+            "rmTop": {
+              "imgHeight": 9553,
+              "bandPx": 1041,
+              "mean": 249,
+              "std": 0,
+              "inkFraction": 0,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 174
+            },
+            "rmScrolled": {
+              "imgHeight": 11096,
+              "bandPx": 1041,
+              "mean": 231.8,
+              "std": 51.69,
+              "inkFraction": 0.152,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 174
+            }
+          },
+          "diffs": {
+            "topVsScrolled": {
+              "meanAbsDiff": 35.66,
+              "changedFraction": 0.1957
+            },
+            "scrolledVsRmScrolled": {
+              "meanAbsDiff": 18.59,
+              "changedFraction": 0.0821
+            },
+            "topVsRmTop": {
+              "meanAbsDiff": 0,
+              "changedFraction": 0
+            }
+          },
+          "rmGeometry": {
+            "top": 1474,
+            "height": 1041
+          }
+        },
+        {
+          "label": "div",
+          "heading": "Cool Things",
+          "cssTop": 2540,
+          "cssHeight": 1230,
+          "textChars": 824,
+          "imgs": 16,
+          "canvases": 0,
+          "states": {
+            "top": {
+              "imgHeight": 9553,
+              "bandPx": 1230,
+              "mean": 249,
+              "std": 0,
+              "inkFraction": 0,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 205
+            },
+            "scrolled": {
+              "imgHeight": 11096,
+              "bandPx": 1230,
+              "mean": 222.2,
+              "std": 59.13,
+              "inkFraction": 0.2363,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 205
+            },
+            "rmTop": {
+              "imgHeight": 9553,
+              "bandPx": 1041,
+              "mean": 249,
+              "std": 0,
+              "inkFraction": 0,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 174
+            },
+            "rmScrolled": {
+              "imgHeight": 11096,
+              "bandPx": 1041,
+              "mean": 231.8,
+              "std": 51.69,
+              "inkFraction": 0.152,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 174
+            }
+          },
+          "diffs": {
+            "topVsScrolled": {
+              "meanAbsDiff": 27.17,
+              "changedFraction": 0.2292
+            },
+            "scrolledVsRmScrolled": {
+              "meanAbsDiff": 41.78,
+              "changedFraction": 0.3298
+            },
+            "topVsRmTop": {
+              "meanAbsDiff": 0,
+              "changedFraction": 0
+            }
+          },
+          "rmGeometry": {
+            "top": 1474,
+            "height": 1041
+          }
+        },
+        {
+          "label": "div",
+          "heading": "By the Numbers",
+          "cssTop": 3796,
+          "cssHeight": 754,
+          "textChars": 484,
+          "imgs": 9,
+          "canvases": 0,
+          "states": {
+            "top": {
+              "imgHeight": 9553,
+              "bandPx": 754,
+              "mean": 249,
+              "std": 0,
+              "inkFraction": 0,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 126
+            },
+            "scrolled": {
+              "imgHeight": 11096,
+              "bandPx": 754,
+              "mean": 248.4,
+              "std": 8.22,
+              "inkFraction": 0.0063,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 126
+            },
+            "rmTop": {
+              "imgHeight": 9553,
+              "bandPx": 1041,
+              "mean": 249,
+              "std": 0,
+              "inkFraction": 0,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 174
+            },
+            "rmScrolled": {
+              "imgHeight": 11096,
+              "bandPx": 1041,
+              "mean": 231.8,
+              "std": 51.69,
+              "inkFraction": 0.152,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 174
+            }
+          },
+          "diffs": {
+            "topVsScrolled": {
+              "meanAbsDiff": 0.61,
+              "changedFraction": 0.0057
+            },
+            "scrolledVsRmScrolled": {
+              "meanAbsDiff": 18.26,
+              "changedFraction": 0.1449
+            },
+            "topVsRmTop": {
+              "meanAbsDiff": 0,
+              "changedFraction": 0
+            }
+          },
+          "rmGeometry": {
+            "top": 1474,
+            "height": 1041
+          }
+        },
+        {
+          "label": "div",
+          "heading": "Research",
+          "cssTop": 4575,
+          "cssHeight": 1120,
+          "textChars": 927,
+          "imgs": 2,
+          "canvases": 0,
+          "states": {
+            "top": {
+              "imgHeight": 9553,
+              "bandPx": 1120,
+              "mean": 249,
+              "std": 0,
+              "inkFraction": 0,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 187
+            },
+            "scrolled": {
+              "imgHeight": 11096,
+              "bandPx": 1120,
+              "mean": 248.5,
+              "std": 8.1,
+              "inkFraction": 0.005,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 187
+            },
+            "rmTop": {
+              "imgHeight": 9553,
+              "bandPx": 1041,
+              "mean": 249,
+              "std": 0,
+              "inkFraction": 0,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 174
+            },
+            "rmScrolled": {
+              "imgHeight": 11096,
+              "bandPx": 1041,
+              "mean": 231.8,
+              "std": 51.69,
+              "inkFraction": 0.152,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 174
+            }
+          },
+          "diffs": {
+            "topVsScrolled": {
+              "meanAbsDiff": 0.49,
+              "changedFraction": 0.0047
+            },
+            "scrolledVsRmScrolled": {
+              "meanAbsDiff": 18.12,
+              "changedFraction": 0.1435
+            },
+            "topVsRmTop": {
+              "meanAbsDiff": 0,
+              "changedFraction": 0
+            }
+          },
+          "rmGeometry": {
+            "top": 1474,
+            "height": 1041
+          }
+        },
+        {
+          "label": "div",
+          "heading": "Some of the languages & tools I build with.",
+          "cssTop": 5719,
+          "cssHeight": 488,
+          "textChars": 169,
+          "imgs": 17,
+          "canvases": 1,
+          "states": {
+            "top": {
+              "imgHeight": 9553,
+              "bandPx": 488,
+              "mean": 249,
+              "std": 0,
+              "inkFraction": 0,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 81
+            },
+            "scrolled": {
+              "imgHeight": 11096,
+              "bandPx": 488,
+              "mean": 241.7,
+              "std": 37.34,
+              "inkFraction": 0.073,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 81
+            },
+            "rmTop": {
+              "imgHeight": 9553,
+              "bandPx": 1041,
+              "mean": 249,
+              "std": 0,
+              "inkFraction": 0,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 174
+            },
+            "rmScrolled": {
+              "imgHeight": 11096,
+              "bandPx": 1041,
+              "mean": 231.8,
+              "std": 51.69,
+              "inkFraction": 0.152,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 174
+            }
+          },
+          "diffs": {
+            "topVsScrolled": {
+              "meanAbsDiff": 9.82,
+              "changedFraction": 0.069
+            },
+            "scrolledVsRmScrolled": {
+              "meanAbsDiff": 25.39,
+              "changedFraction": 0.189
+            },
+            "topVsRmTop": {
+              "meanAbsDiff": 0,
+              "changedFraction": 0
+            }
+          },
+          "rmGeometry": {
+            "top": 1474,
+            "height": 1041
+          }
+        },
+        {
+          "label": "div",
+          "heading": "Professional Experience.",
+          "cssTop": 6233,
+          "cssHeight": 4041,
+          "textChars": 1313,
+          "imgs": 1,
+          "canvases": 1,
+          "states": {
+            "top": {
+              "imgHeight": 9553,
+              "bandPx": 3320,
+              "mean": 228.2,
+              "std": 46.81,
+              "inkFraction": 0.2287,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 553
+            },
+            "scrolled": {
+              "imgHeight": 11096,
+              "bandPx": 4041,
+              "mean": 223.9,
+              "std": 56.56,
+              "inkFraction": 0.2614,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 674
+            },
+            "rmTop": {
+              "imgHeight": 9553,
+              "bandPx": 1041,
+              "mean": 249,
+              "std": 0,
+              "inkFraction": 0,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 174
+            },
+            "rmScrolled": {
+              "imgHeight": 11096,
+              "bandPx": 1041,
+              "mean": 231.8,
+              "std": 51.69,
+              "inkFraction": 0.152,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 174
+            }
+          },
+          "diffs": {
+            "topVsScrolled": {
+              "meanAbsDiff": 38.77,
+              "changedFraction": 0.4158
+            },
+            "scrolledVsRmScrolled": {
+              "meanAbsDiff": 35.94,
+              "changedFraction": 0.3401
+            },
+            "topVsRmTop": {
+              "meanAbsDiff": 20.98,
+              "changedFraction": 0.2271
+            }
+          },
+          "rmGeometry": {
+            "top": 1474,
+            "height": 1041
+          }
+        },
+        {
+          "label": "div",
+          "heading": "Let's talk.",
+          "cssTop": 10299,
+          "cssHeight": 509,
+          "textChars": 237,
+          "imgs": 0,
+          "canvases": 0,
+          "states": {
+            "top": null,
+            "scrolled": {
+              "imgHeight": 11096,
+              "bandPx": 509,
+              "mean": 230,
+              "std": 58.9,
+              "inkFraction": 0.1111,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 85
+            },
+            "rmTop": {
+              "imgHeight": 9553,
+              "bandPx": 1041,
+              "mean": 249,
+              "std": 0,
+              "inkFraction": 0,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 174
+            },
+            "rmScrolled": {
+              "imgHeight": 11096,
+              "bandPx": 1041,
+              "mean": 231.8,
+              "std": 51.69,
+              "inkFraction": 0.152,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 174
+            }
+          },
+          "diffs": {
+            "topVsScrolled": null,
+            "scrolledVsRmScrolled": {
+              "meanAbsDiff": 33.72,
+              "changedFraction": 0.2222
+            },
+            "topVsRmTop": null
+          },
+          "rmGeometry": {
+            "top": 1474,
+            "height": 1041
+          }
+        },
+        {
+          "label": "footer.footer",
+          "heading": null,
+          "cssTop": 10833,
+          "cssHeight": 224,
+          "textChars": 178,
+          "imgs": 0,
+          "canvases": 0,
+          "states": {
+            "top": null,
+            "scrolled": {
+              "imgHeight": 11096,
+              "bandPx": 224,
+              "mean": 205.2,
+              "std": 81.72,
+              "inkFraction": 0.2669,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 37
+            },
+            "rmTop": null,
+            "rmScrolled": {
+              "imgHeight": 11096,
+              "bandPx": 224,
+              "mean": 205.2,
+              "std": 81.72,
+              "inkFraction": 0.2669,
+              "modalGrey": 249,
+              "thumbW": 240,
+              "thumbH": 37
+            }
+          },
+          "diffs": {
+            "topVsScrolled": null,
+            "scrolledVsRmScrolled": {
+              "meanAbsDiff": 0,
+              "changedFraction": 0
+            },
+            "topVsRmTop": null
+          },
+          "rmGeometry": {
+            "top": 10833,
+            "height": 224
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+ "violations": 1,
+ "violationNodes": 2,
+ "passes": 44,
+ "incomplete": 1,
+ "critical": 0,
+ "serious": 1,
+ "moderate": 0,
+ "minor": 0
+}
+SERIOUS  color-contrast  nodes=2  .exp__card-cta

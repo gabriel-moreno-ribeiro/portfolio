@@ -1,0 +1,47 @@
+>> lighthouse desktop
+{
+ "scores": {
+  "performance": 60,
+  "accessibility": 96,
+  "best-practices": 100,
+  "seo": 100
+ },
+ "metrics": {
+  "FCP": 1978,
+  "LCP": 8323,
+  "CLS": 0,
+  "TBT": 105,
+  "SpeedIndex": 3005,
+  "TTI": 8337,
+  "LCPelement": null,
+  "totalByteWeight": 9782668,
+  "totalByteWeightDisplay": "Total size was 9,553 KiB",
+  "mainThreadWorkMs": 1186,
+  "bootupTimeMs": 410,
+  "domSize": null
+ }
+}
+>> lighthouse mobile
+{
+ "scores": {
+  "performance": 35,
+  "accessibility": 96,
+  "best-practices": 100,
+  "seo": 100
+ },
+ "metrics": {
+  "FCP": 2979,
+  "LCP": 53367,
+  "CLS": 0.005,
+  "TBT": 1347,
+  "SpeedIndex": 12208,
+  "TTI": 53397,
+  "LCPelement": null,
+  "totalByteWeight": 9947907,
+  "totalByteWeightDisplay": "Total size was 9,715 KiB",
+  "mainThreadWorkMs": 5288,
+  "bootupTimeMs": 2076,
+  "domSize": null
+ }
+}
+digest -> C:\portfolio-gabriel\qa\r2\lh-dev-2\lighthouse-digest.json

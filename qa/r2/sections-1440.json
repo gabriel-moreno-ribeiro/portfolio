@@ -1,0 +1,354 @@
+{
+  "docHeight": 11097,
+  "viewportW": 1440,
+  "dpr": 1,
+  "horizontalOverflow": {
+    "innerWidth": 1440,
+    "docScrollWidth": 1440,
+    "bodyScrollWidth": 1440,
+    "overflowPx": 0,
+    "offenderCount": 87,
+    "offenders": [
+      {
+        "label": "div.moments__track",
+        "left": -148,
+        "right": 5864,
+        "w": 6012
+      },
+      {
+        "label": "figure.moments__item",
+        "left": -151,
+        "right": 171,
+        "w": 322
+      },
+      {
+        "label": "img",
+        "left": -143,
+        "right": 163,
+        "w": 305
+      },
+      {
+        "label": "figcaption",
+        "left": -137,
+        "right": 163,
+        "w": 300
+      },
+      {
+        "label": "figure.moments__item",
+        "left": 1185,
+        "right": 1507,
+        "w": 322
+      },
+      {
+        "label": "img",
+        "left": 1193,
+        "right": 1499,
+        "w": 305
+      },
+      {
+        "label": "figcaption",
+        "left": 1199,
+        "right": 1499,
+        "w": 300
+      },
+      {
+        "label": "figure.moments__item",
+        "left": 1521,
+        "right": 1839,
+        "w": 318
+      },
+      {
+        "label": "img",
+        "left": 1530,
+        "right": 1831,
+        "w": 302
+      },
+      {
+        "label": "figcaption",
+        "left": 1529,
+        "right": 1830,
+        "w": 300
+      },
+      {
+        "label": "figure.moments__item",
+        "left": 1853,
+        "right": 2175,
+        "w": 322
+      },
+      {
+        "label": "img",
+        "left": 1861,
+        "right": 2167,
+        "w": 305
+      },
+      {
+        "label": "figcaption",
+        "left": 1867,
+        "right": 2167,
+        "w": 300
+      },
+      {
+        "label": "figure.moments__item",
+        "left": 2188,
+        "right": 2509,
+        "w": 321
+      },
+      {
+        "label": "img",
+        "left": 2196,
+        "right": 2501,
+        "w": 305
+      }
+    ]
+  },
+  "sections": [
+    {
+      "label": "div.hero-section",
+      "tag": "div",
+      "top": 32,
+      "height": 737,
+      "heading": "Gabriel Moreno Ribeiro.",
+      "textChars": 242,
+      "imgs": 1,
+      "canvases": 0
+    },
+    {
+      "label": "#moments",
+      "tag": "section",
+      "top": 802,
+      "height": 623,
+      "heading": null,
+      "textChars": 1023,
+      "imgs": 34,
+      "canvases": 0
+    },
+    {
+      "label": "div",
+      "tag": "div",
+      "top": 1474,
+      "height": 1041,
+      "heading": "Where I Come From.",
+      "textChars": 476,
+      "imgs": 9,
+      "canvases": 1
+    },
+    {
+      "label": "div",
+      "tag": "div",
+      "top": 2540,
+      "height": 1230,
+      "heading": "Cool Things",
+      "textChars": 824,
+      "imgs": 16,
+      "canvases": 0
+    },
+    {
+      "label": "div",
+      "tag": "div",
+      "top": 3796,
+      "height": 754,
+      "heading": "By the Numbers",
+      "textChars": 484,
+      "imgs": 9,
+      "canvases": 0
+    },
+    {
+      "label": "div",
+      "tag": "div",
+      "top": 4575,
+      "height": 1120,
+      "heading": "Research",
+      "textChars": 927,
+      "imgs": 2,
+      "canvases": 0
+    },
+    {
+      "label": "div",
+      "tag": "div",
+      "top": 5719,
+      "height": 488,
+      "heading": "Some of the languages & tools I build with.",
+      "textChars": 169,
+      "imgs": 17,
+      "canvases": 1
+    },
+    {
+      "label": "div",
+      "tag": "div",
+      "top": 6233,
+      "height": 4041,
+      "heading": "Professional Experience.",
+      "textChars": 1313,
+      "imgs": 1,
+      "canvases": 1
+    },
+    {
+      "label": "div",
+      "tag": "div",
+      "top": 10299,
+      "height": 509,
+      "heading": "Let's talk.",
+      "textChars": 237,
+      "imgs": 0,
+      "canvases": 0
+    },
+    {
+      "label": "footer.footer",
+      "tag": "footer",
+      "top": 10833,
+      "height": 224,
+      "heading": null,
+      "textChars": 178,
+      "imgs": 0,
+      "canvases": 0
+    }
+  ],
+  "experienceColumns": {
+    "legacyLeftColumn": null,
+    "legacyRightColumn": null,
+    "section": {
+      "top": 6233,
+      "left": 160,
+      "w": 1120,
+      "h": 4041
+    },
+    "stopList": {
+      "top": 6474,
+      "left": 160,
+      "w": 1120,
+      "h": 3800,
+      "stops": 20
+    },
+    "stops": [
+      {
+        "id": "exp-principia",
+        "textChars": 223,
+        "top": 6614,
+        "left": 160,
+        "w": 910,
+        "h": 560
+      },
+      {
+        "id": "exp-olympic-club",
+        "textChars": 170,
+        "top": 7174,
+        "left": 160,
+        "w": 910,
+        "h": 560
+      },
+      {
+        "id": "exp-estudar",
+        "textChars": 166,
+        "top": 7734,
+        "left": 160,
+        "w": 910,
+        "h": 560
+      },
+      {
+        "id": "exp-fintech-rct",
+        "textChars": 183,
+        "top": 8294,
+        "left": 160,
+        "w": 910,
+        "h": 560
+      },
+      {
+        "id": "exp-gsat",
+        "textChars": 133,
+        "top": 8854,
+        "left": 160,
+        "w": 910,
+        "h": 560
+      },
+      {
+        "id": "exp-hibeex",
+        "textChars": 240,
+        "top": 9414,
+        "left": 160,
+        "w": 910,
+        "h": 560
+      }
+    ],
+    "stopNav": {
+      "top": 6432,
+      "left": 164,
+      "w": 847,
+      "h": 29
+    },
+    "road": {
+      "top": 6233,
+      "left": 160,
+      "w": 1120,
+      "h": 4041
+    },
+    "carCanvas": {
+      "top": 10208,
+      "left": 452,
+      "w": 132,
+      "h": 132,
+      "bitmap": "132x132"
+    },
+    "carPoster": {
+      "top": 10208,
+      "left": 452,
+      "w": 132,
+      "h": 132,
+      "src": "/assets/car/car-00.webp",
+      "naturalW": 256,
+      "naturalH": 256,
+      "hasAttrDims": true
+    },
+    "odometer": {
+      "top": 6479,
+      "left": 1105,
+      "w": 173,
+      "h": 33,
+      "position": "sticky",
+      "text": "2026stop 6/6 · HIBEEX"
+    },
+    "focusablesInside": 8,
+    "canvases": 1
+  },
+  "fixedOverlays": [
+    {
+      "label": "div.hero-slideshow",
+      "h": 450,
+      "w": 1440
+    },
+    {
+      "label": "nav.section-rail",
+      "h": 190,
+      "w": 105
+    },
+    {
+      "label": "nav.navbar",
+      "h": 51,
+      "w": 510
+    },
+    {
+      "label": "div.sticker-stage",
+      "h": 900,
+      "w": 1440
+    },
+    {
+      "label": "button.handsfree-button",
+      "h": 44,
+      "w": 44
+    },
+    {
+      "label": "button.toggle-button",
+      "h": 44,
+      "w": 44
+    },
+    {
+      "label": "button.terminal-fab",
+      "h": 42,
+      "w": 42
+    },
+    {
+      "label": "button.tip-toast",
+      "h": 47,
+      "w": 245
+    }
+  ]
+}

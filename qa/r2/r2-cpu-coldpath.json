@@ -1,0 +1,303 @@
+{
+  "generatedAt": "2026-09-25T20:33:00.930Z",
+  "baseUrl": "http://localhost:4173",
+  "method": "CPU 4x applied at scrollY 0 (Experience still unmounted), then scroll through the section - same as capture.mjs",
+  "runs": [
+    {
+      "viewport": 1440,
+      "geometry": {
+        "sectionTop": 5119,
+        "sectionHeight": 3400,
+        "innerHeight": 900,
+        "docMaxScroll": 8653,
+        "scrollStart": 5119,
+        "scrollEnd": 7619
+      },
+      "observedWindowMs": 7445,
+      "framesOver50ms": 5,
+      "framesOver100ms": 4,
+      "longestMs": 2184,
+      "totalBlockingMs": 2465,
+      "rafStats": {
+        "frames": 266,
+        "over50": 4,
+        "max": 2200,
+        "median": 17,
+        "fps": 36
+      },
+      "top5": [
+        {
+          "start": 3971,
+          "duration": 2184,
+          "blocking": 2132,
+          "scripts": [
+            {
+              "dur": 2169,
+              "invoker": "TimerHandler:setTimeout",
+              "invokerType": "user-callback",
+              "sourceURL": "vendor-react-5tBKz8g6.js",
+              "fn": "my",
+              "forcedLayout": 181
+            }
+          ]
+        },
+        {
+          "start": 6355,
+          "duration": 243,
+          "blocking": 38,
+          "scripts": [
+            {
+              "dur": 73,
+              "invoker": "MessagePort.onmessage",
+              "invokerType": "event-listener",
+              "sourceURL": "vendor-react-5tBKz8g6.js",
+              "fn": "_t",
+              "forcedLayout": 0
+            },
+            {
+              "dur": 6,
+              "invoker": "FrameRequestCallback",
+              "invokerType": "user-callback",
+              "sourceURL": "Experience-BUeBkGye.js",
+              "fn": null,
+              "forcedLayout": 3
+            }
+          ]
+        },
+        {
+          "start": 6184,
+          "duration": 119,
+          "blocking": 14,
+          "scripts": [
+            {
+              "dur": 46,
+              "invoker": "TimerHandler:setTimeout",
+              "invokerType": "user-callback",
+              "sourceURL": null,
+              "fn": null,
+              "forcedLayout": 45
+            }
+          ]
+        },
+        {
+          "start": 6707,
+          "duration": 114,
+          "blocking": 28,
+          "scripts": [
+            {
+              "dur": 50,
+              "invoker": "IMG[src=\"data:image/svg+xml,%3csvg%20width='128'%20height='128'%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20128%20128'%3e%3cpath%20fill='%230acf83'%20d='M45.5%20129c11.9%200%2021.5-9.6%2021.5-21.5V86H45.5C33.6%2086%2024%2095.6%2024%20107.5S33.6%20129%2045.5%20129zm0%200'/%3e%3cpath%20fill='%23a259ff'%20d='M24%2064.5C24%2052.6%2033.6%2043%2045.5%2043H67v43H45.5C33.6%2086%2024%2076.4%2024%2064.5zm0%200'/%3e%3cpath%20fill='%23f24e1e'%20d='M24%2021.5C24%209.6%2033.6%200%2045.5%200H67v43H45.5C33.6%2043%2024%2033.4%2024%2021.5zm0%200'/%3e%3cpath%20fill='%23ff7262'%20d='M67%200h21.5C100.4%200%20110%209.6%20110%2021.5S100.4%2043%2088.5%2043H67zm0%200'/%3e%3cpath%20fill='%231abcfe'%20d='M110%2064.5c0%2011.9-9.6%2021.5-21.5%2021.5S67%2076.4%2067%2064.5%2076.6%2043%2088.5%2043%20110%2052.6%20110%2064.5zm0%200'/%3e%3c/svg%3e\"].onload",
+              "invokerType": "event-listener",
+              "sourceURL": "Skills-C4GWK2G_.js",
+              "fn": null,
+              "forcedLayout": 0
+            },
+            {
+              "dur": 21,
+              "invoker": "FrameRequestCallback",
+              "invokerType": "user-callback",
+              "sourceURL": "Skills-C4GWK2G_.js",
+              "fn": "tA",
+              "forcedLayout": 0
+            }
+          ]
+        },
+        {
+          "start": 3577,
+          "duration": 55,
+          "blocking": 1,
+          "scripts": [
+            {
+              "dur": 32,
+              "invoker": "MessagePort.onmessage",
+              "invokerType": "event-listener",
+              "sourceURL": "vendor-react-5tBKz8g6.js",
+              "fn": "_t",
+              "forcedLayout": 4
+            }
+          ]
+        }
+      ],
+      "requestsWhileThrottled": [
+        "StickerPeel-D2X_4Lyv.js",
+        "gsap-DHgtL2rv.js",
+        "StickerPeel-C5jNO2pH.css",
+        "Skills-C4GWK2G_.js",
+        "Experience-BUeBkGye.js",
+        "Experience-B4Ox_YBd.css",
+        "hibeex.webp",
+        "car-00.webp",
+        "dm-sans-latin-opsz-italic-C8i6y2Ft.woff2",
+        "icon13-D-esI-Zx.webp",
+        "icon1-CJfYQwPj.webp",
+        "docker-CufPvIvi.svg",
+        "matter-GrM7GHlD.js",
+        "car-01.webp",
+        "car-02.webp",
+        "car-03.webp",
+        "car-04.webp",
+        "car-05.webp",
+        "car-06.webp",
+        "car-07.webp",
+        "car-08.webp",
+        "car-09.webp",
+        "car-10.webp",
+        "car-11.webp",
+        "car-12.webp",
+        "car-13.webp",
+        "car-14.webp",
+        "car-15.webp",
+        "car-16.webp",
+        "car-17.webp"
+      ]
+    },
+    {
+      "viewport": 390,
+      "geometry": {
+        "sectionTop": 4990,
+        "sectionHeight": 3400,
+        "innerHeight": 844,
+        "docMaxScroll": 8731,
+        "scrollStart": 4990,
+        "scrollEnd": 7546
+      },
+      "observedWindowMs": 5454,
+      "framesOver50ms": 6,
+      "framesOver100ms": 3,
+      "longestMs": 504,
+      "totalBlockingMs": 681,
+      "rafStats": {
+        "frames": 267,
+        "over50": 5,
+        "max": 500,
+        "median": 17,
+        "fps": 49
+      },
+      "top5": [
+        {
+          "start": 4021,
+          "duration": 504,
+          "blocking": 451,
+          "scripts": [
+            {
+              "dur": 489,
+              "invoker": "TimerHandler:setTimeout",
+              "invokerType": "user-callback",
+              "sourceURL": "vendor-react-5tBKz8g6.js",
+              "fn": "my",
+              "forcedLayout": 195
+            }
+          ]
+        },
+        {
+          "start": 4693,
+          "duration": 163,
+          "blocking": 47,
+          "scripts": [
+            {
+              "dur": 87,
+              "invoker": "MessagePort.onmessage",
+              "invokerType": "event-listener",
+              "sourceURL": "vendor-react-5tBKz8g6.js",
+              "fn": "_t",
+              "forcedLayout": 0
+            }
+          ]
+        },
+        {
+          "start": 4910,
+          "duration": 106,
+          "blocking": 26,
+          "scripts": [
+            {
+              "dur": 28,
+              "invoker": "IMG[src=\"data:image/svg+xml,%3csvg%20width='128'%20height='128'%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20128%20128'%3e%3cpath%20fill='%230acf83'%20d='M45.5%20129c11.9%200%2021.5-9.6%2021.5-21.5V86H45.5C33.6%2086%2024%2095.6%2024%20107.5S33.6%20129%2045.5%20129zm0%200'/%3e%3cpath%20fill='%23a259ff'%20d='M24%2064.5C24%2052.6%2033.6%2043%2045.5%2043H67v43H45.5C33.6%2086%2024%2076.4%2024%2064.5zm0%200'/%3e%3cpath%20fill='%23f24e1e'%20d='M24%2021.5C24%209.6%2033.6%200%2045.5%200H67v43H45.5C33.6%2043%2024%2033.4%2024%2021.5zm0%200'/%3e%3cpath%20fill='%23ff7262'%20d='M67%200h21.5C100.4%200%20110%209.6%20110%2021.5S100.4%2043%2088.5%2043H67zm0%200'/%3e%3cpath%20fill='%231abcfe'%20d='M110%2064.5c0%2011.9-9.6%2021.5-21.5%2021.5S67%2076.4%2067%2064.5%2076.6%2043%2088.5%2043%20110%2052.6%20110%2064.5zm0%200'/%3e%3c/svg%3e\"].onload",
+              "invokerType": "event-listener",
+              "sourceURL": "Skills-C4GWK2G_.js",
+              "fn": null,
+              "forcedLayout": 0
+            },
+            {
+              "dur": 25,
+              "invoker": "FrameRequestCallback",
+              "invokerType": "user-callback",
+              "sourceURL": "Skills-C4GWK2G_.js",
+              "fn": "tA",
+              "forcedLayout": 0
+            }
+          ]
+        },
+        {
+          "start": 8492,
+          "duration": 84,
+          "blocking": 32,
+          "scripts": [
+            {
+              "dur": 73,
+              "invoker": "FrameRequestCallback",
+              "invokerType": "user-callback",
+              "sourceURL": "Experience-BUeBkGye.js",
+              "fn": null,
+              "forcedLayout": 73
+            },
+            {
+              "dur": 5,
+              "invoker": "MessagePort.onmessage",
+              "invokerType": "event-listener",
+              "sourceURL": "vendor-react-5tBKz8g6.js",
+              "fn": "_t",
+              "forcedLayout": 0
+            }
+          ]
+        },
+        {
+          "start": 3624,
+          "duration": 64,
+          "blocking": 9,
+          "scripts": [
+            {
+              "dur": 40,
+              "invoker": "MessagePort.onmessage",
+              "invokerType": "event-listener",
+              "sourceURL": "vendor-react-5tBKz8g6.js",
+              "fn": "_t",
+              "forcedLayout": 5
+            }
+          ]
+        }
+      ],
+      "requestsWhileThrottled": [
+        "StickerPeel-D2X_4Lyv.js",
+        "StickerPeel-C5jNO2pH.css",
+        "Skills-C4GWK2G_.js",
+        "Experience-BUeBkGye.js",
+        "Experience-B4Ox_YBd.css",
+        "car-00.webp",
+        "hibeex.webp",
+        "dm-sans-latin-opsz-italic-C8i6y2Ft.woff2",
+        "icon13-D-esI-Zx.webp",
+        "icon1-CJfYQwPj.webp",
+        "docker-CufPvIvi.svg",
+        "matter-GrM7GHlD.js",
+        "car-01.webp",
+        "car-02.webp",
+        "car-03.webp",
+        "car-04.webp",
+        "car-05.webp",
+        "car-06.webp",
+        "car-07.webp",
+        "car-08.webp",
+        "car-09.webp",
+        "car-10.webp",
+        "car-11.webp",
+        "car-12.webp",
+        "car-13.webp",
+        "car-14.webp",
+        "car-15.webp",
+        "car-16.webp",
+        "car-17.webp",
+        "car-18.webp"
+      ]
+    }
+  ]
+}

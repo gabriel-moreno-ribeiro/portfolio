@@ -1,0 +1,753 @@
+{
+  "generatedAt": "2026-09-25T20:17:52.026Z",
+  "baseUrl": "http://localhost:4173",
+  "outDir": "C:\\portfolio-gabriel\\qa\\r2",
+  "notes": [],
+  "deepLink": [
+    {
+      "found": true,
+      "scrollY": 10197,
+      "rectTop": 142,
+      "rectH": 445,
+      "innerH": 900,
+      "inViewport": true,
+      "topWithin": false,
+      "heading": "Let's talk.",
+      "hasForm": true,
+      "textChars": 237,
+      "maxScroll": 10197,
+      "viewport": 1440,
+      "unmountedSections": [],
+      "threeRequests": []
+    },
+    {
+      "found": true,
+      "scrollY": 10757,
+      "rectTop": 89,
+      "rectH": 936,
+      "innerH": 844,
+      "inViewport": true,
+      "topWithin": true,
+      "heading": "Let's talk.",
+      "hasForm": true,
+      "textChars": 237,
+      "maxScroll": 11403,
+      "viewport": 390,
+      "unmountedSections": [],
+      "threeRequests": []
+    }
+  ],
+  "railClicks": [
+    {
+      "viewport": 1440,
+      "rail": {
+        "present": true,
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "w": 105,
+        "h": 190,
+        "items": 7
+      },
+      "clicks": [
+        {
+          "label": "Experience",
+          "target": "work-experience",
+          "settleMs": 1250,
+          "ok": true,
+          "found": false,
+          "scrollY": 5059
+        },
+        {
+          "label": "Contact",
+          "target": "contact",
+          "settleMs": 2250,
+          "ok": true,
+          "found": true,
+          "scrollY": 10197,
+          "innerH": 900,
+          "rectTop": 142,
+          "rectBottom": 587,
+          "rectH": 445,
+          "onScreen": true,
+          "topNearViewportTop": true,
+          "textChars": 237,
+          "firstContentOnScreen": true,
+          "firstContentLabel": "p:Contact",
+          "maxScroll": 10197
+        }
+      ]
+    },
+    {
+      "viewport": 390,
+      "rail": {
+        "present": true,
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1",
+        "w": 0,
+        "h": 0,
+        "items": 7
+      },
+      "clicks": [
+        {
+          "label": "Experience",
+          "target": "work-experience",
+          "settleMs": 1750,
+          "ok": true,
+          "found": true,
+          "scrollY": 4930,
+          "innerH": 844,
+          "rectTop": 2636,
+          "rectBottom": 5876,
+          "rectH": 3241,
+          "onScreen": false,
+          "topNearViewportTop": false,
+          "textChars": 1283,
+          "firstContentOnScreen": false,
+          "firstContentLabel": "h2:Professional Experience.",
+          "maxScroll": 11147
+        },
+        {
+          "label": "Contact",
+          "target": "contact",
+          "settleMs": 2250,
+          "ok": true,
+          "found": true,
+          "scrollY": 10770,
+          "innerH": 844,
+          "rectTop": 76,
+          "rectBottom": 1012,
+          "rectH": 936,
+          "onScreen": true,
+          "topNearViewportTop": true,
+          "textChars": 237,
+          "firstContentOnScreen": true,
+          "firstContentLabel": "p:Contact",
+          "maxScroll": 11403
+        }
+      ]
+    }
+  ],
+  "gating": [
+    {
+      "viewport": 1440,
+      "scrolled": {
+        "steps": 34,
+        "finalY": 10197,
+        "docHeight": 11097
+      },
+      "phase1_loadPlus8sIdle": {
+        "count": 0,
+        "files": []
+      },
+      "phase2_scrollExperience": {
+        "count": 0,
+        "files": []
+      },
+      "phase3_afterPointermoveOnHero": {
+        "count": 3,
+        "files": [
+          {
+            "f": "react-three-DKQo_3E1.js",
+            "ms": 20852
+          },
+          {
+            "f": "three-Cau--iyM.js",
+            "ms": 20852
+          },
+          {
+            "f": "robot.glb",
+            "ms": 21766
+          }
+        ]
+      },
+      "canvasAfterPointer": {
+        "canvases": 4,
+        "heroCanvas": true,
+        "posterHidden": "true"
+      },
+      "unmountedAfterFullScroll": [],
+      "mountsAfterFullScroll": [
+        {
+          "id": "main-content",
+          "found": true,
+          "tag": "main",
+          "cls": "home-wrapper",
+          "top": 16,
+          "h": 11065,
+          "textChars": 5903,
+          "imgs": 91,
+          "canvases": 3,
+          "looksReserved": false
+        },
+        {
+          "id": "background",
+          "found": true,
+          "tag": "div",
+          "cls": "background-section",
+          "top": 1474,
+          "h": 1041,
+          "textChars": 476,
+          "imgs": 9,
+          "canvases": 1,
+          "looksReserved": false
+        },
+        {
+          "id": "work",
+          "found": true,
+          "tag": "div",
+          "cls": "find-my-work",
+          "top": 2540,
+          "h": 1230,
+          "textChars": 811,
+          "imgs": 16,
+          "canvases": 0,
+          "looksReserved": false
+        },
+        {
+          "id": "research",
+          "found": true,
+          "tag": "section",
+          "cls": "research-section",
+          "top": 4575,
+          "h": 1120,
+          "textChars": 927,
+          "imgs": 2,
+          "canvases": 0,
+          "looksReserved": false
+        },
+        {
+          "id": "skills",
+          "found": true,
+          "tag": "section",
+          "cls": "skills",
+          "top": 5719,
+          "h": 488,
+          "textChars": 169,
+          "imgs": 17,
+          "canvases": 1,
+          "looksReserved": false
+        },
+        {
+          "id": "work-experience",
+          "found": true,
+          "tag": "section",
+          "cls": "exp",
+          "top": 6233,
+          "h": 4041,
+          "textChars": 1313,
+          "imgs": 1,
+          "canvases": 1,
+          "looksReserved": false
+        },
+        {
+          "id": "contact",
+          "found": true,
+          "tag": "section",
+          "cls": "contact-section",
+          "top": 10339,
+          "h": 445,
+          "textChars": 237,
+          "imgs": 0,
+          "canvases": 0,
+          "looksReserved": false
+        }
+      ],
+      "totalRequests": 138,
+      "d20orHdrEverRequested": []
+    },
+    {
+      "viewport": 390,
+      "scrolled": {
+        "steps": 39,
+        "finalY": 11403,
+        "docHeight": 12247
+      },
+      "phase1_loadPlus8sIdle": {
+        "count": 0,
+        "files": []
+      },
+      "phase2_scrollExperience": {
+        "count": 0,
+        "files": []
+      },
+      "phase3_afterPointermoveOnHero": {
+        "count": 0,
+        "files": []
+      },
+      "canvasAfterPointer": {
+        "canvases": 2,
+        "heroCanvas": false,
+        "posterHidden": null
+      },
+      "unmountedAfterFullScroll": [],
+      "mountsAfterFullScroll": [
+        {
+          "id": "main-content",
+          "found": true,
+          "tag": "main",
+          "cls": "home-wrapper",
+          "top": 16,
+          "h": 12215,
+          "textChars": 5813,
+          "imgs": 77,
+          "canvases": 2,
+          "looksReserved": false
+        },
+        {
+          "id": "background",
+          "found": true,
+          "tag": "div",
+          "cls": "background-section",
+          "top": 1168,
+          "h": 882,
+          "textChars": 476,
+          "imgs": 8,
+          "canvases": 0,
+          "looksReserved": false
+        },
+        {
+          "id": "work",
+          "found": true,
+          "tag": "div",
+          "cls": "find-my-work",
+          "top": 2074,
+          "h": 1869,
+          "textChars": 811,
+          "imgs": 4,
+          "canvases": 0,
+          "looksReserved": false
+        },
+        {
+          "id": "research",
+          "found": true,
+          "tag": "section",
+          "cls": "research-section",
+          "top": 5234,
+          "h": 1630,
+          "textChars": 927,
+          "imgs": 2,
+          "canvases": 0,
+          "looksReserved": false
+        },
+        {
+          "id": "skills",
+          "found": true,
+          "tag": "section",
+          "cls": "skills",
+          "top": 6888,
+          "h": 654,
+          "textChars": 169,
+          "imgs": 17,
+          "canvases": 1,
+          "looksReserved": false
+        },
+        {
+          "id": "work-experience",
+          "found": true,
+          "tag": "section",
+          "cls": "exp",
+          "top": 7566,
+          "h": 3241,
+          "textChars": 1271,
+          "imgs": 1,
+          "canvases": 1,
+          "looksReserved": false
+        },
+        {
+          "id": "contact",
+          "found": true,
+          "tag": "section",
+          "cls": "contact-section",
+          "top": 10846,
+          "h": 936,
+          "textChars": 237,
+          "imgs": 0,
+          "canvases": 0,
+          "looksReserved": false
+        }
+      ],
+      "totalRequests": 104,
+      "d20orHdrEverRequested": []
+    }
+  ],
+  "carFirstFrame": [
+    {
+      "viewport": 1440,
+      "parkedAt": 6233,
+      "sectionTop": 6233,
+      "posterVisibleMsSinceNav": 4485,
+      "spriteTakeoverMsSinceNav": 4491,
+      "waitedMs": 11,
+      "posterPresent": true,
+      "posterComplete": true,
+      "posterNatural": "256x256",
+      "posterSrc": "/assets/car/car-00.webp",
+      "posterHidden": true,
+      "canvasBitmap": "132x132",
+      "canvasCssW": 132
+    },
+    {
+      "viewport": 390,
+      "parkedAt": 7539,
+      "sectionTop": 7539,
+      "posterVisibleMsSinceNav": 3866,
+      "spriteTakeoverMsSinceNav": 4797,
+      "waitedMs": 932,
+      "posterPresent": true,
+      "posterComplete": true,
+      "posterNatural": "256x256",
+      "posterSrc": "/assets/car/car-00.webp",
+      "posterHidden": true,
+      "canvasBitmap": "104x104",
+      "canvasCssW": 52
+    }
+  ],
+  "cpuAttributed": [
+    {
+      "viewport": 1440,
+      "entryType": "long-animation-frame",
+      "geometry": {
+        "sectionTop": 6233,
+        "sectionHeight": 4041,
+        "innerHeight": 900,
+        "docMaxScroll": 10408,
+        "scrollStart": 6233,
+        "scrollEnd": 9374
+      },
+      "note": "section pre-mounted before throttling (its chunk is already parsed)",
+      "observedWindowMs": 4796,
+      "framesOver50ms": 0,
+      "framesOver100ms": 0,
+      "longestMs": 0,
+      "totalBlockingMs": 0,
+      "top5": [],
+      "rafStats": {
+        "frames": 278,
+        "framesOver50ms": 0,
+        "maxFrameMs": 33,
+        "medianFrameMs": 17,
+        "p95FrameMs": 17,
+        "effectiveFps": 58
+      },
+      "requestsDuringThrottledScroll": [
+        "ContactSection-DXllL1_q.js"
+      ]
+    },
+    {
+      "viewport": 390,
+      "entryType": "long-animation-frame",
+      "geometry": {
+        "sectionTop": 7539,
+        "sectionHeight": 3241,
+        "innerHeight": 844,
+        "docMaxScroll": 11121,
+        "scrollStart": 7539,
+        "scrollEnd": 9936
+      },
+      "note": "section pre-mounted before throttling (its chunk is already parsed)",
+      "observedWindowMs": 4778,
+      "framesOver50ms": 3,
+      "framesOver100ms": 1,
+      "longestMs": 167,
+      "totalBlockingMs": 150,
+      "top5": [
+        {
+          "start": 6143,
+          "duration": 167,
+          "blocking": 45,
+          "renderStart": 6306,
+          "styleAndLayoutStart": 6307,
+          "scripts": [
+            {
+              "dur": 91,
+              "name": "script",
+              "invoker": "MessagePort.onmessage",
+              "invokerType": "event-listener",
+              "sourceURL": "http://localhost:4173/assets/vendor-react-5tBKz8g6.js",
+              "sourceFunctionName": "_t",
+              "sourceCharPosition": 3746,
+              "forcedStyleAndLayoutDuration": 0,
+              "pauseDuration": 0
+            }
+          ]
+        },
+        {
+          "start": 6364,
+          "duration": 81,
+          "blocking": 0,
+          "renderStart": 6422,
+          "styleAndLayoutStart": 6441,
+          "scripts": [
+            {
+              "dur": 23,
+              "name": "script",
+              "invoker": "IMG[src=\"data:image/svg+xml,%3csvg%20width='128'%20height='128'%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20128%20128'%3e%3cpath%20fill='%230acf83'%20d='M45.5%20129c11.9%200%2021.5-9.6%2021.5-21.5V86H45.5C33.6%2086%2024%2095.6%2024%20107.5S33.6%20129%2045.5%20129zm0%200'/%3e%3cpath%20fill='%23a259ff'%20d='M24%2064.5C24%2052.6%2033.6%2043%2045.5%2043H67v43H45.5C33.6%2086%2024%2076.4%2024%2064.5zm0%200'/%3e%3cpath%20fill='%23f24e1e'%20d='M24%2021.5C24%209.6%2033.6%200%2045.5%200H67v43H45.5C33.6%2043%2024%2033.4%2024%2021.5zm0%200'/%3e%3cpath%20fill='%23ff7262'%20d='M67%200h21.5C100.4%200%20110%209.6%20110%2021.5S100.4%2043%2088.5%2043H67zm0%200'/%3e%3cpath%20fill='%231abcfe'%20d='M110%2064.5c0%2011.9-9.6%2021.5-21.5%2021.5S67%2076.4%2067%2064.5%2076.6%2043%2088.5%2043%20110%2052.6%20110%2064.5zm0%200'/%3e%3c/svg%3e\"].onload",
+              "invokerType": "event-listener",
+              "sourceURL": "http://localhost:4173/assets/Skills-C4GWK2G_.js",
+              "sourceFunctionName": null,
+              "sourceCharPosition": 89349,
+              "forcedStyleAndLayoutDuration": 0,
+              "pauseDuration": 0
+            },
+            {
+              "dur": 18,
+              "name": "script",
+              "invoker": "FrameRequestCallback",
+              "invokerType": "user-callback",
+              "sourceURL": "http://localhost:4173/assets/Skills-C4GWK2G_.js",
+              "sourceFunctionName": "tA",
+              "sourceCharPosition": 91081,
+              "forcedStyleAndLayoutDuration": 0,
+              "pauseDuration": 0
+            }
+          ]
+        },
+        {
+          "start": 10466,
+          "duration": 52,
+          "blocking": 2,
+          "renderStart": 10470,
+          "styleAndLayoutStart": 10517,
+          "scripts": [
+            {
+              "dur": 44,
+              "name": "script",
+              "invoker": "FrameRequestCallback",
+              "invokerType": "user-callback",
+              "sourceURL": "http://localhost:4173/assets/Experience-BUeBkGye.js",
+              "sourceFunctionName": null,
+              "sourceCharPosition": 30717,
+              "forcedStyleAndLayoutDuration": 43,
+              "pauseDuration": 0
+            }
+          ]
+        }
+      ],
+      "rafStats": {
+        "frames": 268,
+        "framesOver50ms": 2,
+        "maxFrameMs": 150,
+        "medianFrameMs": 17,
+        "p95FrameMs": 17,
+        "effectiveFps": 56
+      },
+      "requestsDuringThrottledScroll": [
+        "matter-GrM7GHlD.js",
+        "car-01.webp",
+        "car-02.webp",
+        "car-03.webp",
+        "car-04.webp",
+        "car-05.webp",
+        "car-06.webp",
+        "car-07.webp",
+        "car-08.webp",
+        "car-09.webp",
+        "car-10.webp",
+        "car-11.webp",
+        "car-12.webp",
+        "car-13.webp",
+        "car-14.webp",
+        "car-15.webp",
+        "car-16.webp",
+        "car-17.webp",
+        "car-18.webp",
+        "car-19.webp",
+        "car-20.webp",
+        "car-21.webp",
+        "car-22.webp",
+        "car-23.webp",
+        "car-24.webp"
+      ]
+    }
+  ],
+  "sticker": [
+    {
+      "viewport": 1440,
+      "mountedBeforeInteraction": {
+        "present": false,
+        "stage": true
+      },
+      "after6sIdle": {
+        "present": true,
+        "complete": true,
+        "natural": "469x469",
+        "src": "/hibeex.webp",
+        "attrW": "130",
+        "attrH": "130",
+        "renderedW": 147,
+        "renderedH": 147,
+        "filter": "none",
+        "opacity": "1",
+        "mixBlendMode": "normal",
+        "onScreen": true,
+        "stageRect": {
+          "top": 0,
+          "left": 0,
+          "w": 1440,
+          "h": 900
+        }
+      },
+      "msToFirstStickerRequest": 6235,
+      "stickerAsset": "hibeex.webp",
+      "crop": "sticker-1440.png",
+      "pixels": {
+        "opaquePx": 402,
+        "darkFraction": 0.91,
+        "saturatedFraction": 0,
+        "meanRGB": [
+          13,
+          13,
+          13
+        ]
+      }
+    },
+    {
+      "viewport": 390,
+      "mountedBeforeInteraction": {
+        "present": false,
+        "stage": true
+      },
+      "after6sIdle": {
+        "present": true,
+        "complete": true,
+        "natural": "469x469",
+        "src": "/hibeex.webp",
+        "attrW": "130",
+        "attrH": "130",
+        "renderedW": 0,
+        "renderedH": 0,
+        "filter": "none",
+        "opacity": "1",
+        "mixBlendMode": "normal",
+        "onScreen": false,
+        "stageRect": {
+          "top": 0,
+          "left": 0,
+          "w": 0,
+          "h": 0
+        }
+      },
+      "msToFirstStickerRequest": 6227,
+      "stickerAsset": "hibeex.webp"
+    }
+  ],
+  "heroPaint": [
+    {
+      "viewport": 1440,
+      "at80ms": {
+        "found": true,
+        "heroH": 737,
+        "elementsAtOpacityZero": [
+          {
+            "label": "div.hero-robot__canvas",
+            "opacity": "0",
+            "transform": "none",
+            "w": 300,
+            "h": 300
+          }
+        ],
+        "countAtOpacityZero": 1,
+        "h1": {
+          "opacity": "1",
+          "transform": "none",
+          "text": "Gabriel Moreno Ribeiro."
+        },
+        "descOpacity": "1"
+      },
+      "lcpCandidates": [
+        {
+          "ms": 184,
+          "size": 81120,
+          "tag": "h1",
+          "cls": "hero-name",
+          "url": null
+        },
+        {
+          "ms": 208,
+          "size": 90000,
+          "tag": "img",
+          "cls": "hero-robot__poster",
+          "url": "http://localhost:4173/assets/robot-poster.webp"
+        },
+        {
+          "ms": 448,
+          "size": 648000,
+          "tag": "img",
+          "cls": "hero-slideshow__img",
+          "url": "http://localhost:4173/assets/hero-slideshow/1-1920.avif"
+        }
+      ],
+      "fcp": [
+        {
+          "name": "first-paint",
+          "ms": 52
+        },
+        {
+          "name": "first-contentful-paint",
+          "ms": 52
+        }
+      ],
+      "slideshow": {
+        "present": true,
+        "imgs": [
+          {
+            "src": "1-1920.avif",
+            "natural": "1920x1280",
+            "loading": null
+          }
+        ]
+      },
+      "moments": {
+        "present": true,
+        "total": 34,
+        "eager": 6,
+        "lazy": 28
+      }
+    },
+    {
+      "viewport": 390,
+      "at80ms": {
+        "found": true,
+        "heroH": 519,
+        "elementsAtOpacityZero": [],
+        "countAtOpacityZero": 0,
+        "h1": {
+          "opacity": "1",
+          "transform": "none",
+          "text": "Gabriel Moreno Ribeiro."
+        },
+        "descOpacity": "1"
+      },
+      "lcpCandidates": [
+        {
+          "ms": 172,
+          "size": 26196,
+          "tag": "p",
+          "cls": "desc",
+          "url": null
+        }
+      ],
+      "fcp": [
+        {
+          "name": "first-paint",
+          "ms": 80
+        },
+        {
+          "name": "first-contentful-paint",
+          "ms": 80
+        }
+      ],
+      "slideshow": {
+        "present": false
+      },
+      "moments": {
+        "present": true,
+        "total": 34,
+        "eager": 6,
+        "lazy": 28
+      }
+    }
+  ]
+}

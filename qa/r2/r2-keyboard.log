@@ -1,0 +1,57 @@
+{
+ "mountsAtStart": [
+  "background:reserved",
+  "work:reserved",
+  "research:reserved",
+  "skills:reserved",
+  "work-experience:reserved",
+  "contact:reserved"
+ ],
+ "pass1": {
+  "tabs": 44,
+  "owners": [
+   "nav.section-rail",
+   "nav.navbar",
+   "#main-content",
+   "#moments",
+   "footer.footer",
+   "nav.links",
+   "#root"
+  ],
+  "contact": false,
+  "exp": false,
+  "offScreen": 4
+ },
+ "pass2": {
+  "tabs": 98,
+  "owners": [
+   "nav.section-rail",
+   "nav.navbar",
+   "#main-content",
+   "#moments",
+   "#background",
+   "#work",
+   "#numbers",
+   "#research",
+   "#skills",
+   "nav.exp__index",
+   "#exp-hibeex",
+   "#contact",
+   "#contact-name",
+   "#contact-email",
+   "#contact-message",
+   "footer.footer",
+   "nav.links",
+   "#root"
+  ],
+  "reachedContactField": true,
+  "reachedExperienceStop": true
+ },
+ "pass3": {
+  "tabs": 98,
+  "contact": true,
+  "exp": true,
+  "owners": 18,
+  "noOutline": 0
+ }
+}

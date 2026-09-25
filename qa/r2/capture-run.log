@@ -1,0 +1,67 @@
+>> viewport 1440
+>> viewport 390
+>> keyboard
+>> cpu4x 1440
+>> cpu4x 390
+{
+ "viewports": [
+  {
+   "vp": "1440x900",
+   "errors": 0,
+   "warnings": 0,
+   "failed": 0,
+   "bodyKB": 13843.2,
+   "canvasEls": 3,
+   "webgl": 1,
+   "notes": []
+  },
+  {
+   "vp": "390x844",
+   "errors": 0,
+   "warnings": 0,
+   "failed": 0,
+   "bodyKB": 11924.1,
+   "canvasEls": 2,
+   "webgl": 0,
+   "notes": []
+  }
+ ],
+ "keyboard": {
+  "tabsPressed": 44,
+  "loopedBackAtTab": 44,
+  "ctrlKOpened": true,
+  "ctrlKAttempts": [
+   {
+    "combo": "Control+K",
+    "opened": true
+   }
+  ],
+  "escapeClosed": true,
+  "invisibleFocusables": 0,
+  "sectionsReached": [
+   "nav.section-rail",
+   "nav.navbar",
+   "#main-content",
+   "#moments",
+   "footer.footer",
+   "nav.links",
+   "#root"
+  ]
+ },
+ "cpu": {
+  "390": {
+   "framesOver50ms": 13,
+   "longestMs": 441,
+   "entryType": "long-animation-frame",
+   "rafFps": 40,
+   "rafMax": 433
+  },
+  "1440": {
+   "framesOver50ms": 11,
+   "longestMs": 2681,
+   "entryType": "long-animation-frame",
+   "rafFps": 29,
+   "rafMax": 2667
+  }
+ }
+}

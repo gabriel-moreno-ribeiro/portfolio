@@ -1,0 +1,481 @@
+{
+  "generatedAt": "2026-09-25T20:29:40.108Z",
+  "baseUrl": "http://localhost:4173",
+  "viewports": {
+    "390": {
+      "fastScroll": {
+        "docStart": 9575,
+        "docEnd": 12220,
+        "clsBeforeScroll": 0.0002,
+        "clsTotal": 0.2625,
+        "shifts": 3,
+        "worst": [
+          {
+            "ms": 4473,
+            "value": 0.2599,
+            "sources": [
+              "FOOTER.footer"
+            ]
+          },
+          {
+            "ms": 3860,
+            "value": 0.0024,
+            "sources": [
+              "DIV.accordion-gallery",
+              "DIV.city-timeline"
+            ]
+          },
+          {
+            "ms": 2551,
+            "value": 0.0002,
+            "sources": [
+              "SPAN.role-suffix",
+              "SPAN"
+            ]
+          }
+        ]
+      },
+      "carTrack": [
+        {
+          "pct": 10,
+          "scrollY": 7806,
+          "carMidPctOfViewport": 43.9,
+          "carTop": 344,
+          "carH": 52,
+          "odoTop": 76,
+          "odoH": 33,
+          "navbarBottom": 64,
+          "odoUnderNavbar": false
+        },
+        {
+          "pct": 25,
+          "scrollY": 8165,
+          "carMidPctOfViewport": 40,
+          "carTop": 312,
+          "carH": 52,
+          "odoTop": 76,
+          "odoH": 33,
+          "navbarBottom": 64,
+          "odoUnderNavbar": false
+        },
+        {
+          "pct": 50,
+          "scrollY": 8765,
+          "carMidPctOfViewport": 40,
+          "carTop": 312,
+          "carH": 52,
+          "odoTop": 76,
+          "odoH": 33,
+          "navbarBottom": 64,
+          "odoUnderNavbar": false
+        },
+        {
+          "pct": 75,
+          "scrollY": 9364,
+          "carMidPctOfViewport": 40,
+          "carTop": 312,
+          "carH": 52,
+          "odoTop": 76,
+          "odoH": 33,
+          "navbarBottom": 64,
+          "odoUnderNavbar": false
+        },
+        {
+          "pct": 100,
+          "scrollY": 9963,
+          "carMidPctOfViewport": 37.1,
+          "carTop": 287,
+          "carH": 52,
+          "odoTop": 76,
+          "odoH": 33,
+          "navbarBottom": 64,
+          "odoUnderNavbar": false
+        }
+      ],
+      "rest": {
+        "ctaInfo": {
+          "text": "Let’s talk ↓",
+          "href": "#contact",
+          "insideStopId": "exp-hibeex",
+          "cardCls": "exp__card",
+          "color": "rgb(184, 80, 26)",
+          "bg": "color(srgb 0.941176 0.45098 0.176471 / 0.12)",
+          "fontSize": "12.5px",
+          "w": 122,
+          "h": 39
+        },
+        "carousel": {
+          "slideNodes": 0,
+          "visibleSlides": 0,
+          "dots": 2,
+          "dotSizes": [
+            "284x26"
+          ],
+          "imgs": 4
+        },
+        "agPanels": [
+          {
+            "name": "Missão Velha, photo 1 of 8",
+            "w": 233,
+            "h": 175,
+            "outline": "3px"
+          },
+          {
+            "name": "Missão Velha, photo 2 of 8",
+            "w": 233,
+            "h": 175,
+            "outline": "3px"
+          },
+          {
+            "name": "Missão Velha, photo 3 of 8",
+            "w": 233,
+            "h": 175,
+            "outline": "3px"
+          },
+          {
+            "name": "Missão Velha, photo 4 of 8",
+            "w": 233,
+            "h": 175,
+            "outline": "3px"
+          },
+          {
+            "name": "Missão Velha, photo 5 of 8",
+            "w": 233,
+            "h": 175,
+            "outline": "3px"
+          },
+          {
+            "name": "Missão Velha, photo 6 of 8",
+            "w": 233,
+            "h": 175,
+            "outline": "3px"
+          },
+          {
+            "name": "Missão Velha, photo 7 of 8",
+            "w": 233,
+            "h": 175,
+            "outline": "3px"
+          },
+          {
+            "name": "Missão Velha, photo 8 of 8",
+            "w": 233,
+            "h": 175,
+            "outline": "3px"
+          }
+        ],
+        "stats": [
+          "3939olympiad medals19 gold · 2 inter",
+          "",
+          "3939",
+          "olympiad medals",
+          "19 gold · 2 international",
+          "3,3923,392students reachedProjeto Ca",
+          "",
+          "3,3923,392",
+          "students reached",
+          "Projeto Candela"
+        ]
+      },
+      "countUp": {
+        "samples": [
+          {
+            "atMs": 0,
+            "values": [
+              "0olympiad medals19 gold · 2 ",
+              "0",
+              "olympiad medals",
+              "19 gold · 2 international",
+              "0students reachedProjeto Can",
+              "0"
+            ]
+          },
+          {
+            "atMs": 300,
+            "values": [
+              "27olympiad medals19 gold · 2",
+              "27",
+              "olympiad medals",
+              "19 gold · 2 international",
+              "2,317students reachedProjeto",
+              "2,317"
+            ]
+          },
+          {
+            "atMs": 600,
+            "values": [
+              "37olympiad medals19 gold · 2",
+              "37",
+              "olympiad medals",
+              "19 gold · 2 international",
+              "3,185students reachedProjeto",
+              "3,185"
+            ]
+          },
+          {
+            "atMs": 1200,
+            "values": [
+              "3939olympiad medals19 gold ·",
+              "3939",
+              "olympiad medals",
+              "19 gold · 2 international",
+              "3,3923,392students reachedPr",
+              "3,3923,392"
+            ]
+          },
+          {
+            "atMs": 2500,
+            "values": [
+              "3939olympiad medals19 gold ·",
+              "3939",
+              "olympiad medals",
+              "19 gold · 2 international",
+              "3,3923,392students reachedPr",
+              "3,3923,392"
+            ]
+          }
+        ]
+      }
+    },
+    "1440": {
+      "fastScroll": {
+        "docStart": 9553,
+        "docEnd": 11097,
+        "clsBeforeScroll": 0.0023,
+        "clsTotal": 0.0558,
+        "shifts": 6,
+        "worst": [
+          {
+            "ms": 4725,
+            "value": 0.0535,
+            "sources": [
+              "FOOTER.footer"
+            ]
+          },
+          {
+            "ms": 278,
+            "value": 0.0021,
+            "sources": [
+              "#text",
+              "#text",
+              "SPAN.role-suffix"
+            ]
+          },
+          {
+            "ms": 2551,
+            "value": 0.0001,
+            "sources": [
+              "SPAN.role-suffix",
+              "SPAN"
+            ]
+          },
+          {
+            "ms": 2559,
+            "value": 0.0001,
+            "sources": [
+              "SPAN.role-suffix",
+              "SPAN"
+            ]
+          }
+        ]
+      },
+      "carTrack": [
+        {
+          "pct": 10,
+          "scrollY": 6547,
+          "carMidPctOfViewport": 40,
+          "carTop": 294,
+          "carH": 132,
+          "odoTop": 80,
+          "odoH": 33,
+          "navbarBottom": 67,
+          "odoUnderNavbar": false
+        },
+        {
+          "pct": 25,
+          "scrollY": 7018,
+          "carMidPctOfViewport": 40,
+          "carTop": 294,
+          "carH": 132,
+          "odoTop": 80,
+          "odoH": 33,
+          "navbarBottom": 67,
+          "odoUnderNavbar": false
+        },
+        {
+          "pct": 50,
+          "scrollY": 7804,
+          "carMidPctOfViewport": 40,
+          "carTop": 294,
+          "carH": 132,
+          "odoTop": 80,
+          "odoH": 33,
+          "navbarBottom": 67,
+          "odoUnderNavbar": false
+        },
+        {
+          "pct": 75,
+          "scrollY": 8589,
+          "carMidPctOfViewport": 40,
+          "carTop": 294,
+          "carH": 132,
+          "odoTop": 80,
+          "odoH": 33,
+          "navbarBottom": 67,
+          "odoUnderNavbar": false
+        },
+        {
+          "pct": 100,
+          "scrollY": 9374,
+          "carMidPctOfViewport": 35.5,
+          "carTop": 254,
+          "carH": 132,
+          "odoTop": 80,
+          "odoH": 33,
+          "navbarBottom": 67,
+          "odoUnderNavbar": false
+        }
+      ],
+      "rest": {
+        "ctaInfo": {
+          "text": "Let’s talk ↓",
+          "href": "#contact",
+          "insideStopId": "exp-hibeex",
+          "cardCls": "exp__card",
+          "color": "rgb(184, 80, 26)",
+          "bg": "color(srgb 0.941176 0.45098 0.176471 / 0.12)",
+          "fontSize": "12.5px",
+          "w": 122,
+          "h": 39
+        },
+        "carousel": {
+          "slideNodes": 0,
+          "visibleSlides": 0,
+          "dots": 0,
+          "dotSizes": [],
+          "imgs": 16
+        },
+        "agPanels": [
+          {
+            "name": "Missão Velha, photo 1 of 8",
+            "w": 201,
+            "h": 320,
+            "outline": "3px"
+          },
+          {
+            "name": "Missão Velha, photo 2 of 8",
+            "w": 19,
+            "h": 320,
+            "outline": "3px"
+          },
+          {
+            "name": "Missão Velha, photo 3 of 8",
+            "w": 19,
+            "h": 320,
+            "outline": "3px"
+          },
+          {
+            "name": "Missão Velha, photo 4 of 8",
+            "w": 19,
+            "h": 320,
+            "outline": "3px"
+          },
+          {
+            "name": "Missão Velha, photo 5 of 8",
+            "w": 19,
+            "h": 320,
+            "outline": "3px"
+          },
+          {
+            "name": "Missão Velha, photo 6 of 8",
+            "w": 19,
+            "h": 320,
+            "outline": "3px"
+          },
+          {
+            "name": "Missão Velha, photo 7 of 8",
+            "w": 19,
+            "h": 320,
+            "outline": "3px"
+          },
+          {
+            "name": "Missão Velha, photo 8 of 8",
+            "w": 19,
+            "h": 320,
+            "outline": "3px"
+          }
+        ],
+        "stats": [
+          "3939olympiad medals19 gold · 2 inter",
+          "",
+          "3939",
+          "olympiad medals",
+          "19 gold · 2 international",
+          "3,3923,392students reachedProjeto Ca",
+          "",
+          "3,3923,392",
+          "students reached",
+          "Projeto Candela"
+        ]
+      },
+      "countUp": {
+        "samples": [
+          {
+            "atMs": 0,
+            "values": [
+              "0olympiad medals19 gold · 2 ",
+              "0",
+              "olympiad medals",
+              "19 gold · 2 international",
+              "0students reachedProjeto Can",
+              "0"
+            ]
+          },
+          {
+            "atMs": 300,
+            "values": [
+              "0olympiad medals19 gold · 2 ",
+              "0",
+              "olympiad medals",
+              "19 gold · 2 international",
+              "0students reachedProjeto Can",
+              "0"
+            ]
+          },
+          {
+            "atMs": 600,
+            "values": [
+              "0olympiad medals19 gold · 2 ",
+              "0",
+              "olympiad medals",
+              "19 gold · 2 international",
+              "0students reachedProjeto Can",
+              "0"
+            ]
+          },
+          {
+            "atMs": 1200,
+            "values": [
+              "0olympiad medals19 gold · 2 ",
+              "0",
+              "olympiad medals",
+              "19 gold · 2 international",
+              "0students reachedProjeto Can",
+              "0"
+            ]
+          },
+          {
+            "atMs": 2500,
+            "values": [
+              "0olympiad medals19 gold · 2 ",
+              "0",
+              "olympiad medals",
+              "19 gold · 2 international",
+              "0students reachedProjeto Can",
+              "0"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

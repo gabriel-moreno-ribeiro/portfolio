@@ -1,0 +1,172 @@
+{
+  "generatedAt": "2026-09-25T20:17:12.409Z",
+  "baseUrl": "http://localhost:5173",
+  "viewport": "1440x900",
+  "mountsAtStart": [
+    "background:reserved",
+    "work:reserved",
+    "research:reserved",
+    "skills:reserved",
+    "work-experience:reserved",
+    "contact:reserved"
+  ],
+  "pass1": {
+    "tabs": 44,
+    "loopedBackAtTab": 44,
+    "owners": [
+      "nav.section-rail",
+      "nav.navbar",
+      "#main-content",
+      "#moments",
+      "footer.footer",
+      "nav.links",
+      "#root"
+    ],
+    "reachedContactField": false,
+    "reachedExperienceStop": false,
+    "offScreenFocus": [
+      {
+        "tab": 26,
+        "owner": "footer.footer",
+        "id": null,
+        "cls": "footer__cta-link",
+        "scrollY": 1007
+      },
+      {
+        "tab": 27,
+        "owner": "nav.links",
+        "id": null,
+        "cls": null,
+        "scrollY": 1990
+      },
+      {
+        "tab": 28,
+        "owner": "nav.links",
+        "id": null,
+        "cls": null,
+        "scrollY": 4735
+      },
+      {
+        "tab": 29,
+        "owner": "nav.links",
+        "id": null,
+        "cls": null,
+        "scrollY": 7158
+      }
+    ],
+    "maxScrollYReached": 10197,
+    "order": [
+      "? a.skip-link \"Skip to content\"",
+      "nav.section-rail button.section-rail__item.section-rail__item--active \"Top\"",
+      "nav.section-rail button.section-rail__item \"Origins\"",
+      "nav.section-rail button.section-rail__item \"Cool Things\"",
+      "nav.section-rail button.section-rail__item \"Research\"",
+      "nav.section-rail button.section-rail__item \"Skills\"",
+      "nav.section-rail button.section-rail__item \"Experience\"",
+      "nav.section-rail button.section-rail__item \"Contact\"",
+      "nav.navbar button.menu-icon \"Close menu\"",
+      "nav.navbar button \"Home.\"",
+      "nav.navbar button \"Library.\"",
+      "nav.navbar button \"News.\"",
+      "nav.navbar button \"Story.\"",
+      "nav.navbar button \"LinkedIn.\"",
+      "nav.navbar button \"GitHub.\"",
+      "#main-content button.btn.primary \"See Work\"",
+      "#main-content button.btn.outline \"Book a Call\"",
+      "#main-content a.hero-latest__link \"HIBEEX selected for the Canast\"",
+      "#moments button.moments__filter \"All\"",
+      "#moments button.moments__filter \"Missão Velha\"",
+      "#moments button.moments__filter \"Salvador\"",
+      "#moments button.moments__filter \"Fortaleza\"",
+      "#moments button.moments__filter \"São Paulo\"",
+      "#moments div.moments__row \"Waterfall with the family · Mi\"",
+      "#moments div.moments__row.moments__row--reverse \"Projeto Candela at Fundação Es\"",
+      "footer.footer a.footer__cta-link \"me@gabrielmr.com\"",
+      "nav.links a \"Home.\"",
+      "nav.links a \"Library.\"",
+      "nav.links a \"News.\"",
+      "nav.links a \"Story.\"",
+      "nav.links a \"Contact.\"",
+      "footer.footer a \"LinkedIn.\"",
+      "footer.footer a \"GitHub.\"",
+      "footer.footer a \"Email.\"",
+      "footer.footer a \"Privacy.\"",
+      "footer.footer a \"Terms.\"",
+      "footer.footer a \"llms.txt\"",
+      "footer.footer a.footer__freshness-link \"last commit 7h ago\"",
+      "#root button.handsfree-button \"Hands-free mode (camera)\"",
+      "#root button.toggle-button \"Switch to dark mode\"",
+      "#root button.terminal-fab \"Open terminal (Ctrl+K)\"",
+      "#root button.back-to-top \"Back to top\"",
+      "#root button.tip-toast \"Just for fun, try pressing Ctr\"",
+      "BODY"
+    ]
+  },
+  "mountsAfterPass1": [
+    "background:mounted",
+    "work:mounted",
+    "research:mounted",
+    "skills:mounted",
+    "work-experience:mounted",
+    "contact:mounted"
+  ],
+  "pass2": {
+    "tabs": 98,
+    "owners": [
+      "nav.section-rail",
+      "nav.navbar",
+      "#main-content",
+      "#moments",
+      "#background",
+      "#work",
+      "#numbers",
+      "#research",
+      "#skills",
+      "nav.exp__index",
+      "#exp-hibeex",
+      "#contact",
+      "#contact-name",
+      "#contact-email",
+      "#contact-message",
+      "footer.footer",
+      "nav.links",
+      "#root"
+    ],
+    "reachedContactField": true,
+    "reachedExperienceStop": true
+  },
+  "pass3AfterFullScroll": {
+    "tabs": 98,
+    "owners": [
+      "nav.section-rail",
+      "nav.navbar",
+      "#main-content",
+      "#moments",
+      "#background",
+      "#work",
+      "#numbers",
+      "#research",
+      "#skills",
+      "nav.exp__index",
+      "#exp-hibeex",
+      "#contact",
+      "#contact-name",
+      "#contact-email",
+      "#contact-message",
+      "footer.footer",
+      "nav.links",
+      "#root"
+    ],
+    "reachedContactField": true,
+    "reachedExperienceStop": true,
+    "noOutline": []
+  },
+  "mountsAfterFullScroll": [
+    "background:mounted",
+    "work:mounted",
+    "research:mounted",
+    "skills:mounted",
+    "work-experience:mounted",
+    "contact:mounted"
+  ]
+}

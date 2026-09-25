@@ -1,0 +1,212 @@
+{
+  "generatedAt": "2026-09-25T20:22:17.964Z",
+  "url": "http://localhost:4173/",
+  "runs": {
+    "desktop": {
+      "name": "desktop",
+      "ok": true,
+      "ms": 21468,
+      "lighthouseVersion": "13.5.0",
+      "formFactor": "desktop",
+      "throttling": "simulate",
+      "scores": {
+        "performance": 95,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "FCP": 540,
+        "LCP": 1520,
+        "CLS": 0,
+        "TBT": 19,
+        "SpeedIndex": 895,
+        "TTI": 1532,
+        "LCPelement": null,
+        "totalByteWeight": 903856,
+        "totalByteWeightDisplay": "Total size was 883 KiB",
+        "mainThreadWorkMs": 445,
+        "bootupTimeMs": 160,
+        "domSize": null
+      },
+      "unusedJavascript": [
+        {
+          "url": "http://localhost:4173/assets/posthog-6pwzbHJx.js",
+          "totalKB": 56.8,
+          "wastedKB": 30,
+          "wastedPct": 53
+        },
+        {
+          "url": "http://localhost:4173/assets/vendor-react-5tBKz8g6.js",
+          "totalKB": 61.1,
+          "wastedKB": 21.3,
+          "wastedPct": 35
+        }
+      ],
+      "properlySizeImages": [],
+      "unsizedImages": [],
+      "offscreenImages": [],
+      "largestResources": [
+        {
+          "type": "total",
+          "requests": 28,
+          "kb": 867.4
+        },
+        {
+          "type": "image",
+          "requests": 13,
+          "kb": 500.1
+        },
+        {
+          "type": "script",
+          "requests": 6,
+          "kb": 212.6
+        },
+        {
+          "type": "font",
+          "requests": 3,
+          "kb": 110.4
+        },
+        {
+          "type": "other",
+          "requests": 4,
+          "kb": 27.1
+        },
+        {
+          "type": "stylesheet",
+          "requests": 1,
+          "kb": 14
+        },
+        {
+          "type": "document",
+          "requests": 1,
+          "kb": 3.1
+        },
+        {
+          "type": "media",
+          "requests": 0,
+          "kb": 0
+        },
+        {
+          "type": "third-party",
+          "requests": 3,
+          "kb": 2.5
+        }
+      ],
+      "failedAudits": [
+        "llms-txt",
+        "ard-schema"
+      ],
+      "a11yFailures": []
+    },
+    "mobile": {
+      "name": "mobile",
+      "ok": true,
+      "ms": 18369,
+      "lighthouseVersion": "13.5.0",
+      "formFactor": "mobile",
+      "throttling": "simulate",
+      "scores": {
+        "performance": 64,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "FCP": 2547,
+        "LCP": 4763,
+        "CLS": 0,
+        "TBT": 564,
+        "SpeedIndex": 2894,
+        "TTI": 5602,
+        "LCPelement": null,
+        "totalByteWeight": 835899,
+        "totalByteWeightDisplay": "Total size was 816 KiB",
+        "mainThreadWorkMs": 2600,
+        "bootupTimeMs": 1163,
+        "domSize": null
+      },
+      "unusedJavascript": [
+        {
+          "url": "http://localhost:4173/assets/posthog-6pwzbHJx.js",
+          "totalKB": 56.8,
+          "wastedKB": 30.1,
+          "wastedPct": 53
+        },
+        {
+          "url": "http://localhost:4173/assets/gsap-DHgtL2rv.js",
+          "totalKB": 39.3,
+          "wastedKB": 25.5,
+          "wastedPct": 65
+        },
+        {
+          "url": "http://localhost:4173/assets/vendor-react-5tBKz8g6.js",
+          "totalKB": 61.1,
+          "wastedKB": 21.7,
+          "wastedPct": 36
+        },
+        {
+          "url": "http://localhost:4173/assets/motion-CDmMuYs6.js",
+          "totalKB": 42.8,
+          "wastedKB": 20.3,
+          "wastedPct": 47
+        }
+      ],
+      "properlySizeImages": [],
+      "unsizedImages": [],
+      "offscreenImages": [],
+      "largestResources": [
+        {
+          "type": "total",
+          "requests": 27,
+          "kb": 801
+        },
+        {
+          "type": "image",
+          "requests": 9,
+          "kb": 381.4
+        },
+        {
+          "type": "script",
+          "requests": 8,
+          "kb": 263.5
+        },
+        {
+          "type": "font",
+          "requests": 3,
+          "kb": 110.4
+        },
+        {
+          "type": "other",
+          "requests": 4,
+          "kb": 27.1
+        },
+        {
+          "type": "stylesheet",
+          "requests": 2,
+          "kb": 15.5
+        },
+        {
+          "type": "document",
+          "requests": 1,
+          "kb": 3.1
+        },
+        {
+          "type": "media",
+          "requests": 0,
+          "kb": 0
+        },
+        {
+          "type": "third-party",
+          "requests": 3,
+          "kb": 2.5
+        }
+      ],
+      "failedAudits": [
+        "llms-txt",
+        "ard-schema"
+      ],
+      "a11yFailures": []
+    }
+  }
+}

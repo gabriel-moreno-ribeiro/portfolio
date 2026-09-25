@@ -1,0 +1,328 @@
+{
+  "generatedAt": "2026-09-25T20:05:46.695Z",
+  "baseUrl": "http://localhost:5173",
+  "outDir": "C:\\portfolio-gabriel\\qa\\r2",
+  "playwright": "1.61.1",
+  "viewports": [
+    {
+      "viewport": "1440x900",
+      "loadMs": 4206,
+      "scrollInfo": {
+        "steps": 34,
+        "finalY": 10196,
+        "docHeight": 11096,
+        "innerHeight": 900
+      },
+      "experience": {
+        "selector": "#work-experience",
+        "via": "section owning heading matching /experience/i",
+        "heading": "Professional Experience."
+      },
+      "experienceGeometry": {
+        "sectionTop": 6232,
+        "sectionHeight": 4041,
+        "innerHeight": 900,
+        "docMaxScroll": 10196,
+        "scrollStart": 6232,
+        "scrollEnd": 9373
+      },
+      "canvases": {
+        "normal": {
+          "elements": 3,
+          "webgl": 1,
+          "ctx2d": 2,
+          "noneObserved": 0,
+          "detachedWebGL": 0,
+          "contextTypes": [
+            "webgl2",
+            "2d"
+          ],
+          "detail": [
+            {
+              "w": 960,
+              "h": 960,
+              "cssW": 480,
+              "cssH": 480,
+              "cls": "globe-canvas",
+              "parent": "div.globe-wrap",
+              "ctx": "webgl"
+            },
+            {
+              "w": 823,
+              "h": 240,
+              "cssW": 823,
+              "cssH": 240,
+              "cls": "skills__canvas",
+              "parent": "div.skills__box",
+              "ctx": "2d"
+            },
+            {
+              "w": 132,
+              "h": 132,
+              "cssW": 132,
+              "cssH": 132,
+              "cls": "exp__sprite",
+              "parent": "div.exp__car-shake",
+              "ctx": "2d"
+            }
+          ]
+        },
+        "reducedMotion": {
+          "elements": 2,
+          "webgl": 0
+        }
+      },
+      "transfer": {
+        "totalRequests": 274,
+        "totalBodyKB": 13843.2,
+        "byType": {
+          "document": {
+            "requests": 1,
+            "bodyBytes": 9454,
+            "wireBytes": 9709,
+            "bodyKB": 9.2
+          },
+          "script": {
+            "requests": 163,
+            "bodyBytes": 10695059,
+            "wireBytes": 10742649,
+            "bodyKB": 10444.4
+          },
+          "image": {
+            "requests": 104,
+            "bodyBytes": 3281146,
+            "wireBytes": 3308915,
+            "bodyKB": 3204.2
+          },
+          "font": {
+            "requests": 4,
+            "bodyBytes": 188288,
+            "wireBytes": 189568,
+            "bodyKB": 183.9
+          },
+          "fetch/xhr": {
+            "requests": 2,
+            "bodyBytes": 1532,
+            "wireBytes": 1997,
+            "bodyKB": 1.5
+          }
+        }
+      },
+      "consoleErrors": 0,
+      "consoleWarnings": 0,
+      "failedRequests": 0,
+      "shots": [
+        {
+          "name": "home-1440-top.png",
+          "ok": true,
+          "bytes": 2786175
+        },
+        {
+          "name": "home-1440-scrolled.png",
+          "ok": true,
+          "bytes": 4429498
+        },
+        {
+          "name": "experience-1440-25.png",
+          "ok": true,
+          "bytes": 94004
+        },
+        {
+          "name": "experience-1440-50.png",
+          "ok": true,
+          "bytes": 112777
+        },
+        {
+          "name": "experience-1440-100.png",
+          "ok": true,
+          "bytes": 85634
+        },
+        {
+          "name": "home-1440-rm-top.png",
+          "ok": true,
+          "bytes": 2939182
+        },
+        {
+          "name": "home-1440-rm-scrolled.png",
+          "ok": true,
+          "bytes": 4908636
+        }
+      ],
+      "notes": []
+    },
+    {
+      "viewport": "390x844",
+      "loadMs": 3507,
+      "scrollInfo": {
+        "steps": 39,
+        "finalY": 11417,
+        "docHeight": 12261,
+        "innerHeight": 844
+      },
+      "experience": {
+        "selector": "#work-experience",
+        "via": "section owning heading matching /experience/i",
+        "heading": "Professional Experience."
+      },
+      "experienceGeometry": {
+        "sectionTop": 7580,
+        "sectionHeight": 3241,
+        "innerHeight": 844,
+        "docMaxScroll": 11417,
+        "scrollStart": 7580,
+        "scrollEnd": 9976
+      },
+      "canvases": {
+        "normal": {
+          "elements": 2,
+          "webgl": 0,
+          "ctx2d": 2,
+          "noneObserved": 0,
+          "detachedWebGL": 0,
+          "contextTypes": [
+            "2d"
+          ],
+          "detail": [
+            {
+              "w": 632,
+              "h": 900,
+              "cssW": 316,
+              "cssH": 450,
+              "cls": "skills__canvas",
+              "parent": "div.skills__box",
+              "ctx": "2d"
+            },
+            {
+              "w": 104,
+              "h": 104,
+              "cssW": 52,
+              "cssH": 52,
+              "cls": "exp__sprite",
+              "parent": "div.exp__car-shake",
+              "ctx": "2d"
+            }
+          ]
+        },
+        "reducedMotion": {
+          "elements": 2,
+          "webgl": 0
+        }
+      },
+      "transfer": {
+        "totalRequests": 252,
+        "totalBodyKB": 11924.1,
+        "byType": {
+          "document": {
+            "requests": 1,
+            "bodyBytes": 9454,
+            "wireBytes": 9709,
+            "bodyKB": 9.2
+          },
+          "image": {
+            "requests": 82,
+            "bodyBytes": 1315917,
+            "wireBytes": 1337774,
+            "bodyKB": 1285.1
+          },
+          "script": {
+            "requests": 163,
+            "bodyBytes": 10695059,
+            "wireBytes": 10742649,
+            "bodyKB": 10444.4
+          },
+          "font": {
+            "requests": 4,
+            "bodyBytes": 188288,
+            "wireBytes": 189568,
+            "bodyKB": 183.9
+          },
+          "fetch/xhr": {
+            "requests": 2,
+            "bodyBytes": 1531,
+            "wireBytes": 1996,
+            "bodyKB": 1.5
+          }
+        }
+      },
+      "consoleErrors": 0,
+      "consoleWarnings": 0,
+      "failedRequests": 0,
+      "shots": [
+        {
+          "name": "home-390-top.png",
+          "ok": true,
+          "bytes": 1799990
+        },
+        {
+          "name": "home-390-scrolled.png",
+          "ok": true,
+          "bytes": 5621993
+        },
+        {
+          "name": "experience-390-25.png",
+          "ok": true,
+          "bytes": 127787
+        },
+        {
+          "name": "experience-390-50.png",
+          "ok": true,
+          "bytes": 136520
+        },
+        {
+          "name": "experience-390-100.png",
+          "ok": true,
+          "bytes": 114547
+        },
+        {
+          "name": "home-390-rm-top.png",
+          "ok": true,
+          "bytes": 2068832
+        },
+        {
+          "name": "home-390-rm-scrolled.png",
+          "ok": true,
+          "bytes": 5733639
+        }
+      ],
+      "notes": []
+    }
+  ],
+  "keyboard": {
+    "tabsPressed": 44,
+    "loopedBackAtTab": 44,
+    "ctrlKOpened": true,
+    "ctrlKAttempts": [
+      {
+        "combo": "Control+K",
+        "opened": true
+      }
+    ],
+    "escapeClosed": true,
+    "invisibleFocusables": 0,
+    "sectionsReached": [
+      "nav.section-rail",
+      "nav.navbar",
+      "#main-content",
+      "#moments",
+      "footer.footer",
+      "nav.links",
+      "#root"
+    ]
+  },
+  "cpu": {
+    "390": {
+      "framesOver50ms": 13,
+      "longestMs": 441,
+      "entryType": "long-animation-frame",
+      "rafFps": 40,
+      "rafMax": 433
+    },
+    "1440": {
+      "framesOver50ms": 11,
+      "longestMs": 2681,
+      "entryType": "long-animation-frame",
+      "rafFps": 29,
+      "rafMax": 2667
+    }
+  }
+}

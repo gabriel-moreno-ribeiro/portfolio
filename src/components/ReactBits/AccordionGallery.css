@@ -20,7 +20,8 @@
 .ag-panel {
   position: relative;
   flex: 1 1 0;
-  min-width: 0;
+  /* Collapsed panels are focusable buttons: 24px is the WCAG 2.5.8 target minimum. */
+  min-width: 24px;
   min-height: 0;
   overflow: hidden;
   border-radius: var(--ag-radius);

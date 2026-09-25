@@ -1,0 +1,32 @@
+=== 390 docHeight=12299 dpr=2 imgs=top:780x19150(css 390x9575, hOverflow 0px) scrolled:780x24522(css 390x12261, hOverflow 0px) rmTop:780x19150(css 390x9575, hOverflow 0px) rmScrolled:780x24522(css 390x12261, hOverflow 0px)
+  docHeight normal=12299 reduced=12299 delta=0px
+  horizontalOverflow: {"innerWidth":390,"docScrollWidth":390,"overflowPx":0,"offenderCount":135}
+  offenders: [{"label":"div.moments__track","left":-131,"right":3951,"w":4082},{"label":"figure.moments__item","left":-133,"right":100,"w":233},{"label":"img","left":-127,"right":77,"w":204},{"label":"figcaption","left":-123,"right":94,"w":217},{"label":"figure.moments__item","left":333,"right":546,"w":213},{"label":"img","left":339,"right":540,"w":201},{"label":"figcaption","left":339,"right":539,"w":200},{"label":"figure.moments__item","left":556,"right":772,"w":216}]
+  section                   cssTop  h    std(top/scr/rmT/rmS)        ink(top/scr/rmT/rmS)        diff t-vs-s / s-vs-rmS
+  div.hero-section            104   519   50.84  50.9 50.85 50.85  0.13780.14060.13820.1382  0.0071 / 0.0185
+  #moments                    647   489   63.84 66.08 72.47 72.47  0.47160.55360.51110.5111  0.4885 / 0.5075
+  div                        1168   882   85.35 60.26 85.35 60.26  0.23250.19180.23240.1916  0.1351 / 0
+  div                        2074  1869    0.12 56.06 85.35 60.26       00.21770.23240.1916  0.2513 / 0.3845
+  div                        3967  1271   54.79 57.79 85.35 60.26  0.24080.27770.23240.1916  0.1982 / 0.3773
+  div                        5262  1630   66.19  64.6 85.35 60.26   0.1260.21890.23240.1916  0.2005 / 0.344
+  div                        6916   654       0 52.73 85.35 60.26       00.26610.23240.1916  0.2732 / 0.4254
+  div                        7594  3241   47.55 59.33 85.35 60.26  0.16390.22750.23240.1916  0.3805 / 0.3976
+  div                       10858   976     n/a  45.5 85.35 60.26     n/a0.21530.23240.1916  n/a / 0.3253
+  footer.footer             11858   264     n/a  26.5   n/a 26.48     n/a0.1074   n/a0.1072  n/a / 0
+  experienceAnatomy: {"legacyLeftColumn":null,"legacyRightColumn":null,"section":{"top":7594,"left":16,"w":358,"h":3241},"stopList":{"top":7874,"left":16,"w":358,"h":2960,"stops":20},"stops":[{"id":"exp-principia","textChars":223,"top":7994,"left":16,"w":358,"h":420},{"id":"exp-olympic-club","textChars":170,"top":8414,"left":16,"w":358,"h":420},{"id":"exp-estudar","textChars":166,"top":8834,"left":16,"w":358,"h":420},{"id":"exp-fintech-rct","textChars":183,"top":9254,"left":16,"w":358,"h":420},{"id":"exp-gsat","textChars":133,"top":9674,"left":16,"w":358,"h":420},{"id":"exp-hibeex","textChars":240,"top":10094,"left":16,"w":358,"h":420}],"stopNav":{"top":7731,"left":20,"w":350,"h":132},"road":{"top":7594,"left":16,"w":358,"h":3241},"carCanvas":{"top":10809,"left":12,"w":52,"h":52,"bitmap":"104x104"},"carPoster":{"top":10809,"left":12,"w":52,"h":52,"src":"/assets/car/car-00.webp","naturalW":256,"naturalH":256,"hasAttrDims":true},"odometer":{"top":7881,"left":16,"w":358,"h":33,"position":"sticky","text":"2026stop 6/6 · HIBEEX"},"focusablesInside":8,"canvases":1}
+=== 1440 docHeight=11097 dpr=1 imgs=top:1440x9553(css 1440x9553, hOverflow 0px) scrolled:1440x11096(css 1440x11096, hOverflow 0px) rmTop:1440x9553(css 1440x9553, hOverflow 0px) rmScrolled:1440x11096(css 1440x11096, hOverflow 0px)
+  docHeight normal=11097 reduced=11097 delta=0px
+  horizontalOverflow: {"innerWidth":1440,"docScrollWidth":1440,"overflowPx":0,"offenderCount":87}
+  offenders: [{"label":"div.moments__track","left":-148,"right":5864,"w":6012},{"label":"figure.moments__item","left":-151,"right":171,"w":322},{"label":"img","left":-143,"right":163,"w":305},{"label":"figcaption","left":-137,"right":163,"w":300},{"label":"figure.moments__item","left":1185,"right":1507,"w":322},{"label":"img","left":1193,"right":1499,"w":305},{"label":"figcaption","left":1199,"right":1499,"w":300},{"label":"figure.moments__item","left":1521,"right":1839,"w":318}]
+  section                   cssTop  h    std(top/scr/rmT/rmS)        ink(top/scr/rmT/rmS)        diff t-vs-s / s-vs-rmS
+  div.hero-section             32   737   54.34 54.33 54.35 54.35   0.4830.48410.48310.4831  0.002 / 0.0069
+  #moments                    802   623   68.19 71.22 70.14 70.11  0.63170.64660.63630.6409  0.5578 / 0.5986
+  div                        1474  1041       0 79.99     0 51.69       00.2002     0 0.152  0.1957 / 0.0821
+  div                        2540  1230       0 59.13     0 51.69       00.2363     0 0.152  0.2292 / 0.3298
+  div                        3796   754       0  8.22     0 51.69       00.0063     0 0.152  0.0057 / 0.1449
+  div                        4575  1120       0   8.1     0 51.69       0 0.005     0 0.152  0.0047 / 0.1435
+  div                        5719   488       0 37.34     0 51.69       0 0.073     0 0.152  0.069 / 0.189
+  div                        6233  4041   46.81 56.56     0 51.69  0.22870.2614     0 0.152  0.4158 / 0.3401
+  div                       10299   509     n/a  58.9     0 51.69     n/a0.1111     0 0.152  n/a / 0.2222
+  footer.footer             10833   224     n/a 81.72   n/a 81.72     n/a0.2669   n/a0.2669  n/a / 0
+  experienceAnatomy: {"legacyLeftColumn":null,"legacyRightColumn":null,"section":{"top":6233,"left":160,"w":1120,"h":4041},"stopList":{"top":6474,"left":160,"w":1120,"h":3800,"stops":20},"stops":[{"id":"exp-principia","textChars":223,"top":6614,"left":160,"w":910,"h":560},{"id":"exp-olympic-club","textChars":170,"top":7174,"left":160,"w":910,"h":560},{"id":"exp-estudar","textChars":166,"top":7734,"left":160,"w":910,"h":560},{"id":"exp-fintech-rct","textChars":183,"top":8294,"left":160,"w":910,"h":560},{"id":"exp-gsat","textChars":133,"top":8854,"left":160,"w":910,"h":560},{"id":"exp-hibeex","textChars":240,"top":9414,"left":160,"w":910,"h":560}],"stopNav":{"top":6432,"left":164,"w":847,"h":29},"road":{"top":6233,"left":160,"w":1120,"h":4041},"carCanvas":{"top":10208,"left":452,"w":132,"h":132,"bitmap":"132x132"},"carPoster":{"top":10208,"left":452,"w":132,"h":132,"src":"/assets/car/car-00.webp","naturalW":256,"naturalH":256,"hasAttrDims":true},"odometer":{"top":6479,"left":1105,"w":173,"h":33,"position":"sticky","text":"2026stop 6/6 · HIBEEX"},"focusablesInside":8,"canvases":1}

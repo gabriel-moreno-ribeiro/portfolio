@@ -1,0 +1,13 @@
+dist/assets total: 4710.2 KB (4.6 MB) in 125 files
+js raw 2775.2 KB / gzip 851.4 KB | css 136 KB
+top 10 chunks:
+     700.3 KB  gz   179.6 KB  assets/three-Cau--iyM.js
+     354.5 KB  gz    92.5 KB  assets/Terminal-Dv_9ryUQ.js
+     236.7 KB  gz    73.1 KB  assets/react-three-DKQo_3E1.js
+     224.6 KB  gz    55.6 KB  assets/html2canvas-pro.esm-BP2_FaI7.js
+     193.5 KB  gz      61 KB  assets/vendor-react-5tBKz8g6.js
+     173.2 KB  gz    56.6 KB  assets/posthog-6pwzbHJx.js
+     142.7 KB  gz    48.1 KB  assets/index-CDrBeNWA.js
+     129.2 KB  gz    42.7 KB  assets/motion-CDmMuYs6.js
+     122.6 KB  gz    37.1 KB  assets/mediapipe-qHAtWFBm.js
+     102.7 KB  gz    39.1 KB  assets/gsap-DHgtL2rv.js
