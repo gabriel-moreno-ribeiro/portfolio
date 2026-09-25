@@ -1,0 +1,754 @@
+{
+  "generatedAt": "2026-09-25T19:00:50.251Z",
+  "baseUrl": "http://localhost:5173",
+  "outDir": "C:\\portfolio-gabriel\\qa\\r1",
+  "darkThemeExperience": [
+    {
+      "viewport": "1440x900",
+      "themeBefore": null,
+      "themeAfter": {
+        "attr": "dark",
+        "bodyBg": "rgb(10, 10, 26)",
+        "expBg": "rgba(0, 0, 0, 0)",
+        "expColor": "rgb(255, 255, 255)"
+      },
+      "geometry": {
+        "top": 6231,
+        "height": 3741,
+        "innerHeight": 900,
+        "scrollStart": 6231,
+        "scrollEnd": 9072
+      },
+      "shots": [
+        {
+          "pct": 25,
+          "scrollY": 6941,
+          "file": "experience-dark-1440-25.png",
+          "bytes": 118055
+        },
+        {
+          "pct": 50,
+          "scrollY": 7652,
+          "file": "experience-dark-1440-50.png",
+          "bytes": 112066
+        },
+        {
+          "pct": 100,
+          "scrollY": 9072,
+          "file": "experience-dark-1440-100.png",
+          "bytes": 123714
+        }
+      ]
+    },
+    {
+      "viewport": "390x844",
+      "themeBefore": null,
+      "themeAfter": {
+        "attr": "dark",
+        "bodyBg": "rgb(10, 10, 26)",
+        "expBg": "rgba(0, 0, 0, 0)",
+        "expColor": "rgb(255, 255, 255)"
+      },
+      "geometry": {
+        "top": 7528,
+        "height": 2921,
+        "innerHeight": 844,
+        "scrollStart": 7528,
+        "scrollEnd": 9604
+      },
+      "shots": [
+        {
+          "pct": 25,
+          "scrollY": 8047,
+          "file": "experience-dark-390-25.png",
+          "bytes": 159990
+        },
+        {
+          "pct": 50,
+          "scrollY": 8566,
+          "file": "experience-dark-390-50.png",
+          "bytes": 134773
+        },
+        {
+          "pct": 100,
+          "scrollY": 9604,
+          "file": "experience-dark-390-100.png",
+          "bytes": 165081
+        }
+      ]
+    }
+  ],
+  "skillsIdle": [
+    {
+      "viewport": "1440x900",
+      "geometry": {
+        "top": 5717,
+        "height": 488,
+        "innerHeight": 900,
+        "scrollStart": 5717,
+        "scrollEnd": 5306
+      },
+      "parkedForMs": 10396,
+      "verdict": "idle",
+      "idle": {
+        "windowMs": 2178,
+        "pageRafScheduledInWindow": 0,
+        "pageIntervalFiresInWindow": 5,
+        "pageTimeoutFiresInWindow": 1,
+        "intervalsAlive": 2,
+        "probeFramesServed": 122,
+        "canvasFound": true,
+        "canvasPixelChangedFraction": 0,
+        "canvasMaxChannelDelta": 0,
+        "canvasCssSize": "1054x240",
+        "reducedMotionMatch": false
+      },
+      "touch": null,
+      "shot": "skills-idle-1440.png"
+    },
+    {
+      "viewport": "390x844",
+      "geometry": {
+        "top": 6850,
+        "height": 654,
+        "innerHeight": 844,
+        "scrollStart": 6850,
+        "scrollEnd": 6660
+      },
+      "parkedForMs": 13965,
+      "verdict": "idle",
+      "idle": {
+        "windowMs": 2035,
+        "pageRafScheduledInWindow": 0,
+        "pageIntervalFiresInWindow": 6,
+        "pageTimeoutFiresInWindow": 1,
+        "intervalsAlive": 5,
+        "probeFramesServed": 123,
+        "canvasFound": true,
+        "canvasPixelChangedFraction": 0,
+        "canvasMaxChannelDelta": 0,
+        "canvasCssSize": "316x450",
+        "reducedMotionMatch": false
+      },
+      "touch": {
+        "probe": {
+          "canvasRect": {
+            "x": 37,
+            "y": 223,
+            "w": 316,
+            "h": 450
+          },
+          "insideX": 195,
+          "insideY": 448,
+          "touchAction": "pan-y",
+          "canvasPointerEvents": "auto",
+          "outsideX": 40,
+          "outsideY": 84
+        },
+        "dragOutsideCanvas": {
+          "startX": 40,
+          "startY": 84,
+          "scrollYBefore": 6790,
+          "scrollYAfter": 6855,
+          "deltaY": 65,
+          "scrolled": true
+        },
+        "dragInsideCanvas": {
+          "startX": 195,
+          "startY": 448,
+          "scrollYBefore": 6790,
+          "scrollYAfter": 7015,
+          "deltaY": 225,
+          "scrolled": true
+        }
+      },
+      "shot": "skills-idle-390.png"
+    }
+  ],
+  "hiddenTab": [
+    {
+      "viewport": "1440x900",
+      "method": "document.hidden/visibilityState overridden with a getter + visibilitychange/blur/pagehide dispatched; Chromium background throttling is NOT applied, so this measures only whether the app itself pauses",
+      "windowMs": 5000,
+      "whileVisible": {
+        "rafScheduled": 67,
+        "intervalFires": 32,
+        "timeoutFires": 3,
+        "intervalsAlive": -1
+      },
+      "hiddenState": {
+        "hidden": true,
+        "visibilityState": "hidden"
+      },
+      "whileHidden": {
+        "rafScheduled": 3,
+        "intervalFires": 7,
+        "timeoutFires": 1,
+        "intervalsAlive": -4
+      },
+      "requestsWhileHidden": {
+        "count": 0,
+        "byType": {},
+        "urls": []
+      },
+      "verdict": "rAF keeps running with the tab hidden (3 scheduled in 5s)"
+    }
+  ],
+  "heroHeight": [
+    {
+      "viewport": "1440x900",
+      "reducedMotion": false,
+      "heroSection": {
+        "sel": "div.hero-section",
+        "h": 737,
+        "w": 1368,
+        "top": 32
+      },
+      "heroSlideshow": {
+        "sel": "div.hero-slideshow",
+        "h": 450,
+        "w": 1440,
+        "top": 0
+      },
+      "heroStatus": {
+        "text": "reading Made in America · Sam Walton",
+        "live": "polite",
+        "cls": "hero-status"
+      },
+      "canvasesInHero": 1,
+      "robotPoster": [
+        {
+          "src": "/assets/robot-poster.webp",
+          "w": 300,
+          "h": 300,
+          "hasAttrDims": true
+        }
+      ],
+      "docHeight": 11215
+    },
+    {
+      "viewport": "1440x900",
+      "reducedMotion": true,
+      "heroSection": {
+        "sel": "div.hero-section",
+        "h": 737,
+        "w": 1368,
+        "top": 32
+      },
+      "heroSlideshow": {
+        "sel": "div.hero-slideshow",
+        "h": 450,
+        "w": 1440,
+        "top": 0
+      },
+      "heroStatus": {
+        "text": "building HIBEEX",
+        "live": "polite",
+        "cls": "hero-status"
+      },
+      "canvasesInHero": 0,
+      "robotPoster": [
+        {
+          "src": "/assets/robot-poster.webp",
+          "w": 300,
+          "h": 300,
+          "hasAttrDims": true
+        }
+      ],
+      "docHeight": 11215
+    },
+    {
+      "viewport": "390x844",
+      "reducedMotion": false,
+      "heroSection": {
+        "sel": "div.hero-section",
+        "h": 519,
+        "w": 358,
+        "top": 104
+      },
+      "heroSlideshow": null,
+      "heroStatus": {
+        "text": "building HIBEEX",
+        "live": "polite",
+        "cls": "hero-status"
+      },
+      "canvasesInHero": 0,
+      "robotPoster": [],
+      "docHeight": 12129
+    },
+    {
+      "viewport": "390x844",
+      "reducedMotion": true,
+      "heroSection": {
+        "sel": "div.hero-section",
+        "h": 519,
+        "w": 358,
+        "top": 104
+      },
+      "heroSlideshow": null,
+      "heroStatus": {
+        "text": "building HIBEEX",
+        "live": "polite",
+        "cls": "hero-status"
+      },
+      "canvasesInHero": 0,
+      "robotPoster": [],
+      "docHeight": 12129
+    }
+  ],
+  "smallTargets": [
+    {
+      "viewport": "1440x900",
+      "totalInteractive": 98,
+      "count": 28,
+      "grouped": {
+        "button.section-rail__item.section-rail__item--active": 1,
+        "button.section-rail__item": 6,
+        "button.menu-icon": 1,
+        "a.hero-latest__link": 1,
+        "button.moments__filter": 5,
+        "div.ag-panel": 7,
+        "button.city-timeline__dot.city-timeline__dot--active": 1,
+        "button.city-timeline__dot": 3,
+        "a.research-section__orcid": 1,
+        "a.footer__cta-link": 1,
+        "a.footer__freshness-link": 1
+      },
+      "items": [
+        {
+          "sel": "button.section-rail__item.section-rail__item--active",
+          "w": 44.9,
+          "h": 22,
+          "text": "Top",
+          "aria": null,
+          "section": "#main-content"
+        },
+        {
+          "sel": "button.section-rail__item",
+          "w": 71.4,
+          "h": 22,
+          "text": "Origins",
+          "aria": null,
+          "section": "#main-content"
+        },
+        {
+          "sel": "button.section-rail__item",
+          "w": 104.7,
+          "h": 22,
+          "text": "Cool Things",
+          "aria": null,
+          "section": "#main-content"
+        },
+        {
+          "sel": "button.section-rail__item",
+          "w": 84.7,
+          "h": 22,
+          "text": "Research",
+          "aria": null,
+          "section": "#main-content"
+        },
+        {
+          "sel": "button.section-rail__item",
+          "w": 61.3,
+          "h": 22,
+          "text": "Skills",
+          "aria": null,
+          "section": "#main-content"
+        },
+        {
+          "sel": "button.section-rail__item",
+          "w": 95,
+          "h": 22,
+          "text": "Experience",
+          "aria": null,
+          "section": "#main-content"
+        },
+        {
+          "sel": "button.section-rail__item",
+          "w": 78.8,
+          "h": 22,
+          "text": "Contact",
+          "aria": null,
+          "section": "#main-content"
+        },
+        {
+          "sel": "button.menu-icon",
+          "w": 16,
+          "h": 16,
+          "text": null,
+          "aria": "Open menu",
+          "section": "#main-content"
+        },
+        {
+          "sel": "a.hero-latest__link",
+          "w": 362.5,
+          "h": 23,
+          "text": "HIBEEX selected for the Canast",
+          "aria": null,
+          "section": "#main-content"
+        },
+        {
+          "sel": "button.moments__filter",
+          "w": 29.8,
+          "h": 21,
+          "text": "All",
+          "aria": null,
+          "section": "#moments"
+        },
+        {
+          "sel": "button.moments__filter",
+          "w": 107.4,
+          "h": 21,
+          "text": "Missão Velha",
+          "aria": null,
+          "section": "#moments"
+        },
+        {
+          "sel": "button.moments__filter",
+          "w": 76.1,
+          "h": 21,
+          "text": "Salvador",
+          "aria": null,
+          "section": "#moments"
+        },
+        {
+          "sel": "button.moments__filter",
+          "w": 83,
+          "h": 21,
+          "text": "Fortaleza",
+          "aria": null,
+          "section": "#moments"
+        },
+        {
+          "sel": "button.moments__filter",
+          "w": 81.2,
+          "h": 21,
+          "text": "São Paulo",
+          "aria": null,
+          "section": "#moments"
+        },
+        {
+          "sel": "div.ag-panel",
+          "w": 19.1,
+          "h": 320.2,
+          "text": null,
+          "aria": "Missão Velha",
+          "section": "#background"
+        },
+        {
+          "sel": "div.ag-panel",
+          "w": 19.1,
+          "h": 320.2,
+          "text": null,
+          "aria": "Missão Velha",
+          "section": "#background"
+        },
+        {
+          "sel": "div.ag-panel",
+          "w": 19.1,
+          "h": 320.2,
+          "text": null,
+          "aria": "Missão Velha",
+          "section": "#background"
+        },
+        {
+          "sel": "div.ag-panel",
+          "w": 19.2,
+          "h": 320.2,
+          "text": null,
+          "aria": "Missão Velha",
+          "section": "#background"
+        },
+        {
+          "sel": "div.ag-panel",
+          "w": 19.2,
+          "h": 320.2,
+          "text": null,
+          "aria": "Missão Velha",
+          "section": "#background"
+        },
+        {
+          "sel": "div.ag-panel",
+          "w": 19.3,
+          "h": 320.2,
+          "text": null,
+          "aria": "Missão Velha",
+          "section": "#background"
+        },
+        {
+          "sel": "div.ag-panel",
+          "w": 19.3,
+          "h": 320.2,
+          "text": null,
+          "aria": "Missão Velha",
+          "section": "#background"
+        },
+        {
+          "sel": "button.city-timeline__dot.city-timeline__dot--active",
+          "w": 22,
+          "h": 22,
+          "text": null,
+          "aria": "Missão Velha, Ceará",
+          "section": "#background"
+        },
+        {
+          "sel": "button.city-timeline__dot",
+          "w": 22,
+          "h": 22,
+          "text": null,
+          "aria": "Salvador, Bahia",
+          "section": "#background"
+        },
+        {
+          "sel": "button.city-timeline__dot",
+          "w": 22,
+          "h": 22,
+          "text": null,
+          "aria": "Fortaleza, Ceará",
+          "section": "#background"
+        },
+        {
+          "sel": "button.city-timeline__dot",
+          "w": 22,
+          "h": 22,
+          "text": null,
+          "aria": "São Paulo, SP",
+          "section": "#background"
+        },
+        {
+          "sel": "a.research-section__orcid",
+          "w": 1056,
+          "h": 19.5,
+          "text": "ORCID: 0009-0009-2574-6646",
+          "aria": null,
+          "section": "#research"
+        },
+        {
+          "sel": "a.footer__cta-link",
+          "w": 133.1,
+          "h": 21,
+          "text": "me@gabrielmr.com",
+          "aria": null,
+          "section": "#main-content"
+        },
+        {
+          "sel": "a.footer__freshness-link",
+          "w": 112.8,
+          "h": 17.5,
+          "text": "last commit 6h ago",
+          "aria": null,
+          "section": "#main-content"
+        }
+      ]
+    },
+    {
+      "viewport": "390x844",
+      "totalInteractive": 99,
+      "count": 22,
+      "grouped": {
+        "button.menu-icon": 1,
+        "button": 6,
+        "button.navbar-toggle-btn": 2,
+        "a.hero-latest__link": 1,
+        "button.moments__filter": 5,
+        "button.city-timeline__dot.city-timeline__dot--active": 1,
+        "button.city-timeline__dot": 3,
+        "a.research-section__orcid": 1,
+        "a.footer__cta-link": 1,
+        "a.footer__freshness-link": 1
+      },
+      "items": [
+        {
+          "sel": "button.menu-icon",
+          "w": 16,
+          "h": 16,
+          "text": null,
+          "aria": "Open menu",
+          "section": "#main-content"
+        },
+        {
+          "sel": "button",
+          "w": 42.9,
+          "h": 21,
+          "text": "Home.",
+          "aria": null,
+          "section": "#main-content"
+        },
+        {
+          "sel": "button",
+          "w": 49.1,
+          "h": 21,
+          "text": "Library.",
+          "aria": null,
+          "section": "#main-content"
+        },
+        {
+          "sel": "button",
+          "w": 40.1,
+          "h": 21,
+          "text": "News.",
+          "aria": null,
+          "section": "#main-content"
+        },
+        {
+          "sel": "button",
+          "w": 38.9,
+          "h": 21,
+          "text": "Story.",
+          "aria": null,
+          "section": "#main-content"
+        },
+        {
+          "sel": "button",
+          "w": 57.7,
+          "h": 21,
+          "text": "LinkedIn.",
+          "aria": null,
+          "section": "#main-content"
+        },
+        {
+          "sel": "button",
+          "w": 50.3,
+          "h": 21,
+          "text": "GitHub.",
+          "aria": null,
+          "section": "#main-content"
+        },
+        {
+          "sel": "button.navbar-toggle-btn",
+          "w": 20,
+          "h": 20,
+          "text": null,
+          "aria": null,
+          "section": "#main-content"
+        },
+        {
+          "sel": "button.navbar-toggle-btn",
+          "w": 20,
+          "h": 20,
+          "text": null,
+          "aria": "Switch to dark mode",
+          "section": "#main-content"
+        },
+        {
+          "sel": "a.hero-latest__link",
+          "w": 337.3,
+          "h": 21.5,
+          "text": "HIBEEX selected for the Canast",
+          "aria": null,
+          "section": "#main-content"
+        },
+        {
+          "sel": "button.moments__filter",
+          "w": 25.7,
+          "h": 20,
+          "text": "All",
+          "aria": null,
+          "section": "#moments"
+        },
+        {
+          "sel": "button.moments__filter",
+          "w": 90.9,
+          "h": 20,
+          "text": "Missão Velha",
+          "aria": null,
+          "section": "#moments"
+        },
+        {
+          "sel": "button.moments__filter",
+          "w": 64.7,
+          "h": 20,
+          "text": "Salvador",
+          "aria": null,
+          "section": "#moments"
+        },
+        {
+          "sel": "button.moments__filter",
+          "w": 70.5,
+          "h": 20,
+          "text": "Fortaleza",
+          "aria": null,
+          "section": "#moments"
+        },
+        {
+          "sel": "button.moments__filter",
+          "w": 68.8,
+          "h": 20,
+          "text": "São Paulo",
+          "aria": null,
+          "section": "#moments"
+        },
+        {
+          "sel": "button.city-timeline__dot.city-timeline__dot--active",
+          "w": 22,
+          "h": 22,
+          "text": null,
+          "aria": "Missão Velha, Ceará",
+          "section": "#background"
+        },
+        {
+          "sel": "button.city-timeline__dot",
+          "w": 22,
+          "h": 22,
+          "text": null,
+          "aria": "Salvador, Bahia",
+          "section": "#background"
+        },
+        {
+          "sel": "button.city-timeline__dot",
+          "w": 22,
+          "h": 22,
+          "text": null,
+          "aria": "Fortaleza, Ceará",
+          "section": "#background"
+        },
+        {
+          "sel": "button.city-timeline__dot",
+          "w": 22,
+          "h": 22,
+          "text": null,
+          "aria": "São Paulo, SP",
+          "section": "#background"
+        },
+        {
+          "sel": "a.research-section__orcid",
+          "w": 318,
+          "h": 19.5,
+          "text": "ORCID: 0009-0009-2574-6646",
+          "aria": null,
+          "section": "#research"
+        },
+        {
+          "sel": "a.footer__cta-link",
+          "w": 133.1,
+          "h": 21,
+          "text": "me@gabrielmr.com",
+          "aria": null,
+          "section": "#main-content"
+        },
+        {
+          "sel": "a.footer__freshness-link",
+          "w": 112.8,
+          "h": 17.5,
+          "text": "last commit 6h ago",
+          "aria": null,
+          "section": "#main-content"
+        }
+      ]
+    }
+  ],
+  "unsizedImages": [
+    {
+      "viewport": "1440x900",
+      "imgsTotal": 90,
+      "count": 0,
+      "items": []
+    },
+    {
+      "viewport": "390x844",
+      "imgsTotal": 87,
+      "count": 0,
+      "items": []
+    }
+  ]
+}

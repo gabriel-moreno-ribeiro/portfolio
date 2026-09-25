@@ -1,29 +1,30 @@
-import { forwardRef } from 'react';
+import { memo } from 'react';
+import type { RefObject } from 'react';
 
 interface OdometerProps {
-  stopNumber: number;
+  /** O ano e a parada são escritos por `ref` (fora do React) a cada mudança. */
+  yearRef: RefObject<HTMLSpanElement | null>;
+  stopRef: RefObject<HTMLSpanElement | null>;
+  firstYear: number;
+  firstOrg: string;
   total: number;
-  org: string;
 }
 
 /**
- * Canto fixo da seção. O ano é escrito por `ref` a cada mudança de progresso (fora do React),
- * então fica `aria-hidden`; só a parada — que muda raramente — é anunciada.
+ * Canto fixo da seção. O ano fica `aria-hidden` (muda direto no DOM, sem anúncio); só a
+ * parada — que muda raramente — é anunciada por `aria-live`.
  */
-const Odometer = forwardRef<HTMLSpanElement, OdometerProps>(function Odometer(
-  { stopNumber, total, org },
-  yearRef,
-) {
+function Odometer({ yearRef, stopRef, firstYear, firstOrg, total }: OdometerProps) {
   return (
     <div className="exp__odo">
       <span className="exp__odo-year" ref={yearRef} aria-hidden="true">
-        2023
+        {firstYear}
       </span>
-      <span className="exp__odo-stop" aria-live="polite">
-        stop {stopNumber}/{total} · {org}
+      <span className="exp__odo-stop" ref={stopRef} aria-live="polite">
+        stop 1/{total} · {firstOrg}
       </span>
     </div>
   );
-});
+}
 
-export default Odometer;
+export default memo(Odometer);

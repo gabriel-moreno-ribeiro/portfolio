@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { FiArrowUpRight, FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { Project, projects } from "../../content/projects";
+import useIsMobile from "../../hooks/useIsMobile";
 import { formatRelative, useGitHub, useLocalData } from "../../lib/data";
 import {
   Counter,
@@ -21,6 +22,9 @@ function MediaCarousel({ project, paused }: { project: Project; paused: boolean 
   const count = available.length;
   const [idx, setIdx] = useState(0);
   const wrapRef = useRef<HTMLDivElement>(null);
+  // Below 900px the thumbnails would pull every photo of the gallery for a 34x24 box,
+  // so the picker falls back to dots and only two photos are ever in the DOM.
+  const compact = useIsMobile(900);
   const inView = useVisible(wrapRef);
   const pageVisible = usePageVisible();
   const reduced = useReducedMotion();
@@ -40,6 +44,7 @@ function MediaCarousel({ project, paused }: { project: Project; paused: boolean 
   const src = `/work/${project.slug}/${current}`;
   const prev = () => setIdx((i) => (i - 1 + count) % count);
   const next = () => setIdx((i) => (i + 1) % count);
+  const nextFile = count > 1 ? available[(active + 1) % count] : null;
 
   return (
     <div className="media-carousel" ref={wrapRef}>
@@ -56,6 +61,17 @@ function MediaCarousel({ project, paused }: { project: Project; paused: boolean 
           decoding="async"
         />
       )}
+      {nextFile && !nextFile.endsWith(".mp4") && (
+        <img
+          className="media-carousel__preload"
+          src={`/work/${project.slug}/${nextFile}`}
+          alt=""
+          aria-hidden="true"
+          width={640}
+          height={400}
+          decoding="async"
+        />
+      )}
       {count > 1 && (
         <>
           <button className="carousel-arrow left" onClick={prev} aria-label="Previous photo">
@@ -64,7 +80,7 @@ function MediaCarousel({ project, paused }: { project: Project; paused: boolean 
           <button className="carousel-arrow right" onClick={next} aria-label="Next photo">
             <FiChevronRight />
           </button>
-          <div className="carousel-thumbs">
+          <div className={`carousel-thumbs${compact ? " carousel-thumbs--dots" : ""}`}>
             {available.map((file, i) => (
               <button
                 key={file}
@@ -74,7 +90,7 @@ function MediaCarousel({ project, paused }: { project: Project; paused: boolean 
                 aria-label={`Photo ${i + 1} of ${count}`}
                 aria-current={i === active ? "true" : undefined}
               >
-                {file.endsWith(".mp4") ? (
+                {compact ? null : file.endsWith(".mp4") ? (
                   <span className="carousel-thumb__video" aria-hidden="true">
                     ▶
                   </span>

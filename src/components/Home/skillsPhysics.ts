@@ -102,7 +102,8 @@ export async function createToolbox({ canvas, items, size, onHover }: ToolboxOpt
   Composite.add(world, [left, right, floor]);
 
   const half = Math.ceil(items.length / 2);
-  const trayY = Math.min(96, h * 0.16);
+  // A bandeja tem de caber um card inteiro abaixo do topo, mas sem roubar a altura da queda.
+  const trayY = Math.min(Math.max(size + 16, h * 0.28), h * 0.42);
   const trayW = Math.min(w * 0.86, half * (size + 18));
   let tray: Body | null = Bodies.rectangle(w / 2, trayY, trayW, 12, {
     isStatic: true,

@@ -106,9 +106,10 @@ $dm-latin-ext: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+030
   font-weight: 600;
   font-size: 0.9rem;
   text-decoration: none;
-  transition: top 0.1s;
 
-  &:focus {
+  // Sem transição: o link precisa estar no lugar no mesmo frame em que recebe foco.
+  &:focus,
+  &:focus-visible {
     top: 0;
   }
 }

@@ -200,7 +200,15 @@
       }
     }
 
-    // Thumbnails instead of dots: a real target (>= 24px) and a preview of where you go.
+    // Next photo, fetched ahead of the swap. Never the visible one.
+    .media-carousel__preload {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    // Dots (mobile) and thumbnails (desktop): a real target (>= 24px) and a preview of where you go.
     .carousel-thumbs {
       position: absolute;
       bottom: 8px;
@@ -213,6 +221,18 @@
       gap: 4px;
       padding: 0 8px;
       box-sizing: border-box;
+
+      // Dots: no photo is downloaded for the picker.
+      &.carousel-thumbs--dots .carousel-thumb {
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        opacity: 1;
+
+        &.is-active {
+          background: var(--primary-orange);
+        }
+      }
 
       .carousel-thumb {
         width: 44px;
@@ -337,7 +357,6 @@
 
   &__key {
     color: var(--fg-muted);
-    opacity: 0.75;
   }
 
   &__line strong,
@@ -352,7 +371,7 @@
   }
 
   &__rel {
-    opacity: 0.75;
+    color: var(--fg-muted);
   }
 
   // Above the card's stretched link so it stays clickable.
@@ -403,23 +422,37 @@
 }
 
 // Medal chips light up one after another when the card is hovered or focused.
+// Only the background layer fades: the label keeps full contrast at all times.
 .featured-card--chips .featured-tags span {
-  opacity: 0.7;
-  transition: opacity 0.25s ease-out;
+  position: relative;
+  isolation: isolate;
+  background: transparent;
+  border: 1px solid var(--border);
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    z-index: -1;
+    border-radius: 999px;
+    background: rgba(240, 115, 45, 0.18);
+    opacity: 0;
+    transition: opacity 0.25s ease-out;
+  }
 }
 
-.featured-card--chips:hover .featured-tags span,
-.featured-card--chips:focus-within .featured-tags span {
+.featured-card--chips:hover .featured-tags span::before,
+.featured-card--chips:focus-within .featured-tags span::before {
   opacity: 1;
 }
 
-.featured-card--chips:hover .featured-tags span:nth-child(2),
-.featured-card--chips:focus-within .featured-tags span:nth-child(2) {
+.featured-card--chips:hover .featured-tags span:nth-child(2)::before,
+.featured-card--chips:focus-within .featured-tags span:nth-child(2)::before {
   transition-delay: 0.12s;
 }
 
-.featured-card--chips:hover .featured-tags span:nth-child(3),
-.featured-card--chips:focus-within .featured-tags span:nth-child(3) {
+.featured-card--chips:hover .featured-tags span:nth-child(3)::before,
+.featured-card--chips:focus-within .featured-tags span:nth-child(3)::before {
   transition-delay: 0.24s;
 }
 
@@ -428,15 +461,10 @@
     transition: none;
   }
 
-  .featured-card--chips .featured-tags span {
+  .featured-card--chips .featured-tags span::before {
     opacity: 1;
     transition: none;
   }
 }
 
-@media screen and (max-width: 600px) {
-  .find-my-work .media-carousel .carousel-thumbs .carousel-thumb {
-    width: 34px;
-    height: 24px;
-  }
-}
+

@@ -1,0 +1,160 @@
+{
+  "generatedAt": "2026-09-25T19:08:33.623Z",
+  "baseUrl": "http://localhost:5173",
+  "canvases": [
+    {
+      "i": 0,
+      "cls": "(none)",
+      "parent": "DIV",
+      "pageTop": 72,
+      "left": 570,
+      "w": 300,
+      "h": 300,
+      "inFullPagePng": {
+        "region": {
+          "left": 570,
+          "top": 72,
+          "w": 300,
+          "h": 300
+        },
+        "mean": 178,
+        "std": 64.54,
+        "inkFraction": 0.7398
+      },
+      "inViewportPng": {
+        "region": {
+          "left": 570,
+          "top": 72,
+          "w": 300,
+          "h": 300
+        },
+        "mean": 156.1,
+        "std": 64.02,
+        "inkFraction": 0.7574
+      },
+      "paintsInViewport": true,
+      "paintsInFullPage": true
+    },
+    {
+      "i": 1,
+      "cls": "globe-canvas",
+      "parent": "globe-wrap",
+      "pageTop": 1626,
+      "left": 250,
+      "w": 480,
+      "h": 480,
+      "inFullPagePng": {
+        "region": {
+          "left": 250,
+          "top": 1626,
+          "w": 480,
+          "h": 480
+        },
+        "mean": 249,
+        "std": 0,
+        "inkFraction": 0
+      },
+      "inViewportPng": {
+        "region": {
+          "left": 250,
+          "top": 210,
+          "w": 480,
+          "h": 480
+        },
+        "mean": 123.7,
+        "std": 124.18,
+        "inkFraction": 0.499
+      },
+      "paintsInViewport": true,
+      "paintsInFullPage": false
+    },
+    {
+      "i": 2,
+      "cls": "skills__canvas",
+      "parent": "skills__box",
+      "pageTop": 5885,
+      "left": 193,
+      "w": 1054,
+      "h": 240,
+      "inFullPagePng": {
+        "region": {
+          "left": 193,
+          "top": 5885,
+          "w": 1054,
+          "h": 240
+        },
+        "mean": 233.5,
+        "std": 61.72,
+        "inkFraction": 0.158
+      },
+      "inViewportPng": {
+        "region": {
+          "left": 193,
+          "top": 165,
+          "w": 1054,
+          "h": 240
+        },
+        "mean": 237.3,
+        "std": 57,
+        "inkFraction": 0.1095
+      },
+      "paintsInViewport": true,
+      "paintsInFullPage": true
+    },
+    {
+      "i": 3,
+      "cls": "exp__sprite",
+      "parent": "exp__car-shake",
+      "pageTop": 9626,
+      "left": 452,
+      "w": 132,
+      "h": 132,
+      "inFullPagePng": {
+        "region": {
+          "left": 452,
+          "top": 9626,
+          "w": 132,
+          "h": 132
+        },
+        "mean": 231.8,
+        "std": 58.38,
+        "inkFraction": 0.0889
+      },
+      "inViewportPng": {
+        "region": {
+          "left": 468,
+          "top": 294,
+          "w": 132,
+          "h": 132
+        },
+        "mean": 210.7,
+        "std": 65.08,
+        "inkFraction": 0.4042
+      },
+      "paintsInViewport": true,
+      "paintsInFullPage": true
+    }
+  ],
+  "countUpStats": {
+    "normal": {
+      "error": "By the Numbers block not found"
+    },
+    "reducedMotion": {
+      "error": "By the Numbers block not found"
+    }
+  },
+  "mobileStickyOverlays": [
+    {
+      "label": "nav.mobile-sticky-cta",
+      "position": "fixed",
+      "rect": {
+        "x": 0,
+        "y": 755,
+        "w": 390,
+        "h": 89
+      },
+      "viewportSharePct": 10.5,
+      "text": "Get in Touch Book a Call"
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+>> viewport 1440
+>> viewport 390
+>> keyboard
+>> cpu4x 1440
+>> cpu4x 390
+{
+ "viewports": [
+  {
+   "vp": "1440x900",
+   "errors": 0,
+   "warnings": 0,
+   "failed": 0,
+   "bodyKB": 21703.8,
+   "canvasEls": 4,
+   "webgl": 2,
+   "notes": []
+  },
+  {
+   "vp": "390x844",
+   "errors": 0,
+   "warnings": 0,
+   "failed": 0,
+   "bodyKB": 13929,
+   "canvasEls": 2,
+   "webgl": 0,
+   "notes": []
+  }
+ ],
+ "keyboard": {
+  "tabsPressed": 80,
+  "loopedBackAtTab": null,
+  "ctrlKOpened": true,
+  "ctrlKAttempts": [
+   {
+    "combo": "Control+K",
+    "opened": true
+   }
+  ],
+  "escapeClosed": true,
+  "invisibleFocusables": 0,
+  "sectionsReached": [
+   "nav.section-rail",
+   "nav.navbar",
+   "#main-content",
+   "#moments",
+   "#background",
+   "#work",
+   "#numbers",
+   "#research",
+   "#skills",
+   "nav.exp__index",
+   "#exp-hibeex",
+   "#work-experience",
+   "#contact",
+   "#contact-name",
+   "#contact-email",
+   "#contact-message"
+  ]
+ },
+ "cpu": {
+  "390": {
+   "framesOver50ms": 20,
+   "longestMs": 311,
+   "entryType": "long-animation-frame",
+   "rafFps": 21,
+   "rafMax": 417
+  },
+  "1440": {
+   "framesOver50ms": 35,
+   "longestMs": 5109,
+   "entryType": "long-animation-frame",
+   "rafFps": 10,
+   "rafMax": 5133
+  }
+ }
+}

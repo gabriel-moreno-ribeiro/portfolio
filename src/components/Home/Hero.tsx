@@ -41,34 +41,46 @@ const CanvasComponent = canRender3D
   : null;
 
 const BG_SETTLE_DELAY = 0.7;
-
 function Hero() {
   const isMobile = useIsMobile();
   const reduced = useReducedMotion();
   const { press } = useLocalData();
   const nowLine = useNowLine();
   const heroRef = useRef<HTMLDivElement>(null);
-  const heroVisible = useVisible(heroRef);
+  const heroVisible = useVisible(heroRef, { threshold: 0.3 });
   const [showRobot, setShowRobot] = useState(false);
   const [load3D, setLoad3D] = useState(false);
+  const [pageLoaded, setPageLoaded] = useState(
+    () => typeof document !== 'undefined' && document.readyState === 'complete',
+  );
+  const [interacted, setInteracted] = useState(false);
   const mountTimeRef = useRef(Date.now());
 
   const use3D = canRender3D && !reduced;
 
-  // Let text paint first: the 3D chunk is fetched once the main thread is idle.
   useEffect(() => {
-    if (!use3D) return;
-    const w = window as Window & {
-      requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number;
-      cancelIdleCallback?: (id: number) => void;
-    };
-    if (w.requestIdleCallback) {
-      const id = w.requestIdleCallback(() => setLoad3D(true), { timeout: 2500 });
-      return () => w.cancelIdleCallback?.(id);
-    }
-    const id = window.setTimeout(() => setLoad3D(true), 1200);
-    return () => clearTimeout(id);
-  }, [use3D]);
+    if (pageLoaded) return;
+    const onLoad = () => setPageLoaded(true);
+    window.addEventListener('load', onLoad, { once: true });
+    return () => window.removeEventListener('load', onLoad);
+  }, [pageLoaded]);
+
+  // `scroll` is deliberately NOT here: it would pull ~1MB of three.js into the very
+  // frame someone is scrolling through another section (measured: a 1085ms frame).
+  useEffect(() => {
+    if (!use3D || interacted) return;
+    const mark = () => setInteracted(true);
+    const events = ['pointermove', 'keydown', 'touchstart'] as const;
+    events.forEach((ev) => window.addEventListener(ev, mark, { passive: true, once: true }));
+    return () => events.forEach((ev) => window.removeEventListener(ev, mark));
+  }, [use3D, interacted]);
+
+  // The poster already is the robot, so the 3D chunk waits for all three: the page
+  // is loaded, the hero is on screen, and someone actually moved or typed. No idle
+  // fallback — a visitor who never does any of that keeps the poster.
+  useEffect(() => {
+    if (use3D && pageLoaded && heroVisible && interacted) setLoad3D(true);
+  }, [use3D, pageLoaded, heroVisible, interacted]);
 
   const handleRobotReady = useCallback(() => {
     const elapsed = Date.now() - mountTimeRef.current;

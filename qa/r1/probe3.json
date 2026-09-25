@@ -1,0 +1,589 @@
+{
+  "countUpNormal": {
+    "numbersTop": 3858,
+    "samples": [
+      {
+        "afterMs": 0,
+        "heroText": "0olympiad medals19 gold · 2 international",
+        "values": [
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0.0%",
+          "0"
+        ],
+        "t": 3825
+      },
+      {
+        "afterMs": 150,
+        "heroText": "19olympiad medals19 gold · 2 international",
+        "values": [
+          "19",
+          "1,635",
+          "24",
+          "13",
+          "3",
+          "728",
+          "0.3%",
+          "58"
+        ],
+        "t": 4017
+      },
+      {
+        "afterMs": 300,
+        "heroText": "29olympiad medals19 gold · 2 international",
+        "values": [
+          "29",
+          "2,518",
+          "36",
+          "21",
+          "4",
+          "1121",
+          "0.5%",
+          "90"
+        ],
+        "t": 4186
+      },
+      {
+        "afterMs": 600,
+        "heroText": "37olympiad medals19 gold · 2 international",
+        "values": [
+          "37",
+          "3,208",
+          "46",
+          "26",
+          "6",
+          "1428",
+          "0.7%",
+          "114"
+        ],
+        "t": 4842
+      },
+      {
+        "afterMs": 1000,
+        "heroText": "3939olympiad medals19 gold · 2 international",
+        "values": [
+          "3939",
+          "3,3923,392",
+          "4949",
+          "2828",
+          "66",
+          "15101510",
+          "0.7%0.7%",
+          "121121"
+        ],
+        "t": 5275
+      },
+      {
+        "afterMs": 1500,
+        "heroText": "3939olympiad medals19 gold · 2 international",
+        "values": [
+          "3939",
+          "3,3923,392",
+          "4949",
+          "2828",
+          "66",
+          "15101510",
+          "0.7%0.7%",
+          "121121"
+        ],
+        "t": 5786
+      },
+      {
+        "afterMs": 2500,
+        "heroText": "3939olympiad medals19 gold · 2 international",
+        "values": [
+          "3939",
+          "3,3923,392",
+          "4949",
+          "2828",
+          "66",
+          "15101510",
+          "0.7%0.7%",
+          "121121"
+        ],
+        "t": 6800
+      },
+      {
+        "afterMs": 4000,
+        "heroText": "3939olympiad medals19 gold · 2 international",
+        "values": [
+          "3939",
+          "3,3923,392",
+          "4949",
+          "2828",
+          "66",
+          "15101510",
+          "0.7%0.7%",
+          "121121"
+        ],
+        "t": 8312
+      }
+    ]
+  },
+  "countUpReduced": {
+    "numbersTop": 3858,
+    "samples": [
+      {
+        "afterMs": 0,
+        "heroText": "3939olympiad medals19 gold · 2 international",
+        "values": [
+          "3939",
+          "3,3923,392",
+          "4949",
+          "2828",
+          "66",
+          "15101510",
+          "0.7%0.7%",
+          "121121"
+        ],
+        "t": 3732
+      },
+      {
+        "afterMs": 150,
+        "heroText": "3939olympiad medals19 gold · 2 international",
+        "values": [
+          "3939",
+          "3,3923,392",
+          "4949",
+          "2828",
+          "66",
+          "15101510",
+          "0.7%0.7%",
+          "121121"
+        ],
+        "t": 3939
+      },
+      {
+        "afterMs": 300,
+        "heroText": "3939olympiad medals19 gold · 2 international",
+        "values": [
+          "3939",
+          "3,3923,392",
+          "4949",
+          "2828",
+          "66",
+          "15101510",
+          "0.7%0.7%",
+          "121121"
+        ],
+        "t": 4093
+      },
+      {
+        "afterMs": 600,
+        "heroText": "3939olympiad medals19 gold · 2 international",
+        "values": [
+          "3939",
+          "3,3923,392",
+          "4949",
+          "2828",
+          "66",
+          "15101510",
+          "0.7%0.7%",
+          "121121"
+        ],
+        "t": 4411
+      },
+      {
+        "afterMs": 1000,
+        "heroText": "3939olympiad medals19 gold · 2 international",
+        "values": [
+          "3939",
+          "3,3923,392",
+          "4949",
+          "2828",
+          "66",
+          "15101510",
+          "0.7%0.7%",
+          "121121"
+        ],
+        "t": 4837
+      },
+      {
+        "afterMs": 1500,
+        "heroText": "3939olympiad medals19 gold · 2 international",
+        "values": [
+          "3939",
+          "3,3923,392",
+          "4949",
+          "2828",
+          "66",
+          "15101510",
+          "0.7%0.7%",
+          "121121"
+        ],
+        "t": 5352
+      },
+      {
+        "afterMs": 2500,
+        "heroText": "3939olympiad medals19 gold · 2 international",
+        "values": [
+          "3939",
+          "3,3923,392",
+          "4949",
+          "2828",
+          "66",
+          "15101510",
+          "0.7%0.7%",
+          "121121"
+        ],
+        "t": 6365
+      },
+      {
+        "afterMs": 4000,
+        "heroText": "3939olympiad medals19 gold · 2 international",
+        "values": [
+          "3939",
+          "3,3923,392",
+          "4949",
+          "2828",
+          "66",
+          "15101510",
+          "0.7%0.7%",
+          "121121"
+        ],
+        "t": 7885
+      }
+    ]
+  },
+  "expLinks_light": {
+    "geo": {
+      "s": 6231,
+      "e": 9332
+    },
+    "rows": [
+      {
+        "pct": 25,
+        "afterMs": 80,
+        "links": [],
+        "sectionCta": null
+      },
+      {
+        "pct": 25,
+        "afterMs": 400,
+        "links": [],
+        "sectionCta": null
+      },
+      {
+        "pct": 25,
+        "afterMs": 1200,
+        "links": [],
+        "sectionCta": null
+      },
+      {
+        "pct": 50,
+        "afterMs": 80,
+        "links": [],
+        "sectionCta": null
+      },
+      {
+        "pct": 50,
+        "afterMs": 400,
+        "links": [],
+        "sectionCta": null
+      },
+      {
+        "pct": 50,
+        "afterMs": 1200,
+        "links": [],
+        "sectionCta": null
+      },
+      {
+        "pct": 75,
+        "afterMs": 80,
+        "links": [],
+        "sectionCta": null
+      },
+      {
+        "pct": 75,
+        "afterMs": 400,
+        "links": [],
+        "sectionCta": null
+      },
+      {
+        "pct": 75,
+        "afterMs": 1200,
+        "links": [],
+        "sectionCta": null
+      },
+      {
+        "pct": 100,
+        "afterMs": 80,
+        "links": [
+          {
+            "cls": "",
+            "text": "HIBEEX",
+            "color": "rgb(184, 80, 26)",
+            "border": "0px rgb(184, 80, 26)",
+            "rect": {
+              "x": 610,
+              "y": 238,
+              "w": 83,
+              "h": 32
+            }
+          },
+          {
+            "cls": "exp__card-cta",
+            "text": "Let’s talk ↓",
+            "color": "rgb(17, 17, 17)",
+            "border": "1px rgb(231, 231, 231)",
+            "rect": {
+              "x": 610,
+              "y": 465,
+              "w": 122,
+              "h": 39
+            }
+          }
+        ],
+        "sectionCta": null
+      },
+      {
+        "pct": 100,
+        "afterMs": 400,
+        "links": [
+          {
+            "cls": "",
+            "text": "HIBEEX",
+            "color": "rgb(184, 80, 26)",
+            "border": "0px rgb(184, 80, 26)",
+            "rect": {
+              "x": 610,
+              "y": 238,
+              "w": 83,
+              "h": 32
+            }
+          },
+          {
+            "cls": "exp__card-cta",
+            "text": "Let’s talk ↓",
+            "color": "rgb(17, 17, 17)",
+            "border": "1px rgb(231, 231, 231)",
+            "rect": {
+              "x": 610,
+              "y": 465,
+              "w": 122,
+              "h": 39
+            }
+          }
+        ],
+        "sectionCta": null
+      },
+      {
+        "pct": 100,
+        "afterMs": 1200,
+        "links": [
+          {
+            "cls": "",
+            "text": "HIBEEX",
+            "color": "rgb(184, 80, 26)",
+            "border": "0px rgb(184, 80, 26)",
+            "rect": {
+              "x": 610,
+              "y": 238,
+              "w": 83,
+              "h": 32
+            }
+          },
+          {
+            "cls": "exp__card-cta is-on",
+            "text": "Let’s talk ↓",
+            "color": "rgb(184, 80, 26)",
+            "border": "1px rgb(184, 80, 26)",
+            "rect": {
+              "x": 610,
+              "y": 465,
+              "w": 122,
+              "h": 39
+            }
+          }
+        ],
+        "sectionCta": null
+      }
+    ]
+  },
+  "expLinks_dark": {
+    "geo": {
+      "s": 6231,
+      "e": 9332
+    },
+    "rows": [
+      {
+        "pct": 25,
+        "afterMs": 80,
+        "links": [],
+        "sectionCta": null
+      },
+      {
+        "pct": 25,
+        "afterMs": 400,
+        "links": [],
+        "sectionCta": null
+      },
+      {
+        "pct": 25,
+        "afterMs": 1200,
+        "links": [],
+        "sectionCta": null
+      },
+      {
+        "pct": 50,
+        "afterMs": 80,
+        "links": [],
+        "sectionCta": null
+      },
+      {
+        "pct": 50,
+        "afterMs": 400,
+        "links": [],
+        "sectionCta": null
+      },
+      {
+        "pct": 50,
+        "afterMs": 1200,
+        "links": [],
+        "sectionCta": null
+      },
+      {
+        "pct": 75,
+        "afterMs": 80,
+        "links": [],
+        "sectionCta": null
+      },
+      {
+        "pct": 75,
+        "afterMs": 400,
+        "links": [],
+        "sectionCta": null
+      },
+      {
+        "pct": 75,
+        "afterMs": 1200,
+        "links": [],
+        "sectionCta": null
+      },
+      {
+        "pct": 100,
+        "afterMs": 80,
+        "links": [
+          {
+            "cls": "",
+            "text": "HIBEEX",
+            "color": "rgb(240, 115, 45)",
+            "border": "0px rgb(240, 115, 45)",
+            "rect": {
+              "x": 610,
+              "y": 238,
+              "w": 83,
+              "h": 32
+            }
+          },
+          {
+            "cls": "exp__card-cta",
+            "text": "Let’s talk ↓",
+            "color": "rgb(255, 255, 255)",
+            "border": "1px rgba(255, 255, 255, 0.14)",
+            "rect": {
+              "x": 610,
+              "y": 465,
+              "w": 122,
+              "h": 39
+            }
+          }
+        ],
+        "sectionCta": null
+      },
+      {
+        "pct": 100,
+        "afterMs": 400,
+        "links": [
+          {
+            "cls": "",
+            "text": "HIBEEX",
+            "color": "rgb(240, 115, 45)",
+            "border": "0px rgb(240, 115, 45)",
+            "rect": {
+              "x": 610,
+              "y": 238,
+              "w": 83,
+              "h": 32
+            }
+          },
+          {
+            "cls": "exp__card-cta",
+            "text": "Let’s talk ↓",
+            "color": "rgb(255, 255, 255)",
+            "border": "1px rgba(255, 255, 255, 0.14)",
+            "rect": {
+              "x": 610,
+              "y": 465,
+              "w": 122,
+              "h": 39
+            }
+          }
+        ],
+        "sectionCta": null
+      },
+      {
+        "pct": 100,
+        "afterMs": 1200,
+        "links": [
+          {
+            "cls": "",
+            "text": "HIBEEX",
+            "color": "rgb(240, 115, 45)",
+            "border": "0px rgb(240, 115, 45)",
+            "rect": {
+              "x": 610,
+              "y": 238,
+              "w": 83,
+              "h": 32
+            }
+          },
+          {
+            "cls": "exp__card-cta is-on",
+            "text": "Let’s talk ↓",
+            "color": "rgb(240, 115, 45)",
+            "border": "1px rgb(240, 115, 45)",
+            "rect": {
+              "x": 610,
+              "y": 465,
+              "w": 122,
+              "h": 39
+            }
+          }
+        ],
+        "sectionCta": null
+      }
+    ]
+  },
+  "smallTargetDetail": {
+    "count": 28,
+    "groups": {
+      ".section-rail__item.section-rail__item--active [44.9x22]": 1,
+      ".section-rail__item [71.4x22]": 1,
+      ".section-rail__item [104.7x22]": 1,
+      ".section-rail__item [84.7x22]": 1,
+      ".section-rail__item [61.3x22]": 1,
+      ".section-rail__item [95x22]": 1,
+      ".section-rail__item [78.8x22]": 1,
+      ".menu-icon [16x16]": 1,
+      ".hero-latest__link [362.5x23]": 1,
+      ".moments__filter [29.8x21]": 1,
+      ".moments__filter [107.4x21]": 1,
+      ".moments__filter [76.1x21]": 1,
+      ".moments__filter [83x21]": 1,
+      ".moments__filter [81.2x21]": 1,
+      ".ag-panel [19.1x320.2]": 3,
+      ".ag-panel [19.2x320.2]": 2,
+      ".ag-panel [19.3x320.2]": 2,
+      ".city-timeline__dot.city-timeline__dot--active [22x22]": 1,
+      ".city-timeline__dot [22x22]": 3,
+      ".research-section__orcid [1056x19.5]": 1,
+      ".footer__cta-link [133.1x21]": 1,
+      ".footer__freshness-link [112.8x17.5]": 1
+    }
+  }
+}

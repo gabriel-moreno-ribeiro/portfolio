@@ -1,10 +1,11 @@
-import { lazy, Suspense, useEffect } from "react";
+import { lazy, Suspense, useEffect, useRef, useState, type ReactNode } from "react";
 import { useLocation } from "react-router-dom";
 import Hero from "../components/Home/Hero";
 import MomentsStrip from "../components/Home/MomentsStrip";
 import SectionRail from "../components/Home/SectionRail";
 import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Shared/Footer";
+import { useVisible } from "../lib/motion";
 import { scrollToComponent } from "../utils/scrollToComponent";
 
 const BackgroundGlobe = lazy(() => import("../components/Home/BackgroundGlobe"));
@@ -38,8 +39,43 @@ function Reserve({ height }: { height: number }) {
   return <div style={{ minHeight: height }} aria-hidden="true" />;
 }
 
+// A section below the fold only mounts (and only downloads its chunk) once its
+// reserved box comes within half a viewport of the screen. Mounting everything
+// at load was the single biggest cost on the main thread. While unmounted the
+// wrapper carries the section id, so the rail and hash links still find it.
+function LazySection({ id, height, eager, children }: { id: string; height: number; eager: boolean; children: ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const near = useVisible(ref, { rootMargin: '50% 0px', once: true });
+  const mounted = eager || near;
+  return (
+    <div ref={ref} id={mounted ? undefined : id} style={mounted ? undefined : { minHeight: height }}>
+      {mounted && <Suspense fallback={<Reserve height={height} />}>{children}</Suspense>}
+    </div>
+  );
+}
+
 function Home() {
   const location = useLocation();
+  // A deep link (/#contact) needs its target in the DOM, so mount everything.
+  const eager = location.hash.length > 1;
+
+  // The peelable sticker is a toy (and pulls GSAP): it waits for the first
+  // interaction, or 6 s, instead of competing with the hero for the main thread.
+  const [showSticker, setShowSticker] = useState(false);
+  useEffect(() => {
+    const events = ['pointermove', 'keydown', 'touchstart', 'scroll'];
+    const show = () => {
+      setShowSticker(true);
+      events.forEach((ev) => window.removeEventListener(ev, show));
+      clearTimeout(timer);
+    };
+    const timer = window.setTimeout(show, 6000);
+    events.forEach((ev) => window.addEventListener(ev, show, { passive: true, once: true }));
+    return () => {
+      clearTimeout(timer);
+      events.forEach((ev) => window.removeEventListener(ev, show));
+    };
+  }, []);
 
   // /#contact (and the old /contact URL). In-page: smooth scroll. On a fresh
   // load the target is lazy and the sections above it keep growing as they
@@ -85,32 +121,32 @@ function Home() {
       <Navbar />
       <Hero />
       <MomentsStrip />
-      <Suspense fallback={<Reserve height={700} />}>
+      <LazySection id="background" height={700} eager={eager}>
         <BackgroundGlobe />
-      </Suspense>
-      <Suspense fallback={<Reserve height={900} />}>
+      </LazySection>
+      <LazySection id="work" height={900} eager={eager}>
         <FindMyWork />
-      </Suspense>
-      <Suspense fallback={<Reserve height={720} />}>
+      </LazySection>
+      <LazySection id="numbers" height={720} eager={eager}>
         <NumbersAndStats />
-      </Suspense>
-      <Suspense fallback={<Reserve height={640} />}>
+      </LazySection>
+      <LazySection id="research" height={640} eager={eager}>
         <Research />
-      </Suspense>
-      <Suspense fallback={<Reserve height={560} />}>
+      </LazySection>
+      <LazySection id="skills" height={560} eager={eager}>
         <Skills />
-      </Suspense>
-      <Suspense fallback={<Reserve height={3400} />}>
+      </LazySection>
+      <LazySection id="work-experience" height={3400} eager={eager}>
         <Experience />
-      </Suspense>
-      <Suspense fallback={<Reserve height={720} />}>
+      </LazySection>
+      <LazySection id="contact" height={720} eager={eager}>
         <ContactSection />
-      </Suspense>
+      </LazySection>
       <Footer />
 
       {/* HIBEEX sticker */}
       <div className="sticker-stage">
-        <Suspense fallback={null}>
+        {showSticker && <Suspense fallback={null}>
         <StickerPeel
           imageSrc="/hibeex.webp"
           width={130}
@@ -121,7 +157,7 @@ function Home() {
           shadowIntensity={0.45}
           lightingIntensity={0.09}
         />
-        </Suspense>
+        </Suspense>}
       </div>
 
     </main>

@@ -1,0 +1,346 @@
+{
+  "generatedAt": "2026-09-25T18:54:01.897Z",
+  "baseUrl": "http://localhost:5173",
+  "outDir": "C:\\portfolio-gabriel\\qa\\r1",
+  "playwright": "1.61.1",
+  "viewports": [
+    {
+      "viewport": "1440x900",
+      "loadMs": 7993,
+      "scrollInfo": {
+        "steps": 35,
+        "finalY": 10470,
+        "docHeight": 11370,
+        "innerHeight": 900
+      },
+      "experience": {
+        "selector": "#work-experience",
+        "via": "section owning heading matching /experience/i",
+        "heading": "Professional Experience."
+      },
+      "experienceGeometry": {
+        "sectionTop": 6386,
+        "sectionHeight": 4161,
+        "innerHeight": 900,
+        "docMaxScroll": 10470,
+        "scrollStart": 6386,
+        "scrollEnd": 9647
+      },
+      "canvases": {
+        "normal": {
+          "elements": 4,
+          "webgl": 2,
+          "ctx2d": 2,
+          "noneObserved": 0,
+          "detachedWebGL": 0,
+          "contextTypes": [
+            "2d",
+            "webgl2"
+          ],
+          "detail": [
+            {
+              "w": 300,
+              "h": 300,
+              "cssW": 300,
+              "cssH": 300,
+              "cls": "",
+              "parent": "div.",
+              "ctx": "webgl"
+            },
+            {
+              "w": 960,
+              "h": 960,
+              "cssW": 480,
+              "cssH": 480,
+              "cls": "globe-canvas",
+              "parent": "div.globe-wrap",
+              "ctx": "webgl"
+            },
+            {
+              "w": 1054,
+              "h": 396,
+              "cssW": 1054,
+              "cssH": 396,
+              "cls": "skills__canvas",
+              "parent": "div.skills__box",
+              "ctx": "2d"
+            },
+            {
+              "w": 132,
+              "h": 132,
+              "cssW": 132,
+              "cssH": 132,
+              "cls": "exp__sprite",
+              "parent": "div.exp__car-shake",
+              "ctx": "2d"
+            }
+          ]
+        },
+        "reducedMotion": {
+          "elements": 2,
+          "webgl": 0
+        }
+      },
+      "transfer": {
+        "totalRequests": 298,
+        "totalBodyKB": 21703.8,
+        "byType": {
+          "document": {
+            "requests": 1,
+            "bodyBytes": 9277,
+            "wireBytes": 9532,
+            "bodyKB": 9.1
+          },
+          "script": {
+            "requests": 171,
+            "bodyBytes": 17407726,
+            "wireBytes": 17457284,
+            "bodyKB": 16999.7
+          },
+          "font": {
+            "requests": 4,
+            "bodyBytes": 188288,
+            "wireBytes": 189568,
+            "bodyKB": 183.9
+          },
+          "image": {
+            "requests": 115,
+            "bodyBytes": 4412958,
+            "wireBytes": 4443399,
+            "bodyKB": 4309.5
+          },
+          "fetch/xhr": {
+            "requests": 7,
+            "bodyBytes": 206452,
+            "wireBytes": 207324,
+            "bodyKB": 201.6
+          }
+        }
+      },
+      "consoleErrors": 0,
+      "consoleWarnings": 0,
+      "failedRequests": 0,
+      "shots": [
+        {
+          "name": "home-1440-top.png",
+          "ok": true,
+          "bytes": 3165043
+        },
+        {
+          "name": "home-1440-scrolled.png",
+          "ok": true,
+          "bytes": 4556282
+        },
+        {
+          "name": "experience-1440-25.png",
+          "ok": true,
+          "bytes": 109644
+        },
+        {
+          "name": "experience-1440-50.png",
+          "ok": true,
+          "bytes": 126676
+        },
+        {
+          "name": "experience-1440-100.png",
+          "ok": true,
+          "bytes": 95453
+        },
+        {
+          "name": "home-1440-rm-top.png",
+          "ok": true,
+          "bytes": 4464815
+        },
+        {
+          "name": "home-1440-rm-scrolled.png",
+          "ok": true,
+          "bytes": 5060558
+        }
+      ],
+      "notes": []
+    },
+    {
+      "viewport": "390x844",
+      "loadMs": 4760,
+      "scrollInfo": {
+        "steps": 38,
+        "finalY": 11299,
+        "docHeight": 12143,
+        "innerHeight": 844
+      },
+      "experience": {
+        "selector": "#work-experience",
+        "via": "section owning heading matching /experience/i",
+        "heading": "Professional Experience."
+      },
+      "experienceGeometry": {
+        "sectionTop": 7542,
+        "sectionHeight": 3161,
+        "innerHeight": 844,
+        "docMaxScroll": 11299,
+        "scrollStart": 7542,
+        "scrollEnd": 9858
+      },
+      "canvases": {
+        "normal": {
+          "elements": 2,
+          "webgl": 0,
+          "ctx2d": 2,
+          "noneObserved": 0,
+          "detachedWebGL": 0,
+          "contextTypes": [
+            "2d"
+          ],
+          "detail": [
+            {
+              "w": 632,
+              "h": 900,
+              "cssW": 316,
+              "cssH": 450,
+              "cls": "skills__canvas",
+              "parent": "div.skills__box",
+              "ctx": "2d"
+            },
+            {
+              "w": 104,
+              "h": 104,
+              "cssW": 52,
+              "cssH": 52,
+              "cls": "exp__sprite",
+              "parent": "div.exp__car-shake",
+              "ctx": "2d"
+            }
+          ]
+        },
+        "reducedMotion": {
+          "elements": 2,
+          "webgl": 0
+        }
+      },
+      "transfer": {
+        "totalRequests": 269,
+        "totalBodyKB": 13929,
+        "byType": {
+          "document": {
+            "requests": 1,
+            "bodyBytes": 9277,
+            "wireBytes": 9532,
+            "bodyKB": 9.1
+          },
+          "script": {
+            "requests": 163,
+            "bodyBytes": 10670017,
+            "wireBytes": 10717605,
+            "bodyKB": 10419.9
+          },
+          "font": {
+            "requests": 4,
+            "bodyBytes": 188288,
+            "wireBytes": 189568,
+            "bodyKB": 183.9
+          },
+          "image": {
+            "requests": 99,
+            "bodyBytes": 3394200,
+            "wireBytes": 3420631,
+            "bodyKB": 3314.6
+          },
+          "fetch/xhr": {
+            "requests": 2,
+            "bodyBytes": 1531,
+            "wireBytes": 1996,
+            "bodyKB": 1.5
+          }
+        }
+      },
+      "consoleErrors": 0,
+      "consoleWarnings": 0,
+      "failedRequests": 0,
+      "shots": [
+        {
+          "name": "home-390-top.png",
+          "ok": true,
+          "bytes": 2613379
+        },
+        {
+          "name": "home-390-scrolled.png",
+          "ok": true,
+          "bytes": 5755811
+        },
+        {
+          "name": "experience-390-25.png",
+          "ok": true,
+          "bytes": 131292
+        },
+        {
+          "name": "experience-390-50.png",
+          "ok": true,
+          "bytes": 133519
+        },
+        {
+          "name": "experience-390-100.png",
+          "ok": true,
+          "bytes": 120074
+        },
+        {
+          "name": "home-390-rm-top.png",
+          "ok": true,
+          "bytes": 2941854
+        },
+        {
+          "name": "home-390-rm-scrolled.png",
+          "ok": true,
+          "bytes": 5816801
+        }
+      ],
+      "notes": []
+    }
+  ],
+  "keyboard": {
+    "tabsPressed": 80,
+    "loopedBackAtTab": null,
+    "ctrlKOpened": true,
+    "ctrlKAttempts": [
+      {
+        "combo": "Control+K",
+        "opened": true
+      }
+    ],
+    "escapeClosed": true,
+    "invisibleFocusables": 0,
+    "sectionsReached": [
+      "nav.section-rail",
+      "nav.navbar",
+      "#main-content",
+      "#moments",
+      "#background",
+      "#work",
+      "#numbers",
+      "#research",
+      "#skills",
+      "nav.exp__index",
+      "#exp-hibeex",
+      "#work-experience",
+      "#contact",
+      "#contact-name",
+      "#contact-email",
+      "#contact-message"
+    ]
+  },
+  "cpu": {
+    "390": {
+      "framesOver50ms": 20,
+      "longestMs": 311,
+      "entryType": "long-animation-frame",
+      "rafFps": 21,
+      "rafMax": 417
+    },
+    "1440": {
+      "framesOver50ms": 35,
+      "longestMs": 5109,
+      "entryType": "long-animation-frame",
+      "rafFps": 10,
+      "rafMax": 5133
+    }
+  }
+}

@@ -59,9 +59,23 @@ async function sectionMap(browser, vp, reduced) {
       };
     });
     const exp = document.querySelector('#work-experience');
+    // r1: the Experience section was rebuilt. .left-column/.right-column no longer
+    // exist (they are reported as null so a regression back to them is visible);
+    // the new anatomy is an <ol> of stops + a stop nav + an SVG road + a sprite car.
+    const box = (e) => { if (!e) return null; const r = e.getBoundingClientRect(); return { top: Math.round(r.top + window.scrollY), left: Math.round(r.left), w: Math.round(r.width), h: Math.round(r.height) }; };
     const expCols = exp ? {
-      left: (() => { const e = exp.querySelector('.left-column'); if (!e) return null; const r = e.getBoundingClientRect(); return { top: Math.round(r.top + window.scrollY), left: Math.round(r.left), w: Math.round(r.width), h: Math.round(r.height), childCount: e.children.length, textChars: (e.textContent || '').replace(/\s+/g, '').length, canvases: e.querySelectorAll('canvas').length }; })(),
-      right: (() => { const e = exp.querySelector('.right-column'); if (!e) return null; const r = e.getBoundingClientRect(); return { top: Math.round(r.top + window.scrollY), left: Math.round(r.left), w: Math.round(r.width), h: Math.round(r.height), childCount: e.children.length, textChars: (e.textContent || '').replace(/\s+/g, '').length }; })(),
+      legacyLeftColumn: exp.querySelector('.left-column') ? box(exp.querySelector('.left-column')) : null,
+      legacyRightColumn: exp.querySelector('.right-column') ? box(exp.querySelector('.right-column')) : null,
+      section: box(exp),
+      stopList: (() => { const ol = exp.querySelector('ol'); if (!ol) return null; const o = box(ol); o.stops = ol.querySelectorAll('li').length; return o; })(),
+      stops: [...exp.querySelectorAll('li[id^=exp-]')].map((li) => Object.assign({ id: li.id, textChars: (li.textContent || '').replace(/\s+/g, '').length }, box(li))),
+      stopNav: box(document.querySelector('nav[aria-label="Experience stops"]')),
+      road: box(exp.querySelector('svg')),
+      carCanvas: (() => { const c = exp.querySelector('canvas'); if (!c) return null; const o = box(c); o.bitmap = c.width + 'x' + c.height; return o; })(),
+      carPoster: (() => { const im = exp.querySelector('img[src*="/assets/car/"]'); if (!im) return null; const o = box(im); o.src = im.getAttribute('src'); o.naturalW = im.naturalWidth; o.naturalH = im.naturalHeight; o.hasAttrDims = im.hasAttribute('width') && im.hasAttribute('height'); return o; })(),
+      odometer: (() => { const el = [...exp.querySelectorAll('*')].find((e) => /exp__odo/.test(String(e.className || ''))); if (!el) return null; const o = box(el); o.position = getComputedStyle(el).position; o.text = (el.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 60); return o; })(),
+      focusablesInside: exp.querySelectorAll('a[href],button,input,select,textarea,[tabindex]:not([tabindex="-1"])').length,
+      canvases: exp.querySelectorAll('canvas').length,
     } : null;
     // horizontal overflow: a full-page screenshot is scrollWidth wide, so this
     // also explains any width mismatch in the PNGs
@@ -206,7 +220,7 @@ for (const vp of VIEWPORTS) {
     }
     rows.push(row);
   }
-  report.viewports[vp.w] = { docHeight: map.docHeight, docHeightReducedMotion: mapRM.docHeight, docHeightDeltaWithReduce: mapRM.docHeight - map.docHeight, dpr: map.dpr, horizontalOverflow: map.horizontalOverflow, imageInfo: scales, experienceColumns: map.experienceColumns, fixedOverlays: map.fixedOverlays, sections: rows };
+  report.viewports[vp.w] = { docHeight: map.docHeight, docHeightReducedMotion: mapRM.docHeight, docHeightDeltaWithReduce: mapRM.docHeight - map.docHeight, dpr: map.dpr, horizontalOverflow: map.horizontalOverflow, imageInfo: scales, experienceAnatomy: map.experienceColumns, fixedOverlays: map.fixedOverlays, sections: rows };
 }
 await browser.close();
 fs.writeFileSync(path.join(OUT, 'section-report.json'), JSON.stringify(report, null, 2));
@@ -226,5 +240,5 @@ for (const [w, v] of Object.entries(report.viewports)) {
       + (r.diffs.topVsScrolled ? r.diffs.topVsScrolled.changedFraction : 'n/a') + ' / '
       + (r.diffs.scrolledVsRmScrolled ? r.diffs.scrolledVsRmScrolled.changedFraction : 'n/a'));
   }
-  console.log('  experienceColumns: ' + JSON.stringify(v.experienceColumns));
+  console.log('  experienceAnatomy: ' + JSON.stringify(v.experienceAnatomy));
 }

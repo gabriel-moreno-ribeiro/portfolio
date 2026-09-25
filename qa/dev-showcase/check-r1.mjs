@@ -1,0 +1,18 @@
+import { chromium } from 'playwright';
+const b = await chromium.launch();
+const m = await b.newPage({ viewport: { width: 390, height: 844 } });
+await m.goto('http://localhost:4173', { waitUntil: 'networkidle' });
+await m.locator('.find-my-work').scrollIntoViewIfNeeded();
+await m.waitForTimeout(800);
+const dots = await m.evaluate(() => [...document.querySelectorAll('.carousel-thumb')].map(x => { const r = x.getBoundingClientRect(); return `${Math.round(r.width)}x${Math.round(r.height)}|imgs:${x.querySelectorAll('img').length}`; }));
+const imgsInDom = await m.evaluate(() => [...document.querySelectorAll('.media-carousel img')].map(i => i.getAttribute('src')));
+await m.screenshot({ path: 'C:/portfolio-gabriel/qa/dev-showcase/cool-things-390-after.png' });
+const d = await b.newPage({ viewport: { width: 1440, height: 900 } });
+await d.goto('http://localhost:4173', { waitUntil: 'networkidle' });
+await d.locator('.featured-card--chips').scrollIntoViewIfNeeded();
+await d.locator('.featured-card--chips').hover();
+await d.waitForTimeout(600);
+const chips = await d.evaluate(() => [...document.querySelectorAll('.featured-card--chips .featured-tags span')].map(s => ({ color: getComputedStyle(s).color, op: getComputedStyle(s).opacity, glow: getComputedStyle(s, '::before').opacity })));
+await d.screenshot({ path: 'C:/portfolio-gabriel/qa/dev-showcase/chips-hover-1440.png' });
+console.log(JSON.stringify({ dots: dots.slice(0, 3), dotCount: dots.length, imgsInDom, chips }));
+await b.close();

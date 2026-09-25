@@ -7,11 +7,11 @@ import { pathSampler, type PathSampler } from '../../../lib/motion';
  * assim a estrada nunca distorce e as paradas caem exatamente no centro de cada `<li>`, que é
  * quem manda na altura (o conteúdo é HTML normal, não posicionado por JS).
  *
- * Invariante do movimento: o carro fica perto de `CAR_SCREEN` (40 %) da altura da viewport
- * enquanto a estrada passa por baixo. Com `k = viewportHeight / sectionHeight`:
- *
- *   u(p) = p · (1 − k) + CAR_SCREEN · k        (u = fração vertical percorrida na seção)
- *   p(u) = (u − CAR_SCREEN · k) / (1 − k)      (inversa: em que progresso a parada é atingida)
+ * Invariante do movimento (`carTargetY`): tudo em PIXELS lidos ao vivo do
+ * `getBoundingClientRect()` da seção no momento do desenho. Nenhuma altura de seção nem
+ * altura de viewport fica em cache — cache aqui já produziu carro fora do quadro quando o
+ * layout mudava depois da medição (a seção usa `vh` na sobra da estrada, então a altura muda
+ * com resize).
  */
 
 export const CAR_SCREEN = 0.4;
@@ -90,58 +90,56 @@ export function roadLookup(d: string): RoadLookup {
   return lookup;
 }
 
-/** Progresso da seção em que a parada na fração vertical `u` é atingida. */
-export function progressAtU(u: number, k: number): number {
-  const denom = 1 - k;
-  if (denom <= 0.02) return u;
-  return Math.max(0, Math.min(1, (u - CAR_SCREEN * k) / denom));
-}
-
-/** Fração vertical da seção correspondente ao progresso `p`. */
-export function uAtProgress(p: number, k: number): number {
-  const denom = 1 - k;
-  if (denom <= 0.02) return p;
-  return Math.max(0, Math.min(1, p * denom + CAR_SCREEN * k));
-}
-
-export interface RoadStop {
-  /** Fração vertical da seção em que a parada está. */
-  u: number;
-  /** Progresso da seção em que o carro chega nela. */
-  p: number;
-}
-
 export interface RoadGeom {
   d: string;
-  /** px, iguais aos do viewBox da estrada e aos da seção. */
+  /** px, iguais aos do viewBox da estrada e aos da caixa da seção. */
   width: number;
   height: number;
-  /** viewportHeight / sectionHeight. */
-  k: number;
-  stops: RoadStop[];
-  uFirst: number;
-  uLast: number;
-  /** Meia-janela (em u) em que o card conta como iluminado pelo farol. */
-  litWindowU: number;
+  /** Centro vertical de cada parada, em px da seção. */
+  stopYs: number[];
+  /** Meia-janela (px) em que o card conta como iluminado pelo farol. */
+  litWindowPx: number;
 }
+
+/** A seção como o carro precisa ver: posição e tamanho ao vivo. */
+export interface LiveBox {
+  /** `getBoundingClientRect().top` da seção. */
+  top: number;
+  /** Altura da viewport. */
+  vh: number;
+}
+
+/** Janela vertical (fração da viewport) fora da qual o carro não pode aparecer. */
+const SAFE_MIN = 0.18;
+const SAFE_MAX = 0.86;
 
 /**
- * Posição do carro (fração vertical da seção) para um progresso.
- * Fora do trecho entre a primeira e a última parada o carro fica estacionado nelas — é isso
- * que faz "começa parado na 1ª parada" e "termina parado no HIBEEX" serem verdade em qualquer
- * altura de viewport, sem depender de a seção ter exatamente a altura certa.
+ * Altura, em px da seção, em que o carro deve estar.
+ *
+ *   yAlvo = (scroll já feito na seção) + 0.4 · vh          → linha dos 40 % da viewport
+ *   yAlvo = clamp(yAlvo, y(1ª parada), y(última parada))   → estaciona nas pontas
+ *   yAlvo = clamp(yAlvo, janela segura da viewport)        → nunca sai do quadro
+ *
+ * A 2ª clamp só morde enquanto a parada ainda está do lado certo da linha dos 40 %; a 3ª só
+ * morde se a parada já saiu da tela. As três na ordem: estacionar não pode vencer a viewport.
  */
-export function carU(p: number, road: RoadGeom): number {
-  const u = uAtProgress(p, road.k);
-  return u < road.uFirst ? road.uFirst : u > road.uLast ? road.uLast : u;
+export function carTargetY(box: LiveBox, road: RoadGeom): number {
+  const scrolled = -box.top;
+  const free = scrolled + CAR_SCREEN * box.vh;
+  const first = road.stopYs[0] ?? free;
+  const last = road.stopYs[road.stopYs.length - 1] ?? free;
+  const parked = free < first ? first : free > last ? last : free;
+  const lo = scrolled + SAFE_MIN * box.vh;
+  const hi = scrolled + SAFE_MAX * box.vh;
+  return parked < lo ? lo : parked > hi ? hi : parked;
 }
 
-/** Índice da parada mais próxima do carro e a distância (em u) até ela. */
-export function nearestStop(u: number, stops: RoadStop[]): { index: number; distance: number } {
+/** Índice da parada mais próxima do carro e a distância em px. */
+export function nearestStop(y: number, stopYs: number[]): { index: number; distance: number } {
   let index = 0;
   let distance = Infinity;
-  for (let i = 0; i < stops.length; i++) {
-    const d = Math.abs(stops[i].u - u);
+  for (let i = 0; i < stopYs.length; i++) {
+    const d = Math.abs(stopYs[i] - y);
     if (d < distance) {
       distance = d;
       index = i;

@@ -1,5 +1,5 @@
 /**
- * render-car-sprites.mjs — pré-renderiza a D-20 (`public/assets/3d/d20.glb`) como uma
+ * render-car-sprites.mjs — pré-renderiza a D-20 (`scripts/assets/d20.glb`) como uma
  * sequência de sprites WebP, um por ângulo de yaw, para a seção Experience.
  *
  * Roda o three.js dentro do Chromium do Playwright. Não sobe servidor: intercepta uma
@@ -222,7 +222,7 @@ async function serveFromDisk(route, url) {
   if (rel === '/' || rel === '/index.html') {
     return route.fulfill({ status: 200, contentType: 'text/html', body: PAGE_HTML });
   }
-  if (rel === '/model.glb') file = path.join(ROOT, 'public/assets/3d/d20.glb');
+  if (rel === '/model.glb') file = path.join(ROOT, 'scripts/assets/d20.glb');
   else if (rel.startsWith('/three/')) file = path.join(ROOT, 'node_modules/three', rel.slice('/three/'.length));
   else return route.fulfill({ status: 404, body: 'not found' });
 
@@ -298,7 +298,7 @@ async function main() {
   await writeFile(
     path.join(ROOT, 'src/components/Home/Experience/carSprites.ts'),
     `// GERADO por scripts/render-car-sprites.mjs. Não editar à mão.\n` +
-      `// ${FRAMES} yaws da D-20 (public/assets/3d/d20.glb), câmera ortográfica elevada ${ELEVATION_DEG}°.\n` +
+      `// ${FRAMES} yaws da D-20 (scripts/assets/d20.glb), câmera ortográfica elevada ${ELEVATION_DEG}°.\n` +
       `// \`heading\` = direção de tela (graus, 0 = +x, horário) do eixo frontal do carro naquele yaw:\n` +
       `// o componente escolhe o frame cujo \`heading\` está mais perto da tangente do path.\n` +
       `// Âncoras em pixels do sprite (origem: canto superior esquerdo do frame).\n` +

@@ -278,13 +278,16 @@ function CityPanel({
 }) {
   const galleryItems = useMemo(() => {
     const entries = CITY_PHOTO_MANIFEST[city.id] ?? [];
-    return entries.map(entry => {
+    const place = city.name.split(',')[0];
+    return entries.map((entry, i) => {
       const { file, position } = typeof entry === 'string'
         ? { file: entry, position: 'center top' }
         : entry;
       return {
         image: `/background/${city.id}/${file}`,
-        label: city.name.split(',')[0],
+        label: place,
+        // The panels are focusable, so each one needs a name of its own.
+        alt: `${place}, photo ${i + 1} of ${entries.length}`,
         position,
       };
     });

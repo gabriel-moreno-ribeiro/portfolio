@@ -157,7 +157,9 @@
       ]
     }
     </script>
-  </head>
+      <!-- LCP no mobile: a primeira foto da faixa de momentos, antes de o React montar -->
+    <link rel="preload" as="image" href="/moments/mv01.webp" fetchpriority="high" />
+</head>
   <body>
     <a href="#main-content" class="skip-link">Skip to content</a>
     <noscript>You need to enable JavaScript to run this app.</noscript>

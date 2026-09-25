@@ -1,0 +1,184 @@
+{
+  "viewport": "390x844",
+  "baseUrl": "http://localhost:5173",
+  "phase": "normal motion: initial load + one full slow scroll + experience steps + second slow scroll",
+  "method": "Playwright requestfinished -> request.sizes().responseBodySize (encoded over-the-wire body), falling back to the content-length header. wireBytes = body + response headers.",
+  "caveat": "Vite DEV server serves unminified, ungzipped ES modules; absolute numbers are far above production. Compare only against other runs of this same script on the dev server.",
+  "totalRequests": 269,
+  "totalBodyBytes": 14263313,
+  "totalBodyKB": 13929,
+  "totalBodyMB": 13.6,
+  "totalWireBytes": 14339332,
+  "totalWireKB": 14003.3,
+  "byType": {
+    "document": {
+      "requests": 1,
+      "bodyBytes": 9277,
+      "wireBytes": 9532,
+      "bodyKB": 9.1
+    },
+    "script": {
+      "requests": 163,
+      "bodyBytes": 10670017,
+      "wireBytes": 10717605,
+      "bodyKB": 10419.9
+    },
+    "font": {
+      "requests": 4,
+      "bodyBytes": 188288,
+      "wireBytes": 189568,
+      "bodyKB": 183.9
+    },
+    "image": {
+      "requests": 99,
+      "bodyBytes": 3394200,
+      "wireBytes": 3420631,
+      "bodyKB": 3314.6
+    },
+    "fetch/xhr": {
+      "requests": 2,
+      "bodyBytes": 1531,
+      "wireBytes": 1996,
+      "bodyKB": 1.5
+    }
+  },
+  "top20Heaviest": [
+    {
+      "kb": 2092.9,
+      "type": "script",
+      "status": 200,
+      "url": "/node_modules/.vite/deps/react-icons_ri.js?v=43f1ac73"
+    },
+    {
+      "kb": 1727.4,
+      "type": "script",
+      "status": 200,
+      "url": "/node_modules/.vite/deps/react-icons_fa6.js?v=43f1ac73"
+    },
+    {
+      "kb": 970,
+      "type": "script",
+      "status": 200,
+      "url": "/node_modules/.vite/deps/chunk-6ER7OG3O.js?v=43f1ac73"
+    },
+    {
+      "kb": 894.4,
+      "type": "script",
+      "status": 200,
+      "url": "/node_modules/.vite/deps/react-icons_io5.js?v=43f1ac73"
+    },
+    {
+      "kb": 665.3,
+      "type": "script",
+      "status": 200,
+      "url": "/node_modules/.vite/deps/zod.js?v=43f1ac73"
+    },
+    {
+      "kb": 457.2,
+      "type": "script",
+      "status": 200,
+      "url": "/node_modules/.vite/deps/react-router-dom.js?v=43f1ac73"
+    },
+    {
+      "kb": 455.8,
+      "type": "script",
+      "status": 200,
+      "url": "/node_modules/.vite/deps/gsap_all.js?v=43f1ac73"
+    },
+    {
+      "kb": 411.1,
+      "type": "script",
+      "status": 200,
+      "url": "/node_modules/.vite/deps/motion_react.js?v=43f1ac73"
+    },
+    {
+      "kb": 287.6,
+      "type": "image",
+      "status": 200,
+      "url": "/assets/hero-slideshow/8-1920.avif"
+    },
+    {
+      "kb": 253,
+      "type": "image",
+      "status": 200,
+      "url": "/work/candela/03.webp"
+    },
+    {
+      "kb": 237.5,
+      "type": "script",
+      "status": 200,
+      "url": "/node_modules/.vite/deps/posthog-js.js?v=43f1ac73"
+    },
+    {
+      "kb": 234.5,
+      "type": "script",
+      "status": 200,
+      "url": "/node_modules/.vite/deps/matter-js.js?v=43f1ac73"
+    },
+    {
+      "kb": 203.9,
+      "type": "image",
+      "status": 200,
+      "url": "/assets/hero-slideshow/6-1920.avif"
+    },
+    {
+      "kb": 188.8,
+      "type": "image",
+      "status": 200,
+      "url": "/assets/hero-slideshow/4-1920.avif"
+    },
+    {
+      "kb": 174.7,
+      "type": "script",
+      "status": 200,
+      "url": "/@vite/client"
+    },
+    {
+      "kb": 168.5,
+      "type": "image",
+      "status": 200,
+      "url": "/work/candela/04.webp"
+    },
+    {
+      "kb": 165.3,
+      "type": "script",
+      "status": 200,
+      "url": "/node_modules/.vite/deps/chunk-KHHJNBMQ.js?v=43f1ac73"
+    },
+    {
+      "kb": 160.6,
+      "type": "image",
+      "status": 200,
+      "url": "/work/candela/08.webp"
+    },
+    {
+      "kb": 145.9,
+      "type": "script",
+      "status": 200,
+      "url": "/node_modules/.vite/deps/react-icons_fi.js?v=43f1ac73"
+    },
+    {
+      "kb": 145.8,
+      "type": "image",
+      "status": 200,
+      "url": "/work/candela/05.webp"
+    }
+  ],
+  "thirdParty": [
+    {
+      "kb": 1.2,
+      "type": "fetch",
+      "url": "https://api.github.com/rate_limit"
+    },
+    {
+      "kb": 0.3,
+      "type": "fetch",
+      "url": "https://api.open-meteo.com/v1/forecast?latitude=-23.5505&longitude=-46.6333&current=temperature_2m,weather_code,is_day&timezone=auto"
+    },
+    {
+      "kb": 1,
+      "type": "script",
+      "url": "https://us-assets.i.posthog.com/array/phc_cgNNpL9lqLK50jeJICAV6xcGZDmuDnuPVxPeG8Ieg6m/config.js"
+    }
+  ]
+}

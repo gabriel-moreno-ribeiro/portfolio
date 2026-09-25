@@ -1,6 +1,19 @@
 // Schemas zod dos JSON de `src/data/`. As anotações `z.ZodType<T>` garantem, em tempo de
 // compilação, que cada schema produz exatamente o tipo congelado de `./types.ts`.
+//
+// IMPORTANTE: este módulo só é carregado em dev, por `import()` atrás de `import.meta.env.DEV`
+// em `local.ts`. Assim o `zod` fica fora do bundle de produção. Nunca importe daqui
+// estaticamente em código de runtime.
 import { z } from 'zod';
+import booksJson from '../../data/books.json';
+import changelogJson from '../../data/changelog.json';
+import configJson from '../../data/config.json';
+import experienceJson from '../../data/experience.json';
+import galleryJson from '../../data/gallery.json';
+import nowJson from '../../data/now.json';
+import numbersJson from '../../data/numbers.json';
+import pressJson from '../../data/press.json';
+import skillsJson from '../../data/skills.json';
 import type {
   ChangelogEntry,
   CityInfo,
@@ -131,3 +144,41 @@ export const localSchemas = {
   changelog: z.array(changelogEntrySchema),
   now: nowSchema,
 };
+
+/**
+ * Valida os 8 JSON de `src/data/` e reporta no console. Roda **só em dev**: em produção os JSON
+ * entram por cast direto (já passaram por aqui e pelo `tsc`).
+ */
+export function validateAll(): boolean {
+  const raws: Record<string, unknown> = {
+    config: configJson,
+    experience: experienceJson,
+    numbers: numbersJson,
+    skills: skillsJson,
+    gallery: galleryJson,
+    press: pressJson,
+    changelog: changelogJson,
+    now: nowJson,
+  };
+  let ok = true;
+  for (const [name, schema] of Object.entries(localSchemas)) {
+    const result = schema.safeParse(raws[name]);
+    if (result.success) continue;
+    ok = false;
+    const issues = result.error.issues
+      .slice(0, 8)
+      .map((i) => `  - ${i.path.join('.') || '(raiz)'}: ${i.message}`)
+      .join('\n');
+    console.error(
+      `[data] src/data/${name}.json não passou no schema (${result.error.issues.length} problema(s)).\n` +
+        `${issues}\nO site segue com o JSON cru; corrija o arquivo.`,
+    );
+  }
+  const books = Array.isArray(booksJson) ? booksJson : [];
+  const reading = books.filter((b) => bookLiteSchema.safeParse(b).success && (b as { status: string }).status === 'reading');
+  if (nowJson.readingFromLibrary && reading.length !== 1) {
+    ok = false;
+    console.error(`[data] books.json deveria ter exatamente 1 livro com status "reading"; tem ${reading.length}.`);
+  }
+  return ok;
+}

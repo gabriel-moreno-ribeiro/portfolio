@@ -52,7 +52,8 @@ function Row({
             <img
               src={m.src}
               alt={i < real ? m.alt : ''}
-              loading={i < 5 ? 'eager' : 'lazy'}
+              /* Only the first three of each row race for bandwidth; the rest wait. */
+              loading={i < 3 ? 'eager' : 'lazy'}
               fetchPriority={priority && i === 0 ? 'high' : undefined}
               decoding="async"
               width={m.w}

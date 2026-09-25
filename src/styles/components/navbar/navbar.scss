@@ -57,9 +57,12 @@
     align-items: center;
     position: relative;
     cursor: pointer;
-    width: 16px;
-    height: 16px;
-    padding: 0;
+    // Drawing stays 16px; the box is 24px so the tap target clears the 24×24 minimum.
+    width: 24px;
+    height: 24px;
+    padding: 4px;
+    box-sizing: border-box;
+    margin: 0 -4px;
     background: none;
     border: 0;
     flex-shrink: 0;

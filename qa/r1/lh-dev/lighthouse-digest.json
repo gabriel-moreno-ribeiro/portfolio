@@ -1,0 +1,252 @@
+{
+  "generatedAt": "2026-09-25T19:12:21.055Z",
+  "url": "http://localhost:5173/",
+  "runs": {
+    "desktop": {
+      "name": "desktop",
+      "ok": true,
+      "ms": 67835,
+      "lighthouseVersion": "13.5.0",
+      "formFactor": "desktop",
+      "throttling": "simulate",
+      "scores": {
+        "performance": 28,
+        "accessibility": 97,
+        "best-practices": 96,
+        "seo": 100
+      },
+      "metrics": {
+        "FCP": 2121,
+        "LCP": 11785,
+        "CLS": 0,
+        "TBT": 1421,
+        "SpeedIndex": 5701,
+        "TTI": 17763,
+        "LCPelement": null,
+        "totalByteWeight": 20679516,
+        "totalByteWeightDisplay": "Total size was 20,195 KiB",
+        "mainThreadWorkMs": 5199,
+        "bootupTimeMs": 3582,
+        "domSize": null
+      },
+      "unusedJavascript": [
+        {
+          "url": "http://localhost:5173/node_modules/.vite/deps/@react-three_drei.js?v=43f1ac73",
+          "totalKB": 3677.9,
+          "wastedKB": 2847.6,
+          "wastedPct": 77
+        },
+        {
+          "url": "http://localhost:5173/node_modules/.vite/deps/react-icons_ri.js?v=43f1ac73",
+          "totalKB": 2092.9,
+          "wastedKB": 2035,
+          "wastedPct": 97
+        },
+        {
+          "url": "http://localhost:5173/node_modules/.vite/deps/react-icons_fa6.js?v=43f1ac73",
+          "totalKB": 1727.4,
+          "wastedKB": 1693,
+          "wastedPct": 98
+        },
+        {
+          "url": "http://localhost:5173/node_modules/.vite/deps/chunk-OAEA5FZL.js?v=43f1ac73",
+          "totalKB": 1090.9,
+          "wastedKB": 1022.6,
+          "wastedPct": 94
+        },
+        {
+          "url": "http://localhost:5173/node_modules/.vite/deps/react-icons_io5.js?v=43f1ac73",
+          "totalKB": 894.4,
+          "wastedKB": 868.5,
+          "wastedPct": 97
+        }
+      ],
+      "properlySizeImages": [],
+      "unsizedImages": [],
+      "offscreenImages": [],
+      "largestResources": [
+        {
+          "type": "total",
+          "requests": 229,
+          "kb": 20179.5
+        },
+        {
+          "type": "script",
+          "requests": 168,
+          "kb": 16692.5
+        },
+        {
+          "type": "image",
+          "requests": 43,
+          "kb": 3042.4
+        },
+        {
+          "type": "other",
+          "requests": 13,
+          "kb": 250.2
+        },
+        {
+          "type": "font",
+          "requests": 4,
+          "kb": 185.1
+        },
+        {
+          "type": "document",
+          "requests": 1,
+          "kb": 9.3
+        },
+        {
+          "type": "stylesheet",
+          "requests": 0,
+          "kb": 0
+        },
+        {
+          "type": "media",
+          "requests": 0,
+          "kb": 0
+        },
+        {
+          "type": "third-party",
+          "requests": 11,
+          "kb": 124.4
+        }
+      ],
+      "failedAudits": [
+        "image-aspect-ratio",
+        "valid-source-maps",
+        "color-contrast",
+        "llms-txt",
+        "ard-schema"
+      ],
+      "a11yFailures": [
+        {
+          "id": "color-contrast",
+          "title": "Background and foreground colors do not have a sufficient contrast ratio.",
+          "nodes": 6
+        }
+      ]
+    },
+    "mobile": {
+      "name": "mobile",
+      "ok": true,
+      "ms": 45362,
+      "lighthouseVersion": "13.5.0",
+      "formFactor": "mobile",
+      "throttling": "simulate",
+      "scores": {
+        "performance": 25,
+        "accessibility": 97,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "FCP": 7267,
+        "LCP": 61345,
+        "CLS": 0.002,
+        "TBT": 4053,
+        "SpeedIndex": 17733,
+        "TTI": 62277,
+        "LCPelement": null,
+        "totalByteWeight": 12960201,
+        "totalByteWeightDisplay": "Total size was 12,656 KiB",
+        "mainThreadWorkMs": 13808,
+        "bootupTimeMs": 6027,
+        "domSize": null
+      },
+      "unusedJavascript": [
+        {
+          "url": "http://localhost:5173/node_modules/.vite/deps/react-icons_ri.js?v=43f1ac73",
+          "totalKB": 2092.9,
+          "wastedKB": 2035,
+          "wastedPct": 97
+        },
+        {
+          "url": "http://localhost:5173/node_modules/.vite/deps/react-icons_fa6.js?v=43f1ac73",
+          "totalKB": 1727.4,
+          "wastedKB": 1693,
+          "wastedPct": 98
+        },
+        {
+          "url": "http://localhost:5173/node_modules/.vite/deps/react-icons_io5.js?v=43f1ac73",
+          "totalKB": 894.4,
+          "wastedKB": 868.5,
+          "wastedPct": 97
+        },
+        {
+          "url": "http://localhost:5173/node_modules/.vite/deps/zod.js?v=43f1ac73",
+          "totalKB": 638.1,
+          "wastedKB": 545.5,
+          "wastedPct": 85
+        },
+        {
+          "url": "http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=43f1ac73",
+          "totalKB": 457.2,
+          "wastedKB": 401.1,
+          "wastedPct": 88
+        }
+      ],
+      "properlySizeImages": [],
+      "unsizedImages": [],
+      "offscreenImages": [],
+      "largestResources": [
+        {
+          "type": "total",
+          "requests": 205,
+          "kb": 12641.1
+        },
+        {
+          "type": "script",
+          "requests": 162,
+          "kb": 10235.1
+        },
+        {
+          "type": "image",
+          "requests": 28,
+          "kb": 2161.6
+        },
+        {
+          "type": "font",
+          "requests": 4,
+          "kb": 185.1
+        },
+        {
+          "type": "other",
+          "requests": 10,
+          "kb": 50
+        },
+        {
+          "type": "document",
+          "requests": 1,
+          "kb": 9.3
+        },
+        {
+          "type": "stylesheet",
+          "requests": 0,
+          "kb": 0
+        },
+        {
+          "type": "media",
+          "requests": 0,
+          "kb": 0
+        },
+        {
+          "type": "third-party",
+          "requests": 9,
+          "kb": 25.4
+        }
+      ],
+      "failedAudits": [
+        "color-contrast",
+        "llms-txt",
+        "ard-schema"
+      ],
+      "a11yFailures": [
+        {
+          "id": "color-contrast",
+          "title": "Background and foreground colors do not have a sufficient contrast ratio.",
+          "nodes": 6
+        }
+      ]
+    }
+  }
+}

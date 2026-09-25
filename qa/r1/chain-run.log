@@ -1,0 +1,100 @@
+### AXE
+{
+ "violations": 1,
+ "violationNodes": 11,
+ "passes": 46,
+ "incomplete": 1,
+ "critical": 0,
+ "serious": 1,
+ "moderate": 0,
+ "minor": 0
+}
+SERIOUS  color-contrast  nodes=11  .project-live__key
+### PROBE-EXTRAS
+--- canvases (1440) ---
+  canvas0 DIV                    300x300 @y72  fullPage std=64.54  inViewport std=64.02  paints(fullPage/viewport)=true/true
+  canvas1 globe-wrap             480x480 @y1626  fullPage std=0  inViewport std=124.18  paints(fullPage/viewport)=false/true
+  canvas2 skills__box            1054x240 @y5885  fullPage std=61.72  inViewport std=57  paints(fullPage/viewport)=true/true
+  canvas3 exp__car-shake         132x132 @y9626  fullPage std=58.38  inViewport std=65.08  paints(fullPage/viewport)=true/true
+--- count-up ---
+  normal: By the Numbers block not found
+  reducedMotion: By the Numbers block not found
+--- mobile sticky overlays ---
+[
+ {
+  "label": "nav.mobile-sticky-cta",
+  "position": "fixed",
+  "rect": {
+   "x": 0,
+   "y": 755,
+   "w": 390,
+   "h": 89
+  },
+  "viewportSharePct": 10.5,
+  "text": "Get in Touch Book a Call"
+ }
+]
+### CONSOLE-PROBE dev
+console types received: {"debug":2,"info":1,"warning":1,"error":1,"log":1}
+probe messages received: [{"type":"warning","text":"QA-PROBE-WARN"},{"type":"error","text":"QA-PROBE-ERROR"},{"type":"log","text":"QA-PROBE-LOG"}]
+console still native (not monkey-patched by the app): {"warnIsNative":true,"errorIsNative":true,"logIsNative":true}
+non-probe messages: [
+ {
+  "type": "debug",
+  "text": "[vite] connecting..."
+ },
+ {
+  "type": "debug",
+  "text": "[vite] connected."
+ },
+ {
+  "type": "info",
+  "text": "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold"
+ }
+]
+### DIST-WEIGHT
+dist/assets total: 6388.6 KB (6.24 MB) in 127 files
+js raw 2860.7 KB / gzip 875.6 KB | css 135 KB
+top 10 chunks:
+     700.3 KB  gz   179.6 KB  assets/three-Cau--iyM.js
+     354.5 KB  gz    92.5 KB  assets/Terminal-CCbuhlY2.js
+     236.7 KB  gz    73.1 KB  assets/react-three-DKQo_3E1.js
+     229.4 KB  gz    72.9 KB  assets/index-tpgUFoHI.js
+     224.6 KB  gz    55.6 KB  assets/html2canvas-pro.esm-BP2_FaI7.js
+     193.5 KB  gz      61 KB  assets/vendor-react-5tBKz8g6.js
+     173.2 KB  gz    56.6 KB  assets/posthog-6pwzbHJx.js
+     129.2 KB  gz    42.7 KB  assets/motion-CDmMuYs6.js
+     122.6 KB  gz    37.1 KB  assets/mediapipe-qHAtWFBm.js
+     102.7 KB  gz    39.1 KB  assets/gsap-DHgtL2rv.js
+### PREVIEW CAPTURE (shots only)
+>> viewport 1440
+>> viewport 390
+{
+ "viewports": [
+  {
+   "vp": "1440x900",
+   "errors": 0,
+   "warnings": 0,
+   "failed": 0,
+   "bodyKB": 5268.8,
+   "canvasEls": 4,
+   "webgl": 2,
+   "notes": []
+  },
+  {
+   "vp": "390x844",
+   "errors": 0,
+   "warnings": 0,
+   "failed": 0,
+   "bodyKB": 3900.5,
+   "canvasEls": 2,
+   "webgl": 0,
+   "notes": []
+  }
+ ]
+}
+### CONSOLE-PROBE preview
+console types received: {"warning":1,"error":1,"log":1}
+probe messages received: [{"type":"warning","text":"QA-PROBE-WARN"},{"type":"error","text":"QA-PROBE-ERROR"},{"type":"log","text":"QA-PROBE-LOG"}]
+console still native (not monkey-patched by the app): {"warnIsNative":true,"errorIsNative":true,"logIsNative":true}
+non-probe messages: []

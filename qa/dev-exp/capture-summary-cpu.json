@@ -1,0 +1,24 @@
+{
+  "generatedAt": "2026-09-25T19:42:16.239Z",
+  "baseUrl": "http://localhost:5173",
+  "outDir": "C:\\portfolio-gabriel\\qa\\dev-exp",
+  "playwright": "1.61.1",
+  "viewports": [],
+  "notes": [],
+  "cpu": {
+    "390": {
+      "framesOver50ms": 4,
+      "longestMs": 162,
+      "entryType": "long-animation-frame",
+      "rafFps": 51,
+      "rafMax": 167
+    },
+    "1440": {
+      "framesOver50ms": 10,
+      "longestMs": 794,
+      "entryType": "long-animation-frame",
+      "rafFps": 36,
+      "rafMax": 800
+    }
+  }
+}

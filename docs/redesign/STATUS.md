@@ -6,9 +6,9 @@
 | 0.5 · recuperação | **concluída** | `6eb9e25` | 14 arquivos restaurados do deploy |
 | 1 · auditoria e baseline | **concluída** | `1ea6acf` | Explore → PLAN.md §Fase 1; baseline em `qa/baseline/REPORT.md` |
 | 2 · plano e contratos | **concluída** | `961820d` | PLAN, CONTRACTS, tipos, 8 JSONs, stubs, config compartilhada |
-| 3 · build paralelo | em curso | — | platform ✔; experience ✔ (sprites: 0 frames > 50 ms vs 17 do GLB; 52 ms vs 801 ms; 250 KB vs 3 MB); showcase ✔ (terminal destravado: Escape, dialog, Ctrl+K); hero, skills rodando; follow-ups: getSnapshot (platform) e tags do Candela (showcase) |
-| 4 · integração | pendente | — | — |
-| 5 · QA em loop | pendente | — | — |
+| 3 · build paralelo | **concluída** | `9777d0b` | 5/5 entregues; decisões abaixo |
+| 4 · integração | **concluída** | `9777d0b` | Home monta SectionRail + Experience; Suspense com altura reservada; 7 arquivos mortos removidos; smoke 0 erros |
+| 5 · QA em loop | em curso | — | r1 medido (`qa/r1/REPORT.md`); correções despachadas; r2 depois do frame longo da Experience |
 | 6 · entrega | pendente | — | — |
 
 ## Fase 0 — o que foi feito
@@ -107,3 +107,26 @@ e auditar o estado atual daria um retrato errado.
 - **showcase**: `getSnapshot()` aprovado e adicionado ao CONTRACTS §3 (platform implementa).
   Tags duplicadas do Candela cortadas no componente, não em `projects.ts` (fonte de `/work`).
   Caixas de altura reservada nos `Suspense` da Home: o orquestrador faz na integração.
+- **hero**: correção à auditoria — Navbar é importada por 7 rotas e Footer por 6; testadas todas
+  sem quebra. `useGitHub()` do rodapé passa a rodar em todas as rotas (cache 10 min): aceito.
+  Piscada (sem olhos no GLB) e lampião (fundo é foto) ficam registrados como fora.
+- **skills**: física fica (passo médio 2,5 ms, pico 22 ms; rAF para ao assentar); os frames > 50 ms
+  da página vêm de outras seções. Ícone do Flutter tinha sido apagado por "sem respaldo": era
+  conteúdo do site → restaurado e adicionado ao `skills.json`. Django/MySQL/Firebase/GCloud/NestJS
+  vieram das imagens dos ícones já existentes; confirmar com o Gabriel.
+- **platform (follow-ups)**: `getSnapshot()` e guarda de rate limit via `/rate_limit` (grátis) com
+  reset persistido em `localStorage`.
+
+## Fase 5 — r1 e o que se aprendeu
+
+- Lighthouse de produção (preview): 43 desktop / 47 mobile. O `bootup-time` atribui **4,9 s de
+  Script Evaluation ao chunk `vendor-react` (61 KB)** — não é parse, é a renderização da aplicação
+  sob o React, com o CPU 4× que o Lighthouse desktop simula. Coincide com o frame de 5 109 ms que
+  o QA mediu na Experience integrada em CPU 4×: os dois bloqueios são provavelmente o mesmo bug.
+- Depois do robô adiado (hero): desktop 46 → 61 (TBT 3,1 → 1,3 s), a11y 100, mobile −1,2 MB.
+- Contraste (axe) zerado; carrossel do Candela só carrega atual + próxima (mobile −37 %).
+- Sticker preto: era `height="469"` como presentational hint contra `width:130px` do CSS; nenhum
+  filtro cortado.
+- Skip link: `:focus, :focus-visible` sem transição (orquestrador, `globals.scss`).
+- Commits desta fase serão por rodada (r1, r2…), não um só: o incidente da Fase 0 mostrou o custo
+  de deixar trabalho solto no working tree.

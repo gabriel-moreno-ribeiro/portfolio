@@ -298,8 +298,8 @@
     letter-spacing: 0.06em;
     padding: 2px 8px;
     border-radius: 999px;
-    background: var(--accent-decor);
-    color: #fff;
+    background: var(--accent);
+    color: var(--bg);
   }
 
   &__preview {
