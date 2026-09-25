@@ -8,8 +8,8 @@
 | 2 · plano e contratos | **concluída** | `961820d` | PLAN, CONTRACTS, tipos, 8 JSONs, stubs, config compartilhada |
 | 3 · build paralelo | **concluída** | `9777d0b` | 5/5 entregues; decisões abaixo |
 | 4 · integração | **concluída** | `9777d0b` | Home monta SectionRail + Experience; Suspense com altura reservada; 7 arquivos mortos removidos; smoke 0 erros |
-| 5 · QA em loop | em curso | — | r1 medido (`qa/r1/REPORT.md`); correções despachadas; r2 depois do frame longo da Experience |
-| 6 · entrega | pendente | — | — |
+| 5 · QA em loop | **concluída** (3 rodadas) | `afcbb95` `0f020c0` `9639f41` | r1 → r2 → verificação final; ver "Fase 5 — resultado" |
+| 6 · entrega | **concluída** | ver `git log` | verificação final: preview desktop 96/100/100/100, mobile 66/100/100/100; 0 erros de console, 0 requisições falhas, 0 violações axe, 0 imagens sem dimensão |
 
 ## Fase 0 — o que foi feito
 
@@ -130,3 +130,28 @@ e auditar o estado atual daria um retrato errado.
 - Skip link: `:focus, :focus-visible` sem transição (orquestrador, `globals.scss`).
 - Commits desta fase serão por rodada (r1, r2…), não um só: o incidente da Fase 0 mostrou o custo
   de deixar trabalho solto no working tree.
+
+## Fase 5 — resultado (r2 + verificação final, preview de produção)
+
+| Métrica | baseline (dev) | final |
+|---|---|---|
+| Lighthouse desktop perf / a11y / BP / SEO | 35 / 97 / 100 / 100 (dev) | **95–96 / 100 / 100 / 100** (preview) · dev 53–60 |
+| Lighthouse mobile perf / a11y | 31 / 97 (dev) | **64–70 / 100** (preview) · dev 32–35 |
+| TBT desktop / mobile (preview) | — | 19–64 ms / 378–564 ms |
+| Peso transferido preview 1440 / 390 | (dev 21,4 / 10,4 MB) | **3,66 / 1,78 MB** |
+| Experience CPU 4×, seção montada, 1440 / 390 | 45 / 2 frames > 50 ms | **0 / 3** (máx 33 / 167 ms; dos 3 do mobile, só um de 52 ms é da seção) |
+| Erros de console / requisições falhas | 0 / 0 | **0 / 0** (dev e preview) |
+| Violações axe | 0 | 1 (CTA do card, 4,41:1) → corrigido na verificação final |
+| Imagens sem dimensão | 2 | **0** |
+| Herói normal vs reduce | 703 → 363 px | **737 → 737** |
+| WebGL na Experience | 1 contexto | **0** (sprites) |
+| CLS rolagem rápida @390 | — | 0,045 (era 0,26 no r1 com as caixas erradas) |
+| `dist/` · JS gzip · chunk `index` | 14,7 MB · 833 KB · — | **13,05 MB · 851 KB · 48 KB** |
+
+Meta de performance mobile (≥ 80) **não atingida**: 64–70. O LCP simulado (4,8–5,7 s em 4G lento +
+CPU 4×) é o primeiro render do React de uma SPA renderizada no cliente; sem throttle o LCP é
+172 ms. O corte seguinte é estrutural (pré-render do hero no build) e fica como próximo passo.
+
+Decisões de diretor de arte na Fase 5: cortado o botão flutuante "Let's talk" (virou linha do
+card); cortado o espaço vazio da caixa de Skills (398 → 240 px); sticker preto **é** o logo da
+abelha (RGB 8/8/8 no arquivo), não defeito; hover-preview do Research mantido.
