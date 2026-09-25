@@ -1,0 +1,168 @@
+{
+  "viewport": "390x844",
+  "baseUrl": "http://localhost:5173",
+  "phase": "normal motion: initial load + one full slow scroll + experience steps + second slow scroll",
+  "method": "Playwright requestfinished -> request.sizes().responseBodySize (encoded over-the-wire body), falling back to the content-length header. wireBytes = body + response headers.",
+  "caveat": "Vite DEV server serves unminified, ungzipped ES modules; absolute numbers are far above production. Compare only against other runs of this same script on the dev server.",
+  "totalRequests": 158,
+  "totalBodyBytes": 10942758,
+  "totalBodyKB": 10686.3,
+  "totalBodyMB": 10.44,
+  "totalWireBytes": 10988126,
+  "totalWireKB": 10730.6,
+  "byType": {
+    "document": {
+      "requests": 1,
+      "bodyBytes": 9261,
+      "wireBytes": 9516,
+      "bodyKB": 9
+    },
+    "script": {
+      "requests": 116,
+      "bodyBytes": 9283668,
+      "wireBytes": 9317603,
+      "bodyKB": 9066.1
+    },
+    "font": {
+      "requests": 4,
+      "bodyBytes": 188288,
+      "wireBytes": 189568,
+      "bodyKB": 183.9
+    },
+    "image": {
+      "requests": 37,
+      "bodyBytes": 1461541,
+      "wireBytes": 1471439,
+      "bodyKB": 1427.3
+    }
+  },
+  "top20Heaviest": [
+    {
+      "kb": 2092.9,
+      "type": "script",
+      "status": 200,
+      "url": "/node_modules/.vite/deps/react-icons_ri.js?v=645ee684"
+    },
+    {
+      "kb": 1727.4,
+      "type": "script",
+      "status": 200,
+      "url": "/node_modules/.vite/deps/react-icons_fa6.js?v=03c80e6e"
+    },
+    {
+      "kb": 970,
+      "type": "script",
+      "status": 200,
+      "url": "/node_modules/.vite/deps/chunk-6ER7OG3O.js?v=9a828b57"
+    },
+    {
+      "kb": 894.4,
+      "type": "script",
+      "status": 200,
+      "url": "/node_modules/.vite/deps/react-icons_io5.js?v=9a7b296f"
+    },
+    {
+      "kb": 457.2,
+      "type": "script",
+      "status": 200,
+      "url": "/node_modules/.vite/deps/react-router-dom.js?v=48be7086"
+    },
+    {
+      "kb": 455.8,
+      "type": "script",
+      "status": 200,
+      "url": "/node_modules/.vite/deps/gsap_all.js?v=b5d02edd"
+    },
+    {
+      "kb": 411.1,
+      "type": "script",
+      "status": 200,
+      "url": "/node_modules/.vite/deps/motion_react.js?v=bb0e2363"
+    },
+    {
+      "kb": 237.5,
+      "type": "script",
+      "status": 200,
+      "url": "/node_modules/.vite/deps/posthog-js.js?v=38bbb979"
+    },
+    {
+      "kb": 203.9,
+      "type": "image",
+      "status": 200,
+      "url": "/assets/hero-slideshow/6-1920.avif"
+    },
+    {
+      "kb": 188.8,
+      "type": "image",
+      "status": 200,
+      "url": "/assets/hero-slideshow/4-1920.avif"
+    },
+    {
+      "kb": 174.7,
+      "type": "script",
+      "status": 200,
+      "url": "/@vite/client"
+    },
+    {
+      "kb": 165.3,
+      "type": "script",
+      "status": 200,
+      "url": "/node_modules/.vite/deps/chunk-KHHJNBMQ.js?v=9a828b57"
+    },
+    {
+      "kb": 145.9,
+      "type": "script",
+      "status": 200,
+      "url": "/node_modules/.vite/deps/react-icons_fi.js?v=0bf9908b"
+    },
+    {
+      "kb": 138.3,
+      "type": "image",
+      "status": 200,
+      "url": "/work/candela/01.webp"
+    },
+    {
+      "kb": 131.9,
+      "type": "image",
+      "status": 200,
+      "url": "/background/missao-velha/01.webp"
+    },
+    {
+      "kb": 109.3,
+      "type": "script",
+      "status": 200,
+      "url": "/@react-refresh"
+    },
+    {
+      "kb": 102.8,
+      "type": "script",
+      "status": 200,
+      "url": "/node_modules/.vite/deps/chunk-EO7DMFHO.js?v=9a828b57"
+    },
+    {
+      "kb": 99,
+      "type": "image",
+      "status": 200,
+      "url": "/work/hibeex/01.webp"
+    },
+    {
+      "kb": 89.5,
+      "type": "image",
+      "status": 200,
+      "url": "/assets/hero-slideshow/7-1920.avif"
+    },
+    {
+      "kb": 83.6,
+      "type": "image",
+      "status": 200,
+      "url": "/background/missao-velha/02.webp"
+    }
+  ],
+  "thirdParty": [
+    {
+      "kb": 1,
+      "type": "script",
+      "url": "https://us-assets.i.posthog.com/array/phc_cgNNpL9lqLK50jeJICAV6xcGZDmuDnuPVxPeG8Ieg6m/config.js"
+    }
+  ]
+}

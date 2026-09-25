@@ -1,0 +1,67 @@
+>> viewport 1440
+>> viewport 390
+>> keyboard
+>> cpu4x 1440
+>> cpu4x 390
+{
+ "viewports": [
+  {
+   "vp": "1440x900",
+   "errors": 0,
+   "warnings": 0,
+   "failed": 0,
+   "bodyKB": 21898.8,
+   "canvasEls": 4,
+   "webgl": 3,
+   "notes": []
+  },
+  {
+   "vp": "390x844",
+   "errors": 0,
+   "warnings": 0,
+   "failed": 0,
+   "bodyKB": 10686.3,
+   "canvasEls": 0,
+   "webgl": 0,
+   "notes": []
+  }
+ ],
+ "keyboard": {
+  "tabsPressed": 72,
+  "loopedBackAtTab": 72,
+  "ctrlKOpened": false,
+  "escapeClosed": "n/a (nothing opened)",
+  "invisibleFocusables": 1,
+  "sectionsReached": [
+   "nav.home-sidenav",
+   "#main-content",
+   "#moments",
+   "#background",
+   "#work",
+   "#research",
+   "#contact",
+   "#contact-name",
+   "#contact-email",
+   "#contact-message",
+   "footer.footer",
+   "nav.links",
+   "#root"
+  ]
+ },
+ "cpu": {
+  "390": {
+   "framesOver50ms": 2,
+   "longestMs": 197,
+   "entryType": "long-animation-frame",
+   "rafFps": 54,
+   "rafMax": 217
+  },
+  "1440": {
+   "framesOver50ms": 45,
+   "longestMs": 1570,
+   "entryType": "long-animation-frame",
+   "rafFps": 13,
+   "rafMax": 1900
+  }
+ }
+}

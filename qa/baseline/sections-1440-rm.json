@@ -1,0 +1,277 @@
+{
+  "docHeight": 9390,
+  "viewportW": 1440,
+  "dpr": 1,
+  "horizontalOverflow": {
+    "innerWidth": 1440,
+    "docScrollWidth": 1440,
+    "bodyScrollWidth": 1504,
+    "overflowPx": 0,
+    "offenderCount": 102,
+    "offenders": [
+      {
+        "label": "div.moments__track",
+        "left": 36,
+        "right": 6048,
+        "w": 6012
+      },
+      {
+        "label": "figure.moments__item",
+        "left": 1369,
+        "right": 1691,
+        "w": 322
+      },
+      {
+        "label": "img",
+        "left": 1377,
+        "right": 1682,
+        "w": 305
+      },
+      {
+        "label": "figcaption",
+        "left": 1383,
+        "right": 1683,
+        "w": 300
+      },
+      {
+        "label": "figure.moments__item",
+        "left": 1705,
+        "right": 2023,
+        "w": 318
+      },
+      {
+        "label": "img",
+        "left": 1713,
+        "right": 2015,
+        "w": 302
+      },
+      {
+        "label": "figcaption",
+        "left": 1713,
+        "right": 2013,
+        "w": 300
+      },
+      {
+        "label": "figure.moments__item",
+        "left": 2037,
+        "right": 2359,
+        "w": 322
+      },
+      {
+        "label": "img",
+        "left": 2045,
+        "right": 2350,
+        "w": 305
+      },
+      {
+        "label": "figcaption",
+        "left": 2051,
+        "right": 2351,
+        "w": 300
+      },
+      {
+        "label": "figure.moments__item",
+        "left": 2371,
+        "right": 2693,
+        "w": 321
+      },
+      {
+        "label": "img",
+        "left": 2380,
+        "right": 2685,
+        "w": 305
+      },
+      {
+        "label": "figcaption",
+        "left": 2379,
+        "right": 2680,
+        "w": 300
+      },
+      {
+        "label": "figure.moments__item",
+        "left": 2707,
+        "right": 3025,
+        "w": 318
+      },
+      {
+        "label": "img",
+        "left": 2715,
+        "right": 3017,
+        "w": 302
+      }
+    ]
+  },
+  "sections": [
+    {
+      "label": "div.hero-section",
+      "tag": "div",
+      "top": 32,
+      "height": 363,
+      "heading": "Gabriel Moreno Ribeiro.",
+      "textChars": 193,
+      "imgs": 0,
+      "canvases": 0
+    },
+    {
+      "label": "#moments",
+      "tag": "section",
+      "top": 428,
+      "height": 619,
+      "heading": null,
+      "textChars": 1060,
+      "imgs": 34,
+      "canvases": 0
+    },
+    {
+      "label": "#background",
+      "tag": "div",
+      "top": 1096,
+      "height": 1041,
+      "heading": "Where I Come From.",
+      "textChars": 476,
+      "imgs": 8,
+      "canvases": 1
+    },
+    {
+      "label": "#work",
+      "tag": "div",
+      "top": 2162,
+      "height": 1195,
+      "heading": "Cool Things",
+      "textChars": 677,
+      "imgs": 2,
+      "canvases": 0
+    },
+    {
+      "label": "div.numbers-and-stats",
+      "tag": "div",
+      "top": 3446,
+      "height": 316,
+      "heading": null,
+      "textChars": 37,
+      "imgs": 1,
+      "canvases": 0
+    },
+    {
+      "label": "#research",
+      "tag": "section",
+      "top": 3851,
+      "height": 1117,
+      "heading": "Research",
+      "textChars": 921,
+      "imgs": 1,
+      "canvases": 0
+    },
+    {
+      "label": "#skills",
+      "tag": "div",
+      "top": 4994,
+      "height": 1000,
+      "heading": null,
+      "textChars": 35,
+      "imgs": 0,
+      "canvases": 1
+    },
+    {
+      "label": "div.horizontal-skills-parent",
+      "tag": "div",
+      "top": 6083,
+      "height": 264,
+      "heading": null,
+      "textChars": 0,
+      "imgs": 40,
+      "canvases": 0
+    },
+    {
+      "label": "#work-experience",
+      "tag": "div",
+      "top": 6436,
+      "height": 2186,
+      "heading": "Professional Experience.",
+      "textChars": 1088,
+      "imgs": 0,
+      "canvases": 1
+    },
+    {
+      "label": "#contact",
+      "tag": "section",
+      "top": 8687,
+      "height": 420,
+      "heading": "Let's talk.",
+      "textChars": 204,
+      "imgs": 0,
+      "canvases": 0
+    },
+    {
+      "label": "footer.footer",
+      "tag": "footer",
+      "top": 9155,
+      "height": 195,
+      "heading": null,
+      "textChars": 128,
+      "imgs": 0,
+      "canvases": 0
+    }
+  ],
+  "experienceColumns": {
+    "left": {
+      "top": 6436,
+      "left": 36,
+      "w": 634,
+      "h": 900,
+      "childCount": 1,
+      "textChars": 0,
+      "canvases": 1
+    },
+    "right": {
+      "top": 6436,
+      "left": 670,
+      "w": 734,
+      "h": 2186,
+      "childCount": 6,
+      "textChars": 1065
+    }
+  },
+  "fixedOverlays": [
+    {
+      "label": "div.hero-slideshow",
+      "h": 450,
+      "w": 1440
+    },
+    {
+      "label": "nav.home-sidenav",
+      "h": 190,
+      "w": 118
+    },
+    {
+      "label": "div.navbar",
+      "h": 51,
+      "w": 302
+    },
+    {
+      "label": "div.sticker-stage",
+      "h": 900,
+      "w": 1440
+    },
+    {
+      "label": "button.handsfree-button",
+      "h": 44,
+      "w": 44
+    },
+    {
+      "label": "button.toggle-button",
+      "h": 44,
+      "w": 44
+    },
+    {
+      "label": "button.terminal-fab",
+      "h": 42,
+      "w": 42
+    },
+    {
+      "label": "button.tip-toast",
+      "h": 47,
+      "w": 245
+    }
+  ]
+}

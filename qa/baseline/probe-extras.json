@@ -1,0 +1,218 @@
+{
+  "generatedAt": "2026-09-25T17:53:52.876Z",
+  "baseUrl": "http://localhost:5173",
+  "canvases": [
+    {
+      "i": 0,
+      "cls": "(none)",
+      "parent": "DIV",
+      "pageTop": 72,
+      "left": 570,
+      "w": 300,
+      "h": 300,
+      "inFullPagePng": {
+        "region": {
+          "left": 570,
+          "top": 72,
+          "w": 300,
+          "h": 300
+        },
+        "mean": 194.8,
+        "std": 69.44,
+        "inkFraction": 0.4257
+      },
+      "inViewportPng": {
+        "region": {
+          "left": 570,
+          "top": 72,
+          "w": 300,
+          "h": 300
+        },
+        "mean": 178.3,
+        "std": 65.58,
+        "inkFraction": 0.746
+      },
+      "paintsInViewport": true,
+      "paintsInFullPage": true
+    },
+    {
+      "i": 1,
+      "cls": "globe-canvas",
+      "parent": "globe-wrap",
+      "pageTop": 1588,
+      "left": 250,
+      "w": 480,
+      "h": 480,
+      "inFullPagePng": {
+        "region": {
+          "left": 250,
+          "top": 1588,
+          "w": 480,
+          "h": 480
+        },
+        "mean": 249,
+        "std": 0,
+        "inkFraction": 0
+      },
+      "inViewportPng": {
+        "region": {
+          "left": 250,
+          "top": 210,
+          "w": 480,
+          "h": 480
+        },
+        "mean": 142.2,
+        "std": 123.01,
+        "inkFraction": 0.4297
+      },
+      "paintsInViewport": true,
+      "paintsInFullPage": false
+    },
+    {
+      "i": 2,
+      "cls": "(none)",
+      "parent": "skills-canvas-container",
+      "pageTop": 5334,
+      "left": 0,
+      "w": 1440,
+      "h": 1000,
+      "inFullPagePng": {
+        "region": {
+          "left": 0,
+          "top": 5334,
+          "w": 1440,
+          "h": 1000
+        },
+        "mean": 240.9,
+        "std": 39.88,
+        "inkFraction": 0.0457
+      },
+      "inViewportPng": {
+        "region": {
+          "left": 0,
+          "top": 0,
+          "w": 1440,
+          "h": 900
+        },
+        "mean": 239.4,
+        "std": 42.7,
+        "inkFraction": 0.0628
+      },
+      "paintsInViewport": true,
+      "paintsInFullPage": true
+    },
+    {
+      "i": 3,
+      "cls": "(none)",
+      "parent": "DIV",
+      "pageTop": 6776,
+      "left": 36,
+      "w": 634,
+      "h": 900,
+      "inFullPagePng": {
+        "region": {
+          "left": 36,
+          "top": 6776,
+          "w": 634,
+          "h": 900
+        },
+        "mean": 248.5,
+        "std": 7.01,
+        "inkFraction": 0.0063
+      },
+      "inViewportPng": {
+        "region": {
+          "left": 36,
+          "top": 0,
+          "w": 634,
+          "h": 900
+        },
+        "mean": 247.1,
+        "std": 15.1,
+        "inkFraction": 0.0189
+      },
+      "paintsInViewport": true,
+      "paintsInFullPage": true
+    }
+  ],
+  "countUpStats": {
+    "normal": {
+      "geometry": {
+        "top": 3615,
+        "h": 316
+      },
+      "samples": [
+        {
+          "afterMs": 0,
+          "text": "By the Numbers 39 olympiad medals (19 gold)"
+        },
+        {
+          "afterMs": 200,
+          "text": "By the Numbers 39 olympiad medals (19 gold)"
+        },
+        {
+          "afterMs": 500,
+          "text": "By the Numbers 39 olympiad medals (19 gold)"
+        },
+        {
+          "afterMs": 1000,
+          "text": "By the Numbers 39 olympiad medals (19 gold)"
+        },
+        {
+          "afterMs": 2000,
+          "text": "By the Numbers 3,386 students reached (Projeto Candela)"
+        },
+        {
+          "afterMs": 3500,
+          "text": "By the Numbers 3,392 students reached (Projeto Candela)"
+        }
+      ]
+    },
+    "reducedMotion": {
+      "geometry": {
+        "top": 3275,
+        "h": 316
+      },
+      "samples": [
+        {
+          "afterMs": 0,
+          "text": "By the Numbers 39 olympiad medals (19 gold)"
+        },
+        {
+          "afterMs": 200,
+          "text": "By the Numbers 39 olympiad medals (19 gold)"
+        },
+        {
+          "afterMs": 500,
+          "text": "By the Numbers 39 olympiad medals (19 gold)"
+        },
+        {
+          "afterMs": 1000,
+          "text": "By the Numbers 39 olympiad medals (19 gold)"
+        },
+        {
+          "afterMs": 2000,
+          "text": "By the Numbers 3,392 students reached (Projeto Candela)"
+        },
+        {
+          "afterMs": 3500,
+          "text": "By the Numbers 3,392 students reached (Projeto Candela)"
+        }
+      ]
+    }
+  },
+  "mobileStickyOverlays": [
+    {
+      "label": "nav.mobile-sticky-cta",
+      "position": "fixed",
+      "rect": {
+        "x": 0,
+        "y": 755,
+        "w": 390,
+        "h": 89
+      },
+      "viewportSharePct": 10.5,
+      "text": "Get in Touch Book a Call"
+    }
+  ]
+}
