@@ -21,34 +21,6 @@
     white-space: nowrap;
   }
 
-  // Status segment: same line as the hero (building / reading / local time).
-  // The width is fixed so swapping the phrase never resizes the pill.
-  &__status {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex-shrink: 0;
-    min-width: 0;
-  }
-
-  &__status-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--accent-decor);
-    flex-shrink: 0;
-  }
-
-  &__status-text {
-    width: 30ch;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
-    font-size: 11px;
-    letter-spacing: 0.01em;
-    color: var(--fg-muted);
-  }
 
   .menu-icon {
     display: flex;
@@ -146,9 +118,6 @@
       font-size: 16px;
       margin: 0;
     }
-
-    // No room for the text on a phone: the dot alone says "something is live".
-    &__status-text { display: none; }
 
     .links {
       position: absolute;

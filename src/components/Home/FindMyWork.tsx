@@ -3,14 +3,7 @@ import { FiArrowUpRight, FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { Project, projects } from "../../content/projects";
 import useIsMobile from "../../hooks/useIsMobile";
-import { formatRelative, useGitHub, useLocalData } from "../../lib/data";
-import {
-  Counter,
-  usePageVisible,
-  useReducedMotion,
-  useVisible,
-  WidgetState,
-} from "../../lib/motion";
+import { Counter, usePageVisible, useReducedMotion, useVisible } from "../../lib/motion";
 import { toggleTerminalWindow } from "../../utils/terminalWindow";
 
 const AUTOPLAY_MS = 6000;
@@ -113,75 +106,6 @@ function MediaCarousel({ project, paused }: { project: Project; paused: boolean 
   );
 }
 
-// "last shipped" comes from changelog.json; the commit link from the GitHub summary.
-function HibeexLive() {
-  const { changelog } = useLocalData();
-  const github = useGitHub();
-  const latest = changelog.find((entry) => entry.project === "hibeex");
-  const commit = github.data?.lastCommit;
-
-  return (
-    <div className="project-live">
-      <WidgetState
-        state={latest ? "ready" : "empty"}
-        empty={<p className="project-live__line">no shipping log yet.</p>}
-      >
-        {latest && (
-          <p className="project-live__line">
-            <span className="project-live__key">last shipped</span> {latest.title}
-            <span className="project-live__rel"> · {formatRelative(latest.date)}</span>
-          </p>
-        )}
-      </WidgetState>
-      {commit && (
-        <a
-          className="project-live__link"
-          href={commit.url}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          latest commit: {commit.repo.split("/").pop()} <FiArrowUpRight aria-hidden="true" />
-        </a>
-      )}
-    </div>
-  );
-}
-
-function CandelaLive({ project }: { project: Project }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const shown = useVisible(ref, { once: true, rootMargin: "0px 0px -10%" });
-  const reduced = useReducedMotion();
-  const start = shown || reduced;
-  const students = toNumber(project.stats[0]?.value ?? "0");
-  const schools = toNumber(project.stats[1]?.value ?? "0");
-
-  return (
-    <div className="project-live" ref={ref}>
-      <p className="project-live__counts">
-        <strong>
-          <Counter value={students} start={start} />
-        </strong>{" "}
-        students
-        <span aria-hidden="true"> · </span>
-        <strong>
-          <Counter value={schools} start={start} />
-        </strong>{" "}
-        schools
-      </p>
-      <p className="project-live__line">
-        physics failure rate <strong>30% → 10%</strong>
-      </p>
-      {/* Decorative: the two numbers above carry the information. */}
-      <span className="failure-bar" aria-hidden="true">
-        <span
-          className="failure-bar__fill"
-          style={{ transform: `scaleX(${start ? 1 / 3 : 1})` }}
-        />
-      </span>
-    </div>
-  );
-}
-
 function MedalsLive({ project }: { project: Project }) {
   const ref = useRef<HTMLDivElement>(null);
   const shown = useVisible(ref, { once: true, rootMargin: "0px 0px -10%" });
@@ -201,16 +125,7 @@ function MedalsLive({ project }: { project: Project }) {
 }
 
 function ProjectLive({ project }: { project: Project }) {
-  switch (project.slug) {
-    case "hibeex":
-      return <HibeexLive />;
-    case "candela":
-      return <CandelaLive project={project} />;
-    case "medals":
-      return <MedalsLive project={project} />;
-    default:
-      return null;
-  }
+  return project.slug === "medals" ? <MedalsLive project={project} /> : null;
 }
 
 // The whole card is one link target: the title anchor stretches over the card, so
@@ -240,14 +155,11 @@ function FeaturedCard({ project }: { project: Project }) {
         </h2>
         <p>{project.cardDesc}</p>
         <ProjectLive project={project} />
-        {/* Candela's tags are the same three numbers the live row already shows. */}
-        {project.slug !== "candela" && (
-          <div className="featured-tags">
-            {project.tags.map((tag) => (
-              <span key={tag}>{tag}</span>
-            ))}
-          </div>
-        )}
+        <div className="featured-tags">
+          {project.tags.map((tag) => (
+            <span key={tag}>{tag}</span>
+          ))}
+        </div>
         <span className="featured-cta" aria-hidden="true">
           View project <FiArrowUpRight />
         </span>

@@ -4,7 +4,6 @@ import { FiVideoOff, FiX } from 'react-icons/fi';
 import { IoMoonOutline, IoSunnyOutline } from 'react-icons/io5';
 import { useLocation, useNavigate } from 'react-router-dom';
 import useIsMobile from '../../hooks/useIsMobile';
-import { useNowLine } from '../../lib/data';
 import { useHandsfreeStore } from '../../store/handsfreeStore';
 import { useThemeStore } from '../../store/themeStore';
 import { scrollToComponent } from '../../utils/scrollToComponent';
@@ -16,7 +15,6 @@ const supportsCamera =
 function Navbar() {
   const isMobile = useIsMobile();
   const [isHovered, setIsHovered] = useState<boolean>(false);
-  const nowLine = useNowLine();
 
   const { darkMode, toggleDarkMode } = useThemeStore();
   const {
@@ -75,9 +73,8 @@ function Navbar() {
       href: 'https://github.com/gabriel-moreno-ribeiro',
     },
   ];
-  // 240px fits "Gabriel Moreno Ribeiro." at 16px plus the menu icon; 175px clipped the name.
-  // +14px for the status dot that replaces the status text on phones.
-  const collapsedWidth = isMobile ? '254px' : 'auto';
+  // 240px fits "Gabriel Moreno Ribeiro." at 16px plus the menu icon; 175px clipped the name
+  const collapsedWidth = isMobile ? '240px' : 'auto';
   const expandedWidth = isMobile ? 'calc(100vw - 32px)' : '700px';
 
   const navigate = useNavigate();
@@ -146,15 +143,6 @@ function Navbar() {
         >
           Gabriel Moreno Ribeiro.
         </motion.p>
-      )}
-      {/* Status segment: same source as the hero line. On phones only the dot is left,
-          and it steps aside for the expanded menu. Aria-hidden: the hero already
-          announces this line, and two live regions saying the same thing is noise. */}
-      {!(isMobile && isHovered) && (
-        <span className="navbar__status" aria-hidden="true" title={nowLine.text}>
-          <span className="navbar__status-dot" />
-          <span className="navbar__status-text">{nowLine.text}</span>
-        </span>
       )}
       <motion.div
         className="links"
