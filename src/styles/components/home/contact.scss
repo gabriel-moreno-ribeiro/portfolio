@@ -32,14 +32,6 @@
     }
   }
 
-  &__clock {
-    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-    font-size: 13px;
-    letter-spacing: 0.02em;
-    color: var(--fg-muted);
-    margin: -18px 0 24px;
-  }
-
   &__lead {
     font-size: 17px;
     line-height: 1.6;

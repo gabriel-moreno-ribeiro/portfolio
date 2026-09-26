@@ -10,7 +10,6 @@
   align-items: center;
 
   > .heading {
-    font-size: 48px;
     margin-bottom: 40px;
   }
 }
@@ -292,7 +291,6 @@
 @media (max-width: 900px) {
   .background-section {
     padding: 40px 20px;
-    > .heading { font-size: 32px; }
   }
 
   .globe-layout {

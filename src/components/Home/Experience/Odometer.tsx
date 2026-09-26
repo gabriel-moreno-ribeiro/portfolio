@@ -2,27 +2,31 @@ import { memo } from 'react';
 import type { RefObject } from 'react';
 
 interface OdometerProps {
-  /** O ano e a parada são escritos por `ref` (fora do React) a cada mudança. */
+  /** O ano é escrito por `ref` (fora do React) a cada mudança. */
   yearRef: RefObject<HTMLSpanElement | null>;
-  stopRef: RefObject<HTMLSpanElement | null>;
   firstYear: number;
-  firstOrg: string;
-  total: number;
+  /** Distância (px) do pé da seção até a última parada: onde o trilho termina. */
+  trackEnd?: number;
 }
 
 /**
- * Canto fixo da seção. O ano fica `aria-hidden` (muda direto no DOM, sem anúncio); só a
- * parada — que muda raramente — é anunciada por `aria-live`.
+ * Só o ano da estrada, grande, em serif itálico. Fica `sticky` num trilho que vai do título
+ * até a última parada, e o Experience o tira de cena (`is-away`) quando essa parada sobe:
+ * nunca aparece sobre a nav nem sobre o Contact.
+ * `aria-hidden`: muda direto no DOM a cada quadro e repete o que os cards já dizem.
  */
-function Odometer({ yearRef, stopRef, firstYear, firstOrg, total }: OdometerProps) {
+function Odometer({ yearRef, firstYear, trackEnd }: OdometerProps) {
   return (
-    <div className="exp__odo">
-      <span className="exp__odo-year" ref={yearRef} aria-hidden="true">
-        {firstYear}
-      </span>
-      <span className="exp__odo-stop" ref={stopRef} aria-live="polite">
-        stop 1/{total} · {firstOrg}
-      </span>
+    <div
+      className="exp__odo-track"
+      aria-hidden="true"
+      style={trackEnd === undefined ? undefined : { bottom: Math.round(trackEnd) }}
+    >
+      <div className="exp__odo">
+        <span className="exp__odo-year" ref={yearRef}>
+          {firstYear}
+        </span>
+      </div>
     </div>
   );
 }

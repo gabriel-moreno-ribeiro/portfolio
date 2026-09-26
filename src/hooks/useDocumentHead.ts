@@ -29,12 +29,12 @@ export function useDocumentHead({ title, description, canonical, noindex }: Docu
     return () => {
       // Keep in sync with index.html
       robots?.setAttribute('content', 'index, follow, max-image-preview:large');
-      document.title = 'Gabriel Moreno Ribeiro — Founder, HIBEEX';
+      document.title = 'Gabriel Moreno Ribeiro · Builder & Researcher';
       const meta = document.querySelector('meta[name="description"]');
       if (meta) {
         meta.setAttribute(
           'content',
-          '18, founder and researcher on a build year. CEO of HIBEEX, backoffice AI for small and medium businesses. Founder of Projeto Candela. 39 olympiad medals.'
+          '18, builder and researcher on a build year. Building HIBEEX, backoffice AI for small and medium businesses. Started Projeto Candela. 39 olympiad medals.'
         );
       }
       const link = document.querySelector('link[rel="canonical"]');

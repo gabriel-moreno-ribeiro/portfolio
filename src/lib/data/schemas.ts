@@ -58,7 +58,7 @@ export const experienceSchema: z.ZodType<ExperienceEntry> = z.object({
   id: z.string().min(1),
   order: z.number().int().positive(),
   org: z.string().min(1),
-  role: z.string().min(1),
+  role: z.string(),
   start: z.string().min(4),
   end: z.string().min(4),
   periodLabel: z.string().min(1),

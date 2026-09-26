@@ -9,6 +9,14 @@ import { chromium } from 'playwright';
 
 const TARGET = process.argv[2] ?? 'http://localhost:5173/';
 const SHOTS = process.env.TMP ? `${process.env.TMP}/expshot` : '.';
+// a seção agora é lazy (LazySection): rola a página inteira antes de esperar pelo seletor
+async function warm(page) {
+  const total = await page.evaluate(() => document.documentElement.scrollHeight);
+  for (let y = 0; y < total; y += 600) { await page.evaluate((v) => scrollTo(0, v), y); await page.waitForTimeout(70); }
+  await page.waitForSelector('#work-experience .exp__car', { timeout: 30000 });
+  await page.waitForTimeout(1200);
+}
+
 const b = await chromium.launch();
 const errs = [];
 const watch = (p, tag) => {
@@ -21,7 +29,7 @@ let ctx = await b.newContext({ viewport: { width: 1440, height: 900 } });
 let p = await ctx.newPage();
 watch(p, 'light');
 await p.goto(TARGET, { waitUntil: 'networkidle' });
-await p.waitForSelector('#work-experience .exp__stops li');
+await warm(p);
 await p.waitForTimeout(1200);
 
 console.log('dom:', JSON.stringify(await p.evaluate(() => {
@@ -62,7 +70,7 @@ ctx = await b.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFac
 p = await ctx.newPage();
 watch(p, 'mobile');
 await p.goto(TARGET, { waitUntil: 'networkidle' });
-await p.waitForSelector('#work-experience .exp__poster', { timeout: 20000 });
+await warm(p);
 await p.evaluate(() => { const r = document.querySelector('#work-experience').getBoundingClientRect(); scrollTo(0, r.top + scrollY + 600); });
 await p.waitForTimeout(1500);
 const mbox = await p.evaluate(() => { const r = document.querySelector('#work-experience').getBoundingClientRect(); return { top: r.top + scrollY, h: r.height }; });
@@ -78,7 +86,7 @@ ctx = await b.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion
 p = await ctx.newPage();
 watch(p, 'reduced');
 await p.goto(TARGET, { waitUntil: 'networkidle' });
-await p.waitForTimeout(1500);
+await warm(p);
 console.log('reduced-motion:', JSON.stringify(await p.evaluate(() => {
   const sec = document.querySelector('#work-experience');
   const cr = document.querySelector('.exp__car').getBoundingClientRect();
@@ -105,7 +113,7 @@ await p.addInitScript(() => {
   };
 });
 await p.goto(TARGET, { waitUntil: 'networkidle' });
-await p.waitForSelector('#work-experience .exp__poster', { timeout: 20000 });
+await warm(p);
 await p.evaluate(() => { const r = document.querySelector('#work-experience').getBoundingClientRect(); scrollTo(0, r.top + scrollY + 600); });
 await p.waitForTimeout(1500);
 console.log('sem canvas 2D:', JSON.stringify(await p.evaluate(() => ({

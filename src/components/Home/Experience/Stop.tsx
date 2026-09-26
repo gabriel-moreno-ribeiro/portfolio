@@ -35,7 +35,7 @@ function Stop({ entry, side, cta }: StopProps) {
             entry.org
           )}
         </h3>
-        <p className="exp__card-role">{entry.role}</p>
+        {entry.role && <p className="exp__card-role">{entry.role}</p>}
         <p className="exp__card-period">
           {entry.periodLabel}
           {present && <span className="exp__tag">present</span>}

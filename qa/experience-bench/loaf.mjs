@@ -12,7 +12,6 @@ const ctx = await b.newContext({ viewport: { width: W, height: H }, isMobile: W 
 const p = await ctx.newPage();
 const cdp = await ctx.newCDPSession(p);
 await p.goto('http://localhost:5173/', { waitUntil: 'networkidle' });
-await p.waitForSelector('#work-experience .exp__stops li');
 // `--cold` = exatamente o cenário do QA (página nunca rolada antes de medir, então todas as
 // seções lazy montam DENTRO da janela medida). Sem a flag, aquece antes.
 if (!process.argv.includes('--cold')) {
@@ -20,6 +19,7 @@ if (!process.argv.includes('--cold')) {
   for (let y = 0; y < total; y += 600) { await p.evaluate((v) => scrollTo(0, v), y); await p.waitForTimeout(60); }
   await p.waitForTimeout(1500);
 }
+await p.waitForSelector('#work-experience', { state: 'attached', timeout: 30000 });
 const geo = await p.evaluate(() => {
   const r = document.querySelector('#work-experience').getBoundingClientRect();
   return { start: Math.round(r.top + scrollY), end: Math.round(r.top + scrollY + r.height - innerHeight) };

@@ -50,10 +50,10 @@ export const projects: Project[] = [
       'Backoffice AI for small and medium businesses: raw data in, decisions out. One of 6 startups in the Canastra Ventures AI Residency.',
     tags: ['TypeScript', 'Next.js', 'Supabase', 'AWS', 'AI/ML'],
     period: 'January 2026 to present',
-    role: 'Co-founder and CEO',
+    role: 'Building HIBEEX',
     stats: [
       { value: '6', label: 'startups in the Canastra AI Residency' },
-      { value: '2026', label: 'founded' },
+      { value: '2026', label: 'started' },
     ],
     sections: [
       {
@@ -65,7 +65,7 @@ export const projects: Project[] = [
       {
         heading: 'Where it is',
         body: [
-          'One of 6 startups in the Canastra Ventures AI Residency. I am co-founder and CEO.',
+          'One of 6 startups in the Canastra Ventures AI Residency. I am building it.',
         ],
       },
       {
@@ -88,7 +88,7 @@ export const projects: Project[] = [
       'Low-cost physics lab kits I built and delivered to 28 public schools. 3,392 students so far. Physics failure rates in those classes went from 30% to 10%.',
     tags: ['3,392 students', '28 schools', '30% → 10%'],
     period: '2023 - 2024',
-    role: 'Founder',
+    role: 'Started Projeto Candela',
     stats: [
       { value: '3,392', label: 'students reached' },
       { value: '28', label: 'public schools' },
@@ -175,17 +175,17 @@ export const projects: Project[] = [
     slug: 'gsat',
     title: 'GSAT Education',
     eyebrow: 'Company',
-    summary: 'A test-prep platform I built from scratch as founding CEO.',
-    cardDesc: 'A test-prep platform I built from scratch as founding CEO, November 2025 to May 2026.',
+    summary: 'A test-prep platform I built from scratch.',
+    cardDesc: 'A test-prep platform I built from scratch, November 2025 to May 2026.',
     tags: ['React', 'TypeScript', 'Node.js', 'EdTech'],
     period: 'November 2025 - May 2026',
-    role: 'Co-founder and CEO',
+    role: 'Built a test-prep platform from scratch',
     stats: [{ value: '0 → 1', label: 'built from scratch' }],
     sections: [
       {
         heading: 'What it was',
         body: [
-          'An EdTech platform for standardized test prep. I built it from scratch as founding CEO: product, engineering and go-to-market.',
+          'An EdTech platform for standardized test prep. I built it from scratch: product, engineering and go-to-market.',
         ],
       },
     ],

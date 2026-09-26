@@ -416,8 +416,8 @@ function BackgroundGlobe() {
 
   return (
     <div className="background-section" id="background" ref={sectionRef}>
-      <h2 className="heading" data-color-inverted="true">
-        Where I Come From.
+      <h2 className="heading section-title" data-color-inverted="true">
+        Where I Come <em>From</em>
       </h2>
 
       <div className={`globe-layout ${selected ? 'globe-layout--open' : ''}`}>

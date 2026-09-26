@@ -11,7 +11,6 @@ import { NAVIGATE_EVENT, type NavigateDetail } from "../utils/scrollToComponent"
 
 const BackgroundGlobe = lazy(() => import("../components/Home/BackgroundGlobe"));
 const Skills = lazy(() => import("../components/Home/Skills"));
-const HorizontalSkillsWrapper = lazy(() => import("../components/Home/HorizontalSkillsWrapper"));
 const FindMyWork = lazy(() => import("../components/Home/FindMyWork"));
 const Research = lazy(() => import("../components/Home/Research"));
 const NumbersAndStats = lazy(() => import("../components/Home/Numbers"));
@@ -38,7 +37,7 @@ const RESERVE: Record<string, [desktop: number, mobile: number]> = {
   work: [1230, 1870],
   numbers: [630, 1180],
   research: [1120, 1630],
-  skills: [1300, 400],
+  skills: [1000, 100],
   'work-experience': [4040, 3240],
   contact: [445, 940],
 };
@@ -126,6 +125,8 @@ function Home() {
   useEffect(() => {
     const onNavigate = (e: Event) => {
       const { id, offset } = (e as CustomEvent<NavigateDetail>).detail;
+      // Any new navigation cancels a re-alignment still running for the previous target.
+      stopAlign.current();
       if (!LAZY_IDS.has(id)) return;
       e.preventDefault();
       setMountAll(true);
@@ -155,10 +156,15 @@ function Home() {
   // The peelable sticker is a toy (and pulls GSAP): it waits for the first
   // interaction, or 6 s, instead of competing with the hero for the main thread.
   const [showSticker, setShowSticker] = useState(false);
+  // No mobile o sticker fica 0x0 escondido: nem monta (evita 600 ms de módulo no meio da rolagem).
+  const stickerMobile = useIsMobile(600);
   useEffect(() => {
     const events = ['pointermove', 'keydown', 'touchstart', 'scroll'];
     const show = () => {
-      setShowSticker(true);
+      // Depois da interação, ainda espera a thread ficar ociosa: o módulo do sticker
+      // (GSAP) não pode cair no meio de um frame de rolagem.
+      const idle = (window as Window & { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number }).requestIdleCallback;
+      if (idle) idle(() => setShowSticker(true), { timeout: 3000 }); else setTimeout(() => setShowSticker(true), 800);
       events.forEach((ev) => window.removeEventListener(ev, show));
       clearTimeout(timer);
     };
@@ -191,7 +197,6 @@ function Home() {
       </LazySection>
       <LazySection id="skills" label="Skills" eager={mountAll}>
         <Skills />
-        <HorizontalSkillsWrapper />
       </LazySection>
       <LazySection id="work-experience" label="Professional experience" eager={mountAll}>
         <Experience />
@@ -203,7 +208,7 @@ function Home() {
 
       {/* HIBEEX sticker */}
       <div className="sticker-stage">
-        {showSticker && <Suspense fallback={null}>
+        {showSticker && !stickerMobile && <Suspense fallback={null}>
         <StickerPeel
           imageSrc="/hibeex.webp"
           width={130}

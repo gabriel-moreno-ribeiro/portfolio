@@ -96,7 +96,7 @@ function ProjectPage() {
   );
 
   useDocumentHead({
-    title: project ? `${project.title} — Gabriel Moreno Ribeiro` : 'Gabriel Moreno Ribeiro',
+    title: project ? `${project.title} · Gabriel Moreno Ribeiro` : 'Gabriel Moreno Ribeiro',
     description: project?.summary,
     canonical: project ? `https://gabrielmr.com/work/${project.slug}` : undefined,
   });

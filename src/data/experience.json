@@ -65,7 +65,7 @@
     "id": "gsat",
     "order": 5,
     "org": "GSAT Education",
-    "role": "Co-Founder & CEO",
+    "role": "",
     "start": "2025-11",
     "end": "2026-05",
     "periodLabel": "November 2025 - May 2026",
@@ -73,14 +73,14 @@
     "_placeholder": true,
     "bullets": [
       "Built a **test-prep platform** from scratch",
-      "Product, engineering and go-to-market, as founding CEO"
+      "Product, engineering and go-to-market"
     ]
   },
   {
     "id": "hibeex",
     "order": 6,
     "org": "HIBEEX",
-    "role": "Co-Founder & CEO",
+    "role": "",
     "start": "2026-01",
     "end": "present",
     "periodLabel": "January 2026 - Present",
