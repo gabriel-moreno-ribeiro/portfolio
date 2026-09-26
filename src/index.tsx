@@ -21,6 +21,8 @@ scheduleIdle(() => {
       respect_dnt: true,
       disable_session_recording: true,
       disable_surveys: true,
+      // O handler de scroll do PostHog custava até 442 ms sob CPU 4x na Home.
+      disable_scroll_properties: true,
     });
   });
 });

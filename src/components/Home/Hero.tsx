@@ -7,7 +7,7 @@ import {
   useRef,
   useState,
 } from 'react';
-import { FiArrowRight, FiCalendar } from 'react-icons/fi';
+import { FiArrowRight, FiCalendar, FiDownload } from 'react-icons/fi';
 import useIsMobile from '../../hooks/useIsMobile';
 import { useReducedMotion, useVisible } from '../../lib/motion';
 import { scrollToComponent } from '../../utils/scrollToComponent';
@@ -144,7 +144,7 @@ function Hero() {
                 fontFamily: 'var(--font-serif)',
                 fontStyle: 'italic',
               }}
-              texts={['Founder', 'Builder', 'Researcher', 'Developer']}
+              texts={['Builder', 'Researcher', 'Developer']}
               speed={40}
               pauseDuration={2200}
               enabled={heroVisible}
@@ -153,10 +153,10 @@ function Hero() {
           </div>
         </motion.div>
         <motion.p className="desc" {...rise(0.08)}>
-          Building Backoffice AI for Small and Medium Businesses @ HIBEEX. Founder @ Projeto Candela.
+          Building Backoffice AI for Small and Medium Businesses @ HIBEEX. Started Projeto Candela.
         </motion.p>
         <motion.div className="btn-flex" {...rise(0.16)}>
-          {/* Two calls to action: the work first, then a call. LinkedIn lives in Contact and the footer. */}
+          {/* Three calls to action: the work first, then a call, then the resume. LinkedIn lives in Contact and the footer. */}
           <CommonButton
             text="See Work"
             Icon={<FiArrowRight className="icon-arrow" />}
@@ -170,6 +170,15 @@ function Hero() {
             iconPosition="right"
             onClick={() => window.open('https://cal.com/gabrielmribeiro', '_blank')}
           />
+          {/* Same pill as the outline button, but a real link: the file downloads with a clean name. */}
+          <a
+            className="btn outline hero-resume"
+            href="/files/gabriel-moreno-ribeiro-resume.pdf"
+            download="Gabriel-Moreno-Ribeiro-Resume.pdf"
+          >
+            <p className="text">Resume</p>
+            <div className="icon"><FiDownload className="icon-link" aria-hidden="true" /></div>
+          </a>
         </motion.div>
       </div>
     </div>

@@ -13,7 +13,7 @@ const LINES: [string, string][] = [
 
 function NotFound() {
   useDocumentHead({
-    title: '404 — Gabriel Moreno Ribeiro',
+    title: '404 · Gabriel Moreno Ribeiro',
     description: 'Page not found.',
     canonical: 'https://gabrielmr.com/404',
   });

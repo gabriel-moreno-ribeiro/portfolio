@@ -108,6 +108,13 @@
         font-size: 24px;
       }
 
+      // The resume link wears the outline pill; anchors need the underline off and the text block reset.
+      .hero-resume {
+        box-sizing: border-box; // buttons are border-box by default; the anchor was 68px tall against 56
+        text-decoration: none;
+        .text { margin: 0; }
+      }
+
       .icon-arrow {
         display: flex;
         justify-content: center;

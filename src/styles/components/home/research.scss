@@ -6,9 +6,7 @@
   box-sizing: border-box;
 
   > .heading {
-    font-size: 48px;
-    margin-bottom: 12px;
-    text-align: center;
+    margin-bottom: 40px;
   }
 
   &__subtitle {
@@ -19,15 +17,17 @@
   }
 
   &__orcid {
-    display: block;
     text-align: center;
-    font-family: monospace;
-    font-size: 13px;
+    font-size: 14px;
     color: $text-grey;
-    text-decoration: none;
-    margin: 0 0 40px;
-    transition: color 0.2s;
-    &:hover { color: $primary-orange; }
+    margin: 32px 0 0;
+    a {
+      color: inherit;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      transition: color 0.2s;
+      &:hover { color: $primary-orange; }
+    }
   }
 }
 
@@ -239,10 +239,6 @@
 @media (max-width: 768px) {
   .research-section {
     padding: 40px 20px;
-
-    > .heading {
-      font-size: 32px;
-    }
 
     &__subtitle {
       margin-bottom: 28px;

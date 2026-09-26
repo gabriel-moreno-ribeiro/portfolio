@@ -357,8 +357,8 @@ const commands: CommandDefinition[] = [
         `${bold("DE:")} SCSS + Motion`,
         `${bold("WM:")} Zustand 5`,
         `${bold("Terminal:")} xterm.js`,
-        `${bold("CPU:")} Founder on a Build Year`,
-        `${bold("GPU:")} Founder & Full Stack Builder`,
+        `${bold("CPU:")} Builder on a Build Year`,
+        `${bold("GPU:")} Full Stack Builder`,
         `${bold("Memory:")} 39 olympiad medals (19 gold)`,
         `${bold("Uptime:")} Since 2007`,
       ];

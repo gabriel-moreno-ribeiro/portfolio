@@ -565,3 +565,24 @@ img {
   a { color: inherit; text-decoration: underline; }
   * { animation: none !important; transition: none !important; opacity: 1 !important; transform: none !important; }
 }
+
+// ── Título de seção (formato único, decidido pelo dono do site) ─────────────
+// "Palavra <em>Palavra</em>": sans em peso alto, o termo em <em> em serif itálico
+// na cor de acento. Sem ponto final. Mesmo desenho do título da Experience.
+.section-title {
+  margin: 0;
+  text-align: center; // regra única: todo título de seção centralizado
+  font-family: inherit;
+  font-weight: 700;
+  font-size: clamp(30px, 4.2vw, 48px);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  color: var(--fg);
+
+  em {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+  }
+}

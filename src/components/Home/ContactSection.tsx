@@ -1,6 +1,6 @@
 import { FormEvent, useState } from 'react';
-import { FiArrowUpRight, FiCalendar, FiCheck, FiGithub, FiLinkedin, FiMail, FiSend } from 'react-icons/fi';
-import { config, useClock } from '../../lib/data';
+import { FiArrowUpRight, FiCalendar, FiCheck, FiMail, FiSend } from 'react-icons/fi';
+import { SiGithub, SiLinkedin } from 'react-icons/si';
 
 interface FormErrors {
   name?: string;
@@ -13,12 +13,12 @@ const EMAIL = ['me', 'gabrielmr.com'].join('@');
 const channels = [
   { label: 'Email', value: EMAIL, href: `mailto:${EMAIL}`, Icon: FiMail },
   { label: 'Book a call', value: 'cal.com/gabrielmribeiro', href: 'https://cal.com/gabrielmribeiro', Icon: FiCalendar },
-  { label: 'LinkedIn', value: 'gabriel-moreno-ribeiro', href: 'https://linkedin.com/in/gabriel-moreno-ribeiro', Icon: FiLinkedin },
-  { label: 'GitHub', value: 'gabriel-moreno-ribeiro', href: 'https://github.com/gabriel-moreno-ribeiro', Icon: FiGithub },
+  // Brand marks in the icon boxes instead of the generic feather glyphs.
+  { label: 'LinkedIn', value: 'gabriel-moreno-ribeiro', href: 'https://linkedin.com/in/gabriel-moreno-ribeiro', Icon: SiLinkedin },
+  { label: 'GitHub', value: 'gabriel-moreno-ribeiro', href: 'https://github.com/gabriel-moreno-ribeiro', Icon: SiGithub },
 ];
 
 function ContactSection() {
-  const { hhmm } = useClock(config.location.tz);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
@@ -84,9 +84,6 @@ function ContactSection() {
         </h2>
         <p className="contact-section__lead">
           Building something, hiring, or just curious? Write to me.
-        </p>
-        <p className="contact-section__clock" aria-live="off">
-          {hhmm} here &middot; I usually reply within a day
         </p>
         <ul className="contact-section__channels">
           {channels.map(({ label, value, href, Icon }) => (

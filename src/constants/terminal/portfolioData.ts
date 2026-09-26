@@ -1,8 +1,8 @@
 export const bio = {
   name: "Gabriel Moreno Ribeiro",
-  title: "Founder & CEO | Full Stack Builder | Researcher",
+  title: "Full Stack Builder | Researcher",
   summary:
-    "18, founder and researcher, on a build year. Co-founder and CEO of HIBEEX, backoffice AI for small and medium businesses and one of 6 startups in the Canastra Ventures AI Residency. 39 olympiad medals, 19 gold. Founder of Projeto Candela: 3,392 students in 28 schools. Admitted to St Andrews with a Global Merit Scholarship and 1st place at Insper for Computer Engineering.",
+    "18, builder and researcher, on a build year. Building HIBEEX, backoffice AI for small and medium businesses and one of 6 startups in the Canastra Ventures AI Residency. 39 olympiad medals, 19 gold. Started Projeto Candela: 3,392 students in 28 schools. Admitted to St Andrews with a Global Merit Scholarship and 1st place at Insper for Computer Engineering.",
   interests: ["AI/ML", "FinTech", "Physics Research", "Entrepreneurship", "Product Design"],
 };
 
@@ -15,11 +15,11 @@ export const education = {
 
 export const experience = [
   {
-    title: "Co-Founder & CEO",
+    title: "Building backoffice AI",
     company: "HIBEEX",
     date: "January 2026 - Present",
     description:
-      "Backoffice AI for small and medium businesses: raw data in, decisions out. One of 6 startups in the Canastra Ventures AI Residency, and among the youngest founders they picked. Stack: TypeScript, Next.js, Node.js, Supabase, AWS.",
+      "Backoffice AI for small and medium businesses: raw data in, decisions out. One of 6 startups in the Canastra Ventures AI Residency, and among the youngest people they picked. Stack: TypeScript, Next.js, Node.js, Supabase, AWS.",
   },
   {
     title: "Independent Researcher",
@@ -29,7 +29,7 @@ export const experience = [
       "Designed and ran a randomized controlled trial with 208 public-school students on whether fintech apps change savings behavior. The treatment group saved 130% more.",
   },
   {
-    title: "Co-Founder & CEO",
+    title: "Built a test-prep platform from scratch",
     company: "GSAT Education",
     date: "November 2025 - May 2026",
     description:

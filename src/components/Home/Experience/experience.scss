@@ -5,90 +5,97 @@ $exp-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 
 .exp {
   position: relative;
-  width: 100%;
-  max-width: 1120px;
+  // Largura explícita: o pai é item de um flex em coluna centrado (encolhe ao conteúdo), e
+  // com % a seção ficava do tamanho do texto mais longo. 48px = padding do wrapper + folga
+  // para a barra de rolagem.
+  width: min(960px, calc(100vw - 48px));
   margin: 0 auto;
   padding: 96px 0 0;
   box-sizing: border-box;
   color: var(--fg);
+  // Nada da seção (carro, sombra, odômetro, marcos, legenda) passa do topo nem do pé dela.
+  // Nos lados sobra folga: o odômetro mora na margem direita a partir de 1270 px.
+  clip-path: inset(0 -220px);
 
   --exp-stop-h: 560px;
   --exp-lead: 140px;
-  --exp-tail: 300px;
-  --exp-odo-lane: 210px;
-  --exp-card-w: min(48%, 440px);
+  --exp-tail: 120px;
+  // Onde o trilho do odômetro começa: abaixo do título.
+  --exp-odo-top: 180px;
+  // Cards alternam de lado e a estrada serpenteia entre eles. 56px = vão de 32px até a borda
+  // da estrada + meia-largura dela (46/2 + 1): casa com CARD_GAP.wide e roadHalf() em
+  // geometry.ts. O resto (12% da coluna) é quanto a estrada ondula de um lado para o outro.
+  --exp-card-w: min(400px, calc((100% - clamp(96px, 12%, 150px)) / 2 - 56px));
 }
 
-// ── Cabeçalho: só o título ───────────────────────────────────────────────────
+// ── Cabeçalho: só o título (estilo em .section-title, globals.scss) ─────────
+// Centralizado, como Origins, Cool Things, By the Numbers e Research.
 .exp__head {
   position: relative;
   z-index: 3;
   padding: 0 4px;
-
-  h2 {
-    margin: 0;
-    font-size: clamp(30px, 4.2vw, 48px);
-    font-weight: 700;
-    line-height: 1.05;
-    letter-spacing: -0.01em;
-
-    em {
-      font-family: var(--font-serif);
-      font-style: italic;
-      font-weight: 400;
-      color: var(--accent);
-    }
-  }
+  text-align: center;
 }
 
 // ── Odômetro ─────────────────────────────────────────────────────────────────
-// Fica no canto da seção enquanto ela rola. Chip opaco e baixo, para atravessar os cards
-// sem escondê-los: só o topo da viewport, onde nenhum card está centrado.
-.exp__odo {
-  position: sticky;
-  top: 80px;
-  z-index: 5;
-  width: max-content;
-  max-width: 100%;
-  margin: 14px 2px -38px auto;
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
-  box-sizing: border-box;
-  padding: 5px 11px;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  background: var(--surface);
-  font-family: $exp-mono;
+// Só o ano, grande, em serif itálico. Fica `sticky` dentro de um trilho absoluto que vai do
+// título até a última parada (o `bottom` vem do JS; o fallback é o pé do último card) e some
+// (`is-away`) quando essa parada sobe: nunca por cima da nav nem do Contact.
+// Dentro da coluna fica sob os cards (eles passam por cima); com margem livre, vai para ela.
+// No mobile vai para a faixa da estrada, à esquerda dos cards.
+.exp__odo-track {
+  position: absolute;
+  top: var(--exp-odo-top);
+  bottom: calc(var(--exp-tail) + var(--exp-stop-h) / 2);
+  right: 0;
+  z-index: 1;
+  width: 150px;
   pointer-events: none;
 }
 
+.exp__odo {
+  position: sticky;
+  top: 88px;
+  text-align: right;
+  transition: opacity 0.3s ease;
+
+  &.is-away {
+    opacity: 0;
+  }
+}
+
 .exp__odo-year {
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(40px, 3.6vw, 52px);
+  line-height: 1;
   font-variant-numeric: tabular-nums;
   color: var(--accent);
 }
 
-.exp__odo-stop {
-  min-width: 0;
-  font-size: 11px;
-  letter-spacing: 0.03em;
-  color: var(--fg-muted);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+// Coluna de 960 px: a partir daqui sobram 150+ px à direita, fora de qualquer card.
+@media screen and (min-width: 1270px) {
+  .exp__odo-track {
+    z-index: 5;
+    width: 120px;
+    right: -140px;
+  }
 }
 
 // ── Estrada (decorativa) ─────────────────────────────────────────────────────
-.exp__road {
+.exp__roadway {
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
   z-index: 0;
   pointer-events: none;
+}
+
+// Tamanho vem dos atributos width/height (px da seção medida).
+.exp__road {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
   overflow: visible;
 }
 
@@ -126,6 +133,141 @@ $exp-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   }
 }
 
+// ── A estrada à frente do carro ainda não existe ─────────────────────────────
+// Duas janelas com a mesma estrada (ver Road.tsx): a de cima mostra tudo até o capô; a de
+// baixo, `FOG_LEN` px de altura, apaga a estrada por uma máscara de gradiente fixa nela. O JS
+// só move os transforms (janela desce, estrada dentro sobe o mesmo tanto): camadas compostas,
+// a estrada nunca repinta. Os marcos vão junto. Sem camada por cima da página.
+// Só na tela: na impressão a estrada vai inteira. Reduced-motion não recebe `--fog`.
+.exp__road-win {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  overflow-x: visible;
+  overflow-y: clip;
+  will-change: transform;
+
+}
+
+.exp__road-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  will-change: transform;
+}
+
+// Mesmos pontos do gradiente anterior: cheio, 35% a 55% do caminho, zero no fim.
+.exp__road-win--fog {
+  overflow: clip;
+  -webkit-mask-image: linear-gradient(to bottom, #000, rgb(0 0 0 / 0.35) 55%, transparent);
+  mask-image: linear-gradient(to bottom, #000, rgb(0 0 0 / 0.35) 55%, transparent);
+}
+
+@media print {
+  .exp__road-win--solid,
+  .exp__road-win--solid .exp__road-slide {
+    transform: none !important;
+  }
+
+  .exp__road-win--fog {
+    display: none;
+  }
+}
+
+// ── Legenda da D-20 ──────────────────────────────────────────────────────────
+// Presa ao centro do carro estacionado (left/top vêm do JS); a caixa tem tamanho zero e o
+// texto sai por um fio fino. Some (opacidade) quando o carro sai da parada.
+.exp__d20 {
+  position: absolute;
+  z-index: 2;
+  width: 0;
+  height: 0;
+  transition: opacity 0.35s ease, visibility 0s linear 0s;
+
+  &.is-gone {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.35s ease, visibility 0s linear 0.35s;
+  }
+}
+
+.exp__d20-lead {
+  position: absolute;
+  bottom: 24px;
+  width: 1px;
+  height: 46px;
+  background: var(--accent-decor);
+  opacity: 0.7;
+  transform-origin: 50% 100%;
+}
+
+.exp__d20-text {
+  position: absolute;
+  bottom: 58px;
+  width: 230px;
+  margin: 0;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 15px;
+  line-height: 1.35;
+  color: var(--fg-muted);
+}
+
+// "D-20" não quebra no hífen.
+.exp__nowrap {
+  white-space: nowrap;
+}
+
+// Mesmo serif itálico da legenda, só sublinhado.
+a.exp__d20-link,
+a.exp__d20-link:visited {
+  white-space: nowrap;
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+
+  &:hover {
+    color: var(--fg);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+  }
+}
+
+.exp__d20--right {
+  .exp__d20-lead { left: 20px; transform: rotate(40deg); }
+  .exp__d20-text { left: 52px; }
+}
+
+.exp__d20--left {
+  .exp__d20-lead { right: 20px; transform: rotate(-40deg); }
+  .exp__d20-text { right: 52px; text-align: right; }
+}
+
+// Mobile: acima do 1º card (abaixo do último sob reduced-motion), fio vertical até o carro.
+// O texto começa 28 px à direita do eixo (= NOTE_INSET em Experience.tsx): 18 px de folga
+// da borda do asfalto (meia-largura 10) e 32 px entre a caixa do texto e o card (as linhas
+// em itálico sobram ~1 px abaixo da caixa, e o mínimo pedido é 24).
+.exp__d20--above,
+.exp__d20--below {
+  .exp__d20-lead { left: 16px; transform: none; }
+  .exp__d20-text { left: 28px; width: var(--exp-note-w, 260px); font-size: 14px; }
+}
+
+.exp__d20--above {
+  .exp__d20-lead { bottom: 20px; height: calc(var(--exp-note-reach, 60px) + 4px); }
+  .exp__d20-text { bottom: calc(var(--exp-note-reach, 60px) + 32px); }
+}
+
+.exp__d20--below {
+  .exp__d20-lead { top: 20px; bottom: auto; height: calc(var(--exp-note-reach, 60px) + 4px); }
+  .exp__d20-text { top: calc(var(--exp-note-reach, 60px) + 32px); bottom: auto; }
+}
+
 // ── Carro (decorativo) ───────────────────────────────────────────────────────
 .exp__car-layer {
   position: absolute;
@@ -145,7 +287,7 @@ $exp-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   position: relative;
   width: 100%;
   height: 100%;
-  transform: rotate(var(--exp-roll, 0deg));
+  // A inclinação (rotate) vem do JS direto no `transform`, por quadro.
 }
 
 .exp__car-shake {
@@ -171,27 +313,48 @@ $exp-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   }
 }
 
-// Cone do farol: apex nos faróis (posicionado por transform em Car.tsx), girado para a
-// tangente. Sem `mix-blend-mode`: misturar com o fundo obriga o navegador a rasterizar o
-// backdrop (um SVG de estrada de ~4 000 px) em cada frame que o carro anda. Com camada
-// própria (`will-change: transform`) o blur é rasterizado uma vez e só é transformado.
-.exp__beam {
+// Sombra de contato e brilho das rodas: fora do canvas, para que o quadro só mexa em
+// transform/opacity. Aparecem junto com o 1º desenho do sprite (antes disso fica o poster).
+.exp__car-fx {
   position: absolute;
-  left: 0;
-  top: 0;
-  width: 260px;
-  height: 78px; // = BEAM_H em Car.tsx
-  transform-origin: 0 50%;
-  // base por tema × fator escrito pelo JS (brilho acompanha a velocidade, com lerp)
-  --exp-beam-base: 0.42;
-  opacity: calc(var(--exp-beam-base) * var(--exp-beam-k, 0.72));
-  filter: blur(5px); // tira a aresta dura do triângulo; estático, não anima
-  will-change: transform, opacity;
-  pointer-events: none;
+  inset: 0;
+  visibility: hidden;
+
+  &.is-on {
+    visibility: visible;
+  }
 }
 
-[data-theme='dark'] .exp__beam {
-  --exp-beam-base: 0.72;
+// Caixa do tamanho do carro, escalada até a pegada das rodas (JS, por frame do sprite).
+.exp__shade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle closest-side,
+    rgba(42, 26, 18, 0.9) 0%,
+    rgba(42, 26, 18, 0.45) 55%,
+    rgba(42, 26, 18, 0) 100%
+  );
+  opacity: 0.16;
+  transform-origin: 0 0;
+  will-change: transform, opacity;
+}
+
+// Dois arcos opostos girando no centro da roda (tamanho e traço vêm do JS).
+.exp__wheel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+  border: 1px solid transparent;
+  border-top-color: rgba(255, 236, 214, 0.55);
+  border-bottom-color: rgba(255, 236, 214, 0.55);
+  border-radius: 50%;
+  will-change: transform;
 }
 
 .exp__hazard {
@@ -214,6 +377,10 @@ $exp-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   border-radius: 50%;
   background: var(--accent-decor);
   box-shadow: 0 0 6px var(--accent-decor);
+}
+
+// Só pisca quando aceso: escondido, a animação infinita recalculava estilo a cada quadro.
+.exp__hazard.is-on .exp__hazard-dot {
   animation: exp-hazard 1s steps(1, end) infinite;
 }
 
@@ -223,6 +390,9 @@ $exp-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 
 .exp__hazard-dot--r {
   transform: translate(var(--exp-tr-x, 0), var(--exp-tr-y, 0));
+}
+
+.exp__hazard.is-on .exp__hazard-dot--r {
   animation-delay: 0.5s;
 }
 
@@ -232,13 +402,9 @@ $exp-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   100% { opacity: 1; }
 }
 
-// Engasga ao entrar: 3 ciclos de ±1 px + farol piscando 2×.
+// Engasga ao entrar: 3 ciclos de ±1 px.
 .exp__car-body.is-cranking .exp__car-shake {
   animation: exp-crank 0.14s steps(2, end) 3;
-}
-
-.exp__car-body.is-cranking .exp__beam {
-  animation: exp-flicker 0.21s steps(1, end) 2;
 }
 
 @keyframes exp-crank {
@@ -247,20 +413,12 @@ $exp-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   100% { transform: translate(0, 0); }
 }
 
-@keyframes exp-flicker {
-  0% { opacity: 0.05; }
-  50% { opacity: 1; }
-  100% { opacity: 0.05; }
-}
-
 // ── Paradas ──────────────────────────────────────────────────────────────────
 .exp__stops {
   position: relative;
   z-index: 2;
   margin: 0;
-  // A faixa da direita é do odômetro: a coluna de cards termina antes dela, então o chip
-  // sticky nunca cobre um card. A estrada é desenhada na caixa inteira da seção.
-  padding: var(--exp-lead) var(--exp-odo-lane) var(--exp-tail) 0;
+  padding: var(--exp-lead) 0 var(--exp-tail);
   list-style: none;
 }
 
@@ -282,18 +440,32 @@ $exp-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 }
 
 .exp__card {
+  box-sizing: border-box;
   width: var(--exp-card-w);
   padding: 20px 22px 22px;
   border: 1px solid var(--border);
   border-radius: 14px;
   background: var(--surface);
-  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  position: relative;
+
+  // Anel do farol numa camada própria que só muda de opacidade: animar border-color e
+  // box-shadow repintava o card a cada quadro da transição.
+  &::after {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border: 1px solid var(--accent-decor);
+    border-radius: inherit;
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent-decor) 35%, transparent);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    pointer-events: none;
+  }
 }
 
 // Card sob o farol: é informação (mostra onde o carro está), não decoração.
-.exp__stop.is-lit .exp__card {
-  border-color: var(--accent-decor);
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent-decor) 35%, transparent);
+.exp__stop.is-lit .exp__card::after {
+  opacity: 1;
 }
 
 .exp__card-meta {
@@ -340,6 +512,11 @@ $exp-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   margin: 4px 0 0;
   font-size: 15px;
   font-weight: 600;
+}
+
+// Sem cargo: o período encosta no nome, com o mesmo respiro que o cargo teria.
+.exp__card-org + .exp__card-period {
+  margin-top: 6px;
 }
 
 .exp__card-period {
@@ -418,29 +595,37 @@ a.exp__card-cta:visited {
 }
 
 // ── Mobile: faixa à esquerda, cards à direita ────────────────────────────────
-@media screen and (max-width: 600px) {
+// 760 = NARROW_MAX em Experience.tsx.
+@media screen and (max-width: 760px) {
   .exp {
+    width: calc(100vw - 32px);
     padding: 64px 0 0;
     --exp-stop-h: 420px;
-    --exp-lead: 120px;
-    --exp-tail: 320px;
-    --exp-odo-lane: 0px;
-    --exp-card-w: calc(100% - 96px);
+    --exp-lead: 200px;
+    --exp-tail: 120px;
+    --exp-odo-top: 130px;
+    // 80px = faixa da estrada: ápice em x = 50 + meia-largura (18/2 + 1) + vão de 20px.
+    --exp-card-w: calc(100% - 80px);
   }
 
-  .exp__head {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 14px;
+  // Na coluna estreita os cards ocupam toda a direita e passariam por cima do ano. O trilho
+  // vai para a faixa da estrada (margem de 16 px + 80 px até o card), que nenhum card cruza;
+  // o halo da cor da página o separa da estrada. O carro fica abaixo de 18% da altura
+  // (SAFE_MIN em geometry.ts), então não cruza o ano; se cruzar, passa por cima dele.
+  .exp__odo-track {
+    left: -16px;
+    right: auto;
+    width: 92px;
   }
 
   .exp__odo {
-    position: sticky;
     top: 76px; // abaixo da nav pill fixa (~72 px)
-    width: 100%;
-    margin: 10px 0 -40px;
-    justify-content: space-between;
-    border-radius: 8px;
+    text-align: center;
+  }
+
+  .exp__odo-year {
+    font-size: 30px;
+    text-shadow: 0 0 3px var(--bg), 0 0 8px var(--bg), 0 0 14px var(--bg);
   }
 
   .exp__stop {
@@ -456,24 +641,21 @@ a.exp__card-cta:visited {
 
   .exp__bullets li { font-size: 13.5px; }
 
-  .exp__beam {
-    width: 130px;
-    height: 40px;
-    top: calc(50% - 20px);
-  }
 }
 
 // ── Reduced motion: estado final, sem transições ─────────────────────────────
 @media (prefers-reduced-motion: reduce) {
   .exp__poster,
-  .exp__card,
-  .exp__card-cta {
+  .exp__odo,
+  .exp__card::after,
+  .exp__card-cta,
+  .exp__d20 {
     transition: none;
   }
 
   .exp__car-body.is-cranking .exp__car-shake,
-  .exp__car-body.is-cranking .exp__beam,
-  .exp__hazard-dot {
+  .exp__hazard.is-on .exp__hazard-dot {
     animation: none;
   }
 }
+

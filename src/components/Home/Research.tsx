@@ -167,22 +167,19 @@ function ResearchCard({ item, index, isLatest }: { item: ResearchItem; index: nu
 function Research() {
   return (
     <section className="research-section" id="research">
-      <h2 className="heading" data-color-inverted="true">
-        Research
+      <h2 className="heading section-title" data-color-inverted="true">
+        Research <em>Papers</em>
       </h2>
-      <a
-        href="https://orcid.org/0009-0009-2574-6646"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="research-section__orcid"
-      >
-        ORCID: 0009-0009-2574-6646
-      </a>
       <div className="research-grid">
         {researchItems.map((item, i) => (
           <ResearchCard key={item.slug} item={item} index={i} isLatest={i === latestIndex} />
         ))}
       </div>
+      <p className="research-section__orcid">
+        <a href="https://orcid.org/0009-0009-2574-6646" target="_blank" rel="noopener noreferrer">
+          ORCID 0009-0009-2574-6646
+        </a>
+      </p>
     </section>
   );
 }

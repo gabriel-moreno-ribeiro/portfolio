@@ -2,14 +2,21 @@ import { chromium } from 'playwright';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 const OUT = path.join(path.dirname(fileURLToPath(import.meta.url)), 'shots');
+// a seção agora é lazy (LazySection): rola a página inteira antes de esperar pelo seletor
+async function warm(page) {
+  const total = await page.evaluate(() => document.documentElement.scrollHeight);
+  for (let y = 0; y < total; y += 600) { await page.evaluate((v) => scrollTo(0, v), y); await page.waitForTimeout(70); }
+  await page.waitForSelector('#work-experience .exp__car', { timeout: 30000 });
+  await page.waitForTimeout(1200);
+}
+
 const b = await chromium.launch();
 const p = await b.newPage({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2 });
 const errs = [];
 p.on('pageerror', (e) => errs.push('pageerror: ' + e.message));
 p.on('console', (m) => { if (m.type() === 'error') errs.push('console: ' + m.text()); });
 await p.goto('http://localhost:5173/', { waitUntil: 'networkidle' });
-await p.waitForSelector('#work-experience .exp__stops li');
-await p.waitForTimeout(1500);
+await warm(p);
 for (const pct of [0.25, 0.5, 1]) {
   for (let i = 0; i < 6; i++) {
     const off = await p.evaluate((f) => {

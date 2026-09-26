@@ -1,12 +1,13 @@
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
+import { Link } from 'react-router-dom';
 import { useLocalData } from '../../../lib/data';
-import { useReducedMotion, useSectionProgress, useVisible } from '../../../lib/motion';
+import { useReducedMotion, useVisible } from '../../../lib/motion';
 import useIsMobile from '../../../hooks/useIsMobile';
 import Car, { type CarHandle } from './Car';
 import Odometer from './Odometer';
 import Road, { type RoadMarker } from './Road';
 import Stop from './Stop';
-import { buildRoad, cardSide, carTargetY, laneX, nearestStop, type RoadGeom } from './geometry';
+import { CARD_GAP, buildRoad, cardSide, carTargetY, nearestStop, roadHalf, type RoadGeom, type StopAnchor } from './geometry';
 import './experience.scss';
 
 /**
@@ -14,12 +15,12 @@ import './experience.scss';
  *
  * O conteúdo é HTML comum (`<ol>` de `<li>` com `<h3>`) e já está no estado final: estrada e
  * carro são decoração `aria-hidden` por cima. A geometria da estrada é medida da caixa real
- * da seção (ResizeObserver), não de um viewBox fixo — assim a linha passa exatamente pelo
- * centro de cada card mesmo que o texto quebre diferente.
+ * da seção (ResizeObserver), não de um viewBox fixo — assim a estrada passa a um vão fixo
+ * da borda de cada card, pelo lado de fora da curva, mesmo que o texto quebre diferente.
  *
  * **Nada aqui re-renderiza durante o scroll.** Um único rAF por frame: lê o rect da seção
  * (uma leitura, antes de qualquer escrita) e depois escreve tudo direto no DOM — transform do
- * carro, classes `is-lit`, texto do odômetro, `aria-current` do índice. O que existia antes
+ * carro, classes `is-lit`, texto do odômetro, transform das janelas que apagam a estrada à frente do carro. O que existia antes
  * (`setState` por frame) custava até 799 ms de scheduler do React num frame sob CPU 4×.
  */
 
@@ -31,18 +32,13 @@ export default function Experience() {
   const sectionRef = useRef<HTMLElement>(null);
   const listRef = useRef<HTMLOListElement>(null);
   const yearRef = useRef<HTMLSpanElement>(null);
-  const stopRef = useRef<HTMLSpanElement>(null);
+  const noteRef = useRef<HTMLDivElement>(null);
   const carRef = useRef<CarHandle>(null);
 
   const reduced = useReducedMotion();
-  const narrow = useIsMobile(600);
+  const narrow = useIsMobile(NARROW_MAX);
   const near = useVisible(sectionRef, { rootMargin: '800px 0px', once: true });
   const entered = useVisible(sectionRef, { once: true });
-  // `progress`/`raw` só disparam o loop; a posição sai do rect ao vivo, suavizada aqui
-  // (ver K_SCROLL). Ler o rect direto, sem lerp, fazia o carro pular junto com cada clique
-  // da roda do mouse — o deslocamento por quadro era 0 px na maioria dos frames e 43 px nos
-  // outros. `smoothing` baixo mantém `progress` mudando por mais tempo depois do scroll.
-  const { progress, raw } = useSectionProgress(sectionRef, { smoothing: 0.07 });
 
   const [road, setRoad] = useState<RoadGeom | null>(null);
 
@@ -52,26 +48,49 @@ export default function Experience() {
     const list = listRef.current;
     if (!section || !list || typeof ResizeObserver === 'undefined') return;
 
-    let lastD = '';
+    let lastKey = '';
     const measure = () => {
       const width = section.clientWidth;
       const height = section.clientHeight;
       if (width <= 0 || height <= 0) return;
-      const base = section.getBoundingClientRect().top;
-      const ys = Array.from(list.children).map((li) => {
-        const r = (li as HTMLElement).getBoundingClientRect();
-        return r.top - base + r.height / 2;
+      const box = section.getBoundingClientRect();
+      // A estrada passa a um vão fixo da borda de cada card, do lado de dentro (o card fica
+      // fora da curva). Os cards são layout de CSS puro; é a estrada que se ajusta a eles.
+      const reach = (narrow ? CARD_GAP.narrow : CARD_GAP.wide) + roadHalf(narrow);
+      const stops: StopAnchor[] = [];
+      const cards: RoadGeom['cards'] = [];
+      Array.from(list.children).forEach((li, i) => {
+        const r = li.getBoundingClientRect();
+        const c = (li.querySelector('.exp__card') ?? li).getBoundingClientRect();
+        const cardLeft = !narrow && cardSide(i) === 'left';
+        stops.push({
+          x: cardLeft ? c.right - box.left + reach : c.left - box.left - reach,
+          y: r.top - box.top + r.height / 2,
+        });
+        cards.push({ top: c.top - box.top, bottom: c.bottom - box.top });
       });
-      if (!ys.length) return;
+      if (!stops.length) return;
 
-      // `d` embute largura, altura e paradas: se ele não mudou, não há nada a refazer
+      // A chave embute largura, altura, paradas e cards: se não mudou, não há nada a refazer
       // (e assim o ResizeObserver não vira trabalho de React durante o scroll).
-      const { d, segments } = buildRoad(width, height, ys, narrow);
-      if (d === lastD) return;
-      lastD = d;
+      const { d, segments } = buildRoad(width, height, stops, narrow, cards[cards.length - 1].bottom);
+      if (!d) return;
+      const key = d + cards.map((c) => `${Math.round(c.top)},${Math.round(c.bottom)}`).join(';');
+      if (key === lastKey) return;
+      lastKey = key;
 
+      const ys = stops.map((st) => st.y);
       const spacing = ys.length > 1 ? (ys[ys.length - 1] - ys[0]) / (ys.length - 1) : height * 0.1;
-      setRoad({ d, segments, width, height, stopYs: ys, litWindowPx: spacing * 0.38 });
+      setRoad({
+        d,
+        segments,
+        width,
+        height,
+        stopYs: ys,
+        stopXs: stops.map((st) => st.x),
+        cards,
+        litWindowPx: spacing * 0.38,
+      });
     };
 
     const ro = new ResizeObserver(measure);
@@ -90,33 +109,74 @@ export default function Experience() {
     const cta = section.querySelector<HTMLElement>('.exp__card-cta');
     const hazard = section.querySelector<HTMLElement>('.exp__hazard');
     const last = road.stopYs[road.stopYs.length - 1] ?? 0;
-    const prev = { lit: -2, current: -2, year: '', atLast: null as boolean | null };
-    // Rolagem suavizada: é ela, e não o scroll cru, que posiciona o carro.
-    const motion = { scrolled: Number.NaN, previous: 0 };
+    // Janelas da névoa (ver Road): par [janela, estrada dentro dela], movidos só por transform.
+    const fogSolid = section.querySelector<HTMLElement>('.exp__road-win--solid');
+    const fogBand = section.querySelector<HTMLElement>('.exp__road-win--fog');
+    const fogSolidArt = fogSolid?.firstElementChild as HTMLElement | null | undefined;
+    const fogBandArt = fogBand?.firstElementChild as HTMLElement | null | undefined;
+    const odo = section.querySelector<HTMLElement>('.exp__odo');
+    const note = noteRef.current;
+    const first = road.stopYs[0] ?? 0;
+    const fogAhead = narrow ? FOG_AHEAD.narrow : FOG_AHEAD.wide;
+    const prev = { lit: -2, year: '', atLast: null as boolean | null, fog: Number.NaN, gone: false, away: null as boolean | null };
+    // Rolagem suavizada: é ela, e não o scroll cru, que posiciona o carro. `t` = último quadro,
+    // para o lerp valer o mesmo em 60, 120 ou 30 Hz.
+    const motion = { scrolled: Number.NaN, previous: 0, t: 0 };
 
     // Posição da seção no documento, em cache. Chamar `getBoundingClientRect()` dentro do
     // rAF forçava layout do documento inteiro sempre que outra seção estava montando
-    // (medido: 94 ms num frame sob CPU 4×). O ResizeObserver no `body` pega qualquer
-    // mudança de altura acima da seção, que é a única coisa que move esse valor.
+    // (medido: 94 ms num frame sob CPU 4×). Só uma mudança de altura ACIMA da seção move esse
+    // valor: observa o documento e cada irmão anterior da seção e de seus ancestrais (uma
+    // seção lazy que encolhe acima enquanto outra cresce abaixo não muda a altura total).
+    // `scrollY` e `innerHeight` também forçam layout se lidos no rAF depois de uma escrita:
+    // ficam em cache, lidos no evento de scroll/resize (antes dos rAF do quadro).
     let docTop = 0;
-    const refreshDocTop = () => {
-      docTop = section.getBoundingClientRect().top + window.scrollY;
+    let scrollY = window.scrollY;
+    let vh = window.innerHeight;
+    const measureDocTop = () => {
+      scrollY = window.scrollY;
+      vh = window.innerHeight;
+      docTop = section.getBoundingClientRect().top + scrollY;
     };
-    refreshDocTop();
+    measureDocTop();
+    const refreshDocTop = () => {
+      measureDocTop();
+      onScroll();
+    };
     const bodyRO = new ResizeObserver(refreshDocTop);
     bodyRO.observe(document.documentElement);
+    for (let el: Element | null = section; el && el !== document.body; el = el.parentElement) {
+      for (let sib = el.previousElementSibling; sib; sib = sib.previousElementSibling) bodyRO.observe(sib);
+    }
     window.addEventListener('resize', refreshDocTop, { passive: true });
 
+    // O odômetro sai assim que a última parada passa de ODO_AWAY da viewport para cima: ele
+    // nunca chega a encostar na nav nem no Contact. Vai pelo evento de scroll, não pelo loop:
+    // o loop não roda sob reduced-motion e o progresso da seção satura (para de avisar) antes
+    // de ela sair da tela. Só lê `scrollY`/`innerHeight` e troca uma classe quando muda.
+    const placeOdo = () => {
+      const away = docTop - scrollY + last < vh * ODO_AWAY;
+      if (odo && away !== prev.away) {
+        odo.classList.toggle('is-away', away);
+        prev.away = away;
+      }
+    };
+
     const apply = (): boolean => {
-      // ---- leituras: nenhuma leitura de layout aqui (só `scrollY`), antes das escritas ----
-      const top = reduced ? 0 : docTop - window.scrollY;
-      const vh = window.innerHeight;
+      // ---- nenhuma leitura de layout aqui: só valores em cache ----
+      const top = reduced ? 0 : docTop - scrollY;
       const onScreen = top < vh && top + road.height > 0;
       // ---- conta ----
       // ---- suavização própria do scroll ----
       const rawScrolled = -top;
-      if (Number.isNaN(motion.scrolled)) motion.scrolled = rawScrolled;
-      motion.scrolled += (rawScrolled - motion.scrolled) * K_SCROLL;
+      // Fora da tela não há o que suavizar: ao voltar, o carro parte de onde o scroll está.
+      if (Number.isNaN(motion.scrolled) || !onScreen) motion.scrolled = rawScrolled;
+      const now = performance.now();
+      const dt = now - motion.t;
+      motion.t = now;
+      // Depois de uma pausa (loop parado) o 1º quadro conta como um quadro normal.
+      const frames = dt > 0 && dt < 100 ? dt / FRAME_MS : 1;
+      motion.scrolled += (rawScrolled - motion.scrolled) * (1 - Math.pow(1 - K_SCROLL, frames));
       const speed = reduced ? 0 : Math.abs(motion.scrolled - motion.previous); // px por quadro
       motion.previous = motion.scrolled;
       const y = reduced ? last : carTargetY({ top: -motion.scrolled, vh }, road);
@@ -131,9 +191,22 @@ export default function Experience() {
         if (litIndex >= 0) stops[litIndex]?.classList.add('is-lit');
         prev.lit = litIndex;
       }
-      if (index !== prev.current && stopRef.current) {
-        stopRef.current.textContent = `stop ${index + 1}/${entries.length} · ${entries[index]?.org ?? ''}`;
-        prev.current = index;
+      // A estrada à frente do carro se apaga: as duas janelas da estrada (a inteira até o capô
+      // e a faixa com máscara de gradiente logo depois) descem com o carro, e a estrada dentro
+      // delas sobe o mesmo tanto. Só transform: a estrada nunca é repintada (marcos inclusos).
+      const fogY = Math.round(y + fogAhead);
+      if (fogSolid && fogBand && fogSolidArt && fogBandArt && fogY !== prev.fog) {
+        fogSolid.style.transform = `translate3d(0, ${fogY - road.height}px, 0)`;
+        fogSolidArt.style.transform = `translate3d(0, ${road.height - fogY}px, 0)`;
+        fogBand.style.transform = `translate3d(0, ${fogY}px, 0)`;
+        fogBandArt.style.transform = `translate3d(0, ${-fogY}px, 0)`;
+        prev.fog = fogY;
+      }
+      // A legenda da D-20 sai assim que o carro deixa a 1ª parada.
+      const gone = !reduced && y - first > NOTE_HIDE_PX;
+      if (note && gone !== prev.gone) {
+        note.classList.toggle('is-gone', gone);
+        prev.gone = gone;
       }
       if (year !== prev.year && yearRef.current) {
         yearRef.current.textContent = year;
@@ -147,8 +220,27 @@ export default function Experience() {
       return (settled && Math.abs(rawScrolled - motion.scrolled) < 0.3) || !onScreen;
     };
 
+    // O loop acorda no próprio evento de scroll (e quando a seção muda de lugar), só com a
+    // seção na tela. Antes, um `useSectionProgress` com rAF e lerp próprios só existia para
+    // acordar este loop: era um segundo rAF por quadro, mais o custo do ResizeObserver dele.
+    let wake = () => {};
+    const onScroll = () => {
+      scrollY = window.scrollY;
+      placeOdo();
+      const top = docTop - scrollY;
+      if (top < vh && top + road.height > 0) wake();
+    };
+
     apply();
-    if (reduced) return;
+    placeOdo();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    if (reduced) {
+      return () => {
+        window.removeEventListener('scroll', onScroll);
+        bodyRO.disconnect();
+        window.removeEventListener('resize', refreshDocTop);
+      };
+    }
 
     // O rAF continua enquanto os lerps (inclinação, rodas, sombra, cone) ainda não
     // assentaram — é isso que faz o carro rolar até parar depois que o scroll para. Para
@@ -164,53 +256,81 @@ export default function Experience() {
         raf = requestAnimationFrame(tick);
       }
     };
-    const wake = () => {
+    wake = () => {
       if (queued || document.hidden) return;
       queued = true;
       raf = requestAnimationFrame(tick);
     };
-    const unsubP = progress.on('change', wake);
-    const unsubR = raw.on('change', wake);
+    document.addEventListener('visibilitychange', onScroll);
     return () => {
-      unsubP();
-      unsubR();
       bodyRO.disconnect();
       window.removeEventListener('resize', refreshDocTop);
+      window.removeEventListener('scroll', onScroll);
+      document.removeEventListener('visibilitychange', onScroll);
       if (raf) cancelAnimationFrame(raf);
     };
-  }, [road, reduced, progress, raw, years, entries]);
+  }, [road, reduced, narrow, years]);
 
   const markers: RoadMarker[] = useMemo(() => {
     if (!road) return [];
     return entries.map((e, i) => ({
       id: e.id,
       y: road.stopYs[i] ?? 0,
-      x: laneX(i, road.width, narrow),
+      x: road.stopXs[i] ?? 0,
       year: e.start.slice(0, 4),
       city: e.city,
-      // Marco do lado de fora da curva, oposto ao card. No mobile o card é sempre à direita.
-      side: narrow || cardSide(i) === 'left' ? 'right' : 'left',
+      // Marco do lado de dentro da curva, oposto ao card. No mobile o card é sempre à direita.
+      side: !narrow && cardSide(i) === 'left' ? 'right' : 'left',
     }));
   }, [road, entries, narrow]);
+
+  // Legenda da D-20: presa ao carro estacionado (1ª parada; na última sob reduced-motion,
+  // que é onde o carro fica). No desktop vai do lado de dentro da curva; no mobile, acima do
+  // 1º card (ou abaixo do último), ligada ao carro por um fio vertical.
+  const note = useMemo(() => {
+    if (!road || !road.stopYs.length) return null;
+    const i = reduced ? road.stopYs.length - 1 : 0;
+    const x = road.stopXs[i] ?? 0;
+    const y = road.stopYs[i] ?? 0;
+    const card = road.cards[i] ?? { top: y, bottom: y };
+    const side = narrow ? (reduced ? 'below' : 'above') : cardSide(i) === 'left' ? 'right' : 'left';
+    const style = {
+      left: `${x.toFixed(1)}px`,
+      top: `${y.toFixed(1)}px`,
+      '--exp-note-reach': `${Math.round(reduced ? card.bottom - y : y - card.top)}px`,
+      // mobile: o texto começa em x + NOTE_INSET (ver SCSS) e para 2 px antes da borda
+      '--exp-note-w': `${Math.round(road.width - x - NOTE_INSET - 2)}px`,
+    } as CSSProperties;
+    return { side, style };
+  }, [road, reduced, narrow]);
+
+  // Onde a estrada começa a se apagar no 1º render (o rAF assume dali em diante). Sob
+  // reduced-motion não há apagamento: a estrada inteira fica à vista.
+  const fog = useMemo(() => {
+    if (!road || reduced) return null;
+    return {
+      y: Math.round((road.stopYs[0] ?? 0) + (narrow ? FOG_AHEAD.narrow : FOG_AHEAD.wide)),
+      len: narrow ? FOG_LEN.narrow : FOG_LEN.wide,
+    };
+  }, [road, reduced, narrow]);
 
   return (
     <section className="exp" id="work-experience" ref={sectionRef}>
       <header className="exp__head">
-        <h2>
-          Professional <em>Experience.</em>
+        <h2 className="section-title">
+          Professional <em>Experience</em>
         </h2>
       </header>
 
       <Odometer
         yearRef={yearRef}
-        stopRef={stopRef}
         firstYear={years[0] ?? 2023}
-        total={entries.length}
-        firstOrg={entries[0]?.org ?? ''}
+        // O trilho termina na última parada: o ano nunca desce abaixo dela.
+        trackEnd={road ? road.height - (road.stopYs[road.stopYs.length - 1] ?? road.height) : undefined}
       />
 
       {road && (
-        <Road d={road.d} width={road.width} height={road.height} markers={markers} narrow={narrow} />
+        <Road d={road.d} width={road.width} height={road.height} markers={markers} narrow={narrow} fog={fog} />
       )}
       <div className="exp__car-layer" aria-hidden="true">
         <Car
@@ -223,6 +343,18 @@ export default function Experience() {
         />
       </div>
 
+      {note && (
+        <div className={`exp__d20 exp__d20--${note.side}`} ref={noteRef} style={note.style}>
+          <span className="exp__d20-lead" aria-hidden="true" />
+          <p className="exp__d20-text">
+            My grandfather Adalberto&rsquo;s red Chevrolet <span className="exp__nowrap">D-20</span>, from his garage in Missão Velha.{' '}
+            <Link className="exp__d20-link" to="/story">
+              read the story
+            </Link>
+          </p>
+        </div>
+      )}
+
       <ol className="exp__stops" ref={listRef}>
         {entries.map((entry, i) => (
           <Stop key={entry.id} entry={entry} side={cardSide(i)} cta={i === entries.length - 1} />
@@ -231,6 +363,21 @@ export default function Experience() {
     </section>
   );
 }
+
+/** Até essa largura (px) a seção usa o layout de uma coluna (casa com o SCSS). */
+const NARROW_MAX = 760;
+/** Onde a estrada começa a se apagar, em px à frente do centro do carro (logo depois do capô). */
+const FOG_AHEAD = { wide: 44, narrow: 22 } as const;
+/** Comprimento do apagamento, em px: daí em diante a estrada ainda não existe. */
+const FOG_LEN = { wide: 360, narrow: 300 } as const;
+/** Fração da viewport: a última parada acima disso tira o odômetro de cena. */
+const ODO_AWAY = 0.35;
+/** Recuo, em px, da legenda da D-20 no mobile a partir do eixo da estrada (casa com o SCSS). */
+const NOTE_INSET = 28;
+/** Duração de referência de um quadro para K_SCROLL (60 Hz). */
+const FRAME_MS = 1000 / 60;
+/** Quanto o carro anda depois da 1ª parada até a legenda da D-20 sair. */
+const NOTE_HIDE_PX = 18;
 
 /** Quanto do erro de rolagem some por quadro. Menor = carro mais "solto" atrás do scroll. */
 const K_SCROLL = 0.085;

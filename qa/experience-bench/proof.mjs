@@ -11,14 +11,21 @@ import { fileURLToPath } from 'node:url';
 
 const TARGET = process.argv[2] ?? 'http://localhost:5173/';
 const OUT = path.join(path.dirname(fileURLToPath(import.meta.url)), 'shots');
+// a seção agora é lazy (LazySection): rola a página inteira antes de esperar pelo seletor
+async function warm(page) {
+  const total = await page.evaluate(() => document.documentElement.scrollHeight);
+  for (let y = 0; y < total; y += 600) { await page.evaluate((v) => scrollTo(0, v), y); await page.waitForTimeout(70); }
+  await page.waitForSelector('#work-experience .exp__car', { timeout: 30000 });
+  await page.waitForTimeout(1200);
+}
+
 const b = await chromium.launch();
 const p = await b.newPage({ viewport: { width: 1440, height: 900 } });
 const errs = [];
 p.on('pageerror', (e) => errs.push('pageerror: ' + e.message));
 p.on('console', (m) => { if (m.type() === 'error') errs.push('console: ' + m.text()); });
 await p.goto(TARGET, { waitUntil: 'networkidle' });
-await p.waitForSelector('#work-experience .exp__stops li');
-await p.waitForTimeout(1500);
+await warm(p);
 
 // seta da tangente por cima do carro (só para a prova)
 await p.evaluate(() => {

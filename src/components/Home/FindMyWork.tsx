@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { Project, projects } from "../../content/projects";
 import useIsMobile from "../../hooks/useIsMobile";
 import { Counter, usePageVisible, useReducedMotion, useVisible } from "../../lib/motion";
-import { toggleTerminalWindow } from "../../utils/terminalWindow";
 
 const AUTOPLAY_MS = 6000;
 
@@ -106,9 +105,11 @@ function MediaCarousel({ project, paused }: { project: Project; paused: boolean 
   );
 }
 
+// The final number is the default; the count only runs once the card enters the
+// viewport, so a card still below the fold never reads "0 medals".
 function MedalsLive({ project }: { project: Project }) {
   const ref = useRef<HTMLDivElement>(null);
-  const shown = useVisible(ref, { once: true, rootMargin: "0px 0px -10%" });
+  const shown = useVisible(ref, { once: true });
   const reduced = useReducedMotion();
   const medals = toNumber(project.stats[0]?.value ?? "0");
 
@@ -116,7 +117,7 @@ function MedalsLive({ project }: { project: Project }) {
     <div className="project-live" ref={ref}>
       <p className="project-live__counts">
         <strong>
-          <Counter value={medals} start={shown || reduced} />
+          {shown && !reduced ? <Counter value={medals} /> : medals}
         </strong>{" "}
         medals in 49 competitions
       </p>
@@ -148,11 +149,11 @@ function FeaturedCard({ project }: { project: Project }) {
     >
       <MediaCarousel project={project} paused={paused} />
       <div className="featured-card__body">
-        <h2>
+        <h3>
           <Link to={`/work/${project.slug}`} className="featured-card__link">
             {project.title}
           </Link>
-        </h2>
+        </h3>
         <p>{project.cardDesc}</p>
         <ProjectLive project={project} />
         <div className="featured-tags">
@@ -171,15 +172,12 @@ function FeaturedCard({ project }: { project: Project }) {
 function FindMyWork() {
   return (
     <div className="find-my-work" id="work">
-      <h2 className="heading" data-color-inverted={"true"}>
-        Cool Things
+      <h2 className="heading section-title" data-color-inverted={"true"}>
+        Cool <em>Things</em>
       </h2>
       <p className="work-sub">
         What I've built and what I've won.
       </p>
-      <button className="terminal-launch" onClick={toggleTerminalWindow}>
-        {"> Open terminal"} <kbd>Ctrl+K</kbd>
-      </button>
       <div className="featured-grid">
         {projects.map((project) => (
           <FeaturedCard key={project.slug} project={project} />

@@ -7,7 +7,7 @@ import '../styles/components/shared/contact.scss';
 
 function ThankYou() {
   useDocumentHead({
-    title: 'Message Sent — Gabriel Moreno Ribeiro',
+    title: 'Message Sent · Gabriel Moreno Ribeiro',
     description: 'Thank you for reaching out.',
     canonical: 'https://gabrielmr.com/obrigado',
   });

@@ -180,3 +180,25 @@ Origins (hora por cidade) e o terminal (`getSnapshot`) os consomem agora.
 
 Pedido final dele: colocar online para ver do celular → **preview da Vercel** (URL própria), sem
 tocar em gabrielmr.com.
+
+## Rodada 2 de feedback (26/09) — o que foi feito
+
+Onze itens do Gabriel sobre o preview, mais uma sessão paralela (outra instância do Claude)
+cuidando de Navbar, Footer, Library, News, Story, resumé e ícones do Contact.
+
+| Item | Decisão |
+|---|---|
+| marquee de skills | **cortado** (a seção Skills de ícones flutuantes fica) |
+| cards em cima / longe da estrada | estrada passa a ser desenhada a partir dos cards: apex no card ± (32 px + meia largura), medido em 1280/1366/1440 (32 px) e 390 (20 px) |
+| "CEO / founder / algo do gênero" | **removido de todo o site**: metas do `index.html`, JSON-LD, shell estático, `useDocumentHead`, hero, `experience.json` (roles vazios), `projects.ts`, terminal, `api/chat.ts`, `llms.txt`, `gallery.json`; "President" e "Researcher" ficam |
+| resto da estrada como incógnita | asfalto, borda e faixa dissolvem ~360 px à frente do carro (300 no mobile); sem retângulo, sem brilho; reduced-motion vê a estrada inteira |
+| D-20 do avô | legenda em serif itálico ligada ao carro por um fio: "My grandfather Adalberto's red Chevrolet D-20, from his garage in Missão Velha." + "read the story" (→ /story); some quando o carro anda. "from his garage" é inferência (story.ts diz que ele tinha a garagem e comprou a D20) — confirmar |
+| odômetro "cara de AI" | só o ano, grande, serif itálico na cor de acento, na margem direita; sem pílula, sem "stop N/6"; nunca vaza para o Contact |
+| títulos no mesmo formato | classe `.section-title` em `globals.scss`: centralizado, Title Case, "Palavra <em>Palavra</em>", sem ponto — Origins, Cool Things, By the Numbers, Research Papers, Experience. **Exceção por decisão do Gabriel (via a outra sessão): Contact mantém "Let's talk." com eyebrow e layout anterior** |
+| relógio e eyebrow do Contact | relógio cortado; eyebrow voltou por escolha dele no layout anterior |
+| rodapé "last commit" | cortado (rodada anterior) |
+| carro "mais fluido" | rodada anterior; nesta, a névoa nova custava 20 frames > 50 ms (pintura do SVG por frame) → recorte composto com só transform: rasterização 1 932 → 145 ms, 0 frames longos da seção no bench quente |
+
+Fora da Experience no caminho frio (CPU 4×): montagem das seções lazy pelo React, avaliação do
+módulo do sticker (agora só no desktop e em idle), handler de scroll do PostHog
+(`disable_scroll_properties`), e o trilho lateral (leitura de layout por frame → cache).

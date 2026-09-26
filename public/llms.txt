@@ -1,6 +1,6 @@
 # Gabriel Moreno Ribeiro
 
-> Founder and researcher on a build year. Co-founder and CEO of HIBEEX.
+> Builder and researcher on a build year. Building HIBEEX.
 
 Website: https://gabrielmr.com
 Email: me@gabrielmr.com
@@ -10,7 +10,7 @@ Last updated: September 2026
 
 ## Summary
 
-Gabriel Moreno Ribeiro is an 18-year-old Brazilian founder and researcher on a build year. He is co-founder and CEO of HIBEEX, which builds backoffice AI for small and medium businesses: raw data in, decisions the owners can act on out. HIBEEX is one of 6 startups in the Canastra Ventures AI Residency, and Gabriel is among the youngest founders the program has picked.
+Gabriel Moreno Ribeiro is an 18-year-old Brazilian builder and researcher on a build year. He is building HIBEEX, which makes backoffice AI for small and medium businesses: raw data in, decisions the owners can act on out. HIBEEX is one of 6 startups in the Canastra Ventures AI Residency, and Gabriel is among the youngest people the program has picked.
 
 He was admitted to the University of St Andrews with a Global Merit Scholarship and placed 1st at Insper for Computer Engineering. He chose a build year to go deeper on HIBEEX before starting university.
 
@@ -18,15 +18,15 @@ He cares about using technology to widen access to capital and education.
 
 ## Highlights
 
-- **Co-founder and CEO of HIBEEX** (January 2026 to present): backoffice AI for small and medium businesses. One of 6 startups in the Canastra Ventures AI Residency. Stack: TypeScript, Next.js, Node.js, Supabase, PostgreSQL, AWS.
+- **Building HIBEEX** (January 2026 to present): backoffice AI for small and medium businesses. One of 6 startups in the Canastra Ventures AI Residency. Stack: TypeScript, Next.js, Node.js, Supabase, PostgreSQL, AWS.
 - **Fintech savings RCT**: designed and ran a randomized controlled trial with 208 public-school students on whether fintech apps change savings behavior, advised by Aaron Litvin, Ph.D. (Harvard). The treatment group saved 130% more.
 - **Chemical kinetics research** with Prof. Juliano Bonacin, Ph.D.: reaction mechanisms modeled at 97% accuracy in a 59-page thesis.
 - **39 olympiad medals** (19 gold, 2 international) across 49 academic olympiads. 1st of 10,000+ at IFT-UNESP. Gold at ONNEQ (top 0.675%). 1st at OBAQ (top 0.014%).
-- **Projeto Candela**: founded a project that builds low-cost physics lab kits. 3,392 students in 28 public schools; physics failure rates went from 30% to 10%.
+- **Projeto Candela**: started a project that builds low-cost physics lab kits. 3,392 students in 28 public schools; physics failure rates went from 30% to 10%.
 - **SAT 1510/1600**, top 1% in Brazil.
 - **Fundação Estudar PREP scholar**: one of about 70 from 10,000+ applicants (0.7% acceptance).
 - **Instituto Principia** (Escola de Talentos, 14 picked nationally): quantum mechanics, relativity, statistical physics.
-- **Co-founder and CEO of GSAT Education** (2025 to 2026): EdTech for standardized test prep.
+- **Built GSAT Education** (2025 to 2026): a test-prep platform built from scratch, EdTech for standardized test prep.
 - **President of the Olympic Club at Colégio Militar**: 17 initiatives, participation up 47%, national olympiad results up 62%.
 
 ## Honors

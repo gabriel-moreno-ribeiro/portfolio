@@ -1,6 +1,12 @@
 // Progresso 0..1 de uma seção, suavizado, com velocidade derivada.
 // Um único rAF por seção, e ele só existe enquanto há trabalho: para quando assenta, quando a
 // seção sai da viewport e quando a aba fica oculta.
+//
+// O quadro não lê layout. `getBoundingClientRect`/`scrollY`/`innerHeight` forçam estilo e
+// layout se algum rAF anterior no mesmo quadro escreveu no DOM (medido: 11–22 ms de layout
+// forçado por quadro sob CPU 4×). A posição da seção no documento fica em cache e só é
+// remedida quando algo pode tê-la movido (ResizeObserver, resize, entrada na viewport); o
+// scroll só lê `scrollY` no próprio evento, antes dos rAF do quadro.
 import { useMotionValue } from 'motion/react';
 import { useEffect } from 'react';
 import type { ElementRef, SectionProgress, SectionProgressOptions } from './types';
@@ -32,49 +38,54 @@ export function useSectionProgress(
     const el = ref.current;
     if (!el || typeof window === 'undefined') return;
 
+    const k = smoothing <= 0 ? 1 : Math.min(1, smoothing);
     let rafId = 0;
-    let measureId = 0;
     let inView = true;
     let lastTime = 0;
     let smoothVelocity = 0;
+    // Cache: topo da seção no documento, quanto dela rola, e o alvo atual.
+    let docTop = 0;
+    let span = 0;
+    let target = 0;
 
-    const measure = (): number => {
+    const retarget = (scrollY: number): void => {
+      const top = docTop - scrollY;
+      target = span <= 0 ? (top <= 0 ? 1 : 0) : clamp01(-top / span);
+      raw.set(target);
+    };
+
+    // Só fora do rAF: callbacks de ResizeObserver/IntersectionObserver e `resize` rodam com o
+    // layout recém-feito, então a leitura não força nada.
+    const remeasure = (): void => {
       const rect = el.getBoundingClientRect();
-      const span = rect.height - window.innerHeight;
-      const value = span <= 0 ? (rect.top <= 0 ? 1 : 0) : clamp01(-rect.top / span);
-      raw.set(value);
-      return value;
+      const scrollY = window.scrollY;
+      docTop = rect.top + scrollY;
+      span = rect.height - window.innerHeight;
+      retarget(scrollY);
     };
 
     const canRun = (): boolean => inView && !document.hidden;
 
+    // Por quadro: um lerp e dois `set`. Nenhuma leitura de layout, nenhuma alocação.
     const frame = (time: number): void => {
       rafId = 0;
       if (!canRun()) return;
-      const target = measure();
       const dt = lastTime ? Math.max(0.001, (time - lastTime) / 1000) : 0.016;
       lastTime = time;
 
       const value = progress.get();
       const diff = target - value;
-      let next: number;
-      if (Math.abs(diff) <= EPSILON) {
-        next = target;
-      } else {
-        next = smoothing <= 0 ? target : value + diff * Math.min(1, smoothing);
-      }
-      progress.set(next);
-
-      const instant = (next - value) / dt;
-      smoothVelocity += (instant - smoothVelocity) * 0.25;
-      if (Math.abs(smoothVelocity) < 0.001) smoothVelocity = 0;
-      velocity.set(smoothVelocity);
-
-      const settled = next === target && smoothVelocity === 0;
-      if (settled) {
+      if (Math.abs(diff) < EPSILON) {
+        progress.set(target);
+        smoothVelocity = 0;
+        velocity.set(0);
         lastTime = 0;
         return;
       }
+      const next = value + diff * k;
+      progress.set(next);
+      smoothVelocity += ((next - value) / dt - smoothVelocity) * 0.25;
+      velocity.set(smoothVelocity);
       rafId = requestAnimationFrame(frame);
     };
 
@@ -86,28 +97,26 @@ export function useSectionProgress(
 
     const stop = (): void => {
       if (rafId) cancelAnimationFrame(rafId);
-      if (measureId) cancelAnimationFrame(measureId);
       rafId = 0;
-      measureId = 0;
       lastTime = 0;
       smoothVelocity = 0;
       velocity.set(0);
     };
 
-    // scroll/resize são coalescidos em um único rAF.
     const onScroll = (): void => {
-      if (measureId || rafId) return;
-      measureId = requestAnimationFrame(() => {
-        measureId = 0;
-        measure();
-        start();
-      });
+      retarget(window.scrollY);
+      start();
+    };
+
+    const onResize = (): void => {
+      remeasure();
+      start();
     };
 
     const onVisibility = (): void => {
       if (document.hidden) stop();
       else {
-        const target = measure();
+        remeasure();
         progress.set(target);
         start();
       }
@@ -119,7 +128,7 @@ export function useSectionProgress(
             (entries) => {
               inView = entries[entries.length - 1].isIntersecting;
               if (inView) {
-                measure();
+                remeasure();
                 start();
               } else {
                 stop();
@@ -130,17 +139,29 @@ export function useSectionProgress(
         : null;
     io?.observe(el);
 
-    measure();
-    progress.set(raw.get());
+    // O topo da seção no documento só muda se algo ACIMA dela mudar de altura (ou ela mesma,
+    // para `span`): observa a seção, o documento e cada irmão anterior da seção e dos ancestrais.
+    const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(onResize) : null;
+    if (ro) {
+      ro.observe(el);
+      ro.observe(document.documentElement);
+      for (let node: Element | null = el; node && node !== document.body; node = node.parentElement) {
+        for (let sib = node.previousElementSibling; sib; sib = sib.previousElementSibling) ro.observe(sib);
+      }
+    }
+
+    remeasure();
+    progress.set(target);
     window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll, { passive: true });
+    window.addEventListener('resize', onResize, { passive: true });
     document.addEventListener('visibilitychange', onVisibility);
 
     return () => {
       stop();
       io?.disconnect();
+      ro?.disconnect();
       window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('resize', onScroll);
+      window.removeEventListener('resize', onResize);
       document.removeEventListener('visibilitychange', onVisibility);
     };
   }, [ref, smoothing, reduced, progress, velocity, raw]);

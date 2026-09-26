@@ -7,7 +7,11 @@ for (const theme of ['light', 'dark']) {
   const p = await b.newPage({ viewport: { width: 1440, height: 900 } });
   await p.goto('http://localhost:5173/', { waitUntil: 'networkidle' });
   await p.evaluate((t) => document.documentElement.setAttribute('data-theme', t), theme);
-  await p.waitForSelector('#work-experience .exp__card-cta');
+  // a seção é lazy: rola a página inteira antes de esperar pelo seletor
+  const total = await p.evaluate(() => document.documentElement.scrollHeight);
+  for (let y = 0; y < total; y += 600) { await p.evaluate((v) => scrollTo(0, v), y); await p.waitForTimeout(60); }
+  await p.waitForSelector('#work-experience .exp__card-cta', { timeout: 30000 });
+  await p.waitForTimeout(800);
   for (let i = 0; i < 6; i++) {
     const off = await p.evaluate(() => {
       const r = document.querySelector('#work-experience').getBoundingClientRect();

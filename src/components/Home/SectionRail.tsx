@@ -22,38 +22,78 @@ function SectionRail({ sections }: { sections: RailSection[] }) {
   // The array literal from the caller is a new object on every render; the ids are what matter.
   const key = sections.map((s) => s.id).join(',');
 
-  // Sections below the fold are lazy, so look them up on every scroll instead of
-  // observing a snapshot of the DOM taken at mount.
+  // Layout is read only when it can have changed: once at mount and whenever the document
+  // box resizes (lazy sections mounting, images, fonts, a wider or narrower window). Every
+  // lazy section's placeholder already carries its id, so the lookups resolve from the start.
+  // A scroll only compares scrollY against the cached tops. Even scrollY flushes a dirty
+  // layout in Chromium, so it is read in a task queued from the scroll event, which runs
+  // right after that frame has painted (layout clean); the write shows on the next frame.
   useEffect(() => {
-    let raf = 0;
+    let pending = false;
+    let tops: number[] = [];
+    let docHeight = 0;
+    let vh = window.innerHeight;
+    let y = 0;
+    let lastProgress = -1;
+    const measure = () => {
+      y = window.scrollY;
+      vh = window.innerHeight;
+      tops = sectionsRef.current.map((s) => {
+        const el = document.getElementById(s.id);
+        return el ? el.getBoundingClientRect().top + y : Infinity;
+      });
+      docHeight = document.documentElement.scrollHeight;
+    };
     const update = () => {
-      raf = 0;
-      const list = sectionsRef.current;
-      const line = window.innerHeight * ACTIVE_LINE;
+      const n = tops.length;
+      const line = vh * ACTIVE_LINE;
       let idx = 0;
-      for (let i = 1; i < list.length; i++) {
-        const el = document.getElementById(list[i].id);
-        if (el && el.getBoundingClientRect().top <= line) idx = i;
+      for (let i = 1; i < n; i++) {
+        if (tops[i] - y <= line) idx = i;
       }
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      if (max > 2 && window.scrollY >= max - 2) idx = list.length - 1;
+      const max = docHeight - vh;
+      if (max > 2 && y >= max - 2) idx = n - 1;
       setActive((prev) => (prev === idx ? prev : idx));
-      if (fillRef.current) {
-        const progress = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+      const progress = max > 0 ? Math.min(1, Math.max(0, y / max)) : 0;
+      const ends = (progress === 0 || progress === 1) && progress !== lastProgress;
+      if (fillRef.current && (ends || Math.abs(progress - lastProgress) >= 0.002)) {
+        lastProgress = progress;
         fillRef.current.style.transform = `scaleY(${progress})`;
       }
     };
-    // rAF is only ever scheduled from a scroll or resize event, which do not fire on a hidden tab.
-    const schedule = () => {
-      if (!raf) raf = requestAnimationFrame(update);
+    // Only ever scheduled from a scroll or resize event, which do not fire on a hidden tab.
+    const channel = new MessageChannel();
+    channel.port1.onmessage = () => {
+      pending = false;
+      y = window.scrollY;
+      update();
     };
+    const schedule = () => {
+      if (pending) return;
+      pending = true;
+      channel.port2.postMessage(null);
+    };
+    // A height-only resize leaves the document box alone (the observer covers width changes),
+    // so only the viewport height needs refreshing.
+    const onResize = () => {
+      vh = window.innerHeight;
+      schedule();
+    };
+    // Runs right after layout, so these reads are already clean.
+    const ro = new ResizeObserver(() => {
+      measure();
+      update();
+    });
+    measure();
     update();
+    ro.observe(document.documentElement);
     window.addEventListener('scroll', schedule, { passive: true });
-    window.addEventListener('resize', schedule, { passive: true });
+    window.addEventListener('resize', onResize, { passive: true });
     return () => {
+      ro.disconnect();
       window.removeEventListener('scroll', schedule);
-      window.removeEventListener('resize', schedule);
-      cancelAnimationFrame(raf);
+      window.removeEventListener('resize', onResize);
+      channel.port1.close();
     };
   }, [key]);
 

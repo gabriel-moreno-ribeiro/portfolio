@@ -47,7 +47,7 @@ const NumbersAndStats = () => {
   return (
     <div className="numbers-and-stats" id="numbers" ref={sectionRef}>
       <div className="center-text">
-        <p className="text-p">By the Numbers</p>
+        <h2 className="section-title">By the <em>Numbers</em></h2>
       </div>
       <div className="card-container">
         <AnimatePresence initial={false}>
