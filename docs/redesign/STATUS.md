@@ -202,3 +202,11 @@ cuidando de Navbar, Footer, Library, News, Story, resumé e ícones do Contact.
 Fora da Experience no caminho frio (CPU 4×): montagem das seções lazy pelo React, avaliação do
 módulo do sticker (agora só no desktop e em idle), handler de scroll do PostHog
 (`disable_scroll_properties`), e o trilho lateral (leitura de layout por frame → cache).
+
+Commit da rodada: `c0d3d2d` (só caminhos do orquestrador; Navbar/Footer/Library/News/Story/files
+ficam para a outra sessão). Preview definitivo:
+https://portfolio-in0y31l3x-gabrielcms2112-6182s-projects.vercel.app (não é produção).
+Verificação: tsc e build limpos, 0 erros de console, 0 requisições falhas, 0 ocorrências de
+CEO/founder no site, bench quente da Experience sem frames longos próprios, trilho sem layout
+forçado. Pendências: no mobile o odômetro pode ficar sob um card; "from his garage" na legenda é
+inferência; caminho frio ainda tem frames longos de montagem lazy e do `.horizontal-scroller`.
