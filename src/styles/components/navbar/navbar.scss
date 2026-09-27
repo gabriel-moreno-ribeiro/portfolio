@@ -54,23 +54,33 @@
     }
   }
 
+  // Open state on desktop: the links sit on the right edge of the pill. Their padding is
+  // constant, so hovering one only tints it: the old 2px→20px padding jump pushed "Home."
+  // onto the name.
   .links {
     position: absolute;
     right: 36px;
     display: flex;
-    gap: 12px;
+    align-items: center;
+    gap: 6px;
 
     p,
-    button {
+    button,
+    a {
+      display: inline-flex;
+      align-items: center;
       background: none;
       border: 0;
+      border-radius: 24px;
       font-family: inherit;
       text-decoration: none;
       color: var(--black);
       font-size: 16px;
       font-weight: 500;
-      transition: all 0.3s;
-      padding: 2px;
+      line-height: 1.25;
+      white-space: nowrap;
+      padding: 4px 10px;
+      transition: background-color 0.3s, color 0.3s;
       cursor: pointer;
 
       &.hidden {
@@ -82,8 +92,16 @@
       &:hover,
       &:focus-visible {
         background-color: var(--white);
-        padding: 2px 20px;
-        border-radius: 24px;
+      }
+    }
+
+    .links__social {
+      padding: 6px;
+
+      svg {
+        display: block;
+        width: 18px;
+        height: 18px;
       }
     }
   }
@@ -96,54 +114,98 @@
 
     .links {
       p,
-      button {
-        color: $text-grey;
-        &:hover {
+      button,
+      a {
+        color: var(--text-grey); // #a8a8b8 in dark mode; the Sass $text-grey (#5f5f5f) was 2.6:1
+        &:hover,
+        &:focus-visible {
           background-color: #1e1e1e;
           color: $white;
+        }
+        &[aria-current="page"] {
+          color: var(--accent);
         }
       }
     }
   }
 }
 
+// Phones: the open pill is two rows. Row one keeps the name and the two toggles; the
+// links (and the brand marks) get the whole width of row two. In one row, LinkedIn
+// and GitHub used to land on top of the camera and theme buttons.
 @media screen and (max-width: 600px) {
   .navbar {
     left: 16px;
     padding: 12px 16px;
     gap: 8px;
+    row-gap: 0;
     box-sizing: border-box;
 
+    &.is-open { flex-wrap: wrap; }
+
     .heading {
+      flex-shrink: 0;
       font-size: 16px;
       margin: 0;
     }
 
+    // Closed: out of flow (and clipped), so the name never wraps under the icon.
+    // Open: a real second row with the full width of the pill.
     .links {
       position: absolute;
-      right: unset;
-      left: 40px;
-      display: flex;
-      gap: 8px;
+      top: 100%;
+      left: 16px;
+      right: 16px;
+      gap: 4px;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, margin-top 0.3s ease, padding-top 0.3s ease;
 
       p,
-      button {
+      button,
+      a {
         font-size: 13px;
-        white-space: nowrap;
+        padding: 4px 6px;
       }
+
+      .links__social {
+        margin-left: auto;
+        padding: 5px;
+
+        svg {
+          width: 16px;
+          height: 16px;
+        }
+
+        & + .links__social { margin-left: 0; }
+      }
+    }
+
+    &.is-open .links {
+      position: static;
+      order: 3;
+      flex-basis: 100%;
+      width: 100%;
+      max-height: 48px;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid rgba($black, 0.08);
     }
 
     .navbar-toggles {
       position: absolute;
+      top: 12px;
       right: 16px;
       display: flex;
       align-items: center;
       gap: 4px;
 
       .navbar-toggle-btn {
+        width: 28px;
+        height: 28px;
         border-radius: 50%;
         border: none;
-        padding: 2px;
+        padding: 0;
         background: transparent;
         color: var(--black);
         cursor: pointer;
@@ -171,15 +233,7 @@
       background-color: rgba($black, 0.8);
       border: 2px solid $white;
 
-      .links {
-        p {
-          color: $white;
-          &:hover {
-            background-color: #1e1e1e;
-            color: $white;
-          }
-        }
-      }
+      &.is-open .links { border-top-color: rgba($white, 0.14); }
 
       .navbar-toggles .navbar-toggle-btn {
         color: $white;
@@ -194,6 +248,21 @@
         }
       }
     }
+  }
+}
+
+// Very narrow phones: the name and the toggles no longer share row one, so the name
+// steps aside while the menu is open; the links shrink to fit 256px of row two.
+@media screen and (max-width: 340px) {
+  .navbar.is-open .heading { visibility: hidden; }
+  .navbar .links {
+    p,
+    button,
+    a {
+      font-size: 12px;
+      padding: 4px 4px;
+    }
+    .links__social { padding: 4px; }
   }
 }
 

@@ -21,7 +21,7 @@ function FilesPage() {
   const [copied, setCopied] = useState<string | null>(null);
 
   useDocumentHead({
-    title: 'Documents — Gabriel Moreno Ribeiro',
+    title: 'Documents · Gabriel Moreno Ribeiro',
     description: 'Score reports and school profiles, as direct links.',
     noindex: true,
   });

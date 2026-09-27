@@ -22,18 +22,29 @@ export const fileUrl = (file: string) => `${SITE}/files/${file}`;
 
 export const fileGroups: FileGroup[] = [
   {
+    heading: 'Resume',
+    items: [
+      {
+        file: 'gabriel-moreno-ribeiro-resume.pdf',
+        title: 'Resume',
+        note: 'One page: education, HIBEEX, Projeto Candela, research, awards, skills.',
+        meta: 'September 2026',
+      },
+    ],
+  },
+  {
     heading: 'Tests',
     items: [
       {
         file: 'sat-score-report.pdf',
         title: 'SAT score report',
-        note: '1510 total — 730 reading and writing, 780 math',
+        note: '1510 total: 730 reading and writing, 780 math',
         meta: 'September 2025',
       },
       {
         file: 'duolingo-english-test.pdf',
         title: 'Duolingo English Test',
-        note: '130 overall — CEFR C1',
+        note: '130 overall, CEFR C1',
         meta: 'August 2026',
       },
     ],
@@ -43,13 +54,13 @@ export const fileGroups: FileGroup[] = [
     items: [
       {
         file: 'ari-de-sa-school-profile.pdf',
-        title: 'Colégio Ari de Sá — school profile',
+        title: 'Colégio Ari de Sá school profile',
         note: 'Fortaleza, Ceará. Grading, curriculum and class rank context.',
-        meta: '2024–2025',
+        meta: '2024-2025',
       },
       {
         file: 'colegio-militar-salvador-school-profile.pdf',
-        title: 'Colégio Militar de Salvador — school profile',
+        title: 'Colégio Militar de Salvador school profile',
         note: 'Salvador, Bahia. Curriculum and grading context.',
         meta: '2026',
       },

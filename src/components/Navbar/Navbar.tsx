@@ -1,7 +1,8 @@
 import { motion } from 'motion/react';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FiVideoOff, FiX } from 'react-icons/fi';
 import { IoMoonOutline, IoSunnyOutline } from 'react-icons/io5';
+import { SiGithub, SiLinkedin } from 'react-icons/si';
 import { useLocation, useNavigate } from 'react-router-dom';
 import useIsMobile from '../../hooks/useIsMobile';
 import { useHandsfreeStore } from '../../store/handsfreeStore';
@@ -11,6 +12,19 @@ import MenuIcon from './MenuIcon';
 
 const supportsCamera =
   typeof navigator !== 'undefined' && !!navigator.mediaDevices?.getUserMedia;
+
+const links = [
+  { name: 'Home.', href: '/' },
+  { name: 'Library.', href: '/library' },
+  { name: 'News.', href: '/news' },
+  { name: 'Story.', href: '/story' },
+];
+
+// Brand marks instead of the words: they read faster and take a third of the width.
+const socials = [
+  { name: 'LinkedIn', href: 'https://linkedin.com/in/gabriel-moreno-ribeiro', Icon: SiLinkedin },
+  { name: 'GitHub', href: 'https://github.com/gabriel-moreno-ribeiro', Icon: SiGithub },
+];
 
 function Navbar() {
   const isMobile = useIsMobile();
@@ -47,35 +61,11 @@ function Navbar() {
     }
   };
 
-  const links = [
-    {
-      name: 'Home.',
-      href: '/',
-    },
-    {
-      name: 'Library.',
-      href: '/library',
-    },
-    {
-      name: 'News.',
-      href: '/news',
-    },
-    {
-      name: 'Story.',
-      href: '/story',
-    },
-    {
-      name: 'LinkedIn.',
-      href: 'https://linkedin.com/in/gabriel-moreno-ribeiro',
-    },
-    {
-      name: 'GitHub.',
-      href: 'https://github.com/gabriel-moreno-ribeiro',
-    },
-  ];
-  // 240px fits "Gabriel Moreno Ribeiro." at 16px plus the menu icon; 175px clipped the name
-  const collapsedWidth = isMobile ? '240px' : 'auto';
-  const expandedWidth = isMobile ? 'calc(100vw - 32px)' : '700px';
+  // 240px fits "Gabriel Moreno Ribeiro." at 16px plus the menu icon; 175px clipped the name.
+  // Desktop open: name (202px) + icon + four links + two marks = 708px measured; 740 leaves air.
+  // On phones the links drop to a second row, so the width only needs the name and the toggles.
+  const collapsedWidth = isMobile ? '246px' : 'auto'; // +6: the dark theme adds a 2px border
+  const expandedWidth = isMobile ? 'calc(100vw - 32px)' : '740px';
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -92,16 +82,14 @@ function Navbar() {
       } else {
         navigate(link.href);
       }
-    } else if (link.href.startsWith('/')) {
-      navigate(link.href);
     } else {
-      window.open(link.href, '_blank');
+      navigate(link.href);
     }
   };
 
   return (
     <motion.nav
-      className="navbar"
+      className={`navbar ${isHovered ? 'is-open' : ''}`}
       aria-label="Site menu"
       onMouseEnter={!isMobile ? () => setIsHovered(true) : undefined}
       onMouseLeave={!isMobile ? () => setIsHovered(false) : undefined}
@@ -127,11 +115,7 @@ function Navbar() {
     >
       <MenuIcon isHovered={isHovered} setIsHovered={setIsHovered} />
       {isMobile ? (
-        <p
-          className="heading"
-          aria-hidden="true"
-          style={{ visibility: isHovered ? 'hidden' : 'visible' }}
-        >
+        <p className="heading" aria-hidden="true">
           Gabriel Moreno Ribeiro.
         </p>
       ) : (
@@ -154,19 +138,34 @@ function Navbar() {
         }}
         style={{ pointerEvents: isHovered ? 'auto' : 'none' }}
       >
-        {links.map((link, i) => (
+        {links.map((link) => (
           <button
             type="button"
             onClick={e => {
               e.stopPropagation();
               handleLinkClick(link);
             }}
-            key={`link-${i}`}
+            key={link.href}
             aria-current={isCurrent(link.href) ? 'page' : undefined}
             tabIndex={isHovered ? 0 : -1}
           >
             {link.name}
           </button>
+        ))}
+        {socials.map(({ name, href, Icon }) => (
+          <a
+            key={href}
+            className="links__social"
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${name} (opens in a new tab)`}
+            title={name}
+            tabIndex={isHovered ? 0 : -1}
+            onClick={e => e.stopPropagation()}
+          >
+            <Icon aria-hidden="true" />
+          </a>
         ))}
       </motion.div>
       {isMobile && (
@@ -188,6 +187,8 @@ function Navbar() {
                 handleCameraClick();
               }}
               title={cameraEnabled ? 'Disable camera' : 'Enable camera'}
+              aria-label={cameraEnabled ? 'Disable camera' : 'Enable camera'}
+              tabIndex={isHovered ? 0 : -1}
             >
               {cameraEnabled ? <FiX /> : <FiVideoOff />}
             </button>
@@ -199,6 +200,7 @@ function Navbar() {
               toggleDarkMode();
             }}
             aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
+            tabIndex={isHovered ? 0 : -1}
           >
             {darkMode ? <IoSunnyOutline /> : <IoMoonOutline />}
           </button>

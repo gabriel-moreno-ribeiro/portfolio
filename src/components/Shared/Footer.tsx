@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { SiGithub, SiLinkedin } from "react-icons/si";
 
 const pages = [
   { name: "Home.", to: "/" },
@@ -6,6 +7,12 @@ const pages = [
   { name: "News.", to: "/news" },
   { name: "Story.", to: "/story" },
   { name: "Contact.", to: "/#contact" },
+];
+
+// Brand marks instead of the words "LinkedIn." and "GitHub."
+const socials = [
+  { name: "LinkedIn", href: "https://linkedin.com/in/gabriel-moreno-ribeiro", Icon: SiLinkedin },
+  { name: "GitHub", href: "https://github.com/gabriel-moreno-ribeiro", Icon: SiGithub },
 ];
 
 function obfuscatedEmail() {
@@ -16,9 +23,8 @@ function obfuscatedEmail() {
 
 function Footer() {
   const links = [
-    { name: "LinkedIn.", href: "https://linkedin.com/in/gabriel-moreno-ribeiro" },
-    { name: "GitHub.", href: "https://github.com/gabriel-moreno-ribeiro" },
     { name: "Email.", href: `mailto:${obfuscatedEmail()}` },
+    { name: "Resume.", href: "/files/gabriel-moreno-ribeiro-resume.pdf", newTab: true },
     { name: "Privacy.", href: "/privacy" },
     { name: "Terms.", href: "/terms" },
     { name: "llms.txt", href: "/llms.txt" },
@@ -43,10 +49,23 @@ function Footer() {
         ))}
       </nav>
       <div className="links">
+        {socials.map(({ name, href, Icon }) => (
+          <a
+            key={href}
+            className="footer__social"
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${name} (opens in a new tab)`}
+            title={name}
+          >
+            <Icon aria-hidden="true" />
+          </a>
+        ))}
         {links.map((link, i) => (
           <a
             href={link.href}
-            target={link.href.startsWith("/") ? "_self" : "_blank"}
+            target={link.href.startsWith("/") && !("newTab" in link) ? "_self" : "_blank"}
             rel="noopener noreferrer"
             key={`footer-link-${i}`}
           >
