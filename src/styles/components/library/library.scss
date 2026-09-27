@@ -6,6 +6,8 @@
   --lib-ease: cubic-bezier(0.22, 1, 0.36, 1);
   --lib-scrim: color-mix(in srgb, var(--bg) 94%, transparent);
   --lib-glass: color-mix(in srgb, var(--surface) 86%, transparent);
+  --lib-veil: color-mix(in srgb, var(--bg) 94%, transparent);
+  --lib-ink-pad: 8px;
 
   position: relative;
   width: 100%;
@@ -28,6 +30,36 @@
   font: inherit;
   cursor: pointer;
 }
+
+// ── Placeholder shelf ────────────────────────────────────────────────────────
+// Wall, plank and floor in the colors the scene renders, at the plank's projected
+// position (--shelf-* from ShelfLibrary). The canvas fades in over it.
+.library__stage {
+  --stage-wall: #e7e2db;
+  --stage-plank: #896047;
+  --stage-front: #4b2e20;
+  --stage-floor: #dad4cd;
+
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(
+    180deg,
+    var(--stage-wall) var(--shelf-top),
+    var(--stage-plank) var(--shelf-top) var(--shelf-edge),
+    var(--stage-front) var(--shelf-edge) var(--shelf-bottom),
+    var(--stage-floor) var(--shelf-bottom)
+  );
+  transition: opacity 0s linear 1.1s;
+}
+[data-theme="dark"] .library__stage {
+  --stage-wall: #010108;
+  --stage-plank: #271813;
+  --stage-front: #24120b;
+  --stage-floor: #000002;
+}
+.library--ready .library__stage,
+.library--no3d .library__stage { opacity: 0; }
 
 // ── Canvas ───────────────────────────────────────────────────────────────────
 .library__canvas {
@@ -61,7 +93,7 @@
   > * { pointer-events: auto; }
 }
 
-// ── Top-left crumb + status ──────────────────────────────────────────────────
+// ── Top-left crumb: Home, the page name, All books ──────────────────────────
 .library__eyebrow {
   position: absolute;
   z-index: 20;
@@ -75,78 +107,143 @@
 .library__crumb {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin: 0;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--accent);
+  gap: 18px;
 
   a { pointer-events: auto; background: var(--lib-glass); }
-
-  span + span::before {
-    content: "·";
-    margin: 0 10px 0 0;
-    color: var(--fg-muted);
-  }
-  span:last-child { color: var(--fg-muted); }
 }
 
+// Same voice as "In the news.", at crumb size
+.library__name {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 24px;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  color: var(--fg);
+}
+
+// Text link, the recipe of "Open on Instagram" on /news: accent, a faint rule,
+// and a full rule that grows from the left on hover (transform only)
+.library__textlink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 24px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent);
+  pointer-events: auto;
+  transition: opacity 260ms ease;
+
+  > span {
+    position: relative;
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      bottom: -3px;
+      left: 0;
+      height: 1px;
+      background: currentColor;
+    }
+    &::before { opacity: 0.35; }
+    &::after {
+      transform: scaleX(0);
+      transform-origin: left center;
+      transition: transform 0.35s var(--lib-ease);
+    }
+  }
+  svg { transition: transform 0.3s var(--lib-ease); }
+
+  &:hover:not(:disabled),
+  &:focus-visible {
+    > span::after { transform: scaleX(1); }
+    svg { transform: translate(2px, -2px); }
+  }
+  &:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 4px; border-radius: 4px; }
+  &:disabled { opacity: 0.5; cursor: default; }
+}
+
+.library__index-toggle--float { display: none; }
+
 // ── Browse caption ───────────────────────────────────────────────────────────
+// No box: the words sit on the wall, each line on its own strip of paper
+// (.library__ink), so the spines and the wood show between and around them.
+// Shifted left by the strip's padding so the letters line up with the ruler.
 .library__caption {
   position: absolute;
   z-index: 16;
-  bottom: 96px;
-  left: clamp(24px, 5vw, 82px);
-  width: min(400px, 34vw);
-  padding: 22px 24px 24px;
-  border: 1px solid var(--border);
-  border-radius: 24px;
-  background: var(--lib-glass);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+  bottom: 108px;
+  left: calc(clamp(24px, 5vw, 82px) - var(--lib-ink-pad));
+  display: grid;
+  width: min(440px, 36vw);
+  pointer-events: none;
   transition: opacity 420ms ease, transform 520ms var(--lib-ease);
 }
-[data-theme="dark"] .library__caption { box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4); }
+
+.library__ink {
+  padding: 1px var(--lib-ink-pad);
+  background: var(--lib-veil);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+// Outgoing and incoming book share one cell while they crossfade
+.library__caption-body { grid-area: 1 / 1; min-width: 0; }
 .library--focused .library__caption {
   opacity: 0;
   transform: translate3d(-22px, 0, 0);
   pointer-events: none;
 }
 
-.library__index {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 0 0 12px;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  color: var(--accent);
-
-  i { width: 28px; height: 1px; background: var(--accent-decor); }
-  span:last-child { color: var(--fg-muted); }
-}
-
+// The title is the first thing read; line-height leaves a hairline of shelf between strips
 .library__title {
   margin: 0;
   font-family: var(--font-serif);
   font-style: italic;
   font-weight: 400;
-  font-size: clamp(30px, 2.9vw, 42px);
+  font-size: clamp(32px, 3.1vw, 46px);
   letter-spacing: -0.02em;
-  line-height: 1.02;
+  line-height: 1.2;
   text-wrap: balance;
   color: var(--fg);
 }
 
 .library__author {
-  margin: 10px 0 0;
+  margin: 8px 0 0;
   font-size: 15px;
   font-weight: 500;
+  line-height: 1.5;
+  color: var(--fg);
+}
+
+.library__read {
+  margin: 2px 0 0;
+  font-size: 13px;
+  line-height: 1.6;
   color: var(--fg-muted);
+
+  // "a favorite": one word in the title's voice instead of a tag
+  em {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 15px;
+    color: var(--fg);
+  }
+}
+
+// The review's whole first sentence, never cut
+.library__review {
+  margin: 12px 0 0;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 17px;
+  line-height: 1.5;
+  text-wrap: pretty;
+  color: var(--fg);
 }
 
 // Pill buttons, same recipe as .btn.outline on the home page
@@ -175,11 +272,12 @@
   &:disabled { cursor: default; }
 }
 
+// "Open it": a text link on its own strip of paper
 .library__inspect {
-  margin-top: 18px;
-  min-height: 40px;
-  padding: 8px 18px;
-  font-size: 14px;
+  justify-self: start;
+  margin-top: 12px;
+  padding: 2px var(--lib-ink-pad) 5px;
+  background: var(--lib-veil);
 }
 
 // ── Arrows ───────────────────────────────────────────────────────────────────
@@ -210,17 +308,18 @@
 }
 .library--focused .library__arrow { opacity: 0; pointer-events: none; }
 
-// ── Position ticks ───────────────────────────────────────────────────────────
+// ── Age ruler ────────────────────────────────────────────────────────────────
+// One bar per reading age, as tall as the number of books read that year
 .library__index-bar {
   position: absolute;
   z-index: 19;
   right: clamp(24px, 5vw, 82px);
-  bottom: 34px;
+  bottom: 26px;
   left: clamp(24px, 5vw, 82px);
-  display: grid;
-  grid-template-columns: minmax(280px, 1fr) auto;
+  display: flex;
   gap: 38px;
-  align-items: end;
+  align-items: flex-end;
+  justify-content: space-between;
   transition: opacity 300ms ease, transform 420ms var(--lib-ease);
 }
 .library--focused .library__index-bar {
@@ -229,41 +328,80 @@
   pointer-events: none;
 }
 
-.library__ticks {
+.library__ages {
   display: grid;
+  flex: 0 1 560px;
   grid-auto-flow: column;
   grid-auto-columns: 1fr;
+  min-width: 0;
+}
+
+.library__age {
+  --tip-x: -50%;
+  position: relative;
+  display: grid;
+  grid-template-rows: 18px auto;
+  gap: 7px;
+  justify-items: center;
   align-items: end;
-  height: 24px; // 24px = WCAG 2.2 minimum target size (was 22)
+  min-height: 44px;
+  padding-top: 6px;
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 11px;
+  line-height: 1;
+  color: var(--fg);
 
-  button {
-    position: relative;
-    width: 100%;
-    height: 24px;
+  &:disabled { cursor: default; }
+  &:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; border-radius: 6px; }
 
-    &::before { content: ""; position: absolute; inset: -8px 0; }
+  // Edge ages keep their legend inside the bar
+  &:first-child { --tip-x: 0; .library__age-tip { left: 0; } }
+  &:last-child { --tip-x: 0; .library__age-tip { right: 0; left: auto; } }
+}
 
-    span {
-      position: absolute;
-      right: 50%;
-      bottom: 1px;
-      width: 1px;
-      height: 7px;
-      background: var(--fg);
-      opacity: 0.4;
-      transition: height 220ms ease, opacity 220ms ease, width 220ms ease, background-color 220ms ease;
-    }
+.library__age-bar {
+  width: 2px;
+  background: var(--fg);
+  opacity: 0.7;
+  transition: opacity 200ms ease;
+}
+.library__age:hover:not(:disabled) .library__age-bar { opacity: 1; }
+.library__age.is-active .library__age-bar { background: var(--accent); opacity: 1; }
+.library__age.is-active .library__age-label {
+  // --accent-tag is 4.1:1 on the light scene floor; a touch of --fg takes it past 4.5 in both themes
+  color: color-mix(in srgb, var(--accent-tag) 80%, var(--fg));
+  font-weight: 700;
+}
+.library__age.is-empty { cursor: default; opacity: 0.45; }
 
-    &:hover:not(:disabled) span { height: 13px; opacity: 0.8; }
-    &.is-active span { width: 2px; height: 20px; opacity: 1; background: var(--accent-decor); }
-    &:disabled { cursor: default; }
-  }
+// "age 12 · 4 books": the current age by default, the hovered or focused one on demand
+.library__age-tip {
+  position: absolute;
+  bottom: calc(100% + 2px);
+  left: 50%;
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--fg);
+  font-size: 11px;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translate(var(--tip-x), 4px);
+  pointer-events: none;
+  transition: opacity 160ms ease, transform 220ms var(--lib-ease);
+}
+.library__ages:not(:hover):not(:focus-within) .is-active .library__age-tip,
+.library__age:hover:not(:disabled) .library__age-tip,
+.library__age:focus-visible .library__age-tip {
+  opacity: 1;
+  transform: translate(var(--tip-x), 0);
 }
 
 .library__hint {
   margin: 0;
   font-size: 12px;
-  color: var(--fg-muted);
+  color: color-mix(in srgb, var(--fg-muted) 75%, var(--fg)); // 5.8:1 on the light scene floor
   white-space: nowrap;
 }
 
@@ -464,51 +602,6 @@
   }
 }
 
-// ── Loading ──────────────────────────────────────────────────────────────────
-.library__loading {
-  position: absolute;
-  z-index: 40;
-  inset: 0;
-  display: grid;
-  place-content: center;
-  justify-items: center;
-  gap: 22px;
-  background: var(--bg);
-  transition: opacity 720ms ease 120ms, visibility 720ms ease 120ms;
-
-  p {
-    margin: 0;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--fg-muted);
-  }
-}
-.library--ready .library__loading { opacity: 0; visibility: hidden; }
-
-.library__loading-mark {
-  display: flex;
-  gap: 6px;
-  align-items: flex-end;
-  height: 44px;
-
-  span {
-    width: 10px;
-    border-radius: 3px;
-    background: var(--fg);
-    animation: lib-assemble 1.2s ease-in-out infinite alternate;
-
-    &:nth-child(1) { height: 40px; }
-    &:nth-child(2) { height: 30px; background: var(--accent-decor); animation-delay: 0.12s; }
-    &:nth-child(3) { height: 36px; animation-delay: 0.24s; }
-  }
-}
-@keyframes lib-assemble {
-  from { transform: translateY(0); }
-  to { transform: translateY(-8px); }
-}
-
 .library__credit {
   position: absolute;
   z-index: 18;
@@ -525,17 +618,306 @@
 }
 .library--focused .library__credit { opacity: 0; }
 
+// ── No WebGL: the list carries the page, the card and ruler run on the data ──
+.library--no3d {
+  .library__canvas,
+  .library__arrow,
+  .library__hint,
+  .library__credit,
+  .library__index-toggle--float { display: none; }
+}
+@media (min-width: 761px) {
+  .library--no3d .library__scrim { display: none; }
+}
+
+// ── Index drawer ─────────────────────────────────────────────────────────────
+.library__scrim {
+  position: absolute;
+  z-index: 23;
+  inset: 0;
+  background: color-mix(in srgb, var(--bg) 46%, transparent);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 300ms ease, visibility 0s linear 300ms;
+
+  &.is-open { opacity: 1; visibility: visible; transition-delay: 0s; }
+}
+
+.library__drawer {
+  position: absolute;
+  z-index: 24;
+  top: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  width: min(540px, 42vw);
+  height: 100%;
+  padding-top: 92px;
+  border-left: 1px solid var(--border);
+  background: var(--bg);
+  box-shadow: -24px 0 60px rgba(0, 0, 0, 0.06);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(44px);
+  transition: opacity 320ms ease, transform 560ms var(--lib-ease), visibility 0s linear 560ms;
+
+  &.is-open { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
+}
+[data-theme="dark"] .library__drawer { box-shadow: -24px 0 60px rgba(0, 0, 0, 0.4); }
+
+.library__drawer-top {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0 clamp(24px, 3vw, 40px) 14px;
+
+  h2 {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 34px;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  p {
+    margin: 6px 0 0;
+    font-size: 13px;
+    color: var(--fg-muted);
+  }
+}
+
+.library__drawer-note {
+  margin: 0;
+  padding: 0 clamp(24px, 3vw, 40px) 14px;
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--fg-muted);
+}
+
+.library__drawer-close {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border: 2px solid var(--border);
+  border-radius: 50%;
+  background: var(--lib-glass);
+  color: var(--fg);
+  font-size: 16px;
+  transition: background-color 220ms ease, color 220ms ease, border-color 220ms ease;
+
+  &:hover { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+}
+
+// Three words; the active one is in ink and underlined
+.library__filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 22px;
+  padding: 0 clamp(24px, 3vw, 40px) 8px;
+  border-bottom: 1px solid var(--border);
+
+  button {
+    position: relative;
+    min-height: 40px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--fg-muted);
+    transition: color 0.25s;
+
+    &::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      bottom: 8px;
+      left: 0;
+      height: 1.5px;
+      background: currentColor;
+      transform: scaleX(0);
+      transform-origin: left center;
+      transition: transform 0.35s var(--lib-ease);
+    }
+    &:hover { color: var(--fg); }
+    &[aria-pressed="true"] { color: var(--fg); }
+    &[aria-pressed="true"]::after { transform: scaleX(1); }
+    &:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; border-radius: 4px; }
+  }
+}
+
+.library__drawer-empty {
+  margin: 0;
+  padding: 28px clamp(24px, 3vw, 40px);
+  font-size: 15px;
+  color: var(--fg-muted);
+}
+
+.library__list {
+  flex: 1;
+  min-height: 0;
+  margin: 0;
+  padding: 0 0 96px; // the last row clears the fixed terminal button (bottom-right, 66px tall)
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+}
+
+// One group per reading age; the heading sticks while its books scroll by
+.library__group-head {
+  position: sticky;
+  z-index: 1;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0;
+  padding: 14px clamp(16px, 2vw, 28px) 8px clamp(20px, 3vw, 40px);
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--fg-muted);
+
+  span:first-child { color: var(--fg); }
+}
+
+.library__group-list {
+  margin: 0;
+  padding: 4px 0 10px;
+  list-style: none;
+}
+
+.library__row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 clamp(16px, 2vw, 28px) 0 clamp(20px, 3vw, 40px);
+  transition: background-color 200ms ease;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 10px;
+    bottom: 10px;
+    left: 0;
+    width: 2px;
+    background: var(--accent-decor);
+    opacity: 0;
+    transition: opacity 200ms ease;
+  }
+  &[aria-current="true"]::before { opacity: 1; }
+  &[aria-current="true"] .library__row-num { color: var(--accent); }
+  &:hover { background: color-mix(in srgb, var(--fg) 4%, transparent); }
+}
+
+.library__row-main {
+  display: grid;
+  flex: 1;
+  grid-template-columns: 30px minmax(0, 1fr) auto;
+  cursor: pointer;
+  gap: 12px;
+  align-items: baseline;
+  min-width: 0;
+  padding: 12px 0;
+  text-align: left;
+  color: inherit;
+}
+
+.library__row-num {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--fg-muted);
+  transition: color 200ms ease;
+}
+
+.library__row-text { display: block; min-width: 0; }
+
+.library__row-title {
+  display: block;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 19px;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  color: var(--fg);
+}
+
+.library__row-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+  margin-top: 4px;
+  font-size: 12.5px;
+  color: var(--fg-muted);
+
+  span + span::before { content: "·"; margin-right: 8px; }
+}
+
+// Orange is kept for the one book being read now
+.library__row-title.is-reading { color: var(--accent); }
+
+// The whole row opens the book; the arrow only confirms it on hover
+.library__row-go {
+  align-self: center;
+  color: var(--fg-muted);
+  opacity: 0;
+  transition: opacity 200ms ease, transform 0.3s var(--lib-ease);
+}
+.library__row-main:hover .library__row-go,
+.library__row-main:focus-visible .library__row-go { opacity: 1; transform: translate(2px, -2px); }
+.library__row-main:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: -2px; border-radius: 6px; }
+
+// No WebGL: each row is a disclosure with the full entry
+.library__row--details {
+  display: block;
+  padding: 0;
+
+  .library__row-main {
+    grid-template-columns: 30px minmax(0, 1fr) auto auto;
+    padding: 12px clamp(16px, 2vw, 28px) 12px clamp(20px, 3vw, 40px);
+    cursor: pointer;
+    list-style: none;
+    &::-webkit-details-marker { display: none; }
+  }
+  .library__row-chev {
+    align-self: center;
+    color: var(--fg-muted);
+    transition: transform 300ms var(--lib-ease);
+  }
+  details[open] .library__row-chev { transform: rotate(180deg); }
+}
+
+.library__row-body {
+  padding: 0 clamp(16px, 2vw, 28px) 22px calc(clamp(20px, 3vw, 40px) + 42px);
+  font-size: 15px;
+  line-height: 1.55;
+
+  > p { margin: 0; }
+  .library__quote { margin-top: 16px; }
+  .library__facts { margin-top: 16px; padding-top: 14px; gap: 12px 20px; }
+  .library__link { margin-top: 16px; }
+}
+
 // ── Responsive ───────────────────────────────────────────────────────────────
 @media (max-width: 1020px) {
   .library__panel { width: min(570px, 48vw); }
   .library__panel-inner { padding-right: 34px; padding-left: 60px; }
   .library__controls span:nth-child(2) { display: none; }
   .library__credit { display: none; }
+  .library__drawer { width: min(520px, 52vw); }
 }
 
 @media (max-height: 700px) and (min-width: 761px) {
-  .library__caption { bottom: 84px; padding: 16px 20px 18px; }
-  .library__title { font-size: 26px; }
+  .library__caption { bottom: 100px; }
+  .library__review { margin-top: 10px; font-size: 16px; }
+  .library__title { font-size: 30px; }
   .library__panel-copy { padding-top: 18px; padding-bottom: 18px; }
   .library__panel-title { font-size: clamp(36px, 4vw, 56px); }
   .library__panel-desc, .library__quote, .library__facts { margin-top: 20px; }
@@ -544,24 +926,27 @@
 @media (max-width: 760px) {
   .library__eyebrow { top: 80px; left: 18px; }
   .library--focused .library__eyebrow { opacity: 0; }
-  .library__crumb { font-size: 10px; gap: 8px; }
+  .library__crumb { gap: 14px; }
+  .library__name { font-size: 22px; }
+  // One "All books" on phones: the one between the arrows
+  .library__crumb .library__index-toggle { display: none; }
+  .library--no3d .library__crumb .library__index-toggle { display: inline-flex; } // the float one is hidden there
 
   .library__caption {
-    right: 18px;
-    bottom: 124px;
-    left: 18px;
+    right: calc(18px - var(--lib-ink-pad));
+    bottom: 134px;
+    left: calc(18px - var(--lib-ink-pad));
     width: auto;
-    padding: 16px 18px 18px;
-    border-radius: 20px;
   }
-  .library__index { margin-bottom: 8px; }
-  .library__title { font-size: clamp(24px, 7vw, 32px); }
-  .library__author { margin-top: 6px; font-size: 13px; }
-  .library__inspect { margin-top: 12px; min-height: 36px; padding: 6px 14px; font-size: 13px; }
+  .library__review { margin-top: 8px; font-size: 15px; line-height: 1.45; }
+  .library__title { font-size: clamp(26px, 7.4vw, 32px); }
+  .library__author { margin-top: 4px; font-size: 13px; }
+  .library__read { font-size: 12px; em { font-size: 14px; } }
+  .library__inspect { margin-top: 8px; font-size: 13px; }
 
   .library__arrow {
     top: auto;
-    bottom: 60px;
+    bottom: 80px;
     width: 42px;
     height: 42px;
     font-size: 16px;
@@ -569,11 +954,48 @@
     &--right { right: 18px; }
   }
 
-  .library__index-bar { right: 72px; bottom: 72px; left: 72px; display: block; }
-  // 28 ticks in <600px are ~10px wide each: below the 24px target minimum and unusable by touch.
-  // The panel counter ("01 — 28"), arrows, drag and keyboard cover navigation on small screens.
-  .library__ticks { display: none; }
+  // "All books" between the arrows, a text link at the arrows' height
+  .library__index-toggle--float {
+    position: absolute;
+    z-index: 17;
+    bottom: 80px;
+    left: 50%;
+    display: inline-flex;
+    justify-content: center;
+    min-width: 96px;
+    min-height: 42px;
+    transform: translateX(-50%);
+  }
+  .library--focused .library__index-toggle--float { opacity: 0; pointer-events: none; }
+
+  .library__drawer {
+    top: auto;
+    bottom: 0;
+    width: 100%;
+    height: min(78dvh, 640px);
+    padding-top: 18px;
+    border-left: 0;
+    border-top: 1px solid var(--border);
+    border-radius: 24px 24px 0 0;
+    transform: translateY(100%);
+
+    &.is-open { transform: none; }
+  }
+  .library__drawer-top { padding: 0 18px 12px; h2 { font-size: 28px; } }
+  .library__filters { padding: 0 18px 12px; }
+  .library__drawer-empty { padding: 24px 18px; }
+  .library__list { padding-bottom: max(24px, env(safe-area-inset-bottom)); } // no terminal button on phones
+  .library__row { padding: 0 12px 0 18px; }
+  .library__row-title { font-size: 18px; }
+  .library__row--details .library__row-main { padding-right: 14px; padding-left: 18px; }
+  .library__row-body { padding: 0 14px 20px 60px; .library__facts { grid-template-columns: 1fr; } }
+
+  // Full width so each age stays a 24px+ target (12 ages in 354px is ~29px each)
+  .library__index-bar { right: 18px; bottom: max(8px, env(safe-area-inset-bottom)); left: 18px; }
+  .library__ages { flex-basis: 100%; }
   .library__hint { display: none; }
+  // No room for a standing legend between the ruler and the arrows: it shows on tap or focus only
+  .library__ages:not(:hover):not(:focus-within) .is-active .library__age-tip { opacity: 0; }
 
   .library__panel {
     top: auto;
@@ -607,7 +1029,6 @@
 
 @media (pointer: coarse) {
   .library__canvas { cursor: default; }
-  .library__ticks button { min-height: 28px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

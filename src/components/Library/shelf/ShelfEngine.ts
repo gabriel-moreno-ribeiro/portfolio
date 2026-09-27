@@ -204,6 +204,12 @@ export class ShelfEngine {
   private responsiveBrowseTarget = browseTarget.clone();
   private lastTimestamp = 0;
   private lastDiagnosticsAt = 0;
+  // Idle skip: the scene only renders while something moves, plus a short tail
+  // after anything that changes pixels without moving (theme, resize, a cover load)
+  private renderUntil = 0;
+  // The cover sheen's own clock: it only advances on frames that are drawn,
+  // so a resting shelf holds the sheen still instead of jumping when it wakes
+  private sheenClock = 0;
   private isDisposed = false;
   private hemisphere!: THREE.HemisphereLight;
   private keyLight!: THREE.DirectionalLight;
@@ -259,6 +265,7 @@ export class ShelfEngine {
     this.handleResize();
     this.renderer.compile(this.scene, this.camera);
     this.callbacks.onReady();
+    this.invalidate(500);
     this.animate();
 
     (
@@ -708,10 +715,10 @@ export class ShelfEngine {
       this.browseBy(-1);
     } else if (event.key === "Home") {
       event.preventDefault();
-      this.browseTo(0);
+      this.snapTo(0);
     } else if (event.key === "End") {
       event.preventDefault();
-      this.browseTo(this.runtimeBooks.length - 1);
+      this.snapTo(this.runtimeBooks.length - 1);
     } else if (event.key === "Enter" || event.key === " ") {
       event.preventDefault();
       this.focusBook(this.activeIndex);
@@ -914,6 +921,9 @@ export class ShelfEngine {
     this.updateBooks(delta, elapsed);
 
     if (this.controls.enabled) this.controls.update();
+    // Settled shelf: nothing moved, so the last frame is still right
+    if (this.isSettled() && timestamp > this.renderUntil) return;
+    this.sheenClock += delta;
     this.renderer.render(this.scene, this.camera);
     if (timestamp - this.lastDiagnosticsAt > 500) {
       const diagnostics = this.getDiagnostics();
@@ -935,6 +945,22 @@ export class ShelfEngine {
       this.lastDiagnosticsAt = timestamp;
     }
   };
+
+  private invalidate(ms = 250) {
+    this.renderUntil = Math.max(this.renderUntil, performance.now() + ms);
+  }
+
+  private isSettled() {
+    if (this.mode !== "browse" || this.pointerDown || this.pendingFocusIndex !== null) return false;
+    if (this.browseMotionPhase !== "idle" || this.presentedIndex !== this.activeIndex) return false;
+    if (Math.abs(this.targetScrollIndex - this.scrollIndex) > 1e-4) return false;
+    if (Math.abs(this.targetScrollIndex - Math.round(this.targetScrollIndex)) > 1e-4) return false;
+    if (this.focusProgress > 1e-4) return false;
+    if (this.camera.position.distanceToSquared(this.responsiveBrowseCamera) > 1e-8) return false;
+    return this.runtimeBooks.every(
+      (book) => Math.abs(book.hover - book.targetHover) < 1e-3 && book.idleAmount < 1e-3,
+    );
+  }
 
   private updateState(delta: number, timestamp: number) {
     if (this.mode === "browse") {
@@ -1076,7 +1102,7 @@ export class ShelfEngine {
       );
 
       if (book.livingMaterial) {
-        book.livingMaterial.uniforms.uTime.value = elapsed;
+        book.livingMaterial.uniforms.uTime.value = this.sheenClock;
         const livingStrength =
           this.reducedMotion
             ? 0
@@ -1161,6 +1187,7 @@ export class ShelfEngine {
   }
 
   private handleResize = () => {
+    this.invalidate();
     const width = Math.max(1, this.canvas.clientWidth);
     const height = Math.max(1, this.canvas.clientHeight);
     const dprCap = 1.25;
@@ -1282,6 +1309,7 @@ export class ShelfEngine {
       const proceduralTexture = material.map;
       material.map = texture;
       material.needsUpdate = true;
+      this.invalidate();
       runtime.textures.push(texture);
 
       if (proceduralTexture) {
@@ -1392,6 +1420,7 @@ export class ShelfEngine {
     this.keyLight.intensity = p.keyI;
     this.rimLight.color.set(p.rim);
     this.rimLight.intensity = p.rimI;
+    this.invalidate();
   }
 
   browseBy(direction: number) {
@@ -1405,6 +1434,17 @@ export class ShelfEngine {
     this.pendingFocusIndex = null;
     this.targetScrollIndex = next;
     this.lastInputTime = performance.now() - 1000;
+  }
+
+  // Jump without sliding past every book in between (Home/End)
+  snapTo(index: number) {
+    if (this.mode !== "browse") return;
+    this.browseTo(index);
+    this.scrollIndex = this.targetScrollIndex;
+    if (this.activeIndex !== this.targetScrollIndex) {
+      this.activeIndex = this.targetScrollIndex;
+      this.callbacks.onActiveIndex(this.activeIndex);
+    }
   }
 
   focusBook(index = this.activeIndex) {

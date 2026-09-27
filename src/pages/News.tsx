@@ -1,94 +1,197 @@
-import { motion } from 'motion/react';
 import { useEffect } from 'react';
-import { FiArrowLeft, FiArrowUpRight, FiMessageSquare, FiRadio } from 'react-icons/fi';
+import { FiArrowLeft, FiArrowUpRight } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar/Navbar';
-import InstagramEmbed from '../components/News/InstagramEmbed';
+import PostEmbed from '../components/News/PostEmbed';
 import Footer from '../components/Shared/Footer';
-import { instagram, press } from '../data/news';
+import { mentions, type Mention } from '../data/news';
+import newsMedia from '../data/news-media.json';
 import { useDocumentHead } from '../hooks/useDocumentHead';
+import { Reveal } from '../lib/motion';
 import '../styles/components/pages/news.scss';
 
-const EASE = [0.22, 1, 0.36, 1] as const;
-const rise = (i: number) => ({
-  initial: { opacity: 0, y: 18 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.5, ease: EASE, delay: 0.08 + i * 0.06 },
-});
+type Media = { image: string; w: number; h: number; alt: string; caption: string };
+const MEDIA: Record<string, Media> = newsMedia;
+
+// Where the crop sits when a portrait cover goes into a wider frame (default: centre)
+const FOCUS: Record<string, string> = {
+  DcBlbZOh5hx: '50% 55%', // keeps "Parte 1", the question and the WOW logo in the square frame
+  DRhNb1vgH3p: '50% 22%',
+  C0mIBI9MMmB: '50% 28%',
+};
+
+// Photo beside the lead story: a HIBEEX photo from /work/hibeex, not one from the residency.
+// TODO(Gabriel): swap for a photo from the Canastra AI Residency when there is one.
+const FEATURED_PHOTO = {
+  src: '/work/hibeex/04.webp',
+  w: 1200,
+  h: 800,
+  alt: 'Two young men in white HIBEEX sweatshirts sit side by side at a dark wooden table.',
+};
+
+const postId = (url: string) => url.match(/instagram\.com\/(?:p|reel)\/([^/?#]+)/)?.[1] ?? '';
+const mediaFor = (m: Mention) => (m.instagram ? MEDIA[postId(m.instagram)] : undefined);
+
+// Text link with an underline that grows on hover (transform only). With `stretch`
+// the link also covers its card, so the photo and title are clickable too.
+function TextLink({ href, label, context, stretch }: { href: string; label: string; context?: string; stretch?: boolean }) {
+  return (
+    <a
+      className={stretch ? 'news__link news__link--stretch' : 'news__link'}
+      href={href}
+      target="_blank"
+      rel="noreferrer"
+      aria-label={context ? `${label}, ${context}` : undefined}
+    >
+      <span className="news__link-text">{label}</span>
+      <FiArrowUpRight aria-hidden="true" />
+    </a>
+  );
+}
+
+function Meta({ m }: { m: Mention }) {
+  return (
+    <p className="news__meta">
+      <span className="news__outlet">{m.outlet}</span>
+      <span className="news__date">{m.date}</span>
+    </p>
+  );
+}
+
+function Entry({ m, eager, solo }: { m: Mention; eager: boolean; solo: boolean }) {
+  const media = mediaFor(m);
+
+  if (m.instagram && media) {
+    const id = postId(m.instagram);
+    // The only photo of its year runs the full width: square photo on the left, text on the right
+    return (
+      <Reveal as="li" className={solo ? 'news__entry news__card news__card--solo' : 'news__entry news__card'}>
+        <div className="news__photo">
+          <img
+            src={media.image}
+            width={media.w}
+            height={media.h}
+            alt={media.alt}
+            loading={eager ? 'eager' : 'lazy'}
+            decoding="async"
+            style={FOCUS[id] ? { objectPosition: FOCUS[id] } : undefined}
+          />
+        </div>
+        <div className="news__card-text">
+          <Meta m={m} />
+          <h4 className="news__entry-title">{m.title}</h4>
+          {m.summary && <p className="news__summary">{m.summary}</p>}
+          <TextLink href={m.instagram} label="Open on Instagram" context={m.title} stretch />
+        </div>
+      </Reveal>
+    );
+  }
+
+  // Programs, press, and any post without a saved photo: a text block across the full width,
+  // so it never leaves half a row empty next to a photo.
+  return (
+    <Reveal as="li" className="news__entry news__entry--text news__entry--wide">
+      <Meta m={m} />
+      <h4 className="news__entry-title">{m.title}</h4>
+      {m.summary && <p className="news__summary">{m.summary}</p>}
+      {m.url && <TextLink href={m.url} label="Read" context={m.title} />}
+      {m.instagram && (
+        <>
+          <PostEmbed url={m.instagram} />
+          <TextLink href={m.instagram} label="Open on Instagram" context={m.title} />
+        </>
+      )}
+    </Reveal>
+  );
+}
 
 function News() {
   useDocumentHead({
-    title: 'News — Gabriel Moreno Ribeiro',
-    description: 'Press, mentions and posts about Gabriel Moreno Ribeiro, HIBEEX and Projeto Candela.',
+    title: 'News · Gabriel Moreno Ribeiro',
+    description: 'Press, programs and posts about HIBEEX, Projeto Candela and Gabriel Moreno Ribeiro, newest first.',
     canonical: 'https://gabrielmr.com/news',
   });
 
-  // The Instagram embeds are the heaviest thing on this page; open the connection early.
+  const featured = mentions.find((m) => m.featured);
+  const timeline = mentions.filter((m) => m !== featured);
+  const years = [...new Set(timeline.map((m) => m.year))];
+  const firstPhoto = timeline.find((m) => mediaFor(m));
+  const needsEmbed = timeline.some((m) => m.instagram && !mediaFor(m));
+
+  // Only a post without a saved photo falls back to the Instagram embed; warm that connection early.
   useEffect(() => {
-    if (instagram.length === 0) return;
+    if (!needsEmbed) return;
     const link = document.createElement('link');
     link.rel = 'preconnect';
     link.href = 'https://www.instagram.com';
     document.head.appendChild(link);
     return () => { link.remove(); };
-  }, []);
+  }, [needsEmbed]);
 
   return (
     <main className="news" id="main-content">
       <div className="page-nav"><Navbar /></div>
 
-      <header className="news__header">
-        <motion.p className="news__eyebrow" {...rise(0)}><Link to="/" className="page-back"><FiArrowLeft aria-hidden="true" /> Home</Link></motion.p>
-        <motion.h1 className="news__title" {...rise(1)}>In the news.</motion.h1>
-      </header>
+      <Reveal className="news__header">
+        <p className="news__back">
+          <Link to="/" className="page-back"><FiArrowLeft aria-hidden="true" /> Home</Link>
+        </p>
+        <h1 className="news__title">In the news.</h1>
+        <p className="news__lede">
+          Press, programs and posts about HIBEEX, Projeto Candela and Gabriel, newest first.
+        </p>
+      </Reveal>
 
-      <section className="news__section" aria-labelledby="news-posts">
-        <h2 id="news-posts" className="news__section-title">
-          <FiMessageSquare aria-hidden="true" /> Posts
-        </h2>
-        {instagram.length === 0 ? (
-          <p className="news__empty">Nothing here yet.</p>
-        ) : (
-          <motion.div className="news__grid" {...rise(4)}>
-            {instagram.map((item) => (
-              <InstagramEmbed key={item.url} url={item.url} caption={item.caption} />
-            ))}
-          </motion.div>
-        )}
-      </section>
-
-      <section className="news__section" aria-labelledby="news-press">
-        <h2 id="news-press" className="news__section-title">
-          <FiRadio aria-hidden="true" /> Press &amp; mentions
-        </h2>
-        {press.length === 0 ? (
-          <p className="news__empty">Nothing here yet.</p>
-        ) : (
-          <div className="news__cards">
-            {press.map((item, i) => (
-              <motion.a
-                key={item.url + item.title}
-                className="news__card"
-                href={item.url}
-                target="_blank"
-                rel="noreferrer"
-                {...rise(3 + i)}
-              >
-                <p className="news__card-meta">
-                  <span>{item.outlet}</span>
-                  <i />
-                  <span>{item.date}</span>
+      {mentions.length === 0 ? (
+        <p className="news__empty">Nothing here yet.</p>
+      ) : (
+        <>
+          {featured && (
+            <Reveal as="article" className="news__featured" delay={0.06}>
+              <div className="news__featured-text">
+                <p className="news__meta">
+                  <span className="news__outlet">{featured.outlet}</span>
+                  <span className="news__date">{featured.year}</span>
                 </p>
-                <h3 className="news__card-title">{item.title}</h3>
-                {item.excerpt && <p className="news__card-excerpt">{item.excerpt}</p>}
-                <span className="news__card-link">
-                  Read <FiArrowUpRight aria-hidden="true" />
-                </span>
-              </motion.a>
-            ))}
-          </div>
-        )}
-      </section>
+                <h2 className="news__featured-title">{featured.title}</h2>
+                {featured.summary && <p className="news__summary">{featured.summary}</p>}
+                {featured.url && <TextLink href={featured.url} label="Read more" context={featured.title} />}
+              </div>
+              <div className="news__photo news__featured-photo">
+                <img
+                  src={FEATURED_PHOTO.src}
+                  width={FEATURED_PHOTO.w}
+                  height={FEATURED_PHOTO.h}
+                  alt={FEATURED_PHOTO.alt}
+                  fetchPriority="high"
+                  decoding="async"
+                />
+              </div>
+            </Reveal>
+          )}
+
+          {timeline.length > 0 && (
+            <section className="news__section" aria-label="Timeline">
+              <ol className="news__timeline">
+                {years.map((year) => {
+                  const entries = timeline.filter((m) => m.year === year);
+                  const photos = entries.filter((m) => mediaFor(m)).length;
+                  return (
+                    <li key={year} className="news__year">
+                      <h3 className="news__year-label">{year}</h3>
+                      <ol className="news__entries">
+                        {entries.map((m) => (
+                          <Entry key={m.title} m={m} eager={m === firstPhoto} solo={photos === 1} />
+                        ))}
+                      </ol>
+                    </li>
+                  );
+                })}
+              </ol>
+            </section>
+          )}
+        </>
+      )}
 
       <Footer />
     </main>

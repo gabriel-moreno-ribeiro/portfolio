@@ -1,5 +1,5 @@
 export const siteConfig = {
-  title: "Library — Gabriel Moreno Ribeiro",
+  title: "Library · Gabriel Moreno Ribeiro",
   wordmark: "GABRIEL MORENO RIBEIRO",
   collectionName: "LIBRARY",
   editionEyebrow: "FROM MY SHELF",

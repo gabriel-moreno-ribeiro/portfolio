@@ -83,6 +83,17 @@ export const stars = (rating = 0) => "★★★★★".slice(0, rating) + "☆�
 
 export const books = booksData as Book[];
 
+// "2014 - 2015" reads as "2014 to 2015"
+export const periodText = (period: string) => period.replace(/\s*-\s*/, " to ");
+
+// Books read at each age, 7 to 18 (an age with no books keeps its place on the ruler)
+const ageList = books.map((b) => b.readAge);
+export const ages = Array.from({ length: Math.max(...ageList) - Math.min(...ageList) + 1 }, (_, k) => {
+  const age = Math.min(...ageList) + k;
+  const start = books.findIndex((b) => b.readAge === age);
+  return { age, start, count: books.filter((b) => b.readAge === age).length, period: start < 0 ? "" : books[start].readPeriod };
+});
+
 export const catalog: CatalogBook[] = books.map((b) => {
   const dark = luminance(b.coverColor) < 0.45;
   return {
@@ -94,7 +105,7 @@ export const catalog: CatalogBook[] = books.map((b) => {
     quote: b.quote ?? "",
     quoteBy: b.quote ? b.author : "",
     format: `${FORMAT_LABEL[b.format] ?? "Paperback"} · ${b.pages} pages · ${b.year}`,
-    availability: `${b.status === "reading" ? "Reading now" : "Finished"} · ${b.readPeriod} · age ${b.readAge}`,
+    availability: `${b.status === "reading" ? "Reading now" : "Finished"} · ${periodText(b.readPeriod)} · age ${b.readAge}`,
     url: b.link ?? "",
     cover: b.coverColor,
     accent: b.accentColor ?? shift(b.coverColor, dark ? 0.45 : -0.35),

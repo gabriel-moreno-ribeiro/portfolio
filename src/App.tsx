@@ -52,6 +52,8 @@ function AppContent() {
   const location = useLocation();
   const isHome = location.pathname === "/";
   const isLibrary = location.pathname.startsWith("/library");
+  // Páginas de leitura: sem a barra fixa de CTA no mobile (o e-mail está no rodapé).
+  const isReading = isLibrary || location.pathname.startsWith("/news");
 
   // New page, start at the top (hash links are handled by the page itself)
   useEffect(() => {
@@ -107,7 +109,7 @@ function AppContent() {
         </Suspense>
       )}
       <CustomMouse />
-      {!isLibrary && <MobileStickyCTA />}
+      {!isReading && <MobileStickyCTA />}
       {!isLibrary && <BackToTop />}
       {tip && isHome && (
         <button type="button" className="tip-toast" onClick={() => setTip(false)}>

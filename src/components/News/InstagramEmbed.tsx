@@ -23,7 +23,7 @@ function loadEmbedScript() {
   return embedScript;
 }
 
-export default function InstagramEmbed({ url, caption }: { url: string; caption?: string }) {
+export default function InstagramEmbed({ url }: { url: string }) {
   const ref = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -47,15 +47,16 @@ export default function InstagramEmbed({ url, caption }: { url: string; caption?
 
   return (
     <figure className="news__ig" ref={ref}>
+      {/* embed.js copies this inline style onto the iframe it creates, so no height here */}
       <blockquote
         className="instagram-media"
         data-instgrm-permalink={url}
         data-instgrm-version="14"
         style={{ margin: 0, width: "100%", minWidth: 0, border: 0, background: "transparent" }}
       >
-        <a href={url} target="_blank" rel="noreferrer">View this post on Instagram</a>
+        {/* Stays on screen if embed.js is blocked */}
+        <a className="news__media-link" href={url} target="_blank" rel="noreferrer">Open on Instagram</a>
       </blockquote>
-      {caption && <figcaption className="news__ig-caption">{caption}</figcaption>}
     </figure>
   );
 }

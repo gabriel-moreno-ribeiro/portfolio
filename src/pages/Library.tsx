@@ -22,7 +22,7 @@ function Fallback() {
 export default function LibraryPage() {
   // ShelfLibrary manages the title as you browse; this sets description + canonical (was pointing at the home page)
   useDocumentHead({
-    title: "Library — Gabriel Moreno Ribeiro",
+    title: "Library · Gabriel Moreno Ribeiro",
     description: "The books on Gabriel Moreno Ribeiro's shelf, from Manual do Mundo to Zero to One. Drag, scroll or use the arrow keys to browse.",
     canonical: "https://gabrielmr.com/library",
   });
