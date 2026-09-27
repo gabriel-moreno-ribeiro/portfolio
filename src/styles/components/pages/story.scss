@@ -14,6 +14,19 @@ $story-text: 760px;
   color: var(--fg);
 }
 
+// Reading progress: transform only; not rendered under reduced motion.
+.story__progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--accent-decor);
+  transform-origin: 0 50%;
+  z-index: 9990; // under the navbar (9998)
+  pointer-events: none;
+}
+
 .story__header {
   max-width: $story-text;
   width: 100%;
@@ -283,49 +296,57 @@ $story-text: 760px;
 @keyframes pig-bob { from { transform: translateY(0); } to { transform: translateY(-4px); } }
 @keyframes pig-tail { from { transform: rotate(-14deg); } to { transform: rotate(14deg); } }
 
-// ── Ledger ────────────────────────────────────────────────────────────────────
-.fig--ledger { max-width: 560px; }
+// ── Numbers: the tools losing their names ────────────────────────────────────
+.fig--numbers { max-width: $story-text; }
 
-.ledger {
-  @extend .fig-card;
-  padding: 24px 28px 20px;
-  font-family: "DM Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 14px;
-
-  hr { width: 100%; height: 1px; margin: 12px 0; border: 0; background: var(--border); }
+.fig-numbers__row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
 }
 
-.ledger__title {
-  margin: 0 0 14px;
+.fig-numbers__card {
+  @extend .fig-card;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 28px 20px 22px;
+  text-align: center;
+}
+
+// Name and number share one cell. The number is the final state; the name only
+// shows while it crossfades out on arrival.
+.fig-numbers__stage {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-height: 64px;
+
+  > * { grid-area: 1 / 1; }
+}
+
+.fig-numbers__name {
   font-family: var(--font-serif);
   font-style: italic;
-  font-size: 22px;
-  span { font-family: inherit; font-style: normal; font-size: 12px; color: var(--fg-muted); letter-spacing: 0.1em; text-transform: uppercase; }
+  font-size: 30px;
+  line-height: 1.1;
+  color: var(--fg);
+  opacity: 0;
 }
 
-.ledger__row {
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
-  margin: 0 0 8px;
-
-  i { flex: 1; border-bottom: 1px dotted var(--border); transform: translateY(-4px); }
+.fig-numbers__num {
+  font-family: "DM Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 52px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  color: var(--fg);
 }
 
-.ledger__part { font-weight: 600; }
-.ledger__who { color: var(--fg-muted); font-size: 12px; }
-.ledger__amt { color: var(--fg-muted); font-style: italic; }
-
-.ledger__row--town .ledger__part { color: var(--accent); }
-.ledger__row--town .ledger__amt { color: var(--accent); font-style: normal; font-weight: 600; }
-
-.ledger__total {
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
-  margin: 4px 0 0;
-  font-weight: 700;
-  i { flex: 1; }
+.fig-numbers__label {
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--fg-muted);
 }
 
 // ── Photo strips ──────────────────────────────────────────────────────────────
@@ -598,78 +619,11 @@ $story-text: 760px;
 .repo__note { color: var(--fg-muted); font-family: "DM Sans", sans-serif; }
 .repo__star { margin-left: auto; color: var(--accent-decor); }
 
-// ── Scale ─────────────────────────────────────────────────────────────────────
-.fig--scale { max-width: 640px; }
-
-.scale {
-  position: relative;
-  width: min(100%, 440px);
-  aspect-ratio: 1;
-  margin: 0 auto;
-}
-
-.scale__ring {
-  position: absolute;
-  inset: 0;
-  border: 2px solid var(--border);
-  border-radius: 28px;
-  background: var(--surface);
-
-  &--country { inset: 20%; border-color: rgba(240, 115, 45, 0.45); background: color-mix(in srgb, var(--surface) 92%, var(--accent-decor)); }
-  &--garage { inset: 36%; border-color: #b8501a; background: #b8501a; /* white label needs 4.5:1: 5.0 here, 2.9 on #f0732d */ color: #fff; border-radius: 18px; display: grid; place-items: center; text-align: center; }
-}
-
-.scale__label {
-  position: absolute;
-  top: 14px;
-  left: 18px;
-  font-size: 13px;
-  color: var(--fg-muted);
-  b { display: block; font-family: var(--font-serif); font-size: 22px; color: var(--fg); font-variant-numeric: tabular-nums; }
-}
-
-.scale__ring--garage .scale__label {
-  position: static;
-  color: #fff;
-  white-space: nowrap;
-  b { color: #fff; font-size: 19px; }
-}
-
 // ── End ───────────────────────────────────────────────────────────────────────
 .fig--end { max-width: 760px; margin-bottom: 0; }
 
-.timeline {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  font-family: "DM Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 13px;
-  color: var(--fg-muted);
-}
-
-.timeline__track {
-  position: relative;
-  flex: 1;
-  height: 2px;
-  background: var(--border);
-}
-
-.timeline__fill { position: absolute; left: 0; top: 0; height: 100%; background: var(--accent-decor); }
-
-.timeline__marker {
-  position: absolute;
-  top: 50%;
-  transform: translate(calc(var(--pct, 0) * -1%), -50%);
-  padding: 4px 10px;
-  border-radius: 999px;
-  background: var(--fg);
-  color: var(--bg);
-  font-weight: 600;
-  white-space: nowrap;
-}
-
 .fig-end__photo {
-  margin: 36px auto 0;
+  margin: 0 auto;
   max-width: 420px;
 
   img {
@@ -844,11 +798,12 @@ $story-text: 760px;
   .fig-strip__row { gap: 14px; padding: 0; }
   .polaroid span { font-size: 13px; }
   .fig-truck__part { font-size: 20px; }
-  .scale__label { font-size: 12px; b { font-size: 17px; } }
+  .fig-numbers__row { grid-template-columns: 1fr; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .pig__tail, .pig--walking .pig__svg, .pig--walking .pig__leg--a, .pig--walking .pig__leg--b,
   .typed__caret, .bubble__dots i, .bubble__wave i, .fuse--lit .fuse__spark { animation: none; }
-  .dots i { transition: none; }
+  .dots i { transition: none; opacity: 1; transform: scale(1); }
+  .dots--26 i:not(.is-hit) { opacity: 0.7; }
 }

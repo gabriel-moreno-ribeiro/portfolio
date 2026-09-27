@@ -61,8 +61,8 @@
   padding: 8px 8px 10px;
   border-radius: 10px;
   background: var(--surface);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1), 0 1px 0 rgba(0, 0, 0, 0.04);
-  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
+  // No drop shadow under the photos (owner's call, Sep 2026): the white mount alone frames them.
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 
   &:nth-child(odd) { transform: rotate(-1.4deg); }
   &:nth-child(even) { transform: rotate(1.2deg); }
@@ -70,7 +70,6 @@
 
   &:hover {
     transform: rotate(0) scale(1.04);
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.16);
     z-index: 1;
   }
 
@@ -90,10 +89,6 @@
     letter-spacing: 0.02em;
     color: var(--fg-muted);
   }
-}
-
-[data-theme="dark"] .moments__item {
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
 }
 
 @media screen and (max-width: 700px) {

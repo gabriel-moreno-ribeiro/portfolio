@@ -1,5 +1,5 @@
-import { motion } from 'motion/react';
-import { useMemo } from 'react';
+import { motion, useReducedMotion, useScroll } from 'motion/react';
+import { useMemo, useRef } from 'react';
 import { FiArrowLeft, FiDownload } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar/Navbar';
@@ -8,13 +8,12 @@ import {
   ChatFigure,
   EndFigure,
   LaptopsFigure,
-  LedgerFigure,
   MISSAO_VELHA_PHOTOS,
+  NumbersFigure,
   PhotoStrip,
   PorcaFigure,
   ReposFigure,
   SALVADOR_PHOTOS,
-  ScaleFigure,
   TownFigure,
 } from '../components/Story/figures';
 import { EASE, Reveal } from '../components/Story/shared';
@@ -33,21 +32,20 @@ function Figure({ id }: { id: FigureId }) {
   switch (id) {
     case 'town': return <TownFigure />;
     case 'porca': return <PorcaFigure />;
-    case 'ledger': return <LedgerFigure />;
+    case 'numbers': return <NumbersFigure />;
     case 'truck': return <TruckFigure />;
     case 'missao-velha': return <PhotoStrip photos={MISSAO_VELHA_PHOTOS} eyebrow="Missão Velha · every summer" />;
     case 'laptops': return <LaptopsFigure />;
     case 'salvador': return <PhotoStrip photos={SALVADOR_PHOTOS} eyebrow="Salvador · the years in between" />;
     case 'chat': return <ChatFigure />;
     case 'repos': return <ReposFigure />;
-    case 'scale': return <ScaleFigure />;
     case 'end': return <EndFigure />;
   }
 }
 
 function Story() {
   useDocumentHead({
-    title: `${story.title.replace(/\.$/, '')} — Gabriel Moreno Ribeiro`,
+    title: `${story.title.replace(/\.$/, '')} · Gabriel Moreno Ribeiro`,
     description: story.subtitle,
     canonical: 'https://gabrielmr.com/story',
   });
@@ -58,10 +56,15 @@ function Story() {
   );
   const minutes = Math.max(1, Math.round(words / 220));
 
+  const articleRef = useRef<HTMLElement>(null);
+  const reduced = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: articleRef, offset: ['start start', 'end end'] });
+
   let paragraphs = 0;
 
   return (
     <main className="story" id="main-content">
+      {!reduced && <motion.div className="story__progress" style={{ scaleX: scrollYProgress }} aria-hidden="true" />}
       <div className="page-nav"><Navbar /></div>
 
       <motion.header
@@ -84,7 +87,7 @@ function Story() {
         </div>
       </motion.header>
 
-      <article className="story__body">
+      <article className="story__body" ref={articleRef}>
         {blocks.map((b, i) => {
           if (b.type === 'figure') return <Figure id={b.id} key={`fig-${b.id}`} />;
           if (b.type === 'quote') {

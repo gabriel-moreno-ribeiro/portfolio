@@ -59,6 +59,24 @@
         color: $white;
       }
     }
+
+    // Brand marks: same tint on hover as the words, but the box never changes size.
+    .footer__social {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      padding: 0;
+      border-radius: 50%;
+
+      svg { width: 18px; height: 18px; }
+
+      &:hover {
+        padding: 0;
+        border-radius: 50%;
+      }
+    }
   }
 }
 
@@ -69,7 +87,7 @@
     // the footer flips to a light card in dark mode, so the white CTA text vanished
     &__cta-text { color: rgba($black, 0.65); }
     &__cta-link { color: $black; &:hover { color: var(--accent); } }
-    &__copy { color: rgba($black, 0.55); }
+    &__copy { color: rgba($black, 0.72); } // 0.55 was 4.2:1 on the light card at 12px (axe); 0.72 clears AA
 
     .links {
       a {

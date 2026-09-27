@@ -13,7 +13,7 @@ export function useRevealed<T extends HTMLElement = HTMLDivElement>(margin = '0p
 /** Counts from 0 to `value` once `start` is true. Honors reduced motion. */
 export function useCountUp(value: number, start: boolean, duration = 1400, delay = 0) {
   const reduced = useReducedMotion();
-  const [n, setN] = useState(0);
+  const [n, setN] = useState(reduced ? value : 0);
   useEffect(() => {
     if (!start) return;
     if (reduced) { setN(value); return; }

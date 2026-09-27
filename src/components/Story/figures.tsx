@@ -2,7 +2,7 @@ import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react'
 import { useEffect, useRef, useState } from 'react';
 import { FiArrowUpRight, FiStar } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
-import { CountUp, EASE, Reveal, useCountUp, useRevealed } from './shared';
+import { CountUp, EASE, Reveal, useRevealed } from './shared';
 
 // ── Town: waterfall photo with parallax + population count ───────────────────
 export function TownFigure() {
@@ -114,48 +114,54 @@ export function PorcaFigure() {
   );
 }
 
-// ── Ledger: the tabs he never collected ──────────────────────────────────────
-const TABS = [
-  ['Brake pads', 'a neighbor'],
-  ['Carburetor', 'a cousin'],
-  ['Oil change', 'a cousin who married one'],
-  ['Clutch', 'the street'],
+// ── Numbers: the tools losing their names ────────────────────────────────────
+const TOOLS = [
+  { name: 'pliers', n: '#4' },
+  { name: 'angle grinder', n: '#12' },
+  { name: 'wrench', n: '#1' },
 ];
 
-export function LedgerFigure() {
+export function NumbersFigure() {
   const { ref, inView } = useRevealed();
   const reduced = useReducedMotion();
-  const row = (i: number) => ({
-    initial: reduced ? false : { opacity: 0, x: -10 },
-    animate: inView ? { opacity: 1, x: 0 } : undefined,
-    transition: { duration: 0.5, ease: EASE, delay: 0.15 + i * 0.22 },
-  });
+  const fade = (i: number) => ({ duration: 0.6, ease: EASE, delay: 0.2 + i * 0.25 });
 
   return (
-    <figure className="fig fig--ledger" ref={ref}>
-      <div className="ledger">
-        <p className="ledger__title">Adalberto's garage <span>· tabs</span></p>
-        {TABS.map(([part, who], i) => (
-          <motion.p className="ledger__row" key={part} {...row(i)}>
-            <span className="ledger__part">{part}</span>
-            <span className="ledger__who">{who}</span>
-            <i />
-            <span className="ledger__amt">never charged</span>
-          </motion.p>
+    <figure className="fig fig--numbers" id="numbers" ref={ref}>
+      <div className="fig-numbers__row">
+        {TOOLS.map((t, i) => (
+          <div className="fig-numbers__card" key={t.name}>
+            <div className="fig-numbers__stage">
+              <motion.span
+                className="fig-numbers__name"
+                aria-hidden="true"
+                initial={reduced ? false : { opacity: 1 }}
+                animate={inView ? { opacity: 0 } : undefined}
+                transition={fade(i)}
+              >
+                {t.name}
+              </motion.span>
+              <motion.span
+                className="fig-numbers__num"
+                initial={reduced ? false : { opacity: 0 }}
+                animate={inView ? { opacity: 1 } : undefined}
+                transition={fade(i)}
+              >
+                {t.n}
+              </motion.span>
+            </div>
+            <motion.span
+              className="fig-numbers__label"
+              initial={reduced ? false : { opacity: 0 }}
+              animate={inView ? { opacity: 1 } : undefined}
+              transition={fade(i)}
+            >
+              {t.name}
+            </motion.span>
+          </div>
         ))}
-        <motion.hr {...row(TABS.length)} />
-        <motion.p className="ledger__row ledger__row--town" {...row(TABS.length + 1)}>
-          <span className="ledger__part">One house, before dawn</span>
-          <span className="ledger__who">the town</span>
-          <i />
-          <span className="ledger__amt">rebuilt</span>
-        </motion.p>
-        <motion.p className="ledger__total" {...row(TABS.length + 2)}>
-          <span>Balance</span>
-          <i />
-          <span>even</span>
-        </motion.p>
       </div>
+      <figcaption>Everything in the garage got a number instead.</figcaption>
     </figure>
   );
 }
@@ -271,7 +277,7 @@ export function LaptopsFigure() {
         <p className="tile__num tile__num--mono">
           <CountUp value={HOURS_TOTAL} start={inView} duration={2600} format={clock} />
         </p>
-        <p className="tile__label">hours of Indian YouTube tutorials</p>
+        <p className="tile__label">hours of tutorials</p>
         <p className="tile__foot"><span className="mono">machine #82 › BIOS<i className="typed__caret" /></span> every part tested fine. It crashed anyway.</p>
       </div>
       <div className="tile tile--hindi" lang="hi">
@@ -299,10 +305,10 @@ export function ChatFigure() {
     <figure className="fig fig--chat" ref={ref}>
       <div className="chat">
         <div className="chat__head">
-          <span className="chat__avatar">S</span>
+          <span className="chat__avatar">J</span>
           <span>
-            <b>Silvana</b>
-            <small>dental office · 9:04 pm</small>
+            <b>J.A.R.V.A.N.A.</b>
+            <small>Silvana's voice, dental office, 9:04 pm</small>
           </span>
         </div>
         <div className="chat__body">
@@ -347,8 +353,8 @@ function Bubble({ side, typing, voice, children }: { side: 'in' | 'out'; typing?
 
 // ── Repos ─────────────────────────────────────────────────────────────────────
 const REPOS = [
-  { n: 17, name: 'merlita-escape-detector', note: '' , star: false },
-  { n: 19, name: 'candela-3d-models', note: 'physics kits for schools', star: true },
+  { n: 17, name: 'merlita-escape-detector', note: "she's escaped twice", star: false },
+  { n: 19, name: 'candela-3d-models', note: 'physics kits for public schools', star: true },
   { n: 21, name: 'hindi-to-portuguese-youtube', note: '', star: false },
   { n: 28, name: 'hibeex-v2', note: 'AI for small businesses', star: true },
 ];
@@ -391,58 +397,13 @@ export function ReposFigure() {
   );
 }
 
-// ── Scale: garage, country, world ────────────────────────────────────────────
-export function ScaleFigure() {
-  const { ref, inView } = useRevealed();
-  const reduced = useReducedMotion();
-  const ring = (i: number) => ({
-    initial: reduced ? false : { scale: 0.2, opacity: 0 },
-    animate: inView ? { scale: 1, opacity: 1 } : undefined,
-    transition: { duration: 0.9, ease: EASE, delay: 0.2 + i * 0.5 },
-  });
-  return (
-    <figure className="fig fig--scale" ref={ref}>
-      <div className="scale">
-        <motion.div className="scale__ring scale__ring--world" {...ring(2)}>
-          <span className="scale__label">
-            <b><CountUp value={510072000} start={inView} delay={1200} duration={1800} /> km²</b> a world
-          </span>
-        </motion.div>
-        <motion.div className="scale__ring scale__ring--country" {...ring(1)}>
-          <span className="scale__label">
-            <b><CountUp value={8515767} start={inView} delay={700} duration={1600} /> km²</b> a country
-          </span>
-        </motion.div>
-        <motion.div className="scale__ring scale__ring--garage" {...ring(0)}>
-          <span className="scale__label">
-            <b><CountUp value={29.52} decimals={2} start={inView} delay={200} /> m²</b> a garage
-          </span>
-        </motion.div>
-      </div>
-      <figcaption>Not to scale. Obviously.</figcaption>
-    </figure>
-  );
-}
-
-// ── End: 2013 → 2026 ─────────────────────────────────────────────────────────
+// ── End: back where it started ───────────────────────────────────────────────
 export function EndFigure() {
-  const { ref, inView } = useRevealed();
-  const reduced = useReducedMotion();
-  const years = useCountUp(13, inView, 2200, 300);
-  const pct = (years / 13) * 100;
   return (
-    <figure className="fig fig--end" ref={ref}>
-      <div className="timeline" aria-hidden="true">
-        <span className="timeline__year">2013</span>
-        <div className="timeline__track">
-          <i className="timeline__fill" style={{ width: `${pct}%` }} />
-          <b className="timeline__marker" style={{ left: `${pct}%`, ['--pct' as string]: pct }}>{2013 + Math.round(years)}</b>
-        </div>
-        <span className="timeline__year">2026</span>
-      </div>
-      <Reveal className="fig-end__photo" as="div" delay={0.2}>
+    <figure className="fig fig--end">
+      <Reveal className="fig-end__photo" as="div">
         <img src="/moments/mv04.webp" alt="Gabriel as a boy at night, holding a bottle of cashew soda" loading="lazy" decoding="async" />
-        <span>Missão Velha. Still the same kid.</span>
+        <span>Missão Velha, Ceará.</span>
       </Reveal>
       <div className="fig-end__cta">
         <Link to="/#contact" className="fig-end__btn">Bring me something that won't start</Link>
