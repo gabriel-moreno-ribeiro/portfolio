@@ -210,3 +210,30 @@ Verificação: tsc e build limpos, 0 erros de console, 0 requisições falhas, 0
 CEO/founder no site, bench quente da Experience sem frames longos próprios, trilho sem layout
 forçado. Pendências: no mobile o odômetro pode ficar sob um card; "from his garage" na legenda é
 inferência; caminho frio ainda tem frames longos de montagem lazy e do `.horizontal-scroller`.
+
+## Library e News (27/09) — "muito mais foda", redesign-preserve
+
+Skills usadas: taste-skill (leitura do brief, dials, checklist anti-slop) e redesign-skill
+(scan → diagnóstico → correção em cima do stack). Workflow: auditoria + assets → dois construtores
+em paralelo → QA + crítico → reparo.
+
+**Library** ("a estante conta a história de um leitor dos 7 aos 18"): card sem caixa, texto em
+faixas de papel sobre a parede; resenha do `books.json` inteira em serif itálico; "Read at 7,
+*a favorite* · 2014 to 2015"; "Reading now · 72% of 352 pages"; "Open it" como link de texto;
+régua de idades vira navegação (uma barra por idade proporcional aos livros, hover com legenda,
+clique salta sem animar 28 livros; engine ganhou snap e pula render parado); gaveta agrupada por
+idade com filtros em texto; sem WebGL a gaveta abre sozinha; three.js em chunk separado; contraste
+≥ 4,5:1 nos dois temas. Pendências: painel de detalhe ("Open it") ainda com contador e pílulas
+antigos; idade 8 sem livros no JSON (fica apagada); progresso é % (o JSON não tem página).
+
+**News** ("uma revistinha, não um feed"): fotos dos 5 posts baixadas via `/embed/captioned/` para
+`public/news/*.webp` + `src/data/news-media.json` (alt factual, legenda real); cards de foto sem
+iframe (o embed só como fallback); destaque sem caixa, manchete grande sob um filete, foto do
+time HIBEEX; timeline mantida (anos sticky em serif itálico, um traço de 1 px, sem pontinhos nem
+pílulas), entradas sem foto ocupam a linha inteira; altura 5 515 → 2 931 px em 1440; 0 iframes;
+axe 0. Pendências: capa do reel da WOW é o card "Parte 1" (é o frame que o Instagram serve);
+duas datas com `TODO(Gabriel)` em `news.ts`; foto do destaque é a do time (não há foto da
+residência).
+
+Orquestrador: CTA fixo do mobile escondido também em `/news`; preload da foto do hero só na Home;
+cursor custom invisível até o primeiro movimento; título "Timeline" removido (o ano abre a seção).

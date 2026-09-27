@@ -1,10 +1,21 @@
 // ── /news ─────────────────────────────────────────────────────────────────────
+// A small magazine, not a feed. Header, the lead story set straight on the page
+// under a thin rule with a photo beside it, then the timeline: the year in serif italic on the left (sticky on
+// desktop), a 1px rule, and the entries on the right in a two-column grid.
+// Posts with a saved photo are photo cards (a year's only photo runs the full row);
+// programs, press and any post without a photo run the full width as text.
+// One column under 800px.
+$news-text: 720px;   // header measure
+$news-col: 112px;    // desktop column for the year label; the rule runs at its edge
+$news-gap: 48px;     // space between the rule and the entries
+$news-ease: cubic-bezier(0.22, 1, 0.36, 1);
+
 .news {
   position: relative;
   z-index: 1;
   display: flex;
   flex-direction: column;
-  gap: 56px;
+  gap: 72px;
   max-width: 1120px;
   min-height: 100vh;
   margin: 0 auto;
@@ -12,28 +23,14 @@
   color: var(--fg);
 }
 
+// ── Header ────────────────────────────────────────────────────────────────────
 .news__header {
-  max-width: 720px;
+  max-width: $news-text;
 }
 
-.news__eyebrow,
-.news__card-meta {
+.news__back {
   display: flex;
-  align-items: center;
-  gap: 12px;
   margin: 0;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--accent);
-}
-
-.news__card-meta::before {
-  content: "";
-  width: 36px;
-  height: 1px;
-  background: var(--accent-decor);
 }
 
 .news__title {
@@ -55,22 +52,6 @@
   color: var(--fg-muted);
 }
 
-.news__section-title {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 0 0 22px;
-  padding-bottom: 14px;
-  border-bottom: 1px solid var(--border);
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--fg-muted);
-
-  svg { color: var(--accent-decor); }
-}
-
 .news__empty {
   margin: 0;
   padding: 48px 24px;
@@ -81,91 +62,324 @@
   color: var(--fg-muted);
 }
 
-// Press cards
-.news__cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 20px;
+// ── Shared bits: meta line, summary, links ────────────────────────────────────
+.news__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.4;
 }
 
-.news__card {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  padding: 28px;
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  background: var(--surface);
-  color: inherit;
-  text-decoration: none;
-  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s, box-shadow 0.3s;
+.news__outlet {
+  font-weight: 600;
+  color: var(--fg);
+}
 
-  &:hover {
-    transform: translateY(-3px);
-    border-color: var(--accent-decor);
-    box-shadow: 0 18px 40px -24px rgba(0, 0, 0, 0.25);
+// The dot travels with the date so it never dangles at the end of a wrapped line
+.news__date {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+  color: var(--fg-muted);
 
-    .news__card-link svg { transform: translate(2px, -2px); }
+  &::before {
+    content: "";
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: currentColor;
   }
 }
 
-.news__card-meta i {
-  width: 3px;
-  height: 3px;
-  border-radius: 50%;
-  background: var(--fg-muted);
-}
-
-.news__card-meta span:last-child { color: var(--fg-muted); }
-
-.news__card-title {
-  margin: 0;
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-weight: 400;
-  font-size: 28px;
-  line-height: 1.1;
-  letter-spacing: -0.01em;
-  text-wrap: balance;
-}
-
-.news__card-excerpt {
+.news__summary {
+  max-width: 65ch;
   margin: 0;
   font-size: 15px;
   line-height: 1.55;
   color: var(--fg-muted);
 }
 
-.news__card-link {
+// Underlined text link. The resting underline is a faint line; on hover a full
+// line grows over it from the left (scaleX only) and the arrow nudges out.
+.news__link {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  margin-top: auto;
-  padding-top: 6px;
+  align-self: flex-start;
+  min-height: 24px;
   font-size: 14px;
   font-weight: 600;
   color: var(--accent);
+  text-decoration: none;
 
-  svg { transition: transform 0.3s; }
+  svg { transition: transform 0.3s $news-ease; }
 }
 
-// Instagram
-.news__grid {
+.news__link-text {
+  position: relative;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -3px;
+    height: 1px;
+    background: currentColor;
+  }
+
+  &::before { opacity: 0.35; }
+
+  &::after {
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.35s $news-ease;
+  }
+}
+
+.news__link:hover,
+.news__link:focus-visible,
+.news__card:hover .news__link {
+  .news__link-text::after { transform: scaleX(1); }
+  svg { transform: translate(2px, -2px); }
+}
+
+// The card link also covers the whole card, so the photo and title open the post
+.news__link--stretch::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+// ── Featured ──────────────────────────────────────────────────────────────────
+// Straight on the page like a front-page lead: a thin rule on top, the headline
+// big in serif italic on the left, a photo on the right. No box.
+.news__featured {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr)); // 320px screens: 300px min overflowed by 24px
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  align-items: start;
+  gap: 48px;
+  padding-top: 28px;
+  border-top: 1px solid var(--fg);
+}
+
+.news__featured-text {
+  display: flex;
+  flex-direction: column;
   gap: 20px;
+  min-width: 0;
+
+  .news__summary {
+    max-width: 44ch;
+    font-size: 17px;
+    color: var(--fg);
+  }
+
+  .news__link { margin-top: 4px; font-size: 15px; }
+}
+
+.news__featured-title {
+  margin: 4px 0 0;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(40px, 4.2vw, 58px);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.news__featured-photo {
+  margin: 0;
+}
+
+// ── Timeline ──────────────────────────────────────────────────────────────────
+.news__section {
+  padding-bottom: 64px;
+}
+
+.news__h2 {
+  margin: 0 0 40px;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  color: var(--fg);
+}
+
+.news__timeline {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  // the rule: one hairline, no markers
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: $news-col;
+    width: 1px;
+    background: var(--border);
+  }
+}
+
+.news__year {
+  display: grid;
+  grid-template-columns: $news-col 1fr;
+  column-gap: $news-gap;
   align-items: start;
 }
 
-.news__ig {
+.news__year-label {
+  position: sticky;
+  top: 112px; // clears the navigation pill
   margin: 0;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 44px;
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+}
+
+.news__entries {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 48px 32px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.news__entry {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+.news__entry--wide {
+  grid-column: 1 / -1;
+
+  .news__entry-title { max-width: 32ch; }
+}
+
+.news__card-text {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+// The only photo of its year: full row, square photo left, text right, so the
+// grid never leaves half a row empty
+.news__card--solo {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 32px;
+  align-items: center;
+
+  .news__photo { aspect-ratio: 1 / 1; margin-bottom: 0; }
+  .news__entry-title { font-size: 28px; }
+}
+
+// Text entries read a size up from the photo cards
+.news__entry--text .news__entry-title { font-size: 28px; }
+
+.news__entry-title {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+// Photo frame: fixed ratio so the box is reserved before the image arrives
+.news__photo {
+  aspect-ratio: 3 / 2;
+  margin-bottom: 8px;
   overflow: hidden;
+  border-radius: 20px;
+  background: var(--surface);
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s $news-ease;
+  }
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .news__card:hover .news__photo img { transform: scale(1.02); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .news__link-text::after,
+  .news__link svg,
+  .news__photo img { transition: none; }
+}
+
+// ── Instagram (fallback) ──────────────────────────────────────────────────────
+// Only for a post with no saved photo in news-media.json.
+// Reserved box; the embed mounts inside it once it is near the viewport.
+// Fixed height (never under the 420px floor) so the page does not shift when the
+// iframe arrives at 550 to 900px: taller posts scroll inside the box instead.
+.news__media {
+  width: 100%;
+  max-width: 540px; // Instagram caps its iframe here
+  height: 600px;
+  margin-top: 6px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-width: thin;
   border: 1px solid var(--border);
   border-radius: 20px;
   background: var(--surface);
-  min-height: 420px;
+}
 
-  // embed.js replaces the blockquote with an iframe; keep it flush with the card
+// Placeholder before the embed mounts, and the fallback if embed.js is blocked
+.news__media-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  height: 100%;
+  padding: 24px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 0.2s;
+
+  &:hover,
+  &:focus-visible { color: var(--fg); }
+  &:focus-visible { outline-offset: -6px; } // the box clips overflow
+}
+
+.news__ig {
+  height: 100%;
+  margin: 0;
+
+  // embed.js replaces the blockquote with an iframe; keep it flush with the box
   .instagram-media,
   iframe.instagram-media {
     min-width: 0 !important;
@@ -177,48 +391,61 @@
     box-shadow: none !important;
   }
 
-  // Fallback while embed.js has not run (or is blocked): a centered link instead of an empty box
-  blockquote a {
+  // the fallback link centres in the box until embed.js swaps the blockquote out
+  blockquote.instagram-media { height: 100%; }
+
+  // The iframe is white in both themes, so a short post stretches to the box floor
+  // rather than leaving a strip of --surface under it. Only once rendered: before
+  // that embed.js parks the iframe at height 0, position absolute.
+  iframe.instagram-media-rendered { min-height: 100% !important; }
+}
+
+// ── Narrow screens ────────────────────────────────────────────────────────────
+@media screen and (max-width: 800px) {
+  .news { gap: 64px; padding-top: 104px; }
+
+  .news__featured { grid-template-columns: 1fr; gap: 28px; padding-top: 22px; }
+  .news__featured-title { font-size: clamp(34px, 9.4vw, 44px); }
+  .news__featured-text .news__summary { font-size: 16px; }
+
+  .news__h2 { margin-bottom: 28px; font-size: 26px; }
+
+  .news__timeline {
+    gap: 56px;
+    &::before { display: none; }
+  }
+
+  .news__year {
+    grid-template-columns: 1fr;
+    row-gap: 28px;
+  }
+
+  // the year sits on its own hairline instead of the vertical rule
+  .news__year-label {
+    position: static;
     display: flex;
     align-items: center;
-    justify-content: center;
-    min-height: 418px;
-    padding: 24px;
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--accent);
-    text-decoration: none;
+    gap: 16px;
+    font-size: 34px;
 
-    &:hover { text-decoration: underline; }
+    &::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
   }
-}
 
-.news__ig-caption {
-  padding: 12px 16px 14px;
-  border-top: 1px solid var(--border);
-  font-size: 13px;
-  color: var(--fg-muted);
-}
+  .news__entries { grid-template-columns: 1fr; row-gap: 44px; }
 
-[data-theme="dark"] .news__card:hover {
-  box-shadow: 0 18px 40px -24px rgba(0, 0, 0, 0.8);
-}
+  .news__card--solo {
+    display: flex;
+    .news__photo { margin-bottom: 8px; }
+    .news__entry-title { font-size: 22px; }
+  }
 
-@media screen and (max-width: 800px) {
-  .news { gap: 40px; padding-top: 104px; }
-  .news__card { padding: 22px; }
-  .news__card-title { font-size: 24px; }
-}
+  .news__entry--text .news__entry-title { font-size: 24px; }
+  .news__entry-title { font-size: 22px; }
 
-.news__eyebrow a {
-  color: var(--fg-muted);
-  text-decoration: none;
-  transition: color 0.2s;
-  &:hover { color: var(--fg); }
-}
-.news__eyebrow i {
-  width: 3px;
-  height: 3px;
-  border-radius: 50%;
-  background: var(--fg-muted);
+  .news__media { height: 520px; }
 }

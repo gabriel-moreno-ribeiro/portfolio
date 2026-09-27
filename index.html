@@ -157,8 +157,14 @@
       ]
     }
     </script>
-      <!-- LCP no mobile: a primeira foto da faixa de momentos, antes de o React montar -->
-    <link rel="preload" as="image" href="/moments/mv01.webp" fetchpriority="high" />
+      <!-- LCP no mobile: a primeira foto da faixa de momentos, antes de o React montar. Só na Home. -->
+    <script>
+      if (location.pathname === "/") {
+        var l = document.createElement("link");
+        l.rel = "preload"; l.as = "image"; l.href = "/moments/mv01.webp"; l.fetchPriority = "high";
+        document.head.appendChild(l);
+      }
+    </script>
 </head>
   <body>
     <a href="#main-content" class="skip-link">Skip to content</a>

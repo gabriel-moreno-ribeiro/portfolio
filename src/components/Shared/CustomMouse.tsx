@@ -60,12 +60,15 @@ function CustomMouse() {
       }
     };
 
+    const reveal = () => { if (ref.current) { ref.current.style.opacity = ""; ref.current.removeAttribute("data-idle"); } };
+    document.addEventListener("mousemove", reveal, { once: true });
     document.addEventListener("mousemove", onMove);
     document.addEventListener("mousedown", onDown);
     document.addEventListener("mouseup", onUp);
     document.addEventListener("mouseover", onOver);
     return () => {
       unsub();
+      document.removeEventListener("mousemove", reveal);
       document.removeEventListener("mousemove", onMove);
       document.removeEventListener("mousedown", onDown);
       document.removeEventListener("mouseup", onUp);
@@ -74,7 +77,8 @@ function CustomMouse() {
     };
   }, [darkMode]);
 
-  return <div ref={ref} className="custom-mouse" />;
+  // Fica invisível até o primeiro movimento: sem isso um ponto preto aparece em (0,0).
+  return <div ref={ref} className="custom-mouse" style={{ opacity: 0 }} data-idle="true" />;
 }
 
 export default CustomMouse;
