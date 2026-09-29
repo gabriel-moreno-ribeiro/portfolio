@@ -1,0 +1,7 @@
+1440x900  LoAF total=2  >50ms=2  >100ms=0  maior=61ms  TBT=10ms
+  dur=   61 script=   49 render=   13 styleLayout=    9 blocking=10
+           47ms event-listener chunk-JY4G5M2K.js?v=c4cef3a4:performWorkUntilDeadline MessagePort.onmessage
+  dur=   51 script=    9 render=   42 styleLayout=    8 blocking=0
+           11ms user-callback motion_react.js?v=c4cef3a4:processBatch FrameRequestCallback
+           10ms user-callback Experience.tsx?t=1790442113465:tick FrameRequestCallback
+            6ms event-listener chunk-6ER7OG3O.js?v=c4cef3a4:dispatchEvent DIV#root.ontransitionrun

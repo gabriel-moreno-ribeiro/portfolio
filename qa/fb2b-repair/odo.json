@@ -1,0 +1,412 @@
+{
+  "390x844-light": [
+    {
+      "at": 0.1,
+      "year": "2023",
+      "visible": true,
+      "rect": [
+        15,
+        70,
+        77,
+        111
+      ],
+      "overlapsCard": false,
+      "overlapsCar": false,
+      "overlapsNav": false,
+      "inViewportX": true,
+      "shot": "odo-390x844-light-10.png"
+    },
+    {
+      "at": 0.25,
+      "year": "2024",
+      "visible": true,
+      "rect": [
+        15,
+        70,
+        77,
+        111
+      ],
+      "overlapsCard": false,
+      "overlapsCar": false,
+      "overlapsNav": false,
+      "inViewportX": true,
+      "shot": "odo-390x844-light-25.png"
+    },
+    {
+      "at": 0.5,
+      "year": "2025",
+      "visible": true,
+      "rect": [
+        15,
+        70,
+        77,
+        111
+      ],
+      "overlapsCard": false,
+      "overlapsCar": false,
+      "overlapsNav": false,
+      "inViewportX": true,
+      "shot": "odo-390x844-light-50.png"
+    },
+    {
+      "at": 0.75,
+      "year": "2025",
+      "visible": true,
+      "rect": [
+        15,
+        70,
+        77,
+        111
+      ],
+      "overlapsCard": false,
+      "overlapsCar": false,
+      "overlapsNav": false,
+      "inViewportX": true,
+      "shot": "odo-390x844-light-75.png"
+    },
+    {
+      "at": 1,
+      "year": "2026",
+      "visible": true,
+      "rect": [
+        15,
+        70,
+        77,
+        111
+      ],
+      "overlapsCard": false,
+      "overlapsCar": false,
+      "overlapsNav": false,
+      "inViewportX": true,
+      "shot": "odo-390x844-light-100.png"
+    }
+  ],
+  "390x844-dark": [
+    {
+      "at": 0.1,
+      "year": "2023",
+      "visible": true,
+      "rect": [
+        15,
+        70,
+        77,
+        111
+      ],
+      "overlapsCard": false,
+      "overlapsCar": false,
+      "overlapsNav": false,
+      "inViewportX": true,
+      "shot": "odo-390x844-dark-10.png"
+    },
+    {
+      "at": 0.25,
+      "year": "2024",
+      "visible": true,
+      "rect": [
+        15,
+        70,
+        77,
+        111
+      ],
+      "overlapsCard": false,
+      "overlapsCar": false,
+      "overlapsNav": false,
+      "inViewportX": true,
+      "shot": "odo-390x844-dark-25.png"
+    },
+    {
+      "at": 0.5,
+      "year": "2025",
+      "visible": true,
+      "rect": [
+        15,
+        70,
+        77,
+        111
+      ],
+      "overlapsCard": false,
+      "overlapsCar": false,
+      "overlapsNav": false,
+      "inViewportX": true,
+      "shot": "odo-390x844-dark-50.png"
+    },
+    {
+      "at": 0.75,
+      "year": "2025",
+      "visible": true,
+      "rect": [
+        15,
+        70,
+        77,
+        111
+      ],
+      "overlapsCard": false,
+      "overlapsCar": false,
+      "overlapsNav": false,
+      "inViewportX": true,
+      "shot": "odo-390x844-dark-75.png"
+    },
+    {
+      "at": 1,
+      "year": "2026",
+      "visible": true,
+      "rect": [
+        15,
+        70,
+        77,
+        111
+      ],
+      "overlapsCard": false,
+      "overlapsCar": false,
+      "overlapsNav": false,
+      "inViewportX": true,
+      "shot": "odo-390x844-dark-100.png"
+    }
+  ],
+  "360x740-light": [
+    {
+      "at": 0.1,
+      "year": "2023",
+      "visible": true,
+      "rect": [
+        15,
+        70,
+        77,
+        111
+      ],
+      "overlapsCard": false,
+      "overlapsCar": false,
+      "overlapsNav": false,
+      "inViewportX": true,
+      "shot": "odo-360x740-light-10.png"
+    },
+    {
+      "at": 0.25,
+      "year": "2024",
+      "visible": true,
+      "rect": [
+        15,
+        70,
+        77,
+        111
+      ],
+      "overlapsCard": false,
+      "overlapsCar": false,
+      "overlapsNav": false,
+      "inViewportX": true,
+      "shot": "odo-360x740-light-25.png"
+    },
+    {
+      "at": 0.5,
+      "year": "2025",
+      "visible": true,
+      "rect": [
+        15,
+        70,
+        77,
+        111
+      ],
+      "overlapsCard": false,
+      "overlapsCar": false,
+      "overlapsNav": false,
+      "inViewportX": true,
+      "shot": "odo-360x740-light-50.png"
+    },
+    {
+      "at": 0.75,
+      "year": "2025",
+      "visible": true,
+      "rect": [
+        15,
+        70,
+        77,
+        111
+      ],
+      "overlapsCard": false,
+      "overlapsCar": false,
+      "overlapsNav": false,
+      "inViewportX": true,
+      "shot": "odo-360x740-light-75.png"
+    },
+    {
+      "at": 1,
+      "year": "2026",
+      "visible": true,
+      "rect": [
+        15,
+        70,
+        77,
+        111
+      ],
+      "overlapsCard": false,
+      "overlapsCar": false,
+      "overlapsNav": false,
+      "inViewportX": true,
+      "shot": "odo-360x740-light-100.png"
+    }
+  ],
+  "740x360-light": [
+    {
+      "at": 0.1,
+      "year": "2023",
+      "visible": true,
+      "rect": [
+        15,
+        70,
+        77,
+        111
+      ],
+      "overlapsCard": false,
+      "overlapsCar": false,
+      "overlapsNav": false,
+      "inViewportX": true,
+      "shot": "odo-740x360-light-10.png"
+    },
+    {
+      "at": 0.25,
+      "year": "2024",
+      "visible": true,
+      "rect": [
+        15,
+        70,
+        77,
+        111
+      ],
+      "overlapsCard": false,
+      "overlapsCar": false,
+      "overlapsNav": false,
+      "inViewportX": true,
+      "shot": "odo-740x360-light-25.png"
+    },
+    {
+      "at": 0.5,
+      "year": "2025",
+      "visible": true,
+      "rect": [
+        15,
+        70,
+        77,
+        111
+      ],
+      "overlapsCard": false,
+      "overlapsCar": true,
+      "overlapsNav": false,
+      "inViewportX": true,
+      "shot": "odo-740x360-light-50.png"
+    },
+    {
+      "at": 0.75,
+      "year": "2025",
+      "visible": true,
+      "rect": [
+        15,
+        70,
+        77,
+        111
+      ],
+      "overlapsCard": false,
+      "overlapsCar": false,
+      "overlapsNav": false,
+      "inViewportX": true,
+      "shot": "odo-740x360-light-75.png"
+    },
+    {
+      "at": 1,
+      "year": "2026",
+      "visible": false,
+      "rect": [
+        15,
+        -9,
+        77,
+        32
+      ],
+      "overlapsCard": false,
+      "overlapsCar": false,
+      "overlapsNav": false,
+      "inViewportX": true,
+      "shot": "odo-740x360-light-100.png"
+    }
+  ],
+  "1440x900-light": [
+    {
+      "at": 0.1,
+      "year": "2023",
+      "visible": true,
+      "rect": [
+        1233,
+        78,
+        1340,
+        149
+      ],
+      "overlapsCard": false,
+      "overlapsCar": false,
+      "overlapsNav": false,
+      "inViewportX": true,
+      "shot": "odo-1440x900-light-10.png"
+    },
+    {
+      "at": 0.25,
+      "year": "2024",
+      "visible": true,
+      "rect": [
+        1231,
+        78,
+        1340,
+        149
+      ],
+      "overlapsCard": false,
+      "overlapsCar": false,
+      "overlapsNav": false,
+      "inViewportX": true,
+      "shot": "odo-1440x900-light-25.png"
+    },
+    {
+      "at": 0.5,
+      "year": "2025",
+      "visible": true,
+      "rect": [
+        1234,
+        78,
+        1340,
+        149
+      ],
+      "overlapsCard": false,
+      "overlapsCar": false,
+      "overlapsNav": false,
+      "inViewportX": true,
+      "shot": "odo-1440x900-light-50.png"
+    },
+    {
+      "at": 0.75,
+      "year": "2025",
+      "visible": true,
+      "rect": [
+        1234,
+        78,
+        1340,
+        149
+      ],
+      "overlapsCard": false,
+      "overlapsCar": false,
+      "overlapsNav": false,
+      "inViewportX": true,
+      "shot": "odo-1440x900-light-75.png"
+    },
+    {
+      "at": 1,
+      "year": "2026",
+      "visible": true,
+      "rect": [
+        1232,
+        78,
+        1340,
+        149
+      ],
+      "overlapsCard": false,
+      "overlapsCar": false,
+      "overlapsNav": false,
+      "inViewportX": true,
+      "shot": "odo-1440x900-light-100.png"
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "390": [
+    {
+      "active": "Manual do Mundo",
+      "halfHidden": 0,
+      "currentVisible": true
+    },
+    {
+      "active": "O Extraordinário",
+      "halfHidden": 0,
+      "currentVisible": true
+    },
+    {
+      "active": "Frankenstein",
+      "halfHidden": 0,
+      "currentVisible": true
+    },
+    {
+      "active": "Made in America",
+      "halfHidden": 0,
+      "currentVisible": true
+    }
+  ],
+  "1440": [
+    {
+      "active": "Manual do Mundo",
+      "halfHidden": 0,
+      "currentVisible": true
+    },
+    {
+      "active": "O Extraordinário",
+      "halfHidden": 0,
+      "currentVisible": true
+    },
+    {
+      "active": "Frankenstein",
+      "halfHidden": 0,
+      "currentVisible": true
+    },
+    {
+      "active": "Made in America",
+      "halfHidden": 0,
+      "currentVisible": true
+    }
+  ]
+}

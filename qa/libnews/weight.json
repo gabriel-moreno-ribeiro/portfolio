@@ -1,0 +1,161 @@
+{
+  "/library": {
+    "totalKB": 16570,
+    "requests": 156,
+    "byType": {
+      "Document": 9,
+      "Script": 15689,
+      "Image": 762,
+      "Font": 110
+    },
+    "top": [
+      {
+        "url": "/node_modules/.vite/deps/react-icons_si.js?v=c4cef3a4",
+        "type": "Script",
+        "kb": 5066
+      },
+      {
+        "url": "/node_modules/.vite/deps/react-icons_ri.js?v=c4cef3a4",
+        "type": "Script",
+        "kb": 2093
+      },
+      {
+        "url": "/node_modules/.vite/deps/react-icons_fa6.js?v=c4cef3a4",
+        "type": "Script",
+        "kb": 1728
+      },
+      {
+        "url": "/node_modules/.vite/deps/chunk-BV42CLSU.js?v=c4cef3a4",
+        "type": "Script",
+        "kb": 1218
+      },
+      {
+        "url": "/node_modules/.vite/deps/chunk-6ER7OG3O.js?v=c4cef3a4",
+        "type": "Script",
+        "kb": 970
+      },
+      {
+        "url": "/node_modules/.vite/deps/react-icons_io5.js?v=c4cef3a4",
+        "type": "Script",
+        "kb": 895
+      },
+      {
+        "url": "/node_modules/.vite/deps/zod.js?v=c4cef3a4",
+        "type": "Script",
+        "kb": 666
+      },
+      {
+        "url": "/node_modules/.vite/deps/react-router-dom.js?v=c4cef3a4",
+        "type": "Script",
+        "kb": 458
+      },
+      {
+        "url": "/node_modules/.vite/deps/motion_react.js?v=c4cef3a4",
+        "type": "Script",
+        "kb": 411
+      },
+      {
+        "url": "/node_modules/.vite/deps/posthog-js.js?v=c4cef3a4",
+        "type": "Script",
+        "kb": 238
+      },
+      {
+        "url": "/@vite/client",
+        "type": "Script",
+        "kb": 175
+      },
+      {
+        "url": "/src/components/Library/shelf/ShelfEngine.ts?t=1790473750192",
+        "type": "Script",
+        "kb": 154
+      }
+    ],
+    "diag": {
+      "dragMe": "true",
+      "engine": "three.js r170",
+      "drawCalls": "161",
+      "triangles": "19530",
+      "geometries": "172",
+      "textures": "46",
+      "stripeAssets": "0",
+      "pixelRatio": "1",
+      "motionPhase": "idle",
+      "collisionFree": "true",
+      "collisionRejects": "0"
+    },
+    "reducedCardOpacity": "1"
+  },
+  "/news": {
+    "totalKB": 14537,
+    "requests": 123,
+    "byType": {
+      "Document": 9,
+      "Script": 14010,
+      "Image": 432,
+      "Font": 86
+    },
+    "top": [
+      {
+        "url": "/node_modules/.vite/deps/react-icons_si.js?v=c4cef3a4",
+        "type": "Script",
+        "kb": 5066
+      },
+      {
+        "url": "/node_modules/.vite/deps/react-icons_ri.js?v=c4cef3a4",
+        "type": "Script",
+        "kb": 2093
+      },
+      {
+        "url": "/node_modules/.vite/deps/react-icons_fa6.js?v=c4cef3a4",
+        "type": "Script",
+        "kb": 1728
+      },
+      {
+        "url": "/node_modules/.vite/deps/chunk-6ER7OG3O.js?v=c4cef3a4",
+        "type": "Script",
+        "kb": 970
+      },
+      {
+        "url": "/node_modules/.vite/deps/react-icons_io5.js?v=c4cef3a4",
+        "type": "Script",
+        "kb": 895
+      },
+      {
+        "url": "/node_modules/.vite/deps/zod.js?v=c4cef3a4",
+        "type": "Script",
+        "kb": 666
+      },
+      {
+        "url": "/node_modules/.vite/deps/react-router-dom.js?v=c4cef3a4",
+        "type": "Script",
+        "kb": 458
+      },
+      {
+        "url": "/node_modules/.vite/deps/motion_react.js?v=c4cef3a4",
+        "type": "Script",
+        "kb": 411
+      },
+      {
+        "url": "/node_modules/.vite/deps/posthog-js.js?v=c4cef3a4",
+        "type": "Script",
+        "kb": 238
+      },
+      {
+        "url": "/@vite/client",
+        "type": "Script",
+        "kb": 175
+      },
+      {
+        "url": "/node_modules/.vite/deps/react-icons_fi.js?v=c4cef3a4",
+        "type": "Script",
+        "kb": 146
+      },
+      {
+        "url": "/@react-refresh",
+        "type": "Script",
+        "kb": 110
+      }
+    ],
+    "reducedHiddenText": 0
+  }
+}

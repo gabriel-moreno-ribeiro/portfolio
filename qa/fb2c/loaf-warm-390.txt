@@ -1,0 +1,2 @@
+390x844  LoAF total=1  >50ms=1  >100ms=0  maior=74ms  TBT=0ms
+  dur=   74 script=   65 render=    9 styleLayout=    5 blocking=0

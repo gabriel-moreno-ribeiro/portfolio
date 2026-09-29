@@ -1,0 +1,3 @@
+390x844  LoAF total=1  >50ms=1  >100ms=0  maior=64ms  TBT=4ms
+  dur=   64 script=   25 render=   38 styleLayout=   32 blocking=4
+           16ms event-listener chunk-JY4G5M2K.js?v=c4cef3a4:performWorkUntilDeadline MessagePort.onmessage

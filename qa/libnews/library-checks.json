@@ -1,0 +1,814 @@
+[
+  {
+    "w": 1440,
+    "theme": "light",
+    "topLeftEl": {
+      "tag": "CANVAS",
+      "cls": "library__canvas",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    "review": {
+      "text": "“I was seven and the book still smelled like fresh paint.”",
+      "visible": true
+    },
+    "tipVisibleWithoutHover": [
+      "age 7 · 1 book"
+    ],
+    "card": {
+      "cardBg": [
+        {
+          "bg": "rgba(0, 0, 0, 0)",
+          "filter": "none"
+        },
+        {
+          "bg": "rgb(255, 255, 255)",
+          "filter": "none"
+        }
+      ],
+      "bgPixelMedian": [
+        255,
+        255,
+        255
+      ],
+      "bgPixelMin": [
+        240,
+        115,
+        45
+      ],
+      "bgPixelMax": [
+        255,
+        255,
+        255
+      ],
+      "contrast": {
+        "title": {
+          "color": "rgb(17, 17, 17)",
+          "vsMedian": 18.88,
+          "vsLightest": 18.88,
+          "vsDarkest": 6.47
+        },
+        "author": {
+          "color": "rgb(95, 95, 95)",
+          "vsMedian": 6.39,
+          "vsLightest": 6.39,
+          "vsDarkest": 2.19
+        },
+        "read": {
+          "color": "rgb(95, 95, 95)",
+          "vsMedian": 6.39,
+          "vsLightest": 6.39,
+          "vsDarkest": 2.19
+        },
+        "review": {
+          "color": "rgb(17, 17, 17)",
+          "vsMedian": 18.88,
+          "vsLightest": 18.88,
+          "vsDarkest": 6.47
+        },
+        "index": {
+          "color": "rgb(184, 80, 26)",
+          "vsMedian": 5,
+          "vsLightest": 5,
+          "vsDarkest": 1.71
+        },
+        "fav": {
+          "color": "rgb(184, 80, 26)",
+          "vsMedian": 5,
+          "vsLightest": 5,
+          "vsDarkest": 1.71
+        }
+      }
+    },
+    "ageButtons": 11,
+    "hoverTip": {
+      "text": "age 13 · 2 books",
+      "opacity": "1",
+      "visibility": "visible"
+    },
+    "ageClick": {
+      "before": "Manual do Mundo",
+      "after": "Física - Renato Brito Vol. 1",
+      "changedMs": 1340,
+      "ageLabel": "Age 14, 4 books",
+      "activeAge": "Age 14, 4 books"
+    },
+    "end": {
+      "ms": 622,
+      "title": "Zero to One"
+    },
+    "endIndex": "28",
+    "readingCard": {
+      "title": "Zero to One",
+      "read": "Read at 18 · 2025 to 2026",
+      "review": "“The monopoly argument is the useful part, and Thiel states it plainly: competition eats the margin that funds innovation, so build something nobody else is building.”"
+    },
+    "home": {
+      "ms": 378,
+      "title": "Manual do Mundo"
+    },
+    "tabsToDrawerToggle": 16,
+    "tabOrder": [
+      {
+        "cls": "",
+        "text": "The Complete Shelf",
+        "ring": "solid 3px / none"
+      },
+      {
+        "cls": "handsfree-button ",
+        "text": "Hands-free mode (camera)",
+        "ring": "solid 3px / none"
+      },
+      {
+        "cls": "toggle-button",
+        "text": "Switch to dark mode",
+        "ring": "solid 3px / none"
+      },
+      {
+        "cls": "terminal-fab",
+        "text": "Open terminal (Ctrl+K)",
+        "ring": "solid 3px / none"
+      },
+      {
+        "cls": "",
+        "text": "Skip to content\n\nGabriel Moren",
+        "ring": "none 3px / none"
+      },
+      {
+        "cls": "skip-link",
+        "text": "Skip to content",
+        "ring": "solid 3px / none"
+      },
+      {
+        "cls": "library__canvas",
+        "text": "A shelf of 28 books. Drag or u",
+        "ring": "solid 3px / none"
+      },
+      {
+        "cls": "menu-icon",
+        "text": "Close menu",
+        "ring": "solid 2px / none"
+      },
+      {
+        "cls": "",
+        "text": "Home.",
+        "ring": "solid 3px / none"
+      },
+      {
+        "cls": "",
+        "text": "Library.",
+        "ring": "solid 3px / none"
+      },
+      {
+        "cls": "",
+        "text": "News.",
+        "ring": "solid 3px / none"
+      },
+      {
+        "cls": "",
+        "text": "Story.",
+        "ring": "solid 3px / none"
+      },
+      {
+        "cls": "links__social",
+        "text": "LinkedIn (opens in a new tab)",
+        "ring": "solid 3px / none"
+      },
+      {
+        "cls": "links__social",
+        "text": "GitHub (opens in a new tab)",
+        "ring": "solid 3px / none"
+      },
+      {
+        "cls": "page-back",
+        "text": "Home",
+        "ring": "solid 3px / none"
+      },
+      {
+        "cls": "library__index-toggle",
+        "text": "All books",
+        "ring": "solid 3px / none"
+      }
+    ],
+    "drawer": {
+      "open": true,
+      "focusInside": true,
+      "focused": "Close the list",
+      "readingFlag": 1,
+      "readingFilterRows": 1,
+      "readingFilterTitles": [
+        "Made in America"
+      ],
+      "focusInsideAfter70Tabs": true,
+      "afterEscape": {
+        "open": false,
+        "focus": "library__index-toggle"
+      }
+    },
+    "ctrlK": [
+      "Terminal"
+    ]
+  },
+  {
+    "w": 1440,
+    "theme": "dark",
+    "topLeftEl": {
+      "tag": "CANVAS",
+      "cls": "library__canvas",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    "review": {
+      "text": "“I was seven and the book still smelled like fresh paint.”",
+      "visible": true
+    },
+    "tipVisibleWithoutHover": [
+      "age 7 · 1 book"
+    ],
+    "card": {
+      "cardBg": [
+        {
+          "bg": "rgba(0, 0, 0, 0)",
+          "filter": "none"
+        },
+        {
+          "bg": "rgb(22, 22, 46)",
+          "filter": "none"
+        }
+      ],
+      "bgPixelMedian": [
+        22,
+        22,
+        46
+      ],
+      "bgPixelMin": [
+        22,
+        22,
+        46
+      ],
+      "bgPixelMax": [
+        240,
+        115,
+        45
+      ],
+      "contrast": {
+        "title": {
+          "color": "rgb(255, 255, 255)",
+          "vsMedian": 17.67,
+          "vsLightest": 2.92,
+          "vsDarkest": 17.67
+        },
+        "author": {
+          "color": "rgb(168, 168, 184)",
+          "vsMedian": 7.54,
+          "vsLightest": 1.25,
+          "vsDarkest": 7.54
+        },
+        "read": {
+          "color": "rgb(168, 168, 184)",
+          "vsMedian": 7.54,
+          "vsLightest": 1.25,
+          "vsDarkest": 7.54
+        },
+        "review": {
+          "color": "rgb(255, 255, 255)",
+          "vsMedian": 17.67,
+          "vsLightest": 2.92,
+          "vsDarkest": 17.67
+        },
+        "index": {
+          "color": "rgb(240, 115, 45)",
+          "vsMedian": 6.05,
+          "vsLightest": 1,
+          "vsDarkest": 6.05
+        },
+        "fav": {
+          "color": "rgb(240, 115, 45)",
+          "vsMedian": 6.05,
+          "vsLightest": 1,
+          "vsDarkest": 6.05
+        }
+      }
+    },
+    "ageButtons": 11,
+    "hoverTip": {
+      "text": "age 13 · 2 books",
+      "opacity": "1",
+      "visibility": "visible"
+    },
+    "ageClick": {
+      "before": "Manual do Mundo",
+      "after": "Física - Renato Brito Vol. 1",
+      "changedMs": 4945,
+      "ageLabel": "Age 14, 4 books",
+      "activeAge": "Age 14, 4 books"
+    },
+    "end": {
+      "ms": 496,
+      "title": "Zero to One"
+    },
+    "endIndex": "28",
+    "readingCard": {
+      "title": "Made in America",
+      "read": "Reading now · 72% of 352 pages",
+      "review": "“Walton's competitiveness never lets up, but it never reads as arrogance, because most of the book is him describing what he got wrong and who he learned it from.”"
+    },
+    "home": {
+      "ms": 469,
+      "title": "Manual do Mundo"
+    },
+    "tabsToDrawerToggle": 16,
+    "tabOrder": [
+      {
+        "cls": "",
+        "text": "The Complete Shelf",
+        "ring": "solid 3px / none"
+      },
+      {
+        "cls": "handsfree-button ",
+        "text": "Hands-free mode (camera)",
+        "ring": "solid 3px / none"
+      },
+      {
+        "cls": "toggle-button",
+        "text": "Switch to light mode",
+        "ring": "solid 3px / none"
+      },
+      {
+        "cls": "terminal-fab",
+        "text": "Open terminal (Ctrl+K)",
+        "ring": "solid 3px / none"
+      },
+      {
+        "cls": "",
+        "text": "Skip to content\n\nGabriel Moren",
+        "ring": "none 3px / none"
+      },
+      {
+        "cls": "skip-link",
+        "text": "Skip to content",
+        "ring": "solid 3px / none"
+      },
+      {
+        "cls": "library__canvas",
+        "text": "A shelf of 28 books. Drag or u",
+        "ring": "solid 3px / none"
+      },
+      {
+        "cls": "menu-icon",
+        "text": "Close menu",
+        "ring": "solid 2px / none"
+      },
+      {
+        "cls": "",
+        "text": "Home.",
+        "ring": "solid 3px / none"
+      },
+      {
+        "cls": "",
+        "text": "Library.",
+        "ring": "solid 3px / none"
+      },
+      {
+        "cls": "",
+        "text": "News.",
+        "ring": "solid 3px / none"
+      },
+      {
+        "cls": "",
+        "text": "Story.",
+        "ring": "solid 3px / none"
+      },
+      {
+        "cls": "links__social",
+        "text": "LinkedIn (opens in a new tab)",
+        "ring": "solid 3px / none"
+      },
+      {
+        "cls": "links__social",
+        "text": "GitHub (opens in a new tab)",
+        "ring": "solid 3px / none"
+      },
+      {
+        "cls": "page-back",
+        "text": "Home",
+        "ring": "solid 3px / none"
+      },
+      {
+        "cls": "library__index-toggle",
+        "text": "All books",
+        "ring": "solid 3px / none"
+      }
+    ],
+    "drawer": {
+      "open": true,
+      "focusInside": true,
+      "focused": "Close the list",
+      "readingFlag": 1,
+      "readingFilterRows": 1,
+      "readingFilterTitles": [
+        "Made in America"
+      ],
+      "focusInsideAfter70Tabs": true,
+      "afterEscape": {
+        "open": false,
+        "focus": "library__index-toggle"
+      }
+    },
+    "ctrlK": [
+      "Terminal"
+    ]
+  },
+  {
+    "w": 390,
+    "theme": "light",
+    "topLeftEl": {
+      "tag": "CANVAS",
+      "cls": "library__canvas",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    "review": {
+      "text": "“I was seven and the book still smelled like fresh paint.”",
+      "visible": true
+    },
+    "tipVisibleWithoutHover": [],
+    "card": {
+      "cardBg": [
+        {
+          "bg": "rgba(0, 0, 0, 0)",
+          "filter": "none"
+        },
+        {
+          "bg": "rgb(255, 255, 255)",
+          "filter": "none"
+        }
+      ],
+      "bgPixelMedian": [
+        255,
+        255,
+        255
+      ],
+      "bgPixelMin": [
+        240,
+        115,
+        45
+      ],
+      "bgPixelMax": [
+        255,
+        255,
+        255
+      ],
+      "contrast": {
+        "title": {
+          "color": "rgb(17, 17, 17)",
+          "vsMedian": 18.88,
+          "vsLightest": 18.88,
+          "vsDarkest": 6.47
+        },
+        "author": {
+          "color": "rgb(95, 95, 95)",
+          "vsMedian": 6.39,
+          "vsLightest": 6.39,
+          "vsDarkest": 2.19
+        },
+        "read": {
+          "color": "rgb(95, 95, 95)",
+          "vsMedian": 6.39,
+          "vsLightest": 6.39,
+          "vsDarkest": 2.19
+        },
+        "review": {
+          "color": "rgb(17, 17, 17)",
+          "vsMedian": 18.88,
+          "vsLightest": 18.88,
+          "vsDarkest": 6.47
+        },
+        "index": {
+          "color": "rgb(184, 80, 26)",
+          "vsMedian": 5,
+          "vsLightest": 5,
+          "vsDarkest": 1.71
+        },
+        "fav": {
+          "color": "rgb(184, 80, 26)",
+          "vsMedian": 5,
+          "vsLightest": 5,
+          "vsDarkest": 1.71
+        }
+      }
+    },
+    "ageButtons": 11,
+    "ageClick": {
+      "before": "Manual do Mundo",
+      "after": "Física - Renato Brito Vol. 1",
+      "changedMs": 1641,
+      "ageLabel": "Age 14, 4 books",
+      "activeAge": "Age 14, 4 books"
+    },
+    "end": {
+      "ms": 499,
+      "title": "Zero to One"
+    },
+    "endIndex": "28",
+    "readingCard": {
+      "title": "Made in America",
+      "read": "Reading now · 72% of 352 pages",
+      "review": "“Walton's competitiveness never lets up, but it never reads as arrogance, because most of the book is him describing what he got wrong and who he learned it from.”"
+    },
+    "home": {
+      "ms": 233,
+      "title": "Manual do Mundo"
+    },
+    "tabsToDrawerToggle": 15,
+    "tabOrder": [
+      {
+        "cls": "toggle-button",
+        "text": "Switch to dark mode",
+        "ring": "solid 3px / none"
+      },
+      {
+        "cls": "",
+        "text": "Skip to content\n\nGabriel Moren",
+        "ring": "none 3px / none"
+      },
+      {
+        "cls": "skip-link",
+        "text": "Skip to content",
+        "ring": "solid 3px / none"
+      },
+      {
+        "cls": "library__canvas",
+        "text": "A shelf of 28 books. Drag or u",
+        "ring": "solid 3px / none"
+      },
+      {
+        "cls": "menu-icon",
+        "text": "Close menu",
+        "ring": "solid 2px / none"
+      },
+      {
+        "cls": "",
+        "text": "Home.",
+        "ring": "solid 3px / none"
+      },
+      {
+        "cls": "",
+        "text": "Library.",
+        "ring": "solid 3px / none"
+      },
+      {
+        "cls": "",
+        "text": "News.",
+        "ring": "solid 3px / none"
+      },
+      {
+        "cls": "",
+        "text": "Story.",
+        "ring": "solid 3px / none"
+      },
+      {
+        "cls": "links__social",
+        "text": "LinkedIn (opens in a new tab)",
+        "ring": "solid 3px / none"
+      },
+      {
+        "cls": "links__social",
+        "text": "GitHub (opens in a new tab)",
+        "ring": "solid 3px / none"
+      },
+      {
+        "cls": "navbar-toggle-btn ",
+        "text": "Enable camera",
+        "ring": "solid 3px / none"
+      },
+      {
+        "cls": "navbar-toggle-btn",
+        "text": "Switch to dark mode",
+        "ring": "solid 3px / none"
+      },
+      {
+        "cls": "page-back",
+        "text": "Home",
+        "ring": "solid 3px / none"
+      },
+      {
+        "cls": "library__index-toggle",
+        "text": "All books",
+        "ring": "solid 3px / none"
+      }
+    ],
+    "drawer": {
+      "open": true,
+      "focusInside": true,
+      "focused": "Close the list",
+      "readingFlag": 1,
+      "readingFilterRows": 1,
+      "readingFilterTitles": [
+        "Made in America"
+      ],
+      "focusInsideAfter70Tabs": true,
+      "afterEscape": {
+        "open": false,
+        "focus": "library__index-toggle"
+      }
+    },
+    "ctrlK": [
+      "Terminal"
+    ]
+  },
+  {
+    "w": 390,
+    "theme": "dark",
+    "topLeftEl": {
+      "tag": "CANVAS",
+      "cls": "library__canvas",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    "review": {
+      "text": "“I was seven and the book still smelled like fresh paint.”",
+      "visible": true
+    },
+    "tipVisibleWithoutHover": [],
+    "card": {
+      "cardBg": [
+        {
+          "bg": "rgba(0, 0, 0, 0)",
+          "filter": "none"
+        },
+        {
+          "bg": "rgb(22, 22, 46)",
+          "filter": "none"
+        }
+      ],
+      "bgPixelMedian": [
+        22,
+        22,
+        46
+      ],
+      "bgPixelMin": [
+        22,
+        22,
+        46
+      ],
+      "bgPixelMax": [
+        240,
+        115,
+        45
+      ],
+      "contrast": {
+        "title": {
+          "color": "rgb(255, 255, 255)",
+          "vsMedian": 17.67,
+          "vsLightest": 2.92,
+          "vsDarkest": 17.67
+        },
+        "author": {
+          "color": "rgb(168, 168, 184)",
+          "vsMedian": 7.54,
+          "vsLightest": 1.25,
+          "vsDarkest": 7.54
+        },
+        "read": {
+          "color": "rgb(168, 168, 184)",
+          "vsMedian": 7.54,
+          "vsLightest": 1.25,
+          "vsDarkest": 7.54
+        },
+        "review": {
+          "color": "rgb(255, 255, 255)",
+          "vsMedian": 17.67,
+          "vsLightest": 2.92,
+          "vsDarkest": 17.67
+        },
+        "index": {
+          "color": "rgb(240, 115, 45)",
+          "vsMedian": 6.05,
+          "vsLightest": 1,
+          "vsDarkest": 6.05
+        },
+        "fav": {
+          "color": "rgb(240, 115, 45)",
+          "vsMedian": 6.05,
+          "vsLightest": 1,
+          "vsDarkest": 6.05
+        }
+      }
+    },
+    "ageButtons": 11,
+    "ageClick": {
+      "before": "Manual do Mundo",
+      "after": "Física - Renato Brito Vol. 1",
+      "changedMs": 1737,
+      "ageLabel": "Age 14, 4 books",
+      "activeAge": "Age 14, 4 books"
+    },
+    "end": {
+      "ms": 384,
+      "title": "Zero to One"
+    },
+    "endIndex": "28",
+    "readingCard": {
+      "title": "Made in America",
+      "read": "Reading now · 72% of 352 pages",
+      "review": "“Walton's competitiveness never lets up, but it never reads as arrogance, because most of the book is him describing what he got wrong and who he learned it from.”"
+    },
+    "home": {
+      "ms": 176,
+      "title": "Manual do Mundo"
+    },
+    "tabsToDrawerToggle": 15,
+    "tabOrder": [
+      {
+        "cls": "toggle-button",
+        "text": "Switch to light mode",
+        "ring": "solid 3px / none"
+      },
+      {
+        "cls": "",
+        "text": "Skip to content\n\nGabriel Moren",
+        "ring": "none 3px / none"
+      },
+      {
+        "cls": "skip-link",
+        "text": "Skip to content",
+        "ring": "solid 3px / none"
+      },
+      {
+        "cls": "library__canvas",
+        "text": "A shelf of 28 books. Drag or u",
+        "ring": "solid 3px / none"
+      },
+      {
+        "cls": "menu-icon",
+        "text": "Close menu",
+        "ring": "solid 2px / none"
+      },
+      {
+        "cls": "",
+        "text": "Home.",
+        "ring": "solid 3px / none"
+      },
+      {
+        "cls": "",
+        "text": "Library.",
+        "ring": "solid 3px / none"
+      },
+      {
+        "cls": "",
+        "text": "News.",
+        "ring": "solid 3px / none"
+      },
+      {
+        "cls": "",
+        "text": "Story.",
+        "ring": "solid 3px / none"
+      },
+      {
+        "cls": "links__social",
+        "text": "LinkedIn (opens in a new tab)",
+        "ring": "solid 3px / none"
+      },
+      {
+        "cls": "links__social",
+        "text": "GitHub (opens in a new tab)",
+        "ring": "solid 3px / none"
+      },
+      {
+        "cls": "navbar-toggle-btn ",
+        "text": "Enable camera",
+        "ring": "solid 3px / none"
+      },
+      {
+        "cls": "navbar-toggle-btn",
+        "text": "Switch to light mode",
+        "ring": "solid 3px / none"
+      },
+      {
+        "cls": "page-back",
+        "text": "Home",
+        "ring": "solid 3px / none"
+      },
+      {
+        "cls": "library__index-toggle",
+        "text": "All books",
+        "ring": "solid 3px / none"
+      }
+    ],
+    "drawer": {
+      "open": true,
+      "focusInside": true,
+      "focused": "Close the list",
+      "readingFlag": 1,
+      "readingFilterRows": 1,
+      "readingFilterTitles": [
+        "Made in America"
+      ],
+      "focusInsideAfter70Tabs": true,
+      "afterEscape": {
+        "open": false,
+        "focus": "library__index-toggle"
+      }
+    },
+    "ctrlK": [
+      "Terminal"
+    ]
+  }
+]

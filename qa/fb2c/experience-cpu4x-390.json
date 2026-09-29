@@ -1,0 +1,91 @@
+{
+  "viewport": "390x844",
+  "cpuThrottlingRate": 4,
+  "entryType": "long-animation-frame",
+  "selector": "#work-experience",
+  "geometry": {
+    "sectionTop": 6722,
+    "sectionHeight": 3240,
+    "innerHeight": 844,
+    "docMaxScroll": 10500,
+    "scrollStart": 6722,
+    "scrollEnd": 9118
+  },
+  "scrollSteps": 40,
+  "stepDelayMs": 100,
+  "observedWindowMs": 6769,
+  "framesOver50ms": 14,
+  "framesOver100ms": 9,
+  "longestMs": 604,
+  "totalBlockingMs": 1653,
+  "top10": [
+    {
+      "name": "long-animation-frame",
+      "start": 6090,
+      "duration": 604,
+      "blocking": 552
+    },
+    {
+      "name": "long-animation-frame",
+      "start": 4650,
+      "duration": 415,
+      "blocking": 359
+    },
+    {
+      "name": "long-animation-frame",
+      "start": 7125,
+      "duration": 228,
+      "blocking": 0
+    },
+    {
+      "name": "long-animation-frame",
+      "start": 4246,
+      "duration": 163,
+      "blocking": 113
+    },
+    {
+      "name": "long-animation-frame",
+      "start": 5630,
+      "duration": 129,
+      "blocking": 70
+    },
+    {
+      "name": "long-animation-frame",
+      "start": 6733,
+      "duration": 129,
+      "blocking": 58
+    },
+    {
+      "name": "long-animation-frame",
+      "start": 5115,
+      "duration": 122,
+      "blocking": 26
+    },
+    {
+      "name": "long-animation-frame",
+      "start": 4537,
+      "duration": 113,
+      "blocking": 14
+    },
+    {
+      "name": "long-animation-frame",
+      "start": 5248,
+      "duration": 108,
+      "blocking": 0
+    },
+    {
+      "name": "long-animation-frame",
+      "start": 4446,
+      "duration": 88,
+      "blocking": 31
+    }
+  ],
+  "rafStats": {
+    "frames": 239,
+    "framesOver50ms": 16,
+    "maxFrameMs": 650,
+    "medianFrameMs": 17,
+    "p95FrameMs": 83,
+    "effectiveFps": 35
+  }
+}

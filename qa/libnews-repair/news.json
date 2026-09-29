@@ -1,0 +1,274 @@
+[
+  {
+    "w": 1440,
+    "theme": "light",
+    "violations": [],
+    "layout": [
+      {
+        "year": "2026",
+        "listW": 960,
+        "items": [
+          {
+            "cls": "hl-reveal news__entry news__entry--text news__entry--wide",
+            "x": 0,
+            "w": 960,
+            "h": 163
+          },
+          {
+            "cls": "hl-reveal news__entry news__card news__card--solo",
+            "x": 0,
+            "w": 960,
+            "h": 464
+          }
+        ]
+      },
+      {
+        "year": "2025",
+        "listW": 960,
+        "items": [
+          {
+            "cls": "hl-reveal news__entry news__card",
+            "x": 0,
+            "w": 464,
+            "h": 511
+          },
+          {
+            "cls": "hl-reveal news__entry news__card",
+            "x": 496,
+            "w": 464,
+            "h": 511
+          }
+        ]
+      },
+      {
+        "year": "2023",
+        "listW": 960,
+        "items": [
+          {
+            "cls": "hl-reveal news__entry news__card",
+            "x": 0,
+            "w": 464,
+            "h": 511
+          },
+          {
+            "cls": "hl-reveal news__entry news__card",
+            "x": 496,
+            "w": 464,
+            "h": 511
+          }
+        ]
+      }
+    ],
+    "link": {
+      "color": "rgb(184, 80, 26)",
+      "bg": "rgb(255, 248, 244)",
+      "featuredBg": "rgba(0, 0, 0, 0)"
+    }
+  },
+  {
+    "w": 1440,
+    "theme": "dark",
+    "violations": [],
+    "layout": [
+      {
+        "year": "2026",
+        "listW": 960,
+        "items": [
+          {
+            "cls": "hl-reveal news__entry news__entry--text news__entry--wide",
+            "x": 0,
+            "w": 960,
+            "h": 163
+          },
+          {
+            "cls": "hl-reveal news__entry news__card news__card--solo",
+            "x": 0,
+            "w": 960,
+            "h": 464
+          }
+        ]
+      },
+      {
+        "year": "2025",
+        "listW": 960,
+        "items": [
+          {
+            "cls": "hl-reveal news__entry news__card",
+            "x": 0,
+            "w": 464,
+            "h": 511
+          },
+          {
+            "cls": "hl-reveal news__entry news__card",
+            "x": 496,
+            "w": 464,
+            "h": 511
+          }
+        ]
+      },
+      {
+        "year": "2023",
+        "listW": 960,
+        "items": [
+          {
+            "cls": "hl-reveal news__entry news__card",
+            "x": 0,
+            "w": 464,
+            "h": 511
+          },
+          {
+            "cls": "hl-reveal news__entry news__card",
+            "x": 496,
+            "w": 464,
+            "h": 511
+          }
+        ]
+      }
+    ],
+    "link": {
+      "color": "rgb(240, 115, 45)",
+      "bg": "rgb(10, 10, 26)",
+      "featuredBg": "rgba(0, 0, 0, 0)"
+    }
+  },
+  {
+    "w": 390,
+    "theme": "light",
+    "violations": [],
+    "layout": [
+      {
+        "year": "2026",
+        "listW": 342,
+        "items": [
+          {
+            "cls": "hl-reveal news__entry news__entry--text news__entry--wide",
+            "x": 0,
+            "w": 342,
+            "h": 200
+          },
+          {
+            "cls": "hl-reveal news__entry news__card news__card--solo",
+            "x": 0,
+            "w": 342,
+            "h": 562
+          }
+        ]
+      },
+      {
+        "year": "2025",
+        "listW": 342,
+        "items": [
+          {
+            "cls": "hl-reveal news__entry news__card",
+            "x": 0,
+            "w": 342,
+            "h": 425
+          },
+          {
+            "cls": "hl-reveal news__entry news__card",
+            "x": 0,
+            "w": 342,
+            "h": 448
+          }
+        ]
+      },
+      {
+        "year": "2023",
+        "listW": 342,
+        "items": [
+          {
+            "cls": "hl-reveal news__entry news__card",
+            "x": 0,
+            "w": 342,
+            "h": 425
+          },
+          {
+            "cls": "hl-reveal news__entry news__card",
+            "x": 0,
+            "w": 342,
+            "h": 425
+          }
+        ]
+      }
+    ],
+    "link": {
+      "color": "rgb(184, 80, 26)",
+      "bg": "rgb(255, 248, 244)",
+      "featuredBg": "rgba(0, 0, 0, 0)"
+    }
+  },
+  {
+    "w": 390,
+    "theme": "dark",
+    "violations": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "nodes": [
+          ".mobile-sticky-cta__btn[href$=\"/#contact\"][data-discover=\"true\"] | Element has insufficient color contrast of 2.91 (foreground color: #ffffff, background color: #f0732d, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+        ]
+      }
+    ],
+    "layout": [
+      {
+        "year": "2026",
+        "listW": 342,
+        "items": [
+          {
+            "cls": "hl-reveal news__entry news__entry--text news__entry--wide",
+            "x": 0,
+            "w": 342,
+            "h": 200
+          },
+          {
+            "cls": "hl-reveal news__entry news__card news__card--solo",
+            "x": 0,
+            "w": 342,
+            "h": 562
+          }
+        ]
+      },
+      {
+        "year": "2025",
+        "listW": 342,
+        "items": [
+          {
+            "cls": "hl-reveal news__entry news__card",
+            "x": 0,
+            "w": 342,
+            "h": 425
+          },
+          {
+            "cls": "hl-reveal news__entry news__card",
+            "x": 0,
+            "w": 342,
+            "h": 448
+          }
+        ]
+      },
+      {
+        "year": "2023",
+        "listW": 342,
+        "items": [
+          {
+            "cls": "hl-reveal news__entry news__card",
+            "x": 0,
+            "w": 342,
+            "h": 425
+          },
+          {
+            "cls": "hl-reveal news__entry news__card",
+            "x": 0,
+            "w": 342,
+            "h": 425
+          }
+        ]
+      }
+    ],
+    "link": {
+      "color": "rgb(240, 115, 45)",
+      "bg": "rgb(10, 10, 26)",
+      "featuredBg": "rgba(0, 0, 0, 0)"
+    }
+  }
+]

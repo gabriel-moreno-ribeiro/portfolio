@@ -1,0 +1,1561 @@
+{
+  "label": "before",
+  "key": "390-warm",
+  "url": "http://localhost:5173/",
+  "cpuRate": 4,
+  "step": 300,
+  "every": 100,
+  "median": {
+    "over50": 19,
+    "over100": 8,
+    "maxFrame": 2724,
+    "fps": 11.9,
+    "blocking": 6936,
+    "forced": 42,
+    "rafGapsOver50": 32,
+    "perRun": [
+      {
+        "over50": 19,
+        "maxFrame": 2334,
+        "fps": 15.8,
+        "blocking": 4727
+      },
+      {
+        "over50": 22,
+        "maxFrame": 2724,
+        "fps": 11.1,
+        "blocking": 7542
+      },
+      {
+        "over50": 19,
+        "maxFrame": 5769,
+        "fps": 11.9,
+        "blocking": 6936
+      }
+    ],
+    "errors": []
+  },
+  "runs": [
+    {
+      "over50": 19,
+      "over100": 9,
+      "maxFrame": 2334,
+      "blocking": 4727,
+      "forced": 21,
+      "fps": 15.8,
+      "rafGapsOver50": 32,
+      "rafGapMax": 2367,
+      "steps": 33,
+      "height": 9946,
+      "errors": [],
+      "frames": [
+        {
+          "start": 16673,
+          "dur": 2334,
+          "blocking": 2280,
+          "renderStart": 16688,
+          "styleAndLayoutStart": 19003,
+          "preRender": 15,
+          "render": 2319,
+          "styleLayout": 4,
+          "forced": 0,
+          "scripts": [
+            {
+              "dur": 11,
+              "forced": 0,
+              "type": "event-listener",
+              "invoker": "MessagePort.onmessage",
+              "src": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+              "fn": "performWorkUntilDeadline"
+            }
+          ],
+          "y": 3900,
+          "section": "research"
+        },
+        {
+          "start": 22165,
+          "dur": 2003,
+          "blocking": 1953,
+          "renderStart": 22165,
+          "styleAndLayoutStart": 24156,
+          "preRender": 0,
+          "render": 2003,
+          "styleLayout": 12,
+          "forced": 0,
+          "scripts": [],
+          "y": 6300,
+          "section": "work-experience"
+        },
+        {
+          "start": 19590,
+          "dur": 1956,
+          "blocking": 0,
+          "renderStart": 21543,
+          "styleAndLayoutStart": 21544,
+          "preRender": 1953,
+          "render": 2,
+          "styleLayout": 1,
+          "forced": 0,
+          "scripts": [],
+          "y": 5400,
+          "section": "work-experience"
+        },
+        {
+          "start": 21739,
+          "dur": 249,
+          "blocking": 0,
+          "renderStart": 21986,
+          "styleAndLayoutStart": 21987,
+          "preRender": 247,
+          "render": 2,
+          "styleLayout": 1,
+          "forced": 0,
+          "scripts": [],
+          "y": 5700,
+          "section": "work-experience"
+        },
+        {
+          "start": 14065,
+          "dur": 234,
+          "blocking": 170,
+          "renderStart": 14254,
+          "styleAndLayoutStart": 14260,
+          "preRender": 189,
+          "render": 45,
+          "styleLayout": 39,
+          "forced": 0,
+          "scripts": [
+            {
+              "dur": 175,
+              "forced": 0,
+              "type": "event-listener",
+              "invoker": "MessagePort.onmessage",
+              "src": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+              "fn": "performWorkUntilDeadline"
+            },
+            {
+              "dur": 10,
+              "forced": 0,
+              "type": "user-callback",
+              "invoker": "IntersectionObserverCallback",
+              "src": "/src/components/Home/BackgroundGlobe.tsx",
+              "fn": ""
+            }
+          ],
+          "y": 600,
+          "section": "background"
+        },
+        {
+          "start": 15152,
+          "dur": 191,
+          "blocking": 140,
+          "renderStart": 15312,
+          "styleAndLayoutStart": 15314,
+          "preRender": 160,
+          "render": 32,
+          "styleLayout": 30,
+          "forced": 0,
+          "scripts": [
+            {
+              "dur": 158,
+              "forced": 0,
+              "type": "event-listener",
+              "invoker": "MessagePort.onmessage",
+              "src": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+              "fn": "performWorkUntilDeadline"
+            }
+          ],
+          "y": 1800,
+          "section": "work"
+        },
+        {
+          "start": 14826,
+          "dur": 147,
+          "blocking": 72,
+          "renderStart": 14939,
+          "styleAndLayoutStart": 14963,
+          "preRender": 113,
+          "render": 34,
+          "styleLayout": 10,
+          "forced": 6,
+          "scripts": [
+            {
+              "dur": 86,
+              "forced": 0,
+              "type": "event-listener",
+              "invoker": "MessagePort.onmessage",
+              "src": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+              "fn": "performWorkUntilDeadline"
+            },
+            {
+              "dur": 15,
+              "forced": 0,
+              "type": "user-callback",
+              "invoker": "FrameRequestCallback",
+              "src": "/node_modules/.vite/deps/motion_react.js",
+              "fn": "processBatch"
+            },
+            {
+              "dur": 7,
+              "forced": 6,
+              "type": "event-listener",
+              "invoker": "DOMWindow.onscroll",
+              "src": "/src/components/Shared/MobileStickyCTA.tsx",
+              "fn": "onScroll"
+            }
+          ],
+          "y": 1500,
+          "section": "work"
+        },
+        {
+          "start": 13773,
+          "dur": 106,
+          "blocking": 47,
+          "renderStart": 13783,
+          "styleAndLayoutStart": 13837,
+          "preRender": 10,
+          "render": 96,
+          "styleLayout": 42,
+          "forced": 0,
+          "scripts": [
+            {
+              "dur": 22,
+              "forced": 0,
+              "type": "user-callback",
+              "invoker": "FrameRequestCallback",
+              "src": "/node_modules/.vite/deps/motion_react.js",
+              "fn": "processBatch"
+            }
+          ],
+          "y": 300,
+          "section": "moments"
+        },
+        {
+          "start": 14614,
+          "dur": 101,
+          "blocking": 13,
+          "renderStart": 14669,
+          "styleAndLayoutStart": 14713,
+          "preRender": 55,
+          "render": 46,
+          "styleLayout": 1,
+          "forced": 11,
+          "scripts": [
+            {
+              "dur": 30,
+              "forced": 0,
+              "type": "user-callback",
+              "invoker": "FrameRequestCallback",
+              "src": "/node_modules/.vite/deps/motion_react.js",
+              "fn": "processBatch"
+            },
+            {
+              "dur": 17,
+              "forced": 0,
+              "type": "event-listener",
+              "invoker": "MessagePort.onmessage",
+              "src": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+              "fn": "performWorkUntilDeadline"
+            },
+            {
+              "dur": 12,
+              "forced": 11,
+              "type": "event-listener",
+              "invoker": "DOMWindow.onscroll",
+              "src": "/src/components/Shared/MobileStickyCTA.tsx",
+              "fn": "onScroll"
+            }
+          ],
+          "y": 1200,
+          "section": "background"
+        },
+        {
+          "start": 26778,
+          "dur": 92,
+          "blocking": 0,
+          "renderStart": 26863,
+          "styleAndLayoutStart": 26867,
+          "preRender": 85,
+          "render": 7,
+          "styleLayout": 3,
+          "forced": 0,
+          "scripts": [],
+          "y": 9600,
+          "section": "gap"
+        },
+        {
+          "start": 26611,
+          "dur": 87,
+          "blocking": 0,
+          "renderStart": 26678,
+          "styleAndLayoutStart": 26698,
+          "preRender": 66,
+          "render": 20,
+          "styleLayout": 0,
+          "forced": 0,
+          "scripts": [
+            {
+              "dur": 13,
+              "forced": 0,
+              "type": "user-callback",
+              "invoker": "FrameRequestCallback",
+              "src": "/node_modules/.vite/deps/motion_react.js",
+              "fn": "processBatch"
+            },
+            {
+              "dur": 6,
+              "forced": 0,
+              "type": "user-callback",
+              "invoker": "FrameRequestCallback",
+              "src": "",
+              "fn": ""
+            }
+          ],
+          "y": 9600,
+          "section": "gap"
+        },
+        {
+          "start": 13954,
+          "dur": 67,
+          "blocking": 16,
+          "renderStart": 13980,
+          "styleAndLayoutStart": 13980,
+          "preRender": 26,
+          "render": 41,
+          "styleLayout": 40,
+          "forced": 0,
+          "scripts": [
+            {
+              "dur": 25,
+              "forced": 0,
+              "type": "event-listener",
+              "invoker": "MessagePort.onmessage",
+              "src": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+              "fn": "performWorkUntilDeadline"
+            }
+          ],
+          "y": 600,
+          "section": "background"
+        },
+        {
+          "start": 24268,
+          "dur": 65,
+          "blocking": 14,
+          "renderStart": 24270,
+          "styleAndLayoutStart": 24276,
+          "preRender": 2,
+          "render": 64,
+          "styleLayout": 58,
+          "forced": 0,
+          "scripts": [],
+          "y": 6600,
+          "section": "work-experience"
+        },
+        {
+          "start": 24742,
+          "dur": 64,
+          "blocking": 14,
+          "renderStart": 24742,
+          "styleAndLayoutStart": 24748,
+          "preRender": 1,
+          "render": 64,
+          "styleLayout": 58,
+          "forced": 0,
+          "scripts": [],
+          "y": 6600,
+          "section": "work-experience"
+        },
+        {
+          "start": 25744,
+          "dur": 61,
+          "blocking": 6,
+          "renderStart": 25750,
+          "styleAndLayoutStart": 25774,
+          "preRender": 6,
+          "render": 54,
+          "styleLayout": 31,
+          "forced": 4,
+          "scripts": [
+            {
+              "dur": 8,
+              "forced": 4,
+              "type": "user-callback",
+              "invoker": "FrameRequestCallback",
+              "src": "/node_modules/.vite/deps/motion_react.js",
+              "fn": "processBatch"
+            }
+          ],
+          "y": 8100,
+          "section": "work-experience"
+        },
+        {
+          "start": 24928,
+          "dur": 60,
+          "blocking": 0,
+          "renderStart": 24939,
+          "styleAndLayoutStart": 24973,
+          "preRender": 11,
+          "render": 49,
+          "styleLayout": 15,
+          "forced": 0,
+          "scripts": [
+            {
+              "dur": 23,
+              "forced": 0,
+              "type": "user-callback",
+              "invoker": "FrameRequestCallback",
+              "src": "/node_modules/.vite/deps/motion_react.js",
+              "fn": "processBatch"
+            }
+          ],
+          "y": 6900,
+          "section": "work-experience"
+        },
+        {
+          "start": 25634,
+          "dur": 56,
+          "blocking": 0,
+          "renderStart": 25659,
+          "styleAndLayoutStart": 25685,
+          "preRender": 25,
+          "render": 31,
+          "styleLayout": 5,
+          "forced": 0,
+          "scripts": [
+            {
+              "dur": 13,
+              "forced": 0,
+              "type": "user-callback",
+              "invoker": "FrameRequestCallback",
+              "src": "/src/components/Home/Experience/Experience.tsx",
+              "fn": "tick"
+            },
+            {
+              "dur": 12,
+              "forced": 0,
+              "type": "user-callback",
+              "invoker": "FrameRequestCallback",
+              "src": "/node_modules/.vite/deps/motion_react.js",
+              "fn": "processBatch"
+            }
+          ],
+          "y": 7800,
+          "section": "work-experience"
+        },
+        {
+          "start": 25992,
+          "dur": 54,
+          "blocking": 0,
+          "renderStart": 26000,
+          "styleAndLayoutStart": 26008,
+          "preRender": 8,
+          "render": 46,
+          "styleLayout": 38,
+          "forced": 0,
+          "scripts": [],
+          "y": 8700,
+          "section": "contact"
+        },
+        {
+          "start": 24359,
+          "dur": 52,
+          "blocking": 2,
+          "renderStart": 24359,
+          "styleAndLayoutStart": 24376,
+          "preRender": 0,
+          "render": 52,
+          "styleLayout": 34,
+          "forced": 0,
+          "scripts": [
+            {
+              "dur": 16,
+              "forced": 0,
+              "type": "user-callback",
+              "invoker": "FrameRequestCallback",
+              "src": "/src/components/Home/Experience/Experience.tsx",
+              "fn": "tick"
+            }
+          ],
+          "y": 6600,
+          "section": "work-experience"
+        }
+      ]
+    },
+    {
+      "over50": 22,
+      "over100": 8,
+      "maxFrame": 2724,
+      "blocking": 7542,
+      "forced": 42,
+      "fps": 11.1,
+      "rafGapsOver50": 38,
+      "rafGapMax": 2750,
+      "steps": 33,
+      "height": 9946,
+      "errors": [],
+      "frames": [
+        {
+          "start": 21034,
+          "dur": 2724,
+          "blocking": 2674,
+          "renderStart": 21051,
+          "styleAndLayoutStart": 23739,
+          "preRender": 17,
+          "render": 2707,
+          "styleLayout": 19,
+          "forced": 0,
+          "scripts": [
+            {
+              "dur": 17,
+              "forced": 0,
+              "type": "event-listener",
+              "invoker": "MessagePort.onmessage",
+              "src": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+              "fn": "performWorkUntilDeadline"
+            }
+          ],
+          "y": 5400,
+          "section": "work-experience"
+        },
+        {
+          "start": 23867,
+          "dur": 2316,
+          "blocking": 2265,
+          "renderStart": 23883,
+          "styleAndLayoutStart": 26176,
+          "preRender": 16,
+          "render": 2301,
+          "styleLayout": 7,
+          "forced": 0,
+          "scripts": [
+            {
+              "dur": 14,
+              "forced": 0,
+              "type": "event-listener",
+              "invoker": "MessagePort.onmessage",
+              "src": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+              "fn": "performWorkUntilDeadline"
+            }
+          ],
+          "y": 5700,
+          "section": "work-experience"
+        },
+        {
+          "start": 18746,
+          "dur": 2102,
+          "blocking": 2052,
+          "renderStart": 18747,
+          "styleAndLayoutStart": 20839,
+          "preRender": 1,
+          "render": 2101,
+          "styleLayout": 10,
+          "forced": 0,
+          "scripts": [],
+          "y": 4800,
+          "section": "research"
+        },
+        {
+          "start": 16024,
+          "dur": 253,
+          "blocking": 203,
+          "renderStart": 16208,
+          "styleAndLayoutStart": 16208,
+          "preRender": 184,
+          "render": 69,
+          "styleLayout": 69,
+          "forced": 0,
+          "scripts": [
+            {
+              "dur": 184,
+              "forced": 0,
+              "type": "event-listener",
+              "invoker": "MessagePort.onmessage",
+              "src": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+              "fn": "performWorkUntilDeadline"
+            }
+          ],
+          "y": 600,
+          "section": "background"
+        },
+        {
+          "start": 17789,
+          "dur": 148,
+          "blocking": 71,
+          "renderStart": 17930,
+          "styleAndLayoutStart": 17936,
+          "preRender": 141,
+          "render": 7,
+          "styleLayout": 1,
+          "forced": 0,
+          "scripts": [
+            {
+              "dur": 112,
+              "forced": 0,
+              "type": "event-listener",
+              "invoker": "MessagePort.onmessage",
+              "src": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+              "fn": "performWorkUntilDeadline"
+            }
+          ],
+          "y": 3300,
+          "section": "numbers"
+        },
+        {
+          "start": 16900,
+          "dur": 119,
+          "blocking": 47,
+          "renderStart": 16959,
+          "styleAndLayoutStart": 17015,
+          "preRender": 59,
+          "render": 60,
+          "styleLayout": 4,
+          "forced": 1,
+          "scripts": [
+            {
+              "dur": 45,
+              "forced": 0,
+              "type": "event-listener",
+              "invoker": "DOMWindow.onscroll",
+              "src": "/src/components/Shared/BackToTop.tsx",
+              "fn": "onScroll"
+            },
+            {
+              "dur": 36,
+              "forced": 0,
+              "type": "event-listener",
+              "invoker": "MessagePort.onmessage",
+              "src": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+              "fn": "performWorkUntilDeadline"
+            },
+            {
+              "dur": 6,
+              "forced": 1,
+              "type": "event-listener",
+              "invoker": "DOMWindow.onscroll",
+              "src": "/src/components/Shared/MobileStickyCTA.tsx",
+              "fn": "onScroll"
+            }
+          ],
+          "y": 1800,
+          "section": "work"
+        },
+        {
+          "start": 17294,
+          "dur": 113,
+          "blocking": 63,
+          "renderStart": 17407,
+          "styleAndLayoutStart": 17407,
+          "preRender": 113,
+          "render": 1,
+          "styleLayout": 0,
+          "forced": 0,
+          "scripts": [
+            {
+              "dur": 112,
+              "forced": 0,
+              "type": "event-listener",
+              "invoker": "MessagePort.onmessage",
+              "src": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+              "fn": "performWorkUntilDeadline"
+            }
+          ],
+          "y": 2400,
+          "section": "work"
+        },
+        {
+          "start": 17119,
+          "dur": 110,
+          "blocking": 51,
+          "renderStart": 17221,
+          "styleAndLayoutStart": 17223,
+          "preRender": 102,
+          "render": 8,
+          "styleLayout": 6,
+          "forced": 1,
+          "scripts": [
+            {
+              "dur": 93,
+              "forced": 0,
+              "type": "event-listener",
+              "invoker": "MessagePort.onmessage",
+              "src": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+              "fn": "performWorkUntilDeadline"
+            },
+            {
+              "dur": 6,
+              "forced": 1,
+              "type": "event-listener",
+              "invoker": "MessagePort.onmessage",
+              "src": "/src/components/Home/SectionRail.tsx",
+              "fn": ""
+            }
+          ],
+          "y": 2100,
+          "section": "work"
+        },
+        {
+          "start": 15905,
+          "dur": 97,
+          "blocking": 44,
+          "renderStart": 15964,
+          "styleAndLayoutStart": 15966,
+          "preRender": 59,
+          "render": 38,
+          "styleLayout": 36,
+          "forced": 0,
+          "scripts": [
+            {
+              "dur": 54,
+              "forced": 0,
+              "type": "event-listener",
+              "invoker": "MessagePort.onmessage",
+              "src": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+              "fn": "performWorkUntilDeadline"
+            }
+          ],
+          "y": 600,
+          "section": "background"
+        },
+        {
+          "start": 16691,
+          "dur": 88,
+          "blocking": 23,
+          "renderStart": 16747,
+          "styleAndLayoutStart": 16773,
+          "preRender": 56,
+          "render": 32,
+          "styleLayout": 6,
+          "forced": 6,
+          "scripts": [
+            {
+              "dur": 39,
+              "forced": 0,
+              "type": "event-listener",
+              "invoker": "MessagePort.onmessage",
+              "src": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+              "fn": "performWorkUntilDeadline"
+            },
+            {
+              "dur": 9,
+              "forced": 0,
+              "type": "user-callback",
+              "invoker": "FrameRequestCallback",
+              "src": "/node_modules/.vite/deps/motion_react.js",
+              "fn": "processBatch"
+            },
+            {
+              "dur": 6,
+              "forced": 6,
+              "type": "event-listener",
+              "invoker": "DOMWindow.onscroll",
+              "src": "/src/components/Shared/MobileStickyCTA.tsx",
+              "fn": "onScroll"
+            },
+            {
+              "dur": 5,
+              "forced": 0,
+              "type": "user-callback",
+              "invoker": "FrameRequestCallback",
+              "src": "",
+              "fn": ""
+            }
+          ],
+          "y": 1500,
+          "section": "work"
+        },
+        {
+          "start": 16781,
+          "dur": 86,
+          "blocking": 23,
+          "renderStart": 16828,
+          "styleAndLayoutStart": 16829,
+          "preRender": 48,
+          "render": 39,
+          "styleLayout": 38,
+          "forced": 6,
+          "scripts": [
+            {
+              "dur": 34,
+              "forced": 0,
+              "type": "event-listener",
+              "invoker": "MessagePort.onmessage",
+              "src": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+              "fn": "performWorkUntilDeadline"
+            },
+            {
+              "dur": 11,
+              "forced": 6,
+              "type": "event-listener",
+              "invoker": "MessagePort.onmessage",
+              "src": "/src/components/Home/SectionRail.tsx",
+              "fn": ""
+            }
+          ],
+          "y": 1500,
+          "section": "work"
+        },
+        {
+          "start": 27586,
+          "dur": 80,
+          "blocking": 4,
+          "renderStart": 27618,
+          "styleAndLayoutStart": 27633,
+          "preRender": 33,
+          "render": 47,
+          "styleLayout": 32,
+          "forced": 0,
+          "scripts": [],
+          "y": 8400,
+          "section": "contact"
+        },
+        {
+          "start": 26385,
+          "dur": 71,
+          "blocking": 10,
+          "renderStart": 26396,
+          "styleAndLayoutStart": 26422,
+          "preRender": 11,
+          "render": 60,
+          "styleLayout": 34,
+          "forced": 10,
+          "scripts": [
+            {
+              "dur": 10,
+              "forced": 10,
+              "type": "event-listener",
+              "invoker": "DOMWindow.onscroll",
+              "src": "/src/components/Shared/MobileStickyCTA.tsx",
+              "fn": "onScroll"
+            },
+            {
+              "dur": 7,
+              "forced": 0,
+              "type": "user-callback",
+              "invoker": "FrameRequestCallback",
+              "src": "/src/components/Home/Experience/Experience.tsx",
+              "fn": "tick"
+            }
+          ],
+          "y": 6300,
+          "section": "work-experience"
+        },
+        {
+          "start": 26914,
+          "dur": 71,
+          "blocking": 0,
+          "renderStart": 26962,
+          "styleAndLayoutStart": 26974,
+          "preRender": 48,
+          "render": 23,
+          "styleLayout": 11,
+          "forced": 0,
+          "scripts": [
+            {
+              "dur": 19,
+              "forced": 0,
+              "type": "event-listener",
+              "invoker": "MessagePort.onmessage",
+              "src": "/src/components/Home/SectionRail.tsx",
+              "fn": ""
+            },
+            {
+              "dur": 10,
+              "forced": 0,
+              "type": "user-callback",
+              "invoker": "FrameRequestCallback",
+              "src": "/node_modules/.vite/deps/motion_react.js",
+              "fn": "processBatch"
+            }
+          ],
+          "y": 7200,
+          "section": "work-experience"
+        },
+        {
+          "start": 16315,
+          "dur": 65,
+          "blocking": 10,
+          "renderStart": 16331,
+          "styleAndLayoutStart": 16379,
+          "preRender": 16,
+          "render": 49,
+          "styleLayout": 1,
+          "forced": 4,
+          "scripts": [
+            {
+              "dur": 27,
+              "forced": 0,
+              "type": "event-listener",
+              "invoker": "DOMWindow.onscroll",
+              "src": "/src/components/Home/SectionRail.tsx",
+              "fn": "schedule"
+            },
+            {
+              "dur": 13,
+              "forced": 0,
+              "type": "event-listener",
+              "invoker": "DOMWindow.onscroll",
+              "src": "/node_modules/.vite/deps/motion_react.js",
+              "fn": "listener2"
+            },
+            {
+              "dur": 11,
+              "forced": 0,
+              "type": "user-callback",
+              "invoker": "TimerHandler:setInterval",
+              "src": "/src/components/Shared/ScrambleText.tsx",
+              "fn": ""
+            },
+            {
+              "dur": 6,
+              "forced": 4,
+              "type": "event-listener",
+              "invoker": "DOMWindow.onscroll",
+              "src": "/src/components/Shared/MobileStickyCTA.tsx",
+              "fn": "onScroll"
+            }
+          ],
+          "y": 900,
+          "section": "background"
+        },
+        {
+          "start": 16493,
+          "dur": 60,
+          "blocking": 1,
+          "renderStart": 16511,
+          "styleAndLayoutStart": 16534,
+          "preRender": 18,
+          "render": 42,
+          "styleLayout": 19,
+          "forced": 5,
+          "scripts": [
+            {
+              "dur": 12,
+              "forced": 0,
+              "type": "user-callback",
+              "invoker": "FrameRequestCallback",
+              "src": "/node_modules/.vite/deps/motion_react.js",
+              "fn": "processBatch"
+            },
+            {
+              "dur": 9,
+              "forced": 0,
+              "type": "event-listener",
+              "invoker": "MessagePort.onmessage",
+              "src": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+              "fn": "performWorkUntilDeadline"
+            },
+            {
+              "dur": 6,
+              "forced": 5,
+              "type": "event-listener",
+              "invoker": "DOMWindow.onscroll",
+              "src": "/src/components/Shared/MobileStickyCTA.tsx",
+              "fn": "onScroll"
+            }
+          ],
+          "y": 1200,
+          "section": "background"
+        },
+        {
+          "start": 17610,
+          "dur": 59,
+          "blocking": 0,
+          "renderStart": 17653,
+          "styleAndLayoutStart": 17664,
+          "preRender": 43,
+          "render": 16,
+          "styleLayout": 5,
+          "forced": 0,
+          "scripts": [
+            {
+              "dur": 12,
+              "forced": 0,
+              "type": "event-listener",
+              "invoker": "MessagePort.onmessage",
+              "src": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+              "fn": "performWorkUntilDeadline"
+            },
+            {
+              "dur": 7,
+              "forced": 0,
+              "type": "user-callback",
+              "invoker": "FrameRequestCallback",
+              "src": "/node_modules/.vite/deps/motion_react.js",
+              "fn": "processBatch"
+            }
+          ],
+          "y": 3000,
+          "section": "work"
+        },
+        {
+          "start": 17953,
+          "dur": 58,
+          "blocking": 0,
+          "renderStart": 18005,
+          "styleAndLayoutStart": 18009,
+          "preRender": 52,
+          "render": 6,
+          "styleLayout": 2,
+          "forced": 0,
+          "scripts": [
+            {
+              "dur": 22,
+              "forced": 0,
+              "type": "event-listener",
+              "invoker": "MessagePort.onmessage",
+              "src": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+              "fn": "performWorkUntilDeadline"
+            }
+          ],
+          "y": 3600,
+          "section": "research"
+        },
+        {
+          "start": 26713,
+          "dur": 58,
+          "blocking": 0,
+          "renderStart": 26758,
+          "styleAndLayoutStart": 26759,
+          "preRender": 45,
+          "render": 14,
+          "styleLayout": 12,
+          "forced": 0,
+          "scripts": [
+            {
+              "dur": 18,
+              "forced": 0,
+              "type": "user-callback",
+              "invoker": "PerformanceObserverCallback",
+              "src": "",
+              "fn": ""
+            }
+          ],
+          "y": 6900,
+          "section": "work-experience"
+        },
+        {
+          "start": 18029,
+          "dur": 56,
+          "blocking": 1,
+          "renderStart": 18074,
+          "styleAndLayoutStart": 18082,
+          "preRender": 45,
+          "render": 12,
+          "styleLayout": 4,
+          "forced": 0,
+          "scripts": [
+            {
+              "dur": 38,
+              "forced": 0,
+              "type": "event-listener",
+              "invoker": "MessagePort.onmessage",
+              "src": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+              "fn": "performWorkUntilDeadline"
+            }
+          ],
+          "y": 3600,
+          "section": "research"
+        },
+        {
+          "start": 18233,
+          "dur": 54,
+          "blocking": 0,
+          "renderStart": 18280,
+          "styleAndLayoutStart": 18285,
+          "preRender": 48,
+          "render": 7,
+          "styleLayout": 2,
+          "forced": 0,
+          "scripts": [],
+          "y": 3900,
+          "section": "research"
+        },
+        {
+          "start": 16405,
+          "dur": 51,
+          "blocking": 0,
+          "renderStart": 16441,
+          "styleAndLayoutStart": 16445,
+          "preRender": 36,
+          "render": 15,
+          "styleLayout": 11,
+          "forced": 9,
+          "scripts": [
+            {
+              "dur": 18,
+              "forced": 0,
+              "type": "event-listener",
+              "invoker": "MessagePort.onmessage",
+              "src": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+              "fn": "performWorkUntilDeadline"
+            },
+            {
+              "dur": 13,
+              "forced": 9,
+              "type": "event-listener",
+              "invoker": "MessagePort.onmessage",
+              "src": "/src/components/Home/SectionRail.tsx",
+              "fn": ""
+            }
+          ],
+          "y": 900,
+          "section": "background"
+        }
+      ]
+    },
+    {
+      "over50": 19,
+      "over100": 8,
+      "maxFrame": 5769,
+      "blocking": 6936,
+      "forced": 49,
+      "fps": 11.9,
+      "rafGapsOver50": 26,
+      "rafGapMax": 6633,
+      "steps": 33,
+      "height": 9946,
+      "errors": [],
+      "frames": [
+        {
+          "start": 21909,
+          "dur": 5769,
+          "blocking": 5720,
+          "renderStart": 21909,
+          "styleAndLayoutStart": 27647,
+          "preRender": 0,
+          "render": 5769,
+          "styleLayout": 31,
+          "forced": 0,
+          "scripts": [],
+          "y": 300,
+          "section": "moments"
+        },
+        {
+          "start": 27743,
+          "dur": 965,
+          "blocking": 51,
+          "renderStart": 28610,
+          "styleAndLayoutStart": 28697,
+          "preRender": 867,
+          "render": 98,
+          "styleLayout": 11,
+          "forced": 4,
+          "scripts": [
+            {
+              "dur": 76,
+              "forced": 4,
+              "type": "event-listener",
+              "invoker": "DOMWindow.onscroll",
+              "src": "/src/components/Shared/MobileStickyCTA.tsx",
+              "fn": "onScroll"
+            }
+          ],
+          "y": 900,
+          "section": "background"
+        },
+        {
+          "start": 30011,
+          "dur": 929,
+          "blocking": 0,
+          "renderStart": 30894,
+          "styleAndLayoutStart": 30939,
+          "preRender": 884,
+          "render": 45,
+          "styleLayout": 1,
+          "forced": 0,
+          "scripts": [
+            {
+              "dur": 43,
+              "forced": 0,
+              "type": "user-callback",
+              "invoker": "FrameRequestCallback",
+              "src": "",
+              "fn": ""
+            }
+          ],
+          "y": 1500,
+          "section": "work"
+        },
+        {
+          "start": 29081,
+          "dur": 832,
+          "blocking": 723,
+          "renderStart": 29553,
+          "styleAndLayoutStart": 29796,
+          "preRender": 472,
+          "render": 360,
+          "styleLayout": 117,
+          "forced": 21,
+          "scripts": [
+            {
+              "dur": 370,
+              "forced": 0,
+              "type": "event-listener",
+              "invoker": "MessagePort.onmessage",
+              "src": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+              "fn": "performWorkUntilDeadline"
+            },
+            {
+              "dur": 233,
+              "forced": 21,
+              "type": "event-listener",
+              "invoker": "DOMWindow.onscroll",
+              "src": "/src/components/Shared/MobileStickyCTA.tsx",
+              "fn": "onScroll"
+            },
+            {
+              "dur": 7,
+              "forced": 0,
+              "type": "user-callback",
+              "invoker": "FrameRequestCallback",
+              "src": "/node_modules/.vite/deps/motion_react.js",
+              "fn": "processBatch"
+            }
+          ],
+          "y": 1200,
+          "section": "background"
+        },
+        {
+          "start": 28754,
+          "dur": 271,
+          "blocking": 192,
+          "renderStart": 28954,
+          "styleAndLayoutStart": 28960,
+          "preRender": 201,
+          "render": 70,
+          "styleLayout": 64,
+          "forced": 0,
+          "scripts": [
+            {
+              "dur": 166,
+              "forced": 0,
+              "type": "event-listener",
+              "invoker": "MessagePort.onmessage",
+              "src": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+              "fn": "performWorkUntilDeadline"
+            },
+            {
+              "dur": 9,
+              "forced": 0,
+              "type": "user-callback",
+              "invoker": "TimerHandler:setInterval",
+              "src": "/src/components/Shared/ScrambleText.tsx",
+              "fn": ""
+            }
+          ],
+          "y": 900,
+          "section": "background"
+        },
+        {
+          "start": 31847,
+          "dur": 178,
+          "blocking": 127,
+          "renderStart": 32022,
+          "styleAndLayoutStart": 32023,
+          "preRender": 175,
+          "render": 3,
+          "styleLayout": 1,
+          "forced": 0,
+          "scripts": [
+            {
+              "dur": 174,
+              "forced": 0,
+              "type": "user-callback",
+              "invoker": "TimerHandler:setInterval",
+              "src": "/@vite/client",
+              "fn": ""
+            }
+          ],
+          "y": 3300,
+          "section": "numbers"
+        },
+        {
+          "start": 31022,
+          "dur": 129,
+          "blocking": 78,
+          "renderStart": 31148,
+          "styleAndLayoutStart": 31149,
+          "preRender": 126,
+          "render": 2,
+          "styleLayout": 2,
+          "forced": 0,
+          "scripts": [
+            {
+              "dur": 126,
+              "forced": 0,
+              "type": "user-callback",
+              "invoker": "TimerHandler:setInterval",
+              "src": "/src/lib/data/clock.ts",
+              "fn": "tick"
+            }
+          ],
+          "y": 1800,
+          "section": "work"
+        },
+        {
+          "start": 34864,
+          "dur": 102,
+          "blocking": 1,
+          "renderStart": 34950,
+          "styleAndLayoutStart": 34965,
+          "preRender": 86,
+          "render": 17,
+          "styleLayout": 2,
+          "forced": 0,
+          "scripts": [
+            {
+              "dur": 34,
+              "forced": 0,
+              "type": "event-listener",
+              "invoker": "MessagePort.onmessage",
+              "src": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+              "fn": "performWorkUntilDeadline"
+            },
+            {
+              "dur": 6,
+              "forced": 0,
+              "type": "event-listener",
+              "invoker": "MessagePort.onmessage",
+              "src": "/src/components/Home/SectionRail.tsx",
+              "fn": ""
+            }
+          ],
+          "y": 9000,
+          "section": "contact"
+        },
+        {
+          "start": 31244,
+          "dur": 91,
+          "blocking": 0,
+          "renderStart": 31330,
+          "styleAndLayoutStart": 31332,
+          "preRender": 87,
+          "render": 4,
+          "styleLayout": 2,
+          "forced": 0,
+          "scripts": [],
+          "y": 2100,
+          "section": "work"
+        },
+        {
+          "start": 30941,
+          "dur": 78,
+          "blocking": 0,
+          "renderStart": 31016,
+          "styleAndLayoutStart": 31018,
+          "preRender": 75,
+          "render": 3,
+          "styleLayout": 1,
+          "forced": 0,
+          "scripts": [],
+          "y": 1800,
+          "section": "work"
+        },
+        {
+          "start": 33003,
+          "dur": 71,
+          "blocking": 14,
+          "renderStart": 33024,
+          "styleAndLayoutStart": 33058,
+          "preRender": 21,
+          "render": 50,
+          "styleLayout": 16,
+          "forced": 0,
+          "scripts": [
+            {
+              "dur": 14,
+              "forced": 0,
+              "type": "event-listener",
+              "invoker": "MessagePort.onmessage",
+              "src": "/src/components/Home/SectionRail.tsx",
+              "fn": ""
+            },
+            {
+              "dur": 9,
+              "forced": 0,
+              "type": "event-listener",
+              "invoker": "DIV#root.ontransitionend",
+              "src": "/node_modules/.vite/deps/chunk-6ER7OG3O.js",
+              "fn": "dispatchEvent"
+            },
+            {
+              "dur": 7,
+              "forced": 0,
+              "type": "event-listener",
+              "invoker": "DIV#root.ontransitionend",
+              "src": "/node_modules/.vite/deps/chunk-6ER7OG3O.js",
+              "fn": "dispatchEvent"
+            }
+          ],
+          "y": 5400,
+          "section": "work-experience"
+        },
+        {
+          "start": 33765,
+          "dur": 68,
+          "blocking": 13,
+          "renderStart": 33771,
+          "styleAndLayoutStart": 33821,
+          "preRender": 5,
+          "render": 63,
+          "styleLayout": 12,
+          "forced": 12,
+          "scripts": [
+            {
+              "dur": 25,
+              "forced": 0,
+              "type": "user-callback",
+              "invoker": "FrameRequestCallback",
+              "src": "/node_modules/.vite/deps/motion_react.js",
+              "fn": "processBatch"
+            },
+            {
+              "dur": 12,
+              "forced": 12,
+              "type": "event-listener",
+              "invoker": "DOMWindow.onscroll",
+              "src": "/src/components/Shared/MobileStickyCTA.tsx",
+              "fn": "onScroll"
+            }
+          ],
+          "y": 6900,
+          "section": "work-experience"
+        },
+        {
+          "start": 35126,
+          "dur": 68,
+          "blocking": 0,
+          "renderStart": 35193,
+          "styleAndLayoutStart": 35194,
+          "preRender": 67,
+          "render": 1,
+          "styleLayout": 0,
+          "forced": 0,
+          "scripts": [],
+          "y": 9600,
+          "section": "gap"
+        },
+        {
+          "start": 33120,
+          "dur": 67,
+          "blocking": 12,
+          "renderStart": 33172,
+          "styleAndLayoutStart": 33178,
+          "preRender": 52,
+          "render": 15,
+          "styleLayout": 10,
+          "forced": 0,
+          "scripts": [
+            {
+              "dur": 46,
+              "forced": 0,
+              "type": "event-listener",
+              "invoker": "MessagePort.onmessage",
+              "src": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+              "fn": "performWorkUntilDeadline"
+            }
+          ],
+          "y": 5700,
+          "section": "work-experience"
+        },
+        {
+          "start": 34090,
+          "dur": 61,
+          "blocking": 0,
+          "renderStart": 34105,
+          "styleAndLayoutStart": 34117,
+          "preRender": 15,
+          "render": 46,
+          "styleLayout": 34,
+          "forced": 0,
+          "scripts": [],
+          "y": 7500,
+          "section": "work-experience"
+        },
+        {
+          "start": 34633,
+          "dur": 61,
+          "blocking": 0,
+          "renderStart": 34668,
+          "styleAndLayoutStart": 34689,
+          "preRender": 35,
+          "render": 26,
+          "styleLayout": 5,
+          "forced": 6,
+          "scripts": [
+            {
+              "dur": 13,
+              "forced": 6,
+              "type": "event-listener",
+              "invoker": "DOMWindow.onscroll",
+              "src": "/src/components/Shared/MobileStickyCTA.tsx",
+              "fn": "onScroll"
+            }
+          ],
+          "y": 8700,
+          "section": "contact"
+        },
+        {
+          "start": 31153,
+          "dur": 57,
+          "blocking": 5,
+          "renderStart": 31183,
+          "styleAndLayoutStart": 31191,
+          "preRender": 31,
+          "render": 26,
+          "styleLayout": 18,
+          "forced": 0,
+          "scripts": [
+            {
+              "dur": 29,
+              "forced": 0,
+              "type": "event-listener",
+              "invoker": "MessagePort.onmessage",
+              "src": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+              "fn": "performWorkUntilDeadline"
+            }
+          ],
+          "y": 2100,
+          "section": "work"
+        },
+        {
+          "start": 34494,
+          "dur": 53,
+          "blocking": 0,
+          "renderStart": 34502,
+          "styleAndLayoutStart": 34536,
+          "preRender": 8,
+          "render": 45,
+          "styleLayout": 11,
+          "forced": 6,
+          "scripts": [
+            {
+              "dur": 9,
+              "forced": 6,
+              "type": "event-listener",
+              "invoker": "DOMWindow.onscroll",
+              "src": "/src/components/Shared/MobileStickyCTA.tsx",
+              "fn": "onScroll"
+            }
+          ],
+          "y": 8400,
+          "section": "contact"
+        },
+        {
+          "start": 34338,
+          "dur": 51,
+          "blocking": 0,
+          "renderStart": 34346,
+          "styleAndLayoutStart": 34362,
+          "preRender": 8,
+          "render": 43,
+          "styleLayout": 27,
+          "forced": 0,
+          "scripts": [],
+          "y": 8100,
+          "section": "work-experience"
+        }
+      ]
+    }
+  ]
+}

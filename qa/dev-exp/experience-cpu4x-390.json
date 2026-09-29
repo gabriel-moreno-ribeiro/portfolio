@@ -4,52 +4,88 @@
   "entryType": "long-animation-frame",
   "selector": "#work-experience",
   "geometry": {
-    "sectionTop": 7566,
-    "sectionHeight": 3241,
+    "sectionTop": 7038,
+    "sectionHeight": 3240,
     "innerHeight": 844,
-    "docMaxScroll": 11403,
-    "scrollStart": 7566,
-    "scrollEnd": 9962
+    "docMaxScroll": 10810,
+    "scrollStart": 7038,
+    "scrollEnd": 9434
   },
   "scrollSteps": 40,
   "stepDelayMs": 100,
-  "observedWindowMs": 4792,
-  "framesOver50ms": 4,
-  "framesOver100ms": 3,
-  "longestMs": 162,
-  "totalBlockingMs": 234,
+  "observedWindowMs": 6285,
+  "framesOver50ms": 11,
+  "framesOver100ms": 5,
+  "longestMs": 369,
+  "totalBlockingMs": 971,
   "top10": [
     {
       "name": "long-animation-frame",
-      "start": 4326,
-      "duration": 162,
-      "blocking": 32
+      "start": 5311,
+      "duration": 369,
+      "blocking": 304
     },
     {
       "name": "long-animation-frame",
-      "start": 4584,
-      "duration": 118,
-      "blocking": 32
+      "start": 4232,
+      "duration": 247,
+      "blocking": 197
     },
     {
       "name": "long-animation-frame",
-      "start": 4215,
-      "duration": 101,
+      "start": 5813,
+      "duration": 223,
+      "blocking": 77
+    },
+    {
+      "name": "long-animation-frame",
+      "start": 4784,
+      "duration": 145,
+      "blocking": 93
+    },
+    {
+      "name": "long-animation-frame",
+      "start": 9394,
+      "duration": 123,
+      "blocking": 73
+    },
+    {
+      "name": "long-animation-frame",
+      "start": 4518,
+      "duration": 85,
+      "blocking": 24
+    },
+    {
+      "name": "long-animation-frame",
+      "start": 6391,
+      "duration": 77,
+      "blocking": 24
+    },
+    {
+      "name": "long-animation-frame",
+      "start": 4636,
+      "duration": 76,
+      "blocking": 7
+    },
+    {
+      "name": "long-animation-frame",
+      "start": 4716,
+      "duration": 65,
       "blocking": 0
     },
     {
       "name": "long-animation-frame",
-      "start": 7444,
-      "duration": 53,
+      "start": 5058,
+      "duration": 56,
       "blocking": 0
     }
   ],
   "rafStats": {
-    "frames": 244,
-    "framesOver50ms": 4,
-    "maxFrameMs": 167,
+    "frames": 234,
+    "framesOver50ms": 12,
+    "maxFrameMs": 383,
     "medianFrameMs": 17,
-    "p95FrameMs": 33,
-    "effectiveFps": 51
+    "p95FrameMs": 67,
+    "effectiveFps": 37
   }
 }

@@ -1,0 +1,106 @@
+{
+  "390": {
+    "end": [
+      886,
+      369,
+      103,
+      95,
+      150
+    ],
+    "home": [
+      100,
+      158,
+      141,
+      151,
+      152
+    ],
+    "ageClick": [
+      {
+        "to": "Age 14, 4 books",
+        "firstChangeMs": 782,
+        "lastChangeMs": 1525,
+        "titlesSeen": 5,
+        "final": "Física - Renato Brito Vol. 1"
+      },
+      {
+        "to": "Age 9, 1 book",
+        "firstChangeMs": 449,
+        "lastChangeMs": 1473,
+        "titlesSeen": 5,
+        "final": "How to Train Your Dragon"
+      },
+      {
+        "to": "Age 18, 2 books",
+        "firstChangeMs": 576,
+        "lastChangeMs": 1646,
+        "titlesSeen": 7,
+        "final": "Made in America"
+      }
+    ],
+    "fps": null,
+    "cornerEls": [
+      "CANVAS.library__canvas",
+      "DIV.library__stage",
+      "MAIN.library library--ready  ",
+      "DIV.app",
+      "DIV.",
+      "BODY.",
+      "HTML."
+    ],
+    "cornerDot": [],
+    "fpsIdle": 10
+  },
+  "1440": {
+    "end": [
+      1278,
+      462,
+      871,
+      2349,
+      580
+    ],
+    "home": [
+      343,
+      476,
+      1331,
+      233,
+      564
+    ],
+    "ageClick": [
+      {
+        "to": "Age 14, 4 books",
+        "firstChangeMs": 1607,
+        "lastChangeMs": 4027,
+        "titlesSeen": 5,
+        "final": "Física - Renato Brito Vol. 1"
+      },
+      {
+        "to": "Age 9, 1 book",
+        "firstChangeMs": 739,
+        "lastChangeMs": 3115,
+        "titlesSeen": 5,
+        "final": "How to Train Your Dragon"
+      },
+      {
+        "to": "Age 18, 2 books",
+        "firstChangeMs": 1968,
+        "lastChangeMs": 6911,
+        "titlesSeen": 7,
+        "final": "Made in America"
+      }
+    ],
+    "fps": null,
+    "cornerEls": [
+      "CANVAS.library__canvas",
+      "DIV.library__stage",
+      "MAIN.library library--ready  ",
+      "DIV.app",
+      "DIV.",
+      "BODY.",
+      "HTML."
+    ],
+    "cornerDot": [
+      "DIV.custom-mouse rgb(17, 17, 17)"
+    ],
+    "fpsIdle": 3
+  }
+}

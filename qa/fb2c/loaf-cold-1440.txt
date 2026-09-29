@@ -1,0 +1,16 @@
+1440x900  LoAF total=10  >50ms=10  >100ms=5  maior=680ms  TBT=991ms
+  dur=  680 script=  614 render=   66 styleLayout=   65 blocking=570
+          554ms user-callback chunk-6ER7OG3O.js?v=c4cef3a4:commitRootWhenReady TimerHandler:setTimeout
+  dur=  232 script=  225 render=    7 styleLayout=    3 blocking=47
+           90ms event-listener chunk-JY4G5M2K.js?v=c4cef3a4:performWorkUntilDeadline MessagePort.onmessage
+  dur=  199 script=  186 render=   12 styleLayout=    1 blocking=124
+          161ms module-script StickerPeel.jsx:? http://localhost:5173/src/components/ReactBits/StickerPeel.jsx
+  dur=  187 script=  183 render=    4 styleLayout=    3 blocking=136
+          182ms event-listener chunk-JY4G5M2K.js?v=c4cef3a4:performWorkUntilDeadline MessagePort.onmessage
+  dur=  109 script=   90 render=   20 styleLayout=    1 blocking=0
+            6ms user-callback motion_react.js?v=c4cef3a4:processBatch FrameRequestCallback
+  dur=   96 script=   78 render=   17 styleLayout=    9 blocking=40
+           72ms event-listener chunk-JY4G5M2K.js?v=c4cef3a4:performWorkUntilDeadline MessagePort.onmessage
+  dur=   92 script=    6 render=   86 styleLayout=   85 blocking=41
+  dur=   86 script=   73 render=   13 styleLayout=    1 blocking=7
+            5ms event-listener chunk-JY4G5M2K.js?v=c4cef3a4:performWorkUntilDeadline MessagePort.onmessage
