@@ -420,6 +420,7 @@ a.exp__d20-link:visited {
   margin: 0;
   padding: var(--exp-lead) 0 var(--exp-tail);
   list-style: none;
+  pointer-events: none; // see .exp__stop
 }
 
 .exp__stop {
@@ -428,6 +429,11 @@ a.exp__d20-link:visited {
   min-height: var(--exp-stop-h);
   scroll-margin-top: 120px;
   outline: none;
+  // The list and its rows span the full width, above the D-20 note: the empty
+  // half of a row swallowed clicks on "read the story". Only the card takes
+  // the pointer.
+  pointer-events: none;
+  .exp__card { pointer-events: auto; }
 
   &--left { justify-content: flex-start; }
   &--right { justify-content: flex-end; }
