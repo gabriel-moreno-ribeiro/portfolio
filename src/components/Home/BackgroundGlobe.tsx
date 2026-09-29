@@ -176,10 +176,11 @@ function GlobeCanvas({
     const [brazilPhi] = locationToAngles(-10, -38.5);
     let currentPhi = brazilPhi;
     let currentTheta = 0.12;
-    // Zoom: the sphere grows past the circular canvas while a city is open, so
-    // the place itself fills the view instead of the whole hemisphere.
+    // Zoom: the sphere grows a little past the circular canvas while a city is
+    // open. Kept mild so the globe still reads as a globe and the other three
+    // cities (about 20° apart) stay in view around the open one.
     let currentScale = 1;
-    const FOCUS_SCALE = 1.75;
+    const FOCUS_SCALE = 1.3;
     const doublePi = Math.PI * 2;
     const clampTheta = (t: number) => Math.max(-1.35, Math.min(1.35, t));
 
