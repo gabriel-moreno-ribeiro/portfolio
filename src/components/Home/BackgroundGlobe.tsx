@@ -154,8 +154,6 @@ function GlobeCanvas({
   const foldDrag = useRef<(() => void) | null>(null);
   const onPaintedRef = useRef(onPainted);
   onPaintedRef.current = onPainted;
-  const selectedRef = useRef(selected);
-  selectedRef.current = selected;
 
   useEffect(() => {
     foldDrag.current?.();
@@ -233,13 +231,10 @@ function GlobeCanvas({
           const dragX = pointerMovement.current.x / 100;
           const dragY = pointerMovement.current.y / 150;
 
+          // Markers are set once at creation, never through `state`: cobe counts
+          // markers passed here at half their number, so two of the four vanished.
           currentScale += ((focus ? FOCUS_SCALE : 1) - currentScale) * 0.06;
           state.scale = currentScale;
-          const sel = selectedRef.current;
-          state.markers = CITIES.map((c) => ({
-            location: [c.lat, c.lon],
-            size: sel?.id === c.id ? 0.09 : 0.06,
-          }));
 
           if (focus) {
             const [focusPhi, focusTheta] = focus;
