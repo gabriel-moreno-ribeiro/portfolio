@@ -27,12 +27,7 @@
   flex-direction: column;
   align-items: center;
   flex-shrink: 0;
-  width: 520px;
-  transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-
-  .globe-layout--open & {
-    width: 480px;
-  }
+  width: 480px;
 }
 
 .globe-wrap {
@@ -169,10 +164,186 @@
     opacity: 0.72;
     margin: 0;
   }
+}
 
-  .accordion-gallery {
-    margin-top: 4px;
+// ── Photo stage: the open city's photos, one card in focus ──
+// The focused card sits on top with real depth; its neighbours wait behind it,
+// pushed aside, dimmed and out of focus. Only transform, opacity and filter move.
+$stage-ease: cubic-bezier(0.22, 1, 0.36, 1);
+$stage-mono: ui-monospace, 'SF Mono', 'Fira Code', Menlo, Consolas, monospace;
+
+.photo-stage {
+  --stage-dot: color-mix(in srgb, var(--fg) 20%, transparent);
+  --stage-shadow: 0 28px 56px -24px rgba(60, 25, 5, 0.32), 0 10px 22px -12px rgba(60, 25, 5, 0.18);
+  width: 100%;
+  max-width: 1080px;
+  margin-top: 56px;
+  animation: stage-in 0.5s $stage-ease;
+
+  &__viewport {
+    display: grid;
+    place-items: center;
+    padding: 12px 0 24px;
+    outline-offset: 6px;
+    border-radius: 16px;
+    touch-action: pan-y;
+    user-select: none;
+    // The side cards hang outside the column on narrow screens.
+    overflow-x: clip;
+
+    > * { grid-area: 1 / 1; }
   }
+
+  &__bars {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 8px;
+  }
+
+  // 44px tall hit area around a 3px line.
+  &__bar {
+    position: relative;
+    width: 40px;
+    height: 32px;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 6px;
+      right: 6px;
+      top: 50%;
+      height: 3px;
+      margin-top: -1.5px;
+      border-radius: 2px;
+      background: var(--stage-dot);
+      transition: background-color 0.2s ease, transform 0.2s ease;
+    }
+
+    &:hover::before { background: color-mix(in srgb, var(--fg) 45%, transparent); }
+
+    &[aria-current='true']::before {
+      background: var(--accent-decor);
+      transform: scaleY(1.35);
+    }
+  }
+}
+
+.photo-card {
+  width: min(460px, 76%);
+  margin: 0;
+  padding: 18px 22px 22px;
+  box-sizing: border-box;
+  text-align: left;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  transition:
+    transform 0.6s $stage-ease,
+    opacity 0.6s $stage-ease,
+    filter 0.6s $stage-ease,
+    box-shadow 0.6s $stage-ease;
+  will-change: transform;
+
+  &[data-slot='center'] {
+    position: relative;
+    z-index: 2;
+    border-left: 3px solid var(--accent-decor);
+    box-shadow: var(--stage-shadow);
+  }
+
+  &[data-slot='prev'],
+  &[data-slot='next'] {
+    z-index: 1;
+    opacity: 0.4;
+    filter: blur(5px) saturate(0.7);
+    cursor: pointer;
+
+    &:hover { opacity: 0.55; }
+  }
+  &[data-slot='prev'] { transform: translateX(-64%) scale(0.9); }
+  &[data-slot='next'] { transform: translateX(64%) scale(0.9); }
+
+  &[data-slot='hidden'] {
+    z-index: 0;
+    opacity: 0;
+    transform: scale(0.8);
+    pointer-events: none;
+  }
+
+  &__head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding-bottom: 14px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  &__steps {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+
+    i {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--stage-dot);
+
+      &[data-on='true'] {
+        width: 8px;
+        height: 8px;
+        background: var(--accent-decor);
+      }
+    }
+  }
+
+  &__label {
+    font-family: $stage-mono;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  &__count {
+    margin-left: auto;
+    font-family: $stage-mono;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    font-variant-numeric: tabular-nums;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+
+  &__media {
+    aspect-ratio: 4 / 3;
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--grey);
+
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+}
+
+@keyframes stage-in {
+  from { opacity: 0; transform: translateY(12px); }
+}
+
+.photo-stage[data-reduced='true'] {
+  animation: none;
+  .photo-card { transition: none; }
 }
 
 // ── Horizontal timeline ──
@@ -278,6 +449,10 @@
     border-color: rgba(#fff, 0.07);
   }
 
+  .photo-stage {
+    --stage-shadow: 0 32px 64px -20px rgba(0, 0, 0, 0.75), 0 12px 24px -12px rgba(0, 0, 0, 0.5);
+  }
+
   .city-timeline {
     &__line { background: rgba(#fff, 0.12); }
     &__dot {
@@ -314,6 +489,21 @@
     padding: 20px 16px;
     &__headline { font-size: 20px; }
     &__photos { columns: 2; }
+  }
+
+  .photo-stage { margin-top: 36px; }
+  .photo-stage__bars { gap: 2px; }
+  .photo-stage__bar { width: 34px; }
+
+  .photo-card {
+    width: 82%;
+    padding: 14px 14px 16px;
+
+    &__head { gap: 10px; padding-bottom: 12px; margin-bottom: 12px; }
+    &__label { font-size: 11px; letter-spacing: 0.16em; }
+    &__count { font-size: 11px; }
+    &[data-slot='prev'] { transform: translateX(-72%) scale(0.88); }
+    &[data-slot='next'] { transform: translateX(72%) scale(0.88); }
   }
 
   .city-timeline {
