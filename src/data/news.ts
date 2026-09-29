@@ -77,7 +77,7 @@ export const mentions: Mention[] = [
     year: 2023,
     outlet: '@institutoprincipia',
     title: 'Presenting at the International Institute of Physics, Natal',
-    summary: 'Escola de Talentos students presented their projects at the IIF-UFRN science week.',
+    summary: 'Escola de Talentos students presented their projects at the IIF‑UFRN science week.',
     instagram: 'https://www.instagram.com/p/C0mIBI9MMmB/',
   },
   {
@@ -85,7 +85,7 @@ export const mentions: Mention[] = [
     date: 'Dec 2023',
     year: 2023,
     outlet: '@institutoprincipia',
-    title: 'Science week at IIF-UFRN, December 4 to 8',
+    title: 'Science week at IIF‑UFRN, December 4 to 8',
     summary: 'Lectures, seminars and a visit to the Barreira do Inferno launch center with 21 physics students.',
     instagram: 'https://www.instagram.com/p/C0jwc81sCGO/',
   },

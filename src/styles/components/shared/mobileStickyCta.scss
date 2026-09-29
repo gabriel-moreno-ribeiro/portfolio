@@ -38,6 +38,9 @@
     color: #fff;
     transition: opacity 0.15s;
 
+    // Dark accent is the bright orange: white on it was 2.9:1.
+    [data-theme="dark"] & { color: var(--bg); }
+
     &:hover {
       opacity: 0.9;
     }

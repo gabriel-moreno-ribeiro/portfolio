@@ -25,6 +25,7 @@
 
   &__title {
     font-family: var(--font-serif);
+    font-style: italic; // like every other page title
     font-size: clamp(24px, 5vw, 36px);
     font-weight: 400;
     color: var(--fg);
@@ -41,5 +42,11 @@
   &__redirect {
     color: var(--fg-muted);
     font-size: 13px;
+
+    a {
+      color: var(--accent);
+      font-weight: 600;
+      text-underline-offset: 3px;
+    }
   }
 }

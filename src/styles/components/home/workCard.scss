@@ -25,7 +25,7 @@
   .desc {
     width: 100%;
     max-width: 700px;
-    color: $text-grey;
+    color: var(--fg-muted);
     text-align: center;
   }
 }

@@ -468,23 +468,8 @@ a.exp__d20-link:visited {
   opacity: 1;
 }
 
-.exp__card-meta {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 10px;
-  margin: 0 0 10px;
-  font-family: $exp-mono;
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--fg-muted);
-}
-
-.exp__card-year {
-  color: var(--accent);
-}
-
+// The city rides on the period line (it used to be an eyebrow above the name,
+// repeating the year the period already gives).
 .exp__card-city::before {
   content: '· ';
 }

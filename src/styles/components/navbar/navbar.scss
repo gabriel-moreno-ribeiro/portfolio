@@ -110,7 +110,7 @@
 [data-theme="dark"] {
   .navbar {
     background-color: rgba($black, 0.8);
-    border: 2px solid $white;
+    border: 1px solid rgba($white, 0.28);
 
     .links {
       p,
@@ -231,7 +231,7 @@
   [data-theme="dark"] {
     .navbar {
       background-color: rgba($black, 0.8);
-      border: 2px solid $white;
+      border: 1px solid rgba($white, 0.28);
 
       &.is-open .links { border-top-color: rgba($white, 0.14); }
 

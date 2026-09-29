@@ -1,13 +1,11 @@
 import { motion } from 'motion/react';
 import { useEffect } from 'react';
 import { FiArrowLeft, FiEdit3 } from 'react-icons/fi';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar/Navbar';
 import Footer from '../components/Shared/Footer';
 
 function Blog() {
-  const navigate = useNavigate();
-
   useEffect(() => {
     const meta = document.createElement('meta');
     meta.name = 'robots';
@@ -26,10 +24,8 @@ function Blog() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: 'easeOut' }}
       >
-        <button className="page-back" onClick={() => navigate('/')}>
-          <FiArrowLeft /> Back
-        </button>
-        <h1 className="page-title">Blog.</h1>
+        <Link to="/" className="page-back"><FiArrowLeft aria-hidden="true" /> Home</Link>
+        <h1 className="page-title">Blog</h1>
         <p className="page-subtitle">Notes on what I'm building and reading.</p>
 
         <div className="page-empty-state">

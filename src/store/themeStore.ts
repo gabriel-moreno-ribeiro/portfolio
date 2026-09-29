@@ -1,5 +1,11 @@
 import { create } from "zustand";
 
+// The mobile browser chrome follows the page background.
+const setThemeColor = (isDark: boolean) =>
+  document
+    .querySelector('meta[name="theme-color"]')
+    ?.setAttribute("content", isDark ? "#0a0a1a" : "#fff8f4");
+
 // Utility function to get the initial theme
 const getInitialTheme = () => {
   // Check local storage
@@ -11,6 +17,7 @@ const getInitialTheme = () => {
       "data-theme",
       isDark ? "dark" : "light"
     );
+    setThemeColor(isDark);
     return isDark;
   }
 
@@ -31,6 +38,7 @@ export const useThemeStore = create<ThemeState>((set) => ({
         "data-theme",
         newMode ? "dark" : "light"
       );
+      setThemeColor(newMode);
       localStorage.setItem("darkMode", JSON.stringify(newMode));
       return { darkMode: newMode };
     }),
