@@ -1,0 +1,162 @@
+- generic [active] [ref=f7e1]:
+  - link "Skip to content" [ref=f7e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - generic [ref=f7e4]:
+    - main [ref=f7e5]:
+      - navigation "Page sections" [ref=f7e6]:
+        - list [ref=f7e8]:
+          - listitem [ref=f7e9]:
+            - button "Top" [ref=f7e10] [cursor=pointer]
+          - listitem [ref=f7e13]:
+            - button "Origins" [ref=f7e14] [cursor=pointer]
+          - listitem [ref=f7e17]:
+            - button "Cool Things" [ref=f7e18] [cursor=pointer]
+          - listitem [ref=f7e21]:
+            - button "Research" [ref=f7e22] [cursor=pointer]
+          - listitem [ref=f7e25]:
+            - button "Skills" [ref=f7e26] [cursor=pointer]
+          - listitem [ref=f7e29]:
+            - button "Experience" [ref=f7e30] [cursor=pointer]
+          - listitem [ref=f7e33]:
+            - button "Contact" [ref=f7e34] [cursor=pointer]
+      - navigation "Site menu" [ref=f7e37]:
+        - button "Open menu" [ref=f7e38] [cursor=pointer]
+        - paragraph [aria-hidden] [ref=f7e41]: Gabriel Moreno Ribeiro.
+        - generic:
+          - button "Home."
+          - button "Library."
+          - button "News."
+          - button "Story."
+          - button "LinkedIn."
+          - button "GitHub."
+      - generic [ref=f7e45]:
+        - generic [ref=f7e46]:
+          - heading "Gabriel Moreno Ribeiro." [level=1] [ref=f7e47]
+          - generic [ref=f7e48]:
+            - generic [aria-hidden] [ref=f7e49]: Builder
+            - generic [ref=f7e50]: Builder
+            - generic [ref=f7e51]: "& Curious."
+        - paragraph [ref=f7e52]: Building Backoffice AI for Small and Medium Businesses @ HIBEEX. Started Projeto Candela.
+        - generic [ref=f7e53]:
+          - button [ref=f7e54] [cursor=pointer]:
+            - paragraph [ref=f7e58]: See Work
+          - button [ref=f7e59] [cursor=pointer]:
+            - paragraph [ref=f7e63]: Book a Call
+      - region "A few moments" [ref=f7e64]:
+        - paragraph [ref=f7e65]:
+          - generic [ref=f7e66]: Salvador
+          - generic [ref=f7e68]: Missão Velha
+          - generic [ref=f7e70]: Fortaleza
+          - generic [ref=f7e72]: São Paulo
+        - group "Photos, first row" [ref=f7e73]:
+          - generic [ref=f7e74]:
+            - figure "Waterfall with the family · Missão Velha" [ref=f7e75]:
+              - img "Family at a waterfall in the Cariri valley" [ref=f7e76]
+            - figure "Pineapple costume · Salvador" [ref=f7e78]:
+              - img "Gabriel as a child in a pineapple costume" [ref=f7e79]
+            - figure "São João festival · Missão Velha" [ref=f7e81]:
+              - img "Kids with cotton candy at a São João festival" [ref=f7e82]
+            - figure "Sandboarding the dunes · Salvador" [ref=f7e84]:
+              - img "A child sandboarding down a dune" [ref=f7e85]
+            - figure "Summer break · Missão Velha" [ref=f7e87]:
+              - img "Gabriel as a boy holding a can of juice at night" [ref=f7e88]
+            - figure "Festa junina · Salvador" [ref=f7e90]:
+              - img "Gabriel dressed for a festa junina" [ref=f7e91]
+            - figure "Climbing the backyard tree · Salvador" [ref=f7e93]:
+              - img "A child climbing a tree in a backyard" [ref=f7e94]
+            - figure "With my brothers · Missão Velha" [ref=f7e96]:
+              - img "Gabriel and his two brothers laughing in the back of a car" [ref=f7e97]
+            - figure "Rooftop afternoon · Salvador" [ref=f7e99]:
+              - img "Three kids on a rooftop in Salvador" [ref=f7e100]
+            - figure [aria-hidden] [ref=f7e102]:
+              - generic [ref=f7e103]: Waterfall with the family · Missão Velha
+            - figure [aria-hidden] [ref=f7e104]:
+              - generic [ref=f7e105]: Pineapple costume · Salvador
+            - figure [aria-hidden] [ref=f7e106]:
+              - generic [ref=f7e107]: São João festival · Missão Velha
+            - figure [aria-hidden] [ref=f7e108]:
+              - generic [ref=f7e109]: Sandboarding the dunes · Salvador
+            - figure [aria-hidden] [ref=f7e110]:
+              - generic [ref=f7e111]: Summer break · Missão Velha
+            - figure [aria-hidden] [ref=f7e112]:
+              - generic [ref=f7e113]: Festa junina · Salvador
+            - figure [aria-hidden] [ref=f7e114]:
+              - generic [ref=f7e115]: Climbing the backyard tree · Salvador
+            - figure [aria-hidden] [ref=f7e116]:
+              - generic [ref=f7e117]: With my brothers · Missão Velha
+            - figure [aria-hidden] [ref=f7e118]:
+              - generic [ref=f7e119]: Rooftop afternoon · Salvador
+        - group "Photos, second row" [ref=f7e120]:
+          - generic [ref=f7e121]:
+            - figure "Projeto Candela at Fundação Estudar · São Paulo" [ref=f7e122]:
+              - img "Gabriel next to his Projeto Candela poster at the Fundação Estudar annual meeting" [ref=f7e123]
+            - figure "HIBEEX co-founders · São Paulo · 2026" [ref=f7e125]:
+              - img "The two HIBEEX co-founders at a table" [ref=f7e126]
+            - figure "Graduation at Ari de Sá · Fortaleza · 2025" [ref=f7e128]:
+              - img "Gabriel holding his Ari de Sá graduation yearbook" [ref=f7e129]
+            - figure "WOW Aceleradora · São Paulo" [ref=f7e131]:
+              - img "The HIBEEX founders at the WOW accelerator" [ref=f7e132]
+            - figure "Talk about Projeto Candela · Fortaleza" [ref=f7e134]:
+              - img "Gabriel speaking with a microphone" [ref=f7e135]
+            - figure "HIBEEX team at work · São Paulo" [ref=f7e137]:
+              - img "The HIBEEX team in an office at night" [ref=f7e138]
+            - figure "Graduation yearbooks · Fortaleza · 2025" [ref=f7e140]:
+              - img "Gabriel and a friend holding their Ari de Sá yearbooks" [ref=f7e141]
+            - figure "Award with the team · Fortaleza · 2025" [ref=f7e143]:
+              - img "Gabriel with classmates holding trophies" [ref=f7e144]
+            - figure [aria-hidden] [ref=f7e146]:
+              - generic [ref=f7e147]: Projeto Candela at Fundação Estudar · São Paulo
+            - figure [aria-hidden] [ref=f7e148]:
+              - generic [ref=f7e149]: HIBEEX co-founders · São Paulo · 2026
+            - figure [aria-hidden] [ref=f7e150]:
+              - generic [ref=f7e151]: Graduation at Ari de Sá · Fortaleza · 2025
+            - figure [aria-hidden] [ref=f7e152]:
+              - generic [ref=f7e153]: WOW Aceleradora · São Paulo
+            - figure [aria-hidden] [ref=f7e154]:
+              - generic [ref=f7e155]: Talk about Projeto Candela · Fortaleza
+            - figure [aria-hidden] [ref=f7e156]:
+              - generic [ref=f7e157]: HIBEEX team at work · São Paulo
+            - figure [aria-hidden] [ref=f7e158]:
+              - generic [ref=f7e159]: Graduation yearbooks · Fortaleza · 2025
+            - figure [aria-hidden] [ref=f7e160]:
+              - generic [ref=f7e161]: Award with the team · Fortaleza · 2025
+      - heading "Where I come from" [level=2] [ref=f7e162]
+      - heading "Cool things" [level=2] [ref=f7e163]
+      - heading "By the numbers" [level=2] [ref=f7e164]
+      - heading "Research" [level=2] [ref=f7e165]
+      - heading "Skills" [level=2] [ref=f7e166]
+      - heading "Professional experience" [level=2] [ref=f7e167]
+      - heading "Contact" [level=2] [ref=f7e168]
+      - generic [ref=f7e169]:
+        - generic [ref=f7e170]:
+          - paragraph [ref=f7e171]: Want to talk?
+          - link "me@gabrielmr.com" [ref=f7e172] [cursor=pointer]:
+            - /url: mailto:me@gabrielmr.com
+        - navigation "Pages" [ref=f7e173]:
+          - link "Home." [ref=f7e174] [cursor=pointer]:
+            - /url: /
+          - link "Library." [ref=f7e175] [cursor=pointer]:
+            - /url: /library
+          - link "News." [ref=f7e176] [cursor=pointer]:
+            - /url: /news
+          - link "Story." [ref=f7e177] [cursor=pointer]:
+            - /url: /story
+          - link "Contact." [ref=f7e178] [cursor=pointer]:
+            - /url: /#contact
+        - generic [ref=f7e179]:
+          - link "LinkedIn." [ref=f7e180] [cursor=pointer]:
+            - /url: https://linkedin.com/in/gabriel-moreno-ribeiro
+          - link "GitHub." [ref=f7e181] [cursor=pointer]:
+            - /url: https://github.com/gabriel-moreno-ribeiro
+          - link "Email." [ref=f7e182] [cursor=pointer]:
+            - /url: mailto:me@gabrielmr.com
+          - link "Privacy." [ref=f7e183] [cursor=pointer]:
+            - /url: /privacy
+          - link "Terms." [ref=f7e184] [cursor=pointer]:
+            - /url: /terms
+          - link "llms.txt" [ref=f7e185] [cursor=pointer]:
+            - /url: /llms.txt
+        - paragraph [ref=f7e186]: © 2026 Gabriel Moreno Ribeiro
+    - button "Hands-free mode (camera)" [ref=f7e187] [cursor=pointer]: Hands-free mode
+    - button "Switch to dark mode" [ref=f7e191] [cursor=pointer]: Dark mode
+    - button "Open terminal (Ctrl+K)" [ref=f7e194] [cursor=pointer]: Terminal · Ctrl+K

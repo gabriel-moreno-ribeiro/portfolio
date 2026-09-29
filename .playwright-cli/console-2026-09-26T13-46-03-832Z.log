@@ -1,0 +1,71 @@
+[     555ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:5173/node_modules/.vite/deps/chunk-6ER7OG3O.js?v=9faaa5be:19834
+[     987ms] [ERROR] [data] src/data/experience.json não passou no schema (2 problema(s)).
+  - 4.role: Too small: expected string to have >=1 characters
+  - 5.role: Too small: expected string to have >=1 characters
+O site segue com o JSON cru; corrija o arquivo. @ http://localhost:5173/src/lib/data/schemas.ts?t=1790429743867:133
+[   51932ms] [ERROR] [vite] SyntaxError: The requested module '/src/components/Home/Experience/geometry.ts?t=1790430415548' does not provide an export named 'laneX' @ http://localhost:5173/@vite/client:808
+[   51938ms] [ERROR] [vite] Failed to reload /src/components/Home/Experience/Experience.tsx. This could be due to syntax errors or importing non-existent modules. (see errors above) @ http://localhost:5173/@vite/client:808
+[   82367ms] NotFoundError: Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of this node.
+    at removeChild (http://localhost:5173/node_modules/.vite/deps/chunk-6ER7OG3O.js?v=9faaa5be:15650:24)
+    at runWithFiberInDEV (http://localhost:5173/node_modules/.vite/deps/chunk-6ER7OG3O.js?v=9faaa5be:729:72)
+    at commitDeletionEffectsOnFiber (http://localhost:5173/node_modules/.vite/deps/chunk-6ER7OG3O.js?v=9faaa5be:9922:19)
+    at recursivelyTraverseMutationEffects (http://localhost:5173/node_modules/.vite/deps/chunk-6ER7OG3O.js?v=9faaa5be:10111:13)
+    at commitMutationEffectsOnFiber (http://localhost:5173/node_modules/.vite/deps/chunk-6ER7OG3O.js?v=9faaa5be:10279:13)
+    at recursivelyTraverseMutationEffects (http://localhost:5173/node_modules/.vite/deps/chunk-6ER7OG3O.js?v=9faaa5be:10128:13)
+    at commitMutationEffectsOnFiber (http://localhost:5173/node_modules/.vite/deps/chunk-6ER7OG3O.js?v=9faaa5be:10279:13)
+    at recursivelyTraverseMutationEffects (http://localhost:5173/node_modules/.vite/deps/chunk-6ER7OG3O.js?v=9faaa5be:10128:13)
+    at commitMutationEffectsOnFiber (http://localhost:5173/node_modules/.vite/deps/chunk-6ER7OG3O.js?v=9faaa5be:10137:13)
+    at recursivelyTraverseMutationEffects (http://localhost:5173/node_modules/.vite/deps/chunk-6ER7OG3O.js?v=9faaa5be:10128:13)
+[   82285ms] [WARNING] %s
+
+%s
+ An error occurred in the <Text> component. Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://react.dev/link/error-boundaries to learn more about error boundaries. @ http://localhost:5173/node_modules/.vite/deps/chunk-6ER7OG3O.js?v=9faaa5be:6697
+[   82384ms] NotFoundError: Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of this node.
+    at removeChild (http://localhost:5173/node_modules/.vite/deps/chunk-6ER7OG3O.js?v=9faaa5be:15650:24)
+    at runWithFiberInDEV (http://localhost:5173/node_modules/.vite/deps/chunk-6ER7OG3O.js?v=9faaa5be:729:72)
+    at commitDeletionEffectsOnFiber (http://localhost:5173/node_modules/.vite/deps/chunk-6ER7OG3O.js?v=9faaa5be:9922:19)
+    at recursivelyTraverseMutationEffects (http://localhost:5173/node_modules/.vite/deps/chunk-6ER7OG3O.js?v=9faaa5be:10111:13)
+    at commitMutationEffectsOnFiber (http://localhost:5173/node_modules/.vite/deps/chunk-6ER7OG3O.js?v=9faaa5be:10279:13)
+    at recursivelyTraverseMutationEffects (http://localhost:5173/node_modules/.vite/deps/chunk-6ER7OG3O.js?v=9faaa5be:10128:13)
+    at commitMutationEffectsOnFiber (http://localhost:5173/node_modules/.vite/deps/chunk-6ER7OG3O.js?v=9faaa5be:10279:13)
+    at recursivelyTraverseMutationEffects (http://localhost:5173/node_modules/.vite/deps/chunk-6ER7OG3O.js?v=9faaa5be:10128:13)
+    at commitMutationEffectsOnFiber (http://localhost:5173/node_modules/.vite/deps/chunk-6ER7OG3O.js?v=9faaa5be:10137:13)
+    at recursivelyTraverseMutationEffects (http://localhost:5173/node_modules/.vite/deps/chunk-6ER7OG3O.js?v=9faaa5be:10128:13)
+[   82287ms] [WARNING] %s
+
+%s
+ An error occurred in the <Text> component. Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://react.dev/link/error-boundaries to learn more about error boundaries. @ http://localhost:5173/node_modules/.vite/deps/chunk-6ER7OG3O.js?v=9faaa5be:6697
+[   82384ms] NotFoundError: Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of this node.
+    at removeChild (http://localhost:5173/node_modules/.vite/deps/chunk-6ER7OG3O.js?v=9faaa5be:15650:24)
+    at runWithFiberInDEV (http://localhost:5173/node_modules/.vite/deps/chunk-6ER7OG3O.js?v=9faaa5be:729:72)
+    at commitDeletionEffectsOnFiber (http://localhost:5173/node_modules/.vite/deps/chunk-6ER7OG3O.js?v=9faaa5be:9922:19)
+    at recursivelyTraverseMutationEffects (http://localhost:5173/node_modules/.vite/deps/chunk-6ER7OG3O.js?v=9faaa5be:10111:13)
+    at commitMutationEffectsOnFiber (http://localhost:5173/node_modules/.vite/deps/chunk-6ER7OG3O.js?v=9faaa5be:10279:13)
+    at recursivelyTraverseMutationEffects (http://localhost:5173/node_modules/.vite/deps/chunk-6ER7OG3O.js?v=9faaa5be:10128:13)
+    at commitMutationEffectsOnFiber (http://localhost:5173/node_modules/.vite/deps/chunk-6ER7OG3O.js?v=9faaa5be:10279:13)
+    at recursivelyTraverseMutationEffects (http://localhost:5173/node_modules/.vite/deps/chunk-6ER7OG3O.js?v=9faaa5be:10128:13)
+    at commitMutationEffectsOnFiber (http://localhost:5173/node_modules/.vite/deps/chunk-6ER7OG3O.js?v=9faaa5be:10137:13)
+    at recursivelyTraverseMutationEffects (http://localhost:5173/node_modules/.vite/deps/chunk-6ER7OG3O.js?v=9faaa5be:10128:13)
+[   82289ms] [WARNING] %s
+
+%s
+ An error occurred in the <Text> component. Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://react.dev/link/error-boundaries to learn more about error boundaries. @ http://localhost:5173/node_modules/.vite/deps/chunk-6ER7OG3O.js?v=9faaa5be:6697
+[   82389ms] NotFoundError: Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of this node.
+    at removeChild (http://localhost:5173/node_modules/.vite/deps/chunk-6ER7OG3O.js?v=9faaa5be:15650:24)
+    at runWithFiberInDEV (http://localhost:5173/node_modules/.vite/deps/chunk-6ER7OG3O.js?v=9faaa5be:729:72)
+    at commitDeletionEffectsOnFiber (http://localhost:5173/node_modules/.vite/deps/chunk-6ER7OG3O.js?v=9faaa5be:9922:19)
+    at recursivelyTraverseMutationEffects (http://localhost:5173/node_modules/.vite/deps/chunk-6ER7OG3O.js?v=9faaa5be:10111:13)
+    at commitMutationEffectsOnFiber (http://localhost:5173/node_modules/.vite/deps/chunk-6ER7OG3O.js?v=9faaa5be:10279:13)
+    at recursivelyTraverseMutationEffects (http://localhost:5173/node_modules/.vite/deps/chunk-6ER7OG3O.js?v=9faaa5be:10128:13)
+    at commitMutationEffectsOnFiber (http://localhost:5173/node_modules/.vite/deps/chunk-6ER7OG3O.js?v=9faaa5be:10279:13)
+    at recursivelyTraverseMutationEffects (http://localhost:5173/node_modules/.vite/deps/chunk-6ER7OG3O.js?v=9faaa5be:10128:13)
+    at commitMutationEffectsOnFiber (http://localhost:5173/node_modules/.vite/deps/chunk-6ER7OG3O.js?v=9faaa5be:10137:13)
+    at recursivelyTraverseMutationEffects (http://localhost:5173/node_modules/.vite/deps/chunk-6ER7OG3O.js?v=9faaa5be:10128:13)
+[   82292ms] [WARNING] %s
+
+%s
+ An error occurred in the <Text> component. Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://react.dev/link/error-boundaries to learn more about error boundaries. @ http://localhost:5173/node_modules/.vite/deps/chunk-6ER7OG3O.js?v=9faaa5be:6697

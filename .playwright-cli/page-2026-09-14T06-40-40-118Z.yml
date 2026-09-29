@@ -1,0 +1,384 @@
+- generic [active] [ref=f10e1]:
+  - link "Skip to content" [ref=f10e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - generic [ref=f10e4]:
+    - main [ref=f10e5]:
+      - navigation "Page sections" [ref=f10e6]:
+        - button "Go to Top section" [ref=f10e7] [cursor=pointer]:
+          - generic [aria-hidden] [ref=f10e9]: Top
+        - button "Go to Origins section" [ref=f10e10] [cursor=pointer]:
+          - generic [aria-hidden] [ref=f10e12]: Origins
+        - button "Go to Cool Things section" [ref=f10e13] [cursor=pointer]:
+          - generic [aria-hidden] [ref=f10e15]: Cool Things
+        - button "Go to Research section" [ref=f10e16] [cursor=pointer]:
+          - generic [aria-hidden] [ref=f10e18]: Research
+        - button "Go to Skills section" [ref=f10e19] [cursor=pointer]:
+          - generic [aria-hidden] [ref=f10e21]: Skills
+        - button "Go to Experience section" [ref=f10e22] [cursor=pointer]:
+          - generic [aria-hidden] [ref=f10e24]: Experience
+        - button "Go to Contact section" [ref=f10e25] [cursor=pointer]:
+          - generic [aria-hidden] [ref=f10e27]: Contact
+      - navigation "Site menu" [ref=f10e28]:
+        - generic [ref=f10e29] [cursor=pointer]
+        - paragraph [aria-hidden] [ref=f10e32]: Gabriel Moreno Ribeiro.
+        - generic:
+          - button "Home."
+          - button "Library."
+          - button "News."
+          - button "Story."
+          - button "LinkedIn."
+          - button "GitHub."
+      - generic [ref=f10e38]:
+        - generic [ref=f10e39]:
+          - heading "Gabriel Moreno Ribeiro." [level=1] [ref=f10e40]
+          - generic [ref=f10e41]:
+            - generic [aria-hidden] [ref=f10e42]: Founder
+            - generic [ref=f10e43]: Founder
+            - generic [ref=f10e44]: "& Curious."
+        - paragraph [ref=f10e45]: Building Backoffice AI for Small and Medium Businesses @ HIBEEX. Founder @ Projeto Candela.
+        - generic [ref=f10e46]:
+          - button [ref=f10e47] [cursor=pointer]:
+            - paragraph [ref=f10e51]: See Work
+          - button [ref=f10e52] [cursor=pointer]:
+            - paragraph [ref=f10e56]: Book a Call
+        - paragraph [ref=f10e57]: Co-founder and CEO of HIBEEX. We build backoffice AI for small and medium businesses.
+      - region "A few moments" [ref=f10e58]:
+        - paragraph [ref=f10e59]:
+          - generic [ref=f10e60]: Salvador
+          - generic [ref=f10e62]: Missão Velha
+          - generic [ref=f10e64]: Fortaleza
+          - generic [ref=f10e66]: São Paulo
+        - group "Photos, first row" [ref=f10e67]:
+          - generic [ref=f10e68]:
+            - figure "Cariri waterfalls · Missão Velha" [ref=f10e69]:
+              - img "Family at a waterfall in the Cariri valley" [ref=f10e70]
+            - figure "Salvador · childhood" [ref=f10e72]:
+              - img "Gabriel as a child in a pineapple costume" [ref=f10e73]
+            - figure "São João · Ceará" [ref=f10e75]:
+              - img "Kids with cotton candy at a São João festival" [ref=f10e76]
+            - figure "Dunes · Bahia" [ref=f10e78]:
+              - img "A child sandboarding down a dune" [ref=f10e79]
+            - figure "Missão Velha · every summer" [ref=f10e81]:
+              - img "Gabriel as a boy holding a can of juice at night" [ref=f10e82]
+            - figure "Festa junina · Salvador" [ref=f10e84]:
+              - img "Gabriel dressed for a festa junina" [ref=f10e85]
+            - figure "Backyard tree · Salvador" [ref=f10e87]:
+              - img "A child climbing a tree in a backyard" [ref=f10e88]
+            - figure "Cousins · Missão Velha" [ref=f10e90]:
+              - img "Three kids laughing in the back of a car" [ref=f10e91]
+            - figure "Salvador · Bahia" [ref=f10e93]:
+              - img "Three kids on a rooftop in Salvador" [ref=f10e94]
+            - figure [aria-hidden] [ref=f10e96]:
+              - generic [ref=f10e97]: Cariri waterfalls · Missão Velha
+            - figure [aria-hidden] [ref=f10e98]:
+              - generic [ref=f10e99]: Salvador · childhood
+            - figure [aria-hidden] [ref=f10e100]:
+              - generic [ref=f10e101]: São João · Ceará
+            - figure [aria-hidden] [ref=f10e102]:
+              - generic [ref=f10e103]: Dunes · Bahia
+            - figure [aria-hidden] [ref=f10e104]:
+              - generic [ref=f10e105]: Missão Velha · every summer
+            - figure [aria-hidden] [ref=f10e106]:
+              - generic [ref=f10e107]: Festa junina · Salvador
+            - figure [aria-hidden] [ref=f10e108]:
+              - generic [ref=f10e109]: Backyard tree · Salvador
+            - figure [aria-hidden] [ref=f10e110]:
+              - generic [ref=f10e111]: Cousins · Missão Velha
+            - figure [aria-hidden] [ref=f10e112]:
+              - generic [ref=f10e113]: Salvador · Bahia
+        - group "Photos, second row" [ref=f10e114]:
+          - generic [ref=f10e115]:
+            - figure "Olympiad medals · Fortaleza" [ref=f10e116]:
+              - img "Gabriel smiling with olympiad medals" [ref=f10e117]
+            - figure "HIBEEX co-founders · 2026" [ref=f10e119]:
+              - img "The two HIBEEX co-founders at a table" [ref=f10e120]
+            - figure "Fundação Estudar · 2025" [ref=f10e122]:
+              - img "Gabriel holding a Fundação Estudar certificate" [ref=f10e123]
+            - figure "WOW Aceleradora · São Paulo" [ref=f10e125]:
+              - img "The HIBEEX founders at the WOW accelerator" [ref=f10e126]
+            - figure "On stage · Fortaleza" [ref=f10e128]:
+              - img "Gabriel speaking with a microphone" [ref=f10e129]
+            - figure "HIBEEX team · São Paulo" [ref=f10e131]:
+              - img "The HIBEEX team in an office at night" [ref=f10e132]
+            - figure "Fortaleza · 2024–2025" [ref=f10e134]:
+              - img "Gabriel and a friend holding award plaques" [ref=f10e135]
+            - figure "Fortaleza · 2024–2025" [ref=f10e137]:
+              - img "Gabriel with classmates" [ref=f10e138]
+            - figure [aria-hidden] [ref=f10e140]:
+              - generic [ref=f10e141]: Olympiad medals · Fortaleza
+            - figure [aria-hidden] [ref=f10e142]:
+              - generic [ref=f10e143]: HIBEEX co-founders · 2026
+            - figure [aria-hidden] [ref=f10e144]:
+              - generic [ref=f10e145]: Fundação Estudar · 2025
+            - figure [aria-hidden] [ref=f10e146]:
+              - generic [ref=f10e147]: WOW Aceleradora · São Paulo
+            - figure [aria-hidden] [ref=f10e148]:
+              - generic [ref=f10e149]: On stage · Fortaleza
+            - figure [aria-hidden] [ref=f10e150]:
+              - generic [ref=f10e151]: HIBEEX team · São Paulo
+            - figure [aria-hidden] [ref=f10e152]:
+              - generic [ref=f10e153]: Fortaleza · 2024–2025
+            - figure [aria-hidden] [ref=f10e154]:
+              - generic [ref=f10e155]: Fortaleza · 2024–2025
+      - generic [ref=f10e156]:
+        - heading "Where I Come From." [level=2] [ref=f10e157]
+        - generic [ref=f10e163]:
+          - generic [ref=f10e164]:
+            - button "Missão Velha, Ceará" [ref=f10e165] [cursor=pointer]
+            - generic [ref=f10e167]: Missão Velha
+          - generic [ref=f10e169]:
+            - button "Salvador, Bahia" [ref=f10e171] [cursor=pointer]
+            - generic [ref=f10e173]: Salvador
+          - generic [ref=f10e175]:
+            - button "Fortaleza, Ceará" [ref=f10e177] [cursor=pointer]
+            - generic [ref=f10e179]: Fortaleza
+          - generic [ref=f10e181]:
+            - button "São Paulo, SP" [ref=f10e183] [cursor=pointer]
+            - generic [ref=f10e185]: São Paulo
+      - generic [ref=f10e187]:
+        - heading "Cool Things" [level=2] [ref=f10e188]
+        - paragraph [ref=f10e189]: What I've built and what I've won.
+        - button "> Open terminal Ctrl+K" [ref=f10e190] [cursor=pointer]
+        - generic [ref=f10e191]:
+          - generic [ref=f10e192]:
+            - generic [ref=f10e193]:
+              - img "HIBEEX" [ref=f10e194]
+              - button "Previous" [ref=f10e195] [cursor=pointer]
+              - button "Next" [ref=f10e198] [cursor=pointer]
+              - generic [ref=f10e201]:
+                - button "Photo 1" [ref=f10e202] [cursor=pointer]
+                - button "Photo 2" [ref=f10e203] [cursor=pointer]
+                - button "Photo 3" [ref=f10e204] [cursor=pointer]
+                - button "Photo 4" [ref=f10e205] [cursor=pointer]
+            - generic [ref=f10e206]:
+              - heading [level=2] [ref=f10e207]:
+                - link "HIBEEX" [ref=f10e208] [cursor=pointer]:
+                  - /url: /work/hibeex
+              - paragraph [ref=f10e209]: "Backoffice AI for small and medium businesses: raw data in, decisions out. One of 6 startups in the Canastra Ventures AI Residency."
+              - generic [ref=f10e210]:
+                - generic [ref=f10e211]: TypeScript
+                - generic [ref=f10e212]: Next.js
+                - generic [ref=f10e213]: Supabase
+                - generic [ref=f10e214]: AWS
+                - generic [ref=f10e215]: AI/ML
+              - generic [aria-hidden] [ref=f10e216]: View project
+          - generic [ref=f10e220]:
+            - generic [ref=f10e221]:
+              - img "The kit as it goes out to a school" [ref=f10e222]
+              - button "Previous" [ref=f10e223] [cursor=pointer]
+              - button "Next" [ref=f10e226] [cursor=pointer]
+              - generic [ref=f10e229]:
+                - button "Photo 1" [ref=f10e230] [cursor=pointer]
+                - button "Photo 2" [ref=f10e231] [cursor=pointer]
+                - button "Photo 3" [ref=f10e232] [cursor=pointer]
+                - button "Photo 4" [ref=f10e233] [cursor=pointer]
+                - button "Photo 5" [ref=f10e234] [cursor=pointer]
+                - button "Photo 6" [ref=f10e235] [cursor=pointer]
+                - button "Photo 7" [ref=f10e236] [cursor=pointer]
+                - button "Photo 8" [ref=f10e237] [cursor=pointer]
+            - generic [ref=f10e238]:
+              - heading [level=2] [ref=f10e239]:
+                - link "Projeto Candela" [ref=f10e240] [cursor=pointer]:
+                  - /url: /work/candela
+              - paragraph [ref=f10e241]: Low-cost physics lab kits I built and delivered to 28 public schools. 3,392 students so far. Physics failure rates in those classes went from 30% to 10%.
+              - generic [ref=f10e242]:
+                - generic [ref=f10e243]: 3,392 students
+                - generic [ref=f10e244]: 28 schools
+                - generic [ref=f10e245]: 30% → 10%
+              - generic [aria-hidden] [ref=f10e246]: View project
+          - generic [ref=f10e251]:
+            - heading [level=2] [ref=f10e252]:
+              - link "39 Olympiad Medals" [ref=f10e253] [cursor=pointer]:
+                - /url: /work/medals
+            - paragraph [ref=f10e254]: 49 competitions in math, physics, chemistry and astronomy. 1st of 10,000+ at IFT-UNESP. Gold at ONNEQ. 1st at OBAQ.
+            - generic [ref=f10e255]:
+              - generic [ref=f10e256]: 19 gold
+              - generic [ref=f10e257]: 2 international
+              - generic [ref=f10e258]: 1st IFT-UNESP
+            - generic [aria-hidden] [ref=f10e259]: View project
+          - generic [ref=f10e264]:
+            - heading [level=2] [ref=f10e265]:
+              - link "GSAT Education" [ref=f10e266] [cursor=pointer]:
+                - /url: /work/gsat
+            - paragraph [ref=f10e267]: A test-prep platform I built from scratch as founding CEO, November 2025 to May 2026.
+            - generic [ref=f10e268]:
+              - generic [ref=f10e269]: React
+              - generic [ref=f10e270]: TypeScript
+              - generic [ref=f10e271]: Node.js
+              - generic [ref=f10e272]: EdTech
+            - generic [aria-hidden] [ref=f10e273]: View project
+      - generic [ref=f10e277]:
+        - paragraph [ref=f10e279]: By the Numbers
+        - paragraph [ref=f10e286]:
+          - generic [ref=f10e287]: "0"
+          - text: olympiad medals (19 gold)
+      - generic [ref=f10e288]:
+        - heading "Research" [level=2] [ref=f10e289]
+        - 'link "ORCID: 0009-0009-2574-6646" [ref=f10e290] [cursor=pointer]':
+          - /url: https://orcid.org/0009-0009-2574-6646
+        - generic [ref=f10e291]:
+          - generic [ref=f10e293]:
+            - generic [ref=f10e294]:
+              - generic [ref=f10e295]: Behavioral Economics
+              - generic [ref=f10e296]: "2025"
+            - heading "Impact of Fintech Tools on Adolescent Savings Behavior" [level=3] [ref=f10e297]
+            - paragraph [ref=f10e298]: "Advisor: Aaron Litvin, Ph.D. (Harvard)"
+            - paragraph [ref=f10e299]: RCT with 208 public-school students on whether fintech apps change savings behavior. The treatment group saved 130% more than control over the study period.
+            - generic [ref=f10e300]:
+              - generic [ref=f10e301]: RCT
+              - generic [ref=f10e302]: Fintech
+              - generic [ref=f10e303]: Behavioral Economics
+              - generic [ref=f10e304]: Python
+              - generic [ref=f10e305]: Statistics
+          - generic [ref=f10e307]:
+            - generic [ref=f10e308]:
+              - generic [ref=f10e309]: Physical Chemistry
+              - generic [ref=f10e310]: 2023-2025
+            - heading "Modeling Reaction Mechanisms in Chemical Kinetics" [level=3] [ref=f10e311]
+            - paragraph [ref=f10e312]: "Advisor: Prof. Juliano Bonacin, Ph.D."
+            - paragraph [ref=f10e313]: A 59-page thesis modeling reaction rate mechanisms with numerical methods, at 97% accuracy. Covers the steady-state approximation, Michaelis-Menten kinetics and oscillating reactions.
+            - generic [ref=f10e314]:
+              - generic [ref=f10e315]: MATLAB
+              - generic [ref=f10e316]: Mathematica
+              - generic [ref=f10e317]: LaTeX
+              - generic [ref=f10e318]: Numerical Methods
+              - generic [ref=f10e319]: Kinetics
+          - 'button "Research image for Low-Cost Physics Lab Kits for Public Schools Physics Education 2023-2024 Read Paper Low-Cost Physics Lab Kits for Public Schools Advisor: Coronel Iran Domingues Machado Low-cost physics kits, built and delivered to 28 public schools. 3,392 students. Physics failure rates went from 30% to 10% in the classrooms that used them. Physics Education Experimental Design 3,392 students 28 schools" [ref=f10e320] [cursor=pointer]':
+            - img "Research image for Low-Cost Physics Lab Kits for Public Schools" [ref=f10e322]
+            - generic [ref=f10e323]:
+              - generic [ref=f10e324]:
+                - generic [ref=f10e325]: Physics Education
+                - generic [ref=f10e326]: 2023-2024
+                - generic [ref=f10e327]: Read Paper
+              - heading "Low-Cost Physics Lab Kits for Public Schools" [level=3] [ref=f10e331]
+              - paragraph [ref=f10e332]: "Advisor: Coronel Iran Domingues Machado"
+              - paragraph [ref=f10e333]: Low-cost physics kits, built and delivered to 28 public schools. 3,392 students. Physics failure rates went from 30% to 10% in the classrooms that used them.
+              - generic [ref=f10e334]:
+                - generic [ref=f10e335]: Physics Education
+                - generic [ref=f10e336]: Experimental Design
+                - generic [ref=f10e337]: 3,392 students
+                - generic [ref=f10e338]: 28 schools
+      - generic [ref=f10e339]:
+        - paragraph: Some of the languages & tools I build with.
+      - generic [ref=f10e345]:
+        - heading "Professional Experience." [level=2] [ref=f10e346]
+        - generic [ref=f10e348]:
+          - generic [ref=f10e349]:
+            - heading "Co-Founder & CEO @ HIBEEX" [level=2] [ref=f10e350]
+            - paragraph [ref=f10e352]: January 2026 - Present
+            - list [ref=f10e353]:
+              - listitem [ref=f10e354]: "Building backoffice AI for small and medium businesses: raw data in, decisions out"
+              - listitem [ref=f10e355]: One of 6 startups in the Canastra Ventures AI Residency
+              - listitem [ref=f10e356]: "Stack: TypeScript, Next.js, Node.js, Supabase, PostgreSQL, AWS"
+          - generic [ref=f10e357]:
+            - heading "Independent Researcher @ Fintech Savings RCT" [level=2] [ref=f10e358]
+            - paragraph [ref=f10e360]: 2025 · Advised by Aaron Litvin, Ph.D. (Harvard)
+            - list [ref=f10e361]:
+              - listitem [ref=f10e362]: Ran an RCT with 208 students on whether fintech apps change savings behavior
+              - listitem [ref=f10e363]: Treatment group saved 130% more than control
+          - generic [ref=f10e364]:
+            - heading "Co-Founder & CEO @ GSAT Education" [level=2] [ref=f10e365]
+            - paragraph [ref=f10e367]: November 2025 - May 2026
+            - list [ref=f10e368]:
+              - listitem [ref=f10e369]: Built a test-prep platform from scratch
+              - listitem [ref=f10e370]: Product, engineering and go-to-market, as founding CEO
+          - generic [ref=f10e371]:
+            - heading "President @ Olympic Club - Colégio Militar" [level=2] [ref=f10e372]
+            - paragraph [ref=f10e374]: August 2024 - May 2026
+            - list [ref=f10e375]:
+              - listitem [ref=f10e376]: Ran the board, pushed through 17 initiatives over two years
+              - listitem [ref=f10e377]: Student participation up 47%. National olympiad results up 62%.
+          - generic [ref=f10e378]:
+            - heading "Scholar - PREP Program @ Fundação Estudar" [level=2] [ref=f10e379]
+            - paragraph [ref=f10e381]: January 2025 - March 2026
+            - list [ref=f10e382]:
+              - listitem [ref=f10e383]: One of ~70 picked from 10,000+ applicants (0.7% acceptance)
+              - listitem [ref=f10e384]: Brazil's college access program for international universities
+          - generic [ref=f10e385]:
+            - heading "Researcher @ Instituto Principia" [level=2] [ref=f10e386]
+            - paragraph [ref=f10e388]: January 2023 - July 2025
+            - list [ref=f10e389]:
+              - listitem [ref=f10e390]: One of 14 students selected nationally for Escola de Talentos
+              - listitem [ref=f10e391]: "Thesis on chemical kinetics with Prof. Juliano Bonacin, Ph.D.: 59 pages, 97% accuracy"
+              - listitem [ref=f10e392]: Quantum mechanics, relativity, statistical physics
+      - generic [ref=f10e393]:
+        - generic [ref=f10e394]:
+          - paragraph [ref=f10e395]: Contact
+          - heading [level=2] [ref=f10e396]:
+            - text: Let's
+            - emphasis [ref=f10e397]: talk.
+          - paragraph [ref=f10e398]: Building something, hiring, or just curious? Write to me.
+          - list [ref=f10e399]:
+            - listitem [ref=f10e400]:
+              - link "Email me@gabrielmr.com" [ref=f10e401] [cursor=pointer]:
+                - /url: mailto:me@gabrielmr.com
+                - generic [ref=f10e406]:
+                  - generic [ref=f10e407]: Email
+                  - generic [ref=f10e408]: me@gabrielmr.com
+            - listitem [ref=f10e412]:
+              - link "Book a call cal.com/gabrielmribeiro" [ref=f10e413] [cursor=pointer]:
+                - /url: https://cal.com/gabrielmribeiro
+                - generic [ref=f10e417]:
+                  - generic [ref=f10e418]: Book a call
+                  - generic [ref=f10e419]: cal.com/gabrielmribeiro
+            - listitem [ref=f10e423]:
+              - link "LinkedIn gabriel-moreno-ribeiro" [ref=f10e424] [cursor=pointer]:
+                - /url: https://linkedin.com/in/gabriel-moreno-ribeiro
+                - generic [ref=f10e430]:
+                  - generic [ref=f10e431]: LinkedIn
+                  - generic [ref=f10e432]: gabriel-moreno-ribeiro
+            - listitem [ref=f10e436]:
+              - link "GitHub gabriel-moreno-ribeiro" [ref=f10e437] [cursor=pointer]:
+                - /url: https://github.com/gabriel-moreno-ribeiro
+                - generic [ref=f10e441]:
+                  - generic [ref=f10e442]: GitHub
+                  - generic [ref=f10e443]: gabriel-moreno-ribeiro
+        - generic [ref=f10e448]:
+          - generic [ref=f10e449]:
+            - generic [ref=f10e450]:
+              - generic [ref=f10e451]: Name
+              - textbox "Name" [ref=f10e452]:
+                - /placeholder: Your name
+            - generic [ref=f10e453]:
+              - generic [ref=f10e454]: Email
+              - textbox "Email" [ref=f10e455]:
+                - /placeholder: you@example.com
+          - generic [ref=f10e456]:
+            - generic [ref=f10e457]: Message
+            - textbox "Message" [ref=f10e458]:
+              - /placeholder: What are you working on?
+          - button "Send message" [ref=f10e460] [cursor=pointer]
+      - generic [ref=f10e464]:
+        - generic [ref=f10e465]:
+          - paragraph [ref=f10e466]: Want to talk?
+          - link "me@gabrielmr.com" [ref=f10e467] [cursor=pointer]:
+            - /url: mailto:me@gabrielmr.com
+        - navigation "Pages" [ref=f10e468]:
+          - link "Home." [ref=f10e469] [cursor=pointer]:
+            - /url: /
+          - link "Library." [ref=f10e470] [cursor=pointer]:
+            - /url: /library
+          - link "News." [ref=f10e471] [cursor=pointer]:
+            - /url: /news
+          - link "Story." [ref=f10e472] [cursor=pointer]:
+            - /url: /story
+          - link "Contact." [ref=f10e473] [cursor=pointer]:
+            - /url: /#contact
+        - generic [ref=f10e474]:
+          - link "LinkedIn." [ref=f10e475] [cursor=pointer]:
+            - /url: https://linkedin.com/in/gabriel-moreno-ribeiro
+          - link "GitHub." [ref=f10e476] [cursor=pointer]:
+            - /url: https://github.com/gabriel-moreno-ribeiro
+          - link "Email." [ref=f10e477] [cursor=pointer]:
+            - /url: mailto:me@gabrielmr.com
+          - link "Privacy." [ref=f10e478] [cursor=pointer]:
+            - /url: /privacy
+          - link "Terms." [ref=f10e479] [cursor=pointer]:
+            - /url: /terms
+          - link "llms.txt" [ref=f10e480] [cursor=pointer]:
+            - /url: /llms.txt
+        - paragraph [ref=f10e481]: © 2026 Gabriel Moreno Ribeiro
+      - img "HIBEEX sticker" [ref=f10e486]
+    - button "Hands-free mode (camera)" [ref=f10e489] [cursor=pointer]: Hands-free mode
+    - button "Switch to dark mode" [ref=f10e493] [cursor=pointer]: Dark mode
+    - button "Open terminal (Ctrl+K)" [ref=f10e496] [cursor=pointer]: Terminal · Ctrl+K

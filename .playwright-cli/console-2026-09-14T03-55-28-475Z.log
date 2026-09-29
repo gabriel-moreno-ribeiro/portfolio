@@ -1,0 +1,2 @@
+[ 9467786ms] [ERROR] Failed to load resource: net::ERR_NETWORK_IO_SUSPENDED @ https://us.i.posthog.com/flags/?v=2&ip=0&_=1789367595191&ver=1.353.0&compression=base64:0
+[24307781ms] [ERROR] Failed to load resource: net::ERR_NAME_NOT_RESOLVED @ https://us.i.posthog.com/flags/?v=2&ip=0&_=1789382434780&ver=1.353.0&compression=base64:0

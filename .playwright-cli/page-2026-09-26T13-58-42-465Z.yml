@@ -1,0 +1,67 @@
+- generic [active] [ref=f4e1]:
+  - link "Skip to content" [ref=f4e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - main [ref=f4e6]:
+    - application "A shelf of 28 books. Drag or use the arrow keys to browse. Press Enter to open the selected book." [ref=f4e7]
+    - navigation "Site menu" [ref=f4e8]:
+      - button "Close menu" [expanded] [ref=f4e9] [cursor=pointer]
+      - paragraph [aria-hidden] [ref=f4e12]: Gabriel Moreno Ribeiro.
+      - generic [ref=f4e13]:
+        - button "Home." [ref=f4e14] [cursor=pointer]
+        - button "Library." [ref=f4e15] [cursor=pointer]
+        - button "News." [ref=f4e16] [cursor=pointer]
+        - button "Story." [ref=f4e17] [cursor=pointer]
+        - link "LinkedIn (opens in a new tab)" [ref=f4e18] [cursor=pointer]:
+          - /url: https://linkedin.com/in/gabriel-moreno-ribeiro
+        - link "GitHub (opens in a new tab)" [ref=f4e21] [cursor=pointer]:
+          - /url: https://github.com/gabriel-moreno-ribeiro
+      - generic [ref=f4e24]:
+        - button "Enable camera" [ref=f4e25] [cursor=pointer]
+        - button "Switch to dark mode" [ref=f4e29] [cursor=pointer]
+    - generic:
+      - paragraph:
+        - link "Home" [ref=f4e32] [cursor=pointer]:
+          - /url: /
+        - generic: Library
+        - generic: ·28 books
+      - status: 28 books
+    - generic [ref=f4e36]:
+      - paragraph [ref=f4e37]:
+        - generic [ref=f4e38]: "01"
+        - generic [ref=f4e40]: "28"
+      - heading "Manual do Mundo" [level=1] [ref=f4e41]
+      - paragraph [ref=f4e42]: Iberê Thenório
+      - button "Open Manual do Mundo" [ref=f4e43] [cursor=pointer]: Open
+    - button "Previous book" [disabled] [ref=f4e47]
+    - button "Next book" [ref=f4e50] [cursor=pointer]
+    - navigation "Catalog position"
+    - complementary [aria-hidden]
+    - list "Books" [ref=f4e53]:
+      - listitem [ref=f4e54]: Manual do Mundo by Iberê Thenório
+      - listitem [ref=f4e55]: How to Train Your Dragon by Cressida Cowell
+      - listitem [ref=f4e56]: Percy Jackson by Rick Riordan
+      - listitem [ref=f4e57]: A Ilha do Tesouro by Robert Louis Stevenson
+      - listitem [ref=f4e58]: Harry Potter by J.K. Rowling
+      - listitem [ref=f4e59]: O Pijama Listrado by John Boyne
+      - listitem [ref=f4e60]: Auto da Compadecida by Ariano Suassuna
+      - listitem [ref=f4e61]: O Extraordinário by R.J. Palacio
+      - listitem [ref=f4e62]: Dom Casmurro by Machado de Assis
+      - listitem [ref=f4e63]: Memórias Póstumas de Brás Cubas by Machado de Assis
+      - listitem [ref=f4e64]: Física - Renato Brito Vol. 1 by Renato Brito
+      - listitem [ref=f4e65]: Física - Renato Brito Vol. 2 by Renato Brito
+      - listitem [ref=f4e66]: Tópicos de Física by Gualter, Helou & Nicolau
+      - listitem [ref=f4e67]: Duna by Frank Herbert
+      - listitem [ref=f4e68]: Frankenstein by Mary Shelley
+      - listitem [ref=f4e69]: Fahrenheit 451 by Ray Bradbury
+      - listitem [ref=f4e70]: Brave New World by Aldous Huxley
+      - listitem [ref=f4e71]: Atkins Physical Chemistry by Peter Atkins
+      - listitem [ref=f4e72]: The Martian by Andy Weir
+      - listitem [ref=f4e73]: Project Hail Mary by Andy Weir
+      - listitem [ref=f4e74]: Surely You're Joking, Mr. Feynman! by Richard Feynman
+      - listitem [ref=f4e75]: The Complete Sherlock Holmes by Arthur Conan Doyle
+      - listitem [ref=f4e76]: The Official SAT Study Guide by College Board
+      - listitem [ref=f4e77]: The Wolf of Wall Street by Jordan Belfort
+      - listitem [ref=f4e78]: Catching the Wolf of Wall Street by Jordan Belfort
+      - listitem [ref=f4e79]: The Way of the Wolf by Jordan Belfort
+      - listitem [ref=f4e80]: Made in America by Sam Walton
+      - listitem [ref=f4e81]: Zero to One by Peter Thiel

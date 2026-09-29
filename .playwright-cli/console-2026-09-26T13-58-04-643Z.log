@@ -1,0 +1,12 @@
+[     376ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:5173/node_modules/.vite/deps/chunk-6ER7OG3O.js?v=c4cef3a4:19834
+[     586ms] [ERROR] [data] src/data/experience.json não passou no schema (2 problema(s)).
+  - 4.role: Too small: expected string to have >=1 characters
+  - 5.role: Too small: expected string to have >=1 characters
+O site segue com o JSON cru; corrija o arquivo. @ http://localhost:5173/src/lib/data/schemas.ts?t=1790429743867:133
+[    5504ms] [WARNING] The resource http://localhost:5173/moments/mv01.webp was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://localhost:5173/library:0
+[   30605ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:5173/node_modules/.vite/deps/chunk-6ER7OG3O.js?v=c4cef3a4:19834
+[   30709ms] [ERROR] [data] src/data/experience.json não passou no schema (2 problema(s)).
+  - 4.role: Too small: expected string to have >=1 characters
+  - 5.role: Too small: expected string to have >=1 characters
+O site segue com o JSON cru; corrija o arquivo. @ http://localhost:5173/src/lib/data/schemas.ts?t=1790429743867:133
+[   35796ms] [WARNING] The resource http://localhost:5173/moments/mv01.webp was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://localhost:5173/library:0

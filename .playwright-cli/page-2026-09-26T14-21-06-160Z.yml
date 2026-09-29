@@ -1,0 +1,105 @@
+- generic [active] [ref=f20e1]:
+  - link "Skip to content" [ref=f20e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - generic [ref=f20e4]:
+    - main [ref=f20e16]:
+      - navigation "Site menu" [ref=f20e17]:
+        - button "Close menu" [expanded] [ref=f20e18] [cursor=pointer]
+        - paragraph [aria-hidden] [ref=f20e21]: Gabriel Moreno Ribeiro.
+        - generic [ref=f20e22]:
+          - button "Home." [ref=f20e23] [cursor=pointer]
+          - button "Library." [ref=f20e24] [cursor=pointer]
+          - button "News." [ref=f20e25] [cursor=pointer]
+          - button "Story." [ref=f20e26] [cursor=pointer]
+          - link "LinkedIn (opens in a new tab)" [ref=f20e27] [cursor=pointer]:
+            - /url: https://linkedin.com/in/gabriel-moreno-ribeiro
+          - link "GitHub (opens in a new tab)" [ref=f20e30] [cursor=pointer]:
+            - /url: https://github.com/gabriel-moreno-ribeiro
+      - generic [ref=f20e33]:
+        - paragraph [ref=f20e34]:
+          - link "Home" [ref=f20e35] [cursor=pointer]:
+            - /url: /
+          - generic [ref=f20e39]: Documents
+        - heading "Documents" [level=1] [ref=f20e40]
+        - paragraph [ref=f20e41]: Score reports and school profiles, kept here so they have a link that does not expire. Every file opens straight in the browser.
+      - generic [ref=f20e42]:
+        - generic [ref=f20e43]:
+          - heading "Resume" [level=2] [ref=f20e44]
+          - list [ref=f20e45]:
+            - listitem [ref=f20e46]:
+              - generic [ref=f20e47]:
+                - link "Resume" [ref=f20e48] [cursor=pointer]:
+                  - /url: /files/gabriel-moreno-ribeiro-resume.pdf
+                - paragraph [ref=f20e52]: "One page: education, HIBEEX, Projeto Candela, research, awards, skills."
+                - generic [ref=f20e53]: PDFSeptember 2026
+              - button "Copy link" [ref=f20e55] [cursor=pointer]
+        - generic [ref=f20e59]:
+          - heading "Tests" [level=2] [ref=f20e60]
+          - list [ref=f20e61]:
+            - listitem [ref=f20e62]:
+              - generic [ref=f20e63]:
+                - link "SAT score report" [ref=f20e64] [cursor=pointer]:
+                  - /url: /files/sat-score-report.pdf
+                - paragraph [ref=f20e68]: 1510 total — 730 reading and writing, 780 math
+                - generic [ref=f20e69]: PDFSeptember 2025
+              - button "Copy link" [ref=f20e71] [cursor=pointer]
+            - listitem [ref=f20e75]:
+              - generic [ref=f20e76]:
+                - link "Duolingo English Test" [ref=f20e77] [cursor=pointer]:
+                  - /url: /files/duolingo-english-test.pdf
+                - paragraph [ref=f20e81]: 130 overall — CEFR C1
+                - generic [ref=f20e82]: PDFAugust 2026
+              - button "Copy link" [ref=f20e84] [cursor=pointer]
+        - generic [ref=f20e88]:
+          - heading "School profiles" [level=2] [ref=f20e89]
+          - list [ref=f20e90]:
+            - listitem [ref=f20e91]:
+              - generic [ref=f20e92]:
+                - link "Colégio Ari de Sá — school profile" [ref=f20e93] [cursor=pointer]:
+                  - /url: /files/ari-de-sa-school-profile.pdf
+                - paragraph [ref=f20e97]: Fortaleza, Ceará. Grading, curriculum and class rank context.
+                - generic [ref=f20e98]: PDF2024–2025
+              - button "Copy link" [ref=f20e100] [cursor=pointer]
+            - listitem [ref=f20e104]:
+              - generic [ref=f20e105]:
+                - link "Colégio Militar de Salvador — school profile" [ref=f20e106] [cursor=pointer]:
+                  - /url: /files/colegio-militar-salvador-school-profile.pdf
+                - paragraph [ref=f20e110]: Salvador, Bahia. Curriculum and grading context.
+                - generic [ref=f20e111]: PDF2026
+              - button "Copy link" [ref=f20e113] [cursor=pointer]
+      - status [ref=f20e117]
+      - generic [ref=f20e118]:
+        - generic [ref=f20e119]:
+          - paragraph [ref=f20e120]: Want to talk?
+          - link "me@gabrielmr.com" [ref=f20e121] [cursor=pointer]:
+            - /url: mailto:me@gabrielmr.com
+        - navigation "Pages" [ref=f20e122]:
+          - link "Home." [ref=f20e123] [cursor=pointer]:
+            - /url: /
+          - link "Library." [ref=f20e124] [cursor=pointer]:
+            - /url: /library
+          - link "News." [ref=f20e125] [cursor=pointer]:
+            - /url: /news
+          - link "Story." [ref=f20e126] [cursor=pointer]:
+            - /url: /story
+          - link "Contact." [ref=f20e127] [cursor=pointer]:
+            - /url: /#contact
+        - generic [ref=f20e128]:
+          - link "LinkedIn (opens in a new tab)" [ref=f20e129] [cursor=pointer]:
+            - /url: https://linkedin.com/in/gabriel-moreno-ribeiro
+          - link "GitHub (opens in a new tab)" [ref=f20e132] [cursor=pointer]:
+            - /url: https://github.com/gabriel-moreno-ribeiro
+          - link "Email." [ref=f20e135] [cursor=pointer]:
+            - /url: mailto:me@gabrielmr.com
+          - link "Resume." [ref=f20e136] [cursor=pointer]:
+            - /url: /files/gabriel-moreno-ribeiro-resume.pdf
+          - link "Privacy." [ref=f20e137] [cursor=pointer]:
+            - /url: /privacy
+          - link "Terms." [ref=f20e138] [cursor=pointer]:
+            - /url: /terms
+          - link "llms.txt" [ref=f20e139] [cursor=pointer]:
+            - /url: /llms.txt
+        - paragraph [ref=f20e140]: © 2026 Gabriel Moreno Ribeiro
+    - button "Hands-free mode (camera)" [ref=f20e6] [cursor=pointer]: Hands-free mode
+    - button "Switch to dark mode" [ref=f20e10] [cursor=pointer]: Dark mode
+    - button "Open terminal (Ctrl+K)" [ref=f20e13] [cursor=pointer]: Terminal · Ctrl+K
