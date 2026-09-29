@@ -185,7 +185,7 @@ export default function ShelfLibrary() {
   useEffect(() => {
     if (ready || no3d) return;
     const onResize = () => {
-      const el = mainRef.current;
+      const el = canvasRef.current; // the scene, not the page: the header band is above it
       if (el) setBand(shelfBand(el.clientWidth, el.clientHeight));
     };
     onResize();
