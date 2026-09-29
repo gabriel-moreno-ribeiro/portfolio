@@ -1,12 +1,20 @@
 // 404: the robot doing keepy-uppy with the missing zero, then the way back.
-// Follows the site theme; the scene is sized in em of the digits so it scales as one.
+// Follows the site theme. The whole page fits one screen at 100% zoom: the digits
+// are sized by the smaller of width and height, and the empty top row is the
+// zero's playground.
+// The body's 16px top/bottom padding (plus its min-height: 100vh) made the page
+// 32px taller than the screen.
+body:has(.not-found) { padding-block: 0; }
+
 .not-found {
-  min-height: 100dvh;
+  --nf: clamp(84px, min(17vw, 21vh), 190px);
+  position: relative;
+  height: 100dvh;
+  min-height: 480px;
   display: grid;
-  align-content: center;
+  grid-template-rows: 1fr auto;
   justify-items: center;
-  gap: 40px;
-  padding: 120px 24px 72px;
+  padding: 88px 24px 40px;
   box-sizing: border-box;
   background: var(--bg);
   color: var(--fg);
@@ -14,15 +22,16 @@
   overflow: hidden;
 
   &__scene {
+    align-self: end;
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-size: clamp(104px, 19vw, 200px);
+    font-size: var(--nf);
   }
 
   &__score {
     height: 20px;
-    margin: 18px 0 0;
+    margin: 14px 0 0;
     font-size: 14px;
     font-weight: 500;
     font-variant-numeric: tabular-nums;
@@ -34,23 +43,16 @@
     flex-direction: column;
     align-items: center;
     max-width: 34rem;
-  }
-
-  &__desc {
-    margin: 14px 0 32px;
-    font-size: 17px;
-    line-height: 1.6;
-    color: var(--fg-muted);
-    text-wrap: pretty;
+    margin-top: 20px;
   }
 
   &__actions {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
+    gap: 14px;
+    margin-top: 24px;
   }
-
   &__home {
     display: inline-flex;
     align-items: center;
@@ -93,8 +95,6 @@
   display: flex;
   align-items: baseline;
   justify-content: center;
-  // Room above the fours for the zero's flight.
-  padding-top: 1.05em;
   margin: 0;
   font-weight: 800;
   line-height: 1;
@@ -150,24 +150,29 @@
 }
 
 // Rests on the vent on top of the head (y = 20 of 250 in the robot's drawing).
+// Lives in the page, not the slot: it can fly anywhere on the screen. The script
+// places it with a transform; its size is in the digits' em.
 .nf-ball {
   position: absolute;
-  left: 50%;
-  bottom: calc(0.8em * 230 / 250 - 0.015em);
+  left: 0;
+  top: 0;
+  z-index: 2;
   width: 0.33em;
   height: 0.43em;
-  margin-left: -0.165em;
   padding: 0;
-  font: inherit; // buttons reset font-size; every length here is in the digits' em
+  font-size: var(--nf);
   border: 0;
   border-radius: 50%;
   background: none;
   color: var(--accent-decor);
-  cursor: pointer;
+  cursor: grab;
+  touch-action: none;
   will-change: transform;
   -webkit-tap-highlight-color: transparent;
 
-  svg { display: block; width: 100%; height: 100%; overflow: visible; }
+  &:active { cursor: grabbing; }
+
+  svg { display: block; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
 
   // A bigger target than the glyph without moving it.
   &::after {
@@ -203,11 +208,9 @@
 }
 
 @media (max-width: 600px) {
-  .not-found {
-    gap: 28px;
-    padding: 96px 20px 56px;
-  }
-  .nf-hint { display: none; }
+  .not-found { padding: 80px 20px 32px; }
+  // Above the zero's usual arc, centred.
+  .nf-hint { left: 50%; bottom: 230%; translate: -50% 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {

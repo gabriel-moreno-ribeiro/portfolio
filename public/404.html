@@ -21,14 +21,14 @@
         display: grid;
         place-items: center;
         text-align: center;
-        padding: 96px 24px 64px;
+        padding: 24px;
       }
       .digits {
         display: flex;
         align-items: baseline;
         justify-content: center;
         padding-top: 1em;
-        font-size: clamp(104px, 19vw, 200px);
+        font-size: clamp(84px, min(17vw, 21vh), 190px);
         font-weight: 800;
         line-height: 1;
         letter-spacing: -0.04em;
@@ -58,9 +58,8 @@
       @media (prefers-reduced-motion: reduce) {
         .ball, .robot .torso, .robot .eyes { animation: none; }
       }
-      h1 { font-size: clamp(30px, 4.2vw, 48px); font-weight: 700; line-height: 1.05; letter-spacing: -0.01em; margin-top: 56px; }
+      h1 { font-size: clamp(30px, 4.2vw, 48px); font-weight: 700; line-height: 1.05; letter-spacing: -0.01em; margin: 40px 0 28px; }
       h1 em { font-family: "DM Serif Display", Georgia, serif; font-weight: 400; color: var(--accent); }
-      p { color: var(--fg-muted); font-size: 17px; line-height: 1.6; margin: 14px auto 32px; max-width: 34rem; }
       a {
         display: inline-flex;
         align-items: center;
@@ -129,7 +128,6 @@
         <span aria-hidden="true">4</span>
       </p>
       <h1>This page <em>doesn't exist</em></h1>
-      <p>The robot found the missing zero and won't give it back. Everything else is where you left it.</p>
       <a href="/">Back to home</a>
     </main>
   </body>
