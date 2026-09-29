@@ -102,6 +102,7 @@ export const galleryItemSchema: z.ZodType<GalleryItem> = z.object({
   alt: z.string(),
   w: z.number().positive(),
   h: z.number().positive(),
+  focus: z.string().optional(),
   _placeholder: placeholder,
 });
 

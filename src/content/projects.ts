@@ -38,6 +38,8 @@ export interface Project {
   gallery?: string[];
   /** Captions keyed by gallery filename. */
   captions?: Record<string, string>;
+  /** Where the crop sits (CSS object-position) keyed by gallery filename; default centre. */
+  focus?: Record<string, string>;
 }
 
 export const projects: Project[] = [
@@ -77,6 +79,11 @@ export const projects: Project[] = [
     ],
     links: [{ href: 'https://www.hibeex.com.br/', label: 'hibeex.com.br', external: true }],
     gallery: ['01.webp', '02.webp', '03.webp', '04.webp'],
+    focus: {
+      '01.webp': '50% 10%', // the five faces sit in the top half
+      '02.webp': '50% 15%', // portrait: heads and the WOW banner
+      '03.webp': '20% 50%', // Gabriel presenting, on the left edge
+    },
   },
   {
     slug: 'candela',
@@ -131,6 +138,13 @@ export const projects: Project[] = [
       '06.webp': 'The inclined plane, with the mass hanging',
       '07.webp': 'Spring scale and graduated cylinder',
       '08.webp': 'The pulley stand and the ramp',
+    },
+    focus: {
+      '01.webp': '50% 90%', // the box and its label sit low in the frame
+      '03.webp': '50% 60%',
+      '05.webp': '50% 20%', // protractor at the top of the stand
+      '07.webp': '50% 20%',
+      '08.webp': '50% 60%',
     },
   },
   {

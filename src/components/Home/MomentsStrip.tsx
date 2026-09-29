@@ -46,6 +46,7 @@ function Row({
               decoding="async"
               width={m.w}
               height={m.h}
+              style={m.focus ? { objectPosition: m.focus } : undefined}
             />
             <figcaption>{caption(m)}</figcaption>
           </figure>

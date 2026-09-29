@@ -166,18 +166,19 @@ export function NumbersFigure() {
 }
 
 // ── Photo strips ──────────────────────────────────────────────────────────────
-type Photo = { src: string; alt: string; caption: string };
+// focus: where the 4:5 crop sits (CSS object-position); default centre
+type Photo = { src: string; alt: string; caption: string; focus?: string };
 
 export const MISSAO_VELHA_PHOTOS: Photo[] = [
   { src: '/background/missao-velha/02.webp', alt: 'Three boys under the wooden sign of the Missão Velha waterfall trail', caption: 'The trail to the waterfall' },
   { src: '/moments/mv07.webp', alt: 'Three kids laughing in the back of a car', caption: 'Cousins, back seat' },
-  { src: '/background/missao-velha/05.webp', alt: 'Family in front of a mud house decorated with São João flags', caption: 'São João, Missão Velha' },
+  { src: '/background/missao-velha/05.webp', alt: 'Family in front of a mud house decorated with São João flags', caption: 'São João, Missão Velha', focus: '40% 50%' },
   { src: '/moments/mv06.webp', alt: 'Kids with cotton candy at a São João festival', caption: 'Cotton candy season' },
 ];
 
 export const SALVADOR_PHOTOS: Photo[] = [
   { src: '/moments/ssa02.webp', alt: 'A child climbing a big tree in a backyard', caption: 'Backyard tree, Salvador' },
-  { src: '/moments/ssa01.webp', alt: 'Gabriel as a child in a pineapple costume', caption: 'Pineapple, apparently' },
+  { src: '/moments/ssa01.webp', alt: 'Gabriel as a child in a pineapple costume', caption: 'Pineapple, apparently', focus: '55% 50%' },
   { src: '/moments/ssa06.webp', alt: 'A child sandboarding down a dune', caption: 'Dunes, Bahia' },
   { src: '/moments/ssa03.webp', alt: 'Three kids at home in Salvador', caption: 'Salvador, Bahia' },
 ];
@@ -200,7 +201,7 @@ export function PhotoStrip({ photos, eyebrow }: { photos: Photo[]; eyebrow: stri
             transition={hidden ? { duration: 0 } : { duration: 0.7, ease: EASE, delay: 0.1 + i * 0.12 }}
             whileHover={reduced ? undefined : { rotate: 0, y: -6, scale: 1.03 }}
           >
-            <img src={p.src} alt={p.alt} loading="lazy" decoding="async" />
+            <img src={p.src} alt={p.alt} loading="lazy" decoding="async" style={p.focus ? { objectPosition: p.focus } : undefined} />
             <span>{p.caption}</span>
           </motion.div>
         ))}
