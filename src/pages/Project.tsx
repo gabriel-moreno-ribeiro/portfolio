@@ -137,6 +137,7 @@ function ProjectPage() {
           <img
             src={`/work/${project.slug}/${hero}`}
             alt={project.captions?.[hero] ?? project.title}
+            style={project.focus?.[hero] ? { objectPosition: project.focus[hero] } : undefined}
           />
         </motion.button>
       )}
@@ -194,6 +195,7 @@ function ProjectPage() {
                   src={`/work/${project.slug}/${file}`}
                   alt={project.captions?.[file] ?? `${project.title} photo ${i + 2}`}
                   loading="lazy"
+                  style={project.focus?.[file] ? { objectPosition: project.focus[file] } : undefined}
                 />
                 {project.captions?.[file] && <span>{project.captions[file]}</span>}
               </button>

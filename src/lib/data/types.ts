@@ -103,6 +103,8 @@ export interface GalleryItem extends Placeholder {
   alt: string;
   w: number;
   h: number;
+  /** Onde o corte assenta (CSS object-position); ausente = centro. */
+  focus?: string;
 }
 
 export interface PressItem {

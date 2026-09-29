@@ -51,6 +51,7 @@ function MediaCarousel({ project, paused }: { project: Project; paused: boolean 
           height={400}
           loading="lazy"
           decoding="async"
+          style={project.focus?.[current] ? { objectPosition: project.focus[current] } : undefined}
         />
       )}
       {nextFile && !nextFile.endsWith(".mp4") && (
@@ -94,6 +95,7 @@ function MediaCarousel({ project, paused }: { project: Project; paused: boolean 
                     height={28}
                     loading="lazy"
                     decoding="async"
+                    style={project.focus?.[file] ? { objectPosition: project.focus[file] } : undefined}
                   />
                 )}
               </button>

@@ -17,6 +17,16 @@ const SLIDES: string[] = [
   '/assets/hero-slideshow/8-1920.avif',
 ];
 
+// Where the crop sits in the 50vh strip (default from the stylesheet: center 30%).
+// The mask fades the strip out towards the bottom, so the subject stays in the top half.
+const FOCUS: Record<string, string> = {
+  '/assets/hero-slideshow/1-1920.avif': '50% 40%', // waterfall
+  '/assets/hero-slideshow/4-1920.avif': '50% 40%', // Elevador Lacerda and the bay
+  '/assets/hero-slideshow/6-1920.avif': '50% 50%', // Pelourinho facades
+  '/assets/hero-slideshow/7-1920.avif': '50% 60%', // the church sits low, under a wide sky
+  '/assets/hero-slideshow/8-1920.avif': '50% 50%', // altar
+};
+
 const skipSlideshow = typeof window !== 'undefined' && window.innerWidth < 768;
 
 function HeroSlideshow() {
@@ -102,6 +112,7 @@ function HeroSlideshow() {
             transition={{ duration: reduced ? 0 : 1.5, ease: 'easeInOut' }}
             draggable={false}
             decoding="async"
+            style={FOCUS[SLIDES[index]] ? { objectPosition: FOCUS[SLIDES[index]] } : undefined}
           />
         </AnimatePresence>
       </div>
