@@ -1,0 +1,106 @@
+{
+  "390": {
+    "end": [
+      66,
+      77,
+      229,
+      127,
+      115
+    ],
+    "home": [
+      55,
+      185,
+      657,
+      249,
+      254
+    ],
+    "ageClick": [
+      {
+        "to": "Age 14, 4 books",
+        "firstChangeMs": 401,
+        "lastChangeMs": 401,
+        "titlesSeen": 1,
+        "final": "Física - Renato Brito Vol. 1"
+      },
+      {
+        "to": "Age 9, 1 book",
+        "firstChangeMs": 112,
+        "lastChangeMs": 112,
+        "titlesSeen": 1,
+        "final": "How to Train Your Dragon"
+      },
+      {
+        "to": "Age 18, 2 books",
+        "firstChangeMs": 99,
+        "lastChangeMs": 99,
+        "titlesSeen": 1,
+        "final": "Made in America"
+      }
+    ],
+    "fps": null,
+    "cornerEls": [
+      "CANVAS.library__canvas",
+      "DIV.library__stage",
+      "MAIN.library library--ready  ",
+      "DIV.app",
+      "DIV.",
+      "BODY.",
+      "HTML."
+    ],
+    "cornerDot": [],
+    "fpsIdle": 61
+  },
+  "1440": {
+    "end": [
+      88,
+      421,
+      104,
+      83,
+      287
+    ],
+    "home": [
+      58,
+      25,
+      206,
+      120,
+      145
+    ],
+    "ageClick": [
+      {
+        "to": "Age 14, 4 books",
+        "firstChangeMs": 1257,
+        "lastChangeMs": 1257,
+        "titlesSeen": 1,
+        "final": "Física - Renato Brito Vol. 1"
+      },
+      {
+        "to": "Age 9, 1 book",
+        "firstChangeMs": 451,
+        "lastChangeMs": 451,
+        "titlesSeen": 1,
+        "final": "How to Train Your Dragon"
+      },
+      {
+        "to": "Age 18, 2 books",
+        "firstChangeMs": 892,
+        "lastChangeMs": 892,
+        "titlesSeen": 1,
+        "final": "Made in America"
+      }
+    ],
+    "fps": null,
+    "cornerEls": [
+      "CANVAS.library__canvas",
+      "DIV.library__stage",
+      "MAIN.library library--ready  ",
+      "DIV.app",
+      "DIV.",
+      "BODY.",
+      "HTML."
+    ],
+    "cornerDot": [
+      "DIV.custom-mouse rgb(17, 17, 17)"
+    ],
+    "fpsIdle": 52
+  }
+}

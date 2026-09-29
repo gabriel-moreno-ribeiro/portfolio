@@ -1,0 +1,1777 @@
+{
+  "tag": "before",
+  "generatedAt": "2026-09-27T15:11:56.693Z",
+  "throttle": 4,
+  "runs": [
+    {
+      "viewport": "1440x900",
+      "pageHeight": 8251,
+      "scrollMs": 18024,
+      "cls": 0.0004,
+      "framesOver50": 56,
+      "worstMs": 2926,
+      "totalBlockingMs": 1715,
+      "dominant": [
+        {
+          "script": "/node_modules/.vite/deps/chunk-JY4G5M2K.js :: performWorkUntilDeadline",
+          "frames": 30,
+          "totalMs": 7185
+        },
+        {
+          "script": "(no script: style/layout/paint)",
+          "frames": 9,
+          "totalMs": 1095
+        },
+        {
+          "script": "/src/components/Shared/MobileStickyCTA.tsx :: onScroll",
+          "frames": 7,
+          "totalMs": 647
+        },
+        {
+          "script": "/node_modules/.vite/deps/motion_react.js :: processBatch",
+          "frames": 9,
+          "totalMs": 631
+        },
+        {
+          "script": "/node_modules/.vite/deps/chunk-6ER7OG3O.js :: dispatchContinuousEvent",
+          "frames": 1,
+          "totalMs": 346
+        }
+      ],
+      "frames": [
+        {
+          "start": 18017,
+          "duration": 2926,
+          "blocking": 2,
+          "render": 45,
+          "top": {
+            "d": 7,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 23435,
+          "duration": 1268,
+          "blocking": 56,
+          "render": 93,
+          "top": {
+            "d": 13,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 17384,
+          "duration": 628,
+          "blocking": 578,
+          "render": 8,
+          "top": {
+            "d": 620,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 4
+          }
+        },
+        {
+          "start": 21052,
+          "duration": 467,
+          "blocking": 0,
+          "render": 2,
+          "top": null
+        },
+        {
+          "start": 11829,
+          "duration": 346,
+          "blocking": 295,
+          "render": 11,
+          "top": {
+            "d": 41,
+            "url": "/node_modules/.vite/deps/chunk-6ER7OG3O.js",
+            "fn": "dispatchContinuousEvent",
+            "invoker": "DIV#root.onpointerover",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 22572,
+          "duration": 342,
+          "blocking": 168,
+          "render": 40,
+          "top": {
+            "d": 56,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 17160,
+          "duration": 151,
+          "blocking": 89,
+          "render": 138,
+          "top": {
+            "d": 92,
+            "url": "/src/components/Shared/MobileStickyCTA.tsx",
+            "fn": "onScroll",
+            "invoker": "DOMWindow.onscroll",
+            "type": "event-listener",
+            "layout": 92
+          }
+        },
+        {
+          "start": 21602,
+          "duration": 148,
+          "blocking": 33,
+          "render": 71,
+          "top": null
+        },
+        {
+          "start": 13294,
+          "duration": 123,
+          "blocking": 40,
+          "render": 31,
+          "top": {
+            "d": 58,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 25397,
+          "duration": 117,
+          "blocking": 35,
+          "render": 7,
+          "top": {
+            "d": 78,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 22337,
+          "duration": 116,
+          "blocking": 8,
+          "render": 37,
+          "top": {
+            "d": 21,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 26770,
+          "duration": 113,
+          "blocking": 4,
+          "render": 30,
+          "top": {
+            "d": 23,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 12955,
+          "duration": 110,
+          "blocking": 0,
+          "render": 4,
+          "top": {
+            "d": 41,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 22948,
+          "duration": 109,
+          "blocking": 51,
+          "render": 87,
+          "top": {
+            "d": 15,
+            "url": "/src/components/Shared/MobileStickyCTA.tsx",
+            "fn": "onScroll",
+            "invoker": "DOMWindow.onscroll",
+            "type": "event-listener",
+            "layout": 13
+          }
+        },
+        {
+          "start": 27289,
+          "duration": 99,
+          "blocking": 47,
+          "render": 65,
+          "top": {
+            "d": 27,
+            "url": "/node_modules/.vite/deps/motion_react.js",
+            "fn": "processBatch",
+            "invoker": "FrameRequestCallback",
+            "type": "user-callback",
+            "layout": 0
+          }
+        },
+        {
+          "start": 28927,
+          "duration": 98,
+          "blocking": 46,
+          "render": 26,
+          "top": {
+            "d": 70,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 25136,
+          "duration": 88,
+          "blocking": 27,
+          "render": 70,
+          "top": {
+            "d": 21,
+            "url": "/src/components/Shared/MobileStickyCTA.tsx",
+            "fn": "onScroll",
+            "invoker": "DOMWindow.onscroll",
+            "type": "event-listener",
+            "layout": 21
+          }
+        },
+        {
+          "start": 17069,
+          "duration": 87,
+          "blocking": 0,
+          "render": 23,
+          "top": null
+        },
+        {
+          "start": 26493,
+          "duration": 86,
+          "blocking": 24,
+          "render": 53,
+          "top": {
+            "d": 21,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 16982,
+          "duration": 85,
+          "blocking": 13,
+          "render": 60,
+          "top": {
+            "d": 25,
+            "url": "/src/components/Shared/MobileStickyCTA.tsx",
+            "fn": "onScroll",
+            "invoker": "DOMWindow.onscroll",
+            "type": "event-listener",
+            "layout": 23
+          }
+        },
+        {
+          "start": 14327,
+          "duration": 84,
+          "blocking": 15,
+          "render": 52,
+          "top": {
+            "d": 13,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 22003,
+          "duration": 83,
+          "blocking": 23,
+          "render": 72,
+          "top": null
+        },
+        {
+          "start": 22112,
+          "duration": 83,
+          "blocking": 17,
+          "render": 52,
+          "top": {
+            "d": 15,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 22233,
+          "duration": 82,
+          "blocking": 24,
+          "render": 62,
+          "top": {
+            "d": 13,
+            "url": "/src/components/Shared/MobileStickyCTA.tsx",
+            "fn": "onScroll",
+            "invoker": "DOMWindow.onscroll",
+            "type": "event-listener",
+            "layout": 12
+          }
+        },
+        {
+          "start": 16636,
+          "duration": 81,
+          "blocking": 1,
+          "render": 15,
+          "top": {
+            "d": 35,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 20959,
+          "duration": 81,
+          "blocking": 0,
+          "render": 9,
+          "top": null
+        },
+        {
+          "start": 15314,
+          "duration": 80,
+          "blocking": 12,
+          "render": 54,
+          "top": {
+            "d": 10,
+            "url": "/node_modules/.vite/deps/motion_react.js",
+            "fn": "processBatch",
+            "invoker": "FrameRequestCallback",
+            "type": "user-callback",
+            "layout": 0
+          }
+        },
+        {
+          "start": 26403,
+          "duration": 78,
+          "blocking": 0,
+          "render": 31,
+          "top": {
+            "d": 25,
+            "url": "/node_modules/.vite/deps/motion_react.js",
+            "fn": "processBatch",
+            "invoker": "FrameRequestCallback",
+            "type": "user-callback",
+            "layout": 0
+          }
+        },
+        {
+          "start": 13078,
+          "duration": 77,
+          "blocking": 13,
+          "render": 51,
+          "top": {
+            "d": 24,
+            "url": "/node_modules/.vite/deps/motion_react.js",
+            "fn": "processBatch",
+            "invoker": "FrameRequestCallback",
+            "type": "user-callback",
+            "layout": 0
+          }
+        },
+        {
+          "start": 26685,
+          "duration": 76,
+          "blocking": 23,
+          "render": 42,
+          "top": {
+            "d": 30,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 16178,
+          "duration": 74,
+          "blocking": 24,
+          "render": 38,
+          "top": {
+            "d": 36,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 23273,
+          "duration": 72,
+          "blocking": 0,
+          "render": 18,
+          "top": {
+            "d": 14,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 15526,
+          "duration": 71,
+          "blocking": 0,
+          "render": 3,
+          "top": {
+            "d": 33,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 15404,
+          "duration": 68,
+          "blocking": 8,
+          "render": 57,
+          "top": {
+            "d": 6,
+            "url": "/src/components/Shared/MobileStickyCTA.tsx",
+            "fn": "onScroll",
+            "invoker": "DOMWindow.onscroll",
+            "type": "event-listener",
+            "layout": 4
+          }
+        },
+        {
+          "start": 26271,
+          "duration": 66,
+          "blocking": 0,
+          "render": 29,
+          "top": {
+            "d": 8,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 27512,
+          "duration": 66,
+          "blocking": 0,
+          "render": 16,
+          "top": {
+            "d": 25,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 12624,
+          "duration": 65,
+          "blocking": 0,
+          "render": 17,
+          "top": {
+            "d": 12,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 22474,
+          "duration": 65,
+          "blocking": 10,
+          "render": 56,
+          "top": {
+            "d": 9,
+            "url": "/node_modules/.vite/deps/motion_react.js",
+            "fn": "processBatch",
+            "invoker": "FrameRequestCallback",
+            "type": "user-callback",
+            "layout": 0
+          }
+        },
+        {
+          "start": 21788,
+          "duration": 64,
+          "blocking": 3,
+          "render": 52,
+          "top": {
+            "d": 7,
+            "url": "/src/components/Shared/MobileStickyCTA.tsx",
+            "fn": "onScroll",
+            "invoker": "DOMWindow.onscroll",
+            "type": "event-listener",
+            "layout": 7
+          }
+        },
+        {
+          "start": 13948,
+          "duration": 63,
+          "blocking": 0,
+          "render": 24,
+          "top": {
+            "d": 24,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 16105,
+          "duration": 62,
+          "blocking": 1,
+          "render": 40,
+          "top": {
+            "d": 15,
+            "url": "/node_modules/.vite/deps/motion_react.js",
+            "fn": "processBatch",
+            "invoker": "FrameRequestCallback",
+            "type": "user-callback",
+            "layout": 0
+          }
+        },
+        {
+          "start": 26199,
+          "duration": 62,
+          "blocking": 8,
+          "render": 48,
+          "top": {
+            "d": 10,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 27144,
+          "duration": 62,
+          "blocking": 0,
+          "render": 42,
+          "top": {
+            "d": 8,
+            "url": "/node_modules/.vite/deps/motion_react.js",
+            "fn": "processBatch",
+            "invoker": "FrameRequestCallback",
+            "type": "user-callback",
+            "layout": 1
+          }
+        },
+        {
+          "start": 23113,
+          "duration": 61,
+          "blocking": 0,
+          "render": 25,
+          "top": {
+            "d": 12,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 24996,
+          "duration": 61,
+          "blocking": 5,
+          "render": 45,
+          "top": {
+            "d": 10,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 27024,
+          "duration": 61,
+          "blocking": 0,
+          "render": 38,
+          "top": {
+            "d": 9,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 16916,
+          "duration": 59,
+          "blocking": 0,
+          "render": 44,
+          "top": null
+        },
+        {
+          "start": 27213,
+          "duration": 59,
+          "blocking": 9,
+          "render": 54,
+          "top": null
+        },
+        {
+          "start": 27439,
+          "duration": 58,
+          "blocking": 0,
+          "render": 19,
+          "top": null
+        },
+        {
+          "start": 23192,
+          "duration": 56,
+          "blocking": 3,
+          "render": 48,
+          "top": {
+            "d": 7,
+            "url": "/node_modules/.vite/deps/motion_react.js",
+            "fn": "processBatch",
+            "invoker": "FrameRequestCallback",
+            "type": "user-callback",
+            "layout": 0
+          }
+        },
+        {
+          "start": 25712,
+          "duration": 56,
+          "blocking": 0,
+          "render": 3,
+          "top": {
+            "d": 46,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 12777,
+          "duration": 53,
+          "blocking": 0,
+          "render": 19,
+          "top": {
+            "d": 9,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 14546,
+          "duration": 53,
+          "blocking": 0,
+          "render": 38,
+          "top": null
+        },
+        {
+          "start": 13224,
+          "duration": 52,
+          "blocking": 0,
+          "render": 39,
+          "top": {
+            "d": 7,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 16728,
+          "duration": 52,
+          "blocking": 0,
+          "render": 33,
+          "top": {
+            "d": 6,
+            "url": "/node_modules/.vite/deps/motion_react.js",
+            "fn": "processBatch",
+            "invoker": "FrameRequestCallback",
+            "type": "user-callback",
+            "layout": 0
+          }
+        },
+        {
+          "start": 14864,
+          "duration": 51,
+          "blocking": 0,
+          "render": 27,
+          "top": {
+            "d": 6,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        }
+      ]
+    },
+    {
+      "viewport": "390x844",
+      "pageHeight": 10372,
+      "scrollMs": 20893,
+      "cls": 0.0023,
+      "framesOver50": 76,
+      "worstMs": 309,
+      "totalBlockingMs": 1414,
+      "dominant": [
+        {
+          "script": "/node_modules/.vite/deps/chunk-JY4G5M2K.js :: performWorkUntilDeadline",
+          "frames": 35,
+          "totalMs": 3272
+        },
+        {
+          "script": "/src/components/Shared/MobileStickyCTA.tsx :: onScroll",
+          "frames": 17,
+          "totalMs": 1666
+        },
+        {
+          "script": "(no script: style/layout/paint)",
+          "frames": 13,
+          "totalMs": 1298
+        },
+        {
+          "script": "/node_modules/.vite/deps/motion_react.js :: processBatch",
+          "frames": 9,
+          "totalMs": 642
+        },
+        {
+          "script": "/node_modules/.vite/deps/chunk-6ER7OG3O.js :: dispatchContinuousEvent",
+          "frames": 2,
+          "totalMs": 164
+        }
+      ],
+      "frames": [
+        {
+          "start": 15948,
+          "duration": 309,
+          "blocking": 0,
+          "render": 50,
+          "top": null
+        },
+        {
+          "start": 25044,
+          "duration": 241,
+          "blocking": 0,
+          "render": 3,
+          "top": null
+        },
+        {
+          "start": 13298,
+          "duration": 226,
+          "blocking": 162,
+          "render": 203,
+          "top": {
+            "d": 8,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 21602,
+          "duration": 209,
+          "blocking": 153,
+          "render": 195,
+          "top": {
+            "d": 15,
+            "url": "/src/components/Shared/MobileStickyCTA.tsx",
+            "fn": "onScroll",
+            "invoker": "DOMWindow.onscroll",
+            "type": "event-listener",
+            "layout": 14
+          }
+        },
+        {
+          "start": 20816,
+          "duration": 207,
+          "blocking": 155,
+          "render": 198,
+          "top": {
+            "d": 67,
+            "url": "/src/components/Shared/MobileStickyCTA.tsx",
+            "fn": "onScroll",
+            "invoker": "DOMWindow.onscroll",
+            "type": "event-listener",
+            "layout": 41
+          }
+        },
+        {
+          "start": 13545,
+          "duration": 204,
+          "blocking": 121,
+          "render": 122,
+          "top": {
+            "d": 51,
+            "url": "/src/components/Shared/MobileStickyCTA.tsx",
+            "fn": "onScroll",
+            "invoker": "DOMWindow.onscroll",
+            "type": "event-listener",
+            "layout": 49
+          }
+        },
+        {
+          "start": 18972,
+          "duration": 180,
+          "blocking": 0,
+          "render": 28,
+          "top": {
+            "d": 5,
+            "url": "/src/components/Shared/MobileStickyCTA.tsx",
+            "fn": "onScroll",
+            "invoker": "DOMWindow.onscroll",
+            "type": "event-listener",
+            "layout": 5
+          }
+        },
+        {
+          "start": 7979,
+          "duration": 173,
+          "blocking": 98,
+          "render": 50,
+          "top": {
+            "d": 98,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 14415,
+          "duration": 164,
+          "blocking": 66,
+          "render": 73,
+          "top": {
+            "d": 41,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 12131,
+          "duration": 158,
+          "blocking": 9,
+          "render": 9,
+          "top": {
+            "d": 50,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 22057,
+          "duration": 153,
+          "blocking": 61,
+          "render": 23,
+          "top": {
+            "d": 88,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 20620,
+          "duration": 152,
+          "blocking": 20,
+          "render": 13,
+          "top": {
+            "d": 54,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 12813,
+          "duration": 151,
+          "blocking": 93,
+          "render": 136,
+          "top": {
+            "d": 23,
+            "url": "/src/components/Shared/MobileStickyCTA.tsx",
+            "fn": "onScroll",
+            "invoker": "DOMWindow.onscroll",
+            "type": "event-listener",
+            "layout": 23
+          }
+        },
+        {
+          "start": 6964,
+          "duration": 135,
+          "blocking": 70,
+          "render": 7,
+          "top": {
+            "d": 113,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 12347,
+          "duration": 130,
+          "blocking": 52,
+          "render": 100,
+          "top": null
+        },
+        {
+          "start": 13789,
+          "duration": 118,
+          "blocking": 0,
+          "render": 23,
+          "top": {
+            "d": 17,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 9212,
+          "duration": 116,
+          "blocking": 15,
+          "render": 8,
+          "top": {
+            "d": 56,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 6682,
+          "duration": 114,
+          "blocking": 17,
+          "render": 26,
+          "top": {
+            "d": 40,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 20495,
+          "duration": 111,
+          "blocking": 34,
+          "render": 24,
+          "top": {
+            "d": 60,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 14987,
+          "duration": 102,
+          "blocking": 0,
+          "render": 15,
+          "top": {
+            "d": 6,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 14708,
+          "duration": 101,
+          "blocking": 0,
+          "render": 32,
+          "top": {
+            "d": 7,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 23386,
+          "duration": 101,
+          "blocking": 0,
+          "render": 46,
+          "top": {
+            "d": 6,
+            "url": "/node_modules/.vite/deps/motion_react.js",
+            "fn": "processBatch",
+            "invoker": "FrameRequestCallback",
+            "type": "user-callback",
+            "layout": 0
+          }
+        },
+        {
+          "start": 10641,
+          "duration": 96,
+          "blocking": 23,
+          "render": 10,
+          "top": {
+            "d": 63,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 4922,
+          "duration": 94,
+          "blocking": 10,
+          "render": 44,
+          "top": {
+            "d": 16,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 18861,
+          "duration": 93,
+          "blocking": 0,
+          "render": 35,
+          "top": {
+            "d": 14,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 21372,
+          "duration": 93,
+          "blocking": 42,
+          "render": 91,
+          "top": {
+            "d": 35,
+            "url": "/node_modules/.vite/deps/motion_react.js",
+            "fn": "processBatch",
+            "invoker": "FrameRequestCallback",
+            "type": "user-callback",
+            "layout": 2
+          }
+        },
+        {
+          "start": 21232,
+          "duration": 87,
+          "blocking": 1,
+          "render": 24,
+          "top": {
+            "d": 21,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 4515,
+          "duration": 86,
+          "blocking": 32,
+          "render": 18,
+          "top": {
+            "d": 18,
+            "url": "/node_modules/.vite/deps/chunk-6ER7OG3O.js",
+            "fn": "dispatchContinuousEvent",
+            "invoker": "DIV#root.onpointerover",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 12584,
+          "duration": 85,
+          "blocking": 19,
+          "render": 41,
+          "top": {
+            "d": 15,
+            "url": "/src/components/Shared/MobileStickyCTA.tsx",
+            "fn": "onScroll",
+            "invoker": "DOMWindow.onscroll",
+            "type": "event-listener",
+            "layout": 14
+          }
+        },
+        {
+          "start": 7110,
+          "duration": 84,
+          "blocking": 10,
+          "render": 52,
+          "top": {
+            "d": 31,
+            "url": "/node_modules/.vite/deps/motion_react.js",
+            "fn": "processBatch",
+            "invoker": "FrameRequestCallback",
+            "type": "user-callback",
+            "layout": 0
+          }
+        },
+        {
+          "start": 23917,
+          "duration": 83,
+          "blocking": 32,
+          "render": 81,
+          "top": null
+        },
+        {
+          "start": 21977,
+          "duration": 78,
+          "blocking": 6,
+          "render": 26,
+          "top": {
+            "d": 14,
+            "url": "/node_modules/.vite/deps/chunk-6ER7OG3O.js",
+            "fn": "dispatchContinuousEvent",
+            "invoker": "DIV#root.onpointerout",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 13098,
+          "duration": 77,
+          "blocking": 23,
+          "render": 63,
+          "top": {
+            "d": 13,
+            "url": "/src/components/Shared/MobileStickyCTA.tsx",
+            "fn": "onScroll",
+            "invoker": "DOMWindow.onscroll",
+            "type": "event-listener",
+            "layout": 13
+          }
+        },
+        {
+          "start": 23301,
+          "duration": 77,
+          "blocking": 0,
+          "render": 44,
+          "top": null
+        },
+        {
+          "start": 5241,
+          "duration": 75,
+          "blocking": 10,
+          "render": 55,
+          "top": {
+            "d": 9,
+            "url": "/node_modules/.vite/deps/motion_react.js",
+            "fn": "processBatch",
+            "invoker": "FrameRequestCallback",
+            "type": "user-callback",
+            "layout": 0
+          }
+        },
+        {
+          "start": 15512,
+          "duration": 73,
+          "blocking": 0,
+          "render": 41,
+          "top": null
+        },
+        {
+          "start": 13994,
+          "duration": 71,
+          "blocking": 0,
+          "render": 31,
+          "top": {
+            "d": 13,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 14099,
+          "duration": 70,
+          "blocking": 17,
+          "render": 53,
+          "top": {
+            "d": 12,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 8402,
+          "duration": 69,
+          "blocking": 13,
+          "render": 63,
+          "top": {
+            "d": 29,
+            "url": "/src/components/Shared/MobileStickyCTA.tsx",
+            "fn": "onScroll",
+            "invoker": "DOMWindow.onscroll",
+            "type": "event-listener",
+            "layout": 20
+          }
+        },
+        {
+          "start": 13005,
+          "duration": 69,
+          "blocking": 0,
+          "render": 36,
+          "top": {
+            "d": 12,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 14618,
+          "duration": 69,
+          "blocking": 0,
+          "render": 27,
+          "top": {
+            "d": 8,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 21129,
+          "duration": 67,
+          "blocking": 16,
+          "render": 53,
+          "top": {
+            "d": 12,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 8884,
+          "duration": 66,
+          "blocking": 9,
+          "render": 58,
+          "top": {
+            "d": 21,
+            "url": "/node_modules/.vite/deps/motion_react.js",
+            "fn": "processBatch",
+            "invoker": "FrameRequestCallback",
+            "type": "user-callback",
+            "layout": 10
+          }
+        },
+        {
+          "start": 22316,
+          "duration": 63,
+          "blocking": 0,
+          "render": 22,
+          "top": {
+            "d": 21,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 23177,
+          "duration": 63,
+          "blocking": 0,
+          "render": 46,
+          "top": null
+        },
+        {
+          "start": 14858,
+          "duration": 60,
+          "blocking": 9,
+          "render": 57,
+          "top": {
+            "d": 16,
+            "url": "/src/components/Shared/MobileStickyCTA.tsx",
+            "fn": "onScroll",
+            "invoker": "DOMWindow.onscroll",
+            "type": "event-listener",
+            "layout": 9
+          }
+        },
+        {
+          "start": 15723,
+          "duration": 60,
+          "blocking": 6,
+          "render": 45,
+          "top": {
+            "d": 10,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 10007,
+          "duration": 59,
+          "blocking": 0,
+          "render": 41,
+          "top": {
+            "d": 8,
+            "url": "/node_modules/.vite/deps/motion_react.js",
+            "fn": "processBatch",
+            "invoker": "FrameRequestCallback",
+            "type": "user-callback",
+            "layout": 0
+          }
+        },
+        {
+          "start": 5172,
+          "duration": 58,
+          "blocking": 0,
+          "render": 18,
+          "top": {
+            "d": 17,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 6814,
+          "duration": 58,
+          "blocking": 0,
+          "render": 46,
+          "top": {
+            "d": 8,
+            "url": "/node_modules/.vite/deps/motion_react.js",
+            "fn": "processBatch",
+            "invoker": "FrameRequestCallback",
+            "type": "user-callback",
+            "layout": 0
+          }
+        },
+        {
+          "start": 9928,
+          "duration": 58,
+          "blocking": 0,
+          "render": 31,
+          "top": {
+            "d": 13,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 22250,
+          "duration": 58,
+          "blocking": 0,
+          "render": 37,
+          "top": {
+            "d": 11,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 23012,
+          "duration": 58,
+          "blocking": 0,
+          "render": 47,
+          "top": null
+        },
+        {
+          "start": 15333,
+          "duration": 57,
+          "blocking": 0,
+          "render": 49,
+          "top": null
+        },
+        {
+          "start": 9140,
+          "duration": 56,
+          "blocking": 3,
+          "render": 41,
+          "top": {
+            "d": 6,
+            "url": "/src/components/Shared/MobileStickyCTA.tsx",
+            "fn": "onScroll",
+            "invoker": "DOMWindow.onscroll",
+            "type": "event-listener",
+            "layout": 4
+          }
+        },
+        {
+          "start": 10322,
+          "duration": 56,
+          "blocking": 0,
+          "render": 30,
+          "top": {
+            "d": 9,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 10391,
+          "duration": 56,
+          "blocking": 0,
+          "render": 38,
+          "top": {
+            "d": 12,
+            "url": "/src/components/Shared/MobileStickyCTA.tsx",
+            "fn": "onScroll",
+            "invoker": "DOMWindow.onscroll",
+            "type": "event-listener",
+            "layout": 11
+          }
+        },
+        {
+          "start": 13920,
+          "duration": 56,
+          "blocking": 2,
+          "render": 43,
+          "top": {
+            "d": 9,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 5392,
+          "duration": 55,
+          "blocking": 0,
+          "render": 39,
+          "top": {
+            "d": 13,
+            "url": "/src/components/Shared/MobileStickyCTA.tsx",
+            "fn": "onScroll",
+            "invoker": "DOMWindow.onscroll",
+            "type": "event-listener",
+            "layout": 11
+          }
+        },
+        {
+          "start": 18562,
+          "duration": 55,
+          "blocking": 0,
+          "render": 18,
+          "top": {
+            "d": 23,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 21059,
+          "duration": 55,
+          "blocking": 0,
+          "render": 34,
+          "top": {
+            "d": 14,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 8703,
+          "duration": 54,
+          "blocking": 0,
+          "render": 28,
+          "top": {
+            "d": 11,
+            "url": "/node_modules/.vite/deps/motion_react.js",
+            "fn": "processBatch",
+            "invoker": "FrameRequestCallback",
+            "type": "user-callback",
+            "layout": 0
+          }
+        },
+        {
+          "start": 11000,
+          "duration": 54,
+          "blocking": 2,
+          "render": 17,
+          "top": {
+            "d": 34,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 13223,
+          "duration": 54,
+          "blocking": 0,
+          "render": 34,
+          "top": {
+            "d": 7,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 5047,
+          "duration": 53,
+          "blocking": 0,
+          "render": 6,
+          "top": {
+            "d": 20,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 5102,
+          "duration": 53,
+          "blocking": 2,
+          "render": 17,
+          "top": {
+            "d": 35,
+            "url": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+            "fn": "performWorkUntilDeadline",
+            "invoker": "MessagePort.onmessage",
+            "type": "event-listener",
+            "layout": 0
+          }
+        },
+        {
+          "start": 7209,
+          "duration": 53,
+          "blocking": 0,
+          "render": 30,
+          "top": null
+        },
+        {
+          "start": 8782,
+          "duration": 53,
+          "blocking": 0,
+          "render": 40,
+          "top": {
+            "d": 16,
+            "url": "/src/components/Shared/MobileStickyCTA.tsx",
+            "fn": "onScroll",
+            "invoker": "DOMWindow.onscroll",
+            "type": "event-listener",
+            "layout": 14
+          }
+        },
+        {
+          "start": 8326,
+          "duration": 52,
+          "blocking": 0,
+          "render": 43,
+          "top": null
+        },
+        {
+          "start": 8546,
+          "duration": 52,
+          "blocking": 0,
+          "render": 34,
+          "top": {
+            "d": 10,
+            "url": "/node_modules/.vite/deps/motion_react.js",
+            "fn": "processBatch",
+            "invoker": "FrameRequestCallback",
+            "type": "user-callback",
+            "layout": 0
+          }
+        },
+        {
+          "start": 4860,
+          "duration": 51,
+          "blocking": 0,
+          "render": 28,
+          "top": {
+            "d": 7,
+            "url": "/src/components/Shared/MobileStickyCTA.tsx",
+            "fn": "onScroll",
+            "invoker": "DOMWindow.onscroll",
+            "type": "event-listener",
+            "layout": 6
+          }
+        },
+        {
+          "start": 7509,
+          "duration": 51,
+          "blocking": 0,
+          "render": 21,
+          "top": null
+        },
+        {
+          "start": 14241,
+          "duration": 51,
+          "blocking": 0,
+          "render": 34,
+          "top": {
+            "d": 8,
+            "url": "/src/components/Shared/MobileStickyCTA.tsx",
+            "fn": "onScroll",
+            "invoker": "DOMWindow.onscroll",
+            "type": "event-listener",
+            "layout": 3
+          }
+        },
+        {
+          "start": 18795,
+          "duration": 51,
+          "blocking": 0,
+          "render": 37,
+          "top": {
+            "d": 8,
+            "url": "/src/components/Shared/MobileStickyCTA.tsx",
+            "fn": "onScroll",
+            "invoker": "DOMWindow.onscroll",
+            "type": "event-listener",
+            "layout": 7
+          }
+        },
+        {
+          "start": 20410,
+          "duration": 51,
+          "blocking": 1,
+          "render": 51,
+          "top": null
+        },
+        {
+          "start": 22664,
+          "duration": 51,
+          "blocking": 0,
+          "render": 39,
+          "top": {
+            "d": 10,
+            "url": "/src/components/Shared/MobileStickyCTA.tsx",
+            "fn": "onScroll",
+            "invoker": "DOMWindow.onscroll",
+            "type": "event-listener",
+            "layout": 10
+          }
+        }
+      ]
+    }
+  ]
+}

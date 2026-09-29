@@ -1,0 +1,1123 @@
+{
+  "console": {
+    "390": {
+      "msgs": [],
+      "failed": []
+    },
+    "1280": {
+      "msgs": [
+        "[scroll] warning: [.WebGL-0x2de4053d5e00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+        "[scroll] warning: [.WebGL-0x2de4053d5e00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+        "[scroll] warning: [.WebGL-0x2de4053d5e00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+        "[scroll] warning: [.WebGL-0x2de4053d5e00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)"
+      ],
+      "failed": []
+    },
+    "1440": {
+      "msgs": [],
+      "failed": []
+    },
+    "resizeCar": {
+      "carBefore": "translate3d(365.1px, 1741.8px, 0px)",
+      "carAfter": "translate3d(365.7px, 1745.6px, 0px)"
+    }
+  },
+  "leaks": {
+    "1440-contactTop0": {
+      "sectionTop": -3606,
+      "sectionBottom": 162,
+      "contactTop": 227,
+      "odo": {
+        "top": -290,
+        "bottom": -238,
+        "left": 1220,
+        "right": 1340,
+        "opacity": 0,
+        "cls": "exp__odo is-away"
+      },
+      "coneFogLikeClasses": [
+        "exp__road exp__road--fog",
+        "exp__fog exp__fog--bed",
+        "exp__fog exp__fog--edge",
+        "exp__fog exp__fog--line"
+      ],
+      "visibleExpElements": [
+        {
+          "cls": "exp__road exp__road--fog",
+          "top": -3606,
+          "bottom": 162,
+          "left": 240,
+          "right": 1200,
+          "opacity": 1,
+          "insideSectionBox": true
+        },
+        {
+          "cls": "exp__car-layer",
+          "top": -3606,
+          "bottom": 162,
+          "left": 240,
+          "right": 1200,
+          "opacity": 1,
+          "insideSectionBox": true
+        },
+        {
+          "cls": "exp__stops",
+          "top": -3458,
+          "bottom": 162,
+          "left": 240,
+          "right": 1200,
+          "opacity": 1,
+          "insideSectionBox": true
+        },
+        {
+          "cls": "exp__stop exp__stop--right",
+          "top": -518,
+          "bottom": 42,
+          "left": 240,
+          "right": 1200,
+          "opacity": 1,
+          "insideSectionBox": true
+        }
+      ],
+      "shot": "C:\\portfolio-gabriel\\qa\\fb2b\\leak-1440-contactTop0.png"
+    },
+    "1440-contactTopNav": {
+      "sectionTop": -3606,
+      "sectionBottom": 162,
+      "contactTop": 227,
+      "odo": {
+        "top": -290,
+        "bottom": -238,
+        "left": 1220,
+        "right": 1340,
+        "opacity": 0,
+        "cls": "exp__odo is-away"
+      },
+      "coneFogLikeClasses": [
+        "exp__road exp__road--fog",
+        "exp__fog exp__fog--bed",
+        "exp__fog exp__fog--edge",
+        "exp__fog exp__fog--line"
+      ],
+      "visibleExpElements": [
+        {
+          "cls": "exp__road exp__road--fog",
+          "top": -3606,
+          "bottom": 162,
+          "left": 240,
+          "right": 1200,
+          "opacity": 1,
+          "insideSectionBox": true
+        },
+        {
+          "cls": "exp__car-layer",
+          "top": -3606,
+          "bottom": 162,
+          "left": 240,
+          "right": 1200,
+          "opacity": 1,
+          "insideSectionBox": true
+        },
+        {
+          "cls": "exp__stops",
+          "top": -3458,
+          "bottom": 162,
+          "left": 240,
+          "right": 1200,
+          "opacity": 1,
+          "insideSectionBox": true
+        },
+        {
+          "cls": "exp__stop exp__stop--right",
+          "top": -518,
+          "bottom": 42,
+          "left": 240,
+          "right": 1200,
+          "opacity": 1,
+          "insideSectionBox": true
+        }
+      ],
+      "shot": "C:\\portfolio-gabriel\\qa\\fb2b\\leak-1440-contactTopNav.png"
+    },
+    "1440-odoSweep": {
+      "visibleSamples": 15,
+      "worstNearContact": [
+        {
+          "scrollY": 9299,
+          "op": 1,
+          "top": 88,
+          "bottom": 140,
+          "secBottom": 740,
+          "contactTop": 805,
+          "lastCardBottom": 507,
+          "vh": 900
+        },
+        {
+          "scrollY": 9239,
+          "op": 1,
+          "top": 88,
+          "bottom": 140,
+          "secBottom": 800,
+          "contactTop": 865,
+          "lastCardBottom": 567,
+          "vh": 900
+        },
+        {
+          "scrollY": 9179,
+          "op": 1,
+          "top": 88,
+          "bottom": 140,
+          "secBottom": 860,
+          "contactTop": 925,
+          "lastCardBottom": 627,
+          "vh": 900
+        }
+      ],
+      "odoBelowLastCard": 0
+    },
+    "390-contactTop0": {
+      "sectionTop": -2976,
+      "sectionBottom": -40,
+      "contactTop": 0,
+      "odo": {
+        "top": -407,
+        "bottom": -371,
+        "left": 246,
+        "right": 374,
+        "opacity": 0,
+        "cls": "exp__odo is-away"
+      },
+      "coneFogLikeClasses": [
+        "exp__road exp__road--fog",
+        "exp__fog exp__fog--bed",
+        "exp__fog exp__fog--edge",
+        "exp__fog exp__fog--line"
+      ],
+      "visibleExpElements": [],
+      "shot": "C:\\portfolio-gabriel\\qa\\fb2b\\leak-390-contactTop0.png"
+    },
+    "390-contactTopNav": {
+      "sectionTop": -2904,
+      "sectionBottom": 32,
+      "contactTop": 72,
+      "odo": {
+        "top": -335,
+        "bottom": -299,
+        "left": 246,
+        "right": 374,
+        "opacity": 0,
+        "cls": "exp__odo is-away"
+      },
+      "coneFogLikeClasses": [
+        "exp__road exp__road--fog",
+        "exp__fog exp__fog--bed",
+        "exp__fog exp__fog--edge",
+        "exp__fog exp__fog--line"
+      ],
+      "visibleExpElements": [
+        {
+          "cls": "exp__road exp__road--fog",
+          "top": -2904,
+          "bottom": 32,
+          "left": 16,
+          "right": 374,
+          "opacity": 1,
+          "insideSectionBox": true
+        },
+        {
+          "cls": "exp__car-layer",
+          "top": -2904,
+          "bottom": 32,
+          "left": 16,
+          "right": 374,
+          "opacity": 1,
+          "insideSectionBox": true
+        },
+        {
+          "cls": "exp__stops",
+          "top": -2808,
+          "bottom": 32,
+          "left": 16,
+          "right": 374,
+          "opacity": 1,
+          "insideSectionBox": true
+        }
+      ],
+      "shot": "C:\\portfolio-gabriel\\qa\\fb2b\\leak-390-contactTopNav.png"
+    },
+    "390-odoSweep": {
+      "visibleSamples": 13,
+      "worstNearContact": [
+        {
+          "scrollY": 7927,
+          "op": 1,
+          "top": 76,
+          "bottom": 112,
+          "secBottom": 664,
+          "contactTop": 704,
+          "lastCardBottom": 503,
+          "vh": 844
+        },
+        {
+          "scrollY": 7867,
+          "op": 1,
+          "top": 76,
+          "bottom": 112,
+          "secBottom": 724,
+          "contactTop": 764,
+          "lastCardBottom": 563,
+          "vh": 844
+        },
+        {
+          "scrollY": 7807,
+          "op": 1,
+          "top": 76,
+          "bottom": 112,
+          "secBottom": 784,
+          "contactTop": 824,
+          "lastCardBottom": 623,
+          "vh": 844
+        }
+      ],
+      "odoBelowLastCard": 0
+    }
+  },
+  "odometer": {
+    "390": [
+      {
+        "at": 0.1,
+        "innerText": "2023",
+        "textContent": "2023",
+        "childCount": 1,
+        "descendants": [
+          {
+            "tag": "SPAN",
+            "cls": "exp__odo-year",
+            "text": "2023",
+            "display": "inline"
+          }
+        ],
+        "opacity": 1,
+        "cls": "exp__odo",
+        "rect": [
+          246,
+          76,
+          374,
+          112
+        ],
+        "trackAriaHidden": "true",
+        "overlapsCard": false,
+        "fontSize": "34px",
+        "zTrack": "1",
+        "shot": "C:\\portfolio-gabriel\\qa\\fb2b\\odo-390-10.png"
+      },
+      {
+        "at": 0.25,
+        "innerText": "2024",
+        "textContent": "2024",
+        "childCount": 1,
+        "descendants": [
+          {
+            "tag": "SPAN",
+            "cls": "exp__odo-year",
+            "text": "2024",
+            "display": "inline"
+          }
+        ],
+        "opacity": 1,
+        "cls": "exp__odo",
+        "rect": [
+          246,
+          76,
+          374,
+          112
+        ],
+        "trackAriaHidden": "true",
+        "overlapsCard": true,
+        "fontSize": "34px",
+        "zTrack": "1",
+        "shot": "C:\\portfolio-gabriel\\qa\\fb2b\\odo-390-25.png"
+      },
+      {
+        "at": 0.5,
+        "innerText": "2025",
+        "textContent": "2025",
+        "childCount": 1,
+        "descendants": [
+          {
+            "tag": "SPAN",
+            "cls": "exp__odo-year",
+            "text": "2025",
+            "display": "inline"
+          }
+        ],
+        "opacity": 1,
+        "cls": "exp__odo",
+        "rect": [
+          246,
+          76,
+          374,
+          112
+        ],
+        "trackAriaHidden": "true",
+        "overlapsCard": false,
+        "fontSize": "34px",
+        "zTrack": "1",
+        "shot": "C:\\portfolio-gabriel\\qa\\fb2b\\odo-390-50.png"
+      },
+      {
+        "at": 1,
+        "innerText": "2026",
+        "textContent": "2026",
+        "childCount": 1,
+        "descendants": [
+          {
+            "tag": "SPAN",
+            "cls": "exp__odo-year",
+            "text": "2026",
+            "display": "inline"
+          }
+        ],
+        "opacity": 1,
+        "cls": "exp__odo",
+        "rect": [
+          246,
+          76,
+          374,
+          112
+        ],
+        "trackAriaHidden": "true",
+        "overlapsCard": true,
+        "fontSize": "34px",
+        "zTrack": "1",
+        "shot": "C:\\portfolio-gabriel\\qa\\fb2b\\odo-390-100.png"
+      }
+    ],
+    "1280": [
+      {
+        "at": 0.1,
+        "innerText": "2023",
+        "textContent": "2023",
+        "childCount": 1,
+        "descendants": [
+          {
+            "tag": "SPAN",
+            "cls": "exp__odo-year",
+            "text": "2023",
+            "display": "inline"
+          }
+        ],
+        "opacity": 1,
+        "cls": "exp__odo",
+        "rect": [
+          1140,
+          88,
+          1260,
+          134
+        ],
+        "trackAriaHidden": "true",
+        "overlapsCard": false,
+        "fontSize": "46.08px",
+        "zTrack": "5",
+        "shot": "C:\\portfolio-gabriel\\qa\\fb2b\\odo-1280-10.png"
+      },
+      {
+        "at": 0.25,
+        "innerText": "2024",
+        "textContent": "2024",
+        "childCount": 1,
+        "descendants": [
+          {
+            "tag": "SPAN",
+            "cls": "exp__odo-year",
+            "text": "2024",
+            "display": "inline"
+          }
+        ],
+        "opacity": 1,
+        "cls": "exp__odo",
+        "rect": [
+          1140,
+          88,
+          1260,
+          134
+        ],
+        "trackAriaHidden": "true",
+        "overlapsCard": false,
+        "fontSize": "46.08px",
+        "zTrack": "5",
+        "shot": "C:\\portfolio-gabriel\\qa\\fb2b\\odo-1280-25.png"
+      },
+      {
+        "at": 0.5,
+        "innerText": "2025",
+        "textContent": "2025",
+        "childCount": 1,
+        "descendants": [
+          {
+            "tag": "SPAN",
+            "cls": "exp__odo-year",
+            "text": "2025",
+            "display": "inline"
+          }
+        ],
+        "opacity": 1,
+        "cls": "exp__odo",
+        "rect": [
+          1140,
+          88,
+          1260,
+          134
+        ],
+        "trackAriaHidden": "true",
+        "overlapsCard": false,
+        "fontSize": "46.08px",
+        "zTrack": "5",
+        "shot": "C:\\portfolio-gabriel\\qa\\fb2b\\odo-1280-50.png"
+      },
+      {
+        "at": 1,
+        "innerText": "2026",
+        "textContent": "2026",
+        "childCount": 1,
+        "descendants": [
+          {
+            "tag": "SPAN",
+            "cls": "exp__odo-year",
+            "text": "2026",
+            "display": "inline"
+          }
+        ],
+        "opacity": 1,
+        "cls": "exp__odo",
+        "rect": [
+          1140,
+          88,
+          1260,
+          134
+        ],
+        "trackAriaHidden": "true",
+        "overlapsCard": false,
+        "fontSize": "46.08px",
+        "zTrack": "5",
+        "shot": "C:\\portfolio-gabriel\\qa\\fb2b\\odo-1280-100.png"
+      }
+    ],
+    "1440": [
+      {
+        "at": 0.1,
+        "innerText": "2023",
+        "textContent": "2023",
+        "childCount": 1,
+        "descendants": [
+          {
+            "tag": "SPAN",
+            "cls": "exp__odo-year",
+            "text": "2023",
+            "display": "inline"
+          }
+        ],
+        "opacity": 1,
+        "cls": "exp__odo",
+        "rect": [
+          1220,
+          88,
+          1340,
+          140
+        ],
+        "trackAriaHidden": "true",
+        "overlapsCard": false,
+        "fontSize": "51.84px",
+        "zTrack": "5",
+        "shot": "C:\\portfolio-gabriel\\qa\\fb2b\\odo-1440-10.png"
+      },
+      {
+        "at": 0.25,
+        "innerText": "2024",
+        "textContent": "2024",
+        "childCount": 1,
+        "descendants": [
+          {
+            "tag": "SPAN",
+            "cls": "exp__odo-year",
+            "text": "2024",
+            "display": "inline"
+          }
+        ],
+        "opacity": 1,
+        "cls": "exp__odo",
+        "rect": [
+          1220,
+          88,
+          1340,
+          140
+        ],
+        "trackAriaHidden": "true",
+        "overlapsCard": false,
+        "fontSize": "51.84px",
+        "zTrack": "5",
+        "shot": "C:\\portfolio-gabriel\\qa\\fb2b\\odo-1440-25.png"
+      },
+      {
+        "at": 0.5,
+        "innerText": "2025",
+        "textContent": "2025",
+        "childCount": 1,
+        "descendants": [
+          {
+            "tag": "SPAN",
+            "cls": "exp__odo-year",
+            "text": "2025",
+            "display": "inline"
+          }
+        ],
+        "opacity": 1,
+        "cls": "exp__odo",
+        "rect": [
+          1220,
+          88,
+          1340,
+          140
+        ],
+        "trackAriaHidden": "true",
+        "overlapsCard": false,
+        "fontSize": "51.84px",
+        "zTrack": "5",
+        "shot": "C:\\portfolio-gabriel\\qa\\fb2b\\odo-1440-50.png"
+      },
+      {
+        "at": 1,
+        "innerText": "2026",
+        "textContent": "2026",
+        "childCount": 1,
+        "descendants": [
+          {
+            "tag": "SPAN",
+            "cls": "exp__odo-year",
+            "text": "2026",
+            "display": "inline"
+          }
+        ],
+        "opacity": 1,
+        "cls": "exp__odo",
+        "rect": [
+          1220,
+          88,
+          1340,
+          140
+        ],
+        "trackAriaHidden": "true",
+        "overlapsCard": false,
+        "fontSize": "51.84px",
+        "zTrack": "5",
+        "shot": "C:\\portfolio-gabriel\\qa\\fb2b\\odo-1440-100.png"
+      }
+    ]
+  },
+  "d20": {
+    "stop1Centered": {
+      "cls": "exp__d20 exp__d20--above",
+      "opacity": 1,
+      "visibility": "visible",
+      "textBox": [
+        94,
+        182,
+        372,
+        239
+      ],
+      "glyphBox": [
+        94,
+        181,
+        343,
+        239
+      ],
+      "lineCount": 6,
+      "laneWidth": 18,
+      "edgeHalf": 10,
+      "roadXRangeAtTextRows": [
+        66,
+        66
+      ],
+      "horizontalGapToAsphaltPx": 18,
+      "gapMeasuredAtY": 192,
+      "cardTop": 271,
+      "cardLeft": 96,
+      "verticalGapTextBoxToCardPx": 31.9,
+      "verticalGapGlyphsToCardPx": 31.8,
+      "textRightEdgeToViewportPx": 46.8,
+      "textOverlapsCardHoriz": true,
+      "lead": [
+        82,
+        247,
+        83,
+        402
+      ],
+      "viewportTopToGlyphTop": 181,
+      "shot": "C:\\portfolio-gabriel\\qa\\fb2b\\d20-390-stop1-centered.png"
+    },
+    "sectionTop": {
+      "cls": "exp__d20 exp__d20--above",
+      "opacity": 1,
+      "visibility": "visible",
+      "textBox": [
+        94,
+        266,
+        372,
+        323
+      ],
+      "glyphBox": [
+        94,
+        265,
+        343,
+        323
+      ],
+      "lineCount": 6,
+      "laneWidth": 18,
+      "edgeHalf": 10,
+      "roadXRangeAtTextRows": [
+        66,
+        66
+      ],
+      "horizontalGapToAsphaltPx": 18,
+      "gapMeasuredAtY": 276,
+      "cardTop": 355,
+      "cardLeft": 96,
+      "verticalGapTextBoxToCardPx": 31.9,
+      "verticalGapGlyphsToCardPx": 31.8,
+      "textRightEdgeToViewportPx": 46.8,
+      "textOverlapsCardHoriz": true,
+      "lead": [
+        82,
+        331,
+        83,
+        486
+      ],
+      "viewportTopToGlyphTop": 265,
+      "shot": "C:\\portfolio-gabriel\\qa\\fb2b\\d20-390-section-top.png"
+    }
+  },
+  "parking": [
+    {
+      "id": "exp-principia",
+      "carCenterY": 399.8,
+      "kmY": 399.9,
+      "dyCarToKm": -0.2,
+      "dxCarToKmLine": -27.5,
+      "cardCenterY": 399.7,
+      "viewportCenterY": 400,
+      "isLit": true,
+      "kmText": "2023",
+      "kmOpacity": "1",
+      "shot": "C:\\portfolio-gabriel\\qa\\fb2b\\park-1280-1-exp-principia.png"
+    },
+    {
+      "id": "exp-olympic-club",
+      "carCenterY": 399.8,
+      "kmY": 399.9,
+      "dyCarToKm": -0.2,
+      "dxCarToKmLine": 27.5,
+      "cardCenterY": 399.8,
+      "viewportCenterY": 400,
+      "isLit": true,
+      "kmText": "2024 · Salvador",
+      "kmOpacity": "1",
+      "shot": "C:\\portfolio-gabriel\\qa\\fb2b\\park-1280-2-exp-olympic-club.png"
+    },
+    {
+      "id": "exp-estudar",
+      "carCenterY": 399.8,
+      "kmY": 399.9,
+      "dyCarToKm": -0.2,
+      "dxCarToKmLine": -27.5,
+      "cardCenterY": 399.7,
+      "viewportCenterY": 400,
+      "isLit": true,
+      "kmText": "2025",
+      "kmOpacity": "1",
+      "shot": "C:\\portfolio-gabriel\\qa\\fb2b\\park-1280-3-exp-estudar.png"
+    },
+    {
+      "id": "exp-fintech-rct",
+      "carCenterY": 399.8,
+      "kmY": 399.9,
+      "dyCarToKm": -0.2,
+      "dxCarToKmLine": 27.5,
+      "cardCenterY": 399.7,
+      "viewportCenterY": 400,
+      "isLit": true,
+      "kmText": "2025",
+      "kmOpacity": "1",
+      "shot": "C:\\portfolio-gabriel\\qa\\fb2b\\park-1280-4-exp-fintech-rct.png"
+    },
+    {
+      "id": "exp-gsat",
+      "carCenterY": 399.8,
+      "kmY": 399.9,
+      "dyCarToKm": -0.2,
+      "dxCarToKmLine": -27.5,
+      "cardCenterY": 399.7,
+      "viewportCenterY": 400,
+      "isLit": true,
+      "kmText": "2025",
+      "kmOpacity": "1",
+      "shot": "C:\\portfolio-gabriel\\qa\\fb2b\\park-1280-5-exp-gsat.png"
+    },
+    {
+      "id": "exp-hibeex",
+      "carCenterY": 399.8,
+      "kmY": 399.9,
+      "dyCarToKm": -0.2,
+      "dxCarToKmLine": 27.5,
+      "cardCenterY": 399.7,
+      "viewportCenterY": 400,
+      "isLit": true,
+      "kmText": "2026 · São Paulo",
+      "kmOpacity": "1",
+      "shot": "C:\\portfolio-gabriel\\qa\\fb2b\\park-1280-6-exp-hibeex.png"
+    }
+  ],
+  "titles": {
+    "390": {
+      "titles": [
+        {
+          "section": "background",
+          "text": "Where I Come From",
+          "hasEm": true,
+          "emText": "From",
+          "textAlign": "center",
+          "fontSize": "30px",
+          "fontWeight": "700",
+          "cls": "heading section-title",
+          "textCenterMinusViewportCenter": 0,
+          "boxCenterMinusViewportCenter": 0,
+          "nonTitleCaseWords": [],
+          "endsWithPeriod": false
+        },
+        {
+          "section": "work",
+          "text": "Cool Things",
+          "hasEm": true,
+          "emText": "Things",
+          "textAlign": "center",
+          "fontSize": "30px",
+          "fontWeight": "700",
+          "cls": "heading section-title",
+          "textCenterMinusViewportCenter": 0,
+          "boxCenterMinusViewportCenter": 0,
+          "nonTitleCaseWords": [],
+          "endsWithPeriod": false
+        },
+        {
+          "section": "numbers",
+          "text": "By the Numbers",
+          "hasEm": true,
+          "emText": "Numbers",
+          "textAlign": "center",
+          "fontSize": "30px",
+          "fontWeight": "700",
+          "cls": "section-title",
+          "textCenterMinusViewportCenter": 0,
+          "boxCenterMinusViewportCenter": 0,
+          "nonTitleCaseWords": [],
+          "endsWithPeriod": false
+        },
+        {
+          "section": "research",
+          "text": "Research Papers",
+          "hasEm": true,
+          "emText": "Papers",
+          "textAlign": "center",
+          "fontSize": "30px",
+          "fontWeight": "700",
+          "cls": "heading section-title",
+          "textCenterMinusViewportCenter": 0,
+          "boxCenterMinusViewportCenter": 0,
+          "nonTitleCaseWords": [],
+          "endsWithPeriod": false
+        },
+        {
+          "section": "work-experience",
+          "text": "Professional Experience",
+          "hasEm": true,
+          "emText": "Experience",
+          "textAlign": "center",
+          "fontSize": "30px",
+          "fontWeight": "700",
+          "cls": "section-title",
+          "textCenterMinusViewportCenter": 0,
+          "boxCenterMinusViewportCenter": 0,
+          "nonTitleCaseWords": [],
+          "endsWithPeriod": false
+        },
+        {
+          "section": "contact",
+          "text": "Let's Talk",
+          "hasEm": true,
+          "emText": "Talk",
+          "textAlign": "center",
+          "fontSize": "30px",
+          "fontWeight": "700",
+          "cls": "section-title contact-section__title",
+          "textCenterMinusViewportCenter": 0,
+          "boxCenterMinusViewportCenter": 0,
+          "nonTitleCaseWords": [],
+          "endsWithPeriod": false
+        }
+      ],
+      "otherH2InMain": [],
+      "workCards": [
+        {
+          "heading": "H3",
+          "text": "HIBEEX"
+        },
+        {
+          "heading": "H3",
+          "text": "Projeto Candela"
+        },
+        {
+          "heading": "H3",
+          "text": "39 Olympiad Medals"
+        },
+        {
+          "heading": "H3",
+          "text": "GSAT Education"
+        }
+      ],
+      "workHeadings": [
+        "H2:Cool Things",
+        "H3:HIBEEX",
+        "H3:Projeto Candela",
+        "H3:39 Olympiad Medals",
+        "H3:GSAT Education"
+      ]
+    },
+    "1280": {
+      "titles": [
+        {
+          "section": "background",
+          "text": "Where I Come From",
+          "hasEm": true,
+          "emText": "From",
+          "textAlign": "center",
+          "fontSize": "48px",
+          "fontWeight": "700",
+          "cls": "heading section-title",
+          "textCenterMinusViewportCenter": 0,
+          "boxCenterMinusViewportCenter": 0,
+          "nonTitleCaseWords": [],
+          "endsWithPeriod": false
+        },
+        {
+          "section": "work",
+          "text": "Cool Things",
+          "hasEm": true,
+          "emText": "Things",
+          "textAlign": "center",
+          "fontSize": "48px",
+          "fontWeight": "700",
+          "cls": "heading section-title",
+          "textCenterMinusViewportCenter": 0,
+          "boxCenterMinusViewportCenter": 0,
+          "nonTitleCaseWords": [],
+          "endsWithPeriod": false
+        },
+        {
+          "section": "numbers",
+          "text": "By the Numbers",
+          "hasEm": true,
+          "emText": "Numbers",
+          "textAlign": "center",
+          "fontSize": "48px",
+          "fontWeight": "700",
+          "cls": "section-title",
+          "textCenterMinusViewportCenter": 0,
+          "boxCenterMinusViewportCenter": 0,
+          "nonTitleCaseWords": [],
+          "endsWithPeriod": false
+        },
+        {
+          "section": "research",
+          "text": "Research Papers",
+          "hasEm": true,
+          "emText": "Papers",
+          "textAlign": "center",
+          "fontSize": "48px",
+          "fontWeight": "700",
+          "cls": "heading section-title",
+          "textCenterMinusViewportCenter": 0,
+          "boxCenterMinusViewportCenter": 0,
+          "nonTitleCaseWords": [],
+          "endsWithPeriod": false
+        },
+        {
+          "section": "work-experience",
+          "text": "Professional Experience",
+          "hasEm": true,
+          "emText": "Experience",
+          "textAlign": "center",
+          "fontSize": "48px",
+          "fontWeight": "700",
+          "cls": "section-title",
+          "textCenterMinusViewportCenter": 0,
+          "boxCenterMinusViewportCenter": 0,
+          "nonTitleCaseWords": [],
+          "endsWithPeriod": false
+        },
+        {
+          "section": "contact",
+          "text": "Let's Talk",
+          "hasEm": true,
+          "emText": "Talk",
+          "textAlign": "center",
+          "fontSize": "48px",
+          "fontWeight": "700",
+          "cls": "section-title contact-section__title",
+          "textCenterMinusViewportCenter": -275,
+          "boxCenterMinusViewportCenter": -275,
+          "nonTitleCaseWords": [],
+          "endsWithPeriod": false
+        }
+      ],
+      "otherH2InMain": [],
+      "workCards": [
+        {
+          "heading": "H3",
+          "text": "HIBEEX"
+        },
+        {
+          "heading": "H3",
+          "text": "Projeto Candela"
+        },
+        {
+          "heading": "H3",
+          "text": "39 Olympiad Medals"
+        },
+        {
+          "heading": "H3",
+          "text": "GSAT Education"
+        }
+      ],
+      "workHeadings": [
+        "H2:Cool Things",
+        "H3:HIBEEX",
+        "H3:Projeto Candela",
+        "H3:39 Olympiad Medals",
+        "H3:GSAT Education"
+      ]
+    },
+    "1440": {
+      "titles": [
+        {
+          "section": "background",
+          "text": "Where I Come From",
+          "hasEm": true,
+          "emText": "From",
+          "textAlign": "center",
+          "fontSize": "48px",
+          "fontWeight": "700",
+          "cls": "heading section-title",
+          "textCenterMinusViewportCenter": 0,
+          "boxCenterMinusViewportCenter": 0,
+          "nonTitleCaseWords": [],
+          "endsWithPeriod": false
+        },
+        {
+          "section": "work",
+          "text": "Cool Things",
+          "hasEm": true,
+          "emText": "Things",
+          "textAlign": "center",
+          "fontSize": "48px",
+          "fontWeight": "700",
+          "cls": "heading section-title",
+          "textCenterMinusViewportCenter": 0,
+          "boxCenterMinusViewportCenter": 0,
+          "nonTitleCaseWords": [],
+          "endsWithPeriod": false
+        },
+        {
+          "section": "numbers",
+          "text": "By the Numbers",
+          "hasEm": true,
+          "emText": "Numbers",
+          "textAlign": "center",
+          "fontSize": "48px",
+          "fontWeight": "700",
+          "cls": "section-title",
+          "textCenterMinusViewportCenter": 0,
+          "boxCenterMinusViewportCenter": 0,
+          "nonTitleCaseWords": [],
+          "endsWithPeriod": false
+        },
+        {
+          "section": "research",
+          "text": "Research Papers",
+          "hasEm": true,
+          "emText": "Papers",
+          "textAlign": "center",
+          "fontSize": "48px",
+          "fontWeight": "700",
+          "cls": "heading section-title",
+          "textCenterMinusViewportCenter": 0,
+          "boxCenterMinusViewportCenter": 0,
+          "nonTitleCaseWords": [],
+          "endsWithPeriod": false
+        },
+        {
+          "section": "work-experience",
+          "text": "Professional Experience",
+          "hasEm": true,
+          "emText": "Experience",
+          "textAlign": "center",
+          "fontSize": "48px",
+          "fontWeight": "700",
+          "cls": "section-title",
+          "textCenterMinusViewportCenter": 0,
+          "boxCenterMinusViewportCenter": 0,
+          "nonTitleCaseWords": [],
+          "endsWithPeriod": false
+        },
+        {
+          "section": "contact",
+          "text": "Let's Talk",
+          "hasEm": true,
+          "emText": "Talk",
+          "textAlign": "center",
+          "fontSize": "48px",
+          "fontWeight": "700",
+          "cls": "section-title contact-section__title",
+          "textCenterMinusViewportCenter": -275,
+          "boxCenterMinusViewportCenter": -275,
+          "nonTitleCaseWords": [],
+          "endsWithPeriod": false
+        }
+      ],
+      "otherH2InMain": [],
+      "workCards": [
+        {
+          "heading": "H3",
+          "text": "HIBEEX"
+        },
+        {
+          "heading": "H3",
+          "text": "Projeto Candela"
+        },
+        {
+          "heading": "H3",
+          "text": "39 Olympiad Medals"
+        },
+        {
+          "heading": "H3",
+          "text": "GSAT Education"
+        }
+      ],
+      "workHeadings": [
+        "H2:Cool Things",
+        "H3:HIBEEX",
+        "H3:Projeto Candela",
+        "H3:39 Olympiad Medals",
+        "H3:GSAT Education"
+      ]
+    }
+  }
+}

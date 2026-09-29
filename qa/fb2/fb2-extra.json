@@ -1,0 +1,101 @@
+{
+  "390": {
+    "contact": {
+      "contactH2": [
+        {
+          "cls": "section-title contact-section__title",
+          "html": "Let's <em>talk</em>"
+        }
+      ],
+      "clock": 0,
+      "eyebrow": 0
+    },
+    "note": {
+      "noteRect": {
+        "l": 76,
+        "r": 372,
+        "t": 359,
+        "b": 397
+      },
+      "roadXRangeAtNote": [
+        66,
+        66
+      ],
+      "half": 9.99841168996188,
+      "gapNoteLeftToAsphaltRight": 0,
+      "gapNoteBottomToCard1Top": 9.9,
+      "noteRightVsViewport": 18,
+      "odoOrgRect": {
+        "l": 262,
+        "r": 374,
+        "t": 177
+      }
+    }
+  },
+  "1280": {
+    "contact": {
+      "contactH2": [
+        {
+          "cls": "section-title contact-section__title",
+          "html": "Let's <em>talk</em>"
+        }
+      ],
+      "clock": 0,
+      "eyebrow": 0
+    },
+    "note": {
+      "noteRect": {
+        "l": 634,
+        "r": 864,
+        "t": 501,
+        "b": 562
+      },
+      "roadXRangeAtNote": [
+        582,
+        582
+      ],
+      "half": 24,
+      "gapNoteLeftToAsphaltRight": 28,
+      "gapNoteBottomToCard1Top": -92,
+      "noteRightVsViewport": 416,
+      "odoOrgRect": {
+        "l": 1148,
+        "r": 1260,
+        "t": 235
+      }
+    }
+  },
+  "1440": {
+    "contact": {
+      "contactH2": [
+        {
+          "cls": "section-title contact-section__title",
+          "html": "Let's <em>talk</em>"
+        }
+      ],
+      "clock": 0,
+      "eyebrow": 0
+    },
+    "note": {
+      "noteRect": {
+        "l": 714,
+        "r": 944,
+        "t": 501,
+        "b": 562
+      },
+      "roadXRangeAtNote": [
+        662,
+        662
+      ],
+      "half": 24,
+      "gapNoteLeftToAsphaltRight": 28,
+      "gapNoteBottomToCard1Top": -92,
+      "noteRightVsViewport": 496,
+      "odoOrgRect": {
+        "l": 1228,
+        "r": 1340,
+        "t": 235
+      }
+    }
+  }
+}

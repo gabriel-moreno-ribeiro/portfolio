@@ -1,0 +1,24 @@
+{
+  "generatedAt": "2026-09-26T16:38:27.593Z",
+  "baseUrl": "http://localhost:5173",
+  "outDir": "C:\\portfolio-gabriel\\qa\\fb2b-cpu",
+  "playwright": "1.61.1",
+  "viewports": [],
+  "notes": [],
+  "cpu": {
+    "390": {
+      "framesOver50ms": 28,
+      "longestMs": 967,
+      "entryType": "long-animation-frame",
+      "rafFps": 19,
+      "rafMax": 967
+    },
+    "1440": {
+      "framesOver50ms": 28,
+      "longestMs": 898,
+      "entryType": "long-animation-frame",
+      "rafFps": 16,
+      "rafMax": 933
+    }
+  }
+}

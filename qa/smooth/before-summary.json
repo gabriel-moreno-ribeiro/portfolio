@@ -1,0 +1,122 @@
+{
+  "1440-warm": {
+    "over50": 23,
+    "over100": 10,
+    "maxFrame": 2039,
+    "fps": 5.8,
+    "blocking": 4314,
+    "forced": 144,
+    "rafGapsOver50": 59,
+    "perRun": [
+      {
+        "over50": 24,
+        "maxFrame": 2039,
+        "fps": 5.8,
+        "blocking": 4314
+      },
+      {
+        "over50": 13,
+        "maxFrame": 158,
+        "fps": 12,
+        "blocking": 404
+      },
+      {
+        "over50": 23,
+        "maxFrame": 2322,
+        "fps": 5,
+        "blocking": 7025
+      }
+    ],
+    "errors": []
+  },
+  "1440-cold": {
+    "over50": 43,
+    "over100": 23,
+    "maxFrame": 3705,
+    "fps": 6.1,
+    "blocking": 8041,
+    "forced": 1420,
+    "rafGapsOver50": 57,
+    "perRun": [
+      {
+        "over50": 50,
+        "maxFrame": 3705,
+        "fps": 5.6,
+        "blocking": 8041
+      },
+      {
+        "over50": 34,
+        "maxFrame": 1404,
+        "fps": 13,
+        "blocking": 5038
+      },
+      {
+        "over50": 43,
+        "maxFrame": 4558,
+        "fps": 6.1,
+        "blocking": 9874
+      }
+    ],
+    "errors": []
+  },
+  "390-warm": {
+    "over50": 19,
+    "over100": 8,
+    "maxFrame": 2724,
+    "fps": 11.9,
+    "blocking": 6936,
+    "forced": 42,
+    "rafGapsOver50": 32,
+    "perRun": [
+      {
+        "over50": 19,
+        "maxFrame": 2334,
+        "fps": 15.8,
+        "blocking": 4727
+      },
+      {
+        "over50": 22,
+        "maxFrame": 2724,
+        "fps": 11.1,
+        "blocking": 7542
+      },
+      {
+        "over50": 19,
+        "maxFrame": 5769,
+        "fps": 11.9,
+        "blocking": 6936
+      }
+    ],
+    "errors": []
+  },
+  "390-cold": {
+    "over50": 30,
+    "over100": 15,
+    "maxFrame": 1051,
+    "fps": 12.5,
+    "blocking": 2752,
+    "forced": 1030,
+    "rafGapsOver50": 42,
+    "perRun": [
+      {
+        "over50": 25,
+        "maxFrame": 1051,
+        "fps": 19.9,
+        "blocking": 2248
+      },
+      {
+        "over50": 45,
+        "maxFrame": 807,
+        "fps": 12.5,
+        "blocking": 2752
+      },
+      {
+        "over50": 30,
+        "maxFrame": 2224,
+        "fps": 12,
+        "blocking": 4343
+      }
+    ],
+    "errors": []
+  }
+}

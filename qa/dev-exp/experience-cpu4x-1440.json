@@ -4,88 +4,88 @@
   "entryType": "long-animation-frame",
   "selector": "#work-experience",
   "geometry": {
-    "sectionTop": 6233,
-    "sectionHeight": 4041,
+    "sectionTop": 6786,
+    "sectionHeight": 4040,
     "innerHeight": 900,
-    "docMaxScroll": 10197,
-    "scrollStart": 6233,
-    "scrollEnd": 9374
+    "docMaxScroll": 10655,
+    "scrollStart": 6786,
+    "scrollEnd": 9926
   },
   "scrollSteps": 40,
   "stepDelayMs": 100,
-  "observedWindowMs": 6905,
-  "framesOver50ms": 10,
-  "framesOver100ms": 5,
-  "longestMs": 794,
-  "totalBlockingMs": 1409,
+  "observedWindowMs": 6975,
+  "framesOver50ms": 20,
+  "framesOver100ms": 7,
+  "longestMs": 330,
+  "totalBlockingMs": 1060,
   "top10": [
     {
       "name": "long-animation-frame",
-      "start": 4289,
-      "duration": 794,
-      "blocking": 659
+      "start": 6017,
+      "duration": 330,
+      "blocking": 143
     },
     {
       "name": "long-animation-frame",
-      "start": 3877,
-      "duration": 297,
-      "blocking": 97
+      "start": 5553,
+      "duration": 275,
+      "blocking": 223
     },
     {
       "name": "long-animation-frame",
-      "start": 3577,
-      "duration": 289,
-      "blocking": 230
+      "start": 4441,
+      "duration": 146,
+      "blocking": 95
     },
     {
       "name": "long-animation-frame",
-      "start": 3360,
-      "duration": 124,
-      "blocking": 18
+      "start": 6723,
+      "duration": 133,
+      "blocking": 41
     },
     {
       "name": "long-animation-frame",
-      "start": 5201,
-      "duration": 121,
-      "blocking": 62
+      "start": 5843,
+      "duration": 114,
+      "blocking": 45
     },
     {
       "name": "long-animation-frame",
-      "start": 3248,
-      "duration": 62,
+      "start": 5121,
+      "duration": 103,
+      "blocking": 33
+    },
+    {
+      "name": "long-animation-frame",
+      "start": 6401,
+      "duration": 103,
+      "blocking": 16
+    },
+    {
+      "name": "long-animation-frame",
+      "start": 4968,
+      "duration": 96,
       "blocking": 0
     },
     {
       "name": "long-animation-frame",
-      "start": 4188,
-      "duration": 60,
-      "blocking": 0
+      "start": 6621,
+      "duration": 83,
+      "blocking": 25
     },
     {
       "name": "long-animation-frame",
-      "start": 5548,
-      "duration": 56,
-      "blocking": 6
-    },
-    {
-      "name": "long-animation-frame",
-      "start": 3506,
-      "duration": 55,
-      "blocking": 0
-    },
-    {
-      "name": "long-animation-frame",
-      "start": 5139,
-      "duration": 51,
-      "blocking": 0
+      "start": 4623,
+      "duration": 81,
+      "blocking": 27
     }
   ],
   "rafStats": {
-    "frames": 247,
-    "framesOver50ms": 9,
-    "maxFrameMs": 800,
+    "frames": 230,
+    "framesOver50ms": 21,
+    "maxFrameMs": 333,
     "medianFrameMs": 17,
-    "p95FrameMs": 50,
-    "effectiveFps": 36
+    "p95FrameMs": 83,
+    "effectiveFps": 33
   }
 }

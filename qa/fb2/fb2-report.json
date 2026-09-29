@@ -1,0 +1,853 @@
+{
+  "390": {
+    "console": [
+      {
+        "level": "error",
+        "text": "[data] src/data/experience.json não passou no schema (2 problema(s)).\n  - 4.role: Too small: expected string to have >=1 characters\n  - 5.role: Too small: expected string to have >=1 characters\nO site segue com o JSON cru; corrija o arquivo.",
+        "url": "http://localhost:5173/src/lib/data/schemas.ts?t=1790429743867"
+      }
+    ],
+    "failed": [],
+    "dom": {
+      "horizontalSkillsParent": 0,
+      "contactClock": 0,
+      "contactEyebrow": 0,
+      "expTitle": "Professional Experience",
+      "expTitleEndsWithDot": false,
+      "skillsCaption": {
+        "className": "main-text",
+        "text": "Some of the languages & tools I build with."
+      },
+      "headings": [
+        {
+          "tag": "H1",
+          "sectionId": "root",
+          "className": "hero-name",
+          "text": "Gabriel Moreno Ribeiro.",
+          "html": "Gabriel Moreno Ribeiro.",
+          "hasEm": false,
+          "sectionTitle": false,
+          "endsWithDot": true,
+          "rendered": true
+        },
+        {
+          "tag": "H2",
+          "sectionId": "background",
+          "className": "heading section-title",
+          "text": "Where I Come From",
+          "html": "Where I Come <em>From</em>",
+          "hasEm": true,
+          "sectionTitle": true,
+          "endsWithDot": false,
+          "rendered": true
+        },
+        {
+          "tag": "H2",
+          "sectionId": "work",
+          "className": "heading section-title",
+          "text": "Cool Things",
+          "html": "Cool <em>Things</em>",
+          "hasEm": true,
+          "sectionTitle": true,
+          "endsWithDot": false,
+          "rendered": true
+        },
+        {
+          "tag": "H2",
+          "sectionId": "numbers",
+          "className": "text-p section-title",
+          "text": "By the Numbers",
+          "html": "By the <em>Numbers</em>",
+          "hasEm": true,
+          "sectionTitle": true,
+          "endsWithDot": false,
+          "rendered": true
+        },
+        {
+          "tag": "H2",
+          "sectionId": "research",
+          "className": "heading section-title",
+          "text": "Research",
+          "html": "<em>Research</em>",
+          "hasEm": true,
+          "sectionTitle": true,
+          "endsWithDot": false,
+          "rendered": true
+        },
+        {
+          "tag": "H2",
+          "sectionId": "work-experience",
+          "className": "section-title",
+          "text": "Professional Experience",
+          "html": "Professional <em>Experience</em>",
+          "hasEm": true,
+          "sectionTitle": true,
+          "endsWithDot": false,
+          "rendered": true
+        },
+        {
+          "tag": "H2",
+          "sectionId": "contact",
+          "className": "section-title contact-section__title",
+          "text": "Let's talk",
+          "html": "Let's <em>talk</em>",
+          "hasEm": true,
+          "sectionTitle": true,
+          "endsWithDot": false,
+          "rendered": true
+        }
+      ],
+      "allH2": [
+        {
+          "className": "heading section-title",
+          "text": "Where I Come From",
+          "rendered": true
+        },
+        {
+          "className": "heading section-title",
+          "text": "Cool Things",
+          "rendered": true
+        },
+        {
+          "className": "",
+          "text": "HIBEEX",
+          "rendered": true
+        },
+        {
+          "className": "",
+          "text": "Projeto Candela",
+          "rendered": true
+        },
+        {
+          "className": "",
+          "text": "39 Olympiad Medals",
+          "rendered": true
+        },
+        {
+          "className": "",
+          "text": "GSAT Education",
+          "rendered": true
+        },
+        {
+          "className": "text-p section-title",
+          "text": "By the Numbers",
+          "rendered": true
+        },
+        {
+          "className": "heading section-title",
+          "text": "Research",
+          "rendered": true
+        },
+        {
+          "className": "section-title",
+          "text": "Professional Experience",
+          "rendered": true
+        },
+        {
+          "className": "section-title contact-section__title",
+          "text": "Let's talk",
+          "rendered": true
+        }
+      ]
+    },
+    "gaps": {
+      "asphaltHalfWidthPx": 10,
+      "svgRect": {
+        "x": 16,
+        "y": 0.25,
+        "width": 358,
+        "height": 3147.5,
+        "top": 0.25,
+        "right": 374,
+        "bottom": 3147.75,
+        "left": 16
+      },
+      "cards": [
+        {
+          "id": "exp-principia",
+          "liClass": "exp__stop exp__stop--left is-lit",
+          "side": "card-right-of-road",
+          "card": {
+            "left": 96,
+            "right": 374,
+            "topPage": 6022,
+            "h": 302
+          },
+          "roadXAtCenter": 66,
+          "gapAtCenterPx": 20,
+          "minGapOverCardHeightPx": 20,
+          "minEuclidGapPx": 20
+        },
+        {
+          "id": "exp-olympic-club",
+          "liClass": "exp__stop exp__stop--right",
+          "side": "card-right-of-road",
+          "card": {
+            "left": 96,
+            "right": 374,
+            "topPage": 6465,
+            "h": 256
+          },
+          "roadXAtCenter": 66,
+          "gapAtCenterPx": 20,
+          "minGapOverCardHeightPx": 20,
+          "minEuclidGapPx": 20
+        },
+        {
+          "id": "exp-estudar",
+          "liClass": "exp__stop exp__stop--left",
+          "side": "card-right-of-road",
+          "card": {
+            "left": 96,
+            "right": 374,
+            "topPage": 6896,
+            "h": 233
+          },
+          "roadXAtCenter": 66,
+          "gapAtCenterPx": 20,
+          "minGapOverCardHeightPx": 20,
+          "minEuclidGapPx": 20
+        },
+        {
+          "id": "exp-fintech-rct",
+          "liClass": "exp__stop exp__stop--right",
+          "side": "card-right-of-road",
+          "card": {
+            "left": 96,
+            "right": 374,
+            "topPage": 7292,
+            "h": 282
+          },
+          "roadXAtCenter": 66,
+          "gapAtCenterPx": 20,
+          "minGapOverCardHeightPx": 20,
+          "minEuclidGapPx": 20
+        },
+        {
+          "id": "exp-gsat",
+          "liClass": "exp__stop exp__stop--left",
+          "side": "card-right-of-road",
+          "card": {
+            "left": 96,
+            "right": 374,
+            "topPage": 7747,
+            "h": 211
+          },
+          "roadXAtCenter": 66,
+          "gapAtCenterPx": 20,
+          "minGapOverCardHeightPx": 20,
+          "minEuclidGapPx": 20
+        },
+        {
+          "id": "exp-hibeex",
+          "liClass": "exp__stop exp__stop--right",
+          "side": "card-right-of-road",
+          "card": {
+            "left": 96,
+            "right": 374,
+            "topPage": 8104,
+            "h": 338
+          },
+          "roadXAtCenter": 66,
+          "gapAtCenterPx": 20,
+          "minGapOverCardHeightPx": 20,
+          "minEuclidGapPx": 20
+        }
+      ]
+    },
+    "shots": [
+      "exp-390-stop1-exp-principia.png",
+      "exp-390-stop2-exp-olympic-club.png",
+      "exp-390-stop3-exp-estudar.png",
+      "exp-390-stop4-exp-fintech-rct.png",
+      "exp-390-stop5-exp-gsat.png",
+      "exp-390-stop6-exp-hibeex.png"
+    ]
+  },
+  "1280": {
+    "console": [
+      {
+        "level": "error",
+        "text": "[data] src/data/experience.json não passou no schema (2 problema(s)).\n  - 4.role: Too small: expected string to have >=1 characters\n  - 5.role: Too small: expected string to have >=1 characters\nO site segue com o JSON cru; corrija o arquivo.",
+        "url": "http://localhost:5173/src/lib/data/schemas.ts?t=1790429743867"
+      },
+      {
+        "level": "warning",
+        "text": "[.WebGL-0x79f402a6a200]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+        "url": "http://localhost:5173/"
+      },
+      {
+        "level": "warning",
+        "text": "[.WebGL-0x79f402a6a200]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+        "url": "http://localhost:5173/"
+      },
+      {
+        "level": "warning",
+        "text": "[.WebGL-0x79f402a6a200]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+        "url": "http://localhost:5173/"
+      },
+      {
+        "level": "warning",
+        "text": "[.WebGL-0x79f402a6a200]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)",
+        "url": "http://localhost:5173/"
+      }
+    ],
+    "failed": [],
+    "dom": {
+      "horizontalSkillsParent": 0,
+      "contactClock": 0,
+      "contactEyebrow": 0,
+      "expTitle": "Professional Experience",
+      "expTitleEndsWithDot": false,
+      "skillsCaption": {
+        "className": "main-text",
+        "text": "Some of the languages & tools I build with."
+      },
+      "headings": [
+        {
+          "tag": "H1",
+          "sectionId": "root",
+          "className": "hero-name",
+          "text": "Gabriel Moreno Ribeiro.",
+          "html": "Gabriel Moreno Ribeiro.",
+          "hasEm": false,
+          "sectionTitle": false,
+          "endsWithDot": true,
+          "rendered": true
+        },
+        {
+          "tag": "H2",
+          "sectionId": "background",
+          "className": "heading section-title",
+          "text": "Where I Come From",
+          "html": "Where I Come <em>From</em>",
+          "hasEm": true,
+          "sectionTitle": true,
+          "endsWithDot": false,
+          "rendered": true
+        },
+        {
+          "tag": "H2",
+          "sectionId": "work",
+          "className": "heading section-title",
+          "text": "Cool Things",
+          "html": "Cool <em>Things</em>",
+          "hasEm": true,
+          "sectionTitle": true,
+          "endsWithDot": false,
+          "rendered": true
+        },
+        {
+          "tag": "H2",
+          "sectionId": "numbers",
+          "className": "text-p section-title",
+          "text": "By the Numbers",
+          "html": "By the <em>Numbers</em>",
+          "hasEm": true,
+          "sectionTitle": true,
+          "endsWithDot": false,
+          "rendered": true
+        },
+        {
+          "tag": "H2",
+          "sectionId": "research",
+          "className": "heading section-title",
+          "text": "Research",
+          "html": "<em>Research</em>",
+          "hasEm": true,
+          "sectionTitle": true,
+          "endsWithDot": false,
+          "rendered": true
+        },
+        {
+          "tag": "H2",
+          "sectionId": "work-experience",
+          "className": "section-title",
+          "text": "Professional Experience",
+          "html": "Professional <em>Experience</em>",
+          "hasEm": true,
+          "sectionTitle": true,
+          "endsWithDot": false,
+          "rendered": true
+        },
+        {
+          "tag": "H2",
+          "sectionId": "contact",
+          "className": "section-title contact-section__title",
+          "text": "Let's talk",
+          "html": "Let's <em>talk</em>",
+          "hasEm": true,
+          "sectionTitle": true,
+          "endsWithDot": false,
+          "rendered": true
+        }
+      ],
+      "allH2": [
+        {
+          "className": "heading section-title",
+          "text": "Where I Come From",
+          "rendered": true
+        },
+        {
+          "className": "heading section-title",
+          "text": "Cool Things",
+          "rendered": true
+        },
+        {
+          "className": "",
+          "text": "HIBEEX",
+          "rendered": true
+        },
+        {
+          "className": "",
+          "text": "Projeto Candela",
+          "rendered": true
+        },
+        {
+          "className": "",
+          "text": "39 Olympiad Medals",
+          "rendered": true
+        },
+        {
+          "className": "",
+          "text": "GSAT Education",
+          "rendered": true
+        },
+        {
+          "className": "text-p section-title",
+          "text": "By the Numbers",
+          "rendered": true
+        },
+        {
+          "className": "heading section-title",
+          "text": "Research",
+          "rendered": true
+        },
+        {
+          "className": "section-title",
+          "text": "Professional Experience",
+          "rendered": true
+        },
+        {
+          "className": "section-title contact-section__title",
+          "text": "Let's talk",
+          "rendered": true
+        }
+      ]
+    },
+    "gaps": {
+      "asphaltHalfWidthPx": 24,
+      "svgRect": {
+        "x": 160,
+        "y": 0.359375,
+        "width": 960,
+        "height": 3959.390625,
+        "top": 0.359375,
+        "right": 1120,
+        "bottom": 3959.75,
+        "left": 160
+      },
+      "cards": [
+        {
+          "id": "exp-principia",
+          "liClass": "exp__stop exp__stop--left is-lit",
+          "side": "card-left-of-road",
+          "card": {
+            "left": 160,
+            "right": 526,
+            "topPage": 6701,
+            "h": 300
+          },
+          "roadXAtCenter": 582,
+          "gapAtCenterPx": 32,
+          "minGapOverCardHeightPx": 32,
+          "minEuclidGapPx": 32
+        },
+        {
+          "id": "exp-olympic-club",
+          "liClass": "exp__stop exp__stop--right",
+          "side": "card-right-of-road",
+          "card": {
+            "left": 754,
+            "right": 1120,
+            "topPage": 7271,
+            "h": 279
+          },
+          "roadXAtCenter": 698,
+          "gapAtCenterPx": 32,
+          "minGapOverCardHeightPx": 32,
+          "minEuclidGapPx": 32
+        },
+        {
+          "id": "exp-estudar",
+          "liClass": "exp__stop exp__stop--left",
+          "side": "card-left-of-road",
+          "card": {
+            "left": 160,
+            "right": 526,
+            "topPage": 7845,
+            "h": 251
+          },
+          "roadXAtCenter": 582,
+          "gapAtCenterPx": 32,
+          "minGapOverCardHeightPx": 32,
+          "minEuclidGapPx": 32
+        },
+        {
+          "id": "exp-fintech-rct",
+          "liClass": "exp__stop exp__stop--right",
+          "side": "card-right-of-road",
+          "card": {
+            "left": 754,
+            "right": 1120,
+            "topPage": 8392,
+            "h": 278
+          },
+          "roadXAtCenter": 698,
+          "gapAtCenterPx": 32,
+          "minGapOverCardHeightPx": 32,
+          "minEuclidGapPx": 32
+        },
+        {
+          "id": "exp-gsat",
+          "liClass": "exp__stop exp__stop--left",
+          "side": "card-left-of-road",
+          "card": {
+            "left": 160,
+            "right": 526,
+            "topPage": 8988,
+            "h": 206
+          },
+          "roadXAtCenter": 582,
+          "gapAtCenterPx": 32,
+          "minGapOverCardHeightPx": 32,
+          "minEuclidGapPx": 32
+        },
+        {
+          "id": "exp-hibeex",
+          "liClass": "exp__stop exp__stop--right",
+          "side": "card-right-of-road",
+          "card": {
+            "left": 754,
+            "right": 1120,
+            "topPage": 9483,
+            "h": 335
+          },
+          "roadXAtCenter": 698,
+          "gapAtCenterPx": 32,
+          "minGapOverCardHeightPx": 32,
+          "minEuclidGapPx": 32
+        }
+      ]
+    },
+    "shots": [
+      "exp-1280-stop1-exp-principia.png",
+      "exp-1280-stop2-exp-olympic-club.png",
+      "exp-1280-stop3-exp-estudar.png",
+      "exp-1280-stop4-exp-fintech-rct.png",
+      "exp-1280-stop5-exp-gsat.png",
+      "exp-1280-stop6-exp-hibeex.png"
+    ]
+  },
+  "1440": {
+    "console": [
+      {
+        "level": "error",
+        "text": "[data] src/data/experience.json não passou no schema (2 problema(s)).\n  - 4.role: Too small: expected string to have >=1 characters\n  - 5.role: Too small: expected string to have >=1 characters\nO site segue com o JSON cru; corrija o arquivo.",
+        "url": "http://localhost:5173/src/lib/data/schemas.ts?t=1790429743867"
+      }
+    ],
+    "failed": [],
+    "dom": {
+      "horizontalSkillsParent": 0,
+      "contactClock": 0,
+      "contactEyebrow": 0,
+      "expTitle": "Professional Experience",
+      "expTitleEndsWithDot": false,
+      "skillsCaption": {
+        "className": "main-text",
+        "text": "Some of the languages & tools I build with."
+      },
+      "headings": [
+        {
+          "tag": "H1",
+          "sectionId": "root",
+          "className": "hero-name",
+          "text": "Gabriel Moreno Ribeiro.",
+          "html": "Gabriel Moreno Ribeiro.",
+          "hasEm": false,
+          "sectionTitle": false,
+          "endsWithDot": true,
+          "rendered": true
+        },
+        {
+          "tag": "H2",
+          "sectionId": "background",
+          "className": "heading section-title",
+          "text": "Where I Come From",
+          "html": "Where I Come <em>From</em>",
+          "hasEm": true,
+          "sectionTitle": true,
+          "endsWithDot": false,
+          "rendered": true
+        },
+        {
+          "tag": "H2",
+          "sectionId": "work",
+          "className": "heading section-title",
+          "text": "Cool Things",
+          "html": "Cool <em>Things</em>",
+          "hasEm": true,
+          "sectionTitle": true,
+          "endsWithDot": false,
+          "rendered": true
+        },
+        {
+          "tag": "H2",
+          "sectionId": "numbers",
+          "className": "text-p section-title",
+          "text": "By the Numbers",
+          "html": "By the <em>Numbers</em>",
+          "hasEm": true,
+          "sectionTitle": true,
+          "endsWithDot": false,
+          "rendered": true
+        },
+        {
+          "tag": "H2",
+          "sectionId": "research",
+          "className": "heading section-title",
+          "text": "Research",
+          "html": "<em>Research</em>",
+          "hasEm": true,
+          "sectionTitle": true,
+          "endsWithDot": false,
+          "rendered": true
+        },
+        {
+          "tag": "H2",
+          "sectionId": "work-experience",
+          "className": "section-title",
+          "text": "Professional Experience",
+          "html": "Professional <em>Experience</em>",
+          "hasEm": true,
+          "sectionTitle": true,
+          "endsWithDot": false,
+          "rendered": true
+        }
+      ],
+      "allH2": [
+        {
+          "className": "heading section-title",
+          "text": "Where I Come From",
+          "rendered": true
+        },
+        {
+          "className": "heading section-title",
+          "text": "Cool Things",
+          "rendered": true
+        },
+        {
+          "className": "",
+          "text": "HIBEEX",
+          "rendered": true
+        },
+        {
+          "className": "",
+          "text": "Projeto Candela",
+          "rendered": true
+        },
+        {
+          "className": "",
+          "text": "39 Olympiad Medals",
+          "rendered": true
+        },
+        {
+          "className": "",
+          "text": "GSAT Education",
+          "rendered": true
+        },
+        {
+          "className": "text-p section-title",
+          "text": "By the Numbers",
+          "rendered": true
+        },
+        {
+          "className": "heading section-title",
+          "text": "Research",
+          "rendered": true
+        },
+        {
+          "className": "section-title",
+          "text": "Professional Experience",
+          "rendered": true
+        },
+        {
+          "className": "sr-only",
+          "text": "Contact",
+          "rendered": true
+        }
+      ]
+    },
+    "gaps": {
+      "asphaltHalfWidthPx": 24,
+      "svgRect": {
+        "x": 240,
+        "y": 0.359375,
+        "width": 960,
+        "height": 3959.390625,
+        "top": 0.359375,
+        "right": 1200,
+        "bottom": 3959.75,
+        "left": 240
+      },
+      "cards": [
+        {
+          "id": "exp-principia",
+          "liClass": "exp__stop exp__stop--left is-lit",
+          "side": "card-left-of-road",
+          "card": {
+            "left": 240,
+            "right": 606,
+            "topPage": 6701,
+            "h": 300
+          },
+          "roadXAtCenter": 662,
+          "gapAtCenterPx": 32,
+          "minGapOverCardHeightPx": 32,
+          "minEuclidGapPx": 32
+        },
+        {
+          "id": "exp-olympic-club",
+          "liClass": "exp__stop exp__stop--right",
+          "side": "card-right-of-road",
+          "card": {
+            "left": 834,
+            "right": 1200,
+            "topPage": 7271,
+            "h": 279
+          },
+          "roadXAtCenter": 778,
+          "gapAtCenterPx": 32,
+          "minGapOverCardHeightPx": 32,
+          "minEuclidGapPx": 32
+        },
+        {
+          "id": "exp-estudar",
+          "liClass": "exp__stop exp__stop--left",
+          "side": "card-left-of-road",
+          "card": {
+            "left": 240,
+            "right": 606,
+            "topPage": 7845,
+            "h": 251
+          },
+          "roadXAtCenter": 662,
+          "gapAtCenterPx": 32,
+          "minGapOverCardHeightPx": 32,
+          "minEuclidGapPx": 32
+        },
+        {
+          "id": "exp-fintech-rct",
+          "liClass": "exp__stop exp__stop--right",
+          "side": "card-right-of-road",
+          "card": {
+            "left": 834,
+            "right": 1200,
+            "topPage": 8392,
+            "h": 278
+          },
+          "roadXAtCenter": 778,
+          "gapAtCenterPx": 32,
+          "minGapOverCardHeightPx": 32,
+          "minEuclidGapPx": 32
+        },
+        {
+          "id": "exp-gsat",
+          "liClass": "exp__stop exp__stop--left",
+          "side": "card-left-of-road",
+          "card": {
+            "left": 240,
+            "right": 606,
+            "topPage": 8988,
+            "h": 206
+          },
+          "roadXAtCenter": 662,
+          "gapAtCenterPx": 32,
+          "minGapOverCardHeightPx": 32,
+          "minEuclidGapPx": 32
+        },
+        {
+          "id": "exp-hibeex",
+          "liClass": "exp__stop exp__stop--right",
+          "side": "card-right-of-road",
+          "card": {
+            "left": 834,
+            "right": 1200,
+            "topPage": 9483,
+            "h": 335
+          },
+          "roadXAtCenter": 778,
+          "gapAtCenterPx": 32,
+          "minGapOverCardHeightPx": 32,
+          "minEuclidGapPx": 32
+        }
+      ]
+    },
+    "shots": [
+      "exp-1440-start.png"
+    ]
+  },
+  "startVis1440": {
+    "d20": {
+      "top": 620,
+      "left": 662,
+      "w": 0,
+      "h": 0,
+      "opacity": "1",
+      "visibility": "visible",
+      "display": "block",
+      "text": "My grandfather Adalberto’s red Chevrolet D-20, from his garage in Missão Velha. the story ↗"
+    },
+    "odo": {
+      "top": 200,
+      "left": 1220,
+      "w": 120,
+      "h": 0,
+      "opacity": "1",
+      "visibility": "visible",
+      "display": "flex",
+      "text": "2023Instituto Principia"
+    },
+    "odoYear": {
+      "top": 200,
+      "left": 1278,
+      "w": 62,
+      "h": 30,
+      "opacity": "1",
+      "visibility": "visible",
+      "display": "block",
+      "text": "2023"
+    },
+    "odoOrg": {
+      "top": 235,
+      "left": 1228,
+      "w": 112,
+      "h": 14,
+      "opacity": "1",
+      "visibility": "visible",
+      "display": "block",
+      "text": "Instituto Principia"
+    },
+    "title": {
+      "top": 136,
+      "left": 244,
+      "w": 952,
+      "h": 51,
+      "opacity": "1",
+      "visibility": "visible",
+      "display": "block",
+      "text": "Professional Experience"
+    }
+  }
+}

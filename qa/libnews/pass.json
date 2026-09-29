@@ -1,0 +1,430 @@
+[
+  {
+    "route": "/library",
+    "w": 1440,
+    "theme": "light",
+    "readyMs": 19325,
+    "no3d": false,
+    "dashes": [],
+    "eyebrows": [
+      {
+        "cls": "",
+        "tag": "SPAN",
+        "text": "LIBRARY",
+        "headingAfter": false
+      },
+      {
+        "cls": "",
+        "tag": "SPAN",
+        "text": "28 BOOKS",
+        "headingAfter": false
+      }
+    ],
+    "pills": [
+      {
+        "cls": "page-back",
+        "tag": "A",
+        "text": "Home"
+      },
+      {
+        "cls": "library__index-toggle",
+        "tag": "BUTTON",
+        "text": "All books"
+      },
+      {
+        "cls": "library__pill library__inspect",
+        "tag": "BUTTON",
+        "text": "Open"
+      }
+    ],
+    "eyebrowCount": 2,
+    "pillCount": 3,
+    "axe": [],
+    "axeIncompleteContrast": 20,
+    "transferKB": 16569,
+    "console": [
+      {
+        "type": "warning",
+        "text": "The resource http://localhost:5173/moments/mv01.webp was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally."
+      },
+      {
+        "type": "warning",
+        "text": "The resource http://localhost:5173/moments/mv01.webp was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally."
+      }
+    ],
+    "failed": [],
+    "http4xx5xx": []
+  },
+  {
+    "route": "/library",
+    "w": 1440,
+    "theme": "dark",
+    "readyMs": 16422,
+    "no3d": false,
+    "dashes": [],
+    "eyebrows": [
+      {
+        "cls": "",
+        "tag": "SPAN",
+        "text": "LIBRARY",
+        "headingAfter": false
+      },
+      {
+        "cls": "",
+        "tag": "SPAN",
+        "text": "28 BOOKS",
+        "headingAfter": false
+      }
+    ],
+    "pills": [
+      {
+        "cls": "page-back",
+        "tag": "A",
+        "text": "Home"
+      },
+      {
+        "cls": "library__index-toggle",
+        "tag": "BUTTON",
+        "text": "All books"
+      },
+      {
+        "cls": "library__pill library__inspect",
+        "tag": "BUTTON",
+        "text": "Open"
+      }
+    ],
+    "eyebrowCount": 2,
+    "pillCount": 3,
+    "axe": [],
+    "axeIncompleteContrast": 20,
+    "transferKB": 16569,
+    "console": [
+      {
+        "type": "warning",
+        "text": "The resource http://localhost:5173/moments/mv01.webp was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally."
+      },
+      {
+        "type": "warning",
+        "text": "The resource http://localhost:5173/moments/mv01.webp was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally."
+      }
+    ],
+    "failed": [],
+    "http4xx5xx": []
+  },
+  {
+    "route": "/library",
+    "w": 390,
+    "theme": "light",
+    "readyMs": 7083,
+    "no3d": false,
+    "dashes": [],
+    "eyebrows": [
+      {
+        "cls": "",
+        "tag": "SPAN",
+        "text": "LIBRARY",
+        "headingAfter": false
+      },
+      {
+        "cls": "",
+        "tag": "SPAN",
+        "text": "28 BOOKS",
+        "headingAfter": false
+      }
+    ],
+    "pills": [
+      {
+        "cls": "navbar ",
+        "tag": "NAV",
+        "text": "Gabriel Moreno Ribeiro.\n\nHome."
+      },
+      {
+        "cls": "page-back",
+        "tag": "A",
+        "text": "Home"
+      },
+      {
+        "cls": "library__index-toggle",
+        "tag": "BUTTON",
+        "text": "All books"
+      },
+      {
+        "cls": "library__pill library__inspect",
+        "tag": "BUTTON",
+        "text": "Open"
+      },
+      {
+        "cls": "library__index-toggle library__index-toggle--float",
+        "tag": "BUTTON",
+        "text": "All books"
+      }
+    ],
+    "eyebrowCount": 2,
+    "pillCount": 5,
+    "axe": [],
+    "axeIncompleteContrast": 18,
+    "transferKB": 16569,
+    "console": [
+      {
+        "type": "warning",
+        "text": "The resource http://localhost:5173/moments/mv01.webp was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally."
+      },
+      {
+        "type": "warning",
+        "text": "The resource http://localhost:5173/moments/mv01.webp was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally."
+      }
+    ],
+    "failed": [],
+    "http4xx5xx": []
+  },
+  {
+    "route": "/library",
+    "w": 390,
+    "theme": "dark",
+    "readyMs": 7290,
+    "no3d": false,
+    "dashes": [],
+    "eyebrows": [
+      {
+        "cls": "",
+        "tag": "SPAN",
+        "text": "LIBRARY",
+        "headingAfter": false
+      },
+      {
+        "cls": "",
+        "tag": "SPAN",
+        "text": "28 BOOKS",
+        "headingAfter": false
+      }
+    ],
+    "pills": [
+      {
+        "cls": "page-back",
+        "tag": "A",
+        "text": "Home"
+      },
+      {
+        "cls": "library__index-toggle",
+        "tag": "BUTTON",
+        "text": "All books"
+      },
+      {
+        "cls": "library__pill library__inspect",
+        "tag": "BUTTON",
+        "text": "Open"
+      },
+      {
+        "cls": "library__index-toggle library__index-toggle--float",
+        "tag": "BUTTON",
+        "text": "All books"
+      }
+    ],
+    "eyebrowCount": 2,
+    "pillCount": 4,
+    "axe": [],
+    "axeIncompleteContrast": 18,
+    "transferKB": 16569,
+    "console": [
+      {
+        "type": "warning",
+        "text": "The resource http://localhost:5173/moments/mv01.webp was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally."
+      },
+      {
+        "type": "warning",
+        "text": "The resource http://localhost:5173/moments/mv01.webp was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally."
+      }
+    ],
+    "failed": [],
+    "http4xx5xx": []
+  },
+  {
+    "route": "/news",
+    "w": 1440,
+    "theme": "light",
+    "iframesOnLoad": 0,
+    "docHeight": 2931,
+    "imgs": {
+      "total": 5,
+      "withWH": 5,
+      "without": []
+    },
+    "clsAtLoad": 0,
+    "iframesAfterScroll": 0,
+    "docHeightAfterScroll": 2931,
+    "clsTotal": 0,
+    "dashes": [],
+    "opacity0Blocks": [
+      "links"
+    ],
+    "eyebrows": [],
+    "pills": [
+      {
+        "cls": "page-back",
+        "tag": "A",
+        "text": "Home"
+      }
+    ],
+    "eyebrowCount": 0,
+    "pillCount": 1,
+    "axe": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "n": 1,
+        "targets": [
+          "a[href$=\"hibeex.com.br/\"] > .news__link-text"
+        ],
+        "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.38 (foreground color: #b8501a, background color: #f5efeb, font size: 11.3pt (15px), font weight: normal). Expected contrast ratio of 4.5:1"
+      }
+    ],
+    "axeIncompleteContrast": 20,
+    "transferKB": 14523,
+    "console": [
+      {
+        "type": "warning",
+        "text": "The resource http://localhost:5173/moments/mv01.webp was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally."
+      }
+    ],
+    "failed": [],
+    "http4xx5xx": []
+  },
+  {
+    "route": "/news",
+    "w": 1440,
+    "theme": "dark",
+    "iframesOnLoad": 0,
+    "docHeight": 2931,
+    "imgs": {
+      "total": 5,
+      "withWH": 5,
+      "without": []
+    },
+    "clsAtLoad": 0,
+    "iframesAfterScroll": 0,
+    "docHeightAfterScroll": 2931,
+    "clsTotal": 0,
+    "dashes": [],
+    "opacity0Blocks": [
+      "links"
+    ],
+    "eyebrows": [],
+    "pills": [
+      {
+        "cls": "page-back",
+        "tag": "A",
+        "text": "Home"
+      }
+    ],
+    "eyebrowCount": 0,
+    "pillCount": 1,
+    "axe": [],
+    "axeIncompleteContrast": 20,
+    "transferKB": 14523,
+    "console": [
+      {
+        "type": "warning",
+        "text": "The resource http://localhost:5173/moments/mv01.webp was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally."
+      }
+    ],
+    "failed": [],
+    "http4xx5xx": []
+  },
+  {
+    "route": "/news",
+    "w": 390,
+    "theme": "light",
+    "iframesOnLoad": 0,
+    "docHeight": 4033,
+    "imgs": {
+      "total": 5,
+      "withWH": 5,
+      "without": []
+    },
+    "clsAtLoad": 0,
+    "iframesAfterScroll": 0,
+    "docHeightAfterScroll": 4033,
+    "clsTotal": 0,
+    "dashes": [],
+    "opacity0Blocks": [
+      "links"
+    ],
+    "eyebrows": [],
+    "pills": [
+      {
+        "cls": "navbar ",
+        "tag": "NAV",
+        "text": "Gabriel Moreno Ribeiro.\n\nHome."
+      },
+      {
+        "cls": "page-back",
+        "tag": "A",
+        "text": "Home"
+      }
+    ],
+    "eyebrowCount": 0,
+    "pillCount": 2,
+    "axe": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "n": 1,
+        "targets": [
+          "a[href$=\"hibeex.com.br/\"] > .news__link-text"
+        ],
+        "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.38 (foreground color: #b8501a, background color: #f5efeb, font size: 11.3pt (15px), font weight: normal). Expected contrast ratio of 4.5:1"
+      }
+    ],
+    "axeIncompleteContrast": 0,
+    "transferKB": 14523,
+    "console": [
+      {
+        "type": "warning",
+        "text": "The resource http://localhost:5173/moments/mv01.webp was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally."
+      }
+    ],
+    "failed": [],
+    "http4xx5xx": []
+  },
+  {
+    "route": "/news",
+    "w": 390,
+    "theme": "dark",
+    "iframesOnLoad": 0,
+    "docHeight": 4033,
+    "imgs": {
+      "total": 5,
+      "withWH": 5,
+      "without": []
+    },
+    "clsAtLoad": 0,
+    "iframesAfterScroll": 0,
+    "docHeightAfterScroll": 4033,
+    "clsTotal": 0,
+    "dashes": [],
+    "opacity0Blocks": [
+      "links"
+    ],
+    "eyebrows": [],
+    "pills": [
+      {
+        "cls": "page-back",
+        "tag": "A",
+        "text": "Home"
+      }
+    ],
+    "eyebrowCount": 0,
+    "pillCount": 1,
+    "axe": [],
+    "axeIncompleteContrast": 0,
+    "transferKB": 14523,
+    "console": [
+      {
+        "type": "warning",
+        "text": "The resource http://localhost:5173/moments/mv01.webp was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally."
+      }
+    ],
+    "failed": [],
+    "http4xx5xx": []
+  }
+]

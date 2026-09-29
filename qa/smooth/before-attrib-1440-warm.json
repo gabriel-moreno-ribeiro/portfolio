@@ -1,0 +1,694 @@
+{
+  "label": "before",
+  "viewport": 1440,
+  "mode": "warm",
+  "wallMs": 21316,
+  "busyMs": 26787,
+  "files": [
+    {
+      "what": "(program)",
+      "ms": 19485
+    },
+    {
+      "what": "scrollTo",
+      "ms": 4522
+    },
+    {
+      "what": "/node_modules/.vite/deps/chunk-6ER7OG3O.js",
+      "ms": 357
+    },
+    {
+      "what": "(garbage collector)",
+      "ms": 340
+    },
+    {
+      "what": "onCommitFiberRoot",
+      "ms": 332
+    },
+    {
+      "what": "/node_modules/.vite/deps/motion_react.js",
+      "ms": 329
+    },
+    {
+      "what": "/node_modules/.vite/deps/react_jsx-dev-runtime.js",
+      "ms": 282
+    },
+    {
+      "what": "setAttribute",
+      "ms": 118
+    },
+    {
+      "what": "drawImage",
+      "ms": 117
+    },
+    {
+      "what": "/src/components/Home/HeroSlideshow.tsx",
+      "ms": 95
+    },
+    {
+      "what": "/src/components/Shared/MobileStickyCTA.tsx",
+      "ms": 85
+    },
+    {
+      "what": "/src/lib/data/clock.ts",
+      "ms": 65
+    },
+    {
+      "what": "createTask",
+      "ms": 57
+    },
+    {
+      "what": "/node_modules/.vite/deps/chunk-6QD6RN6W.js",
+      "ms": 44
+    },
+    {
+      "what": "/src/components/Home/Experience/Car.tsx",
+      "ms": 41
+    },
+    {
+      "what": "requestAnimationFrame",
+      "ms": 38
+    },
+    {
+      "what": "",
+      "ms": 36
+    },
+    {
+      "what": "/node_modules/.vite/deps/chunk-MUZB3WZK.js",
+      "ms": 31
+    },
+    {
+      "what": "run",
+      "ms": 29
+    },
+    {
+      "what": "/src/components/Home/Experience/Experience.tsx",
+      "ms": 28
+    },
+    {
+      "what": "postMessage",
+      "ms": 20
+    },
+    {
+      "what": "/src/components/Home/SectionRail.tsx",
+      "ms": 20
+    },
+    {
+      "what": "/src/components/Home/BackgroundGlobe.tsx",
+      "ms": 19
+    },
+    {
+      "what": "now",
+      "ms": 17
+    },
+    {
+      "what": "measure",
+      "ms": 16
+    },
+    {
+      "what": "createElementNS",
+      "ms": 16
+    },
+    {
+      "what": "/src/components/Home/Numbers.tsx",
+      "ms": 16
+    },
+    {
+      "what": "/node_modules/.vite/deps/chunk-JY4G5M2K.js",
+      "ms": 15
+    },
+    {
+      "what": "clear",
+      "ms": 13
+    },
+    {
+      "what": "/src/components/Home/SkillsCanvas.tsx",
+      "ms": 12
+    }
+  ],
+  "functions": [
+    {
+      "what": "(program) @ -:0",
+      "ms": 19485
+    },
+    {
+      "what": "scrollTo @ -:0",
+      "ms": 4522
+    },
+    {
+      "what": "(garbage collector) @ -:0",
+      "ms": 340
+    },
+    {
+      "what": "onCommitFiberRoot @ -:36",
+      "ms": 332
+    },
+    {
+      "what": "exports.jsxDEV @ /node_modules/.vite/deps/react_jsx-dev-runtime.js:239",
+      "ms": 190
+    },
+    {
+      "what": "setAttribute @ -:0",
+      "ms": 118
+    },
+    {
+      "what": "drawImage @ -:0",
+      "ms": 117
+    },
+    {
+      "what": "apply @ /src/components/Home/HeroSlideshow.tsx:46",
+      "ms": 88
+    },
+    {
+      "what": "onScroll @ /src/components/Shared/MobileStickyCTA.tsx:11",
+      "ms": 85
+    },
+    {
+      "what": "(anon) @ /node_modules/.vite/deps/motion_react.js:7862",
+      "ms": 75
+    },
+    {
+      "what": "clockValue @ /src/lib/data/clock.ts:60",
+      "ms": 64
+    },
+    {
+      "what": "createTask @ -:0",
+      "ms": 57
+    },
+    {
+      "what": "ReactElement @ /node_modules/.vite/deps/react_jsx-dev-runtime.js:127",
+      "ms": 39
+    },
+    {
+      "what": "requestAnimationFrame @ -:0",
+      "ms": 38
+    },
+    {
+      "what": "getTaskName @ /node_modules/.vite/deps/react_jsx-dev-runtime.js:81",
+      "ms": 31
+    },
+    {
+      "what": "drawRef.current @ /src/components/Home/Experience/Car.tsx:181",
+      "ms": 30
+    },
+    {
+      "what": "renderHTML @ /node_modules/.vite/deps/motion_react.js:5431",
+      "ms": 30
+    },
+    {
+      "what": "exports.jsx @ /node_modules/.vite/deps/chunk-6QD6RN6W.js:239",
+      "ms": 29
+    },
+    {
+      "what": "run @ -:0",
+      "ms": 29
+    },
+    {
+      "what": "(anon) @ -:0",
+      "ms": 26
+    },
+    {
+      "what": "getListener @ /node_modules/.vite/deps/chunk-6ER7OG3O.js:2367",
+      "ms": 26
+    },
+    {
+      "what": "acc.<computed> @ /node_modules/.vite/deps/motion_react.js:449",
+      "ms": 25
+    },
+    {
+      "what": "exports.createElement @ /node_modules/.vite/deps/chunk-MUZB3WZK.js:761",
+      "ms": 25
+    },
+    {
+      "what": "postMessage @ -:0",
+      "ms": 20
+    },
+    {
+      "what": "apply @ /src/components/Home/Experience/Experience.tsx:120",
+      "ms": 20
+    },
+    {
+      "what": "validateProperty @ /node_modules/.vite/deps/chunk-6ER7OG3O.js:2077",
+      "ms": 20
+    },
+    {
+      "what": "dispatchEventForPluginEventSystem @ /node_modules/.vite/deps/chunk-6ER7OG3O.js:13466",
+      "ms": 20
+    },
+    {
+      "what": "now @ -:0",
+      "ms": 17
+    },
+    {
+      "what": "(anon) @ /node_modules/.vite/deps/chunk-6ER7OG3O.js:13495",
+      "ms": 16
+    },
+    {
+      "what": "measure @ -:0",
+      "ms": 16
+    },
+    {
+      "what": "createElementNS @ -:0",
+      "ms": 16
+    },
+    {
+      "what": "processBatch @ /node_modules/.vite/deps/motion_react.js:418",
+      "ms": 16
+    },
+    {
+      "what": "CountUp @ /src/components/Home/Numbers.tsx:13",
+      "ms": 15
+    },
+    {
+      "what": "clear @ -:0",
+      "ms": 13
+    },
+    {
+      "what": "onRender @ /src/components/Home/BackgroundGlobe.tsx:150",
+      "ms": 12
+    },
+    {
+      "what": "insertRule @ -:0",
+      "ms": 12
+    },
+    {
+      "what": "NativeAnimation @ /node_modules/.vite/deps/motion_react.js:2006",
+      "ms": 12
+    },
+    {
+      "what": "performWorkUntilDeadline @ /node_modules/.vite/deps/chunk-JY4G5M2K.js:10",
+      "ms": 12
+    },
+    {
+      "what": "runWithFiberInDEV @ /node_modules/.vite/deps/chunk-6ER7OG3O.js:725",
+      "ms": 11
+    },
+    {
+      "what": "loop @ /src/components/Home/SkillsCanvas.tsx:181",
+      "ms": 11
+    }
+  ],
+  "commits": 18,
+  "components": [
+    {
+      "name": "ScrambleText",
+      "renders": 6,
+      "mounts": 0,
+      "selfMs": 253
+    },
+    {
+      "name": "SectionRail",
+      "renders": 6,
+      "mounts": 0,
+      "selfMs": 134
+    },
+    {
+      "name": "MediaCarousel",
+      "renders": 4,
+      "mounts": 0,
+      "selfMs": 76
+    },
+    {
+      "name": "CityClock",
+      "renders": 2,
+      "mounts": 1,
+      "selfMs": 67
+    },
+    {
+      "name": "AccordionGallery",
+      "renders": 2,
+      "mounts": 0,
+      "selfMs": 58
+    },
+    {
+      "name": "Row",
+      "renders": 2,
+      "mounts": 0,
+      "selfMs": 45
+    },
+    {
+      "name": "PresenceChild",
+      "renders": 12,
+      "mounts": 2,
+      "selfMs": 26
+    },
+    {
+      "name": "CityTimeline",
+      "renders": 2,
+      "mounts": 0,
+      "selfMs": 26
+    },
+    {
+      "name": "AnimatePresence",
+      "renders": 8,
+      "mounts": 0,
+      "selfMs": 20
+    },
+    {
+      "name": "motion.div",
+      "renders": 9,
+      "mounts": 0,
+      "selfMs": 19
+    },
+    {
+      "name": "CityPanel",
+      "renders": 2,
+      "mounts": 0,
+      "selfMs": 15
+    },
+    {
+      "name": "CountUp",
+      "renders": 2,
+      "mounts": 0,
+      "selfMs": 15
+    },
+    {
+      "name": "PopChild",
+      "renders": 12,
+      "mounts": 2,
+      "selfMs": 12
+    },
+    {
+      "name": "NumbersAndStats",
+      "renders": 2,
+      "mounts": 0,
+      "selfMs": 11
+    },
+    {
+      "name": "IconBase",
+      "renders": 13,
+      "mounts": 1,
+      "selfMs": 8
+    },
+    {
+      "name": "motion.img",
+      "renders": 5,
+      "mounts": 1,
+      "selfMs": 7
+    },
+    {
+      "name": "FiCalendar",
+      "renders": 2,
+      "mounts": 0,
+      "selfMs": 7
+    },
+    {
+      "name": "Hero",
+      "renders": 1,
+      "mounts": 0,
+      "selfMs": 7
+    },
+    {
+      "name": "PopChildMeasure",
+      "renders": 12,
+      "mounts": 2,
+      "selfMs": 6
+    },
+    {
+      "name": "HeroSlideshow",
+      "renders": 2,
+      "mounts": 0,
+      "selfMs": 6
+    },
+    {
+      "name": "CommonButton",
+      "renders": 2,
+      "mounts": 0,
+      "selfMs": 6
+    },
+    {
+      "name": "motion.button",
+      "renders": 1,
+      "mounts": 1,
+      "selfMs": 6
+    },
+    {
+      "name": "MomentsStrip",
+      "renders": 1,
+      "mounts": 0,
+      "selfMs": 6
+    },
+    {
+      "name": "FiChevronLeft",
+      "renders": 4,
+      "mounts": 0,
+      "selfMs": 5
+    },
+    {
+      "name": "FiChevronRight",
+      "renders": 4,
+      "mounts": 0,
+      "selfMs": 5
+    },
+    {
+      "name": "BackToTop",
+      "renders": 1,
+      "mounts": 0,
+      "selfMs": 5
+    },
+    {
+      "name": "NumberStatsCard",
+      "renders": 4,
+      "mounts": 0,
+      "selfMs": 4
+    },
+    {
+      "name": "BackgroundGlobe",
+      "renders": 2,
+      "mounts": 0,
+      "selfMs": 4
+    },
+    {
+      "name": "motion.p",
+      "renders": 3,
+      "mounts": 0,
+      "selfMs": 3
+    },
+    {
+      "name": "FiArrowRight",
+      "renders": 1,
+      "mounts": 0,
+      "selfMs": 3
+    },
+    {
+      "name": "FiDownload",
+      "renders": 1,
+      "mounts": 0,
+      "selfMs": 3
+    },
+    {
+      "name": "FiArrowUp",
+      "renders": 1,
+      "mounts": 1,
+      "selfMs": 3
+    },
+    {
+      "name": "GlobeCanvas",
+      "renders": 2,
+      "mounts": 0,
+      "selfMs": 2
+    },
+    {
+      "name": "MobileStickyCTA",
+      "renders": 1,
+      "mounts": 0,
+      "selfMs": 0
+    },
+    {
+      "name": "LinkWithRef",
+      "renders": 1,
+      "mounts": 0,
+      "selfMs": 0
+    }
+  ],
+  "commitRoots": [
+    {
+      "first": "AnimatePresence > PresenceChild > PopChild",
+      "commits": 1,
+      "comps": 14,
+      "ms": 242
+    },
+    {
+      "first": "SectionRail > BackgroundGlobe > GlobeCanvas",
+      "commits": 2,
+      "comps": 28,
+      "ms": 218
+    },
+    {
+      "first": "MediaCarousel > FiChevronLeft > IconBase",
+      "commits": 3,
+      "comps": 29,
+      "ms": 127
+    },
+    {
+      "first": "SectionRail",
+      "commits": 4,
+      "comps": 4,
+      "ms": 115
+    },
+    {
+      "first": "MomentsStrip > Row > Row",
+      "commits": 1,
+      "comps": 3,
+      "ms": 51
+    },
+    {
+      "first": "HeroSlideshow > AnimatePresence > PresenceChild",
+      "commits": 2,
+      "comps": 26,
+      "ms": 35
+    },
+    {
+      "first": "Hero > motion.div > motion.div",
+      "commits": 1,
+      "comps": 14,
+      "ms": 33
+    },
+    {
+      "first": "ScrambleText",
+      "commits": 2,
+      "comps": 2,
+      "ms": 32
+    },
+    {
+      "first": "NumbersAndStats > AnimatePresence > PresenceChild",
+      "commits": 1,
+      "comps": 14,
+      "ms": 12
+    },
+    {
+      "first": "CityClock",
+      "commits": 1,
+      "comps": 1,
+      "ms": 4
+    }
+  ],
+  "timeline": [
+    {
+      "t": 44250,
+      "y": 0,
+      "n": 1,
+      "ms": 8,
+      "first": "ScrambleText"
+    },
+    {
+      "t": 51245,
+      "y": 0,
+      "n": 11,
+      "ms": 24,
+      "first": "HeroSlideshow > AnimatePresence > PresenceChild > PopChild"
+    },
+    {
+      "t": 51650,
+      "y": 300,
+      "n": 1,
+      "ms": 23,
+      "first": "ScrambleText"
+    },
+    {
+      "t": 51765,
+      "y": 600,
+      "n": 15,
+      "ms": 11,
+      "first": "HeroSlideshow > AnimatePresence > PresenceChild > PopChild"
+    },
+    {
+      "t": 57266,
+      "y": 600,
+      "n": 14,
+      "ms": 33,
+      "first": "Hero > motion.div > motion.div > ScrambleText"
+    },
+    {
+      "t": 58154,
+      "y": 900,
+      "n": 14,
+      "ms": 242,
+      "first": "AnimatePresence > PresenceChild > PopChild > PopChildMeasure"
+    },
+    {
+      "t": 61903,
+      "y": 1200,
+      "n": 12,
+      "ms": 136,
+      "first": "SectionRail > BackgroundGlobe > GlobeCanvas > AnimatePresence"
+    },
+    {
+      "t": 62515,
+      "y": 1500,
+      "n": 1,
+      "ms": 4,
+      "first": "CityClock"
+    },
+    {
+      "t": 62773,
+      "y": 1800,
+      "n": 3,
+      "ms": 51,
+      "first": "MomentsStrip > Row > Row"
+    },
+    {
+      "t": 63033,
+      "y": 2100,
+      "n": 5,
+      "ms": 55,
+      "first": "MediaCarousel > FiChevronLeft > IconBase > FiChevronRight"
+    },
+    {
+      "t": 63320,
+      "y": 2400,
+      "n": 16,
+      "ms": 82,
+      "first": "SectionRail > BackgroundGlobe > GlobeCanvas > AnimatePresence"
+    },
+    {
+      "t": 63953,
+      "y": 3300,
+      "n": 19,
+      "ms": 70,
+      "first": "MediaCarousel > FiChevronLeft > IconBase > FiChevronRight"
+    },
+    {
+      "t": 64080,
+      "y": 3600,
+      "n": 5,
+      "ms": 2,
+      "first": "MediaCarousel > FiChevronLeft > IconBase > FiChevronRight"
+    },
+    {
+      "t": 64295,
+      "y": 3900,
+      "n": 1,
+      "ms": 20,
+      "first": "SectionRail"
+    },
+    {
+      "t": 64714,
+      "y": 4200,
+      "n": 14,
+      "ms": 12,
+      "first": "NumbersAndStats > AnimatePresence > PresenceChild > PopChild"
+    },
+    {
+      "t": 65841,
+      "y": 5100,
+      "n": 1,
+      "ms": 22,
+      "first": "SectionRail"
+    },
+    {
+      "t": 68035,
+      "y": 6300,
+      "n": 1,
+      "ms": 1,
+      "first": "SectionRail"
+    },
+    {
+      "t": 70243,
+      "y": 9874,
+      "n": 1,
+      "ms": 72,
+      "first": "SectionRail"
+    }
+  ]
+}

@@ -1,0 +1,322 @@
+{
+  "tag": "before",
+  "generatedAt": "2026-09-27T15:00:39.877Z",
+  "runs": [
+    {
+      "viewport": "1440x900",
+      "theme": "light",
+      "pageHeight": 8251,
+      "scrollWidth": 1440,
+      "bodyFontSize": "19px",
+      "bodyLineHeight": "32.68px",
+      "columnWidth": 760,
+      "dashes": 0,
+      "images": [
+        {
+          "src": "/background/missao-velha/01.webp",
+          "w": null,
+          "h": null,
+          "loading": "eager"
+        },
+        {
+          "src": "/story/d20.webp",
+          "w": null,
+          "h": null,
+          "loading": "lazy"
+        },
+        {
+          "src": "/background/missao-velha/02.webp",
+          "w": null,
+          "h": null,
+          "loading": "lazy"
+        },
+        {
+          "src": "/moments/mv07.webp",
+          "w": null,
+          "h": null,
+          "loading": "lazy"
+        },
+        {
+          "src": "/background/missao-velha/05.webp",
+          "w": null,
+          "h": null,
+          "loading": "lazy"
+        },
+        {
+          "src": "/moments/mv06.webp",
+          "w": null,
+          "h": null,
+          "loading": "lazy"
+        },
+        {
+          "src": "/moments/ssa02.webp",
+          "w": null,
+          "h": null,
+          "loading": "lazy"
+        },
+        {
+          "src": "/moments/ssa01.webp",
+          "w": null,
+          "h": null,
+          "loading": "lazy"
+        },
+        {
+          "src": "/moments/ssa06.webp",
+          "w": null,
+          "h": null,
+          "loading": "lazy"
+        },
+        {
+          "src": "/moments/ssa03.webp",
+          "w": null,
+          "h": null,
+          "loading": "lazy"
+        },
+        {
+          "src": "/moments/mv04.webp",
+          "w": null,
+          "h": null,
+          "loading": "lazy"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "viewport": "1440x900",
+      "theme": "dark",
+      "pageHeight": 8251,
+      "scrollWidth": 1440,
+      "bodyFontSize": "19px",
+      "bodyLineHeight": "32.68px",
+      "columnWidth": 760,
+      "dashes": 0,
+      "images": [
+        {
+          "src": "/background/missao-velha/01.webp",
+          "w": null,
+          "h": null,
+          "loading": "eager"
+        },
+        {
+          "src": "/story/d20.webp",
+          "w": null,
+          "h": null,
+          "loading": "lazy"
+        },
+        {
+          "src": "/background/missao-velha/02.webp",
+          "w": null,
+          "h": null,
+          "loading": "lazy"
+        },
+        {
+          "src": "/moments/mv07.webp",
+          "w": null,
+          "h": null,
+          "loading": "lazy"
+        },
+        {
+          "src": "/background/missao-velha/05.webp",
+          "w": null,
+          "h": null,
+          "loading": "lazy"
+        },
+        {
+          "src": "/moments/mv06.webp",
+          "w": null,
+          "h": null,
+          "loading": "lazy"
+        },
+        {
+          "src": "/moments/ssa02.webp",
+          "w": null,
+          "h": null,
+          "loading": "lazy"
+        },
+        {
+          "src": "/moments/ssa01.webp",
+          "w": null,
+          "h": null,
+          "loading": "lazy"
+        },
+        {
+          "src": "/moments/ssa06.webp",
+          "w": null,
+          "h": null,
+          "loading": "lazy"
+        },
+        {
+          "src": "/moments/ssa03.webp",
+          "w": null,
+          "h": null,
+          "loading": "lazy"
+        },
+        {
+          "src": "/moments/mv04.webp",
+          "w": null,
+          "h": null,
+          "loading": "lazy"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "viewport": "390x844",
+      "theme": "light",
+      "pageHeight": 10373,
+      "scrollWidth": 390,
+      "bodyFontSize": "17px",
+      "bodyLineHeight": "29.24px",
+      "columnWidth": 342,
+      "dashes": 0,
+      "images": [
+        {
+          "src": "/background/missao-velha/01.webp",
+          "w": null,
+          "h": null,
+          "loading": "eager"
+        },
+        {
+          "src": "/story/d20.webp",
+          "w": null,
+          "h": null,
+          "loading": "lazy"
+        },
+        {
+          "src": "/background/missao-velha/02.webp",
+          "w": null,
+          "h": null,
+          "loading": "lazy"
+        },
+        {
+          "src": "/moments/mv07.webp",
+          "w": null,
+          "h": null,
+          "loading": "lazy"
+        },
+        {
+          "src": "/background/missao-velha/05.webp",
+          "w": null,
+          "h": null,
+          "loading": "lazy"
+        },
+        {
+          "src": "/moments/mv06.webp",
+          "w": null,
+          "h": null,
+          "loading": "lazy"
+        },
+        {
+          "src": "/moments/ssa02.webp",
+          "w": null,
+          "h": null,
+          "loading": "lazy"
+        },
+        {
+          "src": "/moments/ssa01.webp",
+          "w": null,
+          "h": null,
+          "loading": "lazy"
+        },
+        {
+          "src": "/moments/ssa06.webp",
+          "w": null,
+          "h": null,
+          "loading": "lazy"
+        },
+        {
+          "src": "/moments/ssa03.webp",
+          "w": null,
+          "h": null,
+          "loading": "lazy"
+        },
+        {
+          "src": "/moments/mv04.webp",
+          "w": null,
+          "h": null,
+          "loading": "lazy"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "viewport": "390x844",
+      "theme": "dark",
+      "pageHeight": 10373,
+      "scrollWidth": 390,
+      "bodyFontSize": "17px",
+      "bodyLineHeight": "29.24px",
+      "columnWidth": 342,
+      "dashes": 0,
+      "images": [
+        {
+          "src": "/background/missao-velha/01.webp",
+          "w": null,
+          "h": null,
+          "loading": "eager"
+        },
+        {
+          "src": "/story/d20.webp",
+          "w": null,
+          "h": null,
+          "loading": "lazy"
+        },
+        {
+          "src": "/background/missao-velha/02.webp",
+          "w": null,
+          "h": null,
+          "loading": "lazy"
+        },
+        {
+          "src": "/moments/mv07.webp",
+          "w": null,
+          "h": null,
+          "loading": "lazy"
+        },
+        {
+          "src": "/background/missao-velha/05.webp",
+          "w": null,
+          "h": null,
+          "loading": "lazy"
+        },
+        {
+          "src": "/moments/mv06.webp",
+          "w": null,
+          "h": null,
+          "loading": "lazy"
+        },
+        {
+          "src": "/moments/ssa02.webp",
+          "w": null,
+          "h": null,
+          "loading": "lazy"
+        },
+        {
+          "src": "/moments/ssa01.webp",
+          "w": null,
+          "h": null,
+          "loading": "lazy"
+        },
+        {
+          "src": "/moments/ssa06.webp",
+          "w": null,
+          "h": null,
+          "loading": "lazy"
+        },
+        {
+          "src": "/moments/ssa03.webp",
+          "w": null,
+          "h": null,
+          "loading": "lazy"
+        },
+        {
+          "src": "/moments/mv04.webp",
+          "w": null,
+          "h": null,
+          "loading": "lazy"
+        }
+      ],
+      "errors": []
+    }
+  ]
+}

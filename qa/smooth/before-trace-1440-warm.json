@@ -1,0 +1,1652 @@
+{
+  "label": "before",
+  "viewport": 1440,
+  "mode": "warm",
+  "mainThread": "6684:40336",
+  "events": 118870,
+  "longTasks": 65,
+  "selfTime": [
+    {
+      "name": "FunctionCall",
+      "ms": 3219,
+      "n": 1304
+    },
+    {
+      "name": "Canvas2DResourceProviderSharedImage::ProduceCanvasResource",
+      "ms": 1543,
+      "n": 146
+    },
+    {
+      "name": "CommandBufferProxyImpl::WaitForGetOffset",
+      "ms": 1306,
+      "n": 10
+    },
+    {
+      "name": "PaintArtifactCompositor::Update",
+      "ms": 1105,
+      "n": 70
+    },
+    {
+      "name": "Paint",
+      "ms": 780,
+      "n": 146
+    },
+    {
+      "name": "Document::recalcStyle",
+      "ms": 399,
+      "n": 118
+    },
+    {
+      "name": "GLES2::ReadPixels",
+      "ms": 314,
+      "n": 10
+    },
+    {
+      "name": "ThreadControllerImpl::RunTask",
+      "ms": 286,
+      "n": 1288
+    },
+    {
+      "name": "LayerTreeHost::DoUpdateLayers",
+      "ms": 278,
+      "n": 73
+    },
+    {
+      "name": "LocalFrameView::performLayout",
+      "ms": 260,
+      "n": 34
+    },
+    {
+      "name": "Receive mojo message",
+      "ms": 243,
+      "n": 35
+    },
+    {
+      "name": "v8.callFunction",
+      "ms": 226,
+      "n": 1304
+    },
+    {
+      "name": "EventDispatch",
+      "ms": 220,
+      "n": 412
+    },
+    {
+      "name": "Blink.Paint.UpdateTime",
+      "ms": 195,
+      "n": 74
+    },
+    {
+      "name": "LocalFrameView::RunPaintLifecyclePhase",
+      "ms": 186,
+      "n": 134
+    },
+    {
+      "name": "LocalFrameView::ScheduleAnimation",
+      "ms": 180,
+      "n": 1066
+    },
+    {
+      "name": "AnimationHost::UpdateAnimationState",
+      "ms": 153,
+      "n": 57
+    },
+    {
+      "name": "Blink.PrePaint.UpdateTime",
+      "ms": 144,
+      "n": 74
+    },
+    {
+      "name": "RunTask",
+      "ms": 144,
+      "n": 1288
+    },
+    {
+      "name": "IntersectionObserverController::computeIntersections",
+      "ms": 119,
+      "n": 147
+    },
+    {
+      "name": "TimerBase::run",
+      "ms": 115,
+      "n": 67
+    },
+    {
+      "name": "LocalFrameView::UpdateStyleAndLayout",
+      "ms": 114,
+      "n": 758
+    },
+    {
+      "name": "Commit",
+      "ms": 108,
+      "n": 73
+    },
+    {
+      "name": "HitTest",
+      "ms": 103,
+      "n": 22
+    },
+    {
+      "name": "Blink.CompositingInputs.UpdateTime",
+      "ms": 96,
+      "n": 74
+    },
+    {
+      "name": "LocalFrameView::RunPrePaintLifecyclePhase",
+      "ms": 90,
+      "n": 134
+    },
+    {
+      "name": "UpdateLayer",
+      "ms": 78,
+      "n": 3567
+    },
+    {
+      "name": "CullRectUpdate",
+      "ms": 74,
+      "n": 134
+    },
+    {
+      "name": "AsyncTask Run",
+      "ms": 65,
+      "n": 604
+    },
+    {
+      "name": "SerializedScriptValueFactory::create",
+      "ms": 64,
+      "n": 162
+    }
+  ],
+  "top": [
+    [
+      {
+        "depth": 0,
+        "name": "RunTask",
+        "ms": 1123,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 1,
+        "name": "ThreadControllerImpl::RunTask",
+        "ms": 1122,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 2,
+        "name": "ProxyMain::BeginMainFrame",
+        "ms": 1122,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 3,
+        "name": "WebFrameWidgetImpl::BeginMainFrame",
+        "ms": 558,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 4,
+        "name": "Blink.Animate.UpdateTime",
+        "ms": 558,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 5,
+        "name": "PageAnimator::serviceScriptedAnimations",
+        "ms": 558,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 6,
+        "name": "FrameRequestCallbackCollection::ExecuteFrameCallbacks",
+        "ms": 557,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 7,
+        "name": "FireAnimationFrame",
+        "ms": 557,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 8,
+        "name": "AsyncTask Run",
+        "ms": 557,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 9,
+        "name": "v8.callFunction",
+        "ms": 557,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 10,
+        "name": "FunctionCall",
+        "ms": 557,
+        "self": 197,
+        "what": "loop /src/components/Home/SkillsCanvas.tsx"
+      },
+      {
+        "depth": 11,
+        "name": "LocalFrameView::RunPaintLifecyclePhase",
+        "ms": 99,
+        "self": 3,
+        "what": ""
+      },
+      {
+        "depth": 12,
+        "name": "Paint",
+        "ms": 96,
+        "self": 96,
+        "what": ""
+      },
+      {
+        "depth": 11,
+        "name": "LocalFrameView::RunStyleAndLayoutLifecyclePhases",
+        "ms": 86,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 12,
+        "name": "LocalFrameView::UpdateStyleAndLayout",
+        "ms": 86,
+        "self": 1,
+        "what": ""
+      },
+      {
+        "depth": 13,
+        "name": "LocalFrameView::layout",
+        "ms": 85,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 14,
+        "name": "Layout",
+        "ms": 85,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 15,
+        "name": "LocalFrameView::performLayout",
+        "ms": 84,
+        "self": 84,
+        "what": ""
+      },
+      {
+        "depth": 11,
+        "name": "PrePaint",
+        "ms": 78,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 12,
+        "name": "LocalFrameView::RunPrePaintLifecyclePhase",
+        "ms": 78,
+        "self": 78,
+        "what": ""
+      },
+      {
+        "depth": 11,
+        "name": "LocalFrameView::RunPaintLifecyclePhase",
+        "ms": 75,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 12,
+        "name": "Paint",
+        "ms": 74,
+        "self": 74,
+        "what": ""
+      },
+      {
+        "depth": 3,
+        "name": "Commit",
+        "ms": 548,
+        "self": 2,
+        "what": ""
+      },
+      {
+        "depth": 4,
+        "name": "LayerTreeHost::DoUpdateLayers",
+        "ms": 540,
+        "self": 1,
+        "what": ""
+      },
+      {
+        "depth": 5,
+        "name": "Canvas2DResourceProviderSharedImage::ProduceCanvasResource",
+        "ms": 538,
+        "self": 444,
+        "what": ""
+      },
+      {
+        "depth": 6,
+        "name": "DecodingImageGenerator::getPixels",
+        "ms": 54,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 7,
+        "name": "Decode LazyPixelRef",
+        "ms": 54,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 8,
+        "name": "ImageFrameGenerator::decodeAndScale",
+        "ms": 54,
+        "self": 48,
+        "what": ""
+      }
+    ],
+    [
+      {
+        "depth": 0,
+        "name": "RunTask",
+        "ms": 563,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 1,
+        "name": "ThreadControllerImpl::RunTask",
+        "ms": 563,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 2,
+        "name": "ProxyMain::BeginMainFrame",
+        "ms": 563,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 3,
+        "name": "WebFrameWidgetImpl::BeginMainFrame",
+        "ms": 465,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 4,
+        "name": "Blink.Animate.UpdateTime",
+        "ms": 465,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 5,
+        "name": "PageAnimator::serviceScriptedAnimations",
+        "ms": 465,
+        "self": 1,
+        "what": ""
+      },
+      {
+        "depth": 6,
+        "name": "AsyncTask Run",
+        "ms": 97,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 7,
+        "name": "EventDispatch",
+        "ms": 97,
+        "self": 0,
+        "what": "scroll"
+      },
+      {
+        "depth": 8,
+        "name": "v8.callFunction",
+        "ms": 94,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 9,
+        "name": "FunctionCall",
+        "ms": 93,
+        "self": 1,
+        "what": "onScroll /src/components/Shared/MobileStickyCTA.tsx"
+      },
+      {
+        "depth": 10,
+        "name": "Document::UpdateStyleAndLayout",
+        "ms": 92,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 11,
+        "name": "Blink.ForcedStyleAndLayout.UpdateTime",
+        "ms": 92,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 12,
+        "name": "LocalFrameView::UpdateStyleAndLayout",
+        "ms": 92,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 13,
+        "name": "Blink.Layout.UpdateTime",
+        "ms": 66,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 14,
+        "name": "LocalFrameView::layout",
+        "ms": 66,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 15,
+        "name": "Layout",
+        "ms": 66,
+        "self": 2,
+        "what": ""
+      },
+      {
+        "depth": 16,
+        "name": "LocalFrameView::performLayout",
+        "ms": 64,
+        "self": 64,
+        "what": ""
+      },
+      {
+        "depth": 13,
+        "name": "Blink.Style.UpdateTime",
+        "ms": 22,
+        "self": 1,
+        "what": ""
+      },
+      {
+        "depth": 14,
+        "name": "UpdateLayoutTree",
+        "ms": 22,
+        "self": 1,
+        "what": ""
+      },
+      {
+        "depth": 6,
+        "name": "FrameRequestCallbackCollection::ExecuteFrameCallbacks",
+        "ms": 53,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 7,
+        "name": "FireAnimationFrame",
+        "ms": 45,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 8,
+        "name": "AsyncTask Run",
+        "ms": 45,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 9,
+        "name": "v8.callFunction",
+        "ms": 45,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 10,
+        "name": "FunctionCall",
+        "ms": 44,
+        "self": 32,
+        "what": "loop /src/components/Home/SkillsCanvas.tsx"
+      },
+      {
+        "depth": 6,
+        "name": "AsyncTask Run",
+        "ms": 47,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 7,
+        "name": "EventDispatch",
+        "ms": 47,
+        "self": 3,
+        "what": "transitionstart"
+      },
+      {
+        "depth": 8,
+        "name": "v8.callFunction",
+        "ms": 34,
+        "self": 1,
+        "what": ""
+      },
+      {
+        "depth": 9,
+        "name": "FunctionCall",
+        "ms": 33,
+        "self": 33,
+        "what": "dispatchEvent /node_modules/.vite/deps/chunk-6ER7OG3O.js"
+      },
+      {
+        "depth": 6,
+        "name": "AnimationTimeline::serviceAnimations",
+        "ms": 46,
+        "self": 12,
+        "what": ""
+      },
+      {
+        "depth": 6,
+        "name": "AsyncTask Run",
+        "ms": 27,
+        "self": 6,
+        "what": ""
+      },
+      {
+        "depth": 7,
+        "name": "EventDispatch",
+        "ms": 20,
+        "self": 3,
+        "what": "transitionrun"
+      },
+      {
+        "depth": 6,
+        "name": "AsyncTask Run",
+        "ms": 23,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 7,
+        "name": "EventDispatch",
+        "ms": 23,
+        "self": 13,
+        "what": "transitionrun"
+      },
+      {
+        "depth": 3,
+        "name": "Commit",
+        "ms": 62,
+        "self": 1,
+        "what": ""
+      },
+      {
+        "depth": 4,
+        "name": "LayerTreeHost::DoUpdateLayers",
+        "ms": 60,
+        "self": 2,
+        "what": ""
+      },
+      {
+        "depth": 5,
+        "name": "Canvas2DResourceProviderSharedImage::ProduceCanvasResource",
+        "ms": 57,
+        "self": 57,
+        "what": ""
+      },
+      {
+        "depth": 3,
+        "name": "WebFrameWidgetImpl::UpdateLifecycle",
+        "ms": 36,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 4,
+        "name": "LocalFrameView::RunPaintLifecyclePhase",
+        "ms": 35,
+        "self": 1,
+        "what": ""
+      }
+    ],
+    [
+      {
+        "depth": 0,
+        "name": "RunTask",
+        "ms": 416,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 1,
+        "name": "ThreadControllerImpl::RunTask",
+        "ms": 416,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 2,
+        "name": "ProxyMain::BeginMainFrame",
+        "ms": 416,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 3,
+        "name": "Commit",
+        "ms": 297,
+        "self": 1,
+        "what": ""
+      },
+      {
+        "depth": 4,
+        "name": "LayerTreeHost::DoUpdateLayers",
+        "ms": 273,
+        "self": 28,
+        "what": ""
+      },
+      {
+        "depth": 5,
+        "name": "GLES2::ReadPixels",
+        "ms": 227,
+        "self": 44,
+        "what": ""
+      },
+      {
+        "depth": 6,
+        "name": "ImplementationBase::WaitForCmd",
+        "ms": 183,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 7,
+        "name": "CommandBufferHelper::Finish",
+        "ms": 183,
+        "self": 6,
+        "what": ""
+      },
+      {
+        "depth": 8,
+        "name": "CommandBufferProxyImpl::WaitForGetOffset",
+        "ms": 175,
+        "self": 175,
+        "what": ""
+      },
+      {
+        "depth": 3,
+        "name": "WebFrameWidgetImpl::BeginMainFrame",
+        "ms": 95,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 4,
+        "name": "Blink.Animate.UpdateTime",
+        "ms": 95,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 5,
+        "name": "PageAnimator::serviceScriptedAnimations",
+        "ms": 95,
+        "self": 2,
+        "what": ""
+      },
+      {
+        "depth": 6,
+        "name": "FrameRequestCallbackCollection::ExecuteFrameCallbacks",
+        "ms": 92,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 7,
+        "name": "FireAnimationFrame",
+        "ms": 65,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 8,
+        "name": "AsyncTask Run",
+        "ms": 65,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 9,
+        "name": "v8.callFunction",
+        "ms": 65,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 10,
+        "name": "FunctionCall",
+        "ms": 65,
+        "self": 1,
+        "what": "/node_modules/.vite/deps/cobe.js"
+      },
+      {
+        "depth": 11,
+        "name": "Document::UpdateStyleAndLayout",
+        "ms": 63,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 12,
+        "name": "Blink.ForcedStyleAndLayout.UpdateTime",
+        "ms": 63,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 13,
+        "name": "LocalFrameView::UpdateStyleAndLayout",
+        "ms": 63,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 14,
+        "name": "Blink.Style.UpdateTime",
+        "ms": 53,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 15,
+        "name": "UpdateLayoutTree",
+        "ms": 53,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 16,
+        "name": "Document::updateStyle",
+        "ms": 53,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 17,
+        "name": "Document::recalcStyle",
+        "ms": 51,
+        "self": 51,
+        "what": ""
+      },
+      {
+        "depth": 7,
+        "name": "FireAnimationFrame",
+        "ms": 28,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 8,
+        "name": "AsyncTask Run",
+        "ms": 27,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 9,
+        "name": "v8.callFunction",
+        "ms": 27,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 10,
+        "name": "FunctionCall",
+        "ms": 27,
+        "self": 20,
+        "what": "processBatch /node_modules/.vite/deps/motion_react.js"
+      },
+      {
+        "depth": 3,
+        "name": "WebFrameWidgetImpl::UpdateLifecycle",
+        "ms": 24,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 4,
+        "name": "LocalFrameView::RunPaintLifecyclePhase",
+        "ms": 23,
+        "self": 1,
+        "what": ""
+      }
+    ],
+    [
+      {
+        "depth": 0,
+        "name": "RunTask",
+        "ms": 368,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 1,
+        "name": "ThreadControllerImpl::RunTask",
+        "ms": 368,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 2,
+        "name": "ProxyMain::BeginMainFrame",
+        "ms": 368,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 3,
+        "name": "Commit",
+        "ms": 316,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 4,
+        "name": "LayerTreeHost::DoUpdateLayers",
+        "ms": 315,
+        "self": 56,
+        "what": ""
+      },
+      {
+        "depth": 5,
+        "name": "GLES2::ReadPixels",
+        "ms": 249,
+        "self": 32,
+        "what": ""
+      },
+      {
+        "depth": 6,
+        "name": "ImplementationBase::WaitForCmd",
+        "ms": 217,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 7,
+        "name": "CommandBufferHelper::Finish",
+        "ms": 217,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 8,
+        "name": "CommandBufferProxyImpl::WaitForGetOffset",
+        "ms": 217,
+        "self": 217,
+        "what": ""
+      },
+      {
+        "depth": 3,
+        "name": "WebFrameWidgetImpl::BeginMainFrame",
+        "ms": 39,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 4,
+        "name": "Blink.Animate.UpdateTime",
+        "ms": 39,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 5,
+        "name": "PageAnimator::serviceScriptedAnimations",
+        "ms": 39,
+        "self": 1,
+        "what": ""
+      },
+      {
+        "depth": 6,
+        "name": "AsyncTask Run",
+        "ms": 22,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 7,
+        "name": "EventDispatch",
+        "ms": 22,
+        "self": 0,
+        "what": "scroll"
+      }
+    ],
+    [
+      {
+        "depth": 0,
+        "name": "RunTask",
+        "ms": 336,
+        "self": 4,
+        "what": ""
+      },
+      {
+        "depth": 1,
+        "name": "ThreadControllerImpl::RunTask",
+        "ms": 328,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 2,
+        "name": "ProxyMain::BeginMainFrame",
+        "ms": 328,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 3,
+        "name": "Commit",
+        "ms": 171,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 4,
+        "name": "LayerTreeHost::DoUpdateLayers",
+        "ms": 170,
+        "self": 14,
+        "what": ""
+      },
+      {
+        "depth": 5,
+        "name": "GLES2::ReadPixels",
+        "ms": 127,
+        "self": 10,
+        "what": ""
+      },
+      {
+        "depth": 6,
+        "name": "ImplementationBase::WaitForCmd",
+        "ms": 117,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 7,
+        "name": "CommandBufferHelper::Finish",
+        "ms": 117,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 8,
+        "name": "CommandBufferProxyImpl::WaitForGetOffset",
+        "ms": 111,
+        "self": 111,
+        "what": ""
+      },
+      {
+        "depth": 5,
+        "name": "Canvas2DResourceProviderSharedImage::ProduceCanvasResource",
+        "ms": 20,
+        "self": 20,
+        "what": ""
+      },
+      {
+        "depth": 3,
+        "name": "WebFrameWidgetImpl::BeginMainFrame",
+        "ms": 90,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 4,
+        "name": "Blink.Animate.UpdateTime",
+        "ms": 90,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 5,
+        "name": "PageAnimator::serviceScriptedAnimations",
+        "ms": 89,
+        "self": 4,
+        "what": ""
+      },
+      {
+        "depth": 6,
+        "name": "FrameRequestCallbackCollection::ExecuteFrameCallbacks",
+        "ms": 43,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 7,
+        "name": "FireAnimationFrame",
+        "ms": 27,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 8,
+        "name": "AsyncTask Run",
+        "ms": 27,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 9,
+        "name": "v8.callFunction",
+        "ms": 26,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 10,
+        "name": "FunctionCall",
+        "ms": 26,
+        "self": 3,
+        "what": "processBatch /node_modules/.vite/deps/motion_react.js"
+      },
+      {
+        "depth": 11,
+        "name": "Document::UpdateStyleAndLayout",
+        "ms": 21,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 12,
+        "name": "Blink.ForcedStyleAndLayout.UpdateTime",
+        "ms": 21,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 13,
+        "name": "LocalFrameView::UpdateStyleAndLayout",
+        "ms": 21,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 14,
+        "name": "Blink.Style.UpdateTime",
+        "ms": 21,
+        "self": 1,
+        "what": ""
+      },
+      {
+        "depth": 15,
+        "name": "UpdateLayoutTree",
+        "ms": 20,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 6,
+        "name": "AsyncTask Run",
+        "ms": 39,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 7,
+        "name": "EventDispatch",
+        "ms": 39,
+        "self": 12,
+        "what": "scroll"
+      },
+      {
+        "depth": 3,
+        "name": "WebFrameWidgetImpl::UpdateLifecycle",
+        "ms": 63,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 4,
+        "name": "LocalFrameView::RunPaintLifecyclePhase",
+        "ms": 60,
+        "self": 9,
+        "what": ""
+      },
+      {
+        "depth": 5,
+        "name": "Blink.Paint.UpdateTime",
+        "ms": 29,
+        "self": 3,
+        "what": ""
+      },
+      {
+        "depth": 6,
+        "name": "Paint",
+        "ms": 25,
+        "self": 7,
+        "what": ""
+      },
+      {
+        "depth": 5,
+        "name": "LocalFrameView::pushPaintArtifactToCompositor",
+        "ms": 22,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 6,
+        "name": "Blink.CompositingCommit.UpdateTime",
+        "ms": 22,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 7,
+        "name": "Layerize",
+        "ms": 22,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 8,
+        "name": "PaintArtifactCompositor::Update",
+        "ms": 22,
+        "self": 22,
+        "what": ""
+      }
+    ],
+    [
+      {
+        "depth": 0,
+        "name": "RunTask",
+        "ms": 334,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 1,
+        "name": "ThreadControllerImpl::RunTask",
+        "ms": 334,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 2,
+        "name": "ProxyMain::BeginMainFrame",
+        "ms": 334,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 3,
+        "name": "Commit",
+        "ms": 283,
+        "self": 2,
+        "what": ""
+      },
+      {
+        "depth": 4,
+        "name": "LayerTreeHost::DoUpdateLayers",
+        "ms": 280,
+        "self": 20,
+        "what": ""
+      },
+      {
+        "depth": 5,
+        "name": "GLES2::ReadPixels",
+        "ms": 230,
+        "self": 93,
+        "what": ""
+      },
+      {
+        "depth": 6,
+        "name": "ImplementationBase::WaitForCmd",
+        "ms": 137,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 7,
+        "name": "CommandBufferHelper::Finish",
+        "ms": 137,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 8,
+        "name": "CommandBufferProxyImpl::WaitForGetOffset",
+        "ms": 136,
+        "self": 136,
+        "what": ""
+      },
+      {
+        "depth": 3,
+        "name": "WebFrameWidgetImpl::UpdateLifecycle",
+        "ms": 23,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 4,
+        "name": "LocalFrameView::RunPaintLifecyclePhase",
+        "ms": 21,
+        "self": 1,
+        "what": ""
+      }
+    ],
+    [
+      {
+        "depth": 0,
+        "name": "RunTask",
+        "ms": 297,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 1,
+        "name": "ThreadControllerImpl::RunTask",
+        "ms": 296,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 2,
+        "name": "ProxyMain::BeginMainFrame",
+        "ms": 296,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 3,
+        "name": "Commit",
+        "ms": 169,
+        "self": 1,
+        "what": ""
+      },
+      {
+        "depth": 4,
+        "name": "LayerTreeHost::DoUpdateLayers",
+        "ms": 153,
+        "self": 13,
+        "what": ""
+      },
+      {
+        "depth": 5,
+        "name": "GLES2::ReadPixels",
+        "ms": 134,
+        "self": 12,
+        "what": ""
+      },
+      {
+        "depth": 6,
+        "name": "ImplementationBase::WaitForCmd",
+        "ms": 122,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 7,
+        "name": "CommandBufferHelper::Finish",
+        "ms": 122,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 8,
+        "name": "CommandBufferProxyImpl::WaitForGetOffset",
+        "ms": 122,
+        "self": 122,
+        "what": ""
+      },
+      {
+        "depth": 3,
+        "name": "WebFrameWidgetImpl::UpdateLifecycle",
+        "ms": 81,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 4,
+        "name": "LocalFrameView::RunPaintLifecyclePhase",
+        "ms": 74,
+        "self": 1,
+        "what": ""
+      },
+      {
+        "depth": 5,
+        "name": "LocalFrameView::pushPaintArtifactToCompositor",
+        "ms": 41,
+        "self": 5,
+        "what": ""
+      },
+      {
+        "depth": 6,
+        "name": "Blink.CompositingCommit.UpdateTime",
+        "ms": 36,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 7,
+        "name": "Layerize",
+        "ms": 36,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 8,
+        "name": "PaintArtifactCompositor::Update",
+        "ms": 36,
+        "self": 36,
+        "what": ""
+      },
+      {
+        "depth": 5,
+        "name": "Blink.Paint.UpdateTime",
+        "ms": 32,
+        "self": 2,
+        "what": ""
+      },
+      {
+        "depth": 6,
+        "name": "Paint",
+        "ms": 27,
+        "self": 27,
+        "what": ""
+      },
+      {
+        "depth": 3,
+        "name": "WebFrameWidgetImpl::BeginMainFrame",
+        "ms": 46,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 4,
+        "name": "Blink.Animate.UpdateTime",
+        "ms": 45,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 5,
+        "name": "PageAnimator::serviceScriptedAnimations",
+        "ms": 45,
+        "self": 0,
+        "what": ""
+      }
+    ],
+    [
+      {
+        "depth": 0,
+        "name": "RunTask",
+        "ms": 295,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 1,
+        "name": "ThreadControllerImpl::RunTask",
+        "ms": 295,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 2,
+        "name": "ProxyMain::BeginMainFrame",
+        "ms": 295,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 3,
+        "name": "AnimationHost::UpdateAnimationState",
+        "ms": 144,
+        "self": 144,
+        "what": ""
+      },
+      {
+        "depth": 3,
+        "name": "WebFrameWidgetImpl::UpdateLifecycle",
+        "ms": 114,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 4,
+        "name": "LocalFrameView::RunPaintLifecyclePhase",
+        "ms": 113,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 5,
+        "name": "Blink.Paint.UpdateTime",
+        "ms": 96,
+        "self": 96,
+        "what": ""
+      },
+      {
+        "depth": 3,
+        "name": "WebFrameWidgetImpl::BeginMainFrame",
+        "ms": 33,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 4,
+        "name": "Blink.Animate.UpdateTime",
+        "ms": 33,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 5,
+        "name": "PageAnimator::serviceScriptedAnimations",
+        "ms": 33,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 6,
+        "name": "FrameRequestCallbackCollection::ExecuteFrameCallbacks",
+        "ms": 28,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 7,
+        "name": "FireAnimationFrame",
+        "ms": 28,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 8,
+        "name": "AsyncTask Run",
+        "ms": 28,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 9,
+        "name": "v8.callFunction",
+        "ms": 28,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 10,
+        "name": "v8.callFunction",
+        "ms": 23,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 11,
+        "name": "FunctionCall",
+        "ms": 23,
+        "self": 23,
+        "what": "clearTime /node_modules/.vite/deps/motion_react.js"
+      }
+    ],
+    [
+      {
+        "depth": 0,
+        "name": "RunTask",
+        "ms": 292,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 1,
+        "name": "ThreadControllerImpl::RunTask",
+        "ms": 292,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 2,
+        "name": "ProxyMain::BeginMainFrame",
+        "ms": 292,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 3,
+        "name": "Commit",
+        "ms": 237,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 4,
+        "name": "LayerTreeHost::DoUpdateLayers",
+        "ms": 236,
+        "self": 7,
+        "what": ""
+      },
+      {
+        "depth": 5,
+        "name": "GLES2::ReadPixels",
+        "ms": 219,
+        "self": 88,
+        "what": ""
+      },
+      {
+        "depth": 6,
+        "name": "ImplementationBase::WaitForCmd",
+        "ms": 131,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 7,
+        "name": "CommandBufferHelper::Finish",
+        "ms": 131,
+        "self": 5,
+        "what": ""
+      },
+      {
+        "depth": 8,
+        "name": "CommandBufferProxyImpl::WaitForGetOffset",
+        "ms": 126,
+        "self": 126,
+        "what": ""
+      },
+      {
+        "depth": 3,
+        "name": "WebFrameWidgetImpl::UpdateLifecycle",
+        "ms": 32,
+        "self": 3,
+        "what": ""
+      },
+      {
+        "depth": 4,
+        "name": "LocalFrameView::RunPaintLifecyclePhase",
+        "ms": 26,
+        "self": 1,
+        "what": ""
+      },
+      {
+        "depth": 3,
+        "name": "WebFrameWidgetImpl::BeginMainFrame",
+        "ms": 23,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 4,
+        "name": "Blink.Animate.UpdateTime",
+        "ms": 23,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 5,
+        "name": "PageAnimator::serviceScriptedAnimations",
+        "ms": 23,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 6,
+        "name": "FrameRequestCallbackCollection::ExecuteFrameCallbacks",
+        "ms": 22,
+        "self": 0,
+        "what": ""
+      }
+    ],
+    [
+      {
+        "depth": 0,
+        "name": "RunTask",
+        "ms": 279,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 1,
+        "name": "ThreadControllerImpl::RunTask",
+        "ms": 279,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 2,
+        "name": "MessagePort::Accept",
+        "ms": 279,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 3,
+        "name": "v8.callFunction",
+        "ms": 279,
+        "self": 0,
+        "what": ""
+      },
+      {
+        "depth": 4,
+        "name": "FunctionCall",
+        "ms": 279,
+        "self": 279,
+        "what": "performWorkUntilDeadline /node_modules/.vite/deps/chunk-JY4G5M2K.js"
+      }
+    ]
+  ]
+}

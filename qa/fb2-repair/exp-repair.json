@@ -1,0 +1,254 @@
+{
+  "390": {
+    "errs": [],
+    "rafHz": 60,
+    "note": {
+      "side": "exp__d20 exp__d20--above",
+      "gapNoteLeftToAsphaltRight": 18,
+      "gapNoteBottomToCard1Top": 23.9,
+      "noteRightVsViewport": 18
+    },
+    "stops": [
+      {
+        "id": "exp-principia",
+        "at300": 0,
+        "at700": 0,
+        "at1200": 0,
+        "at2000": 0,
+        "lit": true,
+        "year": "2023"
+      },
+      {
+        "id": "exp-olympic-club",
+        "at300": -77,
+        "at700": -11,
+        "at1200": -8,
+        "at2000": -8,
+        "lit": true,
+        "year": "2024"
+      },
+      {
+        "id": "exp-estudar",
+        "at300": -77,
+        "at700": -11,
+        "at1200": -8,
+        "at2000": -8,
+        "lit": true,
+        "year": "2025"
+      },
+      {
+        "id": "exp-fintech-rct",
+        "at300": -89,
+        "at700": -12,
+        "at1200": -8,
+        "at2000": -8,
+        "lit": true,
+        "year": "2025"
+      },
+      {
+        "id": "exp-gsat",
+        "at300": -84,
+        "at700": -11,
+        "at1200": -8,
+        "at2000": -8,
+        "lit": true,
+        "year": "2025"
+      },
+      {
+        "id": "exp-hibeex",
+        "at300": -82,
+        "at700": -10,
+        "at1200": -8,
+        "at2000": -8,
+        "lit": true,
+        "year": "2026"
+      }
+    ],
+    "end": {
+      "roadEndMinusLastCardBottom": 0,
+      "sectionBottomMinusLastCardBottom": 150
+    },
+    "afterContact": {
+      "odoBottom": -79,
+      "odoVisible": false,
+      "contactTitleTop": 80
+    },
+    "endView": {
+      "odoBottom": 104,
+      "sectionBottom": 614
+    },
+    "head": {
+      "text": "Professional Experience",
+      "align": "center",
+      "centerOffset": 0
+    }
+  },
+  "1280": {
+    "errs": [],
+    "rafHz": 60,
+    "note": {
+      "side": "exp__d20 exp__d20--right",
+      "gapNoteLeftToAsphaltRight": 28,
+      "gapNoteBottomToCard1Top": -92,
+      "noteRightVsViewport": 416
+    },
+    "stops": [
+      {
+        "id": "exp-principia",
+        "at300": 0,
+        "at700": 0,
+        "at1200": 0,
+        "at2000": 0,
+        "lit": true,
+        "year": "2023"
+      },
+      {
+        "id": "exp-olympic-club",
+        "at300": -129,
+        "at700": -8,
+        "at1200": -5,
+        "at2000": -4,
+        "lit": true,
+        "year": "2024"
+      },
+      {
+        "id": "exp-estudar",
+        "at300": -103,
+        "at700": -8,
+        "at1200": -5,
+        "at2000": -4,
+        "lit": true,
+        "year": "2025"
+      },
+      {
+        "id": "exp-fintech-rct",
+        "at300": -77,
+        "at700": -7,
+        "at1200": -4,
+        "at2000": -4,
+        "lit": true,
+        "year": "2025"
+      },
+      {
+        "id": "exp-gsat",
+        "at300": -114,
+        "at700": -8,
+        "at1200": -5,
+        "at2000": -5,
+        "lit": true,
+        "year": "2025"
+      },
+      {
+        "id": "exp-hibeex",
+        "at300": -64,
+        "at700": -7,
+        "at1200": -4,
+        "at2000": -4,
+        "lit": true,
+        "year": "2026"
+      }
+    ],
+    "end": {
+      "roadEndMinusLastCardBottom": 0,
+      "sectionBottomMinusLastCardBottom": 221
+    },
+    "afterContact": {
+      "odoBottom": -55,
+      "odoVisible": false,
+      "contactTitleTop": 127
+    },
+    "endView": {
+      "odoBottom": 123,
+      "sectionBottom": 661
+    },
+    "head": {
+      "text": "Professional Experience",
+      "align": "center",
+      "centerOffset": 0
+    }
+  },
+  "1440": {
+    "errs": [],
+    "rafHz": 61,
+    "note": {
+      "side": "exp__d20 exp__d20--right",
+      "gapNoteLeftToAsphaltRight": 28,
+      "gapNoteBottomToCard1Top": -92,
+      "noteRightVsViewport": 496
+    },
+    "stops": [
+      {
+        "id": "exp-principia",
+        "at300": 0,
+        "at700": 0,
+        "at1200": 0,
+        "at2000": 0,
+        "lit": true,
+        "year": "2023"
+      },
+      {
+        "id": "exp-olympic-club",
+        "at300": -85,
+        "at700": -7,
+        "at1200": -4,
+        "at2000": -4,
+        "lit": true,
+        "year": "2024"
+      },
+      {
+        "id": "exp-estudar",
+        "at300": -109,
+        "at700": -8,
+        "at1200": -5,
+        "at2000": -4,
+        "lit": true,
+        "year": "2025"
+      },
+      {
+        "id": "exp-fintech-rct",
+        "at300": -97,
+        "at700": -7,
+        "at1200": -4,
+        "at2000": -4,
+        "lit": true,
+        "year": "2025"
+      },
+      {
+        "id": "exp-gsat",
+        "at300": -86,
+        "at700": -8,
+        "at1200": -5,
+        "at2000": -4,
+        "lit": true,
+        "year": "2025"
+      },
+      {
+        "id": "exp-hibeex",
+        "at300": -105,
+        "at700": -6,
+        "at1200": -4,
+        "at2000": -4,
+        "lit": true,
+        "year": "2026"
+      }
+    ],
+    "end": {
+      "roadEndMinusLastCardBottom": 0,
+      "sectionBottomMinusLastCardBottom": 221
+    },
+    "afterContact": {
+      "odoBottom": 45,
+      "odoVisible": true,
+      "contactTitleTop": 227
+    },
+    "endView": {
+      "odoBottom": 123,
+      "sectionBottom": 716
+    },
+    "head": {
+      "text": "Professional Experience",
+      "align": "center",
+      "centerOffset": 0
+    }
+  }
+}

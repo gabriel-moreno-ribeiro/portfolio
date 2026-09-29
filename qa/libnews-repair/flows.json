@@ -1,0 +1,8 @@
+{
+  "themeDark": "dark",
+  "inspectUrl": "http://localhost:5173/library/manual-do-mundo",
+  "backUrl": "http://localhost:5173/library",
+  "rowOpenUrl": "http://localhost:5173/library/dom-casmurro",
+  "reducedCardOpacity": "1",
+  "errors": []
+}

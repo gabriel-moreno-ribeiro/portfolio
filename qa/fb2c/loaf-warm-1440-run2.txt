@@ -1,0 +1,14 @@
+1440x900  LoAF total=4  >50ms=4  >100ms=1  maior=121ms  TBT=88ms
+  dur=  121 script=   64 render=   57 styleLayout=   52 blocking=71
+           64ms event-listener chunk-JY4G5M2K.js?v=c4cef3a4:performWorkUntilDeadline MessagePort.onmessage
+            7ms user-callback useSectionProgress.ts?t=1790442113433:onResize ResizeObserverCallback
+  dur=   74 script=   51 render=   24 styleLayout=    6 blocking=16
+           43ms event-listener chunk-JY4G5M2K.js?v=c4cef3a4:performWorkUntilDeadline MessagePort.onmessage
+            5ms user-callback chunk-KHHJNBMQ.js?v=c4cef3a4:_tick2 FrameRequestCallback
+  dur=   55 script=   26 render=   29 styleLayout=    2 blocking=1
+           22ms user-callback clock.ts?t=1790436708360:tick TimerHandler:setInterval
+            6ms user-callback useSectionProgress.ts?t=1790442113433:frame FrameRequestCallback
+  dur=   51 script=   11 render=   40 styleLayout=    1 blocking=0
+           10ms user-callback Experience.tsx?t=1790442113465:tick FrameRequestCallback
+            9ms event-listener posthog-js.js?v=c4cef3a4:? DOMWindow.onscrollend
+            6ms user-callback motion_react.js?v=c4cef3a4:processBatch FrameRequestCallback
