@@ -20,13 +20,12 @@ const FOCUS: Record<string, string> = {
   C0mIBI9MMmB: '50% 28%',
 };
 
-// Photo beside the lead story: a HIBEEX photo from /work/hibeex, not one from the residency.
-// TODO(Gabriel): swap for a photo from the Canastra AI Residency when there is one.
+// Photo beside the lead story: the team of five, chosen by Gabriel.
 const FEATURED_PHOTO = {
-  src: '/work/hibeex/04.webp',
+  src: '/work/hibeex/01.webp',
   w: 1200,
   h: 800,
-  alt: 'Two young men in white HIBEEX sweatshirts sit side by side at a dark wooden table.',
+  alt: 'The HIBEEX team of five by a window at night, two seated in white HIBEEX sweatshirts and three standing behind them, with the São Paulo skyline outside.',
 };
 
 const postId = (url: string) => url.match(/instagram\.com\/(?:p|reel)\/([^/?#]+)/)?.[1] ?? '';
