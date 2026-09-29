@@ -248,27 +248,24 @@ $stage-mono: ui-monospace, 'SF Mono', 'Fira Code', Menlo, Consolas, monospace;
   }
 }
 
+// No box around the photo: the header line sits above it and the photo itself
+// carries the depth.
 .photo-card {
   width: 60%;
   margin: 0;
-  padding: 12px 14px 14px;
   box-sizing: border-box;
   text-align: left;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 14px;
   transition:
     transform 0.6s $stage-ease,
     opacity 0.6s $stage-ease,
-    filter 0.6s $stage-ease,
-    box-shadow 0.6s $stage-ease;
+    filter 0.6s $stage-ease;
   will-change: transform;
 
   &[data-slot='center'] {
     position: relative;
     z-index: 2;
-    border-left: 3px solid var(--accent-decor);
-    box-shadow: var(--stage-shadow);
+
+    .photo-card__media { box-shadow: var(--stage-shadow); }
   }
 
   &[data-slot='prev'],
@@ -279,6 +276,8 @@ $stage-mono: ui-monospace, 'SF Mono', 'Fira Code', Menlo, Consolas, monospace;
     cursor: pointer;
 
     &:hover { opacity: 0.55; }
+    // Only the photos wait behind; their headers would show through the gap.
+    .photo-card__head { visibility: hidden; }
   }
   &[data-slot='prev'] { transform: translateX(-64%) scale(0.9); }
   &[data-slot='next'] { transform: translateX(64%) scale(0.9); }
@@ -294,9 +293,7 @@ $stage-mono: ui-monospace, 'SF Mono', 'Fira Code', Menlo, Consolas, monospace;
     display: flex;
     align-items: center;
     gap: 14px;
-    padding-bottom: 10px;
-    margin-bottom: 12px;
-    border-bottom: 1px solid var(--border);
+    margin-bottom: 10px;
   }
 
   &__steps {
@@ -339,7 +336,7 @@ $stage-mono: ui-monospace, 'SF Mono', 'Fira Code', Menlo, Consolas, monospace;
 
   &__media {
     aspect-ratio: 16 / 10; // the per-photo positions in BackgroundGlobe assume this
-    border-radius: 8px;
+    border-radius: 12px;
     overflow: hidden;
     background: var(--grey);
 
@@ -512,9 +509,8 @@ $stage-mono: ui-monospace, 'SF Mono', 'Fira Code', Menlo, Consolas, monospace;
 
   .photo-card {
     width: 82%;
-    padding: 14px 14px 16px;
 
-    &__head { gap: 10px; padding-bottom: 12px; margin-bottom: 12px; }
+    &__head { gap: 10px; }
     &__label { font-size: 11px; letter-spacing: 0.16em; }
     &__count { font-size: 11px; }
     &[data-slot='prev'] { transform: translateX(-72%) scale(0.88); }
