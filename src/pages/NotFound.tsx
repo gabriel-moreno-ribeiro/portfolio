@@ -18,19 +18,17 @@ function NotFound() {
     canonical: 'https://gabrielmr.com/404',
   });
 
-  const [headers, setHeaders] = useState(0);
-  const onHeader = useCallback((n: number) => setHeaders(n), []);
+  const [score, setScore] = useState({ streak: 0, best: 0 });
+  const onScore = useCallback((streak: number, best: number) => setScore({ streak, best }), []);
 
   return (
     <main className="not-found" id="main-content">
       <div className="not-found__scene">
-        <p className="nf-digits" aria-label="404">
-          <span className="nf-digit" aria-hidden="true">4</span>
-          <NotFoundRobot onHeader={onHeader} />
-          <span className="nf-digit" aria-hidden="true">4</span>
-        </p>
+        <NotFoundRobot onScore={onScore} />
         <p className="not-found__score" aria-hidden="true">
-          {headers > 0 ? `${headers} ${headers === 1 ? 'header' : 'headers'}` : ' '}
+          {score.streak > 0 && `${score.streak} in a row`}
+          {score.streak > 0 && score.best > score.streak && ' · '}
+          {score.best > score.streak && `best ${score.best}`}
         </p>
       </div>
 
@@ -38,10 +36,6 @@ function NotFound() {
         <h1 className="section-title not-found__title">
           This page <em>doesn't exist</em>
         </h1>
-        <p className="not-found__desc">
-          The robot found the missing zero and won't give it back. Everything else is where you left it.
-        </p>
-
         <div className="not-found__actions">
           <Link to="/" className="not-found__home">
             <FiArrowLeft aria-hidden="true" /> Back to home

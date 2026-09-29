@@ -75,15 +75,44 @@ const CITIES: City[] = [
   },
 ];
 
-// Static manifest of photos that actually exist in public/background/<cityId>/.
-// Each entry can be a filename string or {file, position} for object-position hints.
 type PhotoEntry = string | { file: string; position: string };
 
+// Photos in public/background/<cityId>/, in order. `position` is the object-position
+// that keeps the action (the people, what they are doing) in the 16:10 card crop;
+// it was worked out per photo, so recompute it if the card's aspect ratio changes.
 const CITY_PHOTO_MANIFEST: Record<string, PhotoEntry[]> = {
-  'missao-velha': ['01.webp', '02.webp', '03.webp', '04.webp', '05.webp', '06.webp', '07.webp', '08.webp'],
-  'salvador':     ['01.webp', '02.webp', '03.webp', '04.webp', '05.webp', '06.webp'],
-  'fortaleza':    ['01.webp', '02.webp', '03.webp', '04.webp', '05.webp'],
-  'sao-paulo':    ['01.webp', '02.webp', '03.webp', '04.webp', '05.webp'],
+  'missao-velha': [
+    { file: '01.webp', position: '50% 74%' }, // family on the rocks at the waterfall
+    { file: '02.webp', position: '50% 72%' }, // three kids under the trail gate
+    { file: '03.webp', position: '50% 65%' }, // mechanical bull at the fair
+    { file: '04.webp', position: '50% 50%' }, // cashew soda close-up
+    { file: '05.webp', position: '50% 92%' }, // family at the mud house
+    { file: '06.webp', position: '50% 50%' }, // cotton candy at the fair
+    { file: '07.webp', position: '50% 62%' }, // car selfie
+    { file: '08.webp', position: '50% 56%' }, // big hat at night
+  ],
+  'salvador': [
+    { file: '01.webp', position: '50% 0%' },  // leaf headband
+    { file: '02.webp', position: '50% 59%' }, // up the big tree
+    { file: '03.webp', position: '50% 24%' }, // chocolate box
+    { file: '04.webp', position: '50% 12%' }, // under the blanket
+    { file: '05.webp', position: '50% 48%' }, // festa junina outfit
+    { file: '06.webp', position: '50% 62%' }, // sandboarding the dunes
+  ],
+  'fortaleza': [
+    { file: '01.webp', position: '100% 50%' }, // graduation, in front of the banner
+    { file: '02.webp', position: '50% 18%' },  // next to the poster
+    { file: '03.webp', position: '50% 3%' },   // two grads with their books
+    { file: '04.webp', position: '50% 56%' },  // speaking with the mic
+    { file: '05.webp', position: '50% 26%' },  // four students at the event
+  ],
+  'sao-paulo': [
+    { file: '01.webp', position: '50% 82%' }, // the team by the night-city window
+    { file: '02.webp', position: '50% 52%' }, // at the WOW banner
+    { file: '03.webp', position: '50% 0%' },  // at the table
+    { file: '04.webp', position: '50% 31%' }, // selfie on the sofa
+    { file: '05.webp', position: '50% 44%' }, // the toast
+  ],
 };
 
 function cityPhotos(city: City): StagePhoto[] {
@@ -427,30 +456,30 @@ function BackgroundGlobe() {
           </div>
         )}
 
-        {/* ── Panel column ── */}
-        <AnimatePresence>
-          {selected && (
-            <CityPanel
+        {/* ── Right column: the city's story, its photos right under it ── */}
+        {selected && (
+          <div className="city-column">
+            <div className="city-column__text">
+              <AnimatePresence initial={false}>
+                <CityPanel
+                  key={selected.id}
+                  city={selected}
+                  onClose={handleClose}
+                  showClock={inView}
+                />
+              </AnimatePresence>
+            </div>
+            <CityPhotoStage
               key={selected.id}
-              city={selected}
-              onClose={handleClose}
-              showClock={inView}
+              label={selected.name.split(',')[0]}
+              cityIndex={CITIES.findIndex((c) => c.id === selected.id)}
+              cityCount={CITIES.length}
+              photos={stagePhotos}
+              onInteract={pinTour}
             />
-          )}
-        </AnimatePresence>
+          </div>
+        )}
       </div>
-
-      {/* ── Photos of the open city ── */}
-      {selected && (
-        <CityPhotoStage
-          key={selected.id}
-          label={selected.name.split(',')[0]}
-          cityIndex={CITIES.findIndex((c) => c.id === selected.id)}
-          cityCount={CITIES.length}
-          photos={stagePhotos}
-          onInteract={pinTour}
-        />
-      )}
 
       {/* ── Horizontal timeline ── */}
       <CityTimeline

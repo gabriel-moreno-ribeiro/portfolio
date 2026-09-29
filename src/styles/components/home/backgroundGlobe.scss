@@ -15,11 +15,29 @@
 }
 
 // ── Split layout ──
+// Globe on the left; on the right the city's story with its photos right under
+// it, so map, text and photos share one view.
 .globe-layout {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
   gap: 40px;
+  width: 100%;
+}
+
+.city-column {
+  flex: 1;
+  min-width: 280px;
+  max-width: 540px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+
+  // The outgoing and incoming panels overlap while they cross-fade.
+  &__text {
+    display: grid;
+    > * { grid-area: 1 / 1; }
+  }
 }
 
 .globe-column {
@@ -67,12 +85,9 @@
 
 // ── City panel (right column) ──
 .city-panel {
-  flex: 1;
-  min-width: 280px;
-  max-width: 420px;
   border: 1px solid rgba(0, 0, 0, 0.07);
   border-radius: 20px;
-  padding: 28px 24px;
+  padding: 22px 26px;
   box-sizing: border-box;
   text-align: left;
   position: relative;
@@ -100,7 +115,7 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 0;
   }
 
   &__meta {
@@ -176,14 +191,15 @@ $stage-mono: ui-monospace, 'SF Mono', 'Fira Code', Menlo, Consolas, monospace;
   --stage-dot: color-mix(in srgb, var(--fg) 20%, transparent);
   --stage-shadow: 0 28px 56px -24px rgba(60, 25, 5, 0.32), 0 10px 22px -12px rgba(60, 25, 5, 0.18);
   width: 100%;
-  max-width: 1080px;
-  margin-top: 56px;
   animation: stage-in 0.5s $stage-ease;
 
   &__viewport {
     display: grid;
     place-items: center;
-    padding: 12px 0 24px;
+    padding: 6px 0 18px;
+    // Neighbours fade out at the column's edges instead of being cut.
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 9%, #000 91%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 9%, #000 91%, transparent);
     outline-offset: 6px;
     border-radius: 16px;
     touch-action: pan-y;
@@ -198,7 +214,6 @@ $stage-mono: ui-monospace, 'SF Mono', 'Fira Code', Menlo, Consolas, monospace;
     display: flex;
     justify-content: center;
     gap: 6px;
-    margin-top: 8px;
   }
 
   // 44px tall hit area around a 3px line.
@@ -234,9 +249,9 @@ $stage-mono: ui-monospace, 'SF Mono', 'Fira Code', Menlo, Consolas, monospace;
 }
 
 .photo-card {
-  width: min(460px, 76%);
+  width: 60%;
   margin: 0;
-  padding: 18px 22px 22px;
+  padding: 12px 14px 14px;
   box-sizing: border-box;
   text-align: left;
   background: var(--surface);
@@ -279,8 +294,8 @@ $stage-mono: ui-monospace, 'SF Mono', 'Fira Code', Menlo, Consolas, monospace;
     display: flex;
     align-items: center;
     gap: 14px;
-    padding-bottom: 14px;
-    margin-bottom: 16px;
+    padding-bottom: 10px;
+    margin-bottom: 12px;
     border-bottom: 1px solid var(--border);
   }
 
@@ -323,7 +338,7 @@ $stage-mono: ui-monospace, 'SF Mono', 'Fira Code', Menlo, Consolas, monospace;
   }
 
   &__media {
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 16 / 10; // the per-photo positions in BackgroundGlobe assume this
     border-radius: 8px;
     overflow: hidden;
     background: var(--grey);
@@ -491,7 +506,7 @@ $stage-mono: ui-monospace, 'SF Mono', 'Fira Code', Menlo, Consolas, monospace;
     &__photos { columns: 2; }
   }
 
-  .photo-stage { margin-top: 36px; }
+  .city-column { width: 100%; max-width: 100%; }
   .photo-stage__bars { gap: 2px; }
   .photo-stage__bar { width: 34px; }
 
