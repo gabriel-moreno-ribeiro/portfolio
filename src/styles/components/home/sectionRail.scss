@@ -1,11 +1,30 @@
 // ── Section rail (fixed left, progress + current section) ────────────────────
 // Imported by SectionRail.tsx. Only design tokens here: this file is compiled on its own.
+// Sits in the left gutter on a translucent plate, so it reads over any photo it
+// happens to meet. Labels are shown only when the gutter has room for them
+// (the home column is 1400px wide); narrower than that, dots only, and the
+// labels slide out on hover or keyboard focus.
 .section-rail {
   position: fixed;
-  left: 28px;
+  left: 16px;
   top: 50%;
   transform: translateY(-50%);
   z-index: 50;
+  padding: 8px 10px 8px 8px;
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--bg) 78%, transparent);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  @media (min-width: 1760px) {
+    left: 28px;
+  }
+
+  @media (max-width: 1759px) {
+    .section-rail__label { display: none; }
+    &:hover .section-rail__label,
+    &:focus-within .section-rail__label { display: inline; }
+  }
 
   @media (max-width: 1200px) {
     display: none;
@@ -14,9 +33,9 @@
 
 .section-rail__track {
   position: absolute;
-  left: 4px;
-  top: 10px;
-  bottom: 10px;
+  left: 12px;
+  top: 18px;
+  bottom: 18px;
   width: 1px;
   background: var(--border);
   overflow: hidden;
