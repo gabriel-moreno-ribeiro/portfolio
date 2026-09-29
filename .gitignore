@@ -1,4 +1,8 @@
-# dependencies
+# Politica (set/2026, pedido do Gabriel): tudo que esta na pasta vai para o GitHub.
+# Ficam de fora so: segredos, o que se regenera sozinho, estado local de
+# ferramentas e clones de repositorios de terceiros.
+
+# dependencias (regeneradas por npm install)
 /node_modules
 /.pnp
 .pnp.js
@@ -6,56 +10,28 @@
 # testing
 /coverage
 
-# production
+# build (regenerado por npm run build)
 /dist
+*.tsbuildinfo
 
 # misc
 .DS_Store
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Vite
+# segredos: nunca num repositorio publico
+.env
+.env*
+!.env.example
 *.local
 
-.env
+# estado local de ferramentas (especifico da maquina, pode guardar token)
+.vercel
 .gstack/
 .wrangler/
-
-.vercel
-.env*
-
-# local-only
-/Avatar
-/tools
-/screenshots
-/.claude/refs
-/.claude/settings.local.json
-/.mcp.json
-
-# overnight (screenshots local-only)
-/overnight/screenshots
-
-# letta agent local state
 /.letta
-/overnight/lighthouse
-/overnight/preview.log
-/overnight/build.log
 
-
-# fotos soltas na raiz (nao sao do site; decidir destino)
-/*.jpeg
-/*.jpg
-
-# QA: capturas e relatorios HTML ficam so em disco (dezenas de MB)
-qa/**/*.png
-qa/**/*.html
-
-*.tsbuildinfo
-qa/**/lighthouse-desktop.json
-qa/**/lighthouse-mobile.json
+# clones de repositorios de terceiros (tem git proprio)
+/tools
+/.claude/refs
