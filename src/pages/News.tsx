@@ -15,7 +15,7 @@ const MEDIA: Record<string, Media> = newsMedia;
 
 // Where the crop sits when a portrait cover goes into a wider frame (default: centre)
 const FOCUS: Record<string, string> = {
-  DcBlbZOh5hx: '50% 55%', // keeps "Parte 1", the question and the WOW logo in the square frame
+  DcBlbZOh5hx: '50% 20%', // head and badge inside the square frame
   DRhNb1vgH3p: '50% 22%',
   C0mIBI9MMmB: '50% 28%',
 };
