@@ -111,7 +111,8 @@ $project-text: 720px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   gap: 20px 28px;
-  margin: 44px 0 0;
+  max-width: $project-text; // same column as the text below
+  margin: 44px auto 0;
   padding: 0;
   list-style: none;
 
@@ -120,7 +121,7 @@ $project-text: 720px;
     flex-direction: column;
     gap: 6px;
     padding-left: 16px;
-    border-left: 2px solid var(--accent-decor);
+    border-left: 1px solid var(--border);
   }
 
   strong {
@@ -217,7 +218,7 @@ $project-text: 720px;
 
 .project__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 18px;
 }
 

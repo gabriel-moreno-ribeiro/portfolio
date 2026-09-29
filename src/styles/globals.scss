@@ -1,6 +1,7 @@
 // ── Semantic design tokens ────────────────────────────────────────────────────
 // Light (default)
 :root {
+  color-scheme:   light;
   --bg:           #fff8f4;
   --surface:      #ffffff;
   --fg:           #111111;
@@ -32,6 +33,7 @@
 
 // Dark
 [data-theme="dark"] {
+  color-scheme:   dark;     // scrollbars, form controls, resize handles
   --bg:           #0a0a1a;
   --surface:      #16162e;
   --fg:           #ffffff;
@@ -233,6 +235,9 @@ body {
   width: 100%;
   padding: 0 16px;
   box-sizing: border-box;
+  // The experience road's fog window bleeds 220px past its column; clip (not hidden)
+  // keeps the sticky odometer working.
+  overflow-x: clip;
   position: relative;
   z-index: 1;
 }
@@ -264,8 +269,8 @@ body {
 }
 
 ::selection {
-  background: lighten($primary-orange, 40%);
-  color: var(--primary-orange);
+  background: lighten($primary-orange, 36%);
+  color: var(--fg);
 }
 
 [data-theme="dark"] {
@@ -366,41 +371,21 @@ img {
   padding-bottom: 80px;
 }
 
-// Blog's plain "Back" button. Scoped to .page-wrapper: unscoped, it overrode the
-// pill above on /story, /news and /library and its margin-bottom pushed the
-// library's "Home" link onto the "Library · 28 books" label.
-.page-wrapper .page-back {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: none;
-  border: none;
-  font-family: inherit;
-  font-size: 14px;
-  font-weight: 500;
-  color: $text-grey;
-  cursor: pointer;
-  padding: 6px 0;
-  margin-bottom: 32px;
-  transition: color 0.2s;
-
-  &:hover {
-    color: $primary-orange;
-  }
-}
-
+// Same title as /files and /work.
 .page-title {
-  font-size: 48px;
-  font-weight: 700;
+  margin: 18px 0 8px;
   font-family: var(--font-serif);
   font-style: italic;
-  color: var(--black);
-  margin-bottom: 8px;
+  font-weight: 400;
+  font-size: clamp(42px, 6vw, 72px);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: var(--fg);
 }
 
 .page-subtitle {
   font-size: 16px;
-  color: $text-grey;
+  color: var(--fg-muted);
   margin-bottom: 48px;
 }
 
@@ -411,9 +396,9 @@ img {
   justify-content: center;
   text-align: center;
   padding: 80px 24px;
-  border: 1px dashed rgba(0, 0, 0, 0.12);
+  border: 1px dashed var(--border);
   border-radius: 16px;
-  background: rgba($grey, 0.3);
+  background: color-mix(in srgb, var(--surface) 50%, transparent);
 
   &__icon {
     font-size: 32px;
@@ -422,16 +407,16 @@ img {
     opacity: 0.6;
   }
 
-  h3 {
+  h2 {
     font-size: 20px;
     font-weight: 600;
-    color: var(--black);
+    color: var(--fg);
     margin-bottom: 8px;
   }
 
   p {
     font-size: 14px;
-    color: $text-grey;
+    color: var(--fg-muted);
   }
 }
 
@@ -534,7 +519,7 @@ img {
 
 [data-theme="dark"] .back-to-top {
   background-color: rgba($black, 0.8);
-  border: 2px solid $white;
+  border: 1px solid rgba($white, 0.28);
   color: $white;
 
   &:hover {

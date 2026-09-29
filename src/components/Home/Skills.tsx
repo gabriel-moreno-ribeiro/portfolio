@@ -139,6 +139,16 @@ const Skills: React.FC = () => {
           cardBorder={darkMode ? "rgba(255,255,255,0.16)" : "rgba(0,0,0,0.08)"}
         />
       )}
+      {isMobile && (
+        <ul className="skills-strip" aria-hidden="true">
+          {/* The first ten are already drawn as tiles; the devicon logos get a card. */}
+          {iconUrls.map((src, i) => (
+            <li key={src} className={i < BUILTIN_COUNT ? "is-tile" : undefined}>
+              <img src={src} alt="" width={40} height={40} loading="lazy" decoding="async" />
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };

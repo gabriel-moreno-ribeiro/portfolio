@@ -41,8 +41,8 @@
   }
 
   &.outline {
-    color: var(--black);
-    border: 2px solid var(--border-grey);
+    color: var(--fg);
+    border: 2px solid var(--border);
     position: relative;
     overflow: hidden;
     z-index: 1;
@@ -54,7 +54,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background-color: var(--white);
+      background-color: var(--bg);
 
       z-index: -2;
     }
@@ -66,14 +66,14 @@
       left: 0;
       width: 0%;
       height: 100%;
-      background-color: var(--black);
+      background-color: var(--fg);
       transition: all 0.3s;
       z-index: -1;
     }
 
     &:hover {
-      color: var(--white);
-      border: 2px solid var(--black);
+      color: var(--bg);
+      border: 2px solid var(--fg);
 
       &:before {
         width: 100%;

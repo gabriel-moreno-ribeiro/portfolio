@@ -54,7 +54,7 @@
     color: var(--black);
 
     .orange {
-      color: $primary-orange;
+      color: var(--accent-hero); // #f0732d was 2.8:1 on cream
     }
   }
 }

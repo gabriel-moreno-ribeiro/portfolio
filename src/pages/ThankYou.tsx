@@ -1,7 +1,7 @@
 import { motion } from 'motion/react';
 import { useEffect } from 'react';
 import { FiCheck } from 'react-icons/fi';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDocumentHead } from '../hooks/useDocumentHead';
 import '../styles/components/shared/contact.scss';
 
@@ -23,7 +23,7 @@ function ThankYou() {
     <main className="thank-you" id="main-content">
       <motion.div
         className="thank-you__container"
-        initial={{ opacity: 0, scale: 0.95 }}
+        initial={{ scale: 0.97 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5, ease: 'easeOut' }}
       >
@@ -35,7 +35,8 @@ function ThankYou() {
           Got it. I'll write back soon.
         </p>
         <p className="thank-you__redirect">
-          Taking you back home in a few seconds.
+          Taking you back home in a few seconds.{' '}
+          <Link to="/">Go now</Link>
         </p>
       </motion.div>
     </main>

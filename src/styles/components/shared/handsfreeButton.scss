@@ -26,7 +26,7 @@
 [data-theme="dark"] {
   .handsfree-button {
     background-color: rgba($black, 0.8);
-    border: 2px solid $white;
+    border: 1px solid rgba($white, 0.28);
     color: $white;
 
     &.active {

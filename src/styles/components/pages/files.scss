@@ -18,7 +18,11 @@ $files-text: 720px;
 .files__header {
   max-width: $files-text;
   width: 100%;
-  margin: 0 auto;
+  margin: 0 auto 36px;
+  // The rule spans the full column, like the list rules below it (on the 52ch
+  // summary it stopped short).
+  padding-bottom: 36px;
+  border-bottom: 1px solid var(--border);
 }
 
 .files__eyebrow {
@@ -53,9 +57,7 @@ $files-text: 720px;
 
 .files__summary {
   max-width: 52ch;
-  margin: 20px 0 36px;
-  padding-bottom: 36px;
-  border-bottom: 1px solid var(--border);
+  margin: 20px 0 0;
   font-size: 19px;
   line-height: 1.5;
   color: var(--fg-muted);

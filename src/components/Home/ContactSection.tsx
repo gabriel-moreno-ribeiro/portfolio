@@ -78,9 +78,8 @@ function ContactSection() {
   return (
     <section className="contact-section" id="contact">
       <div className="contact-section__intro">
-        <p className="contact-section__eyebrow">Contact</p>
-        <h2 className="contact-section__title" data-color-inverted="true">
-          Let's <em>talk.</em>
+        <h2 className="section-title contact-section__title" data-color-inverted="true">
+          Let's <em>Talk</em>
         </h2>
         <p className="contact-section__lead">
           Building something, hiring, or just curious? Write to me.

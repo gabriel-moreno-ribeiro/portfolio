@@ -67,7 +67,6 @@ const NumbersAndStats = () => {
         exit={{ opacity: 0, y: -10 }}
         transition={{ duration: 0.3 }}
         className="card-text"
-        aria-live="polite"
       >
         <span className="orange"> {stat.prefix}<CountUp value={stat.value} decimals={stat.decimals} grouping={stat.grouping} />{stat.suffix} </span>
         {stat.label}

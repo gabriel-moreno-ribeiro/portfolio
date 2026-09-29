@@ -51,4 +51,33 @@
       margin-bottom: 0;
     }
   }
+
+  .skills-strip {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    max-width: 340px;
+    margin: 24px auto 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+      display: grid;
+      place-items: center;
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+    }
+
+    img { width: 32px; height: 32px; object-fit: contain; }
+
+    .is-tile {
+      background: none;
+      border: 0;
+      img { width: 56px; height: 56px; }
+    }
+  }
 }

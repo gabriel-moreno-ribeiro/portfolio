@@ -1,4 +1,5 @@
 import { memo } from 'react';
+import { FiArrowDown } from 'react-icons/fi';
 import { renderEmphasis, type ExperienceEntry } from '../../../lib/data';
 
 interface StopProps {
@@ -22,10 +23,6 @@ function Stop({ entry, side, cta }: StopProps) {
       tabIndex={-1}
     >
       <article className="exp__card">
-        <p className="exp__card-meta">
-          <span className="exp__card-year">{entry.start.slice(0, 4)}</span>
-          {entry.city && <span className="exp__card-city">{entry.city}</span>}
-        </p>
         <h3 className="exp__card-org">
           {entry.url ? (
             <a href={entry.url} target="_blank" rel="noopener noreferrer">
@@ -38,6 +35,7 @@ function Stop({ entry, side, cta }: StopProps) {
         {entry.role && <p className="exp__card-role">{entry.role}</p>}
         <p className="exp__card-period">
           {entry.periodLabel}
+          {entry.city && <span className="exp__card-city">{entry.city}</span>}
           {present && <span className="exp__tag">present</span>}
         </p>
         {entry.note && <p className="exp__card-note">{entry.note}</p>}
@@ -48,7 +46,7 @@ function Stop({ entry, side, cta }: StopProps) {
         </ul>
         {cta && (
           <a className="exp__card-cta" href="#contact">
-            Let&rsquo;s talk <span aria-hidden="true">&darr;</span>
+            Let&rsquo;s talk <FiArrowDown aria-hidden="true" />
           </a>
         )}
       </article>
