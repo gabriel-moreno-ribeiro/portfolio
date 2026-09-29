@@ -8,6 +8,8 @@
   --lib-glass: color-mix(in srgb, var(--surface) 86%, transparent);
   --lib-veil: color-mix(in srgb, var(--bg) 94%, transparent);
   --lib-ink-pad: 8px;
+  // Top band kept free for the crumb and the nav pill: the scene starts below it.
+  --lib-top: 96px;
 
   position: relative;
   width: 100%;
@@ -41,7 +43,10 @@
   --stage-floor: #dad4cd;
 
   position: absolute;
-  inset: 0;
+  top: var(--lib-top);
+  right: 0;
+  bottom: 0;
+  left: 0;
   z-index: 0;
   background: linear-gradient(
     180deg,
@@ -64,11 +69,12 @@
 // ── Canvas ───────────────────────────────────────────────────────────────────
 .library__canvas {
   position: absolute;
-  inset: 0;
+  top: var(--lib-top);
+  left: 0;
   z-index: 1;
   display: block;
   width: 100%;
-  height: 100%;
+  height: calc(100% - var(--lib-top));
   cursor: grab;
   touch-action: none;
   opacity: 0;
@@ -284,7 +290,8 @@
 .library__arrow {
   position: absolute;
   z-index: 17;
-  top: 49%;
+  // Upper third of the scene: below the header, above the caption on short screens.
+  top: calc(var(--lib-top) + (100% - var(--lib-top)) * 0.3);
   display: grid;
   place-items: center;
   width: 50px;
@@ -313,7 +320,7 @@
 .library__index-bar {
   position: absolute;
   z-index: 19;
-  right: clamp(24px, 5vw, 82px);
+  right: calc(clamp(24px, 5vw, 82px) + 48px); // clear of the terminal button
   bottom: 26px;
   left: clamp(24px, 5vw, 82px);
   display: flex;
@@ -476,6 +483,10 @@
 
 .library__panel-copy {
   align-self: center;
+  // Centred when short; capped by its row when tall, so it scrolls instead of
+  // spilling under the back button and the controls.
+  max-height: 100%;
+  min-height: 0;
   overflow: auto;
   padding: 28px 8px 28px 0;
   scrollbar-width: thin;
@@ -605,7 +616,7 @@
 .library__credit {
   position: absolute;
   z-index: 18;
-  right: clamp(24px, 5vw, 82px);
+  right: calc(clamp(24px, 5vw, 82px) + 48px);
   bottom: 12px;
   margin: 0;
   line-height: 1;
@@ -924,6 +935,7 @@
 }
 
 @media (max-width: 760px) {
+  .library { --lib-top: 124px; } // the crumb sits under the pill on phones
   .library__eyebrow { top: 80px; left: 18px; }
   .library--focused .library__eyebrow { opacity: 0; }
   .library__crumb { gap: 14px; }
@@ -991,7 +1003,7 @@
   .library__row-body { padding: 0 14px 20px 60px; .library__facts { grid-template-columns: 1fr; } }
 
   // Full width so each age stays a 24px+ target (12 ages in 354px is ~29px each)
-  .library__index-bar { right: 18px; bottom: max(8px, env(safe-area-inset-bottom)); left: 18px; }
+  .library__index-bar { right: 18px; bottom: max(8px, env(safe-area-inset-bottom)); left: 18px; } // no terminal button on phones
   .library__ages { flex-basis: 100%; }
   .library__hint { display: none; }
   // No room for a standing legend between the ruler and the arrows: it shows on tap or focus only
