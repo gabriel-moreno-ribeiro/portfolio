@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>404 — Gabriel Moreno Ribeiro</title>
     <meta name="robots" content="noindex" />
+    <!-- Static twin of the app's 404 (src/pages/NotFound.tsx): same robot, same copy,
+         CSS only. Served for paths the SPA rewrite does not catch. -->
     <style>
-      :root { --bg: #fff8f4; --fg: #111; --fg-muted: #5f5f5f; --accent: #b8501a; }
+      :root { --bg: #fff8f4; --fg: #111; --fg-muted: #5f5f5f; --accent: #b8501a; --ball: #f0732d; }
       @media (prefers-color-scheme: dark) {
         :root { --bg: #0a0a1a; --fg: #fff; --fg-muted: #a8a8b8; --accent: #f0732d; }
       }
@@ -16,42 +18,119 @@
         color: var(--fg);
         font-family: "DM Sans", system-ui, sans-serif;
         min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        display: grid;
+        place-items: center;
         text-align: center;
-        padding: 24px;
+        padding: 96px 24px 64px;
       }
-      .container { max-width: 480px; }
-      .code {
-        font-size: clamp(80px, 18vw, 160px);
-        font-weight: 900;
+      .digits {
+        display: flex;
+        align-items: baseline;
+        justify-content: center;
+        padding-top: 1em;
+        font-size: clamp(104px, 19vw, 200px);
+        font-weight: 800;
         line-height: 1;
-        color: var(--accent);
-        letter-spacing: -4px;
+        letter-spacing: -0.04em;
       }
-      h1 { font-size: 1.5rem; font-weight: 600; margin: 16px 0 8px; }
-      p { color: var(--fg-muted); font-size: 1rem; line-height: 1.6; margin-bottom: 32px; }
+      .slot { position: relative; display: inline-block; width: 0.72em; height: 0.8em; margin: 0 0.03em; }
+      .robot { position: absolute; left: 50%; bottom: -0.015em; width: 0.64em; height: 0.8em; transform: translateX(-50%); overflow: visible; }
+      .robot .torso { transform-box: fill-box; transform-origin: 50% 100%; animation: squash 1.2s infinite; }
+      .robot .eyes { animation: look 1.2s infinite; }
+      .ball {
+        position: absolute; left: 50%; bottom: calc(0.8em * 230 / 250 - 0.015em);
+        width: 0.33em; height: 0.43em; margin-left: -0.165em; color: var(--ball);
+        animation: bounce 1.2s infinite;
+      }
+      .ball svg { display: block; width: 100%; height: 100%; }
+      @keyframes bounce {
+        0%, 100% { transform: translateY(0) rotate(0deg); animation-timing-function: cubic-bezier(0.33, 0.66, 0.66, 1); }
+        50% { transform: translateY(-0.56em) rotate(180deg); animation-timing-function: cubic-bezier(0.33, 0, 0.66, 0.33); }
+      }
+      @keyframes squash {
+        0%, 12%, 100% { transform: none; }
+        4% { transform: translateY(4px) scaleY(0.965); }
+      }
+      @keyframes look {
+        0%, 100% { transform: translateY(2px); }
+        50% { transform: translateY(-5px); }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .ball, .robot .torso, .robot .eyes { animation: none; }
+      }
+      h1 { font-size: clamp(30px, 4.2vw, 48px); font-weight: 700; line-height: 1.05; letter-spacing: -0.01em; margin-top: 56px; }
+      h1 em { font-family: "DM Serif Display", Georgia, serif; font-weight: 400; color: var(--accent); }
+      p { color: var(--fg-muted); font-size: 17px; line-height: 1.6; margin: 14px auto 32px; max-width: 34rem; }
       a {
-        display: inline-block;
-        background: var(--accent);
-        color: #fff;
+        display: inline-flex;
+        align-items: center;
+        min-height: 48px;
+        padding: 0 26px;
+        border-radius: 999px;
+        background: var(--fg);
+        color: var(--bg);
         text-decoration: none;
-        padding: 12px 28px;
-        border-radius: 8px;
         font-weight: 600;
-        font-size: 0.95rem;
-        transition: opacity 0.15s;
+        font-size: 15px;
+        transition: transform 0.16s ease-out;
       }
-      a:hover { opacity: 0.85; }
+      a:hover { transform: translateY(-1px); }
+      a:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
     </style>
   </head>
   <body>
-    <main class="container">
-      <div class="code">404</div>
-      <h1>Nothing here.</h1>
-      <p>This page doesn't exist. The rest of the site does.</p>
-      <a href="/">Take me home</a>
+    <main>
+      <p class="digits" aria-label="404">
+        <span aria-hidden="true">4</span>
+        <span class="slot" aria-hidden="true">
+          <span class="ball">
+            <svg viewBox="0 0 100 130"><ellipse cx="50" cy="65" rx="35" ry="51" fill="none" stroke="currentColor" stroke-width="27" /></svg>
+          </span>
+          <svg class="robot" viewBox="0 0 200 250">
+            <g fill="#6f6f78">
+              <rect x="50" y="188" width="20" height="9" rx="3" /><rect x="130" y="188" width="20" height="9" rx="3" />
+              <rect x="50" y="199" width="20" height="9" rx="3" /><rect x="130" y="199" width="20" height="9" rx="3" />
+              <rect x="50" y="210" width="20" height="9" rx="3" /><rect x="130" y="210" width="20" height="9" rx="3" />
+              <rect x="50" y="221" width="20" height="9" rx="3" /><rect x="130" y="221" width="20" height="9" rx="3" />
+            </g>
+            <path fill="#3b3b42" d="M42 246 L48 232 H72 L78 246 Z M122 246 L128 232 H152 L158 246 Z" />
+            <g class="torso">
+              <g fill="#6f6f78">
+                <rect x="12" y="120" width="34" height="30" rx="6" /><rect x="20" y="160" width="18" height="8" rx="3" /><rect x="20" y="170" width="18" height="8" rx="3" />
+                <rect x="154" y="120" width="34" height="30" rx="6" /><rect x="162" y="160" width="18" height="8" rx="3" /><rect x="162" y="170" width="18" height="8" rx="3" />
+                <rect x="76" y="12" width="4" height="12" rx="2" /><rect x="120" y="12" width="4" height="12" rx="2" />
+              </g>
+              <g fill="#3b3b42">
+                <rect x="21" y="150" width="16" height="8" rx="3" /><rect x="163" y="150" width="16" height="8" rx="3" />
+                <path d="M16 180 H42 L38 194 H34 L32 186 H26 L24 194 H20 Z M158 180 H184 L180 194 H176 L174 186 H168 L166 194 H162 Z" />
+              </g>
+              <rect fill="#f0732d" x="64" y="20" width="72" height="38" rx="9" />
+              <g fill="#6f6f78">
+                <rect x="73" y="27" width="6" height="24" rx="3" /><rect x="84" y="27" width="6" height="24" rx="3" /><rect x="95" y="27" width="6" height="24" rx="3" /><rect x="106" y="27" width="6" height="24" rx="3" /><rect x="117" y="27" width="6" height="24" rx="3" />
+              </g>
+              <rect fill="#3b3b42" x="60" y="56" width="80" height="7" rx="3" />
+              <rect fill="#f0732d" x="38" y="60" width="124" height="128" rx="18" />
+              <rect fill="#d25a17" opacity="0.55" x="148" y="66" width="10" height="116" rx="5" />
+              <g fill="#6f6f78">
+                <circle cx="52" cy="74" r="3.5" /><circle cx="148" cy="74" r="3.5" /><circle cx="52" cy="142" r="3.5" /><circle cx="148" cy="142" r="3.5" />
+              </g>
+              <circle cx="100" cy="106" r="37" fill="#0d0d10" stroke="#7c7c86" stroke-width="5" />
+              <g class="eyes" fill="#fff">
+                <rect x="85" y="98" width="9" height="17" rx="4.5" /><rect x="106" y="98" width="9" height="17" rx="4.5" />
+              </g>
+              <g fill="#6f6f78">
+                <rect x="48" y="150" width="10" height="30" rx="5" /><rect x="142" y="150" width="10" height="30" rx="5" /><rect x="70" y="152" width="60" height="34" rx="7" />
+              </g>
+              <rect fill="#a3a3ad" x="78" y="159" width="44" height="8" rx="4" />
+              <rect fill="#a3a3ad" x="78" y="171" width="44" height="8" rx="4" />
+            </g>
+          </svg>
+        </span>
+        <span aria-hidden="true">4</span>
+      </p>
+      <h1>This page <em>doesn't exist</em></h1>
+      <p>The robot found the missing zero and won't give it back. Everything else is where you left it.</p>
+      <a href="/">Back to home</a>
     </main>
   </body>
 </html>

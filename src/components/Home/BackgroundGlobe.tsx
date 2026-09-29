@@ -4,9 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { config, useClock } from '../../lib/data';
 import { usePageVisible, useReducedMotion } from '../../lib/motion';
 import { useThemeStore } from '../../store/themeStore';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import AccordionGallery from '../ReactBits/AccordionGallery';
+import CityPhotoStage, { type StagePhoto } from './CityPhotoStage';
 
 interface City {
   id: string;
@@ -87,6 +85,21 @@ const CITY_PHOTO_MANIFEST: Record<string, PhotoEntry[]> = {
   'fortaleza':    ['01.webp', '02.webp', '03.webp', '04.webp', '05.webp'],
   'sao-paulo':    ['01.webp', '02.webp', '03.webp', '04.webp', '05.webp'],
 };
+
+function cityPhotos(city: City): StagePhoto[] {
+  const entries = CITY_PHOTO_MANIFEST[city.id] ?? [];
+  const place = city.name.split(',')[0];
+  return entries.map((entry, i) => {
+    const { file, position } = typeof entry === 'string'
+      ? { file: entry, position: 'center top' }
+      : entry;
+    return {
+      src: `/background/${city.id}/${file}`,
+      alt: `${place}, photo ${i + 1} of ${entries.length}`,
+      position,
+    };
+  });
+}
 
 function locationToAngles(lat: number, lon: number): [number, number] {
   return [
@@ -276,23 +289,6 @@ function CityPanel({
   onClose: () => void;
   showClock: boolean;
 }) {
-  const galleryItems = useMemo(() => {
-    const entries = CITY_PHOTO_MANIFEST[city.id] ?? [];
-    const place = city.name.split(',')[0];
-    return entries.map((entry, i) => {
-      const { file, position } = typeof entry === 'string'
-        ? { file: entry, position: 'center top' }
-        : entry;
-      return {
-        image: `/background/${city.id}/${file}`,
-        label: place,
-        // The panels are focusable, so each one needs a name of its own.
-        alt: `${place}, photo ${i + 1} of ${entries.length}`,
-        position,
-      };
-    });
-  }, [city.id, city.name]);
-
   const reduced = useReducedMotion();
 
   return (
@@ -318,21 +314,6 @@ function CityPanel({
           <p key={i} className="city-panel__para">{para}</p>
         ))}
       </div>
-
-      {galleryItems.length > 0 && (
-        /* trigger="hover" opens on hover; the panels also open on focus (keyboard). */
-        <AccordionGallery
-          items={galleryItems as any}
-          height={320}
-          defaultIndex={0}
-          trigger="hover"
-          showLabels={false}
-          grayscale={true}
-          expandRatio={galleryItems.length === 1 ? 0.99 : 0.6}
-          gap={5}
-          radius={10}
-        />
-      )}
     </motion.div>
   );
 }
@@ -393,6 +374,8 @@ function BackgroundGlobe() {
   }, []);
 
   const onPainted = useCallback(() => setGlobePainted(true), []);
+  const stagePhotos = useMemo(() => (selected ? cityPhotos(selected) : []), [selected]);
+  const pinTour = useCallback(() => setPinned(true), []);
 
   // Guided tour: advances every few seconds while the section is on screen and
   // nobody has taken over. Off-screen, hidden tab or reduced motion: it stays put.
@@ -456,6 +439,18 @@ function BackgroundGlobe() {
           )}
         </AnimatePresence>
       </div>
+
+      {/* ── Photos of the open city ── */}
+      {selected && (
+        <CityPhotoStage
+          key={selected.id}
+          label={selected.name.split(',')[0]}
+          cityIndex={CITIES.findIndex((c) => c.id === selected.id)}
+          cityCount={CITIES.length}
+          photos={stagePhotos}
+          onInteract={pinTour}
+        />
+      )}
 
       {/* ── Horizontal timeline ── */}
       <CityTimeline
