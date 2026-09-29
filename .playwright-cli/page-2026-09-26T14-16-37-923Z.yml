@@ -1,0 +1,7 @@
+- generic [active] [ref=f20e1]:
+  - link "Skip to content" [ref=f20e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - generic [ref=f20e4]:
+    - button "Hands-free mode (camera)" [ref=f20e6] [cursor=pointer]: Hands-free mode
+    - button "Switch to dark mode" [ref=f20e10] [cursor=pointer]: Dark mode
+    - button "Open terminal (Ctrl+K)" [ref=f20e13] [cursor=pointer]: Terminal · Ctrl+K

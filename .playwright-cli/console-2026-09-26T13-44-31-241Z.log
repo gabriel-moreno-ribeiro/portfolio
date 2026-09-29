@@ -1,0 +1,25 @@
+[     729ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:5173/node_modules/.vite/deps/chunk-6ER7OG3O.js?v=9faaa5be:19834
+[    1015ms] [ERROR] [data] src/data/experience.json não passou no schema (2 problema(s)).
+  - 4.role: Too small: expected string to have >=1 characters
+  - 5.role: Too small: expected string to have >=1 characters
+O site segue com o JSON cru; corrija o arquivo. @ http://localhost:5173/src/lib/data/schemas.ts?t=1790429743867:133
+[    6160ms] [WARNING] The resource http://localhost:5173/moments/mv01.webp was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://localhost:5173/library:0
+[    9286ms] [WARNING] The resource http://localhost:5173/moments/mv01.webp was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://localhost:5173/library:0
+[  261605ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:5173/node_modules/.vite/deps/chunk-6ER7OG3O.js?v=9faaa5be:19834
+[  261777ms] [ERROR] [data] src/data/experience.json não passou no schema (2 problema(s)).
+  - 4.role: Too small: expected string to have >=1 characters
+  - 5.role: Too small: expected string to have >=1 characters
+O site segue com o JSON cru; corrija o arquivo. @ http://localhost:5173/src/lib/data/schemas.ts?t=1790429743867:133
+[  266617ms] [WARNING] The resource http://localhost:5173/moments/mv01.webp was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://localhost:5173/library:0
+[  565672ms] [WARNING] The resource http://localhost:5173/moments/mv01.webp was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://localhost:5173/library:0
+[  608306ms] [WARNING] The resource http://localhost:5173/moments/mv01.webp was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://localhost:5173/library:0
+[  615364ms] [WARNING] WebGL: INVALID_OPERATION: texImage3D: FLIP_Y or PREMULTIPLY_ALPHA isn't allowed for uploading 3D textures @ http://localhost:5173/node_modules/.vite/deps/chunk-BV42CLSU.js?v=9faaa5be:14402
+[  615365ms] [WARNING] WebGL: INVALID_OPERATION: texImage3D: FLIP_Y or PREMULTIPLY_ALPHA isn't allowed for uploading 3D textures @ http://localhost:5173/node_modules/.vite/deps/chunk-BV42CLSU.js?v=9faaa5be:14402
+[  618723ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:5173/node_modules/.vite/deps/chunk-6ER7OG3O.js?v=c4cef3a4:19834
+[  619268ms] [ERROR] [data] src/data/experience.json não passou no schema (2 problema(s)).
+  - 4.role: Too small: expected string to have >=1 characters
+  - 5.role: Too small: expected string to have >=1 characters
+O site segue com o JSON cru; corrija o arquivo. @ http://localhost:5173/src/lib/data/schemas.ts?t=1790429743867:133
+[  625891ms] [WARNING] The resource http://localhost:5173/moments/mv01.webp was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://localhost:5173/library:0
+[  693956ms] [WARNING] The resource http://localhost:5173/moments/mv01.webp was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://localhost:5173/library:0
+[  707005ms] [WARNING] The resource http://localhost:5173/moments/mv01.webp was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://localhost:5173/library:0

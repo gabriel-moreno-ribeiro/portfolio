@@ -1,0 +1,98 @@
+- generic [active] [ref=f2e1]:
+  - link "Skip to content" [ref=f2e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - generic [ref=f2e4]:
+    - main [ref=f2e5]:
+      - navigation "Site menu" [ref=f2e6]:
+        - generic [ref=f2e7] [cursor=pointer]
+        - paragraph [aria-hidden] [ref=f2e10]: Gabriel Moreno Ribeiro.
+        - generic:
+          - button "Home."
+          - button "Library."
+          - button "News."
+          - button "Story."
+          - button "LinkedIn."
+          - button "GitHub."
+      - generic [ref=f2e11]:
+        - paragraph [ref=f2e12]:
+          - link "Cool Things" [ref=f2e13] [cursor=pointer]:
+            - /url: /#work
+          - generic [ref=f2e17]: Competitions
+        - heading "39 Olympiad Medals" [level=1] [ref=f2e18]
+        - paragraph [ref=f2e19]: 39 medals in 49 academic olympiads across math, physics, chemistry, biology and astronomy. 19 of them gold.
+      - list [ref=f2e21]:
+        - listitem [ref=f2e22]:
+          - strong [ref=f2e23]: "39"
+          - generic [ref=f2e24]: medals in 49 competitions
+        - listitem [ref=f2e25]:
+          - strong [ref=f2e26]: "19"
+          - generic [ref=f2e27]: gold
+        - listitem [ref=f2e28]:
+          - strong [ref=f2e29]: "2"
+          - generic [ref=f2e30]: international
+        - listitem [ref=f2e31]:
+          - strong [ref=f2e32]: 1st
+          - generic [ref=f2e33]: of 10,000+ at IFT-UNESP
+      - generic [ref=f2e34]:
+        - generic [ref=f2e35]:
+          - heading "The record" [level=2] [ref=f2e36]
+          - paragraph [ref=f2e37]: 39 medals in 49 competitions, across math, physics, chemistry, biology and astronomy. 19 gold, 2 of them international.
+          - paragraph [ref=f2e38]: The gold at OBFEP, the physics olympiad for public schools, is the one that turned into Projeto Candela.
+        - generic [ref=f2e39]:
+          - heading "Selections" [level=2] [ref=f2e40]
+          - paragraph [ref=f2e41]: 1st of more than 10,000 applicants at IFT-UNESP, the Institute for Theoretical Physics, and the only student from the Northeast picked that year.
+          - paragraph [ref=f2e42]: 1st at OBAQ, top 0.014%. Gold at ONNEQ, top 0.675%. Silver at OBMEP and bronze at OBQ.
+        - generic [ref=f2e43]:
+          - heading "Alongside" [level=2] [ref=f2e44]
+          - paragraph [ref=f2e45]: SAT 1510/1600, top 1% in Brazil.
+      - navigation "Other work" [ref=f2e46]:
+        - heading "More" [level=2] [ref=f2e47]
+        - list [ref=f2e48]:
+          - listitem [ref=f2e49]:
+            - 'link "HIBEEX Backoffice AI for small and medium businesses: raw data in, decisions out." [ref=f2e50] [cursor=pointer]':
+              - /url: /work/hibeex
+              - strong [ref=f2e51]: HIBEEX
+              - generic [ref=f2e52]: "Backoffice AI for small and medium businesses: raw data in, decisions out."
+          - listitem [ref=f2e56]:
+            - link "Projeto Candela Low-cost physics lab kits, built and taken to 28 public schools in Salvador. 3,392 students so far." [ref=f2e57] [cursor=pointer]:
+              - /url: /work/candela
+              - strong [ref=f2e58]: Projeto Candela
+              - generic [ref=f2e59]: Low-cost physics lab kits, built and taken to 28 public schools in Salvador. 3,392 students so far.
+          - listitem [ref=f2e63]:
+            - link "GSAT Education A test-prep platform I built from scratch as founding CEO." [ref=f2e64] [cursor=pointer]:
+              - /url: /work/gsat
+              - strong [ref=f2e65]: GSAT Education
+              - generic [ref=f2e66]: A test-prep platform I built from scratch as founding CEO.
+      - generic [ref=f2e70]:
+        - generic [ref=f2e71]:
+          - paragraph [ref=f2e72]: Want to talk?
+          - link "me@gabrielmr.com" [ref=f2e73] [cursor=pointer]:
+            - /url: mailto:me@gabrielmr.com
+        - navigation "Pages" [ref=f2e74]:
+          - link "Home." [ref=f2e75] [cursor=pointer]:
+            - /url: /
+          - link "Library." [ref=f2e76] [cursor=pointer]:
+            - /url: /library
+          - link "News." [ref=f2e77] [cursor=pointer]:
+            - /url: /news
+          - link "Story." [ref=f2e78] [cursor=pointer]:
+            - /url: /story
+          - link "Contact." [ref=f2e79] [cursor=pointer]:
+            - /url: /#contact
+        - generic [ref=f2e80]:
+          - link "LinkedIn." [ref=f2e81] [cursor=pointer]:
+            - /url: https://linkedin.com/in/gabriel-moreno-ribeiro
+          - link "GitHub." [ref=f2e82] [cursor=pointer]:
+            - /url: https://github.com/gabriel-moreno-ribeiro
+          - link "Email." [ref=f2e83] [cursor=pointer]:
+            - /url: mailto:me@gabrielmr.com
+          - link "Privacy." [ref=f2e84] [cursor=pointer]:
+            - /url: /privacy
+          - link "Terms." [ref=f2e85] [cursor=pointer]:
+            - /url: /terms
+          - link "llms.txt" [ref=f2e86] [cursor=pointer]:
+            - /url: /llms.txt
+        - paragraph [ref=f2e87]: © 2026 Gabriel Moreno Ribeiro
+    - button "Hands-free mode (camera)" [ref=f2e88] [cursor=pointer]: Hands-free mode
+    - button "Switch to dark mode" [ref=f2e92] [cursor=pointer]: Dark mode
+    - button "Open terminal (Ctrl+K)" [ref=f2e95] [cursor=pointer]: Terminal · Ctrl+K

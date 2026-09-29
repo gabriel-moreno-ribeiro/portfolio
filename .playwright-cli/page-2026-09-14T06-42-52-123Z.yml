@@ -1,0 +1,95 @@
+- generic [active] [ref=f5e1]:
+  - link "Skip to content" [ref=f5e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - generic [ref=f5e4]:
+    - main [ref=f5e5]:
+      - navigation "Site menu" [ref=f5e6]:
+        - generic [ref=f5e7] [cursor=pointer]
+        - paragraph [aria-hidden] [ref=f5e10]: Gabriel Moreno Ribeiro.
+        - generic:
+          - button "Home."
+          - button "Library."
+          - button "News."
+          - button "Story."
+          - button "LinkedIn."
+          - button "GitHub."
+        - generic:
+          - button "Enable camera"
+          - button "Switch to dark mode"
+      - generic [ref=f5e11]:
+        - paragraph [ref=f5e12]:
+          - link "Home" [ref=f5e13] [cursor=pointer]:
+            - /url: /
+        - heading "In the news." [level=1] [ref=f5e16]
+      - region [ref=f5e17]:
+        - heading "Posts" [level=2] [ref=f5e18]
+        - generic [ref=f5e21]:
+          - figure [ref=f5e22]:
+            - blockquote [ref=f5e23]:
+              - link "View this post on Instagram" [ref=f5e24] [cursor=pointer]:
+                - /url: https://www.instagram.com/p/DcBlbZOh5hx/
+          - figure [ref=f5e25]:
+            - blockquote [ref=f5e26]:
+              - link "View this post on Instagram" [ref=f5e27] [cursor=pointer]:
+                - /url: https://www.instagram.com/p/DRhNb1vgH3p/
+          - figure [ref=f5e28]:
+            - blockquote [ref=f5e29]:
+              - link "View this post on Instagram" [ref=f5e30] [cursor=pointer]:
+                - /url: https://www.instagram.com/p/DMyVaLxPwab/
+          - figure [ref=f5e31]:
+            - blockquote [ref=f5e32]:
+              - link "View this post on Instagram" [ref=f5e33] [cursor=pointer]:
+                - /url: https://www.instagram.com/p/C0mIBI9MMmB/
+          - figure [ref=f5e34]:
+            - blockquote [ref=f5e35]:
+              - link "View this post on Instagram" [ref=f5e36] [cursor=pointer]:
+                - /url: https://www.instagram.com/p/C0jwc81sCGO/
+      - region [ref=f5e37]:
+        - heading "Press & mentions" [level=2] [ref=f5e38]
+        - 'link "Canastra Ventures 2026 HIBEEX selected for the Canastra Ventures AI Residency One of 6 startups in the R1''26 cohort. Backoffice AI for small and medium businesses: raw data in, decisions out. Read" [ref=f5e43] [cursor=pointer]':
+          - /url: https://www.hibeex.com.br/
+          - paragraph [ref=f5e44]:
+            - generic [ref=f5e45]: Canastra Ventures
+            - generic [ref=f5e47]: "2026"
+          - heading "HIBEEX selected for the Canastra Ventures AI Residency" [level=3] [ref=f5e48]
+          - paragraph [ref=f5e49]: "One of 6 startups in the R1'26 cohort. Backoffice AI for small and medium businesses: raw data in, decisions out."
+          - generic [ref=f5e50]: Read
+      - generic [ref=f5e54]:
+        - generic [ref=f5e55]:
+          - paragraph [ref=f5e56]: Want to talk?
+          - link "me@gabrielmr.com" [ref=f5e57] [cursor=pointer]:
+            - /url: mailto:me@gabrielmr.com
+        - navigation "Pages" [ref=f5e58]:
+          - link "Home." [ref=f5e59] [cursor=pointer]:
+            - /url: /
+          - link "Library." [ref=f5e60] [cursor=pointer]:
+            - /url: /library
+          - link "News." [ref=f5e61] [cursor=pointer]:
+            - /url: /news
+          - link "Story." [ref=f5e62] [cursor=pointer]:
+            - /url: /story
+          - link "Contact." [ref=f5e63] [cursor=pointer]:
+            - /url: /#contact
+        - generic [ref=f5e64]:
+          - link "LinkedIn." [ref=f5e65] [cursor=pointer]:
+            - /url: https://linkedin.com/in/gabriel-moreno-ribeiro
+          - link "GitHub." [ref=f5e66] [cursor=pointer]:
+            - /url: https://github.com/gabriel-moreno-ribeiro
+          - link "Email." [ref=f5e67] [cursor=pointer]:
+            - /url: mailto:me@gabrielmr.com
+          - link "Privacy." [ref=f5e68] [cursor=pointer]:
+            - /url: /privacy
+          - link "Terms." [ref=f5e69] [cursor=pointer]:
+            - /url: /terms
+          - link "llms.txt" [ref=f5e70] [cursor=pointer]:
+            - /url: /llms.txt
+        - paragraph [ref=f5e71]: © 2026 Gabriel Moreno Ribeiro
+    - text: Hands-free mode
+    - button "Switch to dark mode" [ref=f5e72] [cursor=pointer]: Dark mode
+    - navigation [aria-hidden] [ref=f5e75]:
+      - link [ref=f5e76] [cursor=pointer]:
+        - /url: /#contact
+        - text: Get in Touch
+      - link [ref=f5e77] [cursor=pointer]:
+        - /url: https://cal.com/gabrielmribeiro
+        - text: Book a Call

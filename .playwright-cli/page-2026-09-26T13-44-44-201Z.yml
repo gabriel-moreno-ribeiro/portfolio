@@ -1,0 +1,100 @@
+- generic [active] [ref=e1]:
+  - link "Skip to content" [ref=e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - generic [ref=e4]:
+    - main [ref=e6]:
+      - application "A shelf of 28 books. Drag or use the arrow keys to browse. Press Enter to open the selected book." [ref=e7]
+      - navigation "Site menu" [ref=e8]:
+        - button "Close menu" [expanded] [ref=e9] [cursor=pointer]
+        - paragraph [aria-hidden] [ref=e12]: Gabriel Moreno Ribeiro.
+        - generic [ref=e13]:
+          - button "Home." [ref=e14] [cursor=pointer]
+          - button "Library." [ref=e15] [cursor=pointer]
+          - button "News." [ref=e16] [cursor=pointer]
+          - button "Story." [ref=e17] [cursor=pointer]
+          - button "LinkedIn." [ref=e18] [cursor=pointer]
+          - button "GitHub." [ref=e19] [cursor=pointer]
+      - generic:
+        - paragraph:
+          - link "Home" [ref=e20] [cursor=pointer]:
+            - /url: /
+          - generic: Library
+          - generic: ·28 books
+        - status: 28 books
+      - generic [ref=e24]:
+        - paragraph [ref=e25]:
+          - generic [ref=e26]: "01"
+          - generic [ref=e28]: "28"
+        - heading "Manual do Mundo" [level=1] [ref=e29]
+        - paragraph [ref=e30]: Iberê Thenório
+        - button "Open Manual do Mundo" [ref=e31] [cursor=pointer]: Open
+      - button "Previous book" [disabled] [ref=e35]
+      - button "Next book" [ref=e38] [cursor=pointer]
+      - navigation "Catalog position" [ref=e41]:
+        - generic [ref=e42]:
+          - button "Browse to Manual do Mundo" [ref=e43] [cursor=pointer]
+          - button "Browse to How to Train Your Dragon" [ref=e45] [cursor=pointer]
+          - button "Browse to Percy Jackson" [ref=e47] [cursor=pointer]
+          - button "Browse to A Ilha do Tesouro" [ref=e49] [cursor=pointer]
+          - button "Browse to Harry Potter" [ref=e51] [cursor=pointer]
+          - button "Browse to O Pijama Listrado" [ref=e53] [cursor=pointer]
+          - button "Browse to Auto da Compadecida" [ref=e55] [cursor=pointer]
+          - button "Browse to O Extraordinário" [ref=e57] [cursor=pointer]
+          - button "Browse to Dom Casmurro" [ref=e59] [cursor=pointer]
+          - button "Browse to Memórias Póstumas de Brás Cubas" [ref=e61] [cursor=pointer]
+          - button "Browse to Física - Renato Brito Vol. 1" [ref=e63] [cursor=pointer]
+          - button "Browse to Física - Renato Brito Vol. 2" [ref=e65] [cursor=pointer]
+          - button "Browse to Tópicos de Física" [ref=e67] [cursor=pointer]
+          - button "Browse to Duna" [ref=e69] [cursor=pointer]
+          - button "Browse to Frankenstein" [ref=e71] [cursor=pointer]
+          - button "Browse to Fahrenheit 451" [ref=e73] [cursor=pointer]
+          - button "Browse to Brave New World" [ref=e75] [cursor=pointer]
+          - button "Browse to Atkins Physical Chemistry" [ref=e77] [cursor=pointer]
+          - button "Browse to The Martian" [ref=e79] [cursor=pointer]
+          - button "Browse to Project Hail Mary" [ref=e81] [cursor=pointer]
+          - button "Browse to Surely You're Joking, Mr. Feynman!" [ref=e83] [cursor=pointer]
+          - button "Browse to The Complete Sherlock Holmes" [ref=e85] [cursor=pointer]
+          - button "Browse to The Official SAT Study Guide" [ref=e87] [cursor=pointer]
+          - button "Browse to The Wolf of Wall Street" [ref=e89] [cursor=pointer]
+          - button "Browse to Catching the Wolf of Wall Street" [ref=e91] [cursor=pointer]
+          - button "Browse to The Way of the Wolf" [ref=e93] [cursor=pointer]
+          - button "Browse to Made in America" [ref=e95] [cursor=pointer]
+          - button "Browse to Zero to One" [ref=e97] [cursor=pointer]
+        - paragraph [aria-hidden] [ref=e99]: Drag, scroll, or use the arrow keys
+      - complementary [aria-hidden]
+      - paragraph [ref=e100]:
+        - text: Shelf engine adapted from
+        - link "The Complete Shelf" [ref=e101] [cursor=pointer]:
+          - /url: https://github.com/kabarza/bookshelf
+      - list "Books" [ref=e102]:
+        - listitem [ref=e103]: Manual do Mundo by Iberê Thenório
+        - listitem [ref=e104]: How to Train Your Dragon by Cressida Cowell
+        - listitem [ref=e105]: Percy Jackson by Rick Riordan
+        - listitem [ref=e106]: A Ilha do Tesouro by Robert Louis Stevenson
+        - listitem [ref=e107]: Harry Potter by J.K. Rowling
+        - listitem [ref=e108]: O Pijama Listrado by John Boyne
+        - listitem [ref=e109]: Auto da Compadecida by Ariano Suassuna
+        - listitem [ref=e110]: O Extraordinário by R.J. Palacio
+        - listitem [ref=e111]: Dom Casmurro by Machado de Assis
+        - listitem [ref=e112]: Memórias Póstumas de Brás Cubas by Machado de Assis
+        - listitem [ref=e113]: Física - Renato Brito Vol. 1 by Renato Brito
+        - listitem [ref=e114]: Física - Renato Brito Vol. 2 by Renato Brito
+        - listitem [ref=e115]: Tópicos de Física by Gualter, Helou & Nicolau
+        - listitem [ref=e116]: Duna by Frank Herbert
+        - listitem [ref=e117]: Frankenstein by Mary Shelley
+        - listitem [ref=e118]: Fahrenheit 451 by Ray Bradbury
+        - listitem [ref=e119]: Brave New World by Aldous Huxley
+        - listitem [ref=e120]: Atkins Physical Chemistry by Peter Atkins
+        - listitem [ref=e121]: The Martian by Andy Weir
+        - listitem [ref=e122]: Project Hail Mary by Andy Weir
+        - listitem [ref=e123]: Surely You're Joking, Mr. Feynman! by Richard Feynman
+        - listitem [ref=e124]: The Complete Sherlock Holmes by Arthur Conan Doyle
+        - listitem [ref=e125]: The Official SAT Study Guide by College Board
+        - listitem [ref=e126]: The Wolf of Wall Street by Jordan Belfort
+        - listitem [ref=e127]: Catching the Wolf of Wall Street by Jordan Belfort
+        - listitem [ref=e128]: The Way of the Wolf by Jordan Belfort
+        - listitem [ref=e129]: Made in America by Sam Walton
+        - listitem [ref=e130]: Zero to One by Peter Thiel
+    - button "Hands-free mode (camera)" [ref=e131] [cursor=pointer]: Hands-free mode
+    - button "Switch to dark mode" [ref=e135] [cursor=pointer]: Dark mode
+    - button "Open terminal (Ctrl+K)" [ref=e138] [cursor=pointer]: Terminal · Ctrl+K

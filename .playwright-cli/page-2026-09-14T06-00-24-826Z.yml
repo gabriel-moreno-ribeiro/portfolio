@@ -1,0 +1,130 @@
+- generic [active] [ref=e1]:
+  - link "Skip to content" [ref=e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - generic [ref=e4]:
+    - main [ref=e5]:
+      - navigation "Site menu" [ref=e6]:
+        - generic [ref=e7] [cursor=pointer]
+        - paragraph [aria-hidden] [ref=e10]: Gabriel Moreno Ribeiro.
+        - generic:
+          - button "Home."
+          - button "Library."
+          - button "News."
+          - button "Story."
+          - button "LinkedIn."
+          - button "GitHub."
+      - generic [ref=e11]:
+        - paragraph [ref=e12]:
+          - link "Cool Things" [ref=e13] [cursor=pointer]:
+            - /url: /#work
+          - generic [ref=e17]: Project
+        - heading "Projeto Candela" [level=1] [ref=e18]
+        - paragraph [ref=e19]: Low-cost physics lab kits, built and taken to 28 public schools in Salvador. 3,392 students so far.
+        - generic [ref=e20]:
+          - generic [ref=e21]: Founder
+          - generic [ref=e23]: 2023 - 2024
+      - button "Open The kit as it goes out to a school full size" [ref=e24]:
+        - img "The kit as it goes out to a school" [ref=e25]
+      - list [ref=e26]:
+        - listitem [ref=e27]:
+          - strong [ref=e28]: 3,392
+          - generic [ref=e29]: students reached
+        - listitem [ref=e30]:
+          - strong [ref=e31]: "28"
+          - generic [ref=e32]: public schools
+        - listitem [ref=e33]:
+          - strong [ref=e34]: 30% → 10%
+          - generic [ref=e35]: physics failure rate
+        - listitem [ref=e36]:
+          - strong [ref=e37]: "5"
+          - generic [ref=e38]: experiments per kit
+      - generic [ref=e39]:
+        - generic [ref=e40]:
+          - heading "Why" [level=2] [ref=e41]
+          - paragraph [ref=e42]: I won a gold medal at OBFEP, the physics olympiad for public schools. I put the prize money into building physics kits and took them to public schools in Salvador.
+          - paragraph [ref=e43]: Most of those schools teach physics without a lab. The kit is an attempt to fix that for the price of a box of parts.
+        - generic [ref=e44]:
+          - heading "The kit" [level=2] [ref=e45]
+          - paragraph [ref=e46]: "A wooden box built to be carried between classrooms and stored in a cupboard. Inside: a caliper, a spring scale, a stopwatch, a measuring tape, weights, a graduated cylinder, and the parts for five experiments."
+          - paragraph [ref=e47]: Nothing in it needs a technician, a power outlet, or a part that has to be ordered from out of state.
+        - generic [ref=e48]:
+          - heading "What happened" [level=2] [ref=e49]
+          - paragraph [ref=e50]: 3,392 students in 28 public schools have used the kits. In the classrooms that ran them, physics failure rates went from 30% to 10%.
+          - paragraph [ref=e51]: The work was advised by Coronel Iran Domingues Machado. The write-up is below.
+        - link "Read the paper (PDF)" [ref=e53] [cursor=pointer]:
+          - /url: /research/projeto-candela/paper.pdf
+      - region "Photos" [ref=e57]:
+        - heading "Photos" [level=2] [ref=e58]
+        - generic [ref=e59]:
+          - button "Open The track and car, set up for a run full size" [ref=e60]:
+            - img "The track and car, set up for a run" [ref=e61]
+            - generic [ref=e62]: The track and car, set up for a run
+          - button "Open Everything inside the box full size" [ref=e63]:
+            - img "Everything inside the box" [ref=e64]
+            - generic [ref=e65]: Everything inside the box
+          - button "Open Measuring the car with the caliper full size" [ref=e66]:
+            - img "Measuring the car with the caliper" [ref=e67]
+            - generic [ref=e68]: Measuring the car with the caliper
+          - button "Open The protractor stand full size" [ref=e69]:
+            - img "The protractor stand" [ref=e70]
+            - generic [ref=e71]: The protractor stand
+          - button "Open The inclined plane, with the mass hanging full size" [ref=e72]:
+            - img "The inclined plane, with the mass hanging" [ref=e73]
+            - generic [ref=e74]: The inclined plane, with the mass hanging
+          - button "Open Spring scale and graduated cylinder full size" [ref=e75]:
+            - img "Spring scale and graduated cylinder" [ref=e76]
+            - generic [ref=e77]: Spring scale and graduated cylinder
+          - button "Open The pulley stand and the ramp full size" [ref=e78]:
+            - img "The pulley stand and the ramp" [ref=e79]
+            - generic [ref=e80]: The pulley stand and the ramp
+      - navigation "Other work" [ref=e81]:
+        - heading "More" [level=2] [ref=e82]
+        - list [ref=e83]:
+          - listitem [ref=e84]:
+            - 'link "HIBEEX Backoffice AI for small and medium businesses: raw data in, decisions out." [ref=e85] [cursor=pointer]':
+              - /url: /work/hibeex
+              - strong [ref=e86]: HIBEEX
+              - generic [ref=e87]: "Backoffice AI for small and medium businesses: raw data in, decisions out."
+          - listitem [ref=e91]:
+            - link "39 Olympiad Medals 39 medals in 49 academic olympiads across math, physics, chemistry, biology and astronomy. 19 of them gold." [ref=e92] [cursor=pointer]:
+              - /url: /work/medals
+              - strong [ref=e93]: 39 Olympiad Medals
+              - generic [ref=e94]: 39 medals in 49 academic olympiads across math, physics, chemistry, biology and astronomy. 19 of them gold.
+          - listitem [ref=e98]:
+            - link "GSAT Education A test-prep platform I built from scratch as founding CEO." [ref=e99] [cursor=pointer]:
+              - /url: /work/gsat
+              - strong [ref=e100]: GSAT Education
+              - generic [ref=e101]: A test-prep platform I built from scratch as founding CEO.
+      - generic [ref=e105]:
+        - generic [ref=e106]:
+          - paragraph [ref=e107]: Want to talk?
+          - link "me@gabrielmr.com" [ref=e108] [cursor=pointer]:
+            - /url: mailto:me@gabrielmr.com
+        - navigation "Pages" [ref=e109]:
+          - link "Home." [ref=e110] [cursor=pointer]:
+            - /url: /
+          - link "Library." [ref=e111] [cursor=pointer]:
+            - /url: /library
+          - link "News." [ref=e112] [cursor=pointer]:
+            - /url: /news
+          - link "Story." [ref=e113] [cursor=pointer]:
+            - /url: /story
+          - link "Contact." [ref=e114] [cursor=pointer]:
+            - /url: /#contact
+        - generic [ref=e115]:
+          - link "LinkedIn." [ref=e116] [cursor=pointer]:
+            - /url: https://linkedin.com/in/gabriel-moreno-ribeiro
+          - link "GitHub." [ref=e117] [cursor=pointer]:
+            - /url: https://github.com/gabriel-moreno-ribeiro
+          - link "Email." [ref=e118] [cursor=pointer]:
+            - /url: mailto:me@gabrielmr.com
+          - link "Privacy." [ref=e119] [cursor=pointer]:
+            - /url: /privacy
+          - link "Terms." [ref=e120] [cursor=pointer]:
+            - /url: /terms
+          - link "llms.txt" [ref=e121] [cursor=pointer]:
+            - /url: /llms.txt
+        - paragraph [ref=e122]: © 2026 Gabriel Moreno Ribeiro
+    - button "Hands-free mode (camera)" [ref=e123] [cursor=pointer]: Hands-free mode
+    - button "Switch to dark mode" [ref=e127] [cursor=pointer]: Dark mode
+    - button "Open terminal (Ctrl+K)" [ref=e130] [cursor=pointer]: Terminal · Ctrl+K

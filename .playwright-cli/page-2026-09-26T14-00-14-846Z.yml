@@ -1,0 +1,102 @@
+- generic [active] [ref=f5e1]:
+  - link "Skip to content" [ref=f5e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - generic [ref=f5e4]:
+    - main [ref=f5e6]:
+      - application "A shelf of 28 books. Drag or use the arrow keys to browse. Press Enter to open the selected book." [ref=f5e7]
+      - navigation "Site menu" [ref=f5e8]:
+        - button "Close menu" [expanded] [ref=f5e9] [cursor=pointer]
+        - paragraph [aria-hidden] [ref=f5e12]: Gabriel Moreno Ribeiro.
+        - generic [ref=f5e13]:
+          - button "Home." [ref=f5e14] [cursor=pointer]
+          - button "Library." [ref=f5e15] [cursor=pointer]
+          - button "News." [ref=f5e16] [cursor=pointer]
+          - button "Story." [ref=f5e17] [cursor=pointer]
+          - link "LinkedIn (opens in a new tab)" [ref=f5e18] [cursor=pointer]:
+            - /url: https://linkedin.com/in/gabriel-moreno-ribeiro
+          - link "GitHub (opens in a new tab)" [ref=f5e21] [cursor=pointer]:
+            - /url: https://github.com/gabriel-moreno-ribeiro
+      - generic:
+        - paragraph:
+          - link "Home" [ref=f5e24] [cursor=pointer]:
+            - /url: /
+          - generic: Library
+          - generic: ·28 books
+        - status: 28 books
+      - generic [ref=f5e28]:
+        - paragraph [ref=f5e29]:
+          - generic [ref=f5e30]: "01"
+          - generic [ref=f5e32]: "28"
+        - heading "Manual do Mundo" [level=1] [ref=f5e33]
+        - paragraph [ref=f5e34]: Iberê Thenório
+        - button "Open Manual do Mundo" [ref=f5e35] [cursor=pointer]: Open
+      - button "Previous book" [disabled] [ref=f5e39]
+      - button "Next book" [ref=f5e42] [cursor=pointer]
+      - navigation "Catalog position" [ref=f5e45]:
+        - generic [ref=f5e46]:
+          - button "Browse to Manual do Mundo" [ref=f5e47] [cursor=pointer]
+          - button "Browse to How to Train Your Dragon" [ref=f5e49] [cursor=pointer]
+          - button "Browse to Percy Jackson" [ref=f5e51] [cursor=pointer]
+          - button "Browse to A Ilha do Tesouro" [ref=f5e53] [cursor=pointer]
+          - button "Browse to Harry Potter" [ref=f5e55] [cursor=pointer]
+          - button "Browse to O Pijama Listrado" [ref=f5e57] [cursor=pointer]
+          - button "Browse to Auto da Compadecida" [ref=f5e59] [cursor=pointer]
+          - button "Browse to O Extraordinário" [ref=f5e61] [cursor=pointer]
+          - button "Browse to Dom Casmurro" [ref=f5e63] [cursor=pointer]
+          - button "Browse to Memórias Póstumas de Brás Cubas" [ref=f5e65] [cursor=pointer]
+          - button "Browse to Física - Renato Brito Vol. 1" [ref=f5e67] [cursor=pointer]
+          - button "Browse to Física - Renato Brito Vol. 2" [ref=f5e69] [cursor=pointer]
+          - button "Browse to Tópicos de Física" [ref=f5e71] [cursor=pointer]
+          - button "Browse to Duna" [ref=f5e73] [cursor=pointer]
+          - button "Browse to Frankenstein" [ref=f5e75] [cursor=pointer]
+          - button "Browse to Fahrenheit 451" [ref=f5e77] [cursor=pointer]
+          - button "Browse to Brave New World" [ref=f5e79] [cursor=pointer]
+          - button "Browse to Atkins Physical Chemistry" [ref=f5e81] [cursor=pointer]
+          - button "Browse to The Martian" [ref=f5e83] [cursor=pointer]
+          - button "Browse to Project Hail Mary" [ref=f5e85] [cursor=pointer]
+          - button "Browse to Surely You're Joking, Mr. Feynman!" [ref=f5e87] [cursor=pointer]
+          - button "Browse to The Complete Sherlock Holmes" [ref=f5e89] [cursor=pointer]
+          - button "Browse to The Official SAT Study Guide" [ref=f5e91] [cursor=pointer]
+          - button "Browse to The Wolf of Wall Street" [ref=f5e93] [cursor=pointer]
+          - button "Browse to Catching the Wolf of Wall Street" [ref=f5e95] [cursor=pointer]
+          - button "Browse to The Way of the Wolf" [ref=f5e97] [cursor=pointer]
+          - button "Browse to Made in America" [ref=f5e99] [cursor=pointer]
+          - button "Browse to Zero to One" [ref=f5e101] [cursor=pointer]
+        - paragraph [aria-hidden] [ref=f5e103]: Drag, scroll, or use the arrow keys
+      - complementary [aria-hidden]
+      - paragraph [ref=f5e104]:
+        - text: Shelf engine adapted from
+        - link "The Complete Shelf" [ref=f5e105] [cursor=pointer]:
+          - /url: https://github.com/kabarza/bookshelf
+      - list "Books" [ref=f5e106]:
+        - listitem [ref=f5e107]: Manual do Mundo by Iberê Thenório
+        - listitem [ref=f5e108]: How to Train Your Dragon by Cressida Cowell
+        - listitem [ref=f5e109]: Percy Jackson by Rick Riordan
+        - listitem [ref=f5e110]: A Ilha do Tesouro by Robert Louis Stevenson
+        - listitem [ref=f5e111]: Harry Potter by J.K. Rowling
+        - listitem [ref=f5e112]: O Pijama Listrado by John Boyne
+        - listitem [ref=f5e113]: Auto da Compadecida by Ariano Suassuna
+        - listitem [ref=f5e114]: O Extraordinário by R.J. Palacio
+        - listitem [ref=f5e115]: Dom Casmurro by Machado de Assis
+        - listitem [ref=f5e116]: Memórias Póstumas de Brás Cubas by Machado de Assis
+        - listitem [ref=f5e117]: Física - Renato Brito Vol. 1 by Renato Brito
+        - listitem [ref=f5e118]: Física - Renato Brito Vol. 2 by Renato Brito
+        - listitem [ref=f5e119]: Tópicos de Física by Gualter, Helou & Nicolau
+        - listitem [ref=f5e120]: Duna by Frank Herbert
+        - listitem [ref=f5e121]: Frankenstein by Mary Shelley
+        - listitem [ref=f5e122]: Fahrenheit 451 by Ray Bradbury
+        - listitem [ref=f5e123]: Brave New World by Aldous Huxley
+        - listitem [ref=f5e124]: Atkins Physical Chemistry by Peter Atkins
+        - listitem [ref=f5e125]: The Martian by Andy Weir
+        - listitem [ref=f5e126]: Project Hail Mary by Andy Weir
+        - listitem [ref=f5e127]: Surely You're Joking, Mr. Feynman! by Richard Feynman
+        - listitem [ref=f5e128]: The Complete Sherlock Holmes by Arthur Conan Doyle
+        - listitem [ref=f5e129]: The Official SAT Study Guide by College Board
+        - listitem [ref=f5e130]: The Wolf of Wall Street by Jordan Belfort
+        - listitem [ref=f5e131]: Catching the Wolf of Wall Street by Jordan Belfort
+        - listitem [ref=f5e132]: The Way of the Wolf by Jordan Belfort
+        - listitem [ref=f5e133]: Made in America by Sam Walton
+        - listitem [ref=f5e134]: Zero to One by Peter Thiel
+    - button "Hands-free mode (camera)" [ref=f5e135] [cursor=pointer]: Hands-free mode
+    - button "Switch to dark mode" [ref=f5e139] [cursor=pointer]: Dark mode
+    - button "Open terminal (Ctrl+K)" [ref=f5e142] [cursor=pointer]: Terminal · Ctrl+K
