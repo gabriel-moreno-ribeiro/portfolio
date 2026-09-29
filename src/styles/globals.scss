@@ -238,6 +238,13 @@ body {
   // The experience road's fog window bleeds 220px past its column; clip (not hidden)
   // keeps the sticky odometer working.
   overflow-x: clip;
+
+  // The section rail (fixed, ~125px wide at left 28px) needs a gutter of its
+  // own. Below 1700px the centred 1400px column would run under it, so the
+  // column keeps 150px clear on both sides and stays centred.
+  @media (min-width: 1201px) and (max-width: 1699px) {
+    padding: 0 150px;
+  }
   position: relative;
   z-index: 1;
 }
