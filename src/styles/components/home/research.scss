@@ -319,8 +319,10 @@
     pointer-events: none;
   }
 
+  // Hover, or keyboard focus on the link. Not :focus-within: a click leaves the
+  // card focused, so the preview stayed open after the paper opened in its tab.
   &:hover &__preview,
-  &:focus-within &__preview {
+  &:has(&__link:focus-visible) &__preview {
     opacity: 1;
     transform: translateY(0);
   }

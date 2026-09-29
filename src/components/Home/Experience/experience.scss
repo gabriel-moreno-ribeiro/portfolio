@@ -17,7 +17,7 @@ $exp-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   // Nos lados sobra folga: o odômetro mora na margem direita a partir de 1270 px.
   clip-path: inset(0 -220px);
 
-  --exp-stop-h: 560px;
+  --exp-stop-h: 340px; // was 560: too much road between one job and the next
   --exp-lead: 140px;
   --exp-tail: 120px;
   // Onde o trilho do odômetro começa: abaixo do título.
@@ -585,7 +585,7 @@ a.exp__card-cta:visited {
   .exp {
     width: calc(100vw - 32px);
     padding: 64px 0 0;
-    --exp-stop-h: 420px;
+    --exp-stop-h: 300px;
     --exp-lead: 200px;
     --exp-tail: 120px;
     --exp-odo-top: 130px;
