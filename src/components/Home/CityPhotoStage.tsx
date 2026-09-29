@@ -10,9 +10,6 @@ export interface StagePhoto {
 interface Props {
   /** City name as shown in each card's header. */
   label: string;
-  /** Where this city sits in the journey: lights one of the header dots. */
-  cityIndex: number;
-  cityCount: number;
   photos: StagePhoto[];
   /** Someone browsed the photos: the section stops touring cities under them. */
   onInteract?: () => void;
@@ -35,7 +32,7 @@ function slotOf(i: number, active: number, n: number): Slot {
 
 const SWIPE_PX = 40;
 
-function CityPhotoStage({ label, cityIndex, cityCount, photos, onInteract }: Props) {
+function CityPhotoStage({ label, photos, onInteract }: Props) {
   const [active, setActiveState] = useState(0);
   const reduced = useReducedMotion();
   const dragStart = useRef<number | null>(null);
@@ -104,11 +101,6 @@ function CityPhotoStage({ label, cityIndex, cityCount, photos, onInteract }: Pro
               onClick={side ? () => go(slot === 'next' ? 1 : -1) : undefined}
             >
               <header className="photo-card__head">
-                <span className="photo-card__steps" aria-hidden="true">
-                  {Array.from({ length: cityCount }, (_, k) => (
-                    <i key={k} data-on={k === cityIndex ? 'true' : undefined} />
-                  ))}
-                </span>
                 <span className="photo-card__label">{label}</span>
                 <span className="photo-card__count">
                   {pad(i + 1)} / {pad(n)}

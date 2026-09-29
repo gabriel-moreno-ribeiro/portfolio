@@ -1,6 +1,7 @@
 import createGlobe from 'cobe';
 import { AnimatePresence, motion } from 'motion/react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { FiArrowLeft, FiArrowRight } from 'react-icons/fi';
 import { config, useClock } from '../../lib/data';
 import { usePageVisible, useReducedMotion } from '../../lib/motion';
 import { useThemeStore } from '../../store/themeStore';
@@ -153,6 +154,8 @@ function GlobeCanvas({
   const foldDrag = useRef<(() => void) | null>(null);
   const onPaintedRef = useRef(onPainted);
   onPaintedRef.current = onPainted;
+  const selectedRef = useRef(selected);
+  selectedRef.current = selected;
 
   useEffect(() => {
     foldDrag.current?.();
@@ -173,6 +176,10 @@ function GlobeCanvas({
     const [brazilPhi] = locationToAngles(-10, -38.5);
     let currentPhi = brazilPhi;
     let currentTheta = 0.12;
+    // Zoom: the sphere grows past the circular canvas while a city is open, so
+    // the place itself fills the view instead of the whole hemisphere.
+    let currentScale = 1;
+    const FOCUS_SCALE = 1.75;
     const doublePi = Math.PI * 2;
     const clampTheta = (t: number) => Math.max(-1.35, Math.min(1.35, t));
 
@@ -224,6 +231,14 @@ function GlobeCanvas({
           const focus = focusRef.current;
           const dragX = pointerMovement.current.x / 100;
           const dragY = pointerMovement.current.y / 150;
+
+          currentScale += ((focus ? FOCUS_SCALE : 1) - currentScale) * 0.06;
+          state.scale = currentScale;
+          const sel = selectedRef.current;
+          state.markers = CITIES.map((c) => ({
+            location: [c.lat, c.lon],
+            size: sel?.id === c.id ? 0.09 : 0.06,
+          }));
 
           if (focus) {
             const [focusPhi, focusTheta] = focus;
@@ -312,13 +327,19 @@ function CityClock({ tz }: { tz: string }) {
 function CityPanel({
   city,
   onClose,
+  onStep,
   showClock,
 }: {
   city: City;
   onClose: () => void;
+  /** Move to the previous (-1) or next (+1) city of the journey. */
+  onStep: (dir: -1 | 1) => void;
   showClock: boolean;
 }) {
   const reduced = useReducedMotion();
+  const index = CITIES.findIndex((c) => c.id === city.id);
+  const prev = CITIES[(index - 1 + CITIES.length) % CITIES.length];
+  const next = CITIES[(index + 1) % CITIES.length];
 
   return (
     <motion.div
@@ -328,7 +349,27 @@ function CityPanel({
       exit={reduced ? { opacity: 1 } : { opacity: 0, x: 20 }}
       transition={{ duration: reduced ? 0 : 0.35, ease: 'easeOut' }}
     >
-      <button className="city-panel__close" onClick={onClose} aria-label="Close">✕</button>
+      <div className="city-panel__nav">
+        <button
+          type="button"
+          className="city-panel__arrow"
+          onClick={() => onStep(-1)}
+          aria-label={`Previous city: ${prev.name.split(',')[0]}`}
+          title={prev.name.split(',')[0]}
+        >
+          <FiArrowLeft aria-hidden="true" />
+        </button>
+        <button
+          type="button"
+          className="city-panel__arrow"
+          onClick={() => onStep(1)}
+          aria-label={`Next city: ${next.name.split(',')[0]}`}
+          title={next.name.split(',')[0]}
+        >
+          <FiArrowRight aria-hidden="true" />
+        </button>
+        <button type="button" className="city-panel__close" onClick={onClose} aria-label="Close">✕</button>
+      </div>
 
       <div className="city-panel__text">
         <div className="city-panel__meta">
@@ -421,6 +462,14 @@ function BackgroundGlobe() {
     setSelected(selected?.id === city.id ? null : city);
   };
 
+  const handleStep = (dir: -1 | 1) => {
+    setPinned(true);
+    setSelected((prev) => {
+      const i = CITIES.findIndex((c) => c.id === prev?.id);
+      return CITIES[(i + dir + CITIES.length) % CITIES.length];
+    });
+  };
+
   const handleClose = () => {
     setPinned(true);
     setSelected(null);
@@ -465,6 +514,7 @@ function BackgroundGlobe() {
                   key={selected.id}
                   city={selected}
                   onClose={handleClose}
+                  onStep={handleStep}
                   showClock={inView}
                 />
               </AnimatePresence>
@@ -472,8 +522,6 @@ function BackgroundGlobe() {
             <CityPhotoStage
               key={selected.id}
               label={selected.name.split(',')[0]}
-              cityIndex={CITIES.findIndex((c) => c.id === selected.id)}
-              cityCount={CITIES.length}
               photos={stagePhotos}
               onInteract={pinTour}
             />
