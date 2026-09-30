@@ -92,7 +92,8 @@ export default function ShelfLibrary() {
   const activeBook = catalog[activeIndex];
   const activeMeta = books[activeIndex];
   const activeAge = activeMeta.readAge;
-  const review = firstSentence(activeMeta.review);
+  // A bracketed review is a placeholder still to be written: no quote on the shelf
+  const review = activeMeta.review?.startsWith('[') ? '' : firstSentence(activeMeta.review);
   const selectedBook = useMemo(() => (selectedIndex === null ? null : catalog[selectedIndex]), [selectedIndex]);
   const selectedMeta = selectedIndex === null ? null : books[selectedIndex];
   const isFocused = mode !== "browse";
@@ -292,6 +293,13 @@ export default function ShelfLibrary() {
         <Navbar />
       </div>
 
+      {/* Open book: the crumb's place holds the way back (the panel has one too;
+          Escape and a click beside the book work as well) */}
+      {isFocused && (
+        <button type="button" className="page-back library__eyebrow-back" onClick={() => engineRef.current?.returnToShelf()}>
+          <FiArrowLeft aria-hidden="true" /> Back to the shelf
+        </button>
+      )}
       <div className="library__eyebrow">
         <div className="library__crumb">
           <Link to="/" className="page-back"><FiArrowLeft aria-hidden="true" /> Home</Link>

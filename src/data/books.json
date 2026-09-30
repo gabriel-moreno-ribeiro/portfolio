@@ -53,7 +53,7 @@
     "year": 2005,
     "pages": 377,
     "cover": "/books/percy-jackson.webp",
-    "coverColor": "#162a2a",
+    "coverColor": "#3c4735",
     "format": "standard",
     "status": "finished",
     "favorite": true,
@@ -67,7 +67,7 @@
     "readPeriod": "2017 - 2018",
     "finishedAt": "2018-02-01",
     "review": "I read the whole series in two months. Riordan's trick is that Greek mythology feels like something you already knew, so it never feels like a lesson. Annabeth is written better than Percy, and I don't think that's by accident. The betrayal at the end of the first book caught me completely off guard at ten.",
-    "accentColor": "#292b3f"
+    "accentColor": "#c9d8e2"
   },
   {
     "id": "ilha-do-tesouro",
@@ -510,27 +510,6 @@
     "review": "Over a thousand pages and the quality holds, because Holmes is a method more than a character. The short stories beat the novels; the deduction chains are tighter. Watson is the real achievement: he makes Holmes readable by being the one person who finds him impressive instead of exhausting. It took me months, and it trained a habit I still use: come up with several explanations before committing to one."
   },
   {
-    "id": "sat-study-guide",
-    "title": "The Official SAT Study Guide",
-    "author": "College Board",
-    "year": 2020,
-    "pages": 1300,
-    "cover": "/books/the-official-sat-study-guide.webp",
-    "coverColor": "#0298d2",
-    "format": "textbook",
-    "status": "finished",
-    "favorite": false,
-    "progress": 100,
-    "rating": 4,
-    "tags": [
-      "test-prep"
-    ],
-    "readAge": 17,
-    "readPeriod": "2024 - 2025",
-    "finishedAt": "2025-02-01",
-    "review": "Nobody reads this for fun. You read it until the test stops being a test and becomes a pattern you recognize. I did eight full practice tests, timed. The math is easier than Brazilian olympiad math; the time pressure is harder. The reading questions have their own logic once you accept that every right answer is backed by exact words in the text, which sounds obvious and isn't. The discipline it took was worth more than anything it taught."
-  },
-  {
     "id": "wolf-of-wall-street",
     "title": "The Wolf of Wall Street",
     "author": "Jordan Belfort",
@@ -640,5 +619,93 @@
     "finishedAt": "2026-01-01",
     "quote": "Competition is for losers.",
     "review": "The monopoly argument is the useful part, and Thiel states it plainly: competition eats the margin that funds innovation, so build something nobody else is building. The chapter on secrets is the one I keep coming back to. A secret is something true, that most people don't believe, and that you can act on. Building HIBEEX meant having a specific answer to that. The contrarian framing gets stretched sometimes, but the core idea earns it."
+  },
+  {
+    "id": "cancel-me-if-you-can",
+    "title": "Cancel Me If You Can",
+    "author": "Dave Portnoy",
+    "year": 2025,
+    "pages": 320,
+    "cover": "/books/cancel-me-if-you-can.webp",
+    "coverColor": "#696c60",
+    "format": "standard",
+    "status": "finished",
+    "favorite": false,
+    "progress": 100,
+    "rating": 0,
+    "tags": [
+      "memoir",
+      "business"
+    ],
+    "readAge": 18,
+    "readPeriod": "2025 - 2026",
+    "finishedAt": "2026-06-01",
+    "review": "[Placeholder: Gabriel ainda vai escrever a resenha deste livro.]"
+  },
+  {
+    "id": "steve-jobs",
+    "title": "Steve Jobs",
+    "author": "Walter Isaacson",
+    "year": 2011,
+    "pages": 656,
+    "cover": "/books/steve-jobs.webp",
+    "coverColor": "#838383",
+    "format": "large",
+    "status": "finished",
+    "favorite": false,
+    "progress": 100,
+    "rating": 0,
+    "tags": [
+      "biography",
+      "technology"
+    ],
+    "readAge": 18,
+    "readPeriod": "2025 - 2026",
+    "finishedAt": "2026-06-01",
+    "review": "[Placeholder: Gabriel ainda vai escrever a resenha deste livro.]"
+  },
+  {
+    "id": "1984",
+    "title": "1984",
+    "author": "George Orwell",
+    "year": 1949,
+    "pages": 416,
+    "cover": "/books/1984.webp",
+    "coverColor": "#545042",
+    "format": "standard",
+    "status": "finished",
+    "favorite": false,
+    "progress": 100,
+    "rating": 0,
+    "tags": [
+      "dystopia",
+      "classic"
+    ],
+    "readAge": 18,
+    "readPeriod": "2025 - 2026",
+    "finishedAt": "2026-06-01",
+    "review": "[Placeholder: Gabriel ainda vai escrever a resenha deste livro.]"
+  },
+  {
+    "id": "revolucao-dos-bichos",
+    "title": "A Revolução dos Bichos",
+    "author": "George Orwell",
+    "year": 1945,
+    "pages": 152,
+    "cover": "/books/revolucao-dos-bichos.webp",
+    "coverColor": "#575859",
+    "format": "pocket",
+    "status": "finished",
+    "favorite": false,
+    "progress": 100,
+    "rating": 0,
+    "tags": [
+      "satire",
+      "classic"
+    ],
+    "readAge": 18,
+    "readPeriod": "2025 - 2026",
+    "finishedAt": "2026-06-01",
+    "review": "[Placeholder: Gabriel ainda vai escrever a resenha deste livro.]"
   }
 ]

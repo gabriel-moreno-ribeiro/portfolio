@@ -168,6 +168,7 @@ export class ShelfEngine {
   private pointer = new THREE.Vector2(10, 10);
   private animationFrame = 0;
   private resizeObserver: ResizeObserver;
+  private inspectClickStart: { x: number; y: number } | null = null;
   private mode: ShelfMode = "browse";
   private selectedIndex: number | null = null;
   private activeIndex = 0;
@@ -635,6 +636,11 @@ export class ShelfEngine {
   };
 
   private handlePointerDown = (event: PointerEvent) => {
+    if (this.mode === "inspect") {
+      // A plain click beside the open book (no drag) is the quickest way back.
+      this.inspectClickStart = { x: event.clientX, y: event.clientY };
+      return;
+    }
     if (this.mode !== "browse") return;
     this.pointerDown = true;
     this.pointerId = event.pointerId;
@@ -667,6 +673,15 @@ export class ShelfEngine {
   };
 
   private handlePointerUp = (event: PointerEvent) => {
+    if (this.mode === "inspect" && this.inspectClickStart) {
+      const { x, y } = this.inspectClickStart;
+      this.inspectClickStart = null;
+      if (Math.hypot(event.clientX - x, event.clientY - y) < 7) {
+        this.updatePointer(event);
+        if (this.raycastBook() === null) this.returnToShelf();
+      }
+      return;
+    }
     if (event.pointerId !== this.pointerId) return;
     const wasClick = this.pointerTravel < 7 && Math.abs(event.clientX - this.pointerStartX) < 7;
     this.pointerDown = false;
