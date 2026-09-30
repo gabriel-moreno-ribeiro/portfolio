@@ -92,6 +92,13 @@
   opacity: 0;
   transition: opacity 900ms ease 150ms;
 
+  // Keyboard focus on a viewport-sized element: a thin ring just inside the
+  // edge, not the site's 3px ring floating outside it.
+  &:focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: -2px;
+  }
+
   &.is-dragging { cursor: grabbing; }
   &:focus-visible { outline: 3px solid var(--focus-ring); outline-offset: -3px; }
 }
