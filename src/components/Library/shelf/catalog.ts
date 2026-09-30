@@ -81,15 +81,16 @@ function shift(hex: string, t: number) {
 
 export const stars = (rating = 0) => "★★★★★".slice(0, rating) + "☆☆☆☆☆".slice(rating);
 
-export const books = booksData as Book[];
+// Newest first: the shelf starts with what I read at my age now and runs back to 7.
+export const books = [...(booksData as Book[])].sort((a, b) => b.readAge - a.readAge);
 
 // "2014 - 2015" reads as "2014 to 2015"
 export const periodText = (period: string) => period.replace(/\s*-\s*/, " to ");
 
-// Books read at each age, 7 to 18 (an age with no books keeps its place on the ruler)
+// Books read at each age, newest age first (an age with no books keeps its place on the ruler)
 const ageList = books.map((b) => b.readAge);
 export const ages = Array.from({ length: Math.max(...ageList) - Math.min(...ageList) + 1 }, (_, k) => {
-  const age = Math.min(...ageList) + k;
+  const age = Math.max(...ageList) - k;
   const start = books.findIndex((b) => b.readAge === age);
   return { age, start, count: books.filter((b) => b.readAge === age).length, period: start < 0 ? "" : books[start].readPeriod };
 });

@@ -2,6 +2,9 @@
 // Shell around the 3D shelf engine. Layout inherits from The Complete Shelf
 // (kabarza/bookshelf); palette, type and controls follow the site tokens.
 
+// The body's 16px top/bottom padding would add 32px of scroll: exactly one screen.
+body:has(.library) { padding-block: 0; }
+
 .library {
   --lib-ease: cubic-bezier(0.22, 1, 0.36, 1);
   --lib-scrim: color-mix(in srgb, var(--bg) 94%, transparent);
@@ -15,7 +18,6 @@
   position: relative;
   width: 100%;
   height: 100dvh;
-  margin: -16px 0; // cancels the body's vertical padding so the page never scrolls
   overflow: hidden;
   isolation: isolate;
   background: var(--bg);
@@ -127,7 +129,15 @@
   pointer-events: none;
   transition: opacity 300ms ease;
 }
-.library--focused .library__eyebrow { opacity: 0.55; }
+.library--focused .library__eyebrow { opacity: 0; pointer-events: none; }
+
+.library__eyebrow-back {
+  position: absolute;
+  z-index: 21;
+  top: 26px;
+  left: clamp(24px, 3.4vw, 56px);
+  background: var(--lib-glass);
+}
 
 .library__crumb {
   display: flex;
@@ -968,7 +978,7 @@
   // bottom. The shelf is framed in the band between the two.
   .library { --lib-top: 140px; --lib-bottom: 270px; }
   .library__eyebrow { top: 80px; left: 18px; }
-  .library--focused .library__eyebrow { opacity: 0; }
+  .library__eyebrow-back { top: 80px; left: 18px; }
   .library__crumb { gap: 14px; }
   .library__name { font-size: 22px; }
   // One "All books" on phones: the one between the arrows
