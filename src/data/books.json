@@ -632,7 +632,7 @@
     "status": "finished",
     "favorite": false,
     "progress": 100,
-    "rating": 0,
+    "rating": 3,
     "tags": [
       "memoir",
       "business"
@@ -640,7 +640,7 @@
     "readAge": 18,
     "readPeriod": "2025 - 2026",
     "finishedAt": "2026-06-01",
-    "review": "[Placeholder: Gabriel ainda vai escrever a resenha deste livro.]"
+    "review": "Portnoy writes the way he talks, which is the point: the book is a case study in building an audience by refusing to sound like a company. Barstool grew out of a free newspaper handed out at train stations, and the early chapters on that grind are better than the later ones about fame. The lesson underneath the noise is consistency. He showed up every day for years before anyone cared. Read it for the distribution playbook, not for the opinions."
   },
   {
     "id": "steve-jobs",
@@ -654,7 +654,7 @@
     "status": "finished",
     "favorite": false,
     "progress": 100,
-    "rating": 0,
+    "rating": 5,
     "tags": [
       "biography",
       "technology"
@@ -662,7 +662,7 @@
     "readAge": 18,
     "readPeriod": "2025 - 2026",
     "finishedAt": "2026-06-01",
-    "review": "[Placeholder: Gabriel ainda vai escrever a resenha deste livro.]"
+    "review": "Isaacson doesn't protect him, which is why the book works. Jobs is cruel to people who deserve better, wrong about plenty, and still the person in the room who cares most about whether the thing is good. The chapters on the Macintosh team and the return to Apple are the ones I reread. The idea that stuck: focus is saying no to a hundred good ideas so one can be great. I found myself agreeing with him and not wanting to be him, and I think that's the honest reaction."
   },
   {
     "id": "1984",
@@ -676,7 +676,7 @@
     "status": "finished",
     "favorite": false,
     "progress": 100,
-    "rating": 0,
+    "rating": 5,
     "tags": [
       "dystopia",
       "classic"
@@ -684,7 +684,7 @@
     "readAge": 18,
     "readPeriod": "2025 - 2026",
     "finishedAt": "2026-06-01",
-    "review": "[Placeholder: Gabriel ainda vai escrever a resenha deste livro.]"
+    "review": "The scariest invention isn't the telescreen, it's Newspeak. Take the words away and the thought goes with them. Orwell builds the whole system so carefully that by the time O'Brien explains it, it sounds almost reasonable, which is the horror. Winston's diary is the most human thing in the book and it's also what dooms him. I read it right after Brave New World and they argue with each other: Huxley's future bribes you, Orwell's breaks you."
   },
   {
     "id": "revolucao-dos-bichos",
@@ -698,7 +698,7 @@
     "status": "finished",
     "favorite": false,
     "progress": 100,
-    "rating": 0,
+    "rating": 5,
     "tags": [
       "satire",
       "classic"
@@ -706,6 +706,6 @@
     "readAge": 18,
     "readPeriod": "2025 - 2026",
     "finishedAt": "2026-06-01",
-    "review": "[Placeholder: Gabriel ainda vai escrever a resenha deste livro.]"
+    "review": "A hundred and fifty pages and every one of them lands. The trick is that the animals are never stupid; they're tired, hopeful, and easy to outlast. Squealer rewriting the commandments on the barn wall is the clearest picture of propaganda I've read anywhere. Boxer's fate still gets me. The last line, with the pigs and the men indistinguishable, is the whole book in one sentence."
   }
 ]
