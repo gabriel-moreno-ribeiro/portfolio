@@ -73,6 +73,7 @@ export default function ShelfLibrary() {
   const engineRef = useRef<ShelfEngine | null>(null);
   const themeRef = useRef<"light" | "dark">(darkMode ? "dark" : "light");
   const openerRef = useRef<HTMLElement | null>(null);
+  const backRef = useRef<HTMLButtonElement>(null);
   const ageRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const initialIndex = useRef(Math.max(0, catalog.findIndex((b) => b.id === bookId))).current;
   const deepLinked = useRef(Boolean(bookId)).current;
@@ -158,6 +159,8 @@ export default function ShelfLibrary() {
           onMode: (nextMode, index) => {
             setMode(nextMode);
             setSelectedIndex(index);
+            // The "Open it" button disables under the keyboard; land on the way back.
+            if (nextMode === "inspect") requestAnimationFrame(() => backRef.current?.focus({ preventScroll: true }));
           },
           onStatus: setStatus,
           onReady: () => {
@@ -374,7 +377,7 @@ export default function ShelfLibrary() {
         {selectedBook && selectedMeta ? (
           <div className="library__panel-inner">
             <div className="library__panel-top">
-              <button type="button" className="library__pill library__back" onClick={() => engineRef.current?.returnToShelf()}>
+              <button type="button" ref={backRef} className="library__pill library__back" onClick={() => engineRef.current?.returnToShelf()}>
                 <FiArrowLeft aria-hidden="true" />
                 Back to the shelf
               </button>
