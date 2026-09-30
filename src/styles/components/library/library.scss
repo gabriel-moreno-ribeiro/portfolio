@@ -7,9 +7,10 @@
   --lib-scrim: color-mix(in srgb, var(--bg) 94%, transparent);
   --lib-glass: color-mix(in srgb, var(--surface) 86%, transparent);
   --lib-veil: color-mix(in srgb, var(--bg) 94%, transparent);
-  --lib-ink-pad: 8px;
-  // Top band kept free for the crumb and the nav pill: the scene starts below it.
+  // Header band the shelf composition stays clear of (the engine reads it and
+  // frames the shelf below it; the wall itself runs on behind the header).
   --lib-top: 96px;
+  --lib-bottom: 0px;
 
   position: relative;
   width: 100%;
@@ -33,6 +34,21 @@
   cursor: pointer;
 }
 
+// ── Veil: the caption's field ───────────────────────────────────────────────
+// Left third of the scene fades to the page colour, so the title, the review
+// and the button read on a calm ground whatever the shelf has scrolled to.
+.library__veil {
+  position: absolute;
+  inset: 0 auto 0 0;
+  z-index: 2;
+  width: 46%;
+  background: linear-gradient(90deg, var(--bg) 0%, color-mix(in srgb, var(--bg) 88%, transparent) 52%, transparent 100%);
+  pointer-events: none;
+  transition: opacity 420ms ease;
+}
+.library--focused .library__veil,
+.library--no3d .library__veil { opacity: 0; }
+
 // ── Placeholder shelf ────────────────────────────────────────────────────────
 // Wall, plank and floor in the colors the scene renders, at the plank's projected
 // position (--shelf-* from ShelfLibrary). The canvas fades in over it.
@@ -43,10 +59,7 @@
   --stage-floor: #dad4cd;
 
   position: absolute;
-  top: var(--lib-top);
-  right: 0;
-  bottom: 0;
-  left: 0;
+  inset: 0;
   z-index: 0;
   background: linear-gradient(
     180deg,
@@ -69,12 +82,11 @@
 // ── Canvas ───────────────────────────────────────────────────────────────────
 .library__canvas {
   position: absolute;
-  top: var(--lib-top);
-  left: 0;
+  inset: 0;
   z-index: 1;
   display: block;
   width: 100%;
-  height: calc(100% - var(--lib-top));
+  height: 100%;
   cursor: grab;
   touch-action: none;
   opacity: 0;
@@ -176,26 +188,19 @@
 .library__index-toggle--float { display: none; }
 
 // ── Browse caption ───────────────────────────────────────────────────────────
-// No box: the words sit on the wall, each line on its own strip of paper
-// (.library__ink), so the spines and the wood show between and around them.
-// Shifted left by the strip's padding so the letters line up with the ruler.
+// The words sit straight on the veil, lined up with the ruler below.
 .library__caption {
   position: absolute;
   z-index: 16;
   bottom: 108px;
-  left: calc(clamp(24px, 5vw, 82px) - var(--lib-ink-pad));
+  left: clamp(24px, 5vw, 82px);
   display: grid;
   width: min(440px, 36vw);
   pointer-events: none;
   transition: opacity 420ms ease, transform 520ms var(--lib-ease);
 }
 
-.library__ink {
-  padding: 1px var(--lib-ink-pad);
-  background: var(--lib-veil);
-  -webkit-box-decoration-break: clone;
-  box-decoration-break: clone;
-}
+.library__ink { display: inline; }
 
 // Outgoing and incoming book share one cell while they crossfade
 .library__caption-body { grid-area: 1 / 1; min-width: 0; }
@@ -278,12 +283,33 @@
   &:disabled { cursor: default; }
 }
 
-// "Open it": a text link on its own strip of paper
+// "Open it": the page's one action, in the site's primary pill (.btn.primary)
 .library__inspect {
   justify-self: start;
-  margin-top: 12px;
-  padding: 2px var(--lib-ink-pad) 5px;
-  background: var(--lib-veil);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  margin-top: 18px;
+  padding: 10px 22px;
+  border: 2px solid var(--fg);
+  border-radius: 36px;
+  background: var(--fg);
+  color: var(--bg);
+  font-size: 15px;
+  font-weight: 600;
+  pointer-events: auto;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+
+  svg { transition: transform 0.3s var(--lib-ease); }
+
+  &:hover:not(:disabled) {
+    background: var(--bg);
+    color: var(--fg);
+    border-color: var(--border);
+    svg { transform: translate(2px, -2px); }
+  }
+  &:disabled { opacity: 0.5; cursor: default; }
 }
 
 // ── Arrows ───────────────────────────────────────────────────────────────────
@@ -291,27 +317,26 @@
   position: absolute;
   z-index: 17;
   // Upper third of the scene: below the header, above the caption on short screens.
-  top: calc(var(--lib-top) + (100% - var(--lib-top)) * 0.3);
+  // On the shelf row (upper part of the scene), clear of the caption below it.
+  top: calc(var(--lib-top) + (100% - var(--lib-top)) * 0.36);
   display: grid;
   place-items: center;
-  width: 50px;
-  height: 50px;
-  border: 2px solid var(--border);
+  width: 44px;
+  height: 44px;
+  border: 0;
   border-radius: 50%;
-  background: var(--lib-glass);
-  color: var(--fg);
+  background: var(--fg);
+  color: var(--bg);
   font-size: 18px;
-  transition: opacity 260ms ease, transform 260ms ease, background-color 220ms ease, color 220ms ease, border-color 220ms ease;
+  transition: opacity 200ms ease, transform 200ms ease;
 
-  &--left { left: clamp(15px, 2.7vw, 44px); }
-  &--right { right: clamp(15px, 2.7vw, 44px); }
+  &--left { left: 16px; }
+  &--right { right: 16px; }
 
-  &:hover:not(:disabled) {
-    background: var(--fg);
-    color: var(--bg);
-    border-color: var(--fg);
-  }
-  &:disabled { opacity: 0.28; cursor: default; }
+  &:hover:not(:disabled) { transform: translateY(-1px); }
+  &:active:not(:disabled) { transform: scale(0.96); }
+  // First and last book: the arrow that goes nowhere is simply not there
+  &:disabled { opacity: 0; pointer-events: none; }
 }
 .library--focused .library__arrow { opacity: 0; pointer-events: none; }
 
@@ -386,12 +411,10 @@
   position: absolute;
   bottom: calc(100% + 2px);
   left: 50%;
-  padding: 4px 8px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: var(--surface);
-  color: var(--fg);
-  font-size: 11px;
+  padding: 0 0 6px;
+  color: var(--fg-muted);
+  font-size: 12px;
+  font-weight: 500;
   white-space: nowrap;
   opacity: 0;
   transform: translate(var(--tip-x), 4px);
@@ -403,13 +426,6 @@
 .library__age:focus-visible .library__age-tip {
   opacity: 1;
   transform: translate(var(--tip-x), 0);
-}
-
-.library__hint {
-  margin: 0;
-  font-size: 12px;
-  color: color-mix(in srgb, var(--fg-muted) 75%, var(--fg)); // 5.8:1 on the light scene floor
-  white-space: nowrap;
 }
 
 // ── Detail panel ─────────────────────────────────────────────────────────────
@@ -467,18 +483,15 @@
   &:hover:not(:disabled) svg { transform: translateX(-3px); }
 }
 
+// Same voice as the photo cards' "03 / 08" on the home page
 .library__panel-pos {
-  display: flex;
-  gap: 8px;
-  align-items: center;
   margin: 0;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  color: var(--fg-muted);
-
-  span:first-child { color: var(--accent); }
-  i { width: 28px; height: 1px; background: var(--border); }
+  font-family: ui-monospace, "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent);
+  white-space: nowrap;
 }
 
 .library__panel-copy {
@@ -591,7 +604,7 @@
   display: flex;
   align-items: center;
   gap: 18px;
-  padding-top: 18px;
+  padding: 18px 56px 0 0; // the terminal button lives in the bottom-right corner
   border-top: 1px solid var(--border);
   font-size: 10px;
   font-weight: 600;
@@ -633,7 +646,6 @@
 .library--no3d {
   .library__canvas,
   .library__arrow,
-  .library__hint,
   .library__credit,
   .library__index-toggle--float { display: none; }
 }
@@ -935,7 +947,9 @@
 }
 
 @media (max-width: 760px) {
-  .library { --lib-top: 124px; } // the crumb sits under the pill on phones
+  // The crumb sits under the pill; the caption, arrows and ruler stack at the
+  // bottom. The shelf is framed in the band between the two.
+  .library { --lib-top: 140px; --lib-bottom: 270px; }
   .library__eyebrow { top: 80px; left: 18px; }
   .library--focused .library__eyebrow { opacity: 0; }
   .library__crumb { gap: 14px; }
@@ -944,17 +958,22 @@
   .library__crumb .library__index-toggle { display: none; }
   .library--no3d .library__crumb .library__index-toggle { display: inline-flex; } // the float one is hidden there
 
+  .library__veil {
+    inset: 38% 0 0 0;
+    width: auto;
+    background: linear-gradient(180deg, transparent 0%, color-mix(in srgb, var(--bg) 92%, transparent) 42%, var(--bg) 100%);
+  }
   .library__caption {
-    right: calc(18px - var(--lib-ink-pad));
+    right: 18px;
     bottom: 134px;
-    left: calc(18px - var(--lib-ink-pad));
+    left: 18px;
     width: auto;
   }
-  .library__review { margin-top: 8px; font-size: 15px; line-height: 1.45; }
+  .library__review { display: none; } // the open book carries the review
   .library__title { font-size: clamp(26px, 7.4vw, 32px); }
   .library__author { margin-top: 4px; font-size: 13px; }
   .library__read { font-size: 12px; em { font-size: 14px; } }
-  .library__inspect { margin-top: 8px; font-size: 13px; }
+  .library__inspect { margin-top: 12px; min-height: 40px; padding: 8px 18px; font-size: 14px; }
 
   .library__arrow {
     top: auto;
@@ -1005,7 +1024,6 @@
   // Full width so each age stays a 24px+ target (12 ages in 354px is ~29px each)
   .library__index-bar { right: 18px; bottom: max(8px, env(safe-area-inset-bottom)); left: 18px; } // no terminal button on phones
   .library__ages { flex-basis: 100%; }
-  .library__hint { display: none; }
   // No room for a standing legend between the ruler and the arrows: it shows on tap or focus only
   .library__ages:not(:hover):not(:focus-within) .is-active .library__age-tip { opacity: 0; }
 

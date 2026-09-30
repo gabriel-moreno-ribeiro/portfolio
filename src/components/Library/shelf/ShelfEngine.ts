@@ -296,15 +296,23 @@ export class ShelfEngine {
     const key = new THREE.DirectionalLight("#fff6e7", 4.6);
     key.position.set(-4.2, 7.4, 5.5);
     key.castShadow = true;
-    key.shadow.mapSize.set(512, 512);
-    key.shadow.camera.left = -8;
-    key.shadow.camera.right = 8;
-    key.shadow.camera.top = 6;
-    key.shadow.camera.bottom = -2;
+    key.shadow.mapSize.set(1536, 1536);
+    // The box covers the whole visible wall, or its edge shows as a lighter
+    // wedge; normalBias keeps the wall (lit at a grazing angle) free of acne,
+    // which used to darken everything inside the box.
+    key.shadow.camera.left = -14;
+    key.shadow.camera.right = 14;
+    key.shadow.camera.top = 12;
+    key.shadow.camera.bottom = -4;
     key.shadow.camera.near = 0.5;
-    key.shadow.camera.far = 22;
-    key.shadow.bias = -0.0005;
+    key.shadow.camera.far = 40;
+    key.shadow.bias = -0.0002;
+    key.shadow.normalBias = 0.05;
+    // Without this the box above is never applied and the light keeps the
+    // default ±5 box, whose top edge crossed the wall as a diagonal line.
+    key.shadow.camera.updateProjectionMatrix();
     this.scene.add(key);
+    this.scene.add(key.target);
     this.keyLight = key;
 
     const rim = new THREE.DirectionalLight("#c8d5e5", 2.1);
@@ -1043,6 +1051,10 @@ export class ShelfEngine {
       this.callbacks.onActiveIndex(this.activeIndex);
     }
     this.shelfGroup.position.x = -this.xAtIndex(this.scrollIndex);
+    // The shelf scrolls under a fixed light: keep the shadow box centred on the
+    // books in view, or its edge shows as a wedge on the wall and the plank.
+    this.keyLight.position.x = -4.2 + this.shelfGroup.position.x;
+    this.keyLight.target.position.x = this.shelfGroup.position.x;
     if (this.mode === "browse") {
       this.updateBrowseMotion(delta);
     }
@@ -1134,6 +1146,25 @@ export class ShelfEngine {
     this.camera.lookAt(this.focusCameraTarget);
   }
 
+  // Height of the page header the browse framing stays clear of (--lib-top on
+  // the page). The canvas still fills the viewport: the wall runs on behind the
+  // header, only the shelf composition moves down.
+  private headerBand() {
+    return this.pageBand("--lib-top");
+  }
+
+  // Phones also keep a band at the bottom for the caption, the arrows and the
+  // ruler (--lib-bottom); elsewhere it is 0.
+  private footerBand() {
+    return this.pageBand("--lib-bottom");
+  }
+
+  private pageBand(name: string) {
+    const host = this.canvas.parentElement;
+    const v = host ? parseFloat(getComputedStyle(host).getPropertyValue(name)) : 0;
+    return Number.isFinite(v) ? v : 0;
+  }
+
   private applyFocusViewOffset(progress: number) {
     const width = Math.max(1, this.canvas.clientWidth);
     const height = Math.max(1, this.canvas.clientHeight);
@@ -1153,18 +1184,21 @@ export class ShelfEngine {
       ? (0.28 / verticalHalfSpan) * height * 0.5 * clampedProgress
       : 0;
 
-    if (clampedProgress <= 0.001) {
-      this.camera.clearViewOffset();
-      return;
-    }
-
+    // Browse (progress 0): the frame is the viewport minus the header band,
+    // drawn from `band` px down, so the shelf never runs under the header.
+    // Inspect (progress 1): the full viewport, shifted for the detail panel.
+    // In between, one blend of the two, so the frustum never jumps.
+    const band = this.headerBand() * (1 - clampedProgress);
+    const footer = this.footerBand() * (1 - clampedProgress);
+    const frameHeight = Math.max(1, height - band - footer);
+    this.camera.aspect = width / frameHeight;
     // Shift the composition through an asymmetric frustum. The camera and
     // OrbitControls can then keep the exact center of the book as their target.
     this.camera.setViewOffset(
       width,
-      height,
+      frameHeight,
       horizontalOffset,
-      verticalOffset,
+      verticalOffset - band,
       width,
       height,
     );
@@ -1193,17 +1227,17 @@ export class ShelfEngine {
     const dprCap = 1.25;
     this.responsiveBrowseCamera.set(
       0,
-      width < 760 ? 1.7 : browseCamera.y,
-      width < 760 ? 9.8 : browseCamera.z,
+      width < 760 ? 1.5 : browseCamera.y,
+      width < 760 ? 5.6 : browseCamera.z,
     );
-    this.responsiveBrowseTarget.set(0, width < 760 ? 0.75 : browseTarget.y, browseTarget.z);
+    // Phones: a short frame between the header and the caption (see the bands
+    // above), so the camera sits closer and the shelf fills it.
+    this.responsiveBrowseTarget.set(0, width < 760 ? 1.0 : browseTarget.y, browseTarget.z);
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, dprCap));
     this.renderer.setSize(width, height, false);
-    this.camera.aspect = width / height;
     this.camera.fov = width < 600 ? 33 : width < 920 ? 30 : 27;
-    this.camera.updateProjectionMatrix();
     if (this.mode === "browse" && this.focusProgress < 0.01) {
-      this.camera.clearViewOffset();
+      this.applyFocusViewOffset(0);
       this.camera.position.copy(this.responsiveBrowseCamera);
       this.camera.lookAt(this.responsiveBrowseTarget);
     } else if (this.mode === "inspect" && this.selectedIndex !== null) {
@@ -1531,6 +1565,14 @@ export class ShelfEngine {
       collisionRejects: this.collisionRejects,
       lastCollisionPair: this.lastCollisionPair,
       currentCollision: this.findAnyCollision(),
+      // Where the selected book lands on screen (px), to check the framing
+      selectedOnScreen: this.selectedIndex === null ? null : (() => {
+        const p = new THREE.Vector3();
+        this.runtimeBooks[this.selectedIndex].content.getWorldPosition(p);
+        p.project(this.camera);
+        return { x: Math.round(((p.x + 1) / 2) * this.canvas.clientWidth), y: Math.round(((1 - p.y) / 2) * this.canvas.clientHeight), z: Number(p.z.toFixed(3)) };
+      })(),
+      camera: { x: +this.camera.position.x.toFixed(2), y: +this.camera.position.y.toFixed(2), z: +this.camera.position.z.toFixed(2), aspect: +this.camera.aspect.toFixed(3), view: this.camera.view ? { fullH: this.camera.view.fullHeight, offY: +this.camera.view.offsetY.toFixed(1) } : null },
       canvas: {
         width: this.canvas.width,
         height: this.canvas.height,

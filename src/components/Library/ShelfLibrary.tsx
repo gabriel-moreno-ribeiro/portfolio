@@ -37,11 +37,12 @@ const readableAges = ages.filter((a) => a.count > 0);
 
 // Where the browse camera puts the plank (same numbers as ShelfEngine.handleResize),
 // so the placeholder sits where the 3D shelf will fade in
-function shelfBand(w: number, h: number) {
+function shelfBand(w: number, hFull: number, band: number, footer: number) {
+  const h = Math.max(1, hFull - band - footer);
   const phone = w < 760;
-  const cy = phone ? 1.7 : 1.42;
-  const cz = phone ? 9.8 : 6.65;
-  const ty = phone ? 0.75 : 1.28;
+  const cy = phone ? 1.5 : 1.42;
+  const cz = phone ? 5.6 : 6.65;
+  const ty = phone ? 1.0 : 1.28;
   const tan = Math.tan(((w < 600 ? 33 : w < 920 ? 30 : 27) * Math.PI) / 360);
   let a = ty - cy;
   let b = 0.15 - cz;
@@ -53,7 +54,13 @@ function shelfBand(w: number, h: number) {
     const vz = pz - cz;
     return Math.round(((1 - (vy * -b + vz * a) / (vy * a + vz * b) / tan) / 2) * h);
   };
-  return { top: y(0.31, -0.86), edge: y(0.32, 0.93), bottom: y(0.09, 0.86) };
+  return { top: band + y(0.31, -0.86), edge: band + y(0.32, 0.93), bottom: band + y(0.09, 0.86) };
+}
+
+// --lib-top / --lib-bottom: the bands the shelf stays clear of (see library.scss)
+function pageBand(el: HTMLElement | null, name: string) {
+  const v = el ? parseFloat(getComputedStyle(el).getPropertyValue(name)) : 0;
+  return Number.isFinite(v) ? v : 0;
 }
 
 export default function ShelfLibrary() {
@@ -79,7 +86,7 @@ export default function ShelfLibrary() {
   const [indexOpen, setIndexOpen] = useState(false);
   const [status, setStatus] = useState("Loading the shelf");
   const [rovingAge, setRovingAge] = useState<number | null>(null);
-  const [band, setBand] = useState(() => shelfBand(window.innerWidth, window.innerHeight));
+  const [band, setBand] = useState(() => shelfBand(window.innerWidth, window.innerHeight, window.innerWidth < 760 ? 124 : 96, window.innerWidth < 760 ? 270 : 0));
 
   const activeBook = catalog[activeIndex];
   const activeMeta = books[activeIndex];
@@ -185,8 +192,8 @@ export default function ShelfLibrary() {
   useEffect(() => {
     if (ready || no3d) return;
     const onResize = () => {
-      const el = canvasRef.current; // the scene, not the page: the header band is above it
-      if (el) setBand(shelfBand(el.clientWidth, el.clientHeight));
+      const el = mainRef.current;
+      if (el) setBand(shelfBand(el.clientWidth, el.clientHeight, pageBand(el, "--lib-top"), pageBand(el, "--lib-bottom")));
     };
     onResize();
     window.addEventListener("resize", onResize);
@@ -274,6 +281,9 @@ export default function ShelfLibrary() {
         data-drag-me={true}
         aria-label={`A shelf of ${catalog.length} books. Drag or use the arrow keys to browse. Press Enter to open the selected book.`}
       />
+      {/* Fades the scene under the caption, so the words sit on a calm field
+          instead of on spines and wood */}
+      <div className="library__veil" aria-hidden="true" />
 
       <div className="library__nav">
         <Navbar />
@@ -301,12 +311,12 @@ export default function ShelfLibrary() {
             {!no3d && (
               <button
                 type="button"
-                className="library__textlink library__inspect"
+                className="library__inspect"
                 disabled={isFocused || !ready}
                 onClick={() => engineRef.current?.focusBook(activeIndex)}
                 aria-label={`Open ${activeBook.title}`}
               >
-                <span>Open it</span>
+                Open it
                 <FiArrowUpRight aria-hidden="true" />
               </button>
             )}
@@ -358,7 +368,6 @@ export default function ShelfLibrary() {
             ),
           )}
         </div>
-        <p className="library__hint" aria-hidden="true">Drag, scroll, or use the arrow keys</p>
       </nav>
 
       <aside className="library__panel" aria-hidden={!isFocused} aria-label={selectedBook ? `Details for ${selectedBook.title}` : "Book details"}>
@@ -370,9 +379,7 @@ export default function ShelfLibrary() {
                 Back to the shelf
               </button>
               <p className="library__panel-pos">
-                <span>{pad(selectedIndex! + 1)}</span>
-                <i />
-                <span>{pad(catalog.length)}</span>
+                {pad(selectedIndex! + 1)} / {pad(catalog.length)}
               </p>
             </div>
 
