@@ -29,6 +29,8 @@ body:has(.not-found) { padding-block: 0; }
     font-size: var(--nf);
   }
 
+  &__note { font-style: italic; }
+
   &__score {
     height: 20px;
     margin: 14px 0 0;

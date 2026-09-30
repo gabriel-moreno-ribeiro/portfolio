@@ -11,6 +11,15 @@ const ELSEWHERE = [
   { to: '/news', label: 'News' },
 ];
 
+// The robot has opinions about your streak
+function milestone(best: number) {
+  if (best >= 30) return 'okay, the zero is officially a tool now: #14';
+  if (best >= 20) return 'more tries than the D-20 took to start';
+  if (best >= 10) return 'numbered, like everything in the garage';
+  if (best >= 5) return 'grandpa would have handed you the wrench (#1)';
+  return '';
+}
+
 function NotFound() {
   useDocumentHead({
     title: '404 · Gabriel Moreno Ribeiro',
@@ -29,6 +38,7 @@ function NotFound() {
           {score.streak > 0 && `${score.streak} in a row`}
           {score.streak > 0 && score.best > score.streak && ' · '}
           {score.best > score.streak && `best ${score.best}`}
+          {milestone(score.best) && <span className="not-found__note"> · {milestone(score.best)}</span>}
         </p>
       </div>
 
