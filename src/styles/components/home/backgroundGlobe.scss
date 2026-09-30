@@ -94,27 +94,26 @@
   background: rgba($grey, 0.2);
   align-self: flex-start;
 
-  // Top right: previous / next city, then close.
-  &__nav {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    display: flex;
+  // The local time and, right after it, previous / next city.
+  &__steps {
+    display: inline-flex;
     align-items: center;
     gap: 4px;
+
+    .city-panel__time { margin-right: 2px; }
   }
 
   &__arrow {
     display: grid;
     place-items: center;
-    width: 34px;
-    height: 34px;
+    width: 24px;
+    height: 24px;
     padding: 0;
     border: 1px solid var(--border);
     border-radius: 50%;
     background: var(--surface);
     color: var(--fg);
-    font-size: 15px;
+    font-size: 13px;
     cursor: pointer;
     transition: background-color 0.16s ease-out, border-color 0.16s ease-out, transform 0.16s ease-out;
 
@@ -127,6 +126,9 @@
   }
 
   &__close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
     background: transparent;
     border: none;
     font-size: 17px;
@@ -152,6 +154,7 @@
     align-items: center;
     flex-wrap: wrap;
     gap: 6px 10px;
+    padding-right: 24px; // clear of the close button
   }
 
   &__location {

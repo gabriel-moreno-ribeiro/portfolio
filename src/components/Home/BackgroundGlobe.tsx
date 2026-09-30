@@ -345,34 +345,35 @@ function CityPanel({
       exit={reduced ? { opacity: 1 } : { opacity: 0, x: 20 }}
       transition={{ duration: reduced ? 0 : 0.35, ease: 'easeOut' }}
     >
-      <div className="city-panel__nav">
-        <button
-          type="button"
-          className="city-panel__arrow"
-          onClick={() => onStep(-1)}
-          aria-label={`Previous city: ${prev.name.split(',')[0]}`}
-          title={prev.name.split(',')[0]}
-        >
-          <FiArrowLeft aria-hidden="true" />
-        </button>
-        <button
-          type="button"
-          className="city-panel__arrow"
-          onClick={() => onStep(1)}
-          aria-label={`Next city: ${next.name.split(',')[0]}`}
-          title={next.name.split(',')[0]}
-        >
-          <FiArrowRight aria-hidden="true" />
-        </button>
-        <button type="button" className="city-panel__close" onClick={onClose} aria-label="Close">✕</button>
-      </div>
+      <button type="button" className="city-panel__close" onClick={onClose} aria-label="Close">✕</button>
 
       <div className="city-panel__text">
         <div className="city-panel__meta">
           <p className="city-panel__location">{city.name}</p>
           <span className="city-panel__coords">{city.coords}</span>
-          <span className="city-panel__time">
-            {showClock && <CityClock tz={CITY_TZ[city.id] ?? config.location.tz} />}
+          {/* The local time with previous / next city right beside it; they wrap as one. */}
+          <span className="city-panel__steps">
+            <span className="city-panel__time">
+              {showClock && <CityClock tz={CITY_TZ[city.id] ?? config.location.tz} />}
+            </span>
+            <button
+              type="button"
+              className="city-panel__arrow"
+              onClick={() => onStep(-1)}
+              aria-label={`Previous city: ${prev.name.split(',')[0]}`}
+              title={prev.name.split(',')[0]}
+            >
+              <FiArrowLeft aria-hidden="true" />
+            </button>
+            <button
+              type="button"
+              className="city-panel__arrow"
+              onClick={() => onStep(1)}
+              aria-label={`Next city: ${next.name.split(',')[0]}`}
+              title={next.name.split(',')[0]}
+            >
+              <FiArrowRight aria-hidden="true" />
+            </button>
           </span>
         </div>
         <h3 className="city-panel__headline">{city.headline}</h3>
