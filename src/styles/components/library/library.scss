@@ -398,20 +398,24 @@
   &:last-child { --tip-x: 0; .library__age-tip { right: 0; left: auto; } }
 }
 
+// The ticks stand on the plank's dark lip: page colour on light (cream on
+// wood), ink on dark.
 .library__age-bar {
   width: 2px;
-  background: var(--fg);
-  opacity: 0.7;
+  background: var(--bg);
+  opacity: 0.85;
   transition: opacity 200ms ease;
+
+  [data-theme="dark"] & { background: var(--fg); opacity: 0.7; }
 }
 .library__age:hover:not(:disabled) .library__age-bar { opacity: 1; }
-.library__age.is-active .library__age-bar { background: var(--accent); opacity: 1; }
+.library__age.is-active .library__age-bar { background: var(--accent-decor); opacity: 1; }
 .library__age.is-active .library__age-label {
   // --accent-tag is 4.1:1 on the light scene floor; a touch of --fg takes it past 4.5 in both themes
   color: color-mix(in srgb, var(--accent-tag) 80%, var(--fg));
   font-weight: 700;
 }
-.library__age.is-empty { cursor: default; opacity: 0.45; }
+.library__age.is-empty { cursor: default; color: var(--fg-muted); .library__age-bar { opacity: 0.3; } }
 
 // "age 12 · 4 books": the current age by default, the hovered or focused one on demand
 .library__age-tip {
@@ -640,9 +644,8 @@
   bottom: 12px;
   margin: 0;
   line-height: 1;
-  font-size: 10px;
+  font-size: 11px;
   color: var(--fg-muted);
-  opacity: 0.7;
   transition: opacity 300ms ease;
 
   a { color: inherit; }
@@ -789,6 +792,13 @@
   min-height: 0;
   margin: 0;
   padding: 0 0 96px; // the last row clears the fixed terminal button (bottom-right, 66px tall)
+
+  // Desktop: the rows stop short of the terminal button's column while scrolling
+  @media (min-width: 761px) {
+    .library__group-head,
+    .library__row,
+    .library__row--details .library__row-main { padding-right: calc(clamp(16px, 2vw, 28px) + 58px); }
+  }
   overflow-y: auto;
   overscroll-behavior: contain;
   scrollbar-width: thin;
@@ -1038,7 +1048,7 @@
     top: auto;
     bottom: 0;
     width: 100%;
-    height: min(54dvh, 520px);
+    height: min(50dvh, 480px); // the engine frames the open book above this
     transform: translateY(100%);
 
     &::before {

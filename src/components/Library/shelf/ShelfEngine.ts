@@ -1173,15 +1173,16 @@ export class ShelfEngine {
       width <= 1020
         ? Math.min(compactDetailMaxWidth, width * compactDetailWidthRatio)
         : Math.min(desktopDetailMaxWidth, width * desktopDetailWidthRatio);
-    const focusDistance = isMobile ? 5.8 : 5.4;
-    const verticalHalfSpan =
-      Math.tan(THREE.MathUtils.degToRad(this.camera.fov * 0.5)) * focusDistance;
     const clampedProgress = clamp(progress, 0, 1);
     const horizontalOffset = isMobile
       ? 0
       : detailWidth * 0.5 * clampedProgress;
+    // Phones: the detail sheet covers the lower half, so the book is framed in
+    // the strip between the header band and the sheet (see .library__panel).
+    const sheet = Math.min(height * 0.5, 480);
+    const stripCenter = this.headerBand() + (height - this.headerBand() - sheet) * 0.5;
     const verticalOffset = isMobile
-      ? (0.28 / verticalHalfSpan) * height * 0.5 * clampedProgress
+      ? (height * 0.5 - stripCenter) * clampedProgress
       : 0;
 
     // Browse (progress 0): the frame is the viewport minus the header band,
@@ -1209,7 +1210,8 @@ export class ShelfEngine {
     compositionProgress = 1,
   ) {
     const isMobile = this.canvas.clientWidth < 760;
-    const focusDistance = isMobile ? 5.8 : 5.4;
+    // Farther on phones: the book has to fit the strip above the sheet.
+    const focusDistance = isMobile ? 10.5 : 5.4;
     this.applyFocusViewOffset(compositionProgress);
 
     this.focusCameraTarget.copy(worldPosition);
