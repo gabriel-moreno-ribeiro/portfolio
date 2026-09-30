@@ -271,12 +271,9 @@ export default function ShelfLibrary() {
       ref={mainRef}
       className={`library ${ready ? "library--ready" : ""} ${isFocused ? "library--focused" : ""} ${no3d ? "library--no3d" : ""}`}
       id="main-content"
+      style={{ "--shelf-top": `${band.top}px`, "--shelf-edge": `${band.edge}px`, "--shelf-bottom": `${band.bottom}px` } as React.CSSProperties}
     >
-      <div
-        className="library__stage"
-        aria-hidden="true"
-        style={{ "--shelf-top": `${band.top}px`, "--shelf-edge": `${band.edge}px`, "--shelf-bottom": `${band.bottom}px` } as React.CSSProperties}
-      />
+      <div className="library__stage" aria-hidden="true" />
       <canvas
         ref={canvasRef}
         className="library__canvas"

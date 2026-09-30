@@ -53,7 +53,7 @@ body:has(.library) { padding-block: 0; }
 
 // ── Placeholder shelf ────────────────────────────────────────────────────────
 // Wall, plank and floor in the colors the scene renders, at the plank's projected
-// position (--shelf-* from ShelfLibrary). The canvas fades in over it.
+// position (--shelf-* set on the main by ShelfLibrary). The canvas fades in over it.
 .library__stage {
   --stage-wall: #e7e2db;
   --stage-plank: #896047;
@@ -209,7 +209,9 @@ body:has(.library) { padding-block: 0; }
 .library__caption {
   position: absolute;
   z-index: 16;
-  bottom: 108px;
+  // Above the ruler and, on tall screens, standing on the plank rather than
+  // straddling it (the plank's projected top is --shelf-top).
+  bottom: max(108px, calc(100% - var(--shelf-top, 100%) + 22px));
   left: clamp(24px, 5vw, 82px);
   display: grid;
   width: min(440px, 36vw);
@@ -964,8 +966,18 @@ body:has(.library) { padding-block: 0; }
   .library__drawer { width: min(520px, 52vw); }
 }
 
+// Short desktop screens: the panel copy must fit above the controls
+@media (max-height: 820px) and (min-width: 761px) {
+  .library__panel-inner { padding-top: 64px; padding-bottom: 20px; }
+  .library__panel-copy { padding-top: 14px; padding-bottom: 14px; }
+  .library__panel-title { font-size: clamp(34px, 3.4vw, 48px); }
+  .library__panel-desc { margin-top: 18px; font-size: 16px; line-height: 1.5; }
+  .library__quote { margin-top: 18px; }
+  .library__facts { margin-top: 20px; padding-top: 16px; gap: 14px 24px; }
+}
+
 @media (max-height: 700px) and (min-width: 761px) {
-  .library__caption { bottom: 100px; }
+  .library__caption { bottom: max(100px, calc(100% - var(--shelf-top, 100%) + 22px)); }
   .library__review { margin-top: 10px; font-size: 16px; }
   .library__title { font-size: 30px; }
   .library__panel-copy { padding-top: 18px; padding-bottom: 18px; }
