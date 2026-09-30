@@ -1,0 +1,79 @@
+// Easter eggs: the corner line and the things that cross the floor.
+
+// One line in the corner, same recipe as the Ctrl+K tip
+.egg-line {
+  position: fixed;
+  left: 16px;
+  bottom: 24px;
+  z-index: 9998;
+  max-width: min(440px, calc(100vw - 32px));
+  margin: 0;
+  padding: 12px 16px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--fg);
+  font-size: 14px;
+  line-height: 1.5;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+  animation: tip-in 0.3s ease-out;
+
+  @media (max-width: 768px) {
+    bottom: calc(96px + env(safe-area-inset-bottom)); // above the sticky CTA
+  }
+}
+
+// Whatever runs across: pinned to the floor, over everything, untouchable
+.egg-stage {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9997;
+  height: 0;
+  pointer-events: none;
+  // The stage's own animation only exists to end the whole show on time
+  animation: egg-show 6s linear forwards;
+}
+
+.egg-pig {
+  position: absolute;
+  bottom: 6px;
+  left: -180px;
+  width: 150px;
+  animation: egg-cross 4.6s cubic-bezier(0.4, 0, 0.6, 1) forwards;
+
+  .pig__svg { width: 100%; display: block; overflow: visible; }
+  .pig__body { fill: #f6b1c3; stroke: #b3506d; stroke-width: 2.5; }
+  .pig__ear { fill: #ef98ae; stroke: #b3506d; stroke-width: 2.5; stroke-linejoin: round; }
+  .pig__snout { fill: #ef98ae; stroke: #b3506d; stroke-width: 2.5; }
+  .pig__nostril { fill: #8a3652; }
+  .pig__eye { fill: #2a1b20; }
+  .pig__leg { fill: #ef98ae; stroke: #b3506d; stroke-width: 2.5; transform-box: fill-box; transform-origin: 50% 0; }
+  .pig__tail path { fill: none; stroke: #b3506d; stroke-width: 3; stroke-linecap: round; }
+  .pig__tail { transform-box: fill-box; transform-origin: 100% 100%; animation: egg-pig-tail 1.1s ease-in-out infinite alternate; }
+  .pig__svg { animation: egg-pig-bob 0.32s ease-in-out infinite alternate; }
+  .pig__leg--a { animation: egg-pig-step 0.32s ease-in-out infinite alternate; }
+  .pig__leg--b { animation: egg-pig-step 0.32s ease-in-out infinite alternate-reverse; }
+}
+
+.egg-truck {
+  position: absolute;
+  bottom: 0;
+  left: -260px;
+  width: 220px;
+  height: auto;
+  animation: egg-cross 5.2s cubic-bezier(0.3, 0, 0.7, 1) forwards, egg-rattle 0.12s linear infinite;
+}
+
+@keyframes egg-cross { to { transform: translateX(calc(100vw + 300px)); } }
+@keyframes egg-rattle { from { margin-bottom: 0; } to { margin-bottom: 2px; } }
+@keyframes egg-show { to { height: 0; } }
+@keyframes egg-pig-step { from { transform: rotate(-22deg); } to { transform: rotate(22deg); } }
+@keyframes egg-pig-bob { from { transform: translateY(0); } to { transform: translateY(-4px); } }
+@keyframes egg-pig-tail { from { transform: rotate(-14deg); } to { transform: rotate(14deg); } }
+
+@media print {
+  .egg-line, .egg-stage { display: none !important; }
+}

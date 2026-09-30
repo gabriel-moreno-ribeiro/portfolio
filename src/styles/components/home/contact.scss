@@ -176,6 +176,15 @@
     }
   }
 
+  // J.A.R.V.A.N.A. answers when the message mentions beans
+  &__note {
+    display: block;
+    margin-top: 6px;
+    font-size: 13px;
+    font-style: italic;
+    color: var(--fg-muted);
+  }
+
   &__error {
     font-size: 13px;
     color: #e53e3e;

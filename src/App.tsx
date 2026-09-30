@@ -4,6 +4,7 @@ import CustomMouse from "./components/Shared/CustomMouse";
 import DarkModeButton from "./components/Shared/DarkModeButton";
 import HandsfreeButton from "./components/Shared/HandsfreeButton";
 import BackToTop from "./components/Shared/BackToTop";
+import EasterEggs from "./components/Shared/EasterEggs";
 import HorizontalScroller from "./components/Shared/HorizontalScroller";
 import TerminalButton from "./components/Shared/TerminalButton";
 import TerminalModal from "./components/Terminal/TerminalModal";
@@ -109,6 +110,7 @@ function AppContent() {
         </Suspense>
       )}
       <CustomMouse />
+      <EasterEggs />
       {!isReading && <MobileStickyCTA />}
       {!isLibrary && <BackToTop />}
       {tip && isHome && (
