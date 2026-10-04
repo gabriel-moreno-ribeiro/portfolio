@@ -1,43 +1,47 @@
 import { useInView } from "motion/react";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import python from "../../assets/skills/devicon/python.svg";
+import pytorch from "../../assets/skills/devicon/pytorch.svg";
+import huggingface from "../../assets/skills/devicon/huggingface.svg";
+import qwen from "../../assets/skills/devicon/qwen.svg";
+import ollama from "../../assets/skills/devicon/ollama.svg";
+import ollamaDark from "../../assets/skills/devicon/ollama-dark.svg";
+import vllm from "../../assets/skills/devicon/vllm.svg";
+import unsloth from "../../assets/skills/devicon/unsloth.svg";
+import langgraph from "../../assets/skills/devicon/langgraph.svg";
+import langgraphDark from "../../assets/skills/devicon/langgraph-dark.svg";
+import n8n from "../../assets/skills/devicon/n8n.svg";
+import fastapi from "../../assets/skills/devicon/fastapi.svg";
 import typescript from "../../assets/skills/devicon/typescript.svg";
-import react from "../../assets/skills/devicon/react.svg";
-import nextjs from "../../assets/skills/devicon/nextjs.svg";
-import nextjsDark from "../../assets/skills/devicon/nextjs-dark.svg";
-import nodejs from "../../assets/skills/devicon/nodejs.svg";
 import postgresql from "../../assets/skills/devicon/postgresql.svg";
-import supabase from "../../assets/skills/devicon/supabase.svg";
+import redis from "../../assets/skills/devicon/redis.svg";
 import docker from "../../assets/skills/devicon/docker.svg";
-import aws from "../../assets/skills/devicon/aws.svg";
-import awsDark from "../../assets/skills/devicon/aws-dark.svg";
-import git from "../../assets/skills/devicon/git.svg";
-import github from "../../assets/skills/devicon/github.svg";
-import githubDark from "../../assets/skills/devicon/github-dark.svg";
-import vercel from "../../assets/skills/devicon/vercel.svg";
-import vercelDark from "../../assets/skills/devicon/vercel-dark.svg";
-import claude from "../../assets/skills/devicon/claude.svg";
+import linux from "../../assets/skills/devicon/linux.svg";
+import linuxDark from "../../assets/skills/devicon/linux-dark.svg";
 import useIsMobile from "../../hooks/useIsMobile";
 import { useThemeStore } from "../../store/themeStore";
 import SkillsCanvas from "./SkillsCanvas";
 
-// What a software / AI engineer reaches for today, limited to what this site's
-// projects actually use (HIBEEX's stack, Python, this site's tooling). The black
-// logos get a white version on the dark card.
+// The bench of an AI / automation engineer, below the app layer: training and
+// fine-tuning (PyTorch, Unsloth), open-weight models and serving (Hugging Face,
+// Qwen, Ollama, vLLM), agents and workflows (LangGraph, n8n), and the backend
+// they run on. The black logos get a white version on the dark card.
 const TOOLS: { name: string; light: string; dark?: string }[] = [
   { name: "Python", light: python },
+  { name: "PyTorch", light: pytorch },
+  { name: "Hugging Face", light: huggingface },
+  { name: "Qwen", light: qwen },
+  { name: "Ollama", light: ollama, dark: ollamaDark },
+  { name: "vLLM", light: vllm },
+  { name: "Unsloth", light: unsloth },
+  { name: "LangGraph", light: langgraph, dark: langgraphDark },
+  { name: "n8n", light: n8n },
+  { name: "FastAPI", light: fastapi },
   { name: "TypeScript", light: typescript },
-  { name: "React", light: react },
-  { name: "Next.js", light: nextjs, dark: nextjsDark },
-  { name: "Node.js", light: nodejs },
   { name: "PostgreSQL", light: postgresql },
-  { name: "Supabase", light: supabase },
+  { name: "Redis", light: redis },
   { name: "Docker", light: docker },
-  { name: "AWS", light: aws, dark: awsDark },
-  { name: "Git", light: git },
-  { name: "GitHub", light: github, dark: githubDark },
-  { name: "Vercel", light: vercel, dark: vercelDark },
-  { name: "Claude", light: claude },
+  { name: "Linux", light: linux, dark: linuxDark },
 ];
 
 // |x| stays under ~560 so at 1440px nothing clips on the right or lands on the side nav (left gutter ≈ 195px).
