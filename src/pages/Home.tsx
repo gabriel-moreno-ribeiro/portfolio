@@ -37,7 +37,7 @@ const RESERVE: Record<string, [desktop: number, mobile: number]> = {
   work: [1230, 1870],
   numbers: [630, 1180],
   research: [1120, 1630],
-  skills: [1000, 100],
+  skills: [700, 880],
   'work-experience': [4040, 3240],
   contact: [445, 940],
 };
