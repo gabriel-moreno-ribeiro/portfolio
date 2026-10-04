@@ -91,6 +91,8 @@ const CITY_PHOTO_MANIFEST: Record<string, PhotoEntry[]> = {
     { file: '06.webp', position: '50% 50%' }, // cotton candy at the fair
     { file: '07.webp', position: '50% 62%' }, // car selfie
     { file: '08.webp', position: '50% 56%' }, // big hat at night
+    { file: '09.webp', position: '50% 40%' }, // the parrot through the cage
+    { file: '10.webp', position: '50% 62%' }, // two kisses for great-grandma
   ],
   'salvador': [
     { file: '01.webp', position: '50% 0%' },  // leaf headband
@@ -99,6 +101,12 @@ const CITY_PHOTO_MANIFEST: Record<string, PhotoEntry[]> = {
     { file: '04.webp', position: '50% 12%' }, // under the blanket
     { file: '05.webp', position: '50% 48%' }, // festa junina outfit
     { file: '06.webp', position: '50% 62%' }, // sandboarding the dunes
+    { file: '07.webp', position: '50% 38%' }, // selfie under the tree
+    { file: '08.webp', position: '50% 60%' }, // six on the wicker sofa
+    { file: '09.webp', position: '50% 46%' }, // up the wooden climbing frame
+    { file: '10.webp', position: '50% 26%' }, // praying with the rosary
+    { file: '11.webp', position: '50% 40%' }, // the three brothers at the cinema, as kids
+    { file: '12.webp', position: '50% 50%' }, // the same three at the cinema, today
   ],
   'fortaleza': [
     { file: '01.webp', position: '100% 50%' }, // graduation, in front of the banner
@@ -113,6 +121,7 @@ const CITY_PHOTO_MANIFEST: Record<string, PhotoEntry[]> = {
     { file: '03.webp', position: '50% 0%' },  // at the table
     { file: '04.webp', position: '50% 31%' }, // selfie on the sofa
     { file: '05.webp', position: '50% 44%' }, // the toast
+    { file: '06.webp', position: '50% 0%' },  // listening in the audience
   ],
 };
 
