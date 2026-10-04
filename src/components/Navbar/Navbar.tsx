@@ -15,9 +15,9 @@ const supportsCamera =
 
 const links = [
   { name: 'Home.', href: '/' },
+  { name: 'Story.', href: '/story' },
   { name: 'Library.', href: '/library' },
   { name: 'News.', href: '/news' },
-  { name: 'Story.', href: '/story' },
 ];
 
 // Brand marks instead of the words: they read faster and take a third of the width.
@@ -28,7 +28,11 @@ const socials = [
 
 function Navbar() {
   const isMobile = useIsMobile();
+  // From 1200px up the links stay on show, so Story, Library and News are one click
+  // away; below that the pill would run over the page, so it opens on hover/tap.
+  const pinned = !useIsMobile(1199);
   const [isHovered, setIsHovered] = useState<boolean>(false);
+  const open = pinned || isHovered;
 
   const { darkMode, toggleDarkMode } = useThemeStore();
   const {
@@ -89,17 +93,18 @@ function Navbar() {
 
   return (
     <motion.nav
-      className={`navbar ${isHovered ? 'is-open' : ''}`}
+      key={pinned ? 'pinned' : 'pill'}
+      className={`navbar ${open ? 'is-open' : ''} ${pinned ? 'navbar--pinned' : ''}`}
       aria-label="Site menu"
-      onMouseEnter={!isMobile ? () => setIsHovered(true) : undefined}
-      onMouseLeave={!isMobile ? () => setIsHovered(false) : undefined}
-      onClick={() => setIsHovered(!isHovered)}
-      onFocus={() => setIsHovered(true)}
-      onBlur={e => {
+      onMouseEnter={!isMobile && !pinned ? () => setIsHovered(true) : undefined}
+      onMouseLeave={!isMobile && !pinned ? () => setIsHovered(false) : undefined}
+      onClick={pinned ? undefined : () => setIsHovered(!isHovered)}
+      onFocus={pinned ? undefined : () => setIsHovered(true)}
+      onBlur={pinned ? undefined : e => {
         if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setIsHovered(false);
       }}
       initial={{ opacity: 0 }}
-      animate={{
+      animate={pinned ? { opacity: 1 } : {
         opacity: 1,
         width: isHovered ? expandedWidth : collapsedWidth,
       }}
@@ -113,7 +118,7 @@ function Navbar() {
         justifyContent: isHovered ? 'flex-start' : 'center',
       }}
     >
-      <MenuIcon isHovered={isHovered} setIsHovered={setIsHovered} />
+      {!pinned && <MenuIcon isHovered={isHovered} setIsHovered={setIsHovered} />}
       {isMobile ? (
         <p className="heading" aria-hidden="true">
           Gabriel Moreno Ribeiro.
@@ -130,13 +135,13 @@ function Navbar() {
       )}
       <motion.div
         className="links"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: isHovered ? 1 : 0 }}
+        initial={pinned ? false : { opacity: 0 }}
+        animate={{ opacity: open ? 1 : 0 }}
         transition={{
           delay: isHovered ? 0.15 : 0,
           duration: 0.2,
         }}
-        style={{ pointerEvents: isHovered ? 'auto' : 'none' }}
+        style={{ pointerEvents: open ? 'auto' : 'none' }}
       >
         {links.map((link) => (
           <button
@@ -147,7 +152,7 @@ function Navbar() {
             }}
             key={link.href}
             aria-current={isCurrent(link.href) ? 'page' : undefined}
-            tabIndex={isHovered ? 0 : -1}
+            tabIndex={open ? 0 : -1}
           >
             {link.name}
           </button>
@@ -161,7 +166,7 @@ function Navbar() {
             rel="noopener noreferrer"
             aria-label={`${name} (opens in a new tab)`}
             title={name}
-            tabIndex={isHovered ? 0 : -1}
+            tabIndex={open ? 0 : -1}
             onClick={e => e.stopPropagation()}
           >
             <Icon aria-hidden="true" />
