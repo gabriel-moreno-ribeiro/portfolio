@@ -1457,7 +1457,7 @@ export class ShelfEngine {
   /** Match the portfolio's light/dark tokens (background must equal the page --bg). */
   setTheme(theme: "light" | "dark") {
     const p = theme === "dark"
-      ? { bg: "#0a0a1a", wall: "#13132b", ground: "#0e0e22", shelf: "#3a2a1f", sky: "#8f93bf", skyGround: "#2b2438", hemi: 1.15, key: "#ffe6cc", keyI: 3.1, rim: "#7c86c9", rimI: 1.7 }
+      ? { bg: "#14100d", wall: "#1d1713", ground: "#17120f", shelf: "#3a2a1f", sky: "#b7a594", skyGround: "#2e2219", hemi: 1.15, key: "#ffe6cc", keyI: 3.1, rim: "#c4946c", rimI: 1.7 }
       : { bg: "#fff8f4", wall: "#f7ece3", ground: "#efe2d7", shelf: "#5a4132", sky: "#fff8ea", skyGround: "#6e5848", hemi: 2.4, key: "#fff6e7", keyI: 4.6, rim: "#c8d5e5", rimI: 2.1 };
     (this.scene.background as THREE.Color).set(p.bg);
     (this.scene.fog as THREE.Fog).color.set(p.bg);

@@ -34,10 +34,11 @@
 // Dark
 [data-theme="dark"] {
   color-scheme:   dark;     // scrollbars, form controls, resize handles
-  --bg:           #0a0a1a;
-  --surface:      #16162e;
+  // Warm charcoal, from the shelf's wood and the D-20's cab, not a stock navy
+  --bg:           #14100d;
+  --surface:      #211a15;
   --fg:           #ffffff;
-  --fg-muted:     #a8a8b8;   // was #747474 (4.19:1 fail) → 8.36:1 on --bg
+  --fg-muted:     #b0a69c;   // 7.7:1 on --bg
   --border:       rgba(255, 255, 255, 0.14);
   --accent:       #f0732d;   // 6.72:1 on dark bg — passes
   --accent-decor: #f0732d;
@@ -46,15 +47,15 @@
   --focus-ring:   #ff9a5c;   // lighter for dark bg
 
   // Dark gradient palette
-  --gradient-start: #0a0a1a;
-  --gradient-mid:   #1a1025;
-  --gradient-end:   #2a1530;
+  --gradient-start: #14100d;
+  --gradient-mid:   #22150f;
+  --gradient-end:   #2e1a12;
 
   // Legacy aliases — updated for dark mode
   --primary-orange: #f0732d;
   --white:          #111;    // inverted (legacy; prefer --fg / --bg)
-  --grey:           #1a1a2e; // was #f2f2f2 — was NEVER overridden before
-  --text-grey:      #a8a8b8; // upgraded contrast
+  --grey:           #1d1713; // was #f2f2f2 — was NEVER overridden before
+  --text-grey:      #b0a69c; // upgraded contrast
   --black:          #fff;    // inverted (legacy; prefer --fg / --bg)
   --border-grey:    rgba(255, 255, 255, 0.14); // was #e7e7e7 — never overridden
 }
