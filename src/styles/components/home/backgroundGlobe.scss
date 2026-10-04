@@ -482,7 +482,7 @@ $stage-mono: ui-monospace, 'SF Mono', 'Fira Code', Menlo, Consolas, monospace;
     &__line { background: rgba(#fff, 0.12); }
     &__dot {
       border-color: rgba(#fff, 0.2);
-      background: #0a0a1a;
+      background: var(--bg);
     }
   }
 }

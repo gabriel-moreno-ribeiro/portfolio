@@ -4,7 +4,7 @@ import { create } from "zustand";
 const setThemeColor = (isDark: boolean) =>
   document
     .querySelector('meta[name="theme-color"]')
-    ?.setAttribute("content", isDark ? "#0a0a1a" : "#fff8f4");
+    ?.setAttribute("content", isDark ? "#14100d" : "#fff8f4");
 
 // Utility function to get the initial theme
 const getInitialTheme = () => {

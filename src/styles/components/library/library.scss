@@ -73,10 +73,10 @@ body:has(.library) { padding-block: 0; }
   transition: opacity 0s linear 1.1s;
 }
 [data-theme="dark"] .library__stage {
-  --stage-wall: #010108;
-  --stage-plank: #271813;
-  --stage-front: #24120b;
-  --stage-floor: #000002;
+  --stage-wall: #050201;
+  --stage-plank: #3b2213;
+  --stage-front: #2c140a;
+  --stage-floor: #000000;
 }
 .library--ready .library__stage,
 .library--no3d .library__stage { opacity: 0; }

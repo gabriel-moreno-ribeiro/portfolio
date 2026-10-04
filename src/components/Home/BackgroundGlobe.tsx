@@ -231,9 +231,9 @@ function GlobeCanvas({
         diffuse: 1.5,
         mapSamples: isMobileDevice ? 8000 : 16000,
         mapBrightness: darkMode ? 6 : 9,
-        baseColor: darkMode ? [0.1, 0.1, 0.2] : [1, 1, 1],
+        baseColor: darkMode ? [0.2, 0.15, 0.12] : [1, 1, 1],
         markerColor: [240 / 255, 115 / 255, 45 / 255],
-        glowColor: darkMode ? [0.15, 0.1, 0.3] : [0.98, 0.95, 0.92],
+        glowColor: darkMode ? [0.3, 0.17, 0.1] : [0.98, 0.95, 0.92],
         markers: CITIES.map((c) => ({ location: [c.lat, c.lon], size: 0.06 })),
         onRender: (state) => {
           const focus = focusRef.current;
