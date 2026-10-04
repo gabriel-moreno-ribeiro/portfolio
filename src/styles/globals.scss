@@ -221,8 +221,14 @@ body {
   }
 }
 
+// Dark: the photo is dimmed, not made see-through. At 30% opacity its sky
+// turned into a grey haze over the charcoal; dimmed, it reads as the same place
+// at dusk and sinks into the page along a long, eased fade.
 [data-theme="dark"] .hero-slideshow__img {
-  opacity: 0.3;
+  filter: brightness(0.42) saturate(0.9);
+  $dusk: linear-gradient(to bottom, #000 0%, rgba(0,0,0,0.9) 22%, rgba(0,0,0,0.62) 44%, rgba(0,0,0,0.3) 64%, rgba(0,0,0,0.09) 80%, transparent 94%);
+  mask-image: $dusk;
+  -webkit-mask-image: $dusk;
 }
 
 .home-wrapper {

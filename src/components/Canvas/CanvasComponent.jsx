@@ -3,7 +3,6 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { usePageVisible } from "../../lib/motion";
 import { useInputSourceStore } from "../../store/inputSourceStore";
-import { useThemeStore } from "../../store/themeStore";
 
 useGLTF.setDecoderPath("https://www.gstatic.com/draco/versioned/decoders/1.5.7/");
 
@@ -71,7 +70,6 @@ function Model({ onReady, ...props }) {
 useGLTF.preload("/assets/3d/robot.glb");
 
 export default function CanvasComponent({ onReady }) {
-  const { darkMode } = useThemeStore();
   const pageVisible = usePageVisible();
   const ioRef = useRef(null);
   const [inView, setInView] = useState(true);
@@ -104,8 +102,10 @@ export default function CanvasComponent({ onReady }) {
       gl={{ alpha: true, antialias: true, powerPreference: "high-performance" }}
       style={{ background: "transparent" }}
     >
-      <ambientLight intensity={darkMode ? 0.25 : 1} />
-      <directionalLight position={[10, 10, 10]} intensity={darkMode ? 0 : 2} />
+      {/* Same light in both themes: the dimmed dark-mode rig turned the orange
+          shell maroon, and the static poster it replaces is lit like this */}
+      <ambientLight intensity={1} />
+      <directionalLight position={[10, 10, 10]} intensity={2} />
       <Model onReady={onReady} position={[0, -1.8, 0]} />
       <OrbitControls enableZoom={false} />
     </Canvas>
