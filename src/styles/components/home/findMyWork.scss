@@ -144,6 +144,16 @@
       display: block;
     }
 
+    // Crossfade: the photo being left sits beneath, the new one fades in on top
+    .media-carousel__under {
+      position: absolute;
+      inset: 0;
+    }
+    .media-carousel__in {
+      position: relative;
+      animation: media-in 0.6s ease-out both;
+    }
+
     // Above the card's stretched link, so the controls stay usable while a
     // click on the photo itself still opens the project page.
     .carousel-arrow {
@@ -388,3 +398,7 @@
 }
 
 
+
+@keyframes media-in {
+  from { opacity: 0; }
+}

@@ -133,7 +133,7 @@ function cityPhotos(city: City): StagePhoto[] {
       ? { file: entry, position: 'center top' }
       : entry;
     return {
-      src: `/background/${city.id}/${file}`,
+      src: `/background/${city.id}/sm/${file}`, // 720px wide: the card is ~330px
       alt: `${place}, photo ${i + 1} of ${entries.length}`,
       position,
     };
@@ -151,10 +151,14 @@ function GlobeCanvas({
   selected,
   darkMode,
   onPainted,
+  onInteract,
 }: {
   selected: City | null;
   darkMode?: boolean;
-  onPainted: () => void;
+  /** Someone grabbed the globe: the tour stops. */
+  onInteract?: () => void;
+  /** true once the live globe has drawn real frames; false if its context is lost. */
+  onPainted: (painted: boolean) => void;
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const focusRef = useRef<[number, number] | null>(null);
@@ -169,9 +173,15 @@ function GlobeCanvas({
     focusRef.current = selected ? locationToAngles(selected.lat, selected.lon) : null;
   }, [selected]);
 
+  const onInteractRef = useRef(onInteract);
+  onInteractRef.current = onInteract;
   const onPointerDown = useCallback((e: React.PointerEvent) => {
     pointerInteracting.current = { x: e.clientX, y: e.clientY };
     pointerMovement.current = { x: 0, y: 0 };
+    // A grabbed globe is free: it stops pulling back to the open city (that
+    // undid every drag) until another city is picked.
+    focusRef.current = null;
+    onInteractRef.current?.();
     if (canvasRef.current) canvasRef.current.style.cursor = 'grabbing';
   }, []);
 
@@ -187,6 +197,17 @@ function GlobeCanvas({
     // open. Kept mild so the globe still reads as a globe and the other three
     // cities (about 20° apart) stay in view around the open one.
     let currentScale = 1;
+    // The poster stays until cobe has actually drawn: a few frames, not a timer.
+    let frames = 0;
+    const reveal = () => {
+      if (canvas) canvas.style.opacity = '1';
+      onPaintedRef.current(true);
+    };
+    const onLost = () => {
+      canvas.style.opacity = '0';
+      onPaintedRef.current(false);
+    };
+    canvas.addEventListener('webglcontextlost', onLost);
     const FOCUS_SCALE = 1.3;
     const doublePi = Math.PI * 2;
     const clampTheta = (t: number) => Math.max(-1.35, Math.min(1.35, t));
@@ -236,6 +257,7 @@ function GlobeCanvas({
         glowColor: darkMode ? [0.3, 0.17, 0.1] : [0.98, 0.95, 0.92],
         markers: CITIES.map((c) => ({ location: [c.lat, c.lon], size: 0.06 })),
         onRender: (state) => {
+          if (++frames === 3) reveal();
           const focus = focusRef.current;
           const dragX = pointerMovement.current.x / 100;
           const dragY = pointerMovement.current.y / 150;
@@ -282,10 +304,6 @@ function GlobeCanvas({
       });
       // The observer may already have reported us off-screen before this ran
       globe.toggle(isInView);
-      setTimeout(() => {
-        if (canvas) canvas.style.opacity = '1';
-        onPaintedRef.current();
-      });
     };
 
     if (canvas.offsetWidth > 0) {
@@ -312,6 +330,7 @@ function GlobeCanvas({
       window.removeEventListener('pointermove', onMove);
       window.removeEventListener('pointerup', onUp);
       window.removeEventListener('pointercancel', onUp);
+      canvas.removeEventListener('webglcontextlost', onLost);
       if (globe) globe.destroy();
     };
   }, [darkMode]);
@@ -427,13 +446,17 @@ const CITY_PHIS = CITIES.map((c) => locationToAngles(c.lat, c.lon)[0]);
 const skipGlobe =
   typeof window !== 'undefined' && window.innerWidth < 768;
 
-const AUTOPLAY_MS = 7000;
 
 function BackgroundGlobe() {
   // The first city is selected from the start: the text is in the DOM before any
   // scrolling, observer or WebGL context.
   const [selected, setSelected] = useState<City | null>(CITIES[0]);
   const [pinned, setPinned] = useState(false); // a click stops the tour
+  // Paused while focus is inside the section: the tour must never pull a photo
+  // or a button out from under a keyboard (WCAG 2.2.2). Pointing at the photos
+  // holds them too (CityPhotoStage).
+  const [focusInside, setFocusInside] = useState(false);
+  const held = focusInside;
   const [inView, setInView] = useState(false);
   const [globePainted, setGlobePainted] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -449,19 +472,17 @@ function BackgroundGlobe() {
     return () => io.disconnect();
   }, []);
 
-  const onPainted = useCallback(() => setGlobePainted(true), []);
+  const onPainted = useCallback((painted: boolean) => setGlobePainted(painted), []);
   const stagePhotos = useMemo(() => (selected ? cityPhotos(selected) : []), [selected]);
   const pinTour = useCallback(() => setPinned(true), []);
 
-  // Guided tour: advances every few seconds while the section is on screen and
-  // nobody has taken over. Off-screen, hidden tab or reduced motion: it stays put.
-  useEffect(() => {
-    if (!inView || pinned || reduced || !pageVisible) return;
-    const id = setInterval(() => {
-      setSelected((prev) => CITIES[(CITIES.findIndex((c) => c.id === prev?.id) + 1) % CITIES.length]);
-    }, AUTOPLAY_MS);
-    return () => clearInterval(id);
-  }, [inView, pinned, reduced, pageVisible]);
+  // Guided tour: the open city pages through its photos, and after the last
+  // one the next city opens. Runs only while the section is on screen, the tab
+  // is visible and nobody has taken over; reduced motion keeps it still.
+  const touring = inView && !pinned && !held && !reduced && pageVisible;
+  const nextCity = useCallback(() => {
+    setSelected((prev) => CITIES[(CITIES.findIndex((c) => c.id === prev?.id) + 1) % CITIES.length]);
+  }, []);
 
   const handleSelect = (city: City) => {
     setPinned(true);
@@ -482,7 +503,13 @@ function BackgroundGlobe() {
   };
 
   return (
-    <div className="background-section" id="background" ref={sectionRef}>
+    <div
+      className="background-section"
+      id="background"
+      ref={sectionRef}
+      onFocus={() => setFocusInside(true)}
+      onBlur={(e) => { if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setFocusInside(false); }}
+    >
       <h2 className="heading section-title" data-color-inverted="true">
         Where I Come <em>From</em>
       </h2>
@@ -505,7 +532,7 @@ function BackgroundGlobe() {
                 data-hidden={globePainted ? 'true' : undefined}
               />
               {!reduced && (
-                <GlobeCanvas selected={selected} darkMode={darkMode} onPainted={onPainted} />
+                <GlobeCanvas selected={selected} darkMode={darkMode} onPainted={onPainted} onInteract={pinTour} />
               )}
             </div>
           </div>
@@ -515,6 +542,28 @@ function BackgroundGlobe() {
         {selected && (
           <div className="city-column">
             <div className="city-column__text">
+              {/* Invisible copies of every city's text share the cell, so the box
+                  is always as tall as the longest one and the photos below never
+                  jump when the tour changes city */}
+              {CITIES.map((c) => (
+                <div key={c.id} className="city-panel city-panel--sizer" aria-hidden="true">
+                  <div className="city-panel__text">
+                    <div className="city-panel__meta">
+                      <p className="city-panel__location">{c.name}</p>
+                      <span className="city-panel__coords">{c.coords}</span>
+                      <span className="city-panel__steps">
+                        <span className="city-panel__time">00:00 local</span>
+                        <span className="city-panel__arrow" />
+                        <span className="city-panel__arrow" />
+                      </span>
+                    </div>
+                    <h3 className="city-panel__headline">{c.headline}</h3>
+                    {c.story.map((para, i) => (
+                      <p key={i} className="city-panel__para">{para}</p>
+                    ))}
+                  </div>
+                </div>
+              ))}
               <AnimatePresence initial={false}>
                 <CityPanel
                   key={selected.id}
@@ -530,6 +579,8 @@ function BackgroundGlobe() {
               label={selected.name.split(',')[0]}
               photos={stagePhotos}
               onInteract={pinTour}
+              autoplay={touring}
+              onEnd={nextCity}
             />
           </div>
         )}
@@ -539,7 +590,7 @@ function BackgroundGlobe() {
       <CityTimeline
         selected={selected}
         onSelect={handleSelect}
-        autoplay={inView && !pinned && !reduced && pageVisible}
+        autoplay={touring}
       />
     </div>
   );

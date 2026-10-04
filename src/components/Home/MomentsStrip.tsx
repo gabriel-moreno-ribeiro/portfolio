@@ -40,8 +40,9 @@ function Row({
             <img
               src={m.src}
               alt={i < items.length ? m.alt : ''}
-              /* Only the first three of each row race for bandwidth; the rest wait. */
-              loading={i < 3 ? 'eager' : 'lazy'}
+              /* The first five of each row load up front (three let a photo slide
+                 in before it arrived); the rest wait for the browser's lazy margin. */
+              loading={i < 5 ? 'eager' : 'lazy'}
               fetchPriority={priority && i === 0 ? 'high' : undefined}
               decoding="async"
               width={m.w}

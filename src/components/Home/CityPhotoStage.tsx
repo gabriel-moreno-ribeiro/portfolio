@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useReducedMotion } from '../../lib/motion';
 
 export interface StagePhoto {
@@ -13,9 +13,23 @@ interface Props {
   photos: StagePhoto[];
   /** Someone browsed the photos: the section stops touring cities under them. */
   onInteract?: () => void;
+  /** Page through the photos on its own (the section decides: on screen, tab
+      visible, nobody has taken over, no reduced motion). */
+  autoplay?: boolean;
+  /** Autoplay went past the last photo: time for the next city. */
+  onEnd?: () => void;
 }
 
+// Long enough to look at a photo, short enough that the section feels alive.
+const PHOTO_MS = 3200;
+
 type Slot = 'center' | 'prev' | 'next' | 'hidden';
+
+// How many slides away from the active one a photo is, wrapping around.
+function distance(i: number, active: number, n: number) {
+  const d = Math.abs(i - active) % n;
+  return Math.min(d, n - d);
+}
 
 const pad = (n: number) => String(n).padStart(2, '0');
 
@@ -32,11 +46,26 @@ function slotOf(i: number, active: number, n: number): Slot {
 
 const SWIPE_PX = 40;
 
-function CityPhotoStage({ label, photos, onInteract }: Props) {
+function CityPhotoStage({ label, photos, onInteract, autoplay = false, onEnd }: Props) {
   const [active, setActiveState] = useState(0);
   const reduced = useReducedMotion();
   const dragStart = useRef<number | null>(null);
   const n = photos.length;
+  // Pointing at the photos holds them still; leaving lets them go on.
+  const [held, setHeld] = useState(false);
+  const activeRef = useRef(active);
+  activeRef.current = active;
+  const onEndRef = useRef(onEnd);
+  onEndRef.current = onEnd;
+
+  useEffect(() => {
+    if (!autoplay || held || n < 2) return;
+    const id = window.setInterval(() => {
+      if (activeRef.current + 1 >= n) onEndRef.current?.();
+      else setActiveState(activeRef.current + 1);
+    }, PHOTO_MS);
+    return () => window.clearInterval(id);
+  }, [autoplay, held, n]);
 
   const setActive = useCallback(
     (i: number) => {
@@ -74,6 +103,8 @@ function CityPhotoStage({ label, photos, onInteract }: Props) {
   return (
     <section
       className="photo-stage"
+      onPointerEnter={(e) => { if (e.pointerType === 'mouse') setHeld(true); }}
+      onPointerLeave={() => setHeld(false)}
       data-reduced={reduced ? 'true' : undefined}
       aria-roledescription="carousel"
       aria-label={`Photos from ${label}`}
@@ -106,17 +137,20 @@ function CityPhotoStage({ label, photos, onInteract }: Props) {
                   {pad(i + 1)} / {pad(n)}
                 </span>
               </header>
+              {/* The box is always there (aspect-ratio); a photo more than two
+                  slides away waits for its turn instead of loading behind the others */}
               <div className="photo-card__media">
-                <img
-                  src={photo.src}
-                  alt={slot === 'center' ? photo.alt : ''}
-                  style={{ objectPosition: photo.position }}
-                  width={640}
-                  height={480}
-                  loading={slot === 'hidden' ? 'lazy' : 'eager'}
-                  decoding="async"
-                  draggable={false}
-                />
+                {distance(i, active, n) <= 2 && (
+                  <img
+                    src={photo.src}
+                    alt={slot === 'center' ? photo.alt : ''}
+                    style={{ objectPosition: photo.position }}
+                    width={640}
+                    height={400}
+                    decoding="async"
+                    draggable={false}
+                  />
+                )}
               </div>
             </figure>
           );

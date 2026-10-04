@@ -98,7 +98,8 @@ function ResearchCard({ item, index }: { item: ResearchItem; index: number }) {
   const media = RESEARCH_MEDIA_MANIFEST[item.slug] ?? [];
   const hasMedia = media.length > 0;
   // First page preview, shown on hover/focus over a card that links to a PDF.
-  const preview = item.pdf && hasMedia ? `/research/${item.slug}/${media[0]}` : null;
+  // A 520px copy: the popover is 248px wide
+  const preview = item.pdf && hasMedia ? `/research/${item.slug}/${media[0].replace(/\.webp$/, '-preview.webp')}` : null;
 
   return (
     <Reveal
