@@ -656,7 +656,7 @@ body:has(.library) { padding-block: 0; }
   bottom: 12px;
   margin: 0;
   line-height: 1;
-  font-size: 11px;
+  font-size: 12px; // a sentence, so the 12px body floor
   color: var(--fg-muted);
   transition: opacity 300ms ease;
 
