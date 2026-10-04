@@ -9,10 +9,15 @@ const AUTOPLAY_MS = 6000;
 
 const toNumber = (value: string) => Number(value.replace(/[^\d.]/g, "")) || 0;
 
-function MediaCarousel({ project, paused }: { project: Project; paused: boolean }) {
+function MediaCarousel({ project, paused, offset = 0 }: { project: Project; paused: boolean; offset?: number }) {
   const available = project.gallery ?? [];
   const count = available.length;
-  const [idx, setIdx] = useState(0);
+  // `under` is the photo being left: it stays beneath while the new one fades in.
+  const [{ idx, under }, setState] = useState<{ idx: number; under: number | null }>({ idx: 0, under: null });
+  const setIdx = (fn: (i: number) => number) => setState((s) => ({ idx: fn(s.idx), under: s.idx }));
+  // Only the first step waits the extra offset, so cards side by side don't
+  // change photos on the same beat.
+  const firstStep = useRef(true);
   const wrapRef = useRef<HTMLDivElement>(null);
   // Below 900px the thumbnails would pull every photo of the gallery for a 34x24 box,
   // so the picker falls back to dots and only two photos are ever in the DOM.
@@ -25,9 +30,13 @@ function MediaCarousel({ project, paused }: { project: Project; paused: boolean 
   // hovering or tabbing through it.
   useEffect(() => {
     if (count <= 1 || !inView || !pageVisible || paused || reduced) return;
-    const timer = setInterval(() => setIdx((i) => (i + 1) % count), AUTOPLAY_MS);
-    return () => clearInterval(timer);
-  }, [count, inView, pageVisible, paused, reduced, idx]);
+    const delay = AUTOPLAY_MS + (firstStep.current ? offset : 0);
+    const timer = setTimeout(() => {
+      firstStep.current = false;
+      setIdx((i) => (i + 1) % count);
+    }, delay);
+    return () => clearTimeout(timer);
+  }, [count, inView, pageVisible, paused, reduced, idx, offset]);
 
   if (count === 0) return null;
 
@@ -37,14 +46,27 @@ function MediaCarousel({ project, paused }: { project: Project; paused: boolean 
   const prev = () => setIdx((i) => (i - 1 + count) % count);
   const next = () => setIdx((i) => (i + 1) % count);
   const nextFile = count > 1 ? available[(active + 1) % count] : null;
+  const underFile = under !== null && under !== active && !reduced ? available[under % count] : null;
 
   return (
     <div className="media-carousel" ref={wrapRef}>
+      {underFile && !underFile.endsWith(".mp4") && (
+        <img
+          className="media-carousel__under"
+          src={`/work/${project.slug}/${underFile}`}
+          alt=""
+          aria-hidden="true"
+          width={640}
+          height={400}
+          style={project.focus?.[underFile] ? { objectPosition: project.focus[underFile] } : undefined}
+        />
+      )}
       {current.endsWith(".mp4") ? (
         <video key={src} src={src} controls playsInline width={640} height={400} />
       ) : (
         <img
           key={src}
+          className={underFile ? "media-carousel__in" : undefined}
           src={src}
           alt={project.captions?.[current] ?? project.title}
           width={640}
@@ -79,7 +101,7 @@ function MediaCarousel({ project, paused }: { project: Project; paused: boolean 
                 key={file}
                 type="button"
                 className={i === active ? "carousel-thumb is-active" : "carousel-thumb"}
-                onClick={() => setIdx(i)}
+                onClick={() => setIdx(() => i)}
                 aria-label={`Photo ${i + 1} of ${count}`}
                 aria-current={i === active ? "true" : undefined}
               >
@@ -89,7 +111,7 @@ function MediaCarousel({ project, paused }: { project: Project; paused: boolean 
                   </span>
                 ) : (
                   <img
-                    src={`/work/${project.slug}/${file}`}
+                    src={`/work/${project.slug}/thumbs/${file.replace(/\.\w+$/, ".webp")}`}
                     alt=""
                     width={44}
                     height={28}
@@ -133,7 +155,7 @@ function ProjectLive({ project }: { project: Project }) {
 
 // The whole card is one link target: the title anchor stretches over the card, so
 // the carousel controls stay clickable by sitting above it.
-function FeaturedCard({ project }: { project: Project }) {
+function FeaturedCard({ project, index }: { project: Project; index: number }) {
   const hasMedia = (project.gallery?.length ?? 0) > 0;
   const litChips = project.slug === "medals";
   // The card's stretched link sits over the photo, so the pause lives on the card.
@@ -149,7 +171,7 @@ function FeaturedCard({ project }: { project: Project }) {
       onFocus={() => setPaused(true)}
       onBlur={() => setPaused(false)}
     >
-      <MediaCarousel project={project} paused={paused} />
+      <MediaCarousel project={project} paused={paused} offset={(index % 2) * (AUTOPLAY_MS / 2)} />
       <div className="featured-card__body">
         <h3>
           <Link to={`/work/${project.slug}`} className="featured-card__link">
@@ -181,8 +203,8 @@ function FindMyWork() {
         What I've built and what I've won.
       </p>
       <div className="featured-grid">
-        {projects.map((project) => (
-          <FeaturedCard key={project.slug} project={project} />
+        {projects.map((project, i) => (
+          <FeaturedCard key={project.slug} project={project} index={i} />
         ))}
       </div>
     </div>

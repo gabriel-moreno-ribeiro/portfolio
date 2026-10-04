@@ -30,16 +30,17 @@ const SECTIONS = [
   { id: 'contact', label: 'Contact' },
 ];
 
-// Heights measured on the production build at 1440 and 390 (QA r2). Close
-// enough that swapping the box for the real section barely moves what's below.
+// Heights measured at 1440 and 390 after the October rebuild (city tour with a
+// fixed text height, Skills without canvas). Close enough that swapping the box
+// for the real section barely moves what's below.
 const RESERVE: Record<string, [desktop: number, mobile: number]> = {
-  background: [1040, 880],
-  work: [1230, 1870],
-  numbers: [630, 1180],
-  research: [1120, 1630],
-  skills: [700, 880],
-  'work-experience': [4040, 3240],
-  contact: [445, 940],
+  background: [955, 975],
+  work: [1170, 1705],
+  numbers: [460, 240],
+  research: [1120, 1640],
+  skills: [700, 870],
+  'work-experience': [2450, 2250],
+  contact: [450, 910],
 };
 const LAZY_IDS = new Set(Object.keys(RESERVE));
 

@@ -33,10 +33,12 @@
   flex-direction: column;
   gap: 14px;
 
-  // The outgoing and incoming panels overlap while they cross-fade.
+  // The outgoing and incoming panels overlap while they cross-fade, on top of
+  // the invisible sizers (one per city) that hold the tallest height.
   &__text {
     display: grid;
     > * { grid-area: 1 / 1; }
+    > .city-panel { align-self: stretch; }
   }
 }
 
@@ -84,6 +86,11 @@
 
 
 // ── City panel (right column) ──
+.city-panel--sizer {
+  visibility: hidden;
+  pointer-events: none;
+}
+
 .city-panel {
   border: 1px solid rgba(0, 0, 0, 0.07);
   border-radius: 20px;
@@ -242,16 +249,22 @@ $stage-mono: ui-monospace, 'SF Mono', 'Fira Code', Menlo, Consolas, monospace;
     > * { grid-area: 1 / 1; }
   }
 
+  // One row whatever the photo count: the bars shrink instead of wrapping
+  // (a second row made the section jump between cities).
   &__bars {
     display: flex;
     justify-content: center;
     gap: 6px;
+    // The row's natural width (12 x 40px) must not size the section: on
+    // phones the home column centres sections at their content width.
+    contain: inline-size;
   }
 
   // 44px tall hit area around a 3px line.
   &__bar {
     position: relative;
-    width: 40px;
+    flex: 0 1 40px;
+    min-width: 12px;
     height: 32px;
     padding: 0;
     border: 0;
@@ -553,14 +566,18 @@ $stage-mono: ui-monospace, 'SF Mono', 'Fira Code', Menlo, Consolas, monospace;
 }
 
 // Guided-tour cue on the active city dot (restarts per city)
-.city-timeline__dot { position: relative; }
+.city-timeline__dot {
+  position: relative;
+  // 22px drawn, 44px to touch
+  &::after { content: ''; position: absolute; inset: -11px; border-radius: 50%; }
+}
 .city-timeline__dot-progress {
   position: absolute;
   inset: -6px;
   border-radius: 50%;
   border: 2px solid var(--accent-decor);
   pointer-events: none;
-  animation: city-dot-progress 7s ease-out forwards;
+  animation: city-dot-progress 2.4s ease-out infinite; // pulses while the tour plays
 }
 @keyframes city-dot-progress {
   0% { transform: scale(0.6); opacity: 0.9; }
