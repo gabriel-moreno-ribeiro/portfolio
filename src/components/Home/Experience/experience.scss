@@ -525,7 +525,7 @@ a.exp__d20-link:visited {
   border-radius: 999px;
   background: color-mix(in srgb, var(--accent-decor) 16%, transparent);
   color: var(--accent-tag, var(--accent));
-  font-size: 10px;
+  font-size: 11px; // 11px floor for functional text
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
