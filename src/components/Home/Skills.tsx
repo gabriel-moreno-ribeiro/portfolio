@@ -1,50 +1,43 @@
 import { useInView } from "motion/react";
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import l_icon1 from "../../assets/skills/light/icon1.webp";
-import l_icon2 from "../../assets/skills/light/icon2.webp";
-import l_icon3 from "../../assets/skills/light/icon3.webp";
-import l_icon4 from "../../assets/skills/light/icon4.webp";
-import l_icon5 from "../../assets/skills/light/icon5.webp";
-import l_icon6 from "../../assets/skills/light/icon6.webp";
-import l_icon7 from "../../assets/skills/light/icon7.webp";
-import l_icon8 from "../../assets/skills/light/icon8.webp";
-import l_icon9 from "../../assets/skills/light/icon9.webp";
-import l_icon10 from "../../assets/skills/light/icon10.webp";
-
-import d_icon1 from "../../assets/skills/dark/icon1.webp";
-import d_icon2 from "../../assets/skills/dark/icon2.webp";
-import d_icon3 from "../../assets/skills/dark/icon3.webp";
-import d_icon4 from "../../assets/skills/dark/icon4.webp";
-import d_icon5 from "../../assets/skills/dark/icon5.webp";
-import d_icon6 from "../../assets/skills/dark/icon6.webp";
-import d_icon7 from "../../assets/skills/dark/icon7.webp";
-import d_icon8 from "../../assets/skills/dark/icon8.webp";
-import d_icon9 from "../../assets/skills/dark/icon9.webp";
-import d_icon10 from "../../assets/skills/dark/icon10.webp";
 import python from "../../assets/skills/devicon/python.svg";
-import docker from "../../assets/skills/devicon/docker.svg";
-import git from "../../assets/skills/devicon/git.svg";
-import figma from "../../assets/skills/devicon/figma.svg";
+import typescript from "../../assets/skills/devicon/typescript.svg";
+import react from "../../assets/skills/devicon/react.svg";
+import nextjs from "../../assets/skills/devicon/nextjs.svg";
+import nextjsDark from "../../assets/skills/devicon/nextjs-dark.svg";
+import nodejs from "../../assets/skills/devicon/nodejs.svg";
 import postgresql from "../../assets/skills/devicon/postgresql.svg";
-import tailwindcss from "../../assets/skills/devicon/tailwindcss.svg";
+import supabase from "../../assets/skills/devicon/supabase.svg";
+import docker from "../../assets/skills/devicon/docker.svg";
+import aws from "../../assets/skills/devicon/aws.svg";
+import awsDark from "../../assets/skills/devicon/aws-dark.svg";
+import git from "../../assets/skills/devicon/git.svg";
+import github from "../../assets/skills/devicon/github.svg";
+import githubDark from "../../assets/skills/devicon/github-dark.svg";
+import vercel from "../../assets/skills/devicon/vercel.svg";
+import vercelDark from "../../assets/skills/devicon/vercel-dark.svg";
+import claude from "../../assets/skills/devicon/claude.svg";
 import useIsMobile from "../../hooks/useIsMobile";
 import { useThemeStore } from "../../store/themeStore";
 import SkillsCanvas from "./SkillsCanvas";
 
-const extraIcons = [python, docker, git, figma, postgresql, tailwindcss];
-
-const BUILTIN_COUNT = 10;
-
-const lightIcons = [
-  l_icon1, l_icon2, l_icon3, l_icon4, l_icon5,
-  l_icon6, l_icon7, l_icon8, l_icon9, l_icon10,
-  ...extraIcons,
-];
-
-const darkIcons = [
-  d_icon1, d_icon2, d_icon3, d_icon4, d_icon5,
-  d_icon6, d_icon7, d_icon8, d_icon9, d_icon10,
-  ...extraIcons,
+// What a software / AI engineer reaches for today, limited to what this site's
+// projects actually use (HIBEEX's stack, Python, this site's tooling). The black
+// logos get a white version on the dark card.
+const TOOLS: { name: string; light: string; dark?: string }[] = [
+  { name: "Python", light: python },
+  { name: "TypeScript", light: typescript },
+  { name: "React", light: react },
+  { name: "Next.js", light: nextjs, dark: nextjsDark },
+  { name: "Node.js", light: nodejs },
+  { name: "PostgreSQL", light: postgresql },
+  { name: "Supabase", light: supabase },
+  { name: "Docker", light: docker },
+  { name: "AWS", light: aws, dark: awsDark },
+  { name: "Git", light: git },
+  { name: "GitHub", light: github, dark: githubDark },
+  { name: "Vercel", light: vercel, dark: vercelDark },
+  { name: "Claude", light: claude },
 ];
 
 // |x| stays under ~560 so at 1440px nothing clips on the right or lands on the side nav (left gutter ≈ 195px).
@@ -108,15 +101,18 @@ const Skills: React.FC = () => {
   }, []);
 
   const finalPositions = useMemo(() => {
-    if (isMobile) return mobileFinalPositions;
+    if (isMobile) return mobileFinalPositions.slice(0, TOOLS.length);
     const scale = Math.max(1, vpWidth / 1400);
-    return deskstopFinalPositions.map((p) => ({
+    return deskstopFinalPositions.slice(0, TOOLS.length).map((p) => ({
       x: p.x * scale,
       y: p.y,
     }));
   }, [isMobile, vpWidth]);
 
-  const iconUrls = darkMode ? darkIcons : lightIcons;
+  const iconUrls = useMemo(
+    () => TOOLS.map((t) => (darkMode && t.dark) || t.light),
+    [darkMode],
+  );
 
   return (
     <div className="skills-container" ref={ref} id="skills">
@@ -134,21 +130,24 @@ const Skills: React.FC = () => {
           finalPositions={finalPositions}
           isMobile={isMobile}
           triggerEntrance={inView}
-          cardStartIndex={BUILTIN_COUNT}
-          cardBg={darkMode ? "#16162e" : "#ffffff"}
+          cardStartIndex={0}
+          cardBg={darkMode ? "#211a15" : "#ffffff"}
           cardBorder={darkMode ? "rgba(255,255,255,0.16)" : "rgba(0,0,0,0.08)"}
         />
       )}
       {isMobile && (
         <ul className="skills-strip" aria-hidden="true">
-          {/* The first ten are already drawn as tiles; the devicon logos get a card. */}
-          {iconUrls.map((src, i) => (
-            <li key={src} className={i < BUILTIN_COUNT ? "is-tile" : undefined}>
+          {iconUrls.map((src) => (
+            <li key={src}>
               <img src={src} alt="" width={40} height={40} loading="lazy" decoding="async" />
             </li>
           ))}
         </ul>
       )}
+      {/* The canvas and the strip are pictures; this is the list itself */}
+      <ul className="sr-only">
+        {TOOLS.map((t) => <li key={t.name}>{t.name}</li>)}
+      </ul>
     </div>
   );
 };

@@ -54,12 +54,6 @@ const researchItems: ResearchItem[] = [
   },
 ];
 
-/** Index of the most recent paper (last year mentioned in `year` wins; ties go to the first). */
-const latestIndex = researchItems.reduce((best, item, i, all) => {
-  const yearOf = (v: string) => Number(v.slice(-4));
-  return yearOf(item.year) > yearOf(all[best].year) ? i : best;
-}, 0);
-
 function ResearchMediaCarousel({ slug, title }: { slug: string; title: string }) {
   const available = RESEARCH_MEDIA_MANIFEST[slug] ?? [];
   const [idx, setIdx] = useState(0);
@@ -100,7 +94,7 @@ function ResearchMediaCarousel({ slug, title }: { slug: string; title: string })
   );
 }
 
-function ResearchCard({ item, index, isLatest }: { item: ResearchItem; index: number; isLatest: boolean }) {
+function ResearchCard({ item, index }: { item: ResearchItem; index: number }) {
   const media = RESEARCH_MEDIA_MANIFEST[item.slug] ?? [];
   const hasMedia = media.length > 0;
   // First page preview, shown on hover/focus over a card that links to a PDF.
@@ -117,7 +111,6 @@ function ResearchCard({ item, index, isLatest }: { item: ResearchItem; index: nu
         <div className="research-card__header">
           <span className="research-card__field">{item.field}</span>
           <span className="research-card__year">{item.year}</span>
-          {isLatest && <span className="research-card__latest">latest</span>}
           {item.pdf && (
             <span className="research-card__pdf" aria-hidden="true">
               <FiFileText /> Read Paper
@@ -172,7 +165,7 @@ function Research() {
       </h2>
       <div className="research-grid">
         {researchItems.map((item, i) => (
-          <ResearchCard key={item.slug} item={item} index={i} isLatest={i === latestIndex} />
+          <ResearchCard key={item.slug} item={item} index={i} />
         ))}
       </div>
       <p className="research-section__orcid">
