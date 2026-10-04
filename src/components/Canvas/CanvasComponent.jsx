@@ -4,7 +4,9 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { usePageVisible } from "../../lib/motion";
 import { useInputSourceStore } from "../../store/inputSourceStore";
 
-useGLTF.setDecoderPath("https://www.gstatic.com/draco/versioned/decoders/1.5.7/");
+// Self-hosted (copied from three/examples/jsm/libs/draco/gltf): the robot no
+// longer depends on gstatic.com answering.
+useGLTF.setDecoderPath("/draco/");
 
 // The GLB has no animation tracks and no separate eye meshes, so "sleep" is done
 // on the group: after 30s without input it tilts forward and bobs; the first input

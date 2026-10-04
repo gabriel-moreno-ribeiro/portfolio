@@ -9,7 +9,7 @@ function ThankYou() {
   useDocumentHead({
     title: 'Message Sent · Gabriel Moreno Ribeiro',
     description: 'Thank you for reaching out.',
-    canonical: 'https://gabrielmr.com/obrigado',
+    noindex: true,
   });
 
   const navigate = useNavigate();

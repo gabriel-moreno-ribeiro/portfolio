@@ -118,6 +118,13 @@ body:has(.library) { padding-block: 0; }
   pointer-events: none;
 
   > * { pointer-events: auto; }
+
+  // Tablet to small laptop: a centred pill lands on "All books" in the crumb.
+  // It moves right instead, clear of the camera and theme buttons.
+  @media (min-width: 761px) and (max-width: 1199px) {
+    justify-content: flex-end;
+    padding-right: 140px;
+  }
 }
 
 // ── Top-left crumb: Home, the page name, All books ──────────────────────────

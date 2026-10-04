@@ -1,19 +1,17 @@
 import { motion } from 'motion/react';
-import { useEffect } from 'react';
 import { FiArrowLeft, FiEdit3 } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar/Navbar';
 import Footer from '../components/Shared/Footer';
+import { useDocumentHead } from '../hooks/useDocumentHead';
 
 function Blog() {
-  useEffect(() => {
-    const meta = document.createElement('meta');
-    meta.name = 'robots';
-    meta.content = 'noindex, nofollow';
-    document.head.appendChild(meta);
-    document.title = 'Blog — Gabriel Moreno Ribeiro';
-    return () => { document.head.removeChild(meta); };
-  }, []);
+  useDocumentHead({
+    title: 'Blog · Gabriel Moreno Ribeiro',
+    description: "Notes on what I'm building and reading.",
+    canonical: 'https://gabrielmr.com/blog',
+    noindex: true,
+  });
 
   return (
     <main className="page-wrapper" id="main-content">

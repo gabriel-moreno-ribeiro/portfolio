@@ -23,8 +23,10 @@ function isLowPowerDevice() {
     connection?: { saveData?: boolean };
   };
   if (nav.connection?.saveData) return true;
-  if (typeof nav.deviceMemory === 'number' && nav.deviceMemory <= 4) return true;
-  if (typeof nav.hardwareConcurrency === 'number' && nav.hardwareConcurrency <= 4)
+  // Only genuinely weak machines: 4 threads / 4 GB is an ordinary laptop, and
+  // that cut-off kept the robot away from many of them.
+  if (typeof nav.deviceMemory === 'number' && nav.deviceMemory <= 2) return true;
+  if (typeof nav.hardwareConcurrency === 'number' && nav.hardwareConcurrency <= 2)
     return true;
   return false;
 }

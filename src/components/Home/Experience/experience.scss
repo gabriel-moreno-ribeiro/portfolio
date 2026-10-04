@@ -512,8 +512,11 @@ a.exp__d20-link:visited {
 
 .exp__card-period {
   display: flex;
-  align-items: center;
-  gap: 8px;
+  flex-wrap: wrap; // on a phone the city drops to its own line instead of
+  align-items: center; // squeezing the dates into two broken columns
+  gap: 2px 8px;
+
+  > * { white-space: nowrap; }
   margin: 2px 0 0;
   font-family: $exp-mono;
   font-size: 12px;

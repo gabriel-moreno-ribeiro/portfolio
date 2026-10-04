@@ -23,6 +23,7 @@ function FilesPage() {
   useDocumentHead({
     title: 'Documents · Gabriel Moreno Ribeiro',
     description: 'Score reports and school profiles, as direct links.',
+    canonical: 'https://gabrielmr.com/files',
     noindex: true,
   });
 

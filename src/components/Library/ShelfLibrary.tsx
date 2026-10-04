@@ -210,12 +210,16 @@ export default function ShelfLibrary() {
     engineRef.current?.setTheme(themeRef.current);
   }, [darkMode]);
 
-  // URL + title follow the engine
+  // URL + title follow the engine. A deep link keeps its /library/<id> while the
+  // book is still being prepared: only once it has opened does closing it go
+  // back to /library (it used to flick to /library and back).
+  const deepLinkSettled = useRef(!deepLinked);
   useEffect(() => {
     if (isFocused && selectedBook) {
+      deepLinkSettled.current = true;
       document.title = `${selectedBook.title} · Library`;
       navigate(`/library/${selectedBook.id}`, { replace: true });
-    } else {
+    } else if (deepLinkSettled.current) {
       document.title = siteConfig.title;
       navigate("/library", { replace: true });
     }
