@@ -17,10 +17,11 @@ const MenuIcon: React.FC<MenuIconProps> = ({ isHovered, setIsHovered }) => {
       aria-label={isHovered ? "Close menu" : "Open menu"}
       layout
       transition={{ type: "spring", stiffness: 200, damping: 25 }}
-      onClick={() => {
-        if (isHovered) {
-          setIsHovered(false);
-        }
+      // The one toggle for the icon. It stops here so the pill's own click
+      // toggle doesn't flip it straight back (a phone tap took two tries).
+      onClick={(e) => {
+        e.stopPropagation();
+        setIsHovered((open) => !open);
       }}
     >
       <motion.div

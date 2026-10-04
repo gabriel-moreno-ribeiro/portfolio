@@ -24,7 +24,7 @@ function NotFound() {
   useDocumentHead({
     title: '404 · Gabriel Moreno Ribeiro',
     description: 'Page not found.',
-    canonical: 'https://gabrielmr.com/404',
+    noindex: true,
   });
 
   const [score, setScore] = useState({ streak: 0, best: 0 });

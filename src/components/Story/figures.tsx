@@ -278,8 +278,14 @@ export function ChatFigure() {
   }, [armed]);
 
   useEffect(() => {
-    if (!armed || !inView) return;
-    const timers = [400, 1700, 2500, 3900].map((t, i) => window.setTimeout(() => setStage(i + 1), t));
+    if (!armed) return;
+    // Scrolled past mid-conversation: it finishes instead of waiting on the
+    // typing dots for someone who already left.
+    if (!inView) {
+      setStage((s) => (s > 0 ? 4 : s));
+      return;
+    }
+    const timers = [400, 1700, 2500, 3900].map((t, i) => window.setTimeout(() => setStage((s) => Math.max(s, i + 1)), t));
     return () => timers.forEach(clearTimeout);
   }, [armed, inView]);
 
@@ -293,7 +299,11 @@ export function ChatFigure() {
             <small>Silvana's voice, dental office, 9:04 pm</small>
           </span>
         </div>
-        <div className="chat__body">
+        <p className="sr-only">
+          Patient: my tooth kind of hurts but only when I eat beans. J.A.R.V.A.N.A., in Silvana's voice: That sounds like
+          sensitivity, not an emergency. I can put you in the first slot tomorrow. Does 8:00 work?
+        </p>
+        <div className="chat__body" aria-hidden="true">
           {stage >= 1 && stage < 2 && <Bubble side="in" typing still={!armed} />}
           {stage >= 2 && <Bubble side="in" still={!armed}>my tooth kind of hurts but only when I eat beans</Bubble>}
           {stage >= 3 && stage < 4 && <Bubble side="out" typing still={!armed} />}

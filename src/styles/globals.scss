@@ -102,7 +102,7 @@ $dm-latin-ext: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+030
   top: -9999px;
   left: 16px;
   z-index: 10000;
-  background: var(--accent);
+  background: #b8501a; // the light theme's --accent in both themes: white on it is 5.6:1
   color: #fff;
   padding: 12px 20px;
   border-radius: 0 0 8px 8px;

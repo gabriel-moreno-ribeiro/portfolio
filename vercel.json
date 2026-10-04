@@ -9,7 +9,7 @@
     { "source": "/terms", "destination": "/terms.html" },
     { "source": "/work/([^/.]+)", "destination": "/index.html" },
     { "source": "/files", "destination": "/index.html" },
-    { "source": "/((?!api|assets|honors|blog|projects|teaching|background|work|timeline|research|stats|favicon|logo|manifest|robots|sitemap|llms|books|og-image|hibeex|404|privacy|terms|files).*)", "destination": "/index.html" }
+    { "source": "/((?!api|assets|honors|blog|projects|teaching|background|work|timeline|research|stats|favicon|logo|manifest|robots|sitemap|llms|books|og-image|hibeex|404|privacy|terms|files|draco).*)", "destination": "/index.html" }
   ],
   "headers": [
     {

@@ -99,7 +99,10 @@ function Navbar() {
       onMouseEnter={!isMobile && !pinned ? () => setIsHovered(true) : undefined}
       onMouseLeave={!isMobile && !pinned ? () => setIsHovered(false) : undefined}
       onClick={pinned ? undefined : () => setIsHovered(!isHovered)}
-      onFocus={pinned ? undefined : () => setIsHovered(true)}
+      // Keyboard focus opens the pill; a tap's focus doesn't (the click does that)
+      onFocus={pinned ? undefined : (e) => {
+        if ((e.target as HTMLElement).matches(':focus-visible')) setIsHovered(true);
+      }}
       onBlur={pinned ? undefined : e => {
         if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setIsHovered(false);
       }}

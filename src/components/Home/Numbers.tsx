@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
-import { usePageVisible, useVisible } from "../../lib/motion";
+import { usePageVisible, useReducedMotion, useVisible } from "../../lib/motion";
 import NumberStatsCard from "./NumberStatsCard";
 
 const STATS = [
@@ -11,9 +11,10 @@ const STATS = [
 ];
 
 // Counts from 0 to value over ~1.1s with an ease-out; restarts whenever value changes.
-function CountUp({ value, decimals = 0, grouping = true }: { value: number; decimals?: number; grouping?: boolean }) {
-  const [n, setN] = useState(0);
+function CountUp({ value, decimals = 0, grouping = true, still = false }: { value: number; decimals?: number; grouping?: boolean; still?: boolean }) {
+  const [n, setN] = useState(still ? value : 0);
   useEffect(() => {
+    if (still) { setN(value); return; }
     let raf = 0;
     const start = performance.now();
     const tick = (t: number) => {
@@ -23,7 +24,7 @@ function CountUp({ value, decimals = 0, grouping = true }: { value: number; deci
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [value]);
+  }, [value, still]);
   return <>{n.toLocaleString('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals, useGrouping: grouping })}</>;
 }
 
@@ -32,20 +33,29 @@ const NumbersAndStats = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const inView = useVisible(sectionRef);
   const pageVisible = usePageVisible();
+  const reduced = useReducedMotion();
+  const [held, setHeld] = useState(false);
 
-  // The rotation only runs while the section is on screen and the tab is visible.
+  // The rotation only runs while the section is on screen, the tab is visible and
+  // nobody is pointing at it; never with reduced motion.
   useEffect(() => {
-    if (!inView || !pageVisible) return;
+    if (!inView || !pageVisible || held || reduced) return;
     const interval = setInterval(() => {
       setIndex((prevIndex) => (prevIndex + 1) % STATS.length);
     }, 5000);
     return () => clearInterval(interval);
-  }, [inView, pageVisible]);
+  }, [inView, pageVisible, held, reduced]);
 
   const stat = STATS[index];
 
   return (
-    <div className="numbers-and-stats" id="numbers" ref={sectionRef}>
+    <div
+      className="numbers-and-stats"
+      id="numbers"
+      ref={sectionRef}
+      onPointerEnter={() => setHeld(true)}
+      onPointerLeave={() => setHeld(false)}
+    >
       <div className="center-text">
         <h2 className="section-title">By the <em>Numbers</em></h2>
       </div>
@@ -67,10 +77,17 @@ const NumbersAndStats = () => {
         exit={{ opacity: 0, y: -10 }}
         transition={{ duration: 0.3 }}
         className="card-text"
+        aria-hidden="true"
       >
-        <span className="orange"> {stat.prefix}<CountUp value={stat.value} decimals={stat.decimals} grouping={stat.grouping} />{stat.suffix} </span>
+        <span className="orange"> {stat.prefix}<CountUp value={stat.value} decimals={stat.decimals} grouping={stat.grouping} still={reduced} />{stat.suffix} </span>
         {stat.label}
       </motion.p>
+      {/* The card shows one at a time; the page carries all four */}
+      <ul className="sr-only">
+        {STATS.map((s) => (
+          <li key={s.label}>{s.prefix}{s.value.toLocaleString('en-US', { minimumFractionDigits: s.decimals ?? 0, useGrouping: s.grouping ?? true })}{s.suffix} {s.label}</li>
+        ))}
+      </ul>
     </div>
   );
 };

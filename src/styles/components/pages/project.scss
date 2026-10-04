@@ -426,6 +426,7 @@ $project-text: 720px;
     padding: 24px 12px;
 
     &__nav { display: none; }
+    &__figure { touch-action: pan-y; } // horizontal swipes reach the handler
   }
 }
 

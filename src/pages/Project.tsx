@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { FiArrowLeft, FiArrowUpRight, FiChevronLeft, FiChevronRight, FiX } from 'react-icons/fi';
 import { Link, Navigate, useParams } from 'react-router-dom';
@@ -31,6 +31,8 @@ function Lightbox({
 }) {
   const gallery = project.gallery ?? [];
   const file = gallery[index];
+  // Touch has no arrows (they'd cover the photo): a horizontal swipe steps.
+  const swipeStart = useRef<number | null>(null);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -63,7 +65,18 @@ function Lightbox({
           <FiChevronLeft aria-hidden="true" />
         </button>
       )}
-      <figure className="project-lightbox__figure" onClick={(e) => e.stopPropagation()}>
+      <figure
+        className="project-lightbox__figure"
+        onClick={(e) => e.stopPropagation()}
+        onPointerDown={(e) => { if (e.pointerType !== 'mouse') swipeStart.current = e.clientX; }}
+        onPointerUp={(e) => {
+          if (swipeStart.current === null) return;
+          const dx = e.clientX - swipeStart.current;
+          swipeStart.current = null;
+          if (gallery.length > 1 && Math.abs(dx) > 40) onStep(dx < 0 ? 1 : -1);
+        }}
+        onPointerCancel={() => { swipeStart.current = null; }}
+      >
         <img src={`/work/${project.slug}/${file}`} alt={project.captions?.[file] ?? project.title} />
         {project.captions?.[file] && <figcaption>{project.captions[file]}</figcaption>}
       </figure>
