@@ -70,7 +70,6 @@ const categoryMap: Record<string, TerminalCategory> = {
   pwd: "File System", tree: "File System",
   neofetch: "Fun", sudo: "Fun", matrix: "Fun", cowsay: "Fun",
   fortune: "Fun", theme: "Fun", ascii: "Fun",
-  fuse: "Fun", tools: "Fun", merlita: "Fun", garage: "Fun", jarvana: "Fun", hindi: "Fun", porca: "Fun",
   help: "Utility", clear: "Utility", history: "Utility",
   ai: "AI", chat: "AI",
 };
@@ -371,100 +370,6 @@ const commands: CommandDefinition[] = [
       }
     },
   },
-  // ── The garage (see /story) ──
-  {
-    name: "fuse",
-    description: "Diagnose the truck",
-    execute: (ctx) => {
-      ctx.writeln("Checking battery........ replaced. Still nothing.");
-      ctx.writeln("Checking alternator..... replaced. Still nothing.");
-      ctx.writeln("Checking fuel filter.... replaced. Still nothing.");
-      ctx.writeln("Checking fuse........... " + red("BURNED"));
-      ctx.writeln("");
-      ctx.writeln(`${green("It turned over.")} Cheapest part in the vehicle, worth less than the coffee we drank while we guessed.`);
-      ctx.writeln(yellow("Lesson filed under #9: look before you buy."));
-    },
-  },
-  {
-    name: "tools",
-    description: "The numbered garage",
-    execute: (ctx) => {
-      ctx.writeln(bold("Everything in the garage got a number instead of a name."));
-      ctx.writeln("");
-      ctx.writeln(`  ${yellow("#1")}   the wrench (the one that turns a porca)`);
-      ctx.writeln(`  ${yellow("#4")}   the pliers`);
-      ctx.writeln(`  ${yellow("#9")}   a red Chevrolet D-20 that wouldn't start`);
-      ctx.writeln(`  ${yellow("#12")}  the angle grinder`);
-      ctx.writeln(`  ${yellow("#13")}  this website (he never got to it; I picked the number)`);
-      ctx.writeln("");
-      ctx.writeln("Merlita is not a tool. Merlita is a pig. This distinction cost me an afternoon.");
-    },
-  },
-  {
-    name: "merlita",
-    description: "Check on the pig",
-    execute: (ctx) => {
-      ctx.writeln(`${bold("merlita-escape-detector")} v2.0  (repo #17)`);
-      ctx.writeln("");
-      ctx.writeln(`  status:      ${red("ESCAPED")}`);
-      ctx.writeln("  count:       2");
-      ctx.writeln("  last seen:   the garden, looking innocent");
-      ctx.writeln("  species:     porca (the animal, not the nut)");
-      ctx.writeln("");
-      ctx.writeln(green("Tip: she comes back for the cashew tree."));
-    },
-  },
-  {
-    name: "garage",
-    description: "Where all of this started",
-    execute: (ctx) => {
-      ctx.writeln(bold("Adalberto's garage, Missão Velha, Ceará"));
-      ctx.writeln("");
-      ctx.writeln("  size:        29.52 m²");
-      ctx.writeln("  built by:    a man who left school at 8");
-      ctx.writeln("  tools:       never the right ones");
-      ctx.writeln("  cars fixed:  more than the parts budget allowed");
-      ctx.writeln("  best engineer I've ever met: yes");
-      ctx.writeln("");
-      ctx.writeln(`Read the whole thing: ${green("gabrielmr.com/story")}`);
-    },
-  },
-  {
-    name: "jarvana",
-    description: "Talk to my mother's chatbot",
-    execute: (ctx) => {
-      const q = ctx.args.join(" ").trim();
-      ctx.writeln(bold("J.A.R.V.A.N.A.") + "  (Jarvis + Silvana · please don't sue me, Marvel)");
-      ctx.writeln("");
-      ctx.writeln(`  you:       ${q || "my tooth kind of hurts but only when I eat beans"}`);
-      ctx.writeln(`  jarvana:   ${green("That sounds like sensitivity, not an emergency. I can put you in the first slot tomorrow. Does 8:00 work?")}`);
-      ctx.writeln("");
-      ctx.writeln("62 questions, answered in her voice. It gave my mother a break, and me an idea.");
-    },
-  },
-  {
-    name: "hindi",
-    description: "The one line I know",
-    execute: (ctx) => {
-      ctx.writeln(bold("हे दोस्तों!") + "  (hey guys)");
-      ctx.writeln("");
-      ctx.writeln("198:18:37 hours of laptop-repair tutorials to learn it.");
-      ctx.writeln("Around machine #82 every component tested fine and it still crashed on the BIOS screen.");
-      ctx.writeln("That's how I got into software.");
-    },
-  },
-  {
-    name: "porca",
-    description: "Ambiguous, in Portuguese",
-    execute: (ctx) => {
-      ctx.writeln("porca  (Portuguese, noun)");
-      ctx.writeln(`  1. ${yellow("the nut that goes on a bolt")}`);
-      ctx.writeln(`  2. ${yellow("a female pig")}`);
-      ctx.writeln("");
-      ctx.writeln("The first time grandpa asked for one, I came back from the garden with Merlita.");
-      ctx.writeln(green("Both answers were technically correct."));
-    },
-  },
   {
     name: "sudo",
     description: "Run with superuser privileges",
@@ -478,9 +383,6 @@ const commands: CommandDefinition[] = [
         ctx.writeln(`  LinkedIn: ${green(contact.linkedin)}`);
         ctx.writeln("");
         ctx.writeln(yellow("Initiating hiring sequence... Done."));
-      } else if (ctx.args.join(" ").toLowerCase() === "fix-truck") {
-        ctx.writeln(yellow("You don't need root for this. You need to check the fuse."));
-        ctx.writeln(`Try: ${green("fuse")}`);
       } else {
         ctx.writeln(red(`sudo: ${ctx.args[0] || ""}: command not found`));
         ctx.writeln(`Did you mean: ${green("sudo hire-me")}?`);

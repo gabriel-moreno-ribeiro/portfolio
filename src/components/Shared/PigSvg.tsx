@@ -1,5 +1,4 @@
-// Merlita. Drawn once, walked on /story (the porca figure) and, when someone
-// types her name, across the whole site.
+// Merlita, the pig in /story's porca figure.
 function PigSvg() {
   return (
     <svg viewBox="0 0 140 90" className="pig__svg" aria-hidden="true">
