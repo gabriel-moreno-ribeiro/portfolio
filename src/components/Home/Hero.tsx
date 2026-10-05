@@ -177,9 +177,9 @@ function Hero() {
             iconPosition="right"
             onClick={() => window.open('https://cal.com/gabrielmribeiro', '_blank')}
           />
-          {/* Same pill as the outline button, but a real link: the file downloads with a clean name. */}
+          {/* A real link (the file downloads with a clean name), black in both themes */}
           <a
-            className="btn outline hero-resume"
+            className="btn hero-resume"
             href="/files/gabriel-moreno-ribeiro-resume.pdf"
             download="Gabriel-Moreno-Ribeiro-Resume.pdf"
           >
