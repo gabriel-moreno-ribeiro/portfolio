@@ -5,6 +5,3 @@ Disallow: /files
 Sitemap: https://gabrielmr.com/sitemap.xml
 
 # LLM context: /llms.txt
-
-# Robot #13 says hi. The one in the hero is orange; you're welcome to look.
-# Human-readable notes: /humans.txt

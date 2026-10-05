@@ -1,4 +1,3 @@
-import { sayEgg } from "../../utils/eggs";
 import { Link } from "react-router-dom";
 import { SiGithub, SiLinkedin } from "react-icons/si";
 
@@ -20,18 +19,6 @@ function obfuscatedEmail() {
   const user = 'me';
   const domain = 'gabrielmr.com';
   return `${user}@${domain}`;
-}
-
-// Clicking the year: one line per click, in order, then it starts over
-const YEAR_LINES = [
-  'He numbered everything in the garage except the years. Those he remembered.',
-  '121 laptops, 21 states, 198:18:37 hours of Hindi tutorials. The year is the only round number here.',
-  'Made in Missão Velha, assembled in Salvador, shipped from São Paulo.',
-];
-let yearClicks = 0;
-function nextYearLine() {
-  sayEgg(YEAR_LINES[yearClicks % YEAR_LINES.length]);
-  yearClicks += 1;
 }
 
 function Footer() {
@@ -87,11 +74,7 @@ function Footer() {
         ))}
       </div>
       <p className="footer__copy">
-        &copy;{' '}
-        <button type="button" className="footer__year" onClick={nextYearLine} aria-label="A note about the year">
-          {new Date().getFullYear()}
-        </button>{' '}
-        Gabriel Moreno Ribeiro
+        &copy; {new Date().getFullYear()} Gabriel Moreno Ribeiro
       </p>
     </footer>
   );

@@ -10,7 +10,6 @@ import {
 import { FiArrowRight, FiCalendar, FiDownload } from 'react-icons/fi';
 import useIsMobile from '../../hooks/useIsMobile';
 import { useReducedMotion, useVisible } from '../../lib/motion';
-import { sayEgg } from '../../utils/eggs';
 import { scrollToComponent } from '../../utils/scrollToComponent';
 import CommonButton from '../Shared/CommonButton';
 import ScrambleText from '../Shared/ScrambleText';
@@ -105,11 +104,7 @@ function Hero() {
   return (
     <div className="hero-section" ref={heroRef}>
       {!isNarrowViewport && (
-        <div
-          className="hero-robot"
-          aria-hidden="true"
-          onDoubleClick={() => sayEgg("Grandpa numbered every tool in the garage. The pliers were #4, the wrench #1, the truck #9. He never got to me, so I picked one myself: #13.")}
-        >
+        <div className="hero-robot" aria-hidden="true">
           {/* The poster is in the DOM before anything heavy loads, and it is the
               whole robot under reduced motion. */}
           <img

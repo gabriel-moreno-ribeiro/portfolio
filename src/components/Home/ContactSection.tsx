@@ -168,11 +168,6 @@ function ContactSection() {
                 aria-invalid={errors.message ? true : undefined}
                 aria-describedby={errors.message ? 'contact-message-error' : undefined}
               />
-              {/beans/i.test(message) && (
-                <span className="contact-section__note">
-                  J.A.R.V.A.N.A. says: that sounds like sensitivity, not an emergency. First slot tomorrow?
-                </span>
-              )}
               {errors.message && (
                 <span className="contact-section__error" id="contact-message-error" role="alert">
                   {errors.message}

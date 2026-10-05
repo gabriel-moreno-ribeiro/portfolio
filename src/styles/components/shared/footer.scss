@@ -38,17 +38,6 @@
     font-size: 12px;
   }
 
-  // The year is a button (an easter egg lives behind it) that looks like text
-  &__year {
-    padding: 13px 8px; // a 44px-tall target; the negative margin keeps the line where it was
-    margin: -13px -8px;
-    border: 0;
-    background: none;
-    color: inherit;
-    font: inherit;
-    cursor: pointer;
-    &:hover { color: $white; }
-  }
 
 
   .links {
