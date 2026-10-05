@@ -140,6 +140,37 @@ function cityPhotos(city: City): StagePhoto[] {
   });
 }
 
+// The state each city sits in: its outline lights up while the city is open.
+const CITY_UF: Record<string, string> = {
+  'missao-velha': 'CE',
+  salvador: 'BA',
+  fortaleza: 'CE',
+  'sao-paulo': 'SP',
+};
+
+type StateRing = { uf: string; pts: Float64Array };
+
+// Brazil's state borders (simplified IBGE outlines, src/data/brazil-states.json)
+// as unit vectors, in the same frame cobe uses for its markers.
+function statesToWorld(data: Record<string, number[][][]>): StateRing[] {
+  const rings: StateRing[] = [];
+  for (const [uf, list] of Object.entries(data)) {
+    for (const ring of list) {
+      const pts = new Float64Array(ring.length * 3);
+      ring.forEach(([lon, lat], i) => {
+        const la = (lat * Math.PI) / 180;
+        const lo = (lon * Math.PI) / 180 - Math.PI;
+        const c = Math.cos(la);
+        pts[i * 3] = -c * Math.cos(lo);
+        pts[i * 3 + 1] = Math.sin(la);
+        pts[i * 3 + 2] = c * Math.sin(lo);
+      });
+      rings.push({ uf, pts });
+    }
+  }
+  return rings;
+}
+
 function locationToAngles(lat: number, lon: number): [number, number] {
   return [
     Math.PI - ((lon * Math.PI) / 180 - Math.PI / 2),
@@ -161,6 +192,8 @@ function GlobeCanvas({
   onPainted: (painted: boolean) => void;
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const statesRef = useRef<HTMLCanvasElement>(null);
+  const highlightRef = useRef<string | null>(null);
   const focusRef = useRef<[number, number] | null>(null);
   const pointerInteracting = useRef<{ x: number; y: number } | null>(null);
   const pointerMovement = useRef({ x: 0, y: 0 });
@@ -171,6 +204,7 @@ function GlobeCanvas({
   useEffect(() => {
     foldDrag.current?.();
     focusRef.current = selected ? locationToAngles(selected.lat, selected.lon) : null;
+    highlightRef.current = selected ? CITY_UF[selected.id] ?? null : null;
   }, [selected]);
 
   const onInteractRef = useRef(onInteract);
@@ -178,9 +212,7 @@ function GlobeCanvas({
   const onPointerDown = useCallback((e: React.PointerEvent) => {
     pointerInteracting.current = { x: e.clientX, y: e.clientY };
     pointerMovement.current = { x: 0, y: 0 };
-    // A grabbed globe is free: it stops pulling back to the open city (that
-    // undid every drag) until another city is picked.
-    focusRef.current = null;
+    // Dragging stops the tour; on release the globe eases back to the open city.
     onInteractRef.current?.();
     if (canvasRef.current) canvasRef.current.style.cursor = 'grabbing';
   }, []);
@@ -199,13 +231,71 @@ function GlobeCanvas({
     let currentScale = 1;
     // The poster stays until cobe has actually drawn: a few frames, not a timer.
     let frames = 0;
+    const overlay = statesRef.current;
     const reveal = () => {
       if (canvas) canvas.style.opacity = '1';
+      if (overlay) overlay.style.opacity = '1';
       onPaintedRef.current(true);
     };
     const onLost = () => {
       canvas.style.opacity = '0';
+      if (overlay) overlay.style.opacity = '0';
       onPaintedRef.current(false);
+    };
+
+    // ── State borders, drawn on a 2D layer over the globe ──
+    // Same projection as cobe's shader: a unit vector P is turned by the matrix
+    // J(theta, phi) and lands at 0.8 * scale of the half-width; only the side
+    // facing us (z > 0) is drawn.
+    let states: StateRing[] = [];
+    import('../../data/brazil-states.json').then((m) => {
+      states = statesToWorld(m.default as Record<string, number[][][]>);
+    });
+    const octx = overlay?.getContext('2d') ?? null;
+    const glow: Record<string, number> = {}; // per-state highlight, eased 0..1
+    const line = darkMode ? 'rgba(255, 236, 220, 0.3)' : 'rgba(70, 45, 30, 0.32)';
+    const drawStates = (phi: number, theta: number, scale: number) => {
+      if (!overlay || !octx || states.length === 0) return;
+      const cssW = canvas.offsetWidth;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      if (overlay.width !== Math.round(cssW * dpr)) {
+        overlay.width = Math.round(cssW * dpr);
+        overlay.height = Math.round(cssW * dpr);
+      }
+      const W = overlay.width;
+      const c = Math.cos(theta), e = Math.sin(theta), d = Math.cos(phi), f = Math.sin(phi);
+      const k = 0.8 * scale * (W / 2);
+      const hi = highlightRef.current;
+      octx.clearRect(0, 0, W, W);
+      octx.lineJoin = 'round';
+      for (const { uf, pts } of states) {
+        const target = uf === hi ? 1 : 0;
+        const g = (glow[uf] ?? 0) + (target - (glow[uf] ?? 0)) * 0.08;
+        glow[uf] = g;
+        octx.beginPath();
+        let pen = false;
+        let allFront = true;
+        for (let i = 0; i < pts.length; i += 3) {
+          const x = pts[i], y = pts[i + 1], z = pts[i + 2];
+          const lz = -f * c * x + e * y + d * c * z;
+          if (lz <= 0) { pen = false; allFront = false; continue; }
+          const sx = W / 2 + k * (d * x + f * z);
+          const sy = W / 2 - k * (f * e * x + c * y - d * e * z);
+          if (pen) octx.lineTo(sx, sy);
+          else { octx.moveTo(sx, sy); pen = true; }
+        }
+        if (g > 0.01 && allFront) {
+          octx.closePath();
+          octx.fillStyle = `rgba(240, 115, 45, ${0.3 * g})`;
+          octx.fill();
+          octx.strokeStyle = `rgba(240, 115, 45, ${0.35 + 0.6 * g})`;
+          octx.lineWidth = (1 + 1.2 * g) * dpr;
+        } else {
+          octx.strokeStyle = line;
+          octx.lineWidth = 0.8 * dpr;
+        }
+        octx.stroke();
+      }
     };
     canvas.addEventListener('webglcontextlost', onLost);
     const FOCUS_SCALE = 1.3;
@@ -297,6 +387,7 @@ function GlobeCanvas({
 
           state.phi = currentPhi + dragX;
           state.theta = clampTheta(currentTheta + dragY);
+          drawStates(state.phi, state.theta, currentScale);
           const w = canvas.offsetWidth || size;
           state.width = w * 2;
           state.height = w * 2;
@@ -335,7 +426,12 @@ function GlobeCanvas({
     };
   }, [darkMode]);
 
-  return <canvas ref={canvasRef} className="globe-canvas" onPointerDown={onPointerDown} aria-hidden="true" />;
+  return (
+    <>
+      <canvas ref={canvasRef} className="globe-canvas" onPointerDown={onPointerDown} aria-hidden="true" />
+      <canvas ref={statesRef} className="globe-states" aria-hidden="true" />
+    </>
+  );
 }
 
 const CITY_TZ: Record<string, string> = Object.fromEntries(
