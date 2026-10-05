@@ -108,11 +108,23 @@
         font-size: 24px;
       }
 
-      // The resume link wears the outline pill; anchors need the underline off and the text block reset.
+      // Resume: black in both themes, white on hover. Anchors need the underline
+      // off and the text block reset.
       .hero-resume {
         box-sizing: border-box; // buttons are border-box by default; the anchor was 68px tall against 56
         text-decoration: none;
+        background-color: #111;
+        color: #fff;
+        border: 2px solid #111;
+        transition: background-color 0.3s, color 0.3s, border-color 0.3s;
         .text { margin: 0; }
+
+        &:hover,
+        &:focus-visible {
+          background-color: #fff;
+          color: #111;
+          border-color: #111;
+        }
       }
 
       .icon-arrow {
@@ -164,4 +176,12 @@
       }
     }
   }
+}
+
+// On the dark page a black pill needs an edge to read as a button
+[data-theme="dark"] .hero-section .btn-flex .hero-resume {
+  border-color: rgba(255, 255, 255, 0.3);
+
+  &:hover,
+  &:focus-visible { border-color: #fff; }
 }

@@ -1,6 +1,7 @@
 .btn {
   padding: 10px 24px;
   border-radius: 36px;
+  font-family: inherit; // a <button> doesn't inherit it: See Work was in Arial next to a DM Sans Resume
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
