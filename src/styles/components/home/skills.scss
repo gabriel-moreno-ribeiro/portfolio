@@ -1,138 +1,123 @@
-// ── Skills: the bench, in four groups ────────────────────────────────────────
-// Plain tiles, no canvas. Each one names its tool (the less common logos don't
-// explain themselves). On a mouse they can be picked up and flung; they always
-// spring back. While the section is on screen they breathe a little.
+// ── Skills: the playground ───────────────────────────────────────────────────
+// Cards burst out of the title, trail the cursor and spring back home. They are
+// plain elements moved with transforms by Skills.tsx; this file only draws them.
 .skills-container {
   width: 100%;
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 72px 0 96px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  height: calc(100vh - 64px);
+  max-height: 1000px;
+  min-height: 1000px;
+  position: relative;
+  overflow: visible;
 
   .main-text {
-    margin: 0 0 44px;
+    margin: 0 0 12px;
     font-size: 24px;
     font-weight: 600;
     line-height: 1.35;
     color: var(--black);
     text-align: center;
-  }
-}
-
-.skills__groups {
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 44px 56px;
-}
-
-.skills__group-title {
-  margin: 0 0 16px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid var(--border);
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--fg);
-}
-
-.skills__list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 18px 10px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.skills__tool {
-  position: relative;
-  width: 78px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  touch-action: pan-y; // a drag never steals the page scroll
-  user-select: none;
-
-  &[data-drag-me] { cursor: grab; }
-  &[data-drag-me]:active { cursor: grabbing; }
-}
-
-.skills__card {
-  display: grid;
-  place-items: center;
-  width: 60px;
-  height: 60px;
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  background: var(--surface);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 6px 14px -8px rgba(0, 0, 0, 0.18);
-  transition: border-color 0.2s ease-out, transform 0.2s ease-out;
-
-  img {
-    width: 34px;
-    height: 34px;
-    object-fit: contain;
+    position: relative;
+    z-index: 1;
     pointer-events: none;
   }
 }
 
-.skills__tool:hover .skills__card {
-  border-color: var(--accent-decor);
-  transform: translateY(-3px);
+// The field breaks out of the column to the whole viewport width, so the trail
+// can follow the cursor edge to edge.
+.skills-field {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 100vw;
+  height: 100%;
+  transform: translateX(-50%);
+  overflow: hidden;
 }
 
-.skills__name {
-  font-size: 12px;
-  line-height: 1.25;
-  color: var(--fg-muted);
-  text-align: center;
-  white-space: nowrap;
+// Each card sits at the field's centre; the script moves it from there.
+.skills-orb {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 80px;
+  height: 80px;
+  margin: -40px 0 0 -40px;
+  will-change: transform;
+  pointer-events: none;
 }
 
-// Idle breathing: each card bobs on its own beat. Only while on screen
-// (.is-live comes from an IntersectionObserver), never with reduced motion.
-.skills-container.is-live .skills__tool:not(:hover) .skills__card {
+.skills-orb__card {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: var(--surface);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+
+  img {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    user-select: none;
+  }
+}
+
+[data-theme="dark"] .skills-orb__card {
+  border-color: rgba(255, 255, 255, 0.16);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.45);
+}
+
+// Idle breathing on the inner card (the script owns the outer transform). Only
+// while the section is on screen, never with reduced motion.
+.skills-container.is-live .skills-orb__card {
   animation: skills-bob 3.6s ease-in-out infinite;
   animation-delay: calc(var(--i) * -0.37s);
 }
 
 @keyframes skills-bob {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-3px); }
-}
-
-[data-theme="dark"] .skills__card {
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
-}
-
-@media (max-width: 900px) {
-  .skills__groups {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 36px;
-  }
+  50% { transform: translateY(-4px); }
 }
 
 @media screen and (max-width: 600px) {
+  // No playground on phones (see Skills.tsx): the title above a strip of logos
   .skills-container {
-    padding: 40px 0 56px;
+    height: auto;
+    min-height: 0;
+    padding: 32px 0 0;
 
     .main-text {
-      margin-bottom: 28px;
       font-size: 22px;
+      margin-bottom: 0;
     }
   }
 
-  // Six to a row: every group fills its rows (6, 4, 6, 6 + 4)
-  .skills__list { gap: 14px 4px; }
-  .skills__tool { width: calc((100% - 20px) / 6); gap: 6px; }
-  .skills__card {
-    width: 48px;
-    height: 48px;
-    border-radius: 13px;
-    img { width: 28px; height: 28px; }
+  .skills-strip {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    max-width: 340px;
+    margin: 24px auto 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+      display: grid;
+      place-items: center;
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+    }
+
+    img { width: 32px; height: 32px; object-fit: contain; }
   }
-  .skills__name { font-size: 11px; white-space: normal; }
 }
