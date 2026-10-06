@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { FiArrowUpRight, FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { Link } from "react-router-dom";
-import { Project, projects } from "../../content/projects";
+import { Project, isVideo, posterFor, projects } from "../../content/projects";
+import AutoVideo from "../Shared/AutoVideo";
 import useIsMobile from "../../hooks/useIsMobile";
 import { Counter, usePageVisible, useReducedMotion, useVisible } from "../../lib/motion";
 
@@ -28,15 +29,17 @@ function MediaCarousel({ project, paused, offset = 0 }: { project: Project; paus
 
   // Autoplay only while the carousel is on screen, the tab is visible and nobody is
   // hovering or tabbing through it.
+  // A video isn't cut off by the timer: it plays to its end and then moves on.
+  const onVideo = count > 0 && isVideo(available[idx % count]);
   useEffect(() => {
-    if (count <= 1 || !inView || !pageVisible || paused || reduced) return;
+    if (count <= 1 || !inView || !pageVisible || paused || reduced || onVideo) return;
     const delay = AUTOPLAY_MS + (firstStep.current ? offset : 0);
     const timer = setTimeout(() => {
       firstStep.current = false;
       setIdx((i) => (i + 1) % count);
     }, delay);
     return () => clearTimeout(timer);
-  }, [count, inView, pageVisible, paused, reduced, idx, offset]);
+  }, [count, inView, pageVisible, paused, reduced, idx, offset, onVideo]);
 
   if (count === 0) return null;
 
@@ -61,8 +64,15 @@ function MediaCarousel({ project, paused, offset = 0 }: { project: Project; paus
           style={project.focus?.[underFile] ? { objectPosition: project.focus[underFile] } : undefined}
         />
       )}
-      {current.endsWith(".mp4") ? (
-        <video key={src} src={src} controls playsInline width={640} height={400} />
+      {isVideo(current) ? (
+        <AutoVideo
+          key={src}
+          src={src}
+          poster={posterFor(project.slug, current)}
+          label={project.captions?.[current] ?? project.title}
+          loop={count <= 1}
+          onEnded={count > 1 ? next : undefined}
+        />
       ) : (
         <img
           key={src}
@@ -102,13 +112,21 @@ function MediaCarousel({ project, paused, offset = 0 }: { project: Project; paus
                 type="button"
                 className={i === active ? "carousel-thumb is-active" : "carousel-thumb"}
                 onClick={() => setIdx(() => i)}
-                aria-label={`Photo ${i + 1} of ${count}`}
+                aria-label={`${isVideo(file) ? "Video" : "Photo"} ${i + 1} of ${count}`}
                 aria-current={i === active ? "true" : undefined}
               >
-                {compact ? null : file.endsWith(".mp4") ? (
-                  <span className="carousel-thumb__video" aria-hidden="true">
-                    ▶
-                  </span>
+                {compact ? null : isVideo(file) ? (
+                  <>
+                    <img
+                      src={`/work/${project.slug}/thumbs/${file.replace(/\.\w+$/, ".webp")}`}
+                      alt=""
+                      width={44}
+                      height={28}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                    <span className="carousel-thumb__video" aria-hidden="true">▶</span>
+                  </>
                 ) : (
                   <img
                     src={`/work/${project.slug}/thumbs/${file.replace(/\.\w+$/, ".webp")}`}

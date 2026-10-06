@@ -35,7 +35,7 @@ const SECTIONS = [
 // for the real section barely moves what's below.
 const RESERVE: Record<string, [desktop: number, mobile: number]> = {
   background: [955, 975],
-  work: [1170, 1705],
+  work: [1560, 2180],
   numbers: [460, 240],
   research: [1120, 1640],
   skills: [1000, 525],
