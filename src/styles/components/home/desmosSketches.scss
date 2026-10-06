@@ -4,7 +4,6 @@
 $paper-minor: #eef0f4;
 $paper-major: #dfe3ea;
 $ink: #1f1f24;
-$ink-soft: #5f5f66;
 
 .sketchbook {
   width: 100%;
@@ -22,12 +21,6 @@ $ink-soft: #5f5f66;
       color: var(--fg);
     }
 
-    p {
-      margin: 8px 0 0;
-      font-size: 16px;
-      line-height: 1.55;
-      color: var(--fg-muted);
-    }
   }
 
   &__sheet {
@@ -102,31 +95,49 @@ $ink-soft: #5f5f66;
     }
   }
 
+  // A clear play button in the middle of the drawing; while the video runs it
+  // becomes a small stop button in the corner.
   &__control {
     position: absolute;
-    right: 10px;
-    bottom: 10px;
+    left: 50%;
+    top: 50%;
     display: grid;
     place-items: center;
-    width: 32px;
-    height: 32px;
+    width: 64px;
+    height: 64px;
+    margin: -32px 0 0 -32px;
     border-radius: 50%;
-    background: rgba(17, 17, 17, 0.78);
+    background: rgba(17, 17, 17, 0.82);
     color: #fff;
-    font-size: 14px;
-    opacity: 0;
-    transition: opacity 0.2s ease-out;
+    font-size: 26px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.22);
+    transition: transform 0.2s ease-out, background-color 0.2s ease-out;
 
-    svg { display: block; }
+    svg {
+      display: block;
+      margin-left: 3px; // the triangle's optical centre
+      fill: currentColor;
+    }
   }
 
   &__plot:hover &__control,
-  &__plot:focus-visible &__control,
-  &.is-playing &__control { opacity: 1; }
+  &__plot:focus-visible &__control {
+    transform: scale(1.08);
+    background: #111;
+  }
 
-  // No hover on touch: the play mark is always there
-  @media (hover: none) {
-    &__control { opacity: 1; }
+  &.is-playing &__control {
+    left: auto;
+    top: auto;
+    right: 10px;
+    bottom: 10px;
+    width: 34px;
+    height: 34px;
+    margin: 0;
+    font-size: 13px;
+    opacity: 0.85;
+
+    svg { margin-left: 0; }
   }
 
   figcaption {
@@ -154,10 +165,6 @@ $ink-soft: #5f5f66;
     sup { font-size: 0.62em; line-height: 0; }
   }
 
-  &__part {
-    font-size: 13px;
-    color: $ink-soft;
-  }
 
   &__open {
     display: inline-flex;
