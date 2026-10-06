@@ -1,0 +1,197 @@
+// ── Drawings made of equations ────────────────────────────────────────────────
+// One sheet of Desmos graph paper (white in both themes: it's paper), the three
+// drawings plotted on it, each with an equation from its graph.
+$paper-minor: #eef0f4;
+$paper-major: #dfe3ea;
+$ink: #1f1f24;
+$ink-soft: #5f5f66;
+
+.sketchbook {
+  width: 100%;
+  margin-top: 72px;
+
+  &__head {
+    max-width: 62ch;
+    margin: 0 auto 24px;
+    text-align: center;
+
+    h3 {
+      margin: 0;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--fg);
+    }
+
+    p {
+      margin: 8px 0 0;
+      font-size: 16px;
+      line-height: 1.55;
+      color: var(--fg-muted);
+    }
+  }
+
+  &__sheet {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px 24px;
+    padding: 28px 28px 32px;
+    border: 1px solid $paper-major;
+    border-radius: 14px;
+    background-color: #fff;
+    background-image:
+      linear-gradient($paper-major 1px, transparent 1px),
+      linear-gradient(90deg, $paper-major 1px, transparent 1px),
+      linear-gradient($paper-minor 1px, transparent 1px),
+      linear-gradient(90deg, $paper-minor 1px, transparent 1px);
+    background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+    background-position: -1px -1px;
+  }
+}
+
+.sketch {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  &__plot {
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 5 / 4;
+    padding: 0;
+    border: 0;
+    border-radius: 10px;
+    background: none;
+    cursor: pointer;
+    overflow: hidden;
+
+    > img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      padding: 6%;
+      box-sizing: border-box;
+      object-fit: contain;
+      transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    &:hover > img { transform: scale(1.03); }
+
+    &:focus-visible {
+      outline: 2px solid var(--focus-ring);
+      outline-offset: 2px;
+    }
+  }
+
+  // The recording, cropped to the graph area (the equation list on the left and
+  // the toolbars are cut off): the frame is 1.49x the slot, shifted left.
+  &__screen {
+    position: absolute;
+    inset: 0;
+    background: #fff;
+    overflow: hidden;
+
+    video {
+      position: absolute;
+      width: 149.3%;
+      height: auto;
+      left: -44.8%;
+      top: -5.2%;
+    }
+  }
+
+  &__control {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(17, 17, 17, 0.78);
+    color: #fff;
+    font-size: 14px;
+    opacity: 0;
+    transition: opacity 0.2s ease-out;
+
+    svg { display: block; }
+  }
+
+  &__plot:hover &__control,
+  &__plot:focus-visible &__control,
+  &.is-playing &__control { opacity: 1; }
+
+  // No hover on touch: the play mark is always there
+  @media (hover: none) {
+    &__control { opacity: 1; }
+  }
+
+  figcaption {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    margin-top: 6px;
+  }
+
+  &__name {
+    font-size: 15px;
+    font-weight: 600;
+    color: $ink;
+  }
+
+  // Set like Desmos sets it: serif, italic variables
+  &__eq {
+    font-family: var(--font-serif);
+    font-size: 17px;
+    color: $ink;
+    white-space: nowrap;
+
+    i { font-style: italic; }
+    sup { font-size: 0.62em; line-height: 0; }
+  }
+
+  &__part {
+    font-size: 13px;
+    color: $ink-soft;
+  }
+
+  &__open {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 6px;
+    padding: 4px 2px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #b8501a; // the light accent: the sheet is white in both themes
+    text-decoration: underline;
+    text-decoration-color: rgba(184, 80, 26, 0.35);
+    text-underline-offset: 4px;
+
+    &:hover { text-decoration-color: currentColor; }
+    &:focus-visible {
+      outline: 2px solid var(--focus-ring);
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
+  }
+}
+
+@media (max-width: 900px) {
+  .sketchbook__sheet {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+    padding: 20px 16px 28px;
+  }
+
+  .sketch__plot { max-width: 420px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sketch__plot > img { transition: none; }
+  .sketch__plot:hover > img { transform: none; }
+}

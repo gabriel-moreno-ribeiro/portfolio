@@ -100,21 +100,6 @@ $project-text: 720px;
   &:focus-visible img {
     transform: scale(1.02);
   }
-
-  // A video plays in place (it has its own controls), so no zoom cursor
-  &--video {
-    cursor: auto;
-
-    video {
-      display: block;
-      width: 100%;
-      height: auto;
-      aspect-ratio: 16 / 9;
-      max-height: 62vh;
-      object-fit: contain;
-      background: #fff;
-    }
-  }
 }
 
 // ── Stats ─────────────────────────────────────────────────────────────────────
@@ -252,25 +237,6 @@ $project-text: 720px;
     transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
-  // A video's still keeps the recording's 16:9 (the equations sit on the left)
-  &:has(.project__play) img { aspect-ratio: 16 / 9; }
-
-  .project__play {
-    position: absolute;
-    top: 12px;
-    left: 12px;
-    display: grid;
-    place-items: center;
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    background: rgba(0, 0, 0, 0.6);
-    color: #fff;
-    font-size: 12px;
-    font-style: normal;
-    pointer-events: none;
-  }
-
   // Two lines' worth, so captions of different lengths keep the rows even.
   span {
     display: block;
@@ -308,8 +274,7 @@ $project-text: 720px;
     text-align: center;
     cursor: default;
 
-    img,
-    video {
+    img {
       display: block;
       max-width: 100%;
       max-height: 78vh;
