@@ -223,9 +223,14 @@ export const projects: Project[] = [
       {
         heading: 'The three in the videos',
         body: [
-          'A laptop with the flu, with a thermometer, an ice pack and a mug on the side. A processor wearing a propeller cap and holding a screwdriver. And a bug, the insect kind, with a bandage and a magnifying glass: a fixed bug. Each video shows the drawing going up one equation at a time.',
+          'A laptop with the flu, with a thermometer, an ice pack and a mug on the side. A processor wearing a propeller cap and holding a screwdriver. And a bug, the insect kind, with a bandage and a magnifying glass: a fixed bug. Each video shows the drawing going up one equation at a time, and the links below open the graphs themselves, every equation included.',
         ],
       },
+    ],
+    links: [
+      { href: 'https://www.desmos.com/calculator/axmfjf6rxv', label: 'Sick Laptop on Desmos', external: true },
+      { href: 'https://www.desmos.com/calculator/kk7wibzqq1', label: 'Chip with a screwdriver on Desmos', external: true },
+      { href: 'https://www.desmos.com/calculator/gdohbfcp0i', label: 'Bug with a bandage on Desmos', external: true },
     ],
     gallery: ['laptop-flu.mp4', 'processor.mp4', 'fixed-bug.mp4'],
     captions: {
