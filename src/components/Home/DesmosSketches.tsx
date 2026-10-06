@@ -10,9 +10,8 @@ type Sketch = {
   id: string;
   name: string;
   graph: string;
-  /** One equation from the graph, as typeset HTML, and the part it draws */
+  /** One equation from the graph, as typeset HTML */
   equation: React.ReactNode;
-  part: string;
 };
 
 const SKETCHES: Sketch[] = [
@@ -23,7 +22,6 @@ const SKETCHES: Sketch[] = [
     equation: (
       <>(<i>x</i>/2.85)<sup>6</sup> + ((<i>y</i> − 1.78)/1.92)<sup>6</sup> ≤ 1</>
     ),
-    part: "the screen",
   },
   {
     id: "processor",
@@ -32,7 +30,6 @@ const SKETCHES: Sketch[] = [
     equation: (
       <>(<i>x</i>/2.1)<sup>6</sup> + ((<i>y</i> + 0.3)/1.8)<sup>6</sup> ≤ 1</>
     ),
-    part: "the body",
   },
   {
     id: "fixed-bug",
@@ -41,7 +38,6 @@ const SKETCHES: Sketch[] = [
     equation: (
       <>(<i>x</i>/2.1)<sup>2</sup> + ((<i>y</i> + 0.55)/1.9)<sup>2</sup> ≤ 1</>
     ),
-    part: "the shell",
   },
 ];
 
@@ -85,7 +81,6 @@ function SketchPlot({ sketch }: { sketch: Sketch }) {
       <figcaption>
         <span className="sketch__name">{sketch.name}</span>
         <span className="sketch__eq">{sketch.equation}</span>
-        <span className="sketch__part">draws {sketch.part}</span>
         <a className="sketch__open" href={sketch.graph} target="_blank" rel="noopener noreferrer">
           Open the graph <FiArrowUpRight aria-hidden="true" />
         </a>
@@ -99,10 +94,6 @@ export default function DesmosSketches() {
     <section className="sketchbook" aria-labelledby="sketchbook-title">
       <div className="sketchbook__head">
         <h3 id="sketchbook-title">Drawings made of equations</h3>
-        <p>
-          Off the clock I draw in Desmos, the graphing calculator. Every line on this sheet is a formula. Press a
-          drawing to watch it get built.
-        </p>
       </div>
       <div className="sketchbook__sheet">
         {SKETCHES.map((s) => (
