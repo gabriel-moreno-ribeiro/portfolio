@@ -204,7 +204,41 @@ export const projects: Project[] = [
       },
     ],
   },
+  {
+    slug: 'desmos',
+    title: 'Desmos Drawings',
+    eyebrow: 'Hobby',
+    summary: 'Characters drawn in Desmos with nothing but equations.',
+    cardDesc:
+      'A hobby: characters drawn in Desmos with nothing but equations. A laptop with the flu, a processor in a propeller cap, and a bug that finally got fixed.',
+    tags: ['Desmos', 'Math', 'Hobby'],
+    stats: [],
+    sections: [
+      {
+        heading: 'What it is',
+        body: [
+          'I draw characters in Desmos, the graphing calculator, and every line on the screen is a formula. Rounded shapes come from high powers, the colors are inequalities filling a region, and the propeller blades are rotated ellipses.',
+        ],
+      },
+      {
+        heading: 'The three in the videos',
+        body: [
+          'A laptop with the flu, with a thermometer, an ice pack and a mug on the side. A processor wearing a propeller cap and holding a screwdriver. And a bug, the insect kind, with a bandage and a magnifying glass: a fixed bug. Each video shows the drawing going up one equation at a time.',
+        ],
+      },
+    ],
+    gallery: ['laptop-flu.mp4', 'processor.mp4', 'fixed-bug.mp4'],
+    captions: {
+      'laptop-flu.mp4': 'A laptop with the flu',
+      'processor.mp4': 'A processor in a propeller cap',
+      'fixed-bug.mp4': 'A fixed bug',
+    },
+  },
 ];
+
+/** Gallery files can be videos: a video's poster is "<name>-poster.webp" next to it. */
+export const isVideo = (file: string) => file.endsWith('.mp4');
+export const posterFor = (slug: string, file: string) => `/work/${slug}/${file.replace(/\.mp4$/, '-poster.webp')}`;
 
 export const projectBySlug = (slug: string | undefined) =>
   projects.find((p) => p.slug === slug);

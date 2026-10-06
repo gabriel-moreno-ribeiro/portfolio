@@ -4,8 +4,9 @@ import { createPortal } from 'react-dom';
 import { FiArrowLeft, FiArrowUpRight, FiChevronLeft, FiChevronRight, FiX } from 'react-icons/fi';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import Navbar from '../components/Navbar/Navbar';
+import AutoVideo from '../components/Shared/AutoVideo';
 import Footer from '../components/Shared/Footer';
-import { Project, projectBySlug, projects } from '../content/projects';
+import { Project, projectBySlug, projects, isVideo, posterFor } from '../content/projects';
 import { useDocumentHead } from '../hooks/useDocumentHead';
 import '../styles/components/pages/project.scss';
 
@@ -77,7 +78,20 @@ function Lightbox({
         }}
         onPointerCancel={() => { swipeStart.current = null; }}
       >
-        <img src={`/work/${project.slug}/${file}`} alt={project.captions?.[file] ?? project.title} />
+        {isVideo(file) ? (
+          <video
+            key={file}
+            src={`/work/${project.slug}/${file}`}
+            poster={posterFor(project.slug, file)}
+            controls
+            autoPlay
+            muted
+            playsInline
+            aria-label={project.captions?.[file] ?? project.title}
+          />
+        ) : (
+          <img src={`/work/${project.slug}/${file}`} alt={project.captions?.[file] ?? project.title} />
+        )}
         {project.captions?.[file] && <figcaption>{project.captions[file]}</figcaption>}
       </figure>
       {gallery.length > 1 && (
@@ -139,7 +153,18 @@ function ProjectPage() {
         </div>
       </motion.header>
 
-      {hero && (
+      {hero && isVideo(hero) && (
+        <motion.div className="project__hero project__hero--video" {...rise(0.16)}>
+          <AutoVideo
+            src={`/work/${project.slug}/${hero}`}
+            poster={posterFor(project.slug, hero)}
+            label={project.captions?.[hero] ?? project.title}
+            controls
+          />
+        </motion.div>
+      )}
+
+      {hero && !isVideo(hero) && (
         <motion.button
           type="button"
           className="project__hero"
@@ -193,8 +218,8 @@ function ProjectPage() {
       </div>
 
       {rest.length > 0 && (
-        <motion.section className="project__gallery" aria-label="Photos" {...rise(0.32)}>
-          <h2>Photos</h2>
+        <motion.section className="project__gallery" aria-label={rest.every(isVideo) ? 'Videos' : 'Photos'} {...rise(0.32)}>
+          <h2>{rest.every(isVideo) ? 'Videos' : 'Photos'}</h2>
           <div className="project__grid">
             {rest.map((file, i) => (
               <button
@@ -205,11 +230,12 @@ function ProjectPage() {
                 aria-label={`Open ${project.captions?.[file] ?? `photo ${i + 2}`} full size`}
               >
                 <img
-                  src={`/work/${project.slug}/${file}`}
+                  src={isVideo(file) ? posterFor(project.slug, file) : `/work/${project.slug}/${file}`}
                   alt={project.captions?.[file] ?? `${project.title} photo ${i + 2}`}
                   loading="lazy"
                   style={project.focus?.[file] ? { objectPosition: project.focus[file] } : undefined}
                 />
+                {isVideo(file) && <i className="project__play" aria-hidden="true">▶</i>}
                 {project.captions?.[file] && <span>{project.captions[file]}</span>}
               </button>
             ))}
