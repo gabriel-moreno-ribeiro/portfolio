@@ -12,6 +12,7 @@ import useIsMobile from '../../hooks/useIsMobile';
 import { useReducedMotion, useVisible } from '../../lib/motion';
 import { scrollToComponent } from '../../utils/scrollToComponent';
 import CommonButton from '../Shared/CommonButton';
+import SpotifyCard from './SpotifyCard';
 import ScrambleText from '../Shared/ScrambleText';
 
 // The robot pulls in three.js + react-three (~1MB parsed) and renders every
@@ -183,6 +184,7 @@ function Hero() {
           </a>
         </motion.div>
       </div>
+      <SpotifyCard />
     </div>
   );
 }

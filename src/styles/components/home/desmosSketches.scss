@@ -1,76 +1,94 @@
-// ── Drawings made of equations ────────────────────────────────────────────────
-// One sheet of Desmos graph paper (white in both themes: it's paper), the three
-// drawings plotted on it, each with an equation from its graph.
-$paper-minor: #eef0f4;
-$paper-major: #dfe3ea;
-$ink: #1f1f24;
-
-.sketchbook {
-  width: 100%;
+// ── Desmos drawings ──────────────────────────────────────────────────────────
+.desmos {
   margin-top: 72px;
 
-  &__head {
-    max-width: 62ch;
-    margin: 0 auto 24px;
+  h3 {
+    margin: 0 0 20px;
+    font-size: 24px;
+    font-weight: 600;
     text-align: center;
-
-    h3 {
-      margin: 0;
-      font-size: 22px;
-      font-weight: 700;
-      color: var(--fg);
-    }
-
+    color: var(--fg);
   }
 
-  &__sheet {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 8px 24px;
-    padding: 28px 28px 32px;
-    border: 1px solid $paper-major;
-    border-radius: 14px;
-    background-color: #fff;
-    background-image:
-      linear-gradient($paper-major 1px, transparent 1px),
-      linear-gradient(90deg, $paper-major 1px, transparent 1px),
-      linear-gradient($paper-minor 1px, transparent 1px),
-      linear-gradient(90deg, $paper-minor 1px, transparent 1px);
-    background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
-    background-position: -1px -1px;
-  }
-}
-
-.sketch {
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-
-  &__plot {
+  // The recording or the live graph. Desmos is white, so the stage is too.
+  &__stage {
     position: relative;
+    aspect-ratio: 16 / 9;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    background: #fff;
+  }
+
+  &__video,
+  &__graph {
     display: block;
     width: 100%;
-    aspect-ratio: 5 / 4;
-    padding: 0;
+    height: 100%;
     border: 0;
-    border-radius: 10px;
+  }
+
+  // The recording is 16:9 like the stage; the poster (3:2) sits on the white
+  &__video {
+    object-fit: contain;
+    background: #fff;
+  }
+
+  &__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    margin-top: 14px;
+  }
+
+  &__picks {
+    display: flex;
+    gap: 8px;
+  }
+
+  // The drawings themselves are the tabs. The current one stands on an orange line.
+  &__pick {
+    position: relative;
+    padding: 6px 10px 10px;
+    border: 0;
     background: none;
     cursor: pointer;
-    overflow: hidden;
+    border-radius: 10px;
+    transition: transform 0.2s;
 
-    > img {
+    img {
       display: block;
-      width: 100%;
-      height: 100%;
-      padding: 6%;
-      box-sizing: border-box;
+      width: auto;
+      height: 56px;
       object-fit: contain;
-      transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+      opacity: 0.55;
+      transition: opacity 0.2s;
+      user-select: none;
     }
 
-    &:hover > img { transform: scale(1.03); }
+    &::after {
+      content: "";
+      position: absolute;
+      left: 10px;
+      right: 10px;
+      bottom: 2px;
+      height: 3px;
+      border-radius: 2px;
+      background: var(--primary-orange);
+      transform: scaleX(0);
+      transition: transform 0.25s ease;
+    }
+
+    &:hover img,
+    &:focus-visible img { opacity: 1; }
+    &:hover { transform: translateY(-2px); }
+    &:active { transform: translateY(0); }
+
+    &.is-current {
+      img { opacity: 1; }
+      &::after { transform: scaleX(1); }
+    }
 
     &:focus-visible {
       outline: 2px solid var(--focus-ring);
@@ -78,127 +96,45 @@ $ink: #1f1f24;
     }
   }
 
-  // The recording, cropped to the graph area (the equation list on the left and
-  // the toolbars are cut off): the frame is 1.49x the slot, shifted left.
-  &__screen {
-    position: absolute;
-    inset: 0;
-    background: #fff;
-    overflow: hidden;
-
-    video {
-      position: absolute;
-      width: 149.3%;
-      height: auto;
-      left: -44.8%;
-      top: -5.2%;
-    }
-  }
-
-  // A clear play button in the middle of the drawing; while the video runs it
-  // becomes a small stop button in the corner.
-  &__control {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    display: grid;
-    place-items: center;
-    width: 64px;
-    height: 64px;
-    margin: -32px 0 0 -32px;
-    border-radius: 50%;
-    background: rgba(17, 17, 17, 0.82);
-    color: #fff;
-    font-size: 26px;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.22);
-    transition: transform 0.2s ease-out, background-color 0.2s ease-out;
-
-    svg {
-      display: block;
-      margin-left: 3px; // the triangle's optical centre
-      fill: currentColor;
-    }
-  }
-
-  &__plot:hover &__control,
-  &__plot:focus-visible &__control {
-    transform: scale(1.08);
-    background: #111;
-  }
-
-  &.is-playing &__control {
-    left: auto;
-    top: auto;
-    right: 10px;
-    bottom: 10px;
-    width: 34px;
-    height: 34px;
-    margin: 0;
-    font-size: 13px;
-    opacity: 0.85;
-
-    svg { margin-left: 0; }
-  }
-
-  figcaption {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    margin-top: 6px;
-  }
-
-  &__name {
-    font-size: 15px;
-    font-weight: 600;
-    color: $ink;
-  }
-
-  // Set like Desmos sets it: serif, italic variables
-  &__eq {
-    font-family: var(--font-serif);
-    font-size: 17px;
-    color: $ink;
-    white-space: nowrap;
-
-    i { font-style: italic; }
-    sup { font-size: 0.62em; line-height: 0; }
-  }
-
-
-  &__open {
+  &__toggle {
     display: inline-flex;
     align-items: center;
-    gap: 4px;
-    margin-top: 6px;
-    padding: 4px 2px;
-    font-size: 14px;
-    font-weight: 600;
-    color: #b8501a; // the light accent: the sheet is white in both themes
-    text-decoration: underline;
-    text-decoration-color: rgba(184, 80, 26, 0.35);
-    text-underline-offset: 4px;
+    gap: 8px;
+    padding: 10px 18px;
+    border: 1.5px solid var(--border);
+    border-radius: 36px;
+    background: var(--surface);
+    color: var(--fg);
+    font: 600 14px/1 inherit;
+    font-family: inherit;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: border-color 0.2s, background-color 0.2s, transform 0.12s ease;
 
-    &:hover { text-decoration-color: currentColor; }
-    &:focus-visible {
-      outline: 2px solid var(--focus-ring);
-      outline-offset: 2px;
-      border-radius: 4px;
+    svg { font-size: 16px; }
+
+    &:hover,
+    &:focus-visible { border-color: var(--fg); }
+    &:active { transform: scale(0.97); }
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .desmos {
+    margin-top: 56px;
+
+    h3 { font-size: 22px; }
+
+    &__stage { border-radius: 12px; }
+
+    &__bar {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 12px;
     }
+
+    &__picks { justify-content: center; }
+    &__pick img { height: 48px; }
+    &__toggle { justify-content: center; }
   }
-}
-
-@media (max-width: 900px) {
-  .sketchbook__sheet {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 28px;
-    padding: 20px 16px 28px;
-  }
-
-  .sketch__plot { max-width: 420px; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .sketch__plot > img { transition: none; }
-  .sketch__plot:hover > img { transform: none; }
 }

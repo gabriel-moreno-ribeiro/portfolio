@@ -35,12 +35,12 @@ const SECTIONS = [
 // for the real section barely moves what's below.
 const RESERVE: Record<string, [desktop: number, mobile: number]> = {
   background: [955, 975],
-  work: [1760, 3010],
+  work: [1890, 2145],
   numbers: [460, 240],
   research: [1120, 1640],
   skills: [1000, 525],
   'work-experience': [2450, 2250],
-  contact: [480, 970],
+  contact: [480, 872],
 };
 const LAZY_IDS = new Set(Object.keys(RESERVE));
 
