@@ -28,8 +28,7 @@
     color: $white;
     font-size: 14px;
     font-weight: 600;
-    text-decoration: none;
-    transition: color 0.2s;
+    @include link-draw;
     &:hover { color: $primary-orange; }
   }
 

@@ -1,4 +1,5 @@
-import { lazy, Suspense, useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
+import { motion, useReducedMotion } from "motion/react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import CustomMouse from "./components/Shared/CustomMouse";
 import DarkModeButton from "./components/Shared/DarkModeButton";
@@ -19,6 +20,7 @@ import {
 } from "./providers/MouseInputProvider";
 import { useHandsfreeStore } from "./store/handsfreeStore";
 import { useWindowManagerStore } from "./store/windowManagerStore";
+import { dismissPreloader } from "./lib/preloader";
 
 const HandsfreeUI = lazy(() => import("./components/Shared/HandsfreeUI"));
 const HeroSlideshow = lazy(() => import("./components/Home/HeroSlideshow"));
@@ -34,6 +36,7 @@ const NotFoundPage = lazy(() => import("./pages/NotFound"));
 
 function App() {
   useEffect(() => {
+    dismissPreloader();
     startMouseInputProvider();
     return () => {
       stopMouseInputProvider();
@@ -67,6 +70,13 @@ function AppContent() {
   const handsfreeActive = handsfreeFlags || handsfreeWindow;
   const [tip, setTip] = useState(false);
 
+  // Page change: the new page rises in. Not on the first paint (the loader is
+  // doing the entrance) and not between books or projects (same section key).
+  const reduced = useReducedMotion();
+  const sectionKey = location.pathname.split("/")[1] || "home";
+  const firstKey = useRef(sectionKey);
+  const entering = !reduced && sectionKey !== firstKey.current;
+
   useEffect(() => {
     if (isMobile || window.innerWidth <= 1024 || sessionStorage.getItem("showedToast")) return;
     const show = setTimeout(() => {
@@ -85,6 +95,13 @@ function AppContent() {
         </Suspense>
       )}
       {isHome && <HorizontalScroller />}
+      <motion.div
+        key={sectionKey}
+        className="page-enter"
+        initial={entering ? { opacity: 0, y: 14 } : false}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.32, ease: "easeOut" }}
+      >
       <Suspense fallback={!isHome ? <div style={{ width: "100%", height: "100dvh", background: "var(--bg)" }} /> : null}>
         <Routes>
           <Route path="/library/:bookId?" element={<LibraryPage />} />
@@ -99,6 +116,7 @@ function AppContent() {
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Suspense>
+      </motion.div>
       <HandsfreeButton />
       <DarkModeButton />
       <TerminalButton />

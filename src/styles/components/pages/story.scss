@@ -571,7 +571,15 @@ $story-text: 760px;
   font-family: inherit;
   font-size: 13px;
   color: var(--fg-muted);
+  // Underline draws in from the left (story.scss is imported by the page, so no globals mixin here)
   text-decoration: none;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.25s ease, color 0.2s;
+  &:hover,
+  &:focus-visible { background-size: 100% 1px; }
   &:hover { color: var(--accent); }
 }
 

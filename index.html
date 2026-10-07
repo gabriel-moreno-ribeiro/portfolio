@@ -27,7 +27,69 @@
       html[data-theme="dark"], html[data-theme="dark"] body {
         background: #14100d;
       }
+      /* Loading screen: three blocks shuffling under the robot, painted before any
+         JS runs. App.tsx slides it away once the app has mounted (after 1.7 s at least). */
+      #preloader {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: grid;
+        place-items: center;
+        background: #fff8f4;
+        transition: transform 0.6s cubic-bezier(0.76, 0, 0.24, 1);
+      }
+      html[data-theme="dark"] #preloader { background: #14100d; }
+      #preloader.is-done { transform: translateY(-101%); }
+      .pl-stage { position: relative; width: 112px; height: 190px; }
+      .pl-boxes { position: absolute; left: 0; bottom: 0; width: 112px; height: 112px; }
+      .pl-box {
+        position: absolute;
+        box-sizing: border-box;
+        border: 16px solid #111;
+        animation: 4s ease-in-out infinite;
+      }
+      html[data-theme="dark"] .pl-box { border-color: #fff; }
+      .pl-box:nth-child(1) { width: 112px; height: 48px; margin-top: 64px; animation-name: pl-box1; }
+      .pl-box:nth-child(2) { width: 48px; height: 48px; animation-name: pl-box2; }
+      .pl-box:nth-child(3) { width: 48px; height: 48px; margin-left: 64px; animation-name: pl-box3; }
+      .pl-robot {
+        position: absolute;
+        left: 50%;
+        bottom: 102px;
+        width: 84px;
+        height: 84px;
+        margin-left: -42px;
+        transform-origin: 50% 88%;
+        animation: pl-hop 1.3s ease-in-out infinite;
+      }
+      @keyframes pl-hop {
+        0%   { transform: translateY(0) scale(1.06, 0.94); }
+        35%  { transform: translateY(-10px) scale(0.98, 1.03); }
+        65%  { transform: translateY(0) scale(1, 1); }
+        100% { transform: translateY(0) scale(1.06, 0.94); }
+      }
+      @keyframes pl-box1 {
+        0%          { width: 112px; height: 48px; margin-top: 64px; margin-left: 0; }
+        12.5%, 62.5% { width: 48px; height: 48px; margin-top: 64px; margin-left: 0; }
+        75%         { width: 48px; height: 112px; margin-top: 0; margin-left: 0; }
+        87.5%, 100% { width: 48px; height: 48px; margin-top: 0; margin-left: 0; }
+      }
+      @keyframes pl-box2 {
+        0%, 37.5%   { width: 48px; height: 48px; margin-top: 0; margin-left: 0; }
+        50%         { width: 112px; height: 48px; margin-top: 0; margin-left: 0; }
+        62.5%, 100% { width: 48px; height: 48px; margin-top: 0; margin-left: 64px; }
+      }
+      @keyframes pl-box3 {
+        0%, 12.5%   { width: 48px; height: 48px; margin-top: 0; margin-left: 64px; }
+        25%         { width: 48px; height: 112px; margin-top: 0; margin-left: 64px; }
+        37.5%, 87.5% { width: 48px; height: 48px; margin-top: 64px; margin-left: 64px; }
+        100%        { width: 112px; height: 48px; margin-top: 64px; margin-left: 0; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        #preloader { display: none; }
+      }
     </style>
+    <link rel="preload" as="image" href="/assets/robot-poster.webp" fetchpriority="high" />
     <meta
       name="description"
       content="18, builder and researcher on a build year. Building HIBEEX, backoffice AI for small and medium businesses. Started Projeto Candela. 39 olympiad medals."
@@ -169,6 +231,12 @@
   <body>
     <a href="#main-content" class="skip-link">Skip to content</a>
     <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="preloader" aria-hidden="true">
+      <div class="pl-stage">
+        <img class="pl-robot" src="/assets/robot-poster.webp" alt="" width="84" height="84" />
+        <div class="pl-boxes"><div class="pl-box"></div><div class="pl-box"></div><div class="pl-box"></div></div>
+      </div>
+    </div>
     <div id="root"><div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100dvh;padding:24px;text-align:center;font-family:'DM Sans',sans-serif"><h1 style="font-family:'DM Serif Display',Georgia,serif;font-style:italic;font-size:clamp(38px,8vw,76px);font-weight:400;color:#e2601a;margin:0;line-height:1.12">Gabriel Moreno Ribeiro.</h1><p style="font-size:18px;color:#5f5f5f;max-width:65ch;margin:24px auto 0">Building HIBEEX, a startup making Backoffice AI for small and medium businesses. Started Projeto Candela, which put physics lab kits in 28 public schools.</p></div></div>
     <script type="module" src="/src/index.tsx"></script>
   </body>
