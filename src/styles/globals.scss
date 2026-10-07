@@ -68,6 +68,18 @@ $text-grey: #5f5f5f;
 $black: #111;
 $border-grey: #e7e7e7;
 
+// Text link whose underline draws in from the left on hover and focus.
+@mixin link-draw {
+  text-decoration: none;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.25s ease, color 0.2s;
+  &:hover,
+  &:focus-visible { background-size: 100% 1px; }
+}
+
 // ── Fonts — self-hosted (DM Sans variable from @fontsource-variable/dm-sans; DM Serif Display imported in index.tsx)
 $dm-latin: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
 $dm-latin-ext: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
@@ -366,6 +378,14 @@ img {
     border-color: var(--fg);
     svg { transform: translateX(-2px); }
   }
+}
+
+// The round floating buttons sink under the pointer like every other button.
+.toggle-button,
+.handsfree-button,
+.terminal-fab {
+  transition: background-color 0.3s, color 0.3s, transform 0.12s ease;
+  &:active { transform: scale(0.92); }
 }
 
 .page-wrapper {

@@ -1,6 +1,7 @@
 import { FormEvent, useState } from 'react';
 import { FiArrowUpRight, FiCalendar, FiCheck, FiMail, FiSend } from 'react-icons/fi';
 import { SiGithub, SiLinkedin } from 'react-icons/si';
+import NowPlaying from './NowPlaying';
 
 interface FormErrors {
   name?: string;
@@ -103,6 +104,7 @@ function ContactSection() {
             </li>
           ))}
         </ul>
+        <NowPlaying />
       </div>
 
       <div className="contact-section__card">
