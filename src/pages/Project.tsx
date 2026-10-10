@@ -3,6 +3,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { FiArrowLeft, FiArrowUpRight, FiChevronLeft, FiChevronRight, FiX } from 'react-icons/fi';
 import { Link, Navigate, useParams } from 'react-router-dom';
+import MedalBoard from '../components/Medals/MedalBoard';
 import Navbar from '../components/Navbar/Navbar';
 import Footer from '../components/Shared/Footer';
 import { Project, projectBySlug, projects } from '../content/projects';
@@ -191,6 +192,8 @@ function ProjectPage() {
           </motion.div>
         )}
       </div>
+
+      {project.slug === 'medals' && <MedalBoard />}
 
       {rest.length > 0 && (
         <motion.section className="project__gallery" aria-label="Photos" {...rise(0.32)}>
