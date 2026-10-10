@@ -156,6 +156,9 @@ export const projects: Project[] = [
     cardDesc:
       '49 competitions in math, physics, chemistry and astronomy. 1st of 10,000+ at IFT-UNESP. Gold at ONNEQ. 1st at OBAQ.',
     tags: ['19 gold', '2 international', '1st IFT-UNESP'],
+    gallery: ['01.webp'],
+    captions: { '01.webp': 'Wearing the medals.' },
+    focus: { '01.webp': '50% 30%' },
     stats: [
       { value: '39', label: 'medals in 49 competitions' },
       { value: '19', label: 'gold' },
