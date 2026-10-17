@@ -35,21 +35,22 @@ function Model({ onReady, ...props }) {
   // asks for one, and useFrame keeps asking while the robot is still moving.
   useEffect(() => {
     lastInput.current = performance.now();
+    // A settled robot asks for no frames, so falling asleep needs its own alarm.
+    let alarm = setTimeout(invalidate, IDLE_MS + 50);
     const bump = () => {
       const now = performance.now();
       if (now - lastInput.current > IDLE_MS) wokeAt.current = now;
       lastInput.current = now;
+      clearTimeout(alarm);
+      alarm = setTimeout(invalidate, IDLE_MS + 50);
       invalidate();
     };
     INPUT_EVENTS.forEach((ev) => window.addEventListener(ev, bump, { passive: true }));
     const unsub = useInputSourceStore.subscribe(() => invalidate());
-    const nap = setInterval(() => {
-      if (performance.now() - lastInput.current > IDLE_MS) invalidate();
-    }, IDLE_MS / 2);
     return () => {
       INPUT_EVENTS.forEach((ev) => window.removeEventListener(ev, bump));
       unsub();
-      clearInterval(nap);
+      clearTimeout(alarm);
     };
   }, [invalidate]);
 
