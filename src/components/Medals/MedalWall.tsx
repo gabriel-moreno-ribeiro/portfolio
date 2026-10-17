@@ -1,7 +1,7 @@
-// /work/medals: Gabriel's photo with every medal around it, pinned to one white
-// wall. An 8x8 grid: the photo takes the middle 6x6, the medals flow into the
-// ring of cells left around it (28 cells for 28 medals; more would add rows).
-// The medal photos were shot on white, so the wall is white in both themes.
+// /work/medals: a framed print of Gabriel wearing the medals, with every medal
+// hung around it. An 8x8 grid: the print takes the middle 6x6, the medals flow
+// into the ring of cells left around it (28 cells for 28 medals; more would add
+// rows). The medals are cut-outs, so the page itself is the wall in both themes.
 // Opening anything shows it large; arrows, swipes and the keyboard walk on.
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
@@ -16,6 +16,9 @@ const PHOTO_ALT = 'Gabriel in uniform, wearing the medals';
 // their name tag inwards so it never spills off the wall.
 const column = (i: number) => (i < 8 ? i + 1 : i < 20 ? ((i - 8) % 2 === 0 ? 1 : 8) : ((i - 20) % 8) + 1);
 const edge = (i: number) => (column(i) === 1 ? ' is-left' : column(i) === 8 ? ' is-right' : '');
+// Hung by hand: each medal gets its own small angle and a hair of drop, fixed per
+// position so the wall looks the same on every visit.
+const hang = (i: number) => ({ '--tilt': `${((i * 7) % 11) - 5}deg`, '--drop': `${(i % 3) * 2 - 2}px` } as React.CSSProperties);
 const short = (m: Medal) => [m.name, m.year].filter(Boolean).join(' · ');
 
 // Everything the viewer can show: the photo first, then the medals in wall order.
@@ -101,7 +104,7 @@ export default function MedalWall() {
       <ul className="medal-wall__grid">
         <li className="medal-wall__photo">
           <button type="button" onClick={() => setOpen(0)} aria-label="Open the photo large">
-            <img src="/work/medals/portrait-square.webp" alt={PHOTO_ALT} width={1125} height={1125} decoding="async" />
+            <img src="/work/medals/portrait-square.webp" alt={PHOTO_ALT} width={1125} height={1125} decoding="async" fetchPriority="high" />
           </button>
         </li>
         {medals.map((m, i) => (
@@ -109,6 +112,7 @@ export default function MedalWall() {
             <button
               type="button"
               className="medal-wall__medal"
+              style={hang(i)}
               data-label={short(m)}
               onClick={() => setOpen(i + 1)}
               aria-label={`${short(m)}. Open large`}
