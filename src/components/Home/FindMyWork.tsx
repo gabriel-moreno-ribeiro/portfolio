@@ -5,7 +5,7 @@ import { Project, projects } from "../../content/projects";
 import useIsMobile from "../../hooks/useIsMobile";
 import { usePageVisible, useReducedMotion, useVisible } from "../../lib/motion";
 import DesmosSketches from "./DesmosSketches";
-import MedalsCard from "./MedalsCard";
+import MedalsShowcase from "./MedalsShowcase";
 
 const AUTOPLAY_MS = 6000;
 
@@ -185,7 +185,7 @@ function FindMyWork() {
         {projects.slice(0, 2).map((project, i) => (
           <FeaturedCard key={project.slug} project={project} index={i} />
         ))}
-        <MedalsCard />
+        <MedalsShowcase />
         {projects.slice(2).map((project, i) => (
           <FeaturedCard key={project.slug} project={project} index={i + 2} />
         ))}
