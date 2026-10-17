@@ -28,7 +28,7 @@
         background: #14100d;
       }
       /* Loading screen: three blocks shuffling under the robot, painted before any
-         JS runs. App.tsx slides it away once the app has mounted (after 1.7 s at least). */
+         JS runs. App.tsx slides it away once the app has mounted (gone at 2 s at the earliest). */
       #preloader {
         position: fixed;
         inset: 0;
@@ -202,6 +202,13 @@
         var l = document.createElement("link");
         l.rel = "preload"; l.as = "image"; l.href = "/moments/mv01.webp"; l.fetchPriority = "high";
         document.head.appendChild(l);
+        // Desktop LCP is the first slide of the hero slideshow, which otherwise
+        // only starts downloading once its lazy chunk has arrived.
+        if (window.innerWidth >= 768) {
+          var s = document.createElement("link");
+          s.rel = "preload"; s.as = "image"; s.type = "image/avif"; s.href = "/assets/hero-slideshow/1-1920.avif"; s.fetchPriority = "high";
+          document.head.appendChild(s);
+        }
       }
     </script>
 </head>

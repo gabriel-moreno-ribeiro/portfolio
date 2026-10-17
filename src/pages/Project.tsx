@@ -226,7 +226,9 @@ function ProjectPage() {
                 aria-label={`Open ${project.captions?.[file] ?? `photo ${i + 2}`} full size`}
               >
                 <img
-                  src={`/work/${project.slug}/${file}`}
+                  src={`/work/${project.slug}/sm/${file}`}
+                  srcSet={`/work/${project.slug}/sm/${file} 640w, /work/${project.slug}/${file} 1600w`}
+                  sizes="(max-width: 600px) 100vw, 360px"
                   alt={project.captions?.[file] ?? `${project.title} photo ${i + 2}`}
                   loading="lazy"
                   style={project.focus?.[file] ? { objectPosition: project.focus[file] } : undefined}

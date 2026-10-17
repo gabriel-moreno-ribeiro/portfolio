@@ -148,6 +148,10 @@ function Hero() {
                 fontSize: isMobile ? '22px' : '36px',
                 fontFamily: 'var(--font-serif)',
                 fontStyle: 'italic',
+                // One footprint (the longest word, "Researcher") so the scramble never reflows the line
+                display: 'inline-block',
+                minWidth: '10.2ch',
+                textAlign: 'right',
               }}
               texts={ROLES}
               speed={40}

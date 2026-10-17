@@ -80,6 +80,9 @@ $project-text: 720px;
 .project__hero {
   display: block;
   width: 100%;
+  // The box is reserved (3:2, capped) so the stats and text don't jump when the photo decodes
+  aspect-ratio: 3 / 2;
+  max-height: 62vh;
   margin: 44px 0 0;
   padding: 0;
   border: 1px solid var(--border);
@@ -91,7 +94,7 @@ $project-text: 720px;
   img {
     display: block;
     width: 100%;
-    max-height: 62vh;
+    height: 100%;
     object-fit: cover;
     transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
   }
@@ -396,8 +399,7 @@ $project-text: 720px;
   .project__hero {
     margin-top: 32px;
     border-radius: 14px;
-
-    img { max-height: 46vh; }
+    max-height: 46vh;
   }
 
   .project__stats {

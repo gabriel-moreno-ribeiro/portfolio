@@ -163,8 +163,11 @@ function Home() {
 
   useEffect(() => {
     if (mountAll) return;
-    const onKey = () => setMountAll(true);
-    window.addEventListener('keydown', onKey, { once: true });
+    // Tab only: arrow keys and Space scroll, and scrolling mounts sections as they come.
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Tab') setMountAll(true);
+    };
+    window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [mountAll]);
 

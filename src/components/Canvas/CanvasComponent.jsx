@@ -1,5 +1,5 @@
 import { OrbitControls, useGLTF } from "@react-three/drei";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { usePageVisible } from "../../lib/motion";
 import { useInputSourceStore } from "../../store/inputSourceStore";
@@ -23,22 +23,35 @@ function Model({ onReady, ...props }) {
   const lastInput = useRef(0);
   const wokeAt = useRef(-Infinity);
   const baseY = useRef(props.position?.[1] ?? 0);
+  const invalidate = useThree((s) => s.invalidate);
 
   useEffect(() => {
     // Model is mounted = GLB is loaded and scene is ready
     onReady?.();
+    invalidate();
   }, []);
 
+  // Frames run on demand: any input (or a new head position from the camera)
+  // asks for one, and useFrame keeps asking while the robot is still moving.
   useEffect(() => {
     lastInput.current = performance.now();
     const bump = () => {
       const now = performance.now();
       if (now - lastInput.current > IDLE_MS) wokeAt.current = now;
       lastInput.current = now;
+      invalidate();
     };
     INPUT_EVENTS.forEach((ev) => window.addEventListener(ev, bump, { passive: true }));
-    return () => INPUT_EVENTS.forEach((ev) => window.removeEventListener(ev, bump));
-  }, []);
+    const unsub = useInputSourceStore.subscribe(() => invalidate());
+    const nap = setInterval(() => {
+      if (performance.now() - lastInput.current > IDLE_MS) invalidate();
+    }, IDLE_MS / 2);
+    return () => {
+      INPUT_EVENTS.forEach((ev) => window.removeEventListener(ev, bump));
+      unsub();
+      clearInterval(nap);
+    };
+  }, [invalidate]);
 
   useFrame((state) => {
     const g = group.current;
@@ -60,6 +73,15 @@ function Model({ onReady, ...props }) {
 
     const bob = asleep ? Math.sin((t * 2 * Math.PI) / BOB_PERIOD_S) * 0.04 : 0;
     g.position.y += (baseY.current + bob - g.position.y) * 0.05;
+
+    // Keep rendering while anything is still settling (or while it bobs in its sleep)
+    const moving =
+      asleep ||
+      startle > 0 ||
+      Math.abs(targetY - g.rotation.y) > 0.0005 ||
+      Math.abs(targetX - g.rotation.x) > 0.0005 ||
+      Math.abs(baseY.current - g.position.y) > 0.0005;
+    if (moving) invalidate();
   });
 
   return (
@@ -76,8 +98,8 @@ export default function CanvasComponent({ onReady }) {
   const ioRef = useRef(null);
   const [inView, setInView] = useState(true);
 
-  // The robot damps toward the cursor every frame, so it cannot run on demand.
-  // Stop the loop outright while it is scrolled out of view or the tab is hidden.
+  // Frames are on demand (the model asks for them while it moves), and the loop
+  // stops outright while it is scrolled out of view or the tab is hidden.
   // Canvas only mounts the <canvas> once it has measured itself, so hook the
   // observer up from a callback ref rather than an effect.
   const observeCanvas = useCallback((el) => {
@@ -100,7 +122,7 @@ export default function CanvasComponent({ onReady }) {
       className="robot-canvas"
       data-drag-me={true}
       dpr={[1, 1.5]}
-      frameloop={inView && pageVisible ? "always" : "never"}
+      frameloop={inView && pageVisible ? "demand" : "never"}
       gl={{ alpha: true, antialias: true, powerPreference: "high-performance" }}
       style={{ background: "transparent" }}
     >

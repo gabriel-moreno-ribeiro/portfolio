@@ -125,7 +125,16 @@ export default function MedalWall() {
               onClick={() => setOpen(i + 1)}
               aria-label={`${short(m)}. Open large`}
             >
-              <img src={`/work/medals/wall/${m.num}.webp`} alt="" width={400} height={400} loading="lazy" decoding="async" />
+              <img
+                src={`/work/medals/wall/sm/${m.num}.webp`}
+                srcSet={`/work/medals/wall/sm/${m.num}.webp 280w, /work/medals/wall/${m.num}.webp 440w`}
+                sizes="(max-width: 600px) 25vw, 140px"
+                alt=""
+                width={280}
+                height={280}
+                loading={i < 8 ? undefined : 'lazy'}
+                decoding="async"
+              />
             </button>
           </li>
         ))}

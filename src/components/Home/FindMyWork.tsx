@@ -54,7 +54,7 @@ function MediaCarousel({ project, paused, offset = 0 }: { project: Project; paus
       {underFile && !underFile.endsWith(".mp4") && (
         <img
           className="media-carousel__under"
-          src={`/work/${project.slug}/${underFile}`}
+          src={`/work/${project.slug}/sm/${underFile}`}
           alt=""
           aria-hidden="true"
           width={640}
@@ -68,7 +68,9 @@ function MediaCarousel({ project, paused, offset = 0 }: { project: Project; paus
         <img
           key={src}
           className={underFile ? "media-carousel__in" : undefined}
-          src={src}
+          src={`/work/${project.slug}/sm/${current}`}
+          srcSet={`/work/${project.slug}/sm/${current} 640w, ${src} 1600w`}
+          sizes="(max-width: 900px) 100vw, 640px"
           alt={project.captions?.[current] ?? project.title}
           width={640}
           height={400}
@@ -80,7 +82,7 @@ function MediaCarousel({ project, paused, offset = 0 }: { project: Project; paus
       {nextFile && !nextFile.endsWith(".mp4") && (
         <img
           className="media-carousel__preload"
-          src={`/work/${project.slug}/${nextFile}`}
+          src={`/work/${project.slug}/sm/${nextFile}`}
           alt=""
           aria-hidden="true"
           width={640}

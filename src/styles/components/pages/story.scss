@@ -561,6 +561,7 @@ $story-text: 760px;
   font-family: var(--font-serif);
   font-size: 46px;
   line-height: 1;
+  font-variant-numeric: tabular-nums;
   span { font-family: "DM Sans", sans-serif; font-size: 16px; color: var(--fg-muted); }
 }
 
@@ -820,4 +821,10 @@ $story-text: 760px;
   .typed__caret, .bubble__dots i, .bubble__wave i, .fuse--lit .fuse__spark { animation: none; }
   .dots i { transition: none; opacity: 1; transform: scale(1); }
   .dots--26 i:not(.is-hit) { opacity: 0.7; }
+}
+
+// On a phone the GitHub link sits on its own line, so the counting number above
+// it cannot push it on and off a second line while it counts.
+@media screen and (max-width: 600px) {
+  .repos__link { flex-basis: 100%; }
 }
