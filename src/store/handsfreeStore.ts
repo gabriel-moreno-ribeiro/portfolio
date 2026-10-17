@@ -1,6 +1,9 @@
 import { create } from "zustand";
 import { readStore, writeStore } from "./themeStore";
 
+// Why the camera didn't start, so the visitor gets told what to do about it.
+export type CameraError = "blocked" | "missing" | "busy" | "load";
+
 interface HandsfreeState {
   isEnabled: boolean;
   hasSeenIntro: boolean;
@@ -8,12 +11,14 @@ interface HandsfreeState {
   showGestureTutorial: boolean;
   cameraPermission: "prompt" | "granted" | "denied";
   modelLoadProgress: number;
+  cameraError: CameraError | null;
   setEnabled: (enabled: boolean) => void;
   setHasSeenIntro: (seen: boolean) => void;
   setShowIntroModal: (show: boolean) => void;
   setShowGestureTutorial: (show: boolean) => void;
   setCameraPermission: (perm: "prompt" | "granted" | "denied") => void;
   setModelLoadProgress: (progress: number) => void;
+  setCameraError: (error: CameraError | null) => void;
 }
 
 export const useHandsfreeStore = create<HandsfreeState>((set) => ({
@@ -23,6 +28,7 @@ export const useHandsfreeStore = create<HandsfreeState>((set) => ({
   showGestureTutorial: false,
   cameraPermission: "prompt",
   modelLoadProgress: 0,
+  cameraError: null,
   setEnabled: (enabled) => set({ isEnabled: enabled }),
   setHasSeenIntro: (seen) => {
     writeStore("handsfree-intro-seen", String(seen));
@@ -32,4 +38,5 @@ export const useHandsfreeStore = create<HandsfreeState>((set) => ({
   setShowGestureTutorial: (show) => set({ showGestureTutorial: show }),
   setCameraPermission: (perm) => set({ cameraPermission: perm }),
   setModelLoadProgress: (progress) => set({ modelLoadProgress: progress }),
+  setCameraError: (error) => set({ cameraError: error }),
 }));

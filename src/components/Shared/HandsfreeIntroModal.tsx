@@ -5,7 +5,8 @@ import {
   useWindow,
 } from "../../store/windowManagerStore";
 import DraggableWindow from "../WindowManager/DraggableWindow";
-import { motion, AnimatePresence } from "motion/react";
+import { motion } from "motion/react";
+import { cameraErrorKind } from "../../providers/CameraInputProvider";
 
 const FEATURES = [
   {
@@ -31,12 +32,10 @@ const HandsfreeIntroModal: React.FC = () => {
     setShowIntroModal,
     setHasSeenIntro,
     setEnabled,
-    cameraPermission,
     setCameraPermission,
+    setCameraError,
     modelLoadProgress,
   } = useHandsfreeStore();
-
-  const { setShowGestureTutorial } = useHandsfreeStore();
   const openWindow = useWindowManagerStore((s) => s.openWindow);
   const closeWindow = useWindowManagerStore((s) => s.closeWindow);
   const win = useWindow("handsfree-intro");
@@ -75,12 +74,12 @@ const HandsfreeIntroModal: React.FC = () => {
       const stream = await navigator.mediaDevices.getUserMedia({ video: true });
       stream.getTracks().forEach((t) => t.stop());
       setCameraPermission("granted");
-      setHasSeenIntro(true);
       handleClose();
       setEnabled(true);
-      setTimeout(() => setShowGestureTutorial(true), 1500);
-    } catch {
-      setCameraPermission("denied");
+    } catch (err) {
+      // The robot card (CameraOops) explains it and offers a retry.
+      setCameraError(cameraErrorKind(err));
+      handleClose();
     }
   };
 
@@ -126,18 +125,6 @@ const HandsfreeIntroModal: React.FC = () => {
             ))}
           </div>
 
-          <AnimatePresence>
-            {cameraPermission === "denied" && (
-              <motion.p
-                className="hf-intro__error"
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
-                exit={{ opacity: 0, height: 0 }}
-              >
-                Camera access denied. Please allow it in browser settings.
-              </motion.p>
-            )}
-          </AnimatePresence>
 
           {modelLoadProgress > 0 && modelLoadProgress < 100 && (
             <div className="hf-intro__progress">

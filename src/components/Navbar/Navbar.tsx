@@ -42,7 +42,6 @@ function Navbar() {
     hasSeenIntro,
     setEnabled: setCameraEnabled,
     setShowIntroModal,
-    setShowGestureTutorial,
   } = useHandsfreeStore();
 
   useEffect(() => {
@@ -59,12 +58,8 @@ function Navbar() {
       setShowIntroModal(true);
       return;
     }
-    if (cameraEnabled) {
-      setCameraEnabled(false);
-    } else {
-      setCameraEnabled(true);
-      setTimeout(() => setShowGestureTutorial(true), 1500);
-    }
+    // Turning it on shows the gesture tutorial once the camera is up (useHandsfreeCamera)
+    setCameraEnabled(!cameraEnabled);
   };
 
   // 240px fits "Gabriel Moreno Ribeiro." at 16px plus the menu icon; 175px clipped the name.

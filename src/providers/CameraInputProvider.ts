@@ -1,5 +1,5 @@
 import { useInputSourceStore } from "../store/inputSourceStore";
-import { useHandsfreeStore } from "../store/handsfreeStore";
+import { useHandsfreeStore, type CameraError } from "../store/handsfreeStore";
 
 let videoEl: HTMLVideoElement | null = null;
 let stream: MediaStream | null = null;
@@ -470,6 +470,15 @@ function processFrame() {
   rafId = requestAnimationFrame(processFrame);
 }
 
+// getUserMedia names its failures; anything else broke while loading the models.
+export function cameraErrorKind(err: unknown): CameraError {
+  const name = (err as { name?: string } | null)?.name;
+  if (name === "NotAllowedError" || name === "SecurityError") return "blocked";
+  if (name === "NotFoundError" || name === "OverconstrainedError") return "missing";
+  if (name === "NotReadableError" || name === "AbortError") return "busy";
+  return "load";
+}
+
 // Each start gets a number; stop bumps it, so a start still waiting on the
 // camera or the models finds out it was cancelled and cleans up after itself.
 let session = 0;
@@ -479,6 +488,7 @@ export async function startCameraInput() {
   const mine = ++session;
 
   try {
+    handsfreeState.setCameraError(null);
     handsfreeState.setModelLoadProgress(5);
 
     const granted = await navigator.mediaDevices.getUserMedia({
@@ -520,7 +530,9 @@ export async function startCameraInput() {
     frameCount = 0;
     rafId = requestAnimationFrame(processFrame);
   } catch (err) {
-    handsfreeState.setCameraPermission("denied");
+    const kind = cameraErrorKind(err);
+    if (kind === "blocked") handsfreeState.setCameraPermission("denied");
+    if (mine === session) handsfreeState.setCameraError(kind);
     throw err;
   }
 }

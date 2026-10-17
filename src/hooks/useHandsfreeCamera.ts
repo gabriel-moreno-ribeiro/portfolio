@@ -16,11 +16,17 @@ export function useHandsfreeCamera() {
 
     let cancelled = false;
 
-    startCameraInput().catch(() => {
-      if (!cancelled) {
-        useHandsfreeStore.getState().setEnabled(false);
-      }
-    });
+    // The tutorial waits for a working camera: shown on a timer, it popped up
+    // over the "camera blocked" card.
+    startCameraInput()
+      .then(() => {
+        if (!cancelled) useHandsfreeStore.getState().setShowGestureTutorial(true);
+      })
+      .catch(() => {
+        if (!cancelled) {
+          useHandsfreeStore.getState().setEnabled(false);
+        }
+      });
 
     return () => {
       cancelled = true;

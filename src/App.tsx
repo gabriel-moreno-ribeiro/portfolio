@@ -73,7 +73,7 @@ function AppContent() {
     mounted.current = true;
   }, []);
   const isMobile = useIsMobile();
-  const handsfreeFlags = useHandsfreeStore((s) => s.isEnabled || s.showIntroModal);
+  const handsfreeFlags = useHandsfreeStore((s) => s.isEnabled || s.showIntroModal || !!s.cameraError);
   const handsfreeWindow = useWindowManagerStore((s) => !!s.windows["handsfree-intro"] || !!s.windows["gesture-tutorial"]);
   const handsfreeActive = handsfreeFlags || handsfreeWindow;
   const [tip, setTip] = useState(false);
