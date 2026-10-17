@@ -59,7 +59,7 @@ export default function MedalsCard() {
       <div className="featured-card__body">
         <h3>39 Olympiad Medals</h3>
         <p>
-          49 competitions in math, physics, chemistry, biology and astronomy. Gold at Mathématiques sans
+          49 competitions in math, physics, chemistry, biology and astronomy. 5 golds at Mathématiques sans
           Frontières, an international olympiad. Gold at ONNEQ. 1st at OBAQ.
         </p>
         <MedalsCount />
@@ -83,7 +83,7 @@ export default function MedalsCard() {
         </ul>
         <div className="featured-tags">
           <span>19 gold</span>
-          <span>International: Mathématiques sans Frontières</span>
+          <span>5 international gold</span>
         </div>
       </div>
       {open !== null && (

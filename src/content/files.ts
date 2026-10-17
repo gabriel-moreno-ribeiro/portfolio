@@ -38,8 +38,8 @@ export const fileGroups: FileGroup[] = [
       {
         file: 'sat-score-report.pdf',
         title: 'SAT score report',
-        note: '1510 total: 730 reading and writing, 780 math',
-        meta: 'September 2025',
+        note: '1570 total: 770 reading and writing, 800 math',
+        meta: 'October 2026',
       },
       {
         file: 'duolingo-english-test.pdf',

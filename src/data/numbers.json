@@ -1,5 +1,5 @@
 [
-  { "id": "medals", "value": 39, "label": "olympiad medals", "sub": "19 gold · 2 international", "icon": "/stats/obfep.webp", "size": "hero" },
+  { "id": "medals", "value": 39, "label": "olympiad medals", "sub": "19 gold · 5 international", "icon": "/stats/obfep.webp", "size": "hero" },
   { "id": "students", "value": 3392, "label": "students reached", "sub": "Projeto Candela", "icon": "/stats/screwdriver.webp", "size": "lg" },
   { "id": "competitions", "value": 49, "label": "competitions", "icon": "/stats/obfep.webp", "size": "lg" },
   { "id": "schools", "value": 28, "label": "public schools", "icon": "/stats/screwdriver.webp", "size": "md" },
