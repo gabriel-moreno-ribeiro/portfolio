@@ -43,6 +43,8 @@ const CanvasComponent = canRender3D
   : null;
 
 const BG_SETTLE_DELAY = 0.7;
+// Module-level so a Hero re-render doesn't hand ScrambleText a new array (it restarts the cycle).
+const ROLES = ['Builder', 'Researcher', 'Developer'];
 function Hero() {
   const isMobile = useIsMobile();
   const reduced = useReducedMotion();
@@ -147,7 +149,7 @@ function Hero() {
                 fontFamily: 'var(--font-serif)',
                 fontStyle: 'italic',
               }}
-              texts={['Builder', 'Researcher', 'Developer']}
+              texts={ROLES}
               speed={40}
               pauseDuration={2200}
               enabled={heroVisible}

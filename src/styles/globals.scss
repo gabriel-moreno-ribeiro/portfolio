@@ -380,6 +380,9 @@ img {
   }
 }
 
+// The page wrapper takes focus on a route change (App.tsx); no ring on it.
+.page-enter:focus { outline: none; }
+
 // The round floating buttons sink under the pointer like every other button.
 .toggle-button,
 .handsfree-button,

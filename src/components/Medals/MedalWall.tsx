@@ -38,6 +38,7 @@ const ITEMS: Item[] = [
 function Viewer({ index, onClose, onStep }: { index: number; onClose: () => void; onStep: (d: number) => void }) {
   const item = ITEMS[index];
   const swipeStart = useRef<number | null>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
@@ -47,6 +48,13 @@ function Viewer({ index, onClose, onStep }: { index: number; onClose: () => void
       if (e.key === 'Escape') onClose();
       if (e.key === 'ArrowRight') onStep(1);
       if (e.key === 'ArrowLeft') onStep(-1);
+      // Tab cycles through the three controls instead of leaving the dialog
+      if (e.key === 'Tab' && dialogRef.current) {
+        const f = [...dialogRef.current.querySelectorAll<HTMLElement>('button')];
+        const i = f.indexOf(document.activeElement as HTMLElement);
+        e.preventDefault();
+        f[(i + (e.shiftKey ? -1 : 1) + f.length) % f.length]?.focus();
+      }
     };
     window.addEventListener('keydown', onKey);
     const { overflow } = document.body.style;
@@ -60,7 +68,7 @@ function Viewer({ index, onClose, onStep }: { index: number; onClose: () => void
 
   // Same viewer as the project photos, portalled above the navbar.
   return createPortal(
-    <div className="project-lightbox medal-viewer" role="dialog" aria-modal="true" aria-label={item.title} onClick={onClose}>
+    <div ref={dialogRef} className="project-lightbox medal-viewer" role="dialog" aria-modal="true" aria-label={item.title} onClick={onClose}>
       <button ref={closeRef} className="project-lightbox__close" onClick={onClose} aria-label="Close">
         <FiX aria-hidden="true" />
       </button>

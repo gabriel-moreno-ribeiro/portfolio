@@ -56,26 +56,33 @@ function DockItem({
       whileHover={{ scale: 1.08, y: -3 }}
       whileTap={{ scale: 0.95 }}
       transition={{ type: "spring", stiffness: 500, damping: 30 }}
-      onClick={() => onRestore(win.id)}
     >
-      <div className="dock__preview">
-        {win.thumbnail ? (
-          <img
-            src={win.thumbnail}
-            alt={win.title}
-            className="dock__thumbnail"
-            draggable={false}
-          />
-        ) : (
-          <div className={`dock__placeholder dock__placeholder--${win.type}`}>
-            <span className="dock__placeholder-title">{win.title}</span>
-          </div>
-        )}
-      </div>
-      <button className="dock__close" onClick={handleClose}>
-        <FiX />
+      {/* Restoring is a real button, so Enter and Space work and it has a name */}
+      <button
+        type="button"
+        className="dock__restore"
+        aria-label={`Restore ${win.title}`}
+        onClick={() => onRestore(win.id)}
+      >
+        <span className="dock__preview">
+          {win.thumbnail ? (
+            <img
+              src={win.thumbnail}
+              alt=""
+              className="dock__thumbnail"
+              draggable={false}
+            />
+          ) : (
+            <span className={`dock__placeholder dock__placeholder--${win.type}`}>
+              <span className="dock__placeholder-title">{win.title}</span>
+            </span>
+          )}
+        </span>
+        <span className="dock__label">{win.title}</span>
       </button>
-      <span className="dock__label">{win.title}</span>
+      <button type="button" className="dock__close" aria-label={`Close ${win.title}`} onClick={handleClose}>
+        <FiX aria-hidden="true" />
+      </button>
     </motion.div>
   );
 }

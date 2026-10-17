@@ -96,3 +96,40 @@
     }
   }
 }
+
+// The four dots under the card: 24px targets, 8px marks, the current one in orange.
+.numbers-dots {
+  display: flex;
+  justify-content: center;
+  gap: 2px;
+  margin-top: 6px;
+
+  button {
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+
+    &::before {
+      content: "";
+      display: block;
+      width: 8px;
+      height: 8px;
+      margin: 0 auto;
+      border-radius: 50%;
+      background: var(--border);
+      transition: background-color 0.2s, transform 0.2s;
+    }
+
+    &:hover::before { background: var(--fg-muted); }
+    &[aria-current="true"]::before { background: var(--accent-decor); transform: scale(1.25); }
+
+    &:focus-visible {
+      outline: 2px solid var(--focus-ring);
+      outline-offset: -2px;
+      border-radius: 50%;
+    }
+  }
+}

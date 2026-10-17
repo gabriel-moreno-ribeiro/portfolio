@@ -82,6 +82,18 @@ const NumbersAndStats = () => {
         <span className="orange"> {stat.prefix}<CountUp value={stat.value} decimals={stat.decimals} grouping={stat.grouping} still={reduced} />{stat.suffix} </span>
         {stat.label}
       </motion.p>
+      {/* Pick a stat instead of waiting for the rotation; a pick also holds it */}
+      <div className="numbers-dots" role="group" aria-label="Choose a number">
+        {STATS.map((s, i) => (
+          <button
+            key={s.label}
+            type="button"
+            aria-label={`Show ${i + 1} of ${STATS.length}`}
+            aria-current={i === index ? 'true' : undefined}
+            onClick={() => { setIndex(i); setHeld(true); }}
+          />
+        ))}
+      </div>
       {/* The card shows one at a time; the page carries all four */}
       <ul className="sr-only">
         {STATS.map((s) => (

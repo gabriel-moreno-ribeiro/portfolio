@@ -8,6 +8,7 @@ interface PropsInterface {
   isExpanded: boolean;
 }
 
+// The three window lights, as real buttons so they have names and take focus.
 function MacButtons({
   onClose,
   onExpand,
@@ -17,35 +18,41 @@ function MacButtons({
   const buttons = [
     {
       color: "#FF6057",
-      icon: <FaPlus className="icon expand-icon" onClick={onClose} />,
+      label: "Close window",
+      icon: <FaPlus className="icon expand-icon" aria-hidden="true" />,
+      onClick: onClose,
     },
     {
       color: "#FEBB30",
-      icon: <FaMinus className="icon" onClick={onMinimise} />,
+      label: "Minimize window",
+      icon: <FaMinus className="icon" aria-hidden="true" />,
+      onClick: onMinimise,
     },
     {
       color: "#2ED158",
+      label: isExpanded ? "Restore window size" : "Maximize window",
       icon: isExpanded ? (
-        <RiContractLeftRightFill
-          className="icon expand-icon"
-          onClick={onExpand}
-        />
+        <RiContractLeftRightFill className="icon expand-icon" aria-hidden="true" />
       ) : (
-        <RiExpandUpDownFill className="icon expand-icon" onClick={onExpand} />
+        <RiExpandUpDownFill className="icon expand-icon" aria-hidden="true" />
       ),
+      onClick: onExpand,
     },
   ];
 
   return (
     <div className="mac-buttons-flex">
-      {buttons.map((button, index) => (
-        <div
-          key={index}
+      {buttons.map((button) => (
+        <button
+          type="button"
+          key={button.label}
           className="mac-button"
+          aria-label={button.label}
+          onClick={button.onClick}
           style={{ backgroundColor: button.color, color: button.color }}
         >
           {button.icon}
-        </div>
+        </button>
       ))}
     </div>
   );

@@ -96,6 +96,11 @@
     }
   }
 
+  &__actions {
+    display: flex;
+    gap: 8px;
+  }
+
   &__toggle {
     display: inline-flex;
     align-items: center;
@@ -135,6 +140,7 @@
 
     &__picks { justify-content: center; }
     &__pick img { height: 48px; }
+    &__actions { flex-direction: column; }
     &__toggle { justify-content: center; }
   }
 }

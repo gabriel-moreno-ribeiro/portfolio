@@ -126,10 +126,14 @@ function Home() {
   // Rail clicks and "See Work": mount everything, scroll smoothly to where the
   // target is now, then correct the drift once the smooth scroll has ended.
   useEffect(() => {
+    let timer = 0;
+    let pending: (() => void) | null = null;
     const onNavigate = (e: Event) => {
       const { id, offset } = (e as CustomEvent<NavigateDetail>).detail;
       // Any new navigation cancels a re-alignment still running for the previous target.
       stopAlign.current();
+      clearTimeout(timer);
+      if (pending) window.removeEventListener('scrollend', pending);
       if (!LAZY_IDS.has(id)) return;
       e.preventDefault();
       setMountAll(true);
@@ -142,11 +146,19 @@ function Home() {
         window.removeEventListener('scrollend', begin);
         alignTo(id, offset);
       };
+      pending = begin;
       window.addEventListener('scrollend', begin, { once: true });
-      window.setTimeout(begin, 1200); // browsers without scrollend
+      timer = window.setTimeout(begin, 1200); // browsers without scrollend
     };
     window.addEventListener(NAVIGATE_EVENT, onNavigate);
-    return () => window.removeEventListener(NAVIGATE_EVENT, onNavigate);
+    // Leaving the page (or a rail click within 1.2 s of leaving) must not keep
+    // a scroll loop alive for the next visit.
+    return () => {
+      window.removeEventListener(NAVIGATE_EVENT, onNavigate);
+      clearTimeout(timer);
+      if (pending) window.removeEventListener('scrollend', pending);
+      stopAlign.current();
+    };
   }, [alignTo]);
 
   useEffect(() => {

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { FiVideoOff, FiX } from 'react-icons/fi';
 import { IoMoonOutline, IoSunnyOutline } from 'react-icons/io5';
 import { SiGithub, SiLinkedin } from 'react-icons/si';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import useIsMobile from '../../hooks/useIsMobile';
 import { useHandsfreeStore } from '../../store/handsfreeStore';
 import { useThemeStore } from '../../store/themeStore';
@@ -147,10 +147,14 @@ function Navbar() {
         style={{ pointerEvents: open ? 'auto' : 'none' }}
       >
         {links.map((link) => (
-          <button
-            type="button"
+          // Real links (an href for screen readers, a new tab on middle-click); a
+          // plain click still goes through handleLinkClick for the in-page cases.
+          <Link
+            to={link.href}
             onClick={e => {
               e.stopPropagation();
+              if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+              e.preventDefault();
               handleLinkClick(link);
             }}
             key={link.href}
@@ -158,7 +162,7 @@ function Navbar() {
             tabIndex={open ? 0 : -1}
           >
             {link.name}
-          </button>
+          </Link>
         ))}
         {socials.map(({ name, href, Icon }) => (
           <a

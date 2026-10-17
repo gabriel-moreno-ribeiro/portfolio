@@ -451,6 +451,22 @@
   margin: 0;
 }
 
+.handsfree-loader-cancel {
+  margin-top: 4px;
+  padding: 8px 18px;
+  border: 1.5px solid var(--border);
+  border-radius: 36px;
+  background: none;
+  color: var(--fg);
+  font: 600 14px/1 inherit;
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 0.2s;
+
+  &:hover,
+  &:focus-visible { border-color: var(--fg); }
+}
+
 .handsfree-loader-bar {
   width: 100%;
   height: 4px;

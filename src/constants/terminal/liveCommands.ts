@@ -86,7 +86,10 @@ const liveCommands: TerminalCommand[] = [
         return;
       }
       ctx.writeln(`Opening ${project.title}…`);
-      window.location.assign(`/work/${project.slug}`);
+      // Through the router (it listens to popstate), so the app and the terminal
+      // survive instead of a full reload.
+      window.history.pushState({}, "", `/work/${project.slug}`);
+      window.dispatchEvent(new PopStateEvent("popstate"));
     },
   },
   {

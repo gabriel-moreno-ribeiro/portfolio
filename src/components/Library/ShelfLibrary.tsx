@@ -75,8 +75,10 @@ export default function ShelfLibrary() {
   const openerRef = useRef<HTMLElement | null>(null);
   const backRef = useRef<HTMLButtonElement>(null);
   const ageRefs = useRef<(HTMLButtonElement | null)[]>([]);
-  const initialIndex = useRef(Math.max(0, catalog.findIndex((b) => b.id === bookId))).current;
-  const deepLinked = useRef(Boolean(bookId)).current;
+  // A deep link only counts when the id is a real book; anything else is the plain shelf.
+  const found = useRef(catalog.findIndex((b) => b.id === bookId)).current;
+  const initialIndex = Math.max(0, found);
+  const deepLinked = found >= 0;
   const [activeIndex, setActiveIndex] = useState(initialIndex);
   const activeRef = useRef(activeIndex);
   activeRef.current = activeIndex;
@@ -179,7 +181,7 @@ export default function ShelfLibrary() {
       // Whatever the card shows (deep link, or browsing while it loaded) is where the shelf opens
       const start = activeRef.current;
       if (start > 0) engine.snapTo(start);
-      if (bookId) engine.focusBook(start);
+      if (found >= 0) engine.focusBook(start);
     }
 
     void start();

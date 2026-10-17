@@ -9,10 +9,13 @@ function TerminalModal() {
   const terminalWindow = useWindow("terminal");
   const openWindow = useWindowManagerStore((s) => s.openWindow);
   const closeWindow = useWindowManagerStore((s) => s.closeWindow);
+  const restoreWindow = useWindowManagerStore((s) => s.restoreWindow);
   const isMobile = useIsMobile();
 
   const toggle = useCallback(() => {
-    if (terminalWindow) {
+    if (terminalWindow?.status === "minimized") {
+      restoreWindow("terminal");
+    } else if (terminalWindow) {
       closeWindow("terminal");
     } else {
       openWindow({
@@ -27,7 +30,7 @@ function TerminalModal() {
         size: { width: 960, height: 0 },
       });
     }
-  }, [terminalWindow, openWindow, closeWindow]);
+  }, [terminalWindow, openWindow, closeWindow, restoreWindow]);
 
   // Lock scroll only on mobile (desktop windows float over scrollable content)
   useEffect(() => {
@@ -53,7 +56,9 @@ function TerminalModal() {
         e.preventDefault();
         toggle();
       }
-      if (e.key === "Escape" && terminalWindow && terminalWindow.status !== "minimized") {
+      // Escape closes the terminal unless it was meant for another dialog (a photo viewer)
+      const inOtherDialog = (e.target as Element | null)?.closest?.('[role="dialog"]:not(.draggable-window)');
+      if (e.key === "Escape" && terminalWindow && terminalWindow.status !== "minimized" && !inOtherDialog) {
         closeWindow("terminal");
       }
     };

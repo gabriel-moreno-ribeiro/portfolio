@@ -2,8 +2,8 @@
 // chosen drawing being built, playing while it is on screen, or the live graph
 // itself (the Desmos embed, loaded only when asked for). Three drawings to pick
 // from underneath, as the drawings themselves.
-import { useRef, useState } from "react";
-import { FiArrowLeft, FiSliders } from "react-icons/fi";
+import { useEffect, useRef, useState } from "react";
+import { FiArrowLeft, FiPause, FiPlay, FiSliders } from "react-icons/fi";
 import { usePageVisible, useReducedMotion, useVisible } from "../../lib/motion";
 import "../../styles/components/home/desmosSketches.scss";
 
@@ -25,6 +25,15 @@ export default function DesmosSketches() {
   const sketch = SKETCHES[current];
   // The recording only runs while it can be seen; under reduced motion it waits for a press.
   const autoplay = onScreen && pageVisible && !reduced;
+  // Anyone can stop it (keyboard and touch included), and it stays stopped.
+  const [held, setHeld] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    if (autoplay && !held) v.play().catch(() => {});
+    else v.pause();
+  }, [autoplay, held, current, live]);
 
   return (
     <section className="desmos" aria-labelledby="desmos-title">
@@ -40,6 +49,7 @@ export default function DesmosSketches() {
         ) : (
           <video
             key={sketch.id}
+            ref={videoRef}
             className="desmos__video"
             src={`/work/desmos/${sketch.id}.mp4`}
             poster={`/work/desmos/${sketch.id}.webp`}
@@ -54,13 +64,12 @@ export default function DesmosSketches() {
         )}
       </div>
       <div className="desmos__bar">
-        <div className="desmos__picks" role="tablist" aria-label="Drawings">
+        <div className="desmos__picks" role="group" aria-label="Drawings">
           {SKETCHES.map((s, i) => (
             <button
               key={s.id}
               type="button"
-              role="tab"
-              aria-selected={i === current}
+              aria-pressed={i === current}
               className={`desmos__pick${i === current ? " is-current" : ""}`}
               onClick={() => setCurrent(i)}
             >
@@ -68,6 +77,12 @@ export default function DesmosSketches() {
             </button>
           ))}
         </div>
+        <div className="desmos__actions">
+        {!live && !reduced && (
+          <button type="button" className="desmos__toggle" onClick={() => setHeld((h) => !h)} aria-pressed={held}>
+            {held ? <><FiPlay aria-hidden="true" /> Play</> : <><FiPause aria-hidden="true" /> Pause</>}
+          </button>
+        )}
         <button type="button" className="desmos__toggle" onClick={() => setLive((v) => !v)} aria-pressed={live}>
           {live ? (
             <><FiArrowLeft aria-hidden="true" /> Back to the recording</>
@@ -75,6 +90,7 @@ export default function DesmosSketches() {
             <><FiSliders aria-hidden="true" /> Play with the equations</>
           )}
         </button>
+        </div>
       </div>
     </section>
   );

@@ -93,12 +93,12 @@ function ContactSection() {
                 rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
                 className="contact-section__channel"
               >
-                <span className="contact-section__channel-icon"><Icon /></span>
+                <span className="contact-section__channel-icon"><Icon aria-hidden="true" /></span>
                 <span className="contact-section__channel-text">
                   <span className="contact-section__channel-label">{label}</span>
                   <span className="contact-section__channel-value">{value}</span>
                 </span>
-                <FiArrowUpRight className="contact-section__channel-arrow" />
+                <FiArrowUpRight className="contact-section__channel-arrow" aria-hidden="true" />
               </a>
             </li>
           ))}

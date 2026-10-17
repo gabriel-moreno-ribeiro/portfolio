@@ -31,14 +31,36 @@
     flex-shrink: 0;
     position: relative;
 
-    &:hover .dock__close {
+    &:hover .dock__close,
+    &:focus-within .dock__close {
       opacity: 1;
       transform: scale(1);
     }
   }
 
+  // The restore button keeps the item's layout; the chrome is on the parts inside.
+  &__restore {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    padding: 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+
+    &:focus-visible {
+      outline: 2px solid var(--focus-ring);
+      outline-offset: 3px;
+      border-radius: 6px;
+    }
+  }
+
   &__preview {
     position: relative;
+    display: block;
     width: 56px;
     height: 42px;
     border-radius: 6px;

@@ -469,15 +469,25 @@ function processFrame() {
   rafId = requestAnimationFrame(processFrame);
 }
 
+// Each start gets a number; stop bumps it, so a start still waiting on the
+// camera or the models finds out it was cancelled and cleans up after itself.
+let session = 0;
+
 export async function startCameraInput() {
   const handsfreeState = useHandsfreeStore.getState();
+  const mine = ++session;
 
   try {
     handsfreeState.setModelLoadProgress(5);
 
-    stream = await navigator.mediaDevices.getUserMedia({
+    const granted = await navigator.mediaDevices.getUserMedia({
       video: { width: 640, height: 480, facingMode: "user" },
     });
+    if (mine !== session) {
+      granted.getTracks().forEach((t) => t.stop());
+      return;
+    }
+    stream = granted;
 
     handsfreeState.setCameraPermission("granted");
 
@@ -495,6 +505,10 @@ export async function startCameraInput() {
     await loadModels((progress) => {
       handsfreeState.setModelLoadProgress(progress);
     });
+    if (mine !== session) {
+      stopCameraInput();
+      return;
+    }
 
     useInputSourceStore.getState().setInputSource("camera");
     frameCount = 0;
@@ -506,6 +520,7 @@ export async function startCameraInput() {
 }
 
 export function stopCameraInput() {
+  session++;
   if (rafId !== null) {
     cancelAnimationFrame(rafId);
     rafId = null;

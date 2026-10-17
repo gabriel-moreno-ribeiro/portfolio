@@ -2,13 +2,16 @@ import { motion } from 'motion/react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { FiArrowLeft, FiArrowUpRight, FiChevronLeft, FiChevronRight, FiX } from 'react-icons/fi';
-import { Link, Navigate, useParams } from 'react-router-dom';
+import { lazy, Suspense } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import MedalWall from '../components/Medals/MedalWall';
 import Navbar from '../components/Navbar/Navbar';
 import Footer from '../components/Shared/Footer';
 import { Project, projectBySlug, projects } from '../content/projects';
 import { useDocumentHead } from '../hooks/useDocumentHead';
 import '../styles/components/pages/project.scss';
+
+const NotFound = lazy(() => import('./NotFound'));
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -34,12 +37,24 @@ function Lightbox({
   const file = gallery[index];
   // Touch has no arrows (they'd cover the photo): a horizontal swipe steps.
   const swipeStart = useRef<number | null>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const closeRef = useRef<HTMLButtonElement>(null);
 
+  // Focus moves to Close, Tab cycles inside the dialog, and whoever opened it
+  // gets the focus back when it closes.
   useEffect(() => {
+    const opener = document.activeElement as HTMLElement | null;
+    closeRef.current?.focus();
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
       if (e.key === 'ArrowRight') onStep(1);
       if (e.key === 'ArrowLeft') onStep(-1);
+      if (e.key === 'Tab' && dialogRef.current) {
+        const f = [...dialogRef.current.querySelectorAll<HTMLElement>('button')];
+        const i = f.indexOf(document.activeElement as HTMLElement);
+        e.preventDefault();
+        f[(i + (e.shiftKey ? -1 : 1) + f.length) % f.length]?.focus();
+      }
     };
     window.addEventListener('keydown', onKey);
     const { overflow } = document.body.style;
@@ -47,14 +62,15 @@ function Lightbox({
     return () => {
       window.removeEventListener('keydown', onKey);
       document.body.style.overflow = overflow;
+      opener?.focus();
     };
   }, [onClose, onStep]);
 
   // Portalled to the body: .project sets z-index, so a lightbox rendered inside
   // it would stay trapped below the navbar and the floating buttons.
   return createPortal(
-    <div className="project-lightbox" role="dialog" aria-modal="true" aria-label={project.title} onClick={onClose}>
-      <button className="project-lightbox__close" onClick={onClose} aria-label="Close">
+    <div ref={dialogRef} className="project-lightbox" role="dialog" aria-modal="true" aria-label={project.title} onClick={onClose}>
+      <button ref={closeRef} className="project-lightbox__close" onClick={onClose} aria-label="Close">
         <FiX aria-hidden="true" />
       </button>
       {gallery.length > 1 && (
@@ -110,12 +126,14 @@ function ProjectPage() {
   );
 
   useDocumentHead({
-    title: project ? `${project.title} · Gabriel Moreno Ribeiro` : 'Gabriel Moreno Ribeiro',
-    description: project?.summary,
+    title: project ? `${project.title} · Gabriel Moreno Ribeiro` : '404 · Gabriel Moreno Ribeiro',
+    description: project?.summary ?? 'Page not found.',
     canonical: project ? `https://gabrielmr.com/work/${project.slug}` : undefined,
+    noindex: !project,
   });
 
-  if (!project) return <Navigate to="/" replace />;
+  // A slug that isn't a project (typo, old link) is a 404, not a quiet trip home.
+  if (!project) return <Suspense fallback={null}><NotFound /></Suspense>;
 
   const gallery = project.gallery ?? [];
   const [hero, ...rest] = gallery;

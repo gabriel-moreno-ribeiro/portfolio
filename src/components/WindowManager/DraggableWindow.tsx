@@ -426,9 +426,23 @@ function DraggableWindow({
   if (!win || win.status === "minimized") return null;
 
   const isMaximized = win.status === "maximized";
-  // The terminal is the one window that behaves like a modal dialog (Ctrl+K opens it,
-  // Escape closes it, focus goes back to the opener).
-  const isDialog = windowId === "terminal";
+  // The terminal, the hands-free intro and the gesture tutorial behave like modal
+  // dialogs (a shortcut or button opens them, Escape closes them, focus goes back
+  // to the opener). The terminal handles its own keys; the other two do it here.
+  const isDialog = windowId === "terminal" || windowId === "handsfree-intro" || windowId === "gesture-tutorial";
+  useEffect(() => {
+    if (!isDialog || windowId === "terminal") return;
+    const opener = document.activeElement as HTMLElement | null;
+    windowRef.current?.focus({ preventScroll: true });
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeWindow(windowId);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      opener?.focus();
+    };
+  }, [isDialog, windowId, closeWindow]);
 
   return (
     <motion.div
@@ -436,6 +450,7 @@ function DraggableWindow({
       role={isDialog ? "dialog" : undefined}
       aria-modal={isDialog ? true : undefined}
       aria-label={isDialog ? title : undefined}
+      tabIndex={isDialog ? -1 : undefined}
       className={`draggable-window ${isMaximized ? "draggable-window--maximized" : ""} ${isMobile ? "draggable-window--mobile" : ""} ${className}`}
       style={{
         x: isMaximized ? 0 : x,

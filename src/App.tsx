@@ -59,11 +59,19 @@ function AppContent() {
   // Páginas de leitura: sem a barra fixa de CTA no mobile (o e-mail está no rodapé).
   const isReading = isLibrary || location.pathname.startsWith("/news");
 
-  // New page, start at the top (hash links are handled by the page itself)
+  // New page, start at the top (hash links are handled by the page itself), and
+  // move focus to the new page so keyboard and screen-reader users continue
+  // from there instead of from the top of the document.
+  const pageRef = useRef<HTMLDivElement>(null);
+  const mounted = useRef(false);
   useEffect(() => {
     if (location.hash) return;
     window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
+    if (mounted.current) pageRef.current?.focus({ preventScroll: true });
   }, [location.pathname, location.hash]);
+  useEffect(() => {
+    mounted.current = true;
+  }, []);
   const isMobile = useIsMobile();
   const handsfreeFlags = useHandsfreeStore((s) => s.isEnabled || s.showIntroModal);
   const handsfreeWindow = useWindowManagerStore((s) => !!s.windows["handsfree-intro"] || !!s.windows["gesture-tutorial"]);
@@ -74,18 +82,18 @@ function AppContent() {
   // doing the entrance) and not between books or projects (same section key).
   const reduced = useReducedMotion();
   const sectionKey = location.pathname.split("/")[1] || "home";
-  const firstKey = useRef(sectionKey);
-  const entering = !reduced && sectionKey !== firstKey.current;
+  const entering = !reduced && mounted.current;
 
+  // The Ctrl+K tip, once per session, only where it shows (the home)
   useEffect(() => {
-    if (isMobile || window.innerWidth <= 1024 || sessionStorage.getItem("showedToast")) return;
+    if (!isHome || isMobile || window.innerWidth <= 1024 || sessionStorage.getItem("showedToast")) return;
     const show = setTimeout(() => {
       setTip(true);
       sessionStorage.setItem("showedToast", "true");
     }, 3000);
     const hide = setTimeout(() => setTip(false), 13000);
     return () => { clearTimeout(show); clearTimeout(hide); };
-  }, [isMobile]);
+  }, [isMobile, isHome]);
 
   return (
     <div className="app">
@@ -97,6 +105,8 @@ function AppContent() {
       {isHome && <HorizontalScroller />}
       <motion.div
         key={sectionKey}
+        ref={pageRef}
+        tabIndex={-1}
         className="page-enter"
         initial={entering ? { opacity: 0, y: 14 } : false}
         animate={{ opacity: 1, y: 0 }}
