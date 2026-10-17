@@ -3,12 +3,11 @@ import { FiArrowUpRight, FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { Project, projects } from "../../content/projects";
 import useIsMobile from "../../hooks/useIsMobile";
-import { Counter, usePageVisible, useReducedMotion, useVisible } from "../../lib/motion";
+import { usePageVisible, useReducedMotion, useVisible } from "../../lib/motion";
 import DesmosSketches from "./DesmosSketches";
+import MedalsCard from "./MedalsCard";
 
 const AUTOPLAY_MS = 6000;
-
-const toNumber = (value: string) => Number(value.replace(/[^\d.]/g, "")) || 0;
 
 function MediaCarousel({ project, paused, offset = 0 }: { project: Project; paused: boolean; offset?: number }) {
   const available = project.gallery ?? [];
@@ -136,43 +135,16 @@ function MediaCarousel({ project, paused, offset = 0 }: { project: Project; paus
   );
 }
 
-// The final number is the default; the count only runs once the card enters the
-// viewport, so a card still below the fold never reads "0 medals".
-function MedalsLive({ project }: { project: Project }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const shown = useVisible(ref, { once: true });
-  const reduced = useReducedMotion();
-  const medals = toNumber(project.stats[0]?.value ?? "0");
-
-  return (
-    <div className="project-live" ref={ref}>
-      <p className="project-live__counts">
-        <strong>
-          {shown && !reduced ? <Counter value={medals} /> : medals}
-        </strong>{" "}
-        medals in 49 competitions
-      </p>
-    </div>
-  );
-}
-
-function ProjectLive({ project }: { project: Project }) {
-  return project.slug === "medals" ? <MedalsLive project={project} /> : null;
-}
-
 // The whole card is one link target: the title anchor stretches over the card, so
 // the carousel controls stay clickable by sitting above it.
 function FeaturedCard({ project, index }: { project: Project; index: number }) {
   const hasMedia = (project.gallery?.length ?? 0) > 0;
-  const litChips = project.slug === "medals";
   // The card's stretched link sits over the photo, so the pause lives on the card.
   const [paused, setPaused] = useState(false);
 
   return (
     <div
-      className={`featured-card${hasMedia ? " featured-card--wide" : ""}${
-        litChips ? " featured-card--chips" : ""
-      }`}
+      className={`featured-card${hasMedia ? " featured-card--wide" : ""}`}
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       onFocus={() => setPaused(true)}
@@ -186,7 +158,6 @@ function FeaturedCard({ project, index }: { project: Project; index: number }) {
           </Link>
         </h3>
         <p>{project.cardDesc}</p>
-        <ProjectLive project={project} />
         <div className="featured-tags">
           {project.tags.map((tag) => (
             <span key={tag}>{tag}</span>
@@ -210,8 +181,13 @@ function FindMyWork() {
         What I've built and what I've won.
       </p>
       <div className="featured-grid">
-        {projects.map((project, i) => (
+        {/* The medals sit third, after the two companies' cards */}
+        {projects.slice(0, 2).map((project, i) => (
           <FeaturedCard key={project.slug} project={project} index={i} />
+        ))}
+        <MedalsCard />
+        {projects.slice(2).map((project, i) => (
+          <FeaturedCard key={project.slug} project={project} index={i + 2} />
         ))}
       </div>
       <DesmosSketches />

@@ -1,4 +1,4 @@
-// The medals Gabriel photographed, one entry per photo in public/work/medals/wall/.
+// The medals Gabriel photographed, one entry per photo in public/work/medals/wall/sm/ (and wall/full/).
 // Names, years and levels were read off each medal (or its ribbon) by two
 // independent passes and a third that settled every disagreement. A field is
 // empty when the medal doesn't say it; the one exception is marked below.

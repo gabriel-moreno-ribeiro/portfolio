@@ -148,47 +148,6 @@ export const projects: Project[] = [
     },
   },
   {
-    slug: 'medals',
-    title: '39 Olympiad Medals',
-    eyebrow: 'Competitions',
-    summary:
-      '39 medals in 49 academic olympiads across math, physics, chemistry, biology and astronomy. 19 of them gold.',
-    cardDesc:
-      '49 competitions in math, physics, chemistry and astronomy. 1st of 10,000+ at IFT-UNESP. Gold at ONNEQ. 1st at OBAQ.',
-    tags: ['19 gold', '2 international', '1st IFT-UNESP'],
-    gallery: ['01.webp'],
-    captions: { '01.webp': 'Wearing the medals.' },
-    focus: { '01.webp': '50% 30%' },
-    stats: [
-      { value: '39', label: 'medals in 49 competitions' },
-      { value: '19', label: 'gold' },
-      { value: '2', label: 'international' },
-      { value: '1st', label: 'of 10,000+ at IFT-UNESP' },
-    ],
-    sections: [
-      {
-        heading: 'The record',
-        body: [
-          '39 medals in 49 competitions, across math, physics, chemistry, biology and astronomy. 19 gold, 2 of them international.',
-          'The gold at OBFEP, the physics olympiad for public schools, is the one that turned into Projeto Candela.',
-        ],
-      },
-      {
-        heading: 'Selections',
-        body: [
-          '1st of more than 10,000 applicants at IFT-UNESP, the Institute for Theoretical Physics, and the only student from the Northeast picked that year.',
-          '1st at OBAQ, top 0.014%. Gold at ONNEQ, top 0.675%. Silver at OBMEP and bronze at OBQ.',
-        ],
-      },
-      {
-        heading: 'Alongside',
-        body: [
-          'SAT 1510/1600, top 1% in Brazil.',
-        ],
-      },
-    ],
-  },
-  {
     slug: 'gsat',
     title: 'GSAT Education',
     eyebrow: 'Company',

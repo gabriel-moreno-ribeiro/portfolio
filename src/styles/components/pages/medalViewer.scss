@@ -1,0 +1,20 @@
+// The viewer reuses the project lightbox; a medal floats on the dark overlay.
+.medal-viewer__figure {
+  &.is-medal img {
+    width: min(76vh, 100%);
+    height: auto;
+    border-radius: 0;
+    filter: drop-shadow(0 24px 30px rgba(0, 0, 0, 0.55));
+  }
+
+  figcaption {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4px 12px;
+
+    strong { color: #fff; font-weight: 600; }
+  }
+}
+
+.medal-viewer__count { opacity: 0.6; }

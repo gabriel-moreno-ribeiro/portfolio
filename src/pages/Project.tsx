@@ -4,7 +4,6 @@ import { createPortal } from 'react-dom';
 import { FiArrowLeft, FiArrowUpRight, FiChevronLeft, FiChevronRight, FiX } from 'react-icons/fi';
 import { lazy, Suspense } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import MedalWall from '../components/Medals/MedalWall';
 import Navbar from '../components/Navbar/Navbar';
 import Footer from '../components/Shared/Footer';
 import { Project, projectBySlug, projects } from '../content/projects';
@@ -137,9 +136,7 @@ function ProjectPage() {
         </div>
       </motion.header>
 
-      {project.slug === 'medals' && <MedalWall />}
-
-      {hero && project.slug !== 'medals' && (
+      {hero && (
         <motion.button
           type="button"
           className="project__hero"

@@ -6,7 +6,7 @@ Crie uma subpasta pra cada atividade e jogue os arquivos com estes nomes
   /work/hibeex/        -> HIBEEX
   /work/candela/       -> Projeto Candela
   /work/rct/           -> RCT de poupanca
-  /work/medals/        -> Medalhas
+  /work/medals/        -> Medalhas (card na home: framed-*.webp + wall/sm e wall/full)
   /work/kinetics/      -> Pesquisa de cinetica quimica
   /work/gsat/          -> GSAT Education
 

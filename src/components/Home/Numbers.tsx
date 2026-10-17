@@ -6,7 +6,7 @@ import NumberStatsCard from "./NumberStatsCard";
 const STATS = [
   { img: '/stats/obfep.webp', imgPadding: 6, value: 39, label: 'olympiad medals (19 gold)' },
   { img: '/stats/screwdriver.webp', imgPadding: 18, value: 3392, label: 'students reached (Projeto Candela)' },
-  { img: '/stats/sat.webp', imgPadding: 18, prefix: 'SAT ', value: 1510, grouping: false, label: '/ 1600 (Top 1% Brazil)' },
+  { img: '/stats/sat.webp', imgPadding: 18, prefix: 'SAT ', value: 1570, grouping: false, label: '/ 1600 (Top 1% Brazil)' },
   { img: '/stats/fe.webp', imgPadding: 4, value: 0.7, decimals: 1, suffix: '%', label: 'acceptance rate, Fundação Estudar' },
 ];
 
