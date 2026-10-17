@@ -30,17 +30,18 @@ const SECTIONS = [
   { id: 'contact', label: 'Contact' },
 ];
 
-// Heights measured at 1440 and 390 after the October rebuild (city tour with a
-// fixed text height, Skills without canvas). Close enough that swapping the box
-// for the real section barely moves what's below.
-const RESERVE: Record<string, [desktop: number, mobile: number]> = {
-  background: [955, 975],
-  work: [2250, 2350],
-  numbers: [460, 240],
-  research: [1120, 1640],
-  skills: [1000, 525],
-  'work-experience': [2450, 2250],
-  contact: [480, 872],
+// Heights measured at 1440, 768 and 390 (desktop, tablet, phone). Close enough
+// that swapping the box for the real section barely moves what's below; the
+// tablet column matters most, because a deep link to #contact mounts everything
+// above it at once.
+const RESERVE: Record<string, [desktop: number, tablet: number, mobile: number]> = {
+  background: [955, 1335, 975],
+  work: [2250, 2990, 2350],
+  numbers: [330, 315, 190],
+  research: [1120, 1240, 1640],
+  skills: [1000, 1000, 525],
+  'work-experience': [2450, 2500, 2250],
+  contact: [385, 785, 870],
 };
 const LAZY_IDS = new Set(Object.keys(RESERVE));
 
@@ -66,7 +67,8 @@ function LazySection({ id, label, eager, children }: { id: string; label: string
   const ref = useRef<HTMLDivElement>(null);
   const near = useVisible(ref, { rootMargin: '50% 0px', once: true });
   const mobile = useIsMobile(600);
-  const height = RESERVE[id][mobile ? 1 : 0];
+  const tablet = useIsMobile(900);
+  const height = RESERVE[id][mobile ? 2 : tablet ? 1 : 0];
   const placeholder = <Reserve id={id} label={label} height={height} />;
   return (
     <div ref={ref}>

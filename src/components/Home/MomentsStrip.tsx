@@ -40,10 +40,12 @@ function Row({
             <img
               src={m.src}
               alt={i < items.length ? m.alt : ''}
-              /* The first five of each row load up front (three let a photo slide
-                 in before it arrived); the rest wait for the browser's lazy margin. */
-              loading={i < 5 ? 'eager' : 'lazy'}
-              fetchPriority={priority && i === 0 ? 'high' : undefined}
+              /* Every photo loads up front: the row clips its track, so a lazy image
+                 only starts downloading once the marquee has already slid it into
+                 view, and an empty card drifts across. The ones past the first screen
+                 just queue behind everything else. */
+              loading="eager"
+              fetchPriority={priority && i === 0 ? 'high' : i < 5 ? undefined : 'low'}
               decoding="async"
               width={m.w}
               height={m.h}
