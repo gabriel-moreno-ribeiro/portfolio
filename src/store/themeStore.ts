@@ -6,12 +6,15 @@ const setThemeColor = (isDark: boolean) =>
     .querySelector('meta[name="theme-color"]')
     ?.setAttribute("content", isDark ? "#14100d" : "#fff8f4");
 
+// Storage can throw (cookies blocked, some private modes): never let that stop the app.
+export const readStore = (k: string) => { try { return localStorage.getItem(k); } catch { return null; } };
+export const writeStore = (k: string, v: string) => { try { localStorage.setItem(k, v); } catch { /* not saved */ } };
+
 // Utility function to get the initial theme
 const getInitialTheme = () => {
-  // Check local storage
-  const savedTheme = localStorage.getItem("darkMode");
+  const savedTheme = readStore("darkMode");
   if (savedTheme !== null) {
-    const isDark = JSON.parse(savedTheme);
+    const isDark = savedTheme === "true";
     // Apply data-theme synchronously to prevent FOUC
     document.documentElement.setAttribute(
       "data-theme",
@@ -39,7 +42,7 @@ export const useThemeStore = create<ThemeState>((set) => ({
         newMode ? "dark" : "light"
       );
       setThemeColor(newMode);
-      localStorage.setItem("darkMode", JSON.stringify(newMode));
+      writeStore("darkMode", String(newMode));
       return { darkMode: newMode };
     }),
 }));

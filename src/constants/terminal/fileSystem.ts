@@ -38,8 +38,10 @@ function buildProjectFiles(
     const desc = project.modalData.desc.replace(/<[^>]*>/g, "");
     const links: string[] = [];
     if (project.cardData.url) {
-      if ("githubUrl" in project.cardData.url && project.cardData.url.githubUrl)
-        links.push(`GitHub: ${project.cardData.url.githubUrl}`);
+      if ("githubUrl" in project.cardData.url && project.cardData.url.githubUrl) {
+        const url = project.cardData.url.githubUrl;
+        links.push(`${url.includes("github.com") ? "GitHub" : "Website"}: ${url}`);
+      }
       if (
         "youtubeUrl" in project.cardData.url &&
         project.cardData.url.youtubeUrl
@@ -79,7 +81,7 @@ export function buildFileSystem(): DirectoryNode {
       "education.txt": {
         type: "file",
         name: "education.txt",
-        content: `Education\n=========\n${education.degree}\n${education.university}\nGraduated: ${education.year}`,
+        content: `Education\n=========\n${education.degree}\n${education.university}\nStatus: ${education.year}`,
       },
       skills: {
         type: "directory",
@@ -181,7 +183,7 @@ export function resolvePathToNode(
   let current: FileSystemNode = root;
   for (const part of parts) {
     if (current.type !== "directory") return null;
-    if (!(part in current.children)) return null;
+    if (!Object.prototype.hasOwnProperty.call(current.children, part)) return null;
     current = current.children[part];
   }
   return current;

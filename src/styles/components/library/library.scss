@@ -119,12 +119,6 @@ body:has(.library) { padding-block: 0; }
 
   > * { pointer-events: auto; }
 
-  // Tablet to small laptop: a centred pill lands on "All books" in the crumb.
-  // It moves right instead, clear of the camera and theme buttons.
-  @media (min-width: 761px) and (max-width: 1199px) {
-    justify-content: flex-end;
-    padding-right: 140px;
-  }
 }
 
 // ── Top-left crumb: Home, the page name, All books ──────────────────────────
@@ -1115,4 +1109,12 @@ body:has(.library) { padding-block: 0; }
     transition-duration: 1ms !important;
     transition-delay: 0ms !important;
   }
+}
+
+// Tablet to small laptop: the compact pill sits top-left (Navbar), so the crumb
+// steps down under it, as on phones, and the shelf frames below the crumb.
+@media (min-width: 761px) and (max-width: 1199px) {
+  .library { --lib-top: 128px; }
+  .library__eyebrow,
+  .library__eyebrow-back { top: 80px; left: 18px; }
 }

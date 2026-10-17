@@ -45,7 +45,7 @@ function MacButtons({
       {buttons.map((button) => (
         <button
           type="button"
-          key={button.label}
+          key={button.color}
           className="mac-button"
           aria-label={button.label}
           onClick={button.onClick}

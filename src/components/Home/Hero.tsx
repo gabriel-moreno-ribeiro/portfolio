@@ -172,13 +172,15 @@ function Hero() {
             iconPosition="right"
             onClick={() => scrollToComponent('work')}
           />
-          <CommonButton
-            text="Book a Call"
-            variant="outline"
-            Icon={<FiCalendar className="icon-link" />}
-            iconPosition="right"
-            onClick={() => window.open('https://cal.com/gabrielmribeiro', '_blank')}
-          />
+          <a
+            className="btn outline"
+            href="https://cal.com/gabrielmribeiro"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <p className="text">Book a Call</p>
+            <div className="icon"><FiCalendar className="icon-link" aria-hidden="true" /></div>
+          </a>
           {/* A real link (the file downloads with a clean name), black in both themes */}
           <a
             className="btn hero-resume"

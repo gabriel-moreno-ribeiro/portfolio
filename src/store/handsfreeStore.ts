@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { readStore, writeStore } from "./themeStore";
 
 interface HandsfreeState {
   isEnabled: boolean;
@@ -17,14 +18,14 @@ interface HandsfreeState {
 
 export const useHandsfreeStore = create<HandsfreeState>((set) => ({
   isEnabled: false,
-  hasSeenIntro: localStorage.getItem("handsfree-intro-seen") === "true",
+  hasSeenIntro: readStore("handsfree-intro-seen") === "true",
   showIntroModal: false,
   showGestureTutorial: false,
   cameraPermission: "prompt",
   modelLoadProgress: 0,
   setEnabled: (enabled) => set({ isEnabled: enabled }),
   setHasSeenIntro: (seen) => {
-    localStorage.setItem("handsfree-intro-seen", String(seen));
+    writeStore("handsfree-intro-seen", String(seen));
     set({ hasSeenIntro: seen });
   },
   setShowIntroModal: (show) => set({ showIntroModal: show }),

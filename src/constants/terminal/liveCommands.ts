@@ -46,17 +46,15 @@ const liveCommands: TerminalCommand[] = [
     execute: (ctx) => {
       const { local, github } = getSnapshot();
       ctx.writeln(yellow("By the Numbers"));
-      for (const stat of local.numbers) {
+      for (const stat of local.numbers.filter((s) => !s._placeholder)) {
         const value = formatStat(stat).padEnd(8);
         const sub = stat.sub ? dim(`  ${stat.sub.replace(/\*\*/g, "")}`) : "";
         ctx.writeln(`  ${green(value)} ${stat.label}${sub}`);
       }
-      ctx.writeln("");
       if (github) {
         const commit = github.lastCommit ? ` · last commit ${formatRelative(github.lastCommit.at)}` : "";
+        ctx.writeln("");
         ctx.writeln(dim(`live: ${github.publicRepos} repos${commit}`));
-      } else {
-        ctx.writeln(dim(PANEL_HINT));
       }
     },
   },

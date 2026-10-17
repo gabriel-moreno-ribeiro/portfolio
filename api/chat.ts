@@ -1,4 +1,5 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
+import { tooMany } from "./_ratelimit";
 
 const SYSTEM_PROMPT = `You are the AI assistant on Gabriel Moreno Ribeiro's portfolio website (gabrielmr.com). You represent Gabriel and answer questions about him in a helpful, friendly, slightly witty tone.
 
@@ -26,6 +27,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
   }
+  if (tooMany(req, 30, 600_000)) {
+    return res.status(429).json({ error: "Slow down a little." });
+  }
 
   // Origin check
   const origin = (req.headers.origin || req.headers.referer || "") as string;
@@ -40,12 +44,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   const { messages } = req.body || {};
-  if (!messages || !Array.isArray(messages) || messages.length === 0) {
+  if (!Array.isArray(messages) || messages.length === 0) {
     return res.status(400).json({ error: "Messages array is required" });
   }
-
-  const lastMsg = messages[messages.length - 1]?.content;
-  if (typeof lastMsg === "string" && lastMsg.length > 500) {
+  // Only user/assistant turns with string content, at most the last 20 (as the
+  // client sends): a caller can't add a system turn or bill a huge history.
+  const clean = messages.slice(-20).map((m: { role?: unknown; content?: unknown }) => ({
+    role: m?.role === "assistant" ? "assistant" : "user",
+    content: typeof m?.content === "string" ? m.content.slice(0, 2000) : "",
+  }));
+  const lastMsg = clean[clean.length - 1].content;
+  if (!lastMsg || lastMsg.length > 500) {
     return res.status(400).json({ error: "Message too long. Keep it under 500 characters." });
   }
 
@@ -63,7 +72,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       },
       body: JSON.stringify({
         model: "qwen/qwen3.8-27b",
-        messages: [{ role: "system", content: SYSTEM_PROMPT }, ...messages],
+        messages: [{ role: "system", content: SYSTEM_PROMPT }, ...clean],
         max_tokens: 300,
         temperature: 0.7,
         stream: true,
@@ -71,6 +80,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     });
 
     if (!upstream.ok || !upstream.body) {
+      console.error("[Chat] Groq error:", upstream.status);
       return res.status(502).json({ error: "AI service returned an error." });
     }
 

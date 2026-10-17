@@ -60,6 +60,13 @@ $ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 
 .medal-wall__cell { aspect-ratio: 1; }
 
+.medal-wall__note {
+  margin: 20px 0 0;
+  text-align: center;
+  font-size: 14px;
+  color: var(--fg-muted);
+}
+
 // Each medal hangs from its ribbon at its own angle (--tilt, set per medal in
 // MedalWall.tsx). Hover lifts it off the wall and straightens it.
 .medal-wall__medal {

@@ -1,36 +1,17 @@
-import { useEffect, useCallback } from "react";
+import { useEffect } from "react";
 import {
   useWindowManagerStore,
   useWindow,
 } from "../../store/windowManagerStore";
 import useIsMobile from "../../hooks/useIsMobile";
+import { toggleTerminalWindow } from "../../utils/terminalWindow";
 
 function TerminalModal() {
   const terminalWindow = useWindow("terminal");
-  const openWindow = useWindowManagerStore((s) => s.openWindow);
   const closeWindow = useWindowManagerStore((s) => s.closeWindow);
-  const restoreWindow = useWindowManagerStore((s) => s.restoreWindow);
   const isMobile = useIsMobile();
 
-  const toggle = useCallback(() => {
-    if (terminalWindow?.status === "minimized") {
-      restoreWindow("terminal");
-    } else if (terminalWindow) {
-      closeWindow("terminal");
-    } else {
-      openWindow({
-        id: "terminal",
-        title: "Terminal",
-        type: "terminal",
-        status: "open",
-        position: {
-          x: Math.max(0, window.innerWidth / 2 - 480),
-          y: Math.max(0, window.innerHeight / 2 - 300),
-        },
-        size: { width: 960, height: 0 },
-      });
-    }
-  }, [terminalWindow, openWindow, closeWindow, restoreWindow]);
+  const toggle = toggleTerminalWindow;
 
   // Lock scroll only on mobile (desktop windows float over scrollable content)
   useEffect(() => {

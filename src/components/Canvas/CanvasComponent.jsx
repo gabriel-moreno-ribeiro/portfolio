@@ -24,6 +24,11 @@ function Model({ onReady, ...props }) {
   const wokeAt = useRef(-Infinity);
   const baseY = useRef(props.position?.[1] ?? 0);
   const invalidate = useThree((s) => s.invalidate);
+  const frameloop = useThree((s) => s.frameloop);
+  // Back from a hidden tab or from off screen: settle (or keep bobbing) without waiting for input
+  useEffect(() => {
+    if (frameloop === "demand") invalidate();
+  }, [frameloop, invalidate]);
 
   useEffect(() => {
     // Model is mounted = GLB is loaded and scene is ready

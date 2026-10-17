@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
-import { usePageVisible, useReducedMotion, useVisible } from "../../lib/motion";
+import { Counter, usePageVisible, useReducedMotion, useVisible } from "../../lib/motion";
 import NumberStatsCard from "./NumberStatsCard";
 
 const STATS = [
@@ -10,23 +10,6 @@ const STATS = [
   { img: '/stats/fe.webp', imgPadding: 4, value: 0.7, decimals: 1, suffix: '%', label: 'acceptance rate, Fundação Estudar' },
 ];
 
-// Counts from 0 to value over ~1.1s with an ease-out; restarts whenever value changes.
-function CountUp({ value, decimals = 0, grouping = true, still = false }: { value: number; decimals?: number; grouping?: boolean; still?: boolean }) {
-  const [n, setN] = useState(still ? value : 0);
-  useEffect(() => {
-    if (still) { setN(value); return; }
-    let raf = 0;
-    const start = performance.now();
-    const tick = (t: number) => {
-      const p = Math.min(1, (t - start) / 1100);
-      setN(value * (1 - Math.pow(1 - p, 3)));
-      if (p < 1) raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [value, still]);
-  return <>{n.toLocaleString('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals, useGrouping: grouping })}</>;
-}
 
 const NumbersAndStats = () => {
   const [index, setIndex] = useState(0);
@@ -67,19 +50,18 @@ const NumbersAndStats = () => {
             imgSrc={stat.img}
             imgPadding={stat.imgPadding}
           />
-          <NumberStatsCard key={index + 1} frontCard={false} />
+          <NumberStatsCard key={(index + 1) % STATS.length} frontCard={false} />
         </AnimatePresence>
       </div>
       <motion.p
         key={index}
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -10 }}
         transition={{ duration: 0.3 }}
         className="card-text"
         aria-hidden="true"
       >
-        <span className="orange"> {stat.prefix}<CountUp value={stat.value} decimals={stat.decimals} grouping={stat.grouping} still={reduced} />{stat.suffix} </span>
+        <span className="orange"> <Counter value={stat.value} decimals={stat.decimals} grouping={stat.grouping} prefix={stat.prefix} suffix={stat.suffix} /> </span>
         {stat.label}
       </motion.p>
       {/* Pick a stat instead of waiting for the rotation; a pick also holds it */}

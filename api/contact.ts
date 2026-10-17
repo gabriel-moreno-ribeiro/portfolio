@@ -1,8 +1,12 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
+import { tooMany } from './_ratelimit';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
+  }
+  if (tooMany(req, 5, 3_600_000)) {
+    return res.status(429).json({ error: 'Too many messages. Please try again later or email me directly.' });
   }
 
   const apiKey = process.env.RESEND_API_KEY;

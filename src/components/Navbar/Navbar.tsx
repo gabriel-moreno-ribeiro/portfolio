@@ -27,7 +27,9 @@ const socials = [
 ];
 
 function Navbar() {
-  const isMobile = useIsMobile();
+  // Below the pinned bar (1200px) the pill is the compact two-row one; the 740px
+  // desktop pill ran off tablet screens and under the floating buttons.
+  const isMobile = useIsMobile(1199);
   // From 1200px up the links stay on show, so Story, Library and News are one click
   // away; below that the pill would run over the page, so it opens on hover/tap.
   const pinned = !useIsMobile(1199);

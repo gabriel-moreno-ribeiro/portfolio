@@ -16,7 +16,7 @@ function MobileStickyCTA() {
 
   useEffect(() => {
     // The bar only exists on phones (CSS): no scroll work on wider screens.
-    if (!window.matchMedia('(max-width: 768px)').matches) return;
+    if (!window.matchMedia('(max-width: 600px)').matches) return;
     const onScroll = () => setVisible(window.scrollY > SHOW_AFTER && !contactOnScreen());
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });

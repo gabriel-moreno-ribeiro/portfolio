@@ -1,6 +1,6 @@
 .dock {
   position: fixed;
-  bottom: 16px;
+  bottom: 82px; // above the terminal button (50px at 16px), which it used to cover
   right: 16px;
   z-index: 10002;
   display: flex;

@@ -185,3 +185,9 @@
   &:hover,
   &:focus-visible { border-color: #fff; }
 }
+
+// 601–767px: no robot slot (Hero.tsx) but the fixed pill is still on top, so the
+// name needs the same clearance as on phones.
+@media screen and (min-width: 601px) and (max-width: 767px) {
+  .hero-section { margin-top: 88px; }
+}

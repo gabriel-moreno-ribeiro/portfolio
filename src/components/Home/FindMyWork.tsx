@@ -48,13 +48,19 @@ function MediaCarousel({ project, paused, offset = 0 }: { project: Project; paus
   const next = () => setIdx((i) => (i + 1) % count);
   const nextFile = count > 1 ? available[(active + 1) % count] : null;
   const underFile = under !== null && under !== active && !reduced ? available[under % count] : null;
+  // 640px copy for the 640px box; a 2x screen takes the original.
+  const pic = (f: string) => ({
+    src: `/work/${project.slug}/sm/${f}`,
+    srcSet: `/work/${project.slug}/sm/${f} 640w, /work/${project.slug}/${f} 1600w`,
+    sizes: "(max-width: 900px) 100vw, 640px",
+  });
 
   return (
     <div className="media-carousel" ref={wrapRef}>
       {underFile && !underFile.endsWith(".mp4") && (
         <img
           className="media-carousel__under"
-          src={`/work/${project.slug}/sm/${underFile}`}
+          {...pic(underFile)}
           alt=""
           aria-hidden="true"
           width={640}
@@ -68,9 +74,7 @@ function MediaCarousel({ project, paused, offset = 0 }: { project: Project; paus
         <img
           key={src}
           className={underFile ? "media-carousel__in" : undefined}
-          src={`/work/${project.slug}/sm/${current}`}
-          srcSet={`/work/${project.slug}/sm/${current} 640w, ${src} 1600w`}
-          sizes="(max-width: 900px) 100vw, 640px"
+          {...pic(current)}
           alt={project.captions?.[current] ?? project.title}
           width={640}
           height={400}
@@ -82,7 +86,7 @@ function MediaCarousel({ project, paused, offset = 0 }: { project: Project; paus
       {nextFile && !nextFile.endsWith(".mp4") && (
         <img
           className="media-carousel__preload"
-          src={`/work/${project.slug}/sm/${nextFile}`}
+          {...pic(nextFile)}
           alt=""
           aria-hidden="true"
           width={640}

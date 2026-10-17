@@ -540,6 +540,7 @@ export async function streamAiResponse(
     const decoder = new TextDecoder();
     let done = false;
     let needsNewline = false;
+    let buffer = "";
 
     // Write the AI prefix
     ctx.write(`\x1b[35m`); // magenta for AI
@@ -548,8 +549,9 @@ export async function streamAiResponse(
       const { value, done: readerDone } = await reader.read();
       done = readerDone;
       if (value) {
-        const chunk = decoder.decode(value, { stream: true });
-        const lines = chunk.split("\n");
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split("\n");
+        buffer = lines.pop() ?? "";
         for (const line of lines) {
           if (line.startsWith("data: ")) {
             const data = line.slice(6);

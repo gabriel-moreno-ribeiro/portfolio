@@ -7,6 +7,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { FiChevronLeft, FiChevronRight, FiX } from 'react-icons/fi';
 import { Medal, medals } from '../../content/medals';
+import { useDialog } from '../../hooks/useDialog';
 import '../../styles/components/pages/medalWall.scss';
 
 const PHOTO_ALT = 'Gabriel in uniform, wearing the medals';
@@ -41,30 +42,7 @@ function Viewer({ index, onClose, onStep }: { index: number; onClose: () => void
   const dialogRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
 
-  useEffect(() => {
-    const opener = document.activeElement as HTMLElement | null;
-    closeRef.current?.focus();
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
-      if (e.key === 'ArrowRight') onStep(1);
-      if (e.key === 'ArrowLeft') onStep(-1);
-      // Tab cycles through the three controls instead of leaving the dialog
-      if (e.key === 'Tab' && dialogRef.current) {
-        const f = [...dialogRef.current.querySelectorAll<HTMLElement>('button')];
-        const i = f.indexOf(document.activeElement as HTMLElement);
-        e.preventDefault();
-        f[(i + (e.shiftKey ? -1 : 1) + f.length) % f.length]?.focus();
-      }
-    };
-    window.addEventListener('keydown', onKey);
-    const { overflow } = document.body.style;
-    document.body.style.overflow = 'hidden';
-    return () => {
-      window.removeEventListener('keydown', onKey);
-      document.body.style.overflow = overflow;
-      opener?.focus();
-    };
-  }, [onClose, onStep]);
+  useDialog(dialogRef, closeRef, onClose, onStep);
 
   // Same viewer as the project photos, portalled above the navbar.
   return createPortal(
@@ -108,7 +86,7 @@ export default function MedalWall() {
   const close = useCallback(() => setOpen(null), []);
 
   return (
-    <section className="medal-wall" aria-label={`${medals.length} medals around a photo of Gabriel`}>
+    <section className="medal-wall" aria-label={`${medals.length} of the 39 medals, around a photo of Gabriel`}>
       <ul className="medal-wall__grid">
         <li className="medal-wall__photo">
           <button type="button" onClick={() => setOpen(0)} aria-label="Open the photo large">
@@ -139,6 +117,7 @@ export default function MedalWall() {
           </li>
         ))}
       </ul>
+      <p className="medal-wall__note">{medals.length} of the 39, photographed one by one.</p>
       {open !== null && <Viewer index={open} onClose={close} onStep={step} />}
     </section>
   );

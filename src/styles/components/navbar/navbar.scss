@@ -141,10 +141,10 @@
   }
 }
 
-// Phones: the open pill is two rows. Row one keeps the name and the two toggles; the
+// Phones and tablets (below the pinned bar): the open pill is two rows. Row one keeps the name and the two toggles; the
 // links (and the brand marks) get the whole width of row two. In one row, LinkedIn
 // and GitHub used to land on top of the camera and theme buttons.
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 1199px) {
   .navbar {
     left: 16px;
     padding: 12px 16px;

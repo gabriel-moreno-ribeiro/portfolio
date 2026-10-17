@@ -94,7 +94,6 @@
 @media screen and (max-width: 768px) {
   .footer {
     padding: 12px 24px;
-    margin-bottom: 80px;
 
     .links {
       gap: 2px;
@@ -109,4 +108,9 @@
 .footer .links {
   flex-wrap: wrap;
   justify-content: center;
+}
+
+// Room for the phone's sticky contact bar
+@media screen and (max-width: 600px) {
+  .footer { margin-bottom: 80px; }
 }

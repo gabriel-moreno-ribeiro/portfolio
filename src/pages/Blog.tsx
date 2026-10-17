@@ -15,7 +15,7 @@ function Blog() {
 
   return (
     <main className="page-wrapper" id="main-content">
-      <Navbar />
+      <div className="page-nav"><Navbar /></div>
       <motion.div
         className="page-content"
         initial={{ opacity: 0, y: 20 }}

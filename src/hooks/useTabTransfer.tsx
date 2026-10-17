@@ -56,13 +56,8 @@ export function TabTransferProvider({ children }: { children: ReactNode }) {
   );
   const peerCheckRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  // The channel (and its heartbeat) only runs while a window exists to transfer.
-  const hasWindows = useWindowManagerStore((s) => Object.keys(s.windows).length > 0);
+  // Init/destroy channel
   useEffect(() => {
-    if (!hasWindows) {
-      setHasPeer(false);
-      return;
-    }
     initTabChannel();
 
     // Periodically check peer status
@@ -74,7 +69,7 @@ export function TabTransferProvider({ children }: { children: ReactNode }) {
       if (peerCheckRef.current) clearInterval(peerCheckRef.current);
       destroyTabChannel();
     };
-  }, [hasWindows]);
+  }, []);
 
   // Listen for incoming window transfers
   useEffect(() => {

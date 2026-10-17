@@ -12,6 +12,7 @@
   gap: 12px;
   min-height: 44px;
   border: 2px solid transparent;
+  text-decoration: none; // Book a Call is an <a>: the global link underline was leaking in
 
   .icon {
     display: flex;

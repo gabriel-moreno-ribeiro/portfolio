@@ -8,6 +8,7 @@ import MedalWall from '../components/Medals/MedalWall';
 import Navbar from '../components/Navbar/Navbar';
 import Footer from '../components/Shared/Footer';
 import { Project, projectBySlug, projects } from '../content/projects';
+import { useDialog } from '../hooks/useDialog';
 import { useDocumentHead } from '../hooks/useDocumentHead';
 import '../styles/components/pages/project.scss';
 
@@ -42,29 +43,7 @@ function Lightbox({
 
   // Focus moves to Close, Tab cycles inside the dialog, and whoever opened it
   // gets the focus back when it closes.
-  useEffect(() => {
-    const opener = document.activeElement as HTMLElement | null;
-    closeRef.current?.focus();
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
-      if (e.key === 'ArrowRight') onStep(1);
-      if (e.key === 'ArrowLeft') onStep(-1);
-      if (e.key === 'Tab' && dialogRef.current) {
-        const f = [...dialogRef.current.querySelectorAll<HTMLElement>('button')];
-        const i = f.indexOf(document.activeElement as HTMLElement);
-        e.preventDefault();
-        f[(i + (e.shiftKey ? -1 : 1) + f.length) % f.length]?.focus();
-      }
-    };
-    window.addEventListener('keydown', onKey);
-    const { overflow } = document.body.style;
-    document.body.style.overflow = 'hidden';
-    return () => {
-      window.removeEventListener('keydown', onKey);
-      document.body.style.overflow = overflow;
-      opener?.focus();
-    };
-  }, [onClose, onStep]);
+  useDialog(dialogRef, closeRef, onClose, onStep);
 
   // Portalled to the body: .project sets z-index, so a lightbox rendered inside
   // it would stay trapped below the navbar and the floating buttons.

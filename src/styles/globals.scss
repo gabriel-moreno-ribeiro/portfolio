@@ -380,6 +380,11 @@ img {
   }
 }
 
+// Room for the phone's sticky contact bar (MobileStickyCTA)
+@media screen and (max-width: 600px) {
+  .home-wrapper { padding-bottom: 82px; }
+}
+
 // The page wrapper takes focus on a route change (App.tsx); no ring on it.
 .page-enter:focus { outline: none; }
 
@@ -475,7 +480,6 @@ img {
 
   .home-wrapper {
     gap: 24px;
-    padding-bottom: 82px;
   }
 
   .page-title {

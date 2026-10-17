@@ -423,15 +423,13 @@ function DraggableWindow({
         };
   }, [hasPeer, win?.size.width]);
 
-  if (!win || win.status === "minimized") return null;
-
-  const isMaximized = win.status === "maximized";
   // The terminal, the hands-free intro and the gesture tutorial behave like modal
   // dialogs (a shortcut or button opens them, Escape closes them, focus goes back
   // to the opener). The terminal handles its own keys; the other two do it here.
+  const open = !!win && win.status !== "minimized";
   const isDialog = windowId === "terminal" || windowId === "handsfree-intro" || windowId === "gesture-tutorial";
   useEffect(() => {
-    if (!isDialog || windowId === "terminal") return;
+    if (!open || !isDialog || windowId === "terminal") return;
     const opener = document.activeElement as HTMLElement | null;
     windowRef.current?.focus({ preventScroll: true });
     const onKey = (e: KeyboardEvent) => {
@@ -442,7 +440,11 @@ function DraggableWindow({
       window.removeEventListener("keydown", onKey);
       opener?.focus();
     };
-  }, [isDialog, windowId, closeWindow]);
+  }, [open, isDialog, windowId, closeWindow]);
+
+  if (!win || win.status === "minimized") return null;
+
+  const isMaximized = win.status === "maximized";
 
   return (
     <motion.div
