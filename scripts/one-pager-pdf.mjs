@@ -17,6 +17,7 @@ await page.goto(url, { waitUntil: 'networkidle' });
 await page.waitForSelector('.op__head');
 await page.waitForFunction(() => !document.getElementById('preloader'));
 await page.evaluate(() => document.fonts.ready);
-await page.pdf({ path: out, format: 'A4', printBackground: true, preferCSSPageSize: true });
+// Tagged, so the PDF keeps the headings, lists and the ledger pairs for a screen reader.
+await page.pdf({ path: out, format: 'A4', printBackground: true, preferCSSPageSize: true, tagged: true });
 await browser.close();
 console.log(`wrote ${out}`);

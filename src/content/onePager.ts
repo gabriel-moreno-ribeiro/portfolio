@@ -25,7 +25,7 @@ export const problem =
   'O dono de PME no Brasil gasta mais de 1.300 horas por ano em back office. Contador, BPO e advogado cuidam dele, e cada um vê só a sua parte: o dado do ERP e o do Domínio deveriam ser iguais e nunca são, a conciliação quebra, e o escritório não cresce sem contratar gente.';
 
 export const product =
-  'Conecta nos sistemas que o escritório já usa (Domínio, Conta Azul, Nibo, Omie), limpa o dado e põe agentes pra executar o serviço: conciliação, cobrança, contratos. Vende pelo escritório, que já cuida de uns 65 PMEs, e cobra por serviço entregue e por resultado, não por licença.';
+  'Conecta nos sistemas que o escritório já usa (Domínio, Conta Azul, Nibo, Omie), limpa o dado e põe agentes pra executar o serviço: conciliação, cobrança, contratos. Vende pelo escritório, que já cuida de umas 65 PMEs, e cobra por serviço entregue e por resultado, não por licença.';
 
 export const SOURCES = {
   gc: {
@@ -63,7 +63,7 @@ export const now = {
   thrive: 'E a Thrive Holdings separou US$ 1 bilhão pra comprar escritórios de contabilidade e operar com IA.',
 };
 
-// Traction. `count` is what the odometer runs to; the rest is printed as is.
+// Traction. prefix + count (formatted pt-BR) + suffix, printed as is.
 export interface Metric {
   before?: string;
   prefix?: string;
@@ -81,7 +81,7 @@ export const traction: Metric[] = [
   { before: '63,9', count: 9, suffix: ' dias', label: 'de prazo de recebimento num cliente (55 dias de caixa de volta)' },
   { prefix: 'R$ ', count: 12480, label: 'recuperados pra um único cliente' },
 ];
-export const pipeline = 'Uns 730 escritórios no pipeline. Alvo: 750 escritórios parceiros em 36 meses, uns 49 mil PMEs.';
+export const pipeline = 'Uns 730 escritórios no pipeline. Alvo: 750 escritórios parceiros em 36 meses, umas 49 mil PMEs.';
 
 export const whyNow = [
   { lead: 'Split payment em 2027.', text: 'Até 28% da venda retido na origem. A PME perde capital de giro, e quem explica isso pra ela é o contador.' },
@@ -131,4 +131,5 @@ export const askClose = 'Em dezembro eu levo o produto rodando, não slide.';
 
 export const footer = 'Hibeex: contabilidade, financeiro e jurídico da PME numa operação só. Outubro de 2026.';
 
-export const PDF = '/files/gabriel-moreno-ribeiro-hibeex.pdf';
+// The build time busts the 30-day cache on /files when the PDF is regenerated.
+export const PDF = `/files/gabriel-moreno-ribeiro-hibeex.pdf?v=${encodeURIComponent(__BUILD_TIME__)}`;

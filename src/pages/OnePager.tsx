@@ -5,6 +5,7 @@
 // Hibeex is the bee. The same markup prints to one A4 sheet;
 // scripts/one-pager-pdf.mjs makes the PDF behind the download button.
 import { motion } from 'motion/react';
+import { useEffect } from 'react';
 import { FiArrowDown, FiArrowLeft, FiDownload } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar/Navbar';
@@ -20,9 +21,12 @@ import '../styles/components/pages/onePager.scss';
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
+// Links that leave the page say so, like the site's social icons do.
+const NEW_TAB = <span className="sr-only"> (abre em nova aba)</span>;
+
 const Source = ({ id }: { id: keyof typeof SOURCES }) => (
   <small className="op__source">
-    <a href={SOURCES[id].href} target="_blank" rel="noopener noreferrer">{SOURCES[id].label}</a>
+    <a href={SOURCES[id].href} target="_blank" rel="noopener noreferrer">{SOURCES[id].label}{NEW_TAB}</a>
   </small>
 );
 
@@ -48,11 +52,18 @@ function OnePager() {
 
   const reduced = useReducedMotion();
 
+  // The site is English; this page is Portuguese, down to the document itself.
+  useEffect(() => {
+    const prev = document.documentElement.lang;
+    document.documentElement.lang = 'pt-BR';
+    return () => { document.documentElement.lang = prev; };
+  }, []);
+
   return (
-    <main className="op" id="main-content" lang="pt-BR">
+    <main className="op" id="main-content">
       <div className="page-nav"><Navbar /></div>
 
-      <article className="op__page">
+      <article className="op__page" lang="pt-BR">
         <div className="op__bar">
           <Link to="/" className="page-back"><FiArrowLeft aria-hidden="true" /> Home</Link>
           {/* The reader with 60 seconds can go straight to the third answer */}
@@ -77,7 +88,9 @@ function OnePager() {
             {head.contact.map((c, i) => (
               <span key={c.href}>
                 {i > 0 && <i />}
-                <a href={c.href} target={c.href.startsWith('mailto') ? undefined : '_blank'} rel="noopener noreferrer">{c.label}</a>
+                <a href={c.href} target={c.href.startsWith('mailto') ? undefined : '_blank'} rel="noopener noreferrer">
+                  {c.label}{!c.href.startsWith('mailto') && NEW_TAB}
+                </a>
               </span>
             ))}
           </p>

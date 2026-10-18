@@ -5,7 +5,6 @@
 // Cool Things. Only site tokens, faces and sizes; one rule (1px var(--border));
 // one filled surface (the ask, drawn like the site's cards). One column on a
 // phone; two newspaper columns on A4.
-$ease: cubic-bezier(0.22, 1, 0.36, 1);
 $column: 760px;
 
 .op {
@@ -21,7 +20,9 @@ $column: 760px;
   font-size: 15px;
   line-height: 1.5;
 
-  p { margin: 0; text-wrap: pretty; }
+  p { margin: 0; }
+  p, li, dd { text-wrap: pretty; }
+  h2 { text-wrap: balance; }
   b { font-weight: 600; }
 }
 
@@ -31,6 +32,7 @@ $column: 760px;
 }
 
 // The text link the site draws: an underline that comes in from the left.
+// (The focus ring is the global one.)
 @mixin link-draw {
   color: inherit;
   text-decoration: none;
@@ -42,7 +44,6 @@ $column: 760px;
 
   &:hover,
   &:focus-visible { background-size: 100% 1px; color: var(--accent); }
-  &:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
 }
 
 // ── Bar and head: the /story column ───────────────────────────────────────────
@@ -87,7 +88,6 @@ $column: 760px;
     color: #111;
     border-color: #111;
   }
-  &:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 3px; }
 }
 
 [data-theme="dark"] .op__download {
@@ -135,27 +135,27 @@ $column: 760px;
   &::after { content: "."; }
 }
 
-.op__line {
-  margin-top: 22px !important;
+.op .op__line {
+  margin-top: 22px;
   font-size: 19px;
   line-height: 1.5;
   color: var(--fg-muted);
 }
 
 // The one-liner, in ink, as the summary the site's pages carry under the title.
-.op__deck {
-  margin-top: 10px !important;
+.op .op__deck {
+  margin-top: 10px;
   font-size: 19px;
   line-height: 1.5;
 }
 
 // Meta rows, joined with the site's 3px dots.
-.op__meta {
+.op .op__meta {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 8px 0;
-  margin-top: 26px !important;
+  margin-top: 26px;
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.12em;
@@ -174,10 +174,10 @@ $column: 760px;
 
   a { @include link-draw; color: var(--fg); }
 
-  & + & { margin-top: 10px !important; }
+  & + .op__meta { margin-top: 10px; }
 }
 
-.op__meta--links {
+.op .op__meta--links {
   font-size: 13px;
   font-weight: 500;
   letter-spacing: 0;
@@ -241,10 +241,10 @@ $column: 760px;
   &--origin, &--problem { border-top: 0; }
 }
 
+// A citation wraps like the text it closes, so it never opens a line on its own.
 .op__source {
   font-size: 12px;
   color: var(--fg-muted);
-  white-space: nowrap;
 
   &::before { content: "("; }
   &::after { content: ")"; }
@@ -253,15 +253,26 @@ $column: 760px;
 }
 
 // ── Ledger ────────────────────────────────────────────────────────────────────
-.op__ledger { margin: 0; }
+// One figure column shared by the eight rows (subgrid), so the two
+// before-to-after rows widen it for everyone and every label starts at one x.
+.op__ledger {
+  display: grid;
+  grid-template-columns: minmax(150px, auto) minmax(0, 1fr);
+  column-gap: 16px;
+  margin: 0;
+}
 
 .op__figure {
   display: grid;
-  // The figure column grows for the two before-to-after rows, never clips.
+  grid-column: 1 / -1;
   grid-template-columns: minmax(150px, auto) minmax(0, 1fr);
-  align-items: baseline;
   column-gap: 16px;
+  align-items: baseline;
   padding: 9px 0;
+
+  @supports (grid-template-columns: subgrid) {
+    grid-template-columns: subgrid;
+  }
 
   & + & { border-top: 1px solid var(--border); }
 
@@ -381,22 +392,20 @@ $column: 760px;
 
   .op__head { grid-template-columns: 1fr; padding-bottom: 28px; }
   .op__head .op__bee { grid-column: 1; grid-row: 1; width: 40px; margin: 0 0 16px; }
-  .op__line { font-size: 17px; }
-  .op__deck { font-size: 17px; }
+  .op .op__line { font-size: 17px; }
+  .op .op__deck { font-size: 17px; }
 
   // One item per line: a dot opening a wrapped line is worse than no dots.
-  .op__meta { flex-direction: column; align-items: flex-start; gap: 4px; }
-  .op__meta i { display: none; }
-  .op__meta--links a { padding: 6px 0; margin: -6px 0; overflow-wrap: anywhere; }
+  // Each link grows to a 28px tap target without the boxes overlapping.
+  .op .op__meta { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .op .op__meta i { display: none; }
+  .op .op__meta--links a { padding: 4px 0; margin: -4px 0; overflow-wrap: anywhere; }
 
   .op__body { display: block; margin-top: 28px; }
   .op__s { padding: 22px 0 26px; }
   .op__s--origin, .op__s--problem { border-top: 1px solid var(--border); }
 
-  .op__figure {
-    grid-template-columns: minmax(150px, auto) minmax(0, 1fr);
-    column-gap: 12px;
-  }
+  .op__ledger, .op__figure { column-gap: 12px; }
 
   .op__ask {
     margin-top: 4px;
@@ -410,7 +419,9 @@ $column: 760px;
 // ── A4 ────────────────────────────────────────────────────────────────────────
 // Same markup, paper sizes. The head spans the sheet; the sections flow down
 // two columns and the ask card ends the second one. Rows, list items and the
-// card are the units that never split.
+// card are the units that never split. Everything here is scoped to the page
+// (:has(.op)), since the chunk stays loaded after leaving the route; only the
+// @page size cannot be, and A4 with these margins suits the other pages too.
 @page { size: A4; margin: 7mm 8mm; }
 
 @media print {
@@ -431,7 +442,8 @@ $column: 760px;
     text-align: left;
   }
 
-  .op__bar, .page-nav, .footer, .handsfree-button, .custom-mouse { display: none !important; }
+  .op__bar, .op__jump,
+  body:has(.op) .page-nav, body:has(.op) .footer, body:has(.op) .handsfree-button, body:has(.op) .custom-mouse { display: none !important; }
 
   .op__page { columns: 2; column-gap: 7mm; }
   .op__head, .op__foot { column-span: all; }
@@ -439,11 +451,11 @@ $column: 760px;
   .op__head { max-width: none; column-gap: 6mm; padding-bottom: 2.5mm; }
   .op__head .op__bee { width: 12mm; margin-top: 1mm; }
   .op__title { font-size: 22pt; }
-  .op__line { margin-top: 1.5mm !important; font-size: 8pt; }
-  .op__deck { margin-top: 1.2mm !important; font-size: 9.5pt; line-height: 1.3; }
-  .op__meta { margin-top: 2mm !important; font-size: 6pt; gap: 0.6mm 0; i { margin: 0 2.2mm; } }
-  .op__meta--links { font-size: 6.5pt; }
-  .op__meta + .op__meta { margin-top: 1.2mm !important; }
+  .op .op__line { margin-top: 1.5mm; font-size: 8pt; }
+  .op .op__deck { margin-top: 1.2mm; font-size: 9.5pt; line-height: 1.3; }
+  .op .op__meta { margin-top: 2mm; font-size: 6pt; gap: 0.6mm 0; i { margin: 0 2.2mm; } }
+  .op .op__meta--links { font-size: 6.5pt; }
+  .op .op__meta + .op__meta { margin-top: 1.2mm; }
 
   .op__body { display: block; margin-top: 0; }
   .op__s {
@@ -452,13 +464,16 @@ $column: 760px;
     p + p, ol + p { margin-top: 0.5em; }
   }
   .op__s--origin, .op__s--problem { border-top: 1px solid var(--border); }
+  .op__ledger, .op__figure { grid-template-columns: minmax(17mm, auto) minmax(0, 1fr); column-gap: 2.5mm; }
   .op__figure {
     break-inside: avoid;
-    grid-template-columns: minmax(17mm, auto) minmax(0, 1fr);
-    column-gap: 2.5mm;
     padding: 0.8mm 0;
     dt { font-size: 10pt; }
     dd { font-size: 7pt; line-height: 1.25; }
+
+    @supports (grid-template-columns: subgrid) {
+      grid-template-columns: subgrid;
+    }
   }
   .op__before { font-size: 7pt; }
   .op__arrow { display: none; }
@@ -493,6 +508,6 @@ $column: 760px;
   }
 
   // The body's 100vh floor and bottom padding spilled a blank second page.
-  html, body { height: auto !important; min-height: 0 !important; padding: 0 !important; overflow: visible; }
-  a { text-decoration: none; background-image: none; }
+  html:has(.op), body:has(.op) { min-height: 0 !important; padding: 0 !important; overflow: visible; }
+  .op a { text-decoration: none; background-image: none; }
 }
