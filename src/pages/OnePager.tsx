@@ -1,11 +1,11 @@
 // /one-pager: Gabriel and Hibeex on one page, for the Behring Founders phase 3
 // and any intro. A page of this site like /story and /files: the same header
-// column, the name in serif italic, one hairline, DM Sans, and the site's black
-// container to close. The only thing that says Hibeex is the bee. The same
-// markup prints to one A4 sheet; scripts/one-pager-pdf.mjs makes the PDF
-// behind the download button.
+// column, the name in serif italic, one hairline, DM Sans, and the ask as an
+// ink card drawn the way the site draws its cards. The only thing that says
+// Hibeex is the bee. The same markup prints to one A4 sheet;
+// scripts/one-pager-pdf.mjs makes the PDF behind the download button.
 import { motion } from 'motion/react';
-import { FiArrowDown, FiArrowLeft, FiArrowRight, FiDownload } from 'react-icons/fi';
+import { FiArrowDown, FiArrowLeft, FiDownload } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar/Navbar';
 import HibeexMark from '../components/OnePager/HibeexMark';
@@ -26,6 +26,17 @@ const Source = ({ id }: { id: keyof typeof SOURCES }) => (
   </small>
 );
 
+// The before-to-after arrow: a stroke that still holds 1pt on paper. The PDF's
+// text layer gets the glyph instead, so copied text reads "8h → 2h".
+const Arrow = () => (
+  <>
+    <svg className="op__arrow" viewBox="0 0 16 10" role="img" aria-label="para">
+      <path d="M1 5h13M10 1l4 4-4 4" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+    <span className="op__arrow-glyph" aria-hidden="true">→</span>
+  </>
+);
+
 const figure = (m: Metric) => `${m.prefix ?? ''}${(m.count ?? 0).toLocaleString('pt-BR')}${m.suffix ?? ''}`;
 
 function OnePager() {
@@ -42,24 +53,26 @@ function OnePager() {
       <div className="page-nav"><Navbar /></div>
 
       <article className="op__page">
+        <div className="op__bar">
+          <Link to="/" className="page-back"><FiArrowLeft aria-hidden="true" /> Home</Link>
+          {/* The reader with 60 seconds can go straight to the third answer */}
+          <a className="op__jump" href="#op-ask">O que eu procuro em dezembro <FiArrowDown aria-hidden="true" /></a>
+          <a className="btn op__download" href={PDF} download="gabriel-moreno-ribeiro-hibeex.pdf">
+            <p className="text">Baixar PDF (A4)</p>
+            <div className="icon"><FiDownload className="icon-link" aria-hidden="true" /></div>
+          </a>
+        </div>
+
         <motion.header
           className="op__head"
           initial={reduced ? false : { opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.55, ease: EASE, delay: 0.08 }}
         >
-          <div className="op__bar">
-            <Link to="/" className="page-back"><FiArrowLeft aria-hidden="true" /> Home</Link>
-            {/* The reader with 60 seconds can go straight to the third answer */}
-            <a className="op__jump" href="#op-ask">O que eu procuro em dezembro <FiArrowDown aria-hidden="true" /></a>
-            <a className="btn primary op__download" href={PDF} download="gabriel-moreno-ribeiro-hibeex.pdf">
-              <p className="text">Baixar PDF (A4)</p>
-              <div className="icon"><FiDownload className="icon-link" aria-hidden="true" /></div>
-            </a>
-          </div>
           <HibeexMark className="op__bee" label="Hibeex" />
           <h1 className="op__title">{head.name}</h1>
           <p className="op__line">{head.line}</p>
+          <p className="op__deck">{head.oneLiner}</p>
           <p className="op__meta op__meta--links">
             {head.contact.map((c, i) => (
               <span key={c.href}>
@@ -72,8 +85,6 @@ function OnePager() {
             {head.program.map((p, i) => <span key={p}>{i > 0 && <i />}{p}</span>)}
           </p>
         </motion.header>
-
-        <p className="op__deck">{head.oneLiner}</p>
 
         <div className="op__body">
           <section className="op__s op__s--origin">
@@ -97,7 +108,7 @@ function OnePager() {
             <p>{now.learned}</p>
             <p>{now.contrary} <Source id="contrary" /></p>
             <p>
-              {now.outside} {now.quote} <Source id="gc" /> {now.market} <Source id="census" /> {now.thrive} <Source id="forbes" />
+              {now.outside} <span lang="en">{now.quote}</span> <Source id="gc" /> {now.market} <Source id="census" /> {now.thrive} <Source id="forbes" />
             </p>
           </section>
 
@@ -107,7 +118,7 @@ function OnePager() {
               {traction.map((m) => (
                 <div className="op__figure" key={m.label}>
                   <dt>
-                    {m.before && <><span className="op__before">{m.before}</span><FiArrowRight className="op__arrow" aria-label="para" /></>}
+                    {m.before && <><span className="op__before">{m.before}</span><Arrow /></>}
                     {figure(m)}
                   </dt>
                   <dd>{m.label}</dd>
@@ -158,15 +169,15 @@ function OnePager() {
             </ol>
             <p>{build.text}</p>
           </section>
-        </div>
 
-        <section className="op__ask" aria-labelledby="op-ask">
-          <h2 id="op-ask">O que eu procuro em <em>dezembro</em></h2>
-          <ul className="op__list">
-            {ask.map((a) => <li key={a.lead}><b>{a.lead}</b> {a.text}</li>)}
-          </ul>
-          <p className="op__close">{askClose}</p>
-        </section>
+          <section className="op__ask" aria-labelledby="op-ask">
+            <h2 id="op-ask">O que eu procuro em <em>dezembro</em></h2>
+            <ul className="op__list">
+              {ask.map((a) => <li key={a.lead}><b>{a.lead}</b> {a.text}</li>)}
+            </ul>
+            <p className="op__close">{askClose}</p>
+          </section>
+        </div>
 
         <footer className="op__foot">
           <HibeexMark className="op__bee" />

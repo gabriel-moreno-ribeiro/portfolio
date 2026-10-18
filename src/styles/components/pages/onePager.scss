@@ -1,12 +1,12 @@
 // ── /one-pager ────────────────────────────────────────────────────────────────
 // A page of the site, in the family of /story and /files: the header sits on
 // the same 760px column with the same hairline under it, the name is set like
-// the home hero, and below the rule the body widens into a plain 2-up. Only
-// site tokens, faces and sizes. One column on a phone; two newspaper columns
-// on A4, where the closing ask ends the second column.
+// the home hero, and below the rule the body widens into a plain 2-up like
+// Cool Things. Only site tokens, faces and sizes; one rule (1px var(--border));
+// one filled surface (the ask, drawn like the site's cards). One column on a
+// phone; two newspaper columns on A4.
 $ease: cubic-bezier(0.22, 1, 0.36, 1);
 $column: 760px;
-$body: 1040px;
 
 .op {
   position: relative;
@@ -18,16 +18,14 @@ $body: 1040px;
   margin: 0 auto;
   padding: 120px 24px 0;
   color: var(--fg);
-  font-size: 16px;
+  font-size: 15px;
   line-height: 1.5;
 
   p { margin: 0; text-wrap: pretty; }
   b { font-weight: 600; }
-  ::selection { background: rgba(240, 115, 45, 0.18); }
 }
 
 .op__page {
-  max-width: $body;
   width: 100%;
   margin: 0 auto;
 }
@@ -47,28 +45,14 @@ $body: 1040px;
   &:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
 }
 
-// ── Head: the /story column ───────────────────────────────────────────────────
-.op__head {
-  position: relative;
-  max-width: $column;
-  margin: 0 auto;
-  padding-bottom: 40px;
-  border-bottom: 1px solid var(--border);
-}
-
+// ── Bar and head: the /story column ───────────────────────────────────────────
 .op__bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  margin-bottom: 44px;
-}
-
-.op__download {
-  font-size: 14px;
-  text-decoration: none;
-
-  .text { margin: 0; }
+  max-width: $column;
+  margin: 0 auto 36px;
 }
 
 .op__jump {
@@ -83,26 +67,66 @@ $body: 1040px;
   color: var(--fg-muted);
 }
 
-// The bee, alone, top right of the head like a stamp on letterhead.
+// The hero's Resume button: black in both themes.
+.op__download {
+  box-sizing: border-box;
+  min-height: 40px;
+  padding: 8px 18px;
+  font-size: 14px;
+  text-decoration: none;
+  background-color: #111;
+  color: #fff;
+  border: 2px solid #111;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+
+  .text { margin: 0; }
+
+  &:hover,
+  &:focus-visible {
+    background-color: #fff;
+    color: #111;
+    border-color: #111;
+  }
+  &:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 3px; }
+}
+
+[data-theme="dark"] .op__download {
+  border-color: rgba(255, 255, 255, 0.3);
+
+  &:hover,
+  &:focus-visible { border-color: #fff; }
+}
+
+.op__head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: 28px;
+  align-items: start;
+  max-width: $column;
+  margin: 0 auto;
+  padding-bottom: 36px;
+  border-bottom: 1px solid var(--border);
+}
+
+// The bee, alone beside the name, like a stamp on letterhead.
 .op__bee {
-  width: 88px;
+  width: 60px;
   height: auto;
   color: var(--fg);
 }
 
 .op__head .op__bee {
-  position: absolute;
-  top: 92px;
-  right: 0;
+  grid-column: 2;
+  grid-row: 1 / span 5;
+  margin-top: 10px;
 }
 
 .op__title {
   margin: 0;
-  padding-right: 120px;
   font-family: var(--font-serif);
   font-style: italic;
   font-weight: 400;
-  font-size: clamp(44px, 5vw, 60px);
+  font-size: clamp(44px, 5vw, 64px);
   line-height: 1;
   letter-spacing: -0.02em;
   color: var(--accent-hero);
@@ -112,11 +136,17 @@ $body: 1040px;
 }
 
 .op__line {
-  max-width: 52ch;
-  margin-top: 20px !important;
+  margin-top: 22px !important;
   font-size: 19px;
   line-height: 1.5;
   color: var(--fg-muted);
+}
+
+// The one-liner, in ink, as the summary the site's pages carry under the title.
+.op__deck {
+  margin-top: 10px !important;
+  font-size: 19px;
+  line-height: 1.5;
 }
 
 // Meta rows, joined with the site's 3px dots.
@@ -142,7 +172,7 @@ $body: 1040px;
     background: currentColor;
   }
 
-  a { @include link-draw; }
+  a { @include link-draw; color: var(--fg); }
 
   & + & { margin-top: 10px !important; }
 }
@@ -152,14 +182,6 @@ $body: 1040px;
   font-weight: 500;
   letter-spacing: 0;
   text-transform: none;
-}
-
-// The one-liner opens the body on the same column, bigger, in ink.
-.op__deck {
-  max-width: $column;
-  margin: 40px auto 0 !important;
-  font-size: 21px;
-  line-height: 1.45;
 }
 
 // ── Body: a plain 2-up below the rule ─────────────────────────────────────────
@@ -173,19 +195,19 @@ $body: 1040px;
     "now traction"
     "why market"
     "team validators"
-    "year build";
-  margin-top: 40px;
+    "year ask"
+    "build ask";
 }
 
 .op__s {
   min-width: 0;
-  padding: 26px 0 36px;
+  padding: 24px 0 32px;
   border-top: 1px solid var(--border);
 
   // The site's section title: sans 700, the one italic word in serif accent.
   h2 {
     margin: 0 0 12px;
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 700;
     line-height: 1.15;
     letter-spacing: -0.01em;
@@ -195,12 +217,13 @@ $body: 1040px;
       font-family: var(--font-serif);
       font-style: italic;
       font-weight: 400;
+      font-size: 1.15em;
       color: var(--accent);
     }
   }
 
   p + p,
-  ol + p { margin-top: 0.7em; }
+  ol + p { margin-top: 0.6em; }
 
   &--origin { grid-area: origin; }
   &--problem { grid-area: problem; }
@@ -213,6 +236,9 @@ $body: 1040px;
   &--validators { grid-area: validators; }
   &--year { grid-area: year; }
   &--build { grid-area: build; }
+
+  // The head's rule is the rule above the first row.
+  &--origin, &--problem { border-top: 0; }
 }
 
 .op__source {
@@ -231,10 +257,11 @@ $body: 1040px;
 
 .op__figure {
   display: grid;
-  grid-template-columns: minmax(7.5em, auto) 1fr;
+  // The figure column grows for the two before-to-after rows, never clips.
+  grid-template-columns: minmax(150px, auto) minmax(0, 1fr);
   align-items: baseline;
-  gap: 0 16px;
-  padding: 10px 0;
+  column-gap: 16px;
+  padding: 9px 0;
 
   & + & { border-top: 1px solid var(--border); }
 
@@ -243,7 +270,7 @@ $body: 1040px;
     justify-content: flex-end;
     align-items: baseline;
     gap: 6px;
-    font-size: 24px;
+    font-size: 34px;
     font-weight: 600;
     letter-spacing: -0.01em;
     font-variant-numeric: tabular-nums;
@@ -254,24 +281,27 @@ $body: 1040px;
   dd {
     margin: 0;
     font-size: 14px;
-    line-height: 1.45;
+    line-height: 1.4;
   }
 }
 
 .op__before {
+  font-size: 18px;
   font-weight: 400;
   color: var(--fg-muted);
 }
 
 .op__arrow {
-  width: 0.7em;
-  height: 0.7em;
+  width: 14px;
+  height: auto;
   align-self: center;
   color: var(--fg-muted);
 }
 
-.op__pipeline {
-  margin-top: 14px !important;
+.op__arrow-glyph { display: none; }
+
+.op__s .op__pipeline {
+  margin-top: 14px;
   font-size: 14px;
   color: var(--fg-muted);
 }
@@ -285,20 +315,19 @@ $body: 1040px;
   li + li { margin-top: 0.6em; }
 }
 
-// ── The closing ask: the footer's black container ─────────────────────────────
+// ── The ask: the one filled surface, drawn like the site's cards ──────────────
 .op__ask {
-  display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-  column-gap: 40px;
-  margin-top: 8px;
-  padding: 36px 40px 36px;
-  border-radius: 36px;
+  grid-area: ask;
+  align-self: start;
+  margin-top: 24px;
+  padding: 28px 28px 26px;
+  border-radius: 18px;
   background: rgba(17, 17, 17, 0.9);
   color: #fff;
 
   h2 {
-    margin: 0;
-    font-size: 28px;
+    margin: 0 0 16px;
+    font-size: 24px;
     font-weight: 700;
     line-height: 1.15;
     letter-spacing: -0.01em;
@@ -307,19 +336,19 @@ $body: 1040px;
       font-family: var(--font-serif);
       font-style: italic;
       font-weight: 400;
+      font-size: 1.15em;
       color: #f0732d;
     }
   }
 
-  .op__list li + li { margin-top: 14px; }
+  .op__list li + li { margin-top: 12px; }
 
   .op__close {
-    grid-column: 1 / -1;
-    margin-top: 30px !important;
+    margin-top: 20px;
     font-family: var(--font-serif);
     font-style: italic;
     font-size: 24px;
-    line-height: 1.2;
+    line-height: 1.3;
     color: #f0732d;
   }
 }
@@ -327,6 +356,7 @@ $body: 1040px;
 [data-theme="dark"] .op__ask {
   background: var(--surface);
   border: 1px solid var(--border);
+  color: var(--fg);
 }
 
 .op__foot {
@@ -336,60 +366,57 @@ $body: 1040px;
   margin: 28px 0 96px;
   padding-top: 16px;
   border-top: 1px solid var(--border);
-  font-size: 12px;
+  font-size: 13px;
   color: var(--fg-muted);
 
-  .op__bee { width: 22px; flex: none; }
+  .op__bee { width: 20px; flex: none; }
 }
 
 // ── Narrow ────────────────────────────────────────────────────────────────────
 @media screen and (max-width: 820px) {
   .op { padding: 96px 16px 0; }
 
-  .op__head { padding-bottom: 28px; }
-  .op__bar { margin-bottom: 32px; }
-  .op__head .op__bee { position: static; width: 44px; margin-bottom: 18px; }
-  .op__title { padding-right: 0; }
+  .op__bar { flex-wrap: wrap; margin-bottom: 28px; }
+  .op__jump { order: 3; margin: 4px auto 0; }
+
+  .op__head { grid-template-columns: 1fr; padding-bottom: 28px; }
+  .op__head .op__bee { grid-column: 1; grid-row: 1; width: 40px; margin: 0 0 16px; }
   .op__line { font-size: 17px; }
-  .op__deck { margin-top: 28px !important; font-size: 19px; }
+  .op__deck { font-size: 17px; }
+
+  // One item per line: a dot opening a wrapped line is worse than no dots.
+  .op__meta { flex-direction: column; align-items: flex-start; gap: 4px; }
+  .op__meta i { display: none; }
+  .op__meta--links a { padding: 6px 0; margin: -6px 0; overflow-wrap: anywhere; }
+
   .op__body { display: block; margin-top: 28px; }
   .op__s { padding: 22px 0 26px; }
+  .op__s--origin, .op__s--problem { border-top: 1px solid var(--border); }
 
   .op__figure {
-    grid-template-columns: minmax(6.5em, auto) 1fr;
-    dt { font-size: 22px; }
+    grid-template-columns: minmax(150px, auto) minmax(0, 1fr);
+    column-gap: 12px;
   }
 
   .op__ask {
-    display: block;
-    padding: 26px 22px 26px;
-    border-radius: 28px;
+    margin-top: 4px;
+    padding: 24px 20px 22px;
 
-    h2 { margin-bottom: 16px; }
-    .op__close { margin-top: 22px !important; font-size: 22px; }
+    h2 { font-size: 22px; }
+    .op__close { font-size: 22px; }
   }
 }
 
-@media screen and (max-width: 600px) {
-  .op__bar { flex-wrap: wrap; }
-  .op__jump { order: 3; margin: 4px auto 0; }
-  .op__download { width: 100%; }
-
-  // One item per line: a dot opening a wrapped line is worse than no dots.
-  .op__meta { flex-direction: column; align-items: flex-start; gap: 6px; }
-  .op__meta i { display: none; }
-  .op__meta--links a { overflow-wrap: anywhere; }
-}
-
 // ── A4 ────────────────────────────────────────────────────────────────────────
-// Same markup, paper sizes. The head and the deck span the sheet; the body
-// flows down two columns and the ask ends the second one (the ledger cannot
-// split, so a block spanning both columns left that column short).
+// Same markup, paper sizes. The head spans the sheet; the sections flow down
+// two columns and the ask card ends the second one. Rows, list items and the
+// card are the units that never split.
 @page { size: A4; margin: 7mm 8mm; }
 
 @media print {
   .op {
     --bg: #fff;
+    --surface: #fff;
     --fg: #111;
     --fg-muted: #5f5f5f;
     --border: #e7e7e7;
@@ -398,57 +425,64 @@ $body: 1040px;
     max-width: none;
     min-height: 0;
     padding: 0;
-    font-size: 6.8pt;
-    line-height: 1.26;
+    font-size: 7.2pt;
+    line-height: 1.3;
+    hyphens: manual;
+    text-align: left;
   }
 
-  .op__bar, .op__jump, .page-nav, .footer, .handsfree-button, .custom-mouse { display: none !important; }
+  .op__bar, .page-nav, .footer, .handsfree-button, .custom-mouse { display: none !important; }
 
-  .op__page { max-width: none; columns: 2; column-gap: 7mm; }
-  .op__head, .op__deck, .op__foot { column-span: all; }
+  .op__page { columns: 2; column-gap: 7mm; }
+  .op__head, .op__foot { column-span: all; }
 
-  .op__head { max-width: none; padding-bottom: 2.2mm; }
-  .op__head .op__bee { top: 0; width: 15mm; }
-  .op__title { padding-right: 20mm; font-size: 20pt; }
-  .op__line { max-width: none; margin-top: 1.5mm !important; font-size: 8pt; }
-  .op__meta { margin-top: 1.8mm !important; font-size: 6pt; gap: 0.6mm 0; i { margin: 0 2.2mm; } }
-  .op__meta--links { font-size: 6.8pt; }
-  .op__meta + .op__meta { margin-top: 0.8mm !important; }
-  .op__deck { max-width: none; margin: 2.2mm 0 0 !important; font-size: 9.5pt; line-height: 1.3; }
+  .op__head { max-width: none; column-gap: 6mm; padding-bottom: 2.5mm; }
+  .op__head .op__bee { width: 12mm; margin-top: 1mm; }
+  .op__title { font-size: 22pt; }
+  .op__line { margin-top: 1.5mm !important; font-size: 8pt; }
+  .op__deck { margin-top: 1.2mm !important; font-size: 9.5pt; line-height: 1.3; }
+  .op__meta { margin-top: 2mm !important; font-size: 6pt; gap: 0.6mm 0; i { margin: 0 2.2mm; } }
+  .op__meta--links { font-size: 6.5pt; }
+  .op__meta + .op__meta { margin-top: 1.2mm !important; }
 
-  .op__body { display: block; margin-top: 2.4mm; }
+  .op__body { display: block; margin-top: 0; }
   .op__s {
-    break-inside: avoid;
-    padding: 1.6mm 0 0;
-    margin-bottom: 2.2mm;
-    h2 { margin-bottom: 0.7mm; font-size: 8.5pt; }
+    padding: 1.8mm 0 2.4mm;
+    h2 { margin-bottom: 0.8mm; font-size: 9pt; break-after: avoid; }
     p + p, ol + p { margin-top: 0.5em; }
   }
-  .op__s--origin, .op__s--now { break-inside: auto; }
+  .op__s--origin, .op__s--problem { border-top: 1px solid var(--border); }
   .op__figure {
+    break-inside: avoid;
+    grid-template-columns: minmax(17mm, auto) minmax(0, 1fr);
+    column-gap: 2.5mm;
     padding: 0.8mm 0;
-    gap: 0 3mm;
-    grid-template-columns: minmax(6.5em, auto) 1fr;
     dt { font-size: 10pt; }
-    dd { font-size: 6.8pt; line-height: 1.25; }
+    dd { font-size: 7pt; line-height: 1.25; }
   }
-  .op__pipeline { margin-top: 1.5mm !important; font-size: 6.6pt; }
-  .op__source { font-size: 5.8pt; }
+  .op__before { font-size: 7pt; }
+  .op__arrow { display: none; }
+  .op__arrow-glyph { display: inline; font-size: 8pt; color: var(--fg-muted); }
+  .op__s .op__pipeline { margin-top: 1.5mm; font-size: 6.8pt; }
+  .op__source { font-size: 6pt; }
+  .op__list li { break-inside: avoid; }
   .op__list li + li { margin-top: 0.45em; }
 
-  .op__ask {
-    display: block;
+  .op__ask,
+  [data-theme="dark"] .op .op__ask {
     break-inside: avoid;
-    margin-top: 0.6mm;
-    padding: 3.5mm 4mm 3.5mm;
-    border-radius: 3mm;
+    margin-top: 2mm;
+    padding: 3mm 3.5mm;
+    border: 0;
+    border-radius: 2.5mm;
     background: #111;
+    color: #fff;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
 
     h2 { margin-bottom: 1.5mm; font-size: 9.5pt; }
     .op__list li + li { margin-top: 0.5em; }
-    .op__close { margin-top: 2.2mm !important; font-size: 8.5pt; }
+    .op__close { margin-top: 2mm; font-size: 9pt; }
   }
 
   .op__foot {
