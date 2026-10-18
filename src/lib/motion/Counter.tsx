@@ -15,7 +15,6 @@ export function Counter({
   prefix = '',
   suffix = '',
   grouping = true,
-  locale = 'en-US',
   start = true,
   className,
 }: CounterProps) {
@@ -60,7 +59,7 @@ export function Counter({
   }, [value, duration, start, reduced]);
 
   const format = (n: number) =>
-    `${prefix}${n.toLocaleString(locale, {
+    `${prefix}${n.toLocaleString('en-US', {
       minimumFractionDigits: decimals,
       maximumFractionDigits: decimals,
       useGrouping: grouping,

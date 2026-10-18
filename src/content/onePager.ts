@@ -12,7 +12,7 @@ export const head = {
     { label: 'gabrielmr.com', href: 'https://gabrielmr.com' },
     { label: 'linkedin.com/in/gabriel-moreno-ribeiro', href: 'https://linkedin.com/in/gabriel-moreno-ribeiro' },
   ],
-  program: 'Behring Founders, fase 3. Arenas: enterprise AI, fintech, services.',
+  program: ['Behring Founders, fase 3', 'Arenas: enterprise AI, fintech, services'],
 };
 
 export const origin = [

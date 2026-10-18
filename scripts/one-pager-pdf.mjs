@@ -14,7 +14,7 @@ const page = await browser.newPage({ viewport: { width: 1100, height: 1400 } });
 // Reduced motion: the numbers land on their final value at once, no entrances.
 await page.emulateMedia({ media: 'print', reducedMotion: 'reduce' });
 await page.goto(url, { waitUntil: 'networkidle' });
-await page.waitForSelector('.op__sheet');
+await page.waitForSelector('.op__head');
 await page.waitForFunction(() => !document.getElementById('preloader'));
 await page.evaluate(() => document.fonts.ready);
 await page.pdf({ path: out, format: 'A4', printBackground: true, preferCSSPageSize: true });
