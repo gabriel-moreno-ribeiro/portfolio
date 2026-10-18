@@ -30,6 +30,7 @@ const NewsPage = lazy(() => import("./pages/News"));
 const StoryPage = lazy(() => import("./pages/Story"));
 const ProjectPage = lazy(() => import("./pages/Project"));
 const FilesPage = lazy(() => import("./pages/Files"));
+const OnePagerPage = lazy(() => import("./pages/OnePager"));
 const ContactPage = lazy(() => import("./pages/Contact"));
 const ThankYouPage = lazy(() => import("./pages/ThankYou"));
 const NotFoundPage = lazy(() => import("./pages/NotFound"));
@@ -57,7 +58,7 @@ function AppContent() {
   const isHome = location.pathname === "/";
   const isLibrary = location.pathname.startsWith("/library");
   // Páginas de leitura: sem a barra fixa de CTA no mobile (o e-mail está no rodapé).
-  const isReading = isLibrary || location.pathname.startsWith("/news");
+  const isReading = isLibrary || location.pathname.startsWith("/news") || location.pathname.startsWith("/one-pager");
 
   // New page, start at the top (hash links are handled by the page itself), and
   // move focus to the new page so keyboard and screen-reader users continue
@@ -120,6 +121,7 @@ function AppContent() {
           <Route path="/story" element={<StoryPage />} />
           <Route path="/work/:slug" element={<ProjectPage />} />
           <Route path="/files" element={<FilesPage />} />
+          <Route path="/one-pager" element={<OnePagerPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/obrigado" element={<ThankYouPage />} />
           <Route path="/" element={<Home />} />

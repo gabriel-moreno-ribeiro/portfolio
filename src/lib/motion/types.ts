@@ -49,6 +49,8 @@ export interface CounterProps {
   prefix?: string;
   suffix?: string;
   grouping?: boolean;
+  /** Locale do separador de milhar e da vírgula. Default: 'en-US'. */
+  locale?: string;
   /** Quando false, fica em 0 até virar true. Default: true. */
   start?: boolean;
   className?: string;
