@@ -349,19 +349,13 @@ function CityClock({ tz }: { tz: string }) {
 function CityPanel({
   city,
   onClose,
-  onStep,
   showClock,
 }: {
   city: City;
   onClose: () => void;
-  /** Move to the previous (-1) or next (+1) city of the journey. */
-  onStep: (dir: -1 | 1) => void;
   showClock: boolean;
 }) {
   const reduced = useReducedMotion();
-  const index = CITIES.findIndex((c) => c.id === city.id);
-  const prev = CITIES[(index - 1 + CITIES.length) % CITIES.length];
-  const next = CITIES[(index + 1) % CITIES.length];
 
   return (
     <motion.div
@@ -387,24 +381,33 @@ function CityPanel({
         ))}
       </div>
 
-      {/* Walk the journey: the cities on either side, by name, and where you are. */}
-      <nav className="city-panel__steps" aria-label="Cities">
-        <button type="button" className="city-panel__step" onClick={() => onStep(-1)}>
-          <FiArrowLeft aria-hidden="true" />
-          <span><small>Previous</small>{prev.name.split(',')[0]}</span>
-        </button>
-        <span className="city-panel__progress" aria-live="polite">
-          <span className="city-panel__dots" aria-hidden="true">
-            {CITIES.map((c) => <i key={c.id} className={c.id === city.id ? 'is-on' : undefined} />)}
-          </span>
-          <span className="city-panel__count">{index + 1} / {CITIES.length}</span>
-        </span>
-        <button type="button" className="city-panel__step city-panel__step--next" onClick={() => onStep(1)}>
-          <span><small>Next</small>{next.name.split(',')[0]}</span>
-          <FiArrowRight aria-hidden="true" />
-        </button>
-      </nav>
     </motion.div>
+  );
+}
+
+// Walk the journey: the cities on either side, by name, and the dots for where
+// you are. It sits under the card at a fixed height, so the buttons stay put
+// while the card above changes size with each city's story.
+function CitySteps({ city, onStep }: { city: City; onStep: (dir: -1 | 1) => void }) {
+  const index = CITIES.findIndex((c) => c.id === city.id);
+  const prev = CITIES[(index - 1 + CITIES.length) % CITIES.length];
+  const next = CITIES[(index + 1) % CITIES.length];
+
+  return (
+    <nav className="city-steps" aria-label="Cities">
+      <button type="button" className="city-steps__step" onClick={() => onStep(-1)}>
+        <FiArrowLeft aria-hidden="true" />
+        <span><small>Previous</small>{prev.name.split(',')[0]}</span>
+      </button>
+      <span className="city-steps__dots" aria-hidden="true">
+        {CITIES.map((c) => <i key={c.id} className={c.id === city.id ? 'is-on' : undefined} />)}
+      </span>
+      <span className="sr-only" aria-live="polite">{city.name}, {index + 1} of {CITIES.length}</span>
+      <button type="button" className="city-steps__step city-steps__step--next" onClick={() => onStep(1)}>
+        <span><small>Next</small>{next.name.split(',')[0]}</span>
+        <FiArrowRight aria-hidden="true" />
+      </button>
+    </nav>
   );
 }
 
@@ -537,9 +540,10 @@ function BackgroundGlobe() {
         {selected && (
           <div className="city-column">
             <div className="city-column__text">
-              {/* Invisible copies of every city's text share the cell, so the box
-                  is always as tall as the longest one and the photos below never
-                  jump when the tour changes city */}
+              {/* Invisible copies of every city's text share the cell, so the cell
+                  is always as tall as the longest one and the stepper and photos
+                  below never jump when the tour changes city. The card itself
+                  keeps its own height; the slack is air under it. */}
               {CITIES.map((c) => (
                 <div key={c.id} className="city-panel city-panel--sizer" aria-hidden="true">
                   <div className="city-panel__text">
@@ -553,7 +557,6 @@ function BackgroundGlobe() {
                       <p key={i} className="city-panel__para">{para}</p>
                     ))}
                   </div>
-                  <div className="city-panel__steps"><span className="city-panel__step">&nbsp;<br />&nbsp;</span></div>
                 </div>
               ))}
               <AnimatePresence initial={false}>
@@ -561,11 +564,11 @@ function BackgroundGlobe() {
                   key={selected.id}
                   city={selected}
                   onClose={handleClose}
-                  onStep={handleStep}
                   showClock={inView}
                 />
               </AnimatePresence>
             </div>
+            <CitySteps city={selected} onStep={handleStep} />
             <CityPhotoStage
               key={selected.id}
               label={selected.name.split(',')[0]}
