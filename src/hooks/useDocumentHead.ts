@@ -34,7 +34,7 @@ export function useDocumentHead({ title, description, canonical, noindex }: Docu
       if (meta) {
         meta.setAttribute(
           'content',
-          '18, builder and researcher on a build year. Building HIBEEX, backoffice AI for small and medium businesses. Started Projeto Candela. 39 olympiad medals.'
+          '18, builder and researcher on a build year. Building HIBEEX, backoffice AI for small and medium businesses. Founder of Projeto Candela. 39 olympiad medals.'
         );
       }
       const link = document.querySelector('link[rel="canonical"]');

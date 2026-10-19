@@ -3,7 +3,7 @@ import { FiArrowUpRight, FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { Project, projects } from "../../content/projects";
 import useIsMobile from "../../hooks/useIsMobile";
-import { usePageVisible, useReducedMotion, useVisible } from "../../lib/motion";
+import { Counter, usePageVisible, useReducedMotion, useVisible } from "../../lib/motion";
 import DesmosSketches from "./DesmosSketches";
 import MedalsShowcase from "./MedalsShowcase";
 
@@ -15,8 +15,8 @@ function MediaCarousel({ project, paused, offset = 0 }: { project: Project; paus
   // `under` is the photo being left: it stays beneath while the new one fades in.
   const [{ idx, under }, setState] = useState<{ idx: number; under: number | null }>({ idx: 0, under: null });
   const setIdx = (fn: (i: number) => number) => setState((s) => ({ idx: fn(s.idx), under: s.idx }));
-  // Only the first step waits the extra offset, so cards side by side don't
-  // change photos on the same beat.
+  // Only the first step waits the extra offset, so rows one above the other
+  // don't change photos on the same beat.
   const firstStep = useRef(true);
   const wrapRef = useRef<HTMLDivElement>(null);
   // Below 900px the thumbnails would pull every photo of the gallery for a 34x24 box,
@@ -135,39 +135,72 @@ function MediaCarousel({ project, paused, offset = 0 }: { project: Project; paus
   );
 }
 
-// The whole card is one link target: the title anchor stretches over the card, so
-// the carousel controls stay clickable by sitting above it.
-function FeaturedCard({ project, index }: { project: Project; index: number }) {
+// One project: its photos on one side, the words on the other, no box around
+// it. Rows alternate sides. The tags are the site's dotted meta line.
+function ProjectRow({ project, index }: { project: Project; index: number }) {
   const hasMedia = (project.gallery?.length ?? 0) > 0;
-  // The card's stretched link sits over the photo, so the pause lives on the card.
   const [paused, setPaused] = useState(false);
 
   return (
-    <div
-      className={`featured-card${hasMedia ? " featured-card--wide" : ""}`}
+    <article
+      className={`work-row${index % 2 ? " work-row--flip" : ""}${hasMedia ? "" : " work-row--text"}`}
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       onFocus={() => setPaused(true)}
       onBlur={() => setPaused(false)}
     >
-      <MediaCarousel project={project} paused={paused} offset={(index % 2) * (AUTOPLAY_MS / 2)} />
-      <div className="featured-card__body">
-        <h3>
-          <Link to={`/work/${project.slug}`} className="featured-card__link">
-            {project.title}
-          </Link>
-        </h3>
-        <p>{project.cardDesc}</p>
-        <div className="featured-tags">
-          {project.tags.map((tag) => (
-            <span key={tag}>{tag}</span>
-          ))}
+      {hasMedia && (
+        <div className="work-row__media">
+          <MediaCarousel project={project} paused={paused} offset={(index % 2) * (AUTOPLAY_MS / 2)} />
         </div>
-        <span className="featured-cta" aria-hidden="true">
-          View project <FiArrowUpRight />
-        </span>
+      )}
+      <div className="work-row__body">
+        <p className="work-row__meta">
+          {project.tags.map((tag, i) => <span key={tag}>{i > 0 && <i />}{tag}</span>)}
+        </p>
+        <h3>
+          <Link to={`/work/${project.slug}`} className="work-row__title">{project.title}</Link>
+        </h3>
+        <p className="work-row__desc">{project.cardDesc}</p>
+        <Link to={`/work/${project.slug}`} className="work-row__cta">
+          View project <FiArrowUpRight aria-hidden="true" />
+        </Link>
       </div>
-    </div>
+    </article>
+  );
+}
+
+// The four numbers, as a strip at the foot of the work. Each counts up once.
+const STATS = [
+  { img: "/stats/obfep.webp", value: 39, label: "olympiad medals, 19 gold" },
+  { img: "/stats/screwdriver.webp", value: 3392, label: "students reached, Projeto Candela" },
+  { img: "/stats/sat.webp", prefix: "SAT ", value: 1570, grouping: false, label: "of 1600, top 1% in Brazil" },
+  { img: "/stats/fe.webp", value: 0.7, decimals: 1, suffix: "%", label: "acceptance rate, Fundação Estudar" },
+];
+
+function NumbersStrip() {
+  const ref = useRef<HTMLUListElement>(null);
+  const shown = useVisible(ref, { once: true, rootMargin: "0px 0px -10% 0px" });
+  const reduced = useReducedMotion();
+  const print = (s: (typeof STATS)[number]) =>
+    `${s.prefix ?? ""}${s.value.toLocaleString("en-US", { minimumFractionDigits: s.decimals ?? 0, useGrouping: s.grouping ?? true })}${s.suffix ?? ""}`;
+
+  return (
+    <ul className="numbers-strip" ref={ref} aria-label="By the numbers">
+      {STATS.map((s) => (
+        <li key={s.label}>
+          <img src={s.img} alt="" width={40} height={40} loading="lazy" decoding="async" />
+          <span className="numbers-strip__figure">
+            {shown && !reduced ? (
+              <Counter value={s.value} decimals={s.decimals} grouping={s.grouping} prefix={s.prefix} suffix={s.suffix} />
+            ) : (
+              print(s)
+            )}
+          </span>
+          <span className="numbers-strip__label">{s.label}</span>
+        </li>
+      ))}
+    </ul>
   );
 }
 
@@ -180,17 +213,18 @@ function FindMyWork() {
       <p className="work-sub">
         What I've built and what I've won.
       </p>
-      <div className="featured-grid">
-        {/* The medals sit third, after the two companies' cards */}
+      <div className="work-list">
+        {/* The medals sit third, after the two companies */}
         {projects.slice(0, 2).map((project, i) => (
-          <FeaturedCard key={project.slug} project={project} index={i} />
+          <ProjectRow key={project.slug} project={project} index={i} />
         ))}
         <MedalsShowcase />
         {projects.slice(2).map((project, i) => (
-          <FeaturedCard key={project.slug} project={project} index={i + 2} />
+          <ProjectRow key={project.slug} project={project} index={i + 2} />
         ))}
+        <NumbersStrip />
+        <DesmosSketches />
       </div>
-      <DesmosSketches />
     </div>
   );
 }

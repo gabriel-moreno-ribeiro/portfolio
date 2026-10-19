@@ -13,7 +13,6 @@ const BackgroundGlobe = lazy(() => import("../components/Home/BackgroundGlobe"))
 const Skills = lazy(() => import("../components/Home/Skills"));
 const FindMyWork = lazy(() => import("../components/Home/FindMyWork"));
 const Research = lazy(() => import("../components/Home/Research"));
-const NumbersAndStats = lazy(() => import("../components/Home/Numbers"));
 const Experience = lazy(() => import("../components/Home/Experience/Experience"));
 const ContactSection = lazy(() => import("../components/Home/ContactSection"));
 // @ts-ignore
@@ -37,7 +36,6 @@ const SECTIONS = [
 const RESERVE: Record<string, [desktop: number, tablet: number, mobile: number]> = {
   background: [955, 1335, 975],
   work: [2470, 3340, 3120],
-  numbers: [330, 315, 190],
   research: [1120, 1240, 1640],
   skills: [1000, 1000, 525],
   'work-experience': [2450, 2500, 2250],
@@ -206,9 +204,6 @@ function Home() {
       </LazySection>
       <LazySection id="work" label="Cool things" eager={mountAll}>
         <FindMyWork />
-      </LazySection>
-      <LazySection id="numbers" label="By the numbers" eager={mountAll}>
-        <NumbersAndStats />
       </LazySection>
       <LazySection id="research" label="Research" eager={mountAll}>
         <Research />

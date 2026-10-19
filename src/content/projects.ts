@@ -95,7 +95,7 @@ export const projects: Project[] = [
       'Low-cost physics lab kits I built and delivered to 28 public schools. 3,392 students so far. Physics failure rates in those classes went from 30% to 10%.',
     tags: ['3,392 students', '28 schools', '30% → 10%'],
     period: '2023 - 2024',
-    role: 'Started Projeto Candela',
+    role: 'Founder',
     stats: [
       { value: '3,392', label: 'students reached' },
       { value: '28', label: 'public schools' },

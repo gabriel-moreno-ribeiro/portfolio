@@ -162,7 +162,7 @@ function Hero() {
           </div>
         </motion.div>
         <motion.p className="desc" {...rise(0.08)}>
-          Building Backoffice AI for Small and Medium Businesses @ HIBEEX. Started Projeto Candela.
+          Building Backoffice AI for Small and Medium Businesses @ HIBEEX. Founder of Projeto Candela.
         </motion.p>
         <motion.div className="btn-flex" {...rise(0.16)}>
           {/* Three calls to action: the work first, then a call, then the resume. LinkedIn lives in Contact and the footer. */}

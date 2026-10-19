@@ -17,16 +17,164 @@
     text-align: center;
   }
 
-  .featured-grid {
-    display: grid;
-    // 6 tracks: the first card (the only one with photos) spans the row, the other three take 2 tracks each
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-    align-items: start; // cards without media keep their own height instead of stretching
-    gap: 28px;
+  // The projects, one under the other, no boxes around them.
+  .work-list {
+    display: flex;
+    flex-direction: column;
+    gap: 64px;
     width: 100%;
     max-width: 1100px;
-    padding: 12px 24px 36px;
+    padding: 20px 24px 36px;
     box-sizing: border-box;
+  }
+
+  // ── A project row ───────────────────────────────────────────────────────────
+  .work-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: 40px;
+    align-items: center;
+
+    &--flip .work-row__media { order: 2; }
+
+    // No photos yet: the words sit on the site's 760px column.
+    &--text {
+      grid-template-columns: 1fr;
+      max-width: 760px;
+      padding: 28px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    &__media { min-width: 0; }
+
+    &__body {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 14px;
+      min-width: 0;
+      text-align: left;
+    }
+
+    // The site's dotted meta line, for the tags.
+    &__meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px 0;
+      margin: 0;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--fg-muted);
+
+      span { display: inline-flex; align-items: center; }
+
+      i {
+        width: 3px;
+        height: 3px;
+        margin: 0 10px;
+        border-radius: 50%;
+        background: currentColor;
+      }
+    }
+
+    h3 {
+      margin: 0;
+      font-size: 32px;
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    &__title {
+      color: inherit;
+      text-decoration: none;
+      background-image: linear-gradient(var(--accent-decor), var(--accent-decor));
+      background-size: 0% 2px;
+      background-position: 0 100%;
+      background-repeat: no-repeat;
+      transition: background-size 0.3s ease;
+
+      &:hover,
+      &:focus-visible { background-size: 100% 2px; }
+      &:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 4px; border-radius: 2px; }
+    }
+
+    &__desc {
+      max-width: 48ch;
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.55;
+      color: var(--fg-muted);
+    }
+
+    &__cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 4px;
+      padding: 9px 18px;
+      border: 1.5px solid var(--border);
+      border-radius: 36px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--fg);
+      text-decoration: none;
+      transition: border-color 0.2s, background-color 0.2s, color 0.2s;
+
+      svg { transition: transform 0.2s; }
+
+      &:hover,
+      &:focus-visible { border-color: var(--fg); background: var(--fg); color: var(--bg); }
+      &:hover svg { transform: translate(2px, -2px); }
+    }
+  }
+
+  // ── The four numbers ────────────────────────────────────────────────────────
+  .numbers-strip {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 24px;
+    margin: 0;
+    padding: 28px 0;
+    list-style: none;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+
+    li {
+      display: grid;
+      grid-template-columns: 40px minmax(0, 1fr);
+      grid-template-rows: auto auto;
+      column-gap: 14px;
+      align-items: center;
+      text-align: left;
+    }
+
+    img {
+      grid-row: 1 / span 2;
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      object-fit: cover;
+    }
+
+    &__figure {
+      font-size: 28px;
+      font-weight: 600;
+      line-height: 1;
+      letter-spacing: -0.01em;
+      font-variant-numeric: tabular-nums;
+    }
+
+    &__label {
+      margin-top: 4px;
+      font-size: 13px;
+      line-height: 1.35;
+      color: var(--fg-muted);
+    }
   }
 
   .featured-card {
@@ -41,20 +189,6 @@
     text-align: left;
     transition: border-color 0.2s, transform 0.2s;
 
-    // Cards with photos take the full row, media beside the copy.
-    &--wide {
-      grid-column: 1 / -1;
-      display: grid;
-      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-      gap: 28px;
-      align-items: center;
-    }
-
-    &:hover,
-    &:focus-within {
-      border-color: var(--primary-orange);
-      transform: translateY(-2px);
-    }
 
     &__body {
       display: flex;
@@ -132,7 +266,7 @@
     position: relative;
     width: 100%;
     aspect-ratio: 16 / 10;
-    border-radius: 12px;
+    border-radius: 18px;
     overflow: hidden;
     background: rgba(0, 0, 0, 0.04);
 
@@ -303,102 +437,18 @@
       font-size: 14px;
     }
 
-    .featured-grid {
-      grid-template-columns: 1fr;
-      gap: 20px;
-      padding: 8px 16px 24px;
-    }
+    .work-list { gap: 44px; padding: 12px 0 24px; }
+    .work-row { grid-template-columns: 1fr; gap: 18px; }
+    .work-row--flip .work-row__media { order: 0; }
+    .work-row h3 { font-size: 26px; }
+    .numbers-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 16px; }
 
-    .featured-card,
-    .featured-card--wide {
-      grid-column: auto;
-      display: flex;
-    }
   }
 }
 
-// Tablet: the photo cards stack their media above the copy
+// Tablet: the photos stack above the words
 @media screen and (min-width: 601px) and (max-width: 900px) {
-  .find-my-work .featured-card--wide {
-    grid-template-columns: 1fr;
-  }
-}
-
-// ── Live details inside the cards ───────────────────────────────────────────
-// Scoped through .featured-card so it wins over the card's muted paragraph style.
-.find-my-work .featured-card .project-live {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-  font-size: 13px;
-  color: var(--fg-muted);
-
-  p {
-    margin: 0;
-    font-family: inherit;
-    font-size: 13px;
-    opacity: 1;
-  }
-
-  &__line strong,
-  &__counts strong {
-    color: var(--accent);
-    font-weight: 700;
-  }
-
-  &__counts {
-    font-size: 14px;
-    color: var(--fg);
-  }
-
-}
-
-
-// Medal chips light up one after another when the card is hovered or focused.
-// Only the background layer fades: the label keeps full contrast at all times.
-.featured-card--chips .featured-tags span {
-  position: relative;
-  isolation: isolate;
-  background: transparent;
-  border: 1px solid var(--border);
-
-  &::before {
-    content: "";
-    position: absolute;
-    inset: -1px;
-    z-index: -1;
-    border-radius: 999px;
-    background: rgba(240, 115, 45, 0.18);
-    opacity: 0;
-    transition: opacity 0.25s ease-out;
-  }
-}
-
-.featured-card--chips:hover .featured-tags span::before,
-.featured-card--chips:focus-within .featured-tags span::before {
-  opacity: 1;
-}
-
-.featured-card--chips:hover .featured-tags span:nth-child(2)::before,
-.featured-card--chips:focus-within .featured-tags span:nth-child(2)::before {
-  transition-delay: 0.12s;
-}
-
-.featured-card--chips:hover .featured-tags span:nth-child(3)::before,
-.featured-card--chips:focus-within .featured-tags span:nth-child(3)::before {
-  transition-delay: 0.24s;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .featured-card--chips .featured-tags span::before {
-    opacity: 1;
-    transition: none;
-  }
-}
-
-
-
-@keyframes media-in {
-  from { opacity: 0; }
+  .find-my-work .work-row { grid-template-columns: 1fr; gap: 20px; }
+  .find-my-work .work-row--flip .work-row__media { order: 0; }
+  .find-my-work .numbers-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }

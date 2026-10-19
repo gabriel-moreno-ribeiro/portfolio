@@ -101,35 +101,86 @@
   background: rgba($grey, 0.2);
   align-self: flex-start;
 
-  // The local time and, right after it, previous / next city.
+  // Previous / next city at the foot of the card, named, with where you are.
   &__steps {
-    display: inline-flex;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
-    gap: 4px;
-
-    .city-panel__time { margin-right: 2px; }
+    gap: 12px;
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
   }
 
-  &__arrow {
-    display: grid;
-    place-items: center;
-    width: 24px;
-    height: 24px;
-    padding: 0;
-    border: 1px solid var(--border);
-    border-radius: 50%;
+  &__step {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    justify-self: start;
+    min-height: 44px;
+    padding: 6px 16px 6px 10px;
+    border: 1.5px solid var(--border);
+    border-radius: 36px;
     background: var(--surface);
     color: var(--fg);
-    font-size: 13px;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: left;
     cursor: pointer;
-    transition: background-color 0.16s ease-out, border-color 0.16s ease-out, transform 0.16s ease-out;
+    transition: border-color 0.16s ease-out, transform 0.16s ease-out;
 
-    &:hover {
-      border-color: var(--accent-decor);
-      color: var(--accent);
-      transform: translateY(-1px);
+    svg { flex: none; width: 18px; height: 18px; color: var(--accent); transition: transform 0.2s ease-out; }
+
+    span { display: flex; flex-direction: column; line-height: 1.15; }
+
+    small {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--fg-muted);
     }
-    &:active { transform: scale(0.96); }
+
+    &:hover { border-color: var(--accent-decor); }
+    &:hover svg { transform: translateX(-3px); }
+    &:active { transform: scale(0.97); }
+
+    &--next {
+      justify-self: end;
+      padding: 6px 10px 6px 16px;
+      text-align: right;
+
+      &:hover svg { transform: translateX(3px); }
+    }
+  }
+
+  &__progress {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+
+  &__dots {
+    display: flex;
+    gap: 6px;
+
+    i {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--border);
+      transition: transform 0.2s ease-out, background-color 0.2s;
+    }
+
+    i.is-on { background: var(--accent-decor); transform: scale(1.35); }
+  }
+
+  &__count {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 12px;
+    color: var(--fg-muted);
   }
 
   &__close {

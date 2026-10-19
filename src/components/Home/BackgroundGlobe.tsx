@@ -377,29 +377,8 @@ function CityPanel({
         <div className="city-panel__meta">
           <p className="city-panel__location">{city.name}</p>
           <span className="city-panel__coords">{city.coords}</span>
-          {/* The local time with previous / next city right beside it; they wrap as one. */}
-          <span className="city-panel__steps">
-            <span className="city-panel__time">
-              {showClock && <CityClock tz={CITY_TZ[city.id] ?? config.location.tz} />}
-            </span>
-            <button
-              type="button"
-              className="city-panel__arrow"
-              onClick={() => onStep(-1)}
-              aria-label={`Previous city: ${prev.name.split(',')[0]}`}
-              title={prev.name.split(',')[0]}
-            >
-              <FiArrowLeft aria-hidden="true" />
-            </button>
-            <button
-              type="button"
-              className="city-panel__arrow"
-              onClick={() => onStep(1)}
-              aria-label={`Next city: ${next.name.split(',')[0]}`}
-              title={next.name.split(',')[0]}
-            >
-              <FiArrowRight aria-hidden="true" />
-            </button>
+          <span className="city-panel__time">
+            {showClock && <CityClock tz={CITY_TZ[city.id] ?? config.location.tz} />}
           </span>
         </div>
         <h3 className="city-panel__headline">{city.headline}</h3>
@@ -407,6 +386,24 @@ function CityPanel({
           <p key={i} className="city-panel__para">{para}</p>
         ))}
       </div>
+
+      {/* Walk the journey: the cities on either side, by name, and where you are. */}
+      <nav className="city-panel__steps" aria-label="Cities">
+        <button type="button" className="city-panel__step" onClick={() => onStep(-1)}>
+          <FiArrowLeft aria-hidden="true" />
+          <span><small>Previous</small>{prev.name.split(',')[0]}</span>
+        </button>
+        <span className="city-panel__progress" aria-live="polite">
+          <span className="city-panel__dots" aria-hidden="true">
+            {CITIES.map((c) => <i key={c.id} className={c.id === city.id ? 'is-on' : undefined} />)}
+          </span>
+          <span className="city-panel__count">{index + 1} / {CITIES.length}</span>
+        </span>
+        <button type="button" className="city-panel__step city-panel__step--next" onClick={() => onStep(1)}>
+          <span><small>Next</small>{next.name.split(',')[0]}</span>
+          <FiArrowRight aria-hidden="true" />
+        </button>
+      </nav>
     </motion.div>
   );
 }
@@ -549,17 +546,14 @@ function BackgroundGlobe() {
                     <div className="city-panel__meta">
                       <p className="city-panel__location">{c.name}</p>
                       <span className="city-panel__coords">{c.coords}</span>
-                      <span className="city-panel__steps">
-                        <span className="city-panel__time">00:00 local</span>
-                        <span className="city-panel__arrow" />
-                        <span className="city-panel__arrow" />
-                      </span>
+                      <span className="city-panel__time">00:00 local</span>
                     </div>
                     <h3 className="city-panel__headline">{c.headline}</h3>
                     {c.story.map((para, i) => (
                       <p key={i} className="city-panel__para">{para}</p>
                     ))}
                   </div>
+                  <div className="city-panel__steps"><span className="city-panel__step">&nbsp;<br />&nbsp;</span></div>
                 </div>
               ))}
               <AnimatePresence initial={false}>
