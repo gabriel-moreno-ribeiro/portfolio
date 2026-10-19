@@ -1,6 +1,5 @@
 // The "currently playing" card in the corner of the hero: the Uiverse card by
-// Praashoo7, with the tracks read from content/nowPlaying.ts (fixed for now, the
-// YouTube Music account feeds it later).
+// Praashoo7, with the tracks read from content/nowPlaying.ts; each opens on Spotify.
 import { SiSpotify } from "react-icons/si";
 import { nowPlaying } from "../../content/nowPlaying";
 import "../../styles/components/home/spotifyCard.scss";
