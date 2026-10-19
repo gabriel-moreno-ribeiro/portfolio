@@ -192,21 +192,6 @@ $column: 760px;
   animation: op-drop 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.5s backwards;
 
   svg { width: 18px; height: 18px; }
-
-  // The ping under the pin: three rings, then it rests.
-  &::after {
-    content: "";
-    position: absolute;
-    left: 50%;
-    bottom: -2px;
-    width: 14px;
-    height: 5px;
-    margin-left: -7px;
-    border-radius: 50%;
-    background: var(--accent-decor);
-    opacity: 0;
-    animation: op-ping 1.6s ease-out 1.1s 3;
-  }
 }
 
 .op__time {
@@ -220,11 +205,6 @@ $column: 760px;
   from { transform: translateY(-14px); opacity: 0; }
   60% { transform: translateY(2px); opacity: 1; }
   to { transform: none; }
-}
-
-@keyframes op-ping {
-  0% { transform: scale(0.4); opacity: 0.55; }
-  100% { transform: scale(2.6); opacity: 0; }
 }
 
 // The one-liner, in ink, as the summary the site's pages carry under the title.
@@ -547,7 +527,7 @@ $column: 760px;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .op__pin, .op__pin::after, .is-growing .op__bar-fill { animation: none; }
+  .op__pin, .is-growing .op__bar-fill { animation: none; }
 }
 
 @media screen and (max-width: 600px) {
@@ -595,7 +575,7 @@ $column: 760px;
   .op__name { gap: 3.5mm; .op__bee { width: 11mm; } }
   .op .op__line { font-size: 8pt; i { margin: 0 2mm; } }
   .op__here { padding: 0; border: 0; gap: 1mm; }
-  .op__pin { animation: none; &::after { display: none; } svg { width: 3mm; height: 3mm; } }
+  .op__pin { animation: none; svg { width: 3mm; height: 3mm; } }
   .op__title { font-size: 22pt; }
   .op .op__line { margin-top: 1.5mm; }
   .op .op__deck { margin-top: 1.2mm; font-size: 9.5pt; line-height: 1.3; }
