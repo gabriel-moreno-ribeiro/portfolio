@@ -1,101 +1,101 @@
 // The one-pager at /one-pager: Gabriel first, Hibeex second. For the Behring
 // Founders phase 3 (3 to 6 December, São Paulo) and any intro. Facts come from
-// Gabriel's brief, his phase-1 application and the team's LinkedIn profiles.
-// Written in his voice: short sentences, "a gente", "pra", no em dashes.
+// Gabriel's brief, his résumé, his phase-1 application and the team's LinkedIn
+// profiles. Written in his voice: short sentences, plain words, no dashes.
 
 export const head = {
   name: 'Gabriel Moreno Ribeiro',
-  facts: ['18 anos', 'Founder da Hibeex', 'De Salvador'],
+  facts: ['18 years old', 'Founder of Hibeex', 'From Salvador, Brazil'],
   city: 'São Paulo',
   intro:
-    'Comecei consertando carro com meu avô no interior do Ceará. Depois vieram os notebooks, em Salvador, e o back office do consultório do meu pai, quando ele quase fechou. Hoje eu conserto o back office de pequenas e médias empresas, com a Hibeex.',
+    'I started out fixing cars with my grandfather in a small town in Ceará. Then came laptops, in Salvador, and the back office of my father’s clinic when it nearly closed. Today I fix the back office of small and medium businesses, with Hibeex.',
   contact: [
     { label: 'me@gabrielmr.com', href: 'mailto:me@gabrielmr.com' },
     { label: 'gabrielmr.com', href: 'https://gabrielmr.com' },
     { label: 'linkedin.com/in/gabriel-moreno-ribeiro', href: 'https://linkedin.com/in/gabriel-moreno-ribeiro' },
   ],
-  program: ['Behring Founders, fase 3', 'Arenas: enterprise AI, fintech, services'],
+  program: ['Behring Founders, phase 3', 'Arenas: enterprise AI, fintech, services'],
 };
 
 export const origin = [
-  'A garagem do meu avô fica em Missão Velha, no interior do Ceará. O último carro que a gente consertou junto ficou três tardes parado. Trocamos bateria, alternador e filtro, e o defeito era um fusível, a peça mais barata da caminhonete.',
-  'Em Salvador eu consertava notebook pra pagar os estudos: foram 121, mandados pra 21 estados, só por indicação. Alguns passavam em todos os testes de hardware e travavam na BIOS mesmo assim. Era software, e os únicos tutoriais que me destravaram eram em hindi. Aos 11 eu já tinha Python suficiente pra escrever um script que traduz e dubla esses vídeos pro português.',
-  'Em 2020, com 12 anos, vi o consultório do meu pai quase fechar. Minha mãe virou a secretária e eu fiz o que dava: um chatbot com a voz dela pra atender o telefone, uma automação pra cobrar dos planos de saúde o que eles deviam e um painel com os dados e os contratos num lugar só. Foi a primeira empresa pequena que eu vi por dentro.',
-  'Aos 14 fundei o Projeto Candela. Começou com uma vaquinha e 60 escolas visitadas antes de ter orçamento, e virou kits de física impressos em 3D, de graça, em 28 escolas públicas e 3.392 alunos, com a UFBA. No mesmo período vieram 39 medalhas em olimpíadas científicas.',
-  'Aos 18 me mudei pra São Paulo pra morar com o Teodoro, meu cofundador, e construir a Hibeex.',
+  'My grandfather’s garage is in Missão Velha, in the interior of Ceará. The last car we fixed together sat there for three afternoons. We changed the battery, the alternator and the filter, and the fault was a fuse, the cheapest part in the truck.',
+  'In Salvador I repaired laptops to pay for school: 121 of them, shipped to 21 states, all by referral. Some passed every hardware test and still froze at the BIOS. That was software, and the only tutorials that got me unstuck were in Hindi. At 11 I knew enough Python to write a script that translates and dubs those videos into Portuguese.',
+  'In 2020, at 12, I watched my father’s clinic nearly close. My mother became the receptionist and I did what I could: a chatbot with her voice to answer the phone, an automation to collect what the health plans owed him, and a dashboard with the data and the contracts in one place. It was the first small business I saw from the inside.',
+  'At 14 I founded Projeto Candela. It started with a crowdfunding campaign and 60 schools visited before there was any budget, and became 3D-printed physics kits, free, in 28 public schools and 3,392 students, with the Federal University of Bahia. In the same years came 39 medals in science olympiads.',
+  'At 18 I moved to São Paulo to live with Teodoro, my co-founder, and build Hibeex.',
 ];
 
 export const now = [
-  'A Hibeex faz o back office da pequena e média empresa por meio de quem já cuida dela: o contador, o BPO financeiro e o jurídico. O dono de PME gasta mais de 1.300 horas por ano nisso (uns 54 dias, se ele não dormir). A gente conecta nos sistemas que o escritório já usa (Domínio, Conta Azul, Nibo, Omie), arruma o dado e coloca agentes pra fazer o serviço: conciliação, cobrança, contratos.',
-  'Antes do primeiro commit, eu e o Teodoro conversamos com 96 pessoas, de dono de PME a COO de big tech. Nas primeiras vendas ficou claro que o ciclo é top-down, e isso segura o ritmo. Então hoje a gente trabalha de dentro da operação de empresas em Porto Alegre e em São Paulo, fazendo o back office como serviço, pra aprender o processo por dentro antes de voltar pro produto.',
+  'Hibeex runs the back office of small and medium businesses through the people who already look after them: the accountant, the finance BPO and the lawyer. An SMB owner spends more than 1,300 hours a year on it (about 54 days, without sleeping). We plug into the systems the firm already uses (Domínio, Conta Azul, Nibo, Omie), clean up the data and put agents to work: reconciliation, collections, contracts.',
+  'Before the first commit, Teodoro and I talked to 96 people, from SMB owners to COOs at big tech. The first sales made it clear that the cycle is top-down, and that slows the pace. So today we work from inside the operations of companies in Porto Alegre and São Paulo, doing the back office as a service, to learn the process from the inside before going back to the product.',
 ];
 
 // Traction, split by what it measures.
 export const base = [
-  { figure: '3', label: 'escritórios contábeis como design partners' },
-  { figure: '40+', label: 'bases de PME rodando os agentes' },
+  { figure: '3', label: 'accounting firms as design partners' },
+  { figure: '40+', label: 'SMB accounts running the agents' },
 ];
 
-// MRR today and with the contract already signed. Values in R$ mil.
+// MRR today and with the contract already signed. Values in R$ thousand.
 export const mrr = {
-  today: { value: 3, label: 'hoje', note: 'cobre os custos' },
-  signed: { value: 40, label: 'jan/27', note: 'contrato assinado com a RP Métodos, 35% das bases endereçáveis da carteira dele' },
+  today: { value: 3, label: 'today', note: 'covers our costs' },
+  signed: { value: 40, label: 'Jan 2027', note: 'contract signed with RP Métodos, 35% of the addressable accounts in his portfolio' },
 };
 
-// Measured in a single client. Bars are drawn to scale against `before`.
+// Measured at a single client. Bars are drawn to scale against `before`.
 export const results = [
-  { label: 'Serviço contábil', before: 8, after: 2, unit: 'h', format: (n: number) => `${n}h` },
-  { label: 'Prazo de recebimento', before: 63.9, after: 9, unit: 'dias', format: (n: number) => `${n.toLocaleString('pt-BR')} dias`, note: '55 dias de caixa de volta' },
+  { label: 'Accounting service', before: 8, after: 2, unit: 'h', format: (n: number) => `${n}h` },
+  { label: 'Days to get paid', before: 63.9, after: 9, unit: 'days', format: (n: number) => `${n} days`, note: '55 days of cash back' },
 ];
 export const singles = [
-  { figure: '94%', label: 'de acerto na conciliação automática' },
-  { figure: 'R$ 12.480', label: 'recuperados pra um único cliente' },
+  { figure: '94%', label: 'accuracy in automatic reconciliation' },
+  { figure: 'R$ 12,480', label: 'recovered for a single client' },
 ];
-export const pipeline = 'Uns 730 escritórios no pipeline. O alvo é 750 escritórios parceiros em 36 meses, umas 49 mil PMEs.';
+export const pipeline = 'About 730 accounting firms in the pipeline. The target is 750 partner firms in 36 months, about 49,000 SMBs.';
 
 export const team = [
   {
     name: 'Teodoro Trevisan',
-    role: 'cofundador',
+    role: 'co-founder',
     href: 'https://www.linkedin.com/in/teodoro-trevisan',
-    text: 'É de Porto Alegre e analisa dados desde os 14, quando entrou na Poatek. Foi admitido em engenharia na UT Austin e escolheu um ano construindo. Fundou o Voluntaria+, que levou mais de R$ 100 mil a ONGs. A gente se conheceu no Prep da Fundação Estudar.',
+    text: 'From Porto Alegre, analyzing data since he was 14, when he joined Poatek. He was admitted to engineering at UT Austin and chose a year of building instead. He founded Voluntaria+, which brought more than R$ 100,000 to NGOs. We met at Fundação Estudar’s Prep program.',
   },
   {
     name: 'Devansh Chopra',
-    role: 'CTO, entrando pelo Entrepreneur First',
+    role: 'CTO, joining through Entrepreneur First',
     href: 'https://www.linkedin.com/in/devansh-chopra0526',
-    text: 'Mestre em Computer Science por St Andrews e vencedor do BlackRock Hackathon 2026. Na Vyntelligence, colocou fluxos com agentes em produção pra mais de 15 clientes enterprise. Vem direto de San Francisco.',
+    text: 'Master’s in Computer Science from St Andrews and winner of the BlackRock Hackathon 2026. At Vyntelligence he put agent workflows into production for more than 15 enterprise clients. He is coming straight from San Francisco.',
   },
 ];
 
 export const validators = [
-  { name: 'Rudimar Pascoal', role: 'RP Métodos', href: 'https://www.linkedin.com/in/rudimarpascoal/', text: 'Sexto maior usuário do Domínio no Brasil, mais de 800 bases. Contrato assinado.' },
-  { name: 'Carla Koenig', role: 'BPO financeiro', href: 'https://www.linkedin.com/in/carla-koenig-de-azevedo-33a55255/', text: 'Pioneira do BPO financeiro no Brasil, exit na Ampulheta.' },
-  { name: 'Luciano Oliveira', role: 'Grupo Voalle', href: 'https://www.linkedin.com/in/luciano-oliveira-11718749/', text: 'CTO do Grupo Voalle, advisor de produto.' },
+  { name: 'Rudimar Pascoal', role: 'RP Métodos', href: 'https://www.linkedin.com/in/rudimarpascoal/', text: 'Sixth-largest Domínio user in Brazil, more than 800 accounts. Contract signed.' },
+  { name: 'Carla Koenig', role: 'finance BPO', href: 'https://www.linkedin.com/in/carla-koenig-de-azevedo-33a55255/', text: 'A pioneer of finance BPO in Brazil, with an exit at Ampulheta.' },
+  { name: 'Luciano Oliveira', role: 'Grupo Voalle', href: 'https://www.linkedin.com/in/luciano-oliveira-11718749/', text: 'CTO of Grupo Voalle, product advisor.' },
 ];
 
 export const year = [
-  { name: 'Canastra AI Residency', text: '1 de 6 startups do Brasil. Eu e o Teodoro somos os founders mais novos da história do programa.' },
-  { name: 'European Innovation Academy, Londres', text: '1 de 10 do mundo.' },
-  { name: 'Latitud Fellowship', text: 'top 20%. Também LALA Start, Claude for Startups e AWS for Startups.' },
+  { name: 'Canastra AI Residency', text: '1 of 6 startups in Brazil. Teodoro and I are the youngest founders in the program’s history.' },
+  { name: 'European Innovation Academy, London', text: '1 of 10 in the world, from 5,000+ applicants.' },
+  { name: 'Latitud Fellowship', text: 'top 20%. Also LALA Start, Claude for Startups and AWS for Startups.' },
 ];
 
 export const build = [
-  'Primeiro a gente cobra por fluxo de trabalho entregue, depois por resultado. Em quatro anos, quero o back office inteiro da PME brasileira numa operação só, com crédito embarcado, vendido por quem a PME já confia.',
-  'Na garagem do meu avô, a cidade trazia o que tinha parado de funcionar e ele não largava até achar o fusível. Eu quero construir esse lugar pra pequena empresa.',
+  'First we charge per workflow delivered, then per result. In four years I want the whole back office of the Brazilian SMB in one operation, with embedded credit, sold by the people the SMB already trusts.',
+  'In my grandfather’s garage, the town brought in whatever had stopped working and he would not let go until he found the fuse. I want to build that place for small businesses.',
 ];
 
 export const ask = {
-  intro: 'Em dezembro eu quero conversar com três tipos de gente.',
+  intro: 'In December I want to talk to three kinds of people.',
   people: [
-    { who: 'Quem já faz financeiro, fiscal ou jurídico pra PME em escala,', examples: 'como Contabilizei, Conta Simples, Qive, Cora e a Enter no jurídico.' },
-    { who: 'Quem tem o contador como canal,', examples: 'como Nibo, Omie e a Conta Azul, que acabou de comprar a Mister Contador. Quero entender como montaram esse relacionamento e o que o contador paga de verdade.' },
-    { who: 'Quem investe em serviço com IA,', examples: 'como a Atlantico, a a16z e a Valor. Quero ouvir as perguntas mais duras sobre distribuição e dependência das APIs.' },
+    { who: 'People who already do finance, tax or legal for SMBs at scale,', examples: 'like Contabilizei, Conta Simples, Qive, Cora, and Enter on the legal side.' },
+    { who: 'People who have the accountant as a channel,', examples: 'like Nibo, Omie and Conta Azul, which just bought Mister Contador. I want to understand how they built that relationship and what the accountant really pays for.' },
+    { who: 'People who invest in AI-powered services,', examples: 'like Atlantico, a16z and Valor. I want to hear the hardest questions about distribution and dependence on the APIs.' },
   ],
-  close: 'Levo o produto rodando. Se for você, me escreve.',
+  close: 'I bring the product running. If that’s you, write to me.',
 };
 
-export const footer = 'Hibeex: contabilidade, financeiro e jurídico da PME numa operação só. Outubro de 2026.';
+export const footer = 'Hibeex: accounting, finance and legal for SMBs in one operation. October 2026.';
 
 // The build time busts the 30-day cache on /files when the PDF is regenerated.
 export const PDF = `/files/gabriel-moreno-ribeiro-hibeex.pdf?v=${encodeURIComponent(__BUILD_TIME__)}`;

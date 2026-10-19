@@ -54,7 +54,7 @@ export const experience = [
     company: "Instituto Principia (Escola de Talentos)",
     date: "January 2023 - July 2025",
     description:
-      "One of 14 students picked nationally. Quantum mechanics, relativity, statistical physics. Chemical kinetics research with Prof. Juliano Bonacin, Ph.D.: a 59-page thesis modeling reaction mechanisms at 97% accuracy.",
+      "One of 14 students picked nationally. Quantum mechanics, relativity, statistical physics. Chemical kinetics research with Prof. Juliano Bonacin, Ph.D.: a 150-page monograph on the steady-state hypothesis, revised in October 2026.",
   },
 ];
 

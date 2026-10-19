@@ -15,6 +15,7 @@ interface ResearchItem {
 
 // Only probe for actually-uploaded media. Add slugs to this map when files exist.
 const RESEARCH_MEDIA_MANIFEST: Record<string, string[]> = {
+  'chemical-kinetics': ['01.webp'],
   'projeto-candela': ['01.webp'],
 };
 
@@ -32,14 +33,14 @@ const researchItems: ResearchItem[] = [
   },
   {
     slug: 'chemical-kinetics',
-    title: 'Modeling Reaction Mechanisms in Chemical Kinetics',
-    field: 'Physical Chemistry',
-    year: '2023-2025',
-    advisor: 'Prof. Juliano Bonacin, Ph.D.',
+    title: 'The Steady-State Hypothesis: when it holds and how much it misses',
+    field: 'Chemical Kinetics',
+    year: '2023-2026',
+    advisor: 'Prof. Juliano Alves Bonacin, Ph.D.',
     abstract:
-      'A 59-page thesis modeling reaction rate mechanisms with numerical methods, at 97% accuracy. Covers the steady-state approximation, Michaelis-Menten kinetics and oscillating reactions.',
-    tags: ['MATLAB', 'Mathematica', 'LaTeX', 'Numerical Methods', 'Kinetics'],
-    // pdf: '/research/chemical-kinetics/paper.pdf', // TODO: upload PDF to enable badge
+      'A 150-page monograph on the approximation chemical kinetics uses for intermediates that appear and vanish too fast to measure: when it holds, how much it misses, and whether data can tell. Exact solutions of textbook mechanisms, the Chapman ozone cycle, the start-up of an ammonia reactor, 1,968 enzyme assays from the SABIO-RK database, and a bench test with invertase and a glucose meter, proposed and not yet run. Written at the Escola de Talentos of Instituto Principia and revised in October 2026.',
+    tags: ['Chemical Kinetics', 'Numerical Simulation', 'Python', 'LaTeX', '150 pages'],
+    pdf: '/research/chemical-kinetics/paper.pdf',
   },
   {
     slug: 'projeto-candela',

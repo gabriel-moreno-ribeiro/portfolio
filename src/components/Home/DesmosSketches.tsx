@@ -9,6 +9,9 @@ import "../../styles/components/home/desmosSketches.scss";
 
 type Sketch = { id: string; name: string; graphId: string };
 
+// The recordings are long at 1x; this is the pace the drawings appear at.
+const SPEED = 2.5;
+
 const SKETCHES: Sketch[] = [
   { id: "laptop-flu", name: "Sick laptop", graphId: "axmfjf6rxv" },
   { id: "processor", name: "Chip with a screwdriver", graphId: "kk7wibzqq1" },
@@ -32,6 +35,7 @@ function Tile({ sketch }: { sketch: Sketch }) {
   useEffect(() => {
     const v = videoRef.current;
     if (!v || reduced || ended) return;
+    v.playbackRate = SPEED;
     if (onScreen && pageVisible) v.play().catch(() => {});
     else v.pause();
   }, [onScreen, pageVisible, reduced, ended]);
@@ -41,6 +45,7 @@ function Tile({ sketch }: { sketch: Sketch }) {
     if (!v) return;
     setEnded(false);
     v.currentTime = 0;
+    v.playbackRate = SPEED;
     v.play().catch(() => {});
   };
 
@@ -88,7 +93,7 @@ function Tile({ sketch }: { sketch: Sketch }) {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Play with the equations <FiArrowUpRight aria-hidden="true" />
+          Open in Desmos <FiArrowUpRight aria-hidden="true" />
           <span className="sr-only"> (opens in a new tab)</span>
         </a>
       </p>
