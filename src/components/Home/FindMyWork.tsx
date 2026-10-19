@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Project, projects } from "../../content/projects";
 import useIsMobile from "../../hooks/useIsMobile";
 import { Counter, usePageVisible, useReducedMotion, useVisible } from "../../lib/motion";
+import CandelaMark from "./CandelaMark";
 import DesmosSketches from "./DesmosSketches";
 import MedalsShowcase from "./MedalsShowcase";
 
@@ -170,12 +171,26 @@ function ProjectRow({ project, index }: { project: Project; index: number }) {
   );
 }
 
-// The four numbers, as a strip at the foot of the work. Each counts up once.
+// The numbers the rest of the section doesn't already show, each beside the
+// mark of where it comes from. Each counts up once.
 const STATS = [
-  { value: 39, label: "olympiad medals", note: "19 of them gold" },
-  { value: 3392, label: "students reached", note: "Projeto Candela, 28 schools" },
-  { value: 1570, grouping: false, label: "SAT score", note: "of 1600, top 1% in Brazil" },
-  { value: 0.7, decimals: 1, suffix: "%", label: "acceptance rate", note: "Fundação Estudar" },
+  {
+    logo: (
+      <span className="candela-lockup">
+        <CandelaMark />
+        <span>Projeto<br />Candela</span>
+      </span>
+    ),
+    value: 3392, label: "students reached", note: "28 public schools",
+  },
+  {
+    logo: <img src="/stats/sat-logo.webp" alt="" width={200} height={127} loading="lazy" decoding="async" />,
+    value: 1570, grouping: false, label: "SAT score", note: "of 1600, top 1% in Brazil",
+  },
+  {
+    logo: <img src="/stats/fundacao-estudar.webp" alt="" width={260} height={108} loading="lazy" decoding="async" />,
+    value: 0.7, decimals: 1, suffix: "%", label: "acceptance rate", note: "about 70 of 10,000+ applicants",
+  },
 ];
 
 function NumbersStrip() {
@@ -189,6 +204,7 @@ function NumbersStrip() {
     <ul className="numbers-strip" ref={ref} aria-label="By the numbers">
       {STATS.map((s) => (
         <li key={s.label}>
+          <span className="numbers-strip__logo" aria-hidden="true">{s.logo}</span>
           <span className="numbers-strip__figure">
             {shown && !reduced ? (
               <Counter value={s.value} decimals={s.decimals} grouping={s.grouping} suffix={s.suffix} />

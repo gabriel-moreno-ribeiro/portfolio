@@ -136,7 +136,7 @@
   // ── The four numbers ────────────────────────────────────────────────────────
   .numbers-strip {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     margin: 0;
     padding: 0;
     list-style: none;
@@ -151,6 +151,47 @@
       text-align: left;
 
       & + li { border-left: 1px solid var(--border); }
+    }
+
+    // The mark of where the number comes from, on a white plate so the
+    // logos keep their own colours in both themes.
+    &__logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 52px;
+      width: fit-content;
+      min-width: 52px;
+      margin-bottom: 16px;
+      padding: 7px 10px;
+      box-sizing: border-box;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #fff;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+
+      img, svg { display: block; height: 100%; width: auto; }
+    }
+
+    li:hover &__logo { transform: translateY(-2px); }
+
+    // The bulb with its name beside it, as on the project's poster.
+    .candela-lockup {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      height: 100%;
+
+      svg { height: 100%; width: auto; }
+
+      span {
+        font-size: 12.5px;
+        font-weight: 700;
+        line-height: 1.05;
+        letter-spacing: -0.01em;
+        color: #1f2a44;
+        text-align: left;
+      }
     }
 
     &__figure {
@@ -442,12 +483,21 @@
     .work-row--flip .work-row__media { order: 0; }
     .work-row h3 { font-size: 26px; }
     .numbers-strip {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: 1fr;
 
-      li { padding: 20px 16px; }
-      li:nth-child(odd) { border-left: 0; }
-      li:nth-child(n + 3) { border-top: 1px solid var(--border); }
-      &__figure { font-size: 32px; }
+      li {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr);
+        grid-template-rows: auto auto auto;
+        column-gap: 16px;
+        row-gap: 2px;
+        padding: 18px 0;
+      }
+      li + li { border-left: 0; border-top: 1px solid var(--border); }
+      li { grid-template-columns: 112px minmax(0, 1fr); }
+      &__logo { grid-row: 1 / span 3; align-self: center; margin: 0; height: 46px; width: 100%; }
+      &__figure { font-size: 30px; }
+      &__label { margin-top: 2px; }
     }
 
   }
@@ -457,10 +507,4 @@
 @media screen and (min-width: 601px) and (max-width: 900px) {
   .find-my-work .work-row { grid-template-columns: 1fr; gap: 20px; }
   .find-my-work .work-row--flip .work-row__media { order: 0; }
-  .find-my-work .numbers-strip {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-
-    li:nth-child(odd) { border-left: 0; }
-    li:nth-child(n + 3) { border-top: 1px solid var(--border); }
-  }
 }
