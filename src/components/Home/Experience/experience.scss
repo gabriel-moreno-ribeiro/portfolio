@@ -24,8 +24,9 @@ $exp-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   --exp-odo-top: 180px;
   // Cards alternam de lado e a estrada serpenteia entre eles. 56px = vão de 32px até a borda
   // da estrada + meia-largura dela (46/2 + 1): casa com CARD_GAP.wide e roadHalf() em
-  // geometry.ts. O resto (12% da coluna) é quanto a estrada ondula de um lado para o outro.
-  --exp-card-w: min(400px, calc((100% - clamp(96px, 12%, 150px)) / 2 - 56px));
+  // geometry.ts. O resto (24% da coluna) é quanto a estrada ondula de um lado para o outro:
+  // com 12% ela mal saía do meio.
+  --exp-card-w: min(380px, calc((100% - clamp(150px, 24%, 240px)) / 2 - 56px));
 }
 
 // ── Cabeçalho: só o título (estilo em .section-title, globals.scss) ─────────

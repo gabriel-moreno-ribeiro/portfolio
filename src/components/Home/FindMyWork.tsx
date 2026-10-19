@@ -185,7 +185,7 @@ const STATS = [
   },
   {
     logo: <img className="sat-logo" src="/stats/sat-logo.webp" alt="" width={200} height={127} loading="lazy" decoding="async" />,
-    value: 1570, grouping: false, label: "SAT score", note: "of 1600, top 1% in Brazil",
+    value: 1570, grouping: false, label: "SAT score", note: "of 1600, top <1% in the world", href: "/files/sat-score-report.pdf",
   },
   {
     logo: (
@@ -217,7 +217,14 @@ function NumbersStrip() {
               print(s)
             )}
           </span>
-          <span className="numbers-strip__label">{s.label}</span>
+          {"href" in s ? (
+            <a className="numbers-strip__label numbers-strip__link" href={s.href} target="_blank" rel="noopener noreferrer">
+              {s.label} <FiArrowUpRight aria-hidden="true" />
+              <span className="sr-only"> (score report, opens in a new tab)</span>
+            </a>
+          ) : (
+            <span className="numbers-strip__label">{s.label}</span>
+          )}
           <span className="numbers-strip__note">{s.note}</span>
         </li>
       ))}

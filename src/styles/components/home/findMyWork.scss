@@ -203,6 +203,26 @@
       color: var(--fg);
     }
 
+    // The SAT label opens the score report.
+    &__link {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      width: fit-content;
+      text-decoration: none;
+      background-image: linear-gradient(currentColor, currentColor);
+      background-size: 0% 1.5px;
+      background-position: 0 100%;
+      background-repeat: no-repeat;
+      transition: background-size 0.25s ease, color 0.2s;
+
+      svg { width: 14px; height: 14px; color: var(--accent); transition: transform 0.2s; }
+
+      &:hover,
+      &:focus-visible { background-size: 100% 1.5px; color: var(--accent); }
+      &:hover svg { transform: translate(2px, -2px); }
+    }
+
     &__note {
       font-size: 13px;
       line-height: 1.35;

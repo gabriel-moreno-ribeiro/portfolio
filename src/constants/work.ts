@@ -142,31 +142,13 @@ export const work = [
       },
       modalData: {
         title: "Academic Olympiad Achievements",
-        desc: "39 medals in 49 competitions: 19 gold, 5 international. Math, physics, chemistry, biology and astronomy. 1st of 10,000+ at IFT-UNESP. SAT 1570/1600, top 1% in Brazil. Gold at ONNEQ, silver at OBMEP, bronze at OBQ.",
+        desc: "39 medals in 49 competitions: 19 gold, 5 international. Math, physics, chemistry, biology and astronomy. 1st of 10,000+ at IFT-UNESP. SAT 1570/1600, 99th+ percentile. Gold at ONNEQ, silver at OBMEP, bronze at OBQ.",
         infoHeading: "Highlights",
         infoArr: [
           "19 Gold Medals",
           "SAT 1570/1600",
           "1st OBAQ (0.014%)",
           "ONNEQ Gold (0.675%)",
-        ],
-      },
-    },
-    {
-      cardData: {
-        title: "St Andrews Global Merit Scholar",
-        url: null,
-        imgUrl: null,
-      },
-      modalData: {
-        title: "University of St Andrews - Global Merit Scholarship",
-        desc: "Admitted for Computer Science and Economics with a Global Merit Scholarship. Taking a build year to go deeper on HIBEEX first.",
-        infoHeading: "Details",
-        infoArr: [
-          "CS & Economics",
-          "Merit Scholarship",
-          "Scotland, UK",
-          "On a build year",
         ],
       },
     },

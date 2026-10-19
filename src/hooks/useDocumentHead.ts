@@ -34,7 +34,7 @@ export function useDocumentHead({ title, description, canonical, noindex }: Docu
       if (meta) {
         meta.setAttribute(
           'content',
-          'Building Backoffice AI for Small and Medium Businesses @ Hibeex. Founder @ Projeto Candela.'
+          'Building Backoffice AI for Small and Medium Businesses @ HIBEEX. Founder @ Projeto Candela.'
         );
       }
       const link = document.querySelector('link[rel="canonical"]');

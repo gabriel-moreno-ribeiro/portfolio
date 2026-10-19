@@ -28,9 +28,8 @@ const CITIES: City[] = [
     role: 'Roots',
     headline: 'My grandfather\'s garage.',
     story: [
-      'The Cariri valley, in the countryside of Ceará. Waterfalls cut through the rock, Padre Cícero\'s statue watches from the hill, and everyone knows your name before you say it.',
-      'My grandparents built their lives here and my father grew up on these streets. I came back every summer, months of 40°C heat, most of them spent handing my grandfather tools in his garage.',
-      'It\'s not on any startup map. It\'s where I learned to open things that won\'t start.',
+      'My father\'s family is from here, a small town in the Cariri valley, in the interior of Ceará. I spent most of my summers here as a kid.',
+      'My grandfather has a garage in town. I started helping him fix cars when I was 6, mostly by handing him tools.',
     ],
   },
   {
@@ -40,11 +39,10 @@ const CITIES: City[] = [
     lon: -38.4767,
     coords: '12.9747° S, 38.4767° W',
     role: 'Foundation',
-    headline: 'Home for seventeen years.',
+    headline: 'Where I grew up.',
     story: [
-      'The first capital of Brazil. Pelourinho\'s cobblestones, the Elevador Lacerda over the bay, the gold ceilings of São Francisco, sunset at Farol da Barra.',
-      'I got into Colégio Militar at 10, one of 30 out of 2,500 applicants, with a perfect math score. The olympiad run started here: 39 medals in math, physics, chemistry and astronomy.',
-      'Projeto Candela was built for the public schools of this city. I still call it home.',
+      'I lived in Salvador until I was 17. At 10 I got into Colégio Militar, one of 30 picked from 2,500 applicants, with a perfect score in math. That is where I started doing science olympiads.',
+      'I also repaired laptops here to pay for school, and started Projeto Candela in the city\'s public schools.',
     ],
   },
   {
@@ -54,10 +52,10 @@ const CITIES: City[] = [
     lon: -38.5433,
     coords: '3.7172° S, 38.5433° W',
     role: 'Acceleration',
-    headline: 'Last year of school, far from home.',
+    headline: 'Last year of school.',
     story: [
-      'I moved here for my final year of high school at Colégio Ari de Sá Cavalcante, on the ITA/IME track, sharing an apartment with 11 other students. Graduated with a 9.41 average.',
-      'That year: SAT 1510, Fundação Estudar PREP (70 picked from 10,000+ applicants), and admission to St Andrews with a Global Merit Scholarship.',
+      'I moved here for my last year of high school, at Colégio Ari de Sá, on the ITA/IME track. I shared an apartment with 11 other students and graduated with a 9.41 average.',
+      'That year I was also picked for Fundação Estudar\'s PREP program, about 70 people out of 10,000+ applicants.',
     ],
   },
   {
@@ -69,9 +67,8 @@ const CITIES: City[] = [
     role: 'Building',
     headline: 'Building HIBEEX.',
     story: [
-      'I moved here with Teodoro to build HIBEEX. Deferred university and went all in.',
-      'One of 6 startups in the Canastra Ventures AI Residency. We build backoffice AI for small and medium businesses.',
-      'I chose this over freshman year at St Andrews. So far, no regrets.',
+      'I moved here in 2026 to build HIBEEX with Teodoro, my co-founder. We make back-office AI for small and medium businesses.',
+      'HIBEEX was one of 6 startups in the Canastra Ventures AI Residency.',
     ],
   },
 ];
@@ -385,9 +382,8 @@ function CityPanel({
   );
 }
 
-// Walk the journey: the cities on either side, by name, and the dots for where
-// you are. It sits under the card at a fixed height, so the buttons stay put
-// while the card above changes size with each city's story.
+// Walk the journey: the cities on either side, by name, as plain links.
+// The timeline under the globe already shows where you are.
 function CitySteps({ city, onStep }: { city: City; onStep: (dir: -1 | 1) => void }) {
   const index = CITIES.findIndex((c) => c.id === city.id);
   const prev = CITIES[(index - 1 + CITIES.length) % CITIES.length];
@@ -397,14 +393,11 @@ function CitySteps({ city, onStep }: { city: City; onStep: (dir: -1 | 1) => void
     <nav className="city-steps" aria-label="Cities">
       <button type="button" className="city-steps__step" onClick={() => onStep(-1)}>
         <FiArrowLeft aria-hidden="true" />
-        <span><small>Previous</small>{prev.name.split(',')[0]}</span>
+        <span className="sr-only">Previous city: </span>{prev.name.split(',')[0]}
       </button>
-      <span className="city-steps__dots" aria-hidden="true">
-        {CITIES.map((c) => <i key={c.id} className={c.id === city.id ? 'is-on' : undefined} />)}
-      </span>
       <span className="sr-only" aria-live="polite">{city.name}, {index + 1} of {CITIES.length}</span>
       <button type="button" className="city-steps__step city-steps__step--next" onClick={() => onStep(1)}>
-        <span><small>Next</small>{next.name.split(',')[0]}</span>
+        <span className="sr-only">Next city: </span>{next.name.split(',')[0]}
         <FiArrowRight aria-hidden="true" />
       </button>
     </nav>
