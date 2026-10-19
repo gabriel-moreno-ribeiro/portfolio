@@ -165,6 +165,19 @@ export const projects: Project[] = [
         ],
       },
     ],
+    gallery: ['01.webp', '02.webp', '03.webp', '04.webp'],
+    captions: {
+      '01.webp': 'Team call, with the Scooby in the GSAT shirt',
+      '02.webp': 'The last slide of a GSAT presentation',
+      '03.webp': 'On a call, Scooby watching from the window',
+      '04.webp': 'The GSAT cap, on a dog',
+    },
+    focus: {
+      '01.webp': '50% 55%', // laptop and plushie in the middle of the frame
+      '02.webp': '50% 60%', // the screen sits below the door
+      '03.webp': '50% 65%', // the screen, low in the frame
+      '04.webp': '50% 35%', // the dog's face and cap
+    },
   },
 ];
 

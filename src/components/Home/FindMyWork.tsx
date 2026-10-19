@@ -172,10 +172,10 @@ function ProjectRow({ project, index }: { project: Project; index: number }) {
 
 // The four numbers, as a strip at the foot of the work. Each counts up once.
 const STATS = [
-  { img: "/stats/obfep.webp", value: 39, label: "olympiad medals, 19 gold" },
-  { img: "/stats/screwdriver.webp", value: 3392, label: "students reached, Projeto Candela" },
-  { img: "/stats/sat.webp", prefix: "SAT ", value: 1570, grouping: false, label: "of 1600, top 1% in Brazil" },
-  { img: "/stats/fe.webp", value: 0.7, decimals: 1, suffix: "%", label: "acceptance rate, Fundação Estudar" },
+  { value: 39, label: "olympiad medals", note: "19 of them gold" },
+  { value: 3392, label: "students reached", note: "Projeto Candela, 28 schools" },
+  { value: 1570, grouping: false, label: "SAT score", note: "of 1600, top 1% in Brazil" },
+  { value: 0.7, decimals: 1, suffix: "%", label: "acceptance rate", note: "Fundação Estudar" },
 ];
 
 function NumbersStrip() {
@@ -183,21 +183,21 @@ function NumbersStrip() {
   const shown = useVisible(ref, { once: true, rootMargin: "0px 0px -10% 0px" });
   const reduced = useReducedMotion();
   const print = (s: (typeof STATS)[number]) =>
-    `${s.prefix ?? ""}${s.value.toLocaleString("en-US", { minimumFractionDigits: s.decimals ?? 0, useGrouping: s.grouping ?? true })}${s.suffix ?? ""}`;
+    `${s.value.toLocaleString("en-US", { minimumFractionDigits: s.decimals ?? 0, useGrouping: s.grouping ?? true })}${s.suffix ?? ""}`;
 
   return (
     <ul className="numbers-strip" ref={ref} aria-label="By the numbers">
       {STATS.map((s) => (
         <li key={s.label}>
-          <img src={s.img} alt="" width={40} height={40} loading="lazy" decoding="async" />
           <span className="numbers-strip__figure">
             {shown && !reduced ? (
-              <Counter value={s.value} decimals={s.decimals} grouping={s.grouping} prefix={s.prefix} suffix={s.suffix} />
+              <Counter value={s.value} decimals={s.decimals} grouping={s.grouping} suffix={s.suffix} />
             ) : (
               print(s)
             )}
           </span>
           <span className="numbers-strip__label">{s.label}</span>
+          <span className="numbers-strip__note">{s.note}</span>
         </li>
       ))}
     </ul>
@@ -214,13 +214,9 @@ function FindMyWork() {
         What I've built and what I've won.
       </p>
       <div className="work-list">
-        {/* The medals sit third, after the two companies */}
-        {projects.slice(0, 2).map((project, i) => (
-          <ProjectRow key={project.slug} project={project} index={i} />
-        ))}
         <MedalsShowcase />
-        {projects.slice(2).map((project, i) => (
-          <ProjectRow key={project.slug} project={project} index={i + 2} />
+        {projects.map((project, i) => (
+          <ProjectRow key={project.slug} project={project} index={i} />
         ))}
         <NumbersStrip />
         <DesmosSketches />

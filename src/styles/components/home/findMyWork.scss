@@ -137,40 +137,40 @@
   .numbers-strip {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 24px;
     margin: 0;
-    padding: 28px 0;
+    padding: 0;
     list-style: none;
     border-top: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
 
     li {
-      display: grid;
-      grid-template-columns: 40px minmax(0, 1fr);
-      grid-template-rows: auto auto;
-      column-gap: 14px;
-      align-items: center;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 28px 24px;
       text-align: left;
-    }
 
-    img {
-      grid-row: 1 / span 2;
-      width: 40px;
-      height: 40px;
-      border-radius: 12px;
-      object-fit: cover;
+      & + li { border-left: 1px solid var(--border); }
     }
 
     &__figure {
-      font-size: 28px;
-      font-weight: 600;
+      font-size: 40px;
+      font-weight: 700;
       line-height: 1;
-      letter-spacing: -0.01em;
+      letter-spacing: -0.02em;
       font-variant-numeric: tabular-nums;
+      color: var(--primary-orange);
     }
 
     &__label {
-      margin-top: 4px;
+      margin-top: 6px;
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 1.3;
+      color: var(--fg);
+    }
+
+    &__note {
       font-size: 13px;
       line-height: 1.35;
       color: var(--fg-muted);
@@ -441,7 +441,14 @@
     .work-row { grid-template-columns: 1fr; gap: 18px; }
     .work-row--flip .work-row__media { order: 0; }
     .work-row h3 { font-size: 26px; }
-    .numbers-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 16px; }
+    .numbers-strip {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+
+      li { padding: 20px 16px; }
+      li:nth-child(odd) { border-left: 0; }
+      li:nth-child(n + 3) { border-top: 1px solid var(--border); }
+      &__figure { font-size: 32px; }
+    }
 
   }
 }
@@ -450,5 +457,10 @@
 @media screen and (min-width: 601px) and (max-width: 900px) {
   .find-my-work .work-row { grid-template-columns: 1fr; gap: 20px; }
   .find-my-work .work-row--flip .work-row__media { order: 0; }
-  .find-my-work .numbers-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .find-my-work .numbers-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    li:nth-child(odd) { border-left: 0; }
+    li:nth-child(n + 3) { border-top: 1px solid var(--border); }
+  }
 }

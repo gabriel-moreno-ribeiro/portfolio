@@ -1,6 +1,5 @@
 // ── Desmos drawings ──────────────────────────────────────────────────────────
-// A sketchbook row: three drawings as 3:2 tiles. The open tile grows to the
-// row's width and plays its recording; the other two step aside underneath.
+// A sketchbook row: three 16:9 tiles that draw themselves on scroll.
 $ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 
 .desmos {
@@ -37,39 +36,22 @@ $ease-out: cubic-bezier(0.16, 1, 0.3, 1);
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 20px;
     align-items: start;
-
-    // With one open, it takes the top row and the other two share the row below.
-    &:has(.is-open) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
 
-  &__tile {
-    min-width: 0;
+  &__tile { min-width: 0; }
 
-    &.is-open { grid-column: 1 / -1; order: -1; }
-  }
-
-  // The drawing is the button. Desmos is white, so the frame is too.
+  // Desmos is white, so the frame is too. Same shape as the recordings.
   &__frame {
     position: relative;
-    display: block;
     width: 100%;
-    aspect-ratio: 3 / 2;
-    padding: 0;
+    aspect-ratio: 16 / 9;
     border: 1px solid var(--border);
     border-radius: 18px;
     overflow: hidden;
     background: #fff;
-    cursor: pointer;
     transition: border-color 0.2s, transform 0.45s $ease-out;
 
-    &:hover { border-color: var(--primary-orange); transform: translateY(-3px); }
-    &:focus-visible { outline: 3px solid var(--focus-ring); outline-offset: 3px; }
-
-    .is-open & {
-      aspect-ratio: 16 / 9;
-      cursor: default;
-      &:hover { transform: none; }
-    }
+    .desmos__tile:hover & { border-color: var(--primary-orange); transform: translateY(-3px); }
   }
 
   &__poster,
@@ -78,39 +60,39 @@ $ease-out: cubic-bezier(0.16, 1, 0.3, 1);
     width: 100%;
     height: 100%;
     object-fit: contain;
-    background: #fff;
     user-select: none;
   }
 
-  &__poster { padding: 8%; box-sizing: border-box; }
+  &__poster { padding: 6%; box-sizing: border-box; background: #fff; }
 
-  // While the recording plays, the poster waits underneath.
+  // The recording sits over the finished drawing and stays on its last frame.
   &__video {
     position: absolute;
     inset: 0;
   }
 
-  // Play on the tile; close on the open one. Drawn, not an emoji.
+  // Replay, once a drawing is done. Drawn, not an emoji.
   &__badge {
     position: absolute;
-    right: 14px;
-    bottom: 14px;
+    right: 12px;
+    bottom: 12px;
     display: grid;
     place-items: center;
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border: 0;
     border-radius: 50%;
     background: var(--fg);
     color: var(--bg);
-    font-size: 16px;
+    font-size: 15px;
+    cursor: pointer;
     box-shadow: 0 6px 16px -6px rgba(0, 0, 0, 0.4);
     transition: transform 0.3s $ease-out, background-color 0.2s;
 
-    svg { margin-left: 2px; }
-    .is-open & svg { margin-left: 0; }
+    &:hover { transform: scale(1.08); background: var(--primary-orange); color: #fff; }
+    &:focus-visible { outline: 3px solid var(--focus-ring); outline-offset: 2px; }
   }
-
-  &__frame:hover &__badge { transform: scale(1.08); background: var(--primary-orange); color: #fff; }
 
   &__caption {
     display: flex;
@@ -156,6 +138,5 @@ $ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 
   .desmos__grid { grid-template-columns: 1fr; gap: 24px; }
   .desmos__frame { border-radius: 14px; }
-  .desmos__poster { padding: 5%; }
   .desmos__caption { flex-wrap: wrap; }
 }

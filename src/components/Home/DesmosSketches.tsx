@@ -1,9 +1,9 @@
 // The Desmos hobby, at the end of Cool Things: three drawings made of
-// equations, side by side as a sketchbook. Each tile is the finished drawing;
-// pressing one plays the recording of it being built right there, and a link
-// opens the live graph in Desmos.
+// equations, side by side as a sketchbook. Each tile draws itself as it scrolls
+// into view and stops on the finished drawing; a small button replays it and a
+// link opens the live graph in Desmos.
 import { useEffect, useRef, useState } from "react";
-import { FiArrowUpRight, FiPlay, FiX } from "react-icons/fi";
+import { FiArrowUpRight, FiPlay, FiRotateCcw } from "react-icons/fi";
 import { usePageVisible, useReducedMotion, useVisible } from "../../lib/motion";
 import "../../styles/components/home/desmosSketches.scss";
 
@@ -15,30 +15,38 @@ const SKETCHES: Sketch[] = [
   { id: "fixed-bug", name: "Bug with a bandage", graphId: "gdohbfcp0i" },
 ];
 
-function Tile({ sketch, open, onToggle }: { sketch: Sketch; open: boolean; onToggle: () => void }) {
+function Tile({ sketch }: { sketch: Sketch }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
-  const onScreen = useVisible(wrapRef, { threshold: 0.3 });
+  // The recording is only fetched once the tile is near the viewport.
+  const near = useVisible(wrapRef, { once: true, rootMargin: "300px 0px" });
+  const onScreen = useVisible(wrapRef, { threshold: 0.5 });
   const pageVisible = usePageVisible();
   const reduced = useReducedMotion();
+  const [ended, setEnded] = useState(false);
+  // If the recording can't play here, the finished drawing underneath stays.
+  const [failed, setFailed] = useState(false);
 
-  // The recording runs while its tile is open and on screen.
+  // It draws while on screen with the tab visible, and holds the last frame
+  // once it is done. With reduced motion it waits for the button.
   useEffect(() => {
     const v = videoRef.current;
-    if (!v) return;
-    if (open && onScreen && pageVisible) v.play().catch(() => {});
+    if (!v || reduced || ended) return;
+    if (onScreen && pageVisible) v.play().catch(() => {});
     else v.pause();
-  }, [open, onScreen, pageVisible]);
+  }, [onScreen, pageVisible, reduced, ended]);
+
+  const replay = () => {
+    const v = videoRef.current;
+    if (!v) return;
+    setEnded(false);
+    v.currentTime = 0;
+    v.play().catch(() => {});
+  };
 
   return (
-    <div className={`desmos__tile${open ? " is-open" : ""}`} ref={wrapRef}>
-      <button
-        type="button"
-        className="desmos__frame"
-        onClick={onToggle}
-        aria-pressed={open}
-        aria-label={open ? `Close the recording of ${sketch.name}` : `Watch ${sketch.name} being drawn`}
-      >
+    <div className="desmos__tile" ref={wrapRef}>
+      <div className="desmos__frame">
         <img
           className="desmos__poster"
           src={`/work/desmos/${sketch.id}.webp`}
@@ -49,24 +57,30 @@ function Tile({ sketch, open, onToggle }: { sketch: Sketch; open: boolean; onTog
           decoding="async"
           draggable={false}
         />
-        {open && (
+        {near && !failed && (
           <video
             ref={videoRef}
             className="desmos__video"
             src={`/work/desmos/${sketch.id}.mp4`}
-            poster={`/work/desmos/${sketch.id}.webp`}
-            controls={reduced}
             muted
-            loop
             playsInline
-            autoPlay={!reduced}
+            preload="auto"
+            onEnded={() => setEnded(true)}
+            onError={() => setFailed(true)}
             aria-label={`${sketch.name} being drawn in Desmos`}
           />
         )}
-        <span className="desmos__badge" aria-hidden="true">
-          {open ? <FiX /> : <FiPlay />}
-        </span>
-      </button>
+        {near && !failed && (ended || reduced) && (
+          <button
+            type="button"
+            className="desmos__badge"
+            onClick={replay}
+            aria-label={ended ? `Draw ${sketch.name} again` : `Watch ${sketch.name} being drawn`}
+          >
+            {ended ? <FiRotateCcw /> : <FiPlay />}
+          </button>
+        )}
+      </div>
       <p className="desmos__caption">
         <span>{sketch.name}</span>
         <a
@@ -83,17 +97,15 @@ function Tile({ sketch, open, onToggle }: { sketch: Sketch; open: boolean; onTog
 }
 
 export default function DesmosSketches() {
-  const [open, setOpen] = useState<string | null>(null);
-
   return (
     <section className="desmos" aria-labelledby="desmos-title">
       <div className="desmos__head">
         <h3 id="desmos-title">Drawings made of equations</h3>
-        <p>A hobby: each one is a few dozen inequalities in Desmos. Press one to watch it being drawn.</p>
+        <p>A hobby: each one is a few dozen inequalities in Desmos. They draw themselves as you scroll past.</p>
       </div>
       <div className="desmos__grid">
         {SKETCHES.map((s) => (
-          <Tile key={s.id} sketch={s} open={open === s.id} onToggle={() => setOpen((o) => (o === s.id ? null : s.id))} />
+          <Tile key={s.id} sketch={s} />
         ))}
       </div>
     </section>
