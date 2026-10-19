@@ -90,7 +90,7 @@ export const ask = {
     { who: 'People who already do finance, tax or legal for SMBs at scale,', examples: 'like Contabilizei, Conta Simples, Qive, Cora, and Enter on the legal side.' },
     { who: 'People who have the accountant as a channel,', examples: 'like Nibo, Omie and Conta Azul, which just bought Mister Contador. I want to understand how they built that relationship and what the accountant really pays for.' },
     { who: 'People who invest in AI-powered services,', examples: 'like Atlantico, a16z and Valor. I want to hear the hardest questions about distribution and dependence on the APIs.' },
-    { who: 'And anyone who read this far,', examples: 'which already makes you one of my favorite people. Coffee is on me.' },
+    { who: 'And anyone with a laptop that won’t boot.', examples: 'The first 121 came by referral. I can make it 122.' },
   ],
 };
 
