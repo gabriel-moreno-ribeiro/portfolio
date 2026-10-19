@@ -18,7 +18,7 @@ export default function CandelaMark({ className }: { className?: string }) {
         strokeWidth="1"
         strokeLinejoin="round"
       />
-      <g fill="none" stroke="#1f2a44" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round">
+      <g fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round">
         <path d="M26 44 C26 39 19 36.5 19 27 A13 13 0 1 1 45 27 C45 36.5 38 39 38 44 Z" />
         <line x1="26.5" y1="48" x2="37.5" y2="48" />
         <line x1="26.5" y1="52" x2="37.5" y2="52" />

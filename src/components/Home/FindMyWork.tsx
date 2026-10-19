@@ -184,11 +184,16 @@ const STATS = [
     value: 3392, label: "students reached", note: "28 public schools",
   },
   {
-    logo: <img src="/stats/sat-logo.webp" alt="" width={200} height={127} loading="lazy" decoding="async" />,
+    logo: <img className="sat-logo" src="/stats/sat-logo.webp" alt="" width={200} height={127} loading="lazy" decoding="async" />,
     value: 1570, grouping: false, label: "SAT score", note: "of 1600, top 1% in Brazil",
   },
   {
-    logo: <img src="/stats/fundacao-estudar.webp" alt="" width={260} height={108} loading="lazy" decoding="async" />,
+    logo: (
+      <>
+        <img className="only-light" src="/stats/fundacao-estudar.webp" alt="" width={260} height={108} loading="lazy" decoding="async" />
+        <img className="only-dark" src="/stats/fundacao-estudar-dark.webp" alt="" width={260} height={108} loading="lazy" decoding="async" />
+      </>
+    ),
     value: 0.7, decimals: 1, suffix: "%", label: "acceptance rate", note: "about 70 of 10,000+ applicants",
   },
 ];

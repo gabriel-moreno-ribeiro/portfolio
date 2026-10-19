@@ -153,27 +153,20 @@
       & + li { border-left: 1px solid var(--border); }
     }
 
-    // The mark of where the number comes from, on a white plate so the
-    // logos keep their own colours in both themes.
+    // The mark of where the number comes from, straight on the page.
     &__logo {
       display: flex;
       align-items: center;
-      justify-content: center;
-      height: 52px;
-      width: fit-content;
-      min-width: 52px;
-      margin-bottom: 16px;
-      padding: 7px 10px;
-      box-sizing: border-box;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      background: #fff;
-      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      height: 40px;
+      margin-bottom: 18px;
+      color: var(--fg);
 
       img, svg { display: block; height: 100%; width: auto; }
+      .only-dark { display: none; }
+      [data-theme="dark"] & .only-light { display: none; }
+      [data-theme="dark"] & .only-dark { display: block; }
+      .sat-logo { height: 34px; border-radius: 7px; }
     }
-
-    li:hover &__logo { transform: translateY(-2px); }
 
     // The bulb with its name beside it, as on the project's poster.
     .candela-lockup {
@@ -185,11 +178,10 @@
       svg { height: 100%; width: auto; }
 
       span {
-        font-size: 12.5px;
+        font-size: 13px;
         font-weight: 700;
         line-height: 1.05;
         letter-spacing: -0.01em;
-        color: #1f2a44;
         text-align: left;
       }
     }
@@ -495,7 +487,7 @@
       }
       li + li { border-left: 0; border-top: 1px solid var(--border); }
       li { grid-template-columns: 112px minmax(0, 1fr); }
-      &__logo { grid-row: 1 / span 3; align-self: center; margin: 0; height: 46px; width: 100%; }
+      &__logo { grid-row: 1 / span 3; align-self: center; margin: 0; height: 36px; }
       &__figure { font-size: 30px; }
       &__label { margin-top: 2px; }
     }
