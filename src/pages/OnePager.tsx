@@ -14,7 +14,7 @@ import Navbar from '../components/Navbar/Navbar';
 import HibeexMark from '../components/OnePager/HibeexMark';
 import Footer from '../components/Shared/Footer';
 import {
-  ask, base, build, footer, head, mrr, now, origin, PDF, pipeline, results, singles, team, validators, year,
+  ask, base, build, footer, head, mrr, now, origin, PDF, results, singles, team, validators, year,
 } from '../content/onePager';
 import { useDocumentHead } from '../hooks/useDocumentHead';
 import { usePageVisible, useReducedMotion, useVisible } from '../lib/motion';
@@ -28,6 +28,31 @@ const NEW_TAB = <span className="sr-only"> (opens in a new tab)</span>;
 const Out = ({ href, children }: { href: string; children: React.ReactNode }) => (
   <a href={href} target="_blank" rel="noopener noreferrer">{children}{NEW_TAB}</a>
 );
+
+// mailto does nothing on a computer with no mail app set up (most people who
+// use Gmail in the browser), so the address is also copied, and says so.
+function Mail({ className }: { className?: string }) {
+  const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    if (!copied) return;
+    const id = window.setTimeout(() => setCopied(false), 2200);
+    return () => window.clearTimeout(id);
+  }, [copied]);
+
+  return (
+    <a
+      className={className}
+      href="mailto:me@gabrielmr.com"
+      onClick={() => {
+        navigator.clipboard?.writeText('me@gabrielmr.com').then(() => setCopied(true), () => {});
+      }}
+    >
+      me@gabrielmr.com
+      <span className={`op__copied${copied ? ' is-on' : ''}`} aria-live="polite">{copied ? 'copied' : ''}</span>
+    </a>
+  );
+}
 
 // "São Paulo · 14:32": a pin and the time where Gabriel is. The time ticks only
 // while the tab is visible; without JS (and on paper) it is just the city.
@@ -109,7 +134,7 @@ function OnePager() {
             <ul className="op__contact">
               {head.contact.map((c) => (
                 <li key={c.href}>
-                  {c.href.startsWith('mailto') ? <a href={c.href}>{c.label}</a> : <Out href={c.href}>{c.label}</Out>}
+                  {c.href.startsWith('mailto') ? <Mail /> : <Out href={c.href}>{c.label}</Out>}
                 </li>
               ))}
             </ul>
@@ -207,7 +232,6 @@ function OnePager() {
                   <div key={b.label}><dt>{b.figure}</dt><dd>{b.label}</dd></div>
                 ))}
               </dl>
-              <p className="op__pipeline">{pipeline}</p>
             </section>
 
             <section className="op__ask" aria-labelledby="op-ask">
@@ -216,8 +240,7 @@ function OnePager() {
               <ol className="op__ask-list">
                 {ask.people.map((p) => <li key={p.who}><b>{p.who}</b> {p.examples}</li>)}
               </ol>
-              <p className="op__close">{ask.close}</p>
-              <a className="op__mail" href="mailto:me@gabrielmr.com">me@gabrielmr.com</a>
+              <Mail className="op__mail" />
             </section>
           </div>
         </div>

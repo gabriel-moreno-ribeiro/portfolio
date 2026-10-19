@@ -370,10 +370,16 @@ $column: 760px;
   color: var(--accent);
 }
 
-.op__s .op__pipeline {
-  margin-top: 18px;
-  font-size: 14px;
-  color: var(--fg-muted);
+// "copied", beside the address for a moment after a click.
+.op__copied {
+  margin-left: 8px;
+  font-size: 0.85em;
+  font-weight: 600;
+  color: var(--accent);
+  opacity: 0;
+  transition: opacity 0.2s;
+
+  &.is-on { opacity: 1; }
 }
 
 // ── Lists ─────────────────────────────────────────────────────────────────────
@@ -566,7 +572,7 @@ $column: 760px;
     text-align: left;
   }
 
-  .op__top, .op__time, .op__mail,
+  .op__top, .op__time, .op__mail, .op__copied,
   body:has(.op) .page-nav, body:has(.op) .footer, body:has(.op) .handsfree-button, body:has(.op) .custom-mouse { display: none !important; }
 
   .op__head { column-gap: 8mm; padding-bottom: 2.5mm; }
@@ -597,7 +603,6 @@ $column: 760px;
   .op__bars-note { font-size: 6.2pt; }
   .op__bar-track { height: 1.6mm; }
   .op__bar-fill { animation: none !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .op__s .op__pipeline { margin-top: 1.5mm; font-size: 6.8pt; }
   .op__list li { break-inside: avoid; }
   .op__list li + li { margin-top: 0.45em; }
 

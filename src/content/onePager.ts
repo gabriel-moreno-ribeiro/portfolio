@@ -8,7 +8,7 @@ export const head = {
   facts: ['18 years old', 'Founder of Hibeex', 'From Salvador, Brazil'],
   city: 'São Paulo',
   intro:
-    'I started out fixing cars with my grandfather in a small town in Ceará. Then came laptops, in Salvador, and the back office of my father’s clinic when it nearly closed. Today I fix the back office of small and medium businesses, with Hibeex.',
+    'I started fixing cars with my grandfather in a small town in Ceará when I was 6. Later I repaired laptops in Salvador and, at 12, helped run the back office of my father’s clinic. Today I build Hibeex, which runs the back office of small and medium businesses.',
   contact: [
     { label: 'me@gabrielmr.com', href: 'mailto:me@gabrielmr.com' },
     { label: 'gabrielmr.com', href: 'https://gabrielmr.com' },
@@ -18,11 +18,11 @@ export const head = {
 };
 
 export const origin = [
-  'My grandfather’s garage is in Missão Velha, in the interior of Ceará. The last car we fixed together sat there for three afternoons. We changed the battery, the alternator and the filter, and the fault was a fuse, the cheapest part in the truck.',
-  'In Salvador I repaired laptops to pay for school: 121 of them, shipped to 21 states, all by referral. Some passed every hardware test and still froze at the BIOS. That was software, and the only tutorials that got me unstuck were in Hindi. At 11 I knew enough Python to write a script that translates and dubs those videos into Portuguese.',
-  'In 2020, at 12, I watched my father’s clinic nearly close. My mother became the receptionist and I did what I could: a chatbot with her voice to answer the phone, an automation to collect what the health plans owed him, and a dashboard with the data and the contracts in one place. It was the first small business I saw from the inside.',
-  'At 14 I founded Projeto Candela. It started with a crowdfunding campaign and 60 schools visited before there was any budget, and became 3D-printed physics kits, free, in 28 public schools and 3,392 students, with the Federal University of Bahia. In the same years came 39 medals in science olympiads.',
-  'At 18 I moved to São Paulo to live with Teodoro, my co-founder, and build Hibeex.',
+  'I grew up between Salvador and Missão Velha, a small town in Ceará where my grandfather has a garage. I started helping him fix cars when I was 6.',
+  'In Salvador I repaired laptops to pay for school: 121 of them, sent to 21 states, all by referral. Some of the problems were software, and the only tutorials that covered them were in Hindi, so at 11 I wrote a Python script that translates and dubs those videos into Portuguese.',
+  'In 2020 my father’s clinic nearly closed. My mother took over the front desk and I built what I could: a chatbot with her voice to answer the phone, an automation to collect what the health plans owed, and a dashboard with the data and the contracts. It was my first look at how a small business runs.',
+  'At 14 I founded Projeto Candela, which makes free 3D-printed physics kits for public schools with the Federal University of Bahia. We visited 60 schools before we had a budget, paid for the first kits with crowdfunding and reached 28 schools and 3,392 students. In the same years I won 39 medals in science olympiads.',
+  'At 18 I moved to São Paulo to build Hibeex with Teodoro, my co-founder.',
 ];
 
 export const now = [
@@ -51,7 +51,6 @@ export const singles = [
   { figure: '94%', label: 'accuracy in automatic reconciliation' },
   { figure: 'R$ 12,480', label: 'recovered for a single client' },
 ];
-export const pipeline = 'About 730 accounting firms in the pipeline. The target is 750 partner firms in 36 months, about 49,000 SMBs.';
 
 export const team = [
   {
@@ -81,18 +80,17 @@ export const year = [
 ];
 
 export const build = [
-  'First we charge per workflow delivered, then per result. In four years I want the whole back office of the Brazilian SMB in one operation, with embedded credit, sold by the people the SMB already trusts.',
-  'In my grandfather’s garage, the town brought in whatever had stopped working and he would not let go until he found the fuse. I want to build that place for small businesses.',
+  'Hibeex is what I am building now. We charge per workflow delivered, and later per result. The goal is the whole back office of a Brazilian SMB (accounting, finance and legal) in one operation, with embedded credit, sold through the accountant the business already trusts.',
+  'Running the back office as a service, from inside our clients, is also the model I want to keep working on after Hibeex: services that run on AI for small businesses, in finance and in company operations. That is why I picked enterprise AI, fintech and services as my arenas at Behring Founders.',
 ];
 
 export const ask = {
-  intro: 'In December I want to talk to three kinds of people.',
+  intro: 'I’d like to meet anyone working on these problems, and especially:',
   people: [
     { who: 'People who already do finance, tax or legal for SMBs at scale,', examples: 'like Contabilizei, Conta Simples, Qive, Cora, and Enter on the legal side.' },
     { who: 'People who have the accountant as a channel,', examples: 'like Nibo, Omie and Conta Azul, which just bought Mister Contador. I want to understand how they built that relationship and what the accountant really pays for.' },
     { who: 'People who invest in AI-powered services,', examples: 'like Atlantico, a16z and Valor. I want to hear the hardest questions about distribution and dependence on the APIs.' },
   ],
-  close: 'I bring the product running. If that’s you, write to me.',
 };
 
 export const footer = 'Hibeex: accounting, finance and legal for SMBs in one operation. October 2026.';
