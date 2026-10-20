@@ -21,7 +21,7 @@ export const origin = [
   'I grew up between Salvador and Missão Velha, a small town in Ceará where my grandfather has a garage. I started helping him fix cars when I was 6.',
   'In Salvador I repaired laptops to pay for school: 121 of them, sent to 21 states, all by referral. Some of the problems were software, and the only tutorials that covered them were in Hindi, so at 11 I wrote a Python script that translates and dubs those videos into Portuguese.',
   'In 2020 my father’s clinic nearly closed. My mother took over the front desk and I built what I could: a chatbot with her voice to answer the phone, an automation to collect what the health plans owed, and a dashboard with the data and the contracts. It was my first look at how a small business runs.',
-  'At 14 I founded Projeto Candela, which makes free 3D-printed physics kits for public schools with the Federal University of Bahia. We visited 60 schools before we had a budget, paid for the first kits with crowdfunding and reached 28 schools and 3,392 students. In the same years I won 39 medals in science olympiads.',
+  'At 14 I founded Projeto Candela, which makes free 3D-printed physics kits for public schools with the Federal University of Bahia. We visited 60 schools before we had a budget, paid for the first kits with crowdfunding and reached 28 schools and 3,392 students. In the same years I won 28 medals in 39 science olympiads.',
   'At 18 I moved to São Paulo to build Hibeex with Teodoro, my co-founder.',
 ];
 

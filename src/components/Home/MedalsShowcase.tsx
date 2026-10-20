@@ -64,19 +64,19 @@ export default function MedalsShowcase() {
       </div>
 
       <div className="medals-showcase__body">
-        <h3>39 Olympiad Medals</h3>
+        <h3>28 Olympiad Medals</h3>
         <p>
           Math, physics, chemistry, biology and astronomy. 5 golds at Mathématiques sans Frontières, an
           international olympiad. Gold at ONNEQ, 1st at OBAQ.
         </p>
         <dl className="medals-showcase__stats">
           <div>
-            <dd>{shown && !reduced ? <Counter value={39} /> : 39}</dd>
+            <dd>{shown && !reduced ? <Counter value={28} /> : 28}</dd>
             <dt>medals</dt>
           </div>
           <div>
-            <dd>49</dd>
-            <dt>competitions</dt>
+            <dd>39</dd>
+            <dt>olympiads</dt>
           </div>
           <div>
             <dd>19</dd>

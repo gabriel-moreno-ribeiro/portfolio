@@ -2,7 +2,7 @@ export const bio = {
   name: "Gabriel Moreno Ribeiro",
   title: "Full Stack Builder | Researcher",
   summary:
-    "18, builder and researcher, on a build year. Building HIBEEX, backoffice AI for small and medium businesses and one of 6 startups in the Canastra Ventures AI Residency. 39 olympiad medals, 19 gold. Founder of Projeto Candela: 3,392 students in 28 schools. 1st place at Insper for Computer Engineering.",
+    "18, builder and researcher, on a build year. Building HIBEEX, backoffice AI for small and medium businesses and one of 6 startups in the Canastra Ventures AI Residency. 28 olympiad medals, 19 gold. Founder of Projeto Candela: 3,392 students in 28 schools. 1st place at Insper for Computer Engineering.",
   interests: ["AI/ML", "FinTech", "Physics Research", "Entrepreneurship", "Product Design"],
 };
 

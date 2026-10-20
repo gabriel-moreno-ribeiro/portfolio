@@ -359,7 +359,7 @@ const commands: CommandDefinition[] = [
         `${bold("Terminal:")} xterm.js`,
         `${bold("CPU:")} Builder on a Build Year`,
         `${bold("GPU:")} Full Stack Builder`,
-        `${bold("Memory:")} 39 olympiad medals (19 gold)`,
+        `${bold("Memory:")} 28 olympiad medals (19 gold)`,
         `${bold("Uptime:")} Since 2007`,
       ];
       const maxLines = Math.max(artLines.length, infoLines.length);
