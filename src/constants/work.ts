@@ -31,7 +31,7 @@ export const work = [
       },
       modalData: {
         title: "GSAT Education",
-        desc: "EdTech startup for standardized test prep. I built the platform from scratch as founding CEO: product, engineering and go-to-market.",
+        desc: "EdTech startup for standardized test prep. I built the platform from scratch as founder: product, engineering and go-to-market.",
         infoHeading: "Technologies Used",
         infoArr: [
           "React",
