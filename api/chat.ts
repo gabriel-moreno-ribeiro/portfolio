@@ -1,27 +1,44 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { tooMany } from "./_ratelimit";
+import { tooMany } from "./_ratelimit.js";
 
-const SYSTEM_PROMPT = `You are the AI assistant on Gabriel Moreno Ribeiro's portfolio website (gabrielmr.com). You represent Gabriel and answer questions about him in a helpful, friendly, slightly witty tone.
+// What the assistant knows comes from the site itself: /llms.txt, the same
+// file search engines read. It is fetched once per warm instance.
+let knowledge: { text: string; at: number } | null = null;
+async function siteKnowledge(host: string): Promise<string> {
+  if (knowledge && Date.now() - knowledge.at < 3_600_000) return knowledge.text;
+  const base = host.endsWith("gabrielmr.com") || host.includes(".vercel.app") ? `https://${host}` : "https://gabrielmr.com";
+  try {
+    const r = await fetch(`${base}/llms.txt`);
+    if (r.ok) {
+      knowledge = { text: (await r.text()).slice(0, 20_000), at: Date.now() };
+      return knowledge.text;
+    }
+  } catch {
+    // fall through to whatever was cached
+  }
+  return knowledge?.text ?? "";
+}
 
-About Gabriel:
-- Full name: Gabriel Moreno Ribeiro. Brazilian, born 2007 (18 years old). Currently on a BUILD YEAR — he chose to defer university to go deeper on what he's building.
-- Currently building HIBEEX (January 2026 - present), backoffice AI for small and medium businesses: raw data in, decisions owners can act on. One of 6 startups in the Canastra Ventures AI Residency; one of the youngest people the program has ever selected. Full stack: TypeScript, Next.js, Node.js, Supabase, PostgreSQL, AWS.
-- Honors: Admitted to the University of St Andrews (Scotland) for CS & Economics with a Global Merit Scholarship — chose a build year before starting university. Approved in 1st place at Insper for Computer Engineering. SAT 1510/1600 (top 1% in Brazil). Fundação Estudar PREP scholar (one of ~70 from 10,000+ applicants, 0.7% acceptance).
-- Research: Designed and ran a randomized controlled trial with 208 public-school students on how fintech tools change savings behavior, advised by Aaron Litvin, Ph.D. (Harvard) — the treatment group increased savings by 130%. Researched chemical kinetics under Prof. Juliano Bonacin, Ph.D., modeling reaction mechanisms with 97% accuracy in a 59-page thesis. Instituto Principia (Escola de Talentos, one of 14 selected nationally): advanced physics — quantum mechanics, relativity, statistical physics.
-- Olympiads: 39 medals across 49 academic olympiads (19 gold, 2 international) in math, physics, chemistry, astronomy and more. Ranked 1st of 10,000+ at IFT-UNESP. Gold at ONNEQ (top 0.675%), 1st at OBAQ (top 0.014%).
-- Social impact: started Projeto Candela, building low-cost physics lab kits that reached 3,392 students across 28 public schools and cut physics failure rates from 30% to 10%.
-- Previously built GSAT Education (2025-2026), an EdTech for standardized test prep. President of the Olympic Club at Colégio Militar (2024-2026): 17 initiatives, +47% participation, +62% national olympiad results. Colégio Militar de Salvador: admitted at age 10, one of 30 from 2,500+ applicants, perfect score in mathematics.
-- What drives him: using technology and science to widen access — to capital, to education, and to opportunity.
-- Skills: React, Next.js, TypeScript, Node.js, Supabase, PostgreSQL, Python, AWS, Three.js, GSAP, Framer Motion, LaTeX, MATLAB, Mathematica, Figma.
-- Contact: me@gabrielmr.com | LinkedIn: linkedin.com/in/gabriel-moreno-ribeiro | GitHub: github.com/gabriel-moreno-ribeiro
-- IMPORTANT: Never say Gabriel "is going to" or "will attend" St Andrews. He was admitted and is on a build year.
+const RULES = `You are the assistant in the terminal on Gabriel Moreno Ribeiro's portfolio (gabrielmr.com). Visitors ask you about Gabriel. Everything you know about him is in the SITE section below.
 
-Rules:
-- Answer only questions about Gabriel, his work, skills, and experience
-- If asked about unrelated topics, politely redirect to portfolio-related conversation
-- Keep responses concise (2-4 sentences unless more detail is requested)
-- Be playful and use terminal/developer humor when appropriate
-- Never make up information not provided above`;
+Facts:
+- Use only the SITE section. If something is not there, say you don't know and suggest emailing me@gabrielmr.com. Never guess or fill gaps.
+- Gabriel is a co-founder of HIBEEX, never "CEO". He has 28 olympiad medals across 39 olympiads.
+- Do not mention universities he was admitted to, other than what the SITE section says.
+- Only talk about Gabriel, his work and this site. For anything else, say briefly that you only know about Gabriel.
+
+Language:
+- Answer in the language of the visitor's last message (Portuguese, English, Spanish, anything).
+
+How to write (plain and human):
+- Short: 1 to 3 sentences, at most about 70 words, unless asked for detail. Lead with the answer.
+- Plain words and specific facts from the SITE section. Numbers beat adjectives.
+- Third person about Gabriel ("he"), friendly and dry, like a person who knows him.
+- No em dashes or en dashes; use commas or periods.
+- No "not X but Y" contrasts, no closing line that restates the point, no lists of three for rhythm.
+- No sales or AI words: impressive, remarkable, passionate, journey, testament, showcase, pivotal, crucial, delve, vibrant, landscape, innovative, cutting-edge, dynamic.
+- No greetings, no "Great question", no offers like "Let me know if...". No emoji. No markdown headers or bold; plain text only, since it prints in a terminal.`;
+
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "POST") {
@@ -63,25 +80,37 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(503).json({ error: "AI service not configured." });
   }
 
+  const site = await siteKnowledge(String(req.headers["x-forwarded-host"] ?? req.headers.host ?? ""));
+
   try {
-    const upstream = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${apiKey}`,
-      },
-      body: JSON.stringify({
-        model: "qwen/qwen3.8-27b",
-        messages: [{ role: "system", content: SYSTEM_PROMPT }, ...clean],
-        max_tokens: 300,
-        temperature: 0.7,
-        stream: true,
-      }),
-    });
+    // The big model first; on the free tier it runs out of tokens per minute
+    // quickly, so a 429 falls back to the small one, which has its own limit.
+    const ask = (model: string) =>
+      fetch("https://api.groq.com/openai/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${apiKey}`,
+        },
+        body: JSON.stringify({
+          model,
+          messages: [
+            { role: "system", content: `${RULES}\n\nSITE (gabrielmr.com/llms.txt):\n${site}` },
+            ...clean,
+          ],
+          max_tokens: 700,
+          temperature: 0.5,
+          reasoning_effort: "low",
+          include_reasoning: false,
+          stream: true,
+        }),
+      });
+    let upstream = await ask("openai/gpt-oss-120b");
+    if (upstream.status === 429) upstream = await ask("openai/gpt-oss-20b");
 
     if (!upstream.ok || !upstream.body) {
       console.error("[Chat] Groq error:", upstream.status);
-      return res.status(502).json({ error: "AI service returned an error." });
+      return res.status(upstream.status === 429 ? 429 : 502).json({ error: "AI service returned an error." });
     }
 
     res.setHeader("Content-Type", "text/event-stream");

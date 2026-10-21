@@ -532,7 +532,9 @@ export async function streamAiResponse(
     });
 
     if (!res.ok || !res.body) {
-      ctx.writeln(red("AI service returned an error."));
+      ctx.writeln(red(res.status === 429
+        ? "Too many questions at once. Give it a minute and ask again."
+        : "The AI is offline right now. You can reach Gabriel at me@gabrielmr.com."));
       return "";
     }
 

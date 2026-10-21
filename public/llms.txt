@@ -1,55 +1,66 @@
 # Gabriel Moreno Ribeiro
 
-> Builder and researcher on a build year. Building HIBEEX.
+> 18, from Salvador, Brazil, living in São Paulo. Co-founder of HIBEEX (back-office AI for small and medium businesses) and founder of Projeto Candela.
 
 Website: https://gabrielmr.com
 Email: me@gabrielmr.com
 LinkedIn: https://linkedin.com/in/gabriel-moreno-ribeiro
 GitHub: https://github.com/gabriel-moreno-ribeiro
-Last updated: September 2026
+One-pager: https://gabrielmr.com/one-pager
+Last updated: October 2026
 
 ## Summary
 
-Gabriel Moreno Ribeiro is an 18-year-old Brazilian builder and researcher on a build year. He is building HIBEEX, which makes backoffice AI for small and medium businesses: raw data in, decisions the owners can act on out. HIBEEX is one of 6 startups in the Canastra Ventures AI Residency, and Gabriel is among the youngest people the program has picked.
+Gabriel Moreno Ribeiro is 18 and Brazilian. He grew up between Salvador, Bahia, and Missão Velha, a small town in Ceará where his grandfather has a garage; he started helping him fix cars at 6. He did his last year of high school in Fortaleza and moved to São Paulo in 2026 to build HIBEEX with his co-founder, Teodoro Trevisan. He is on a build year before university.
 
-He placed 1st at Insper for Computer Engineering and is on a build year, going deeper on HIBEEX before starting university.
+## Now: HIBEEX (January 2026 to present), co-founder
 
-He cares about using technology to widen access to capital and education.
+- Runs the back office of small and medium businesses (accounting, finance, legal) through the people who already look after them: the accountant, the finance BPO and the lawyer. Plugs into the systems accounting firms already use (Domínio, Conta Azul, Nibo, Omie), cleans the data and puts agents to work: reconciliation, collections, contracts.
+- Before writing code, Gabriel and Teodoro talked to 96 people, from SMB owners to COOs at big tech. Sales turned out to be top-down, so today they work from inside client operations in Porto Alegre and São Paulo, running the back office as a service to learn the process before going back to the product.
+- Traction: 3 accounting firms as design partners, 40+ SMB accounts running the agents, about R$ 3k MRR today and R$ 40k signed for January 2027 (contract with RP Métodos). At one client: an accounting service went from 8h to 2h and days to get paid from 63.9 to 9. 94% accuracy in automatic reconciliation; R$ 12,480 recovered for a single client.
+- One of 6 startups in the Canastra Ventures AI Residency (12 weeks, 0.55% acceptance); Gabriel and Teodoro are the youngest founders to graduate from it. Also: European Innovation Academy (1 of 10 from 5,000+ applicants), Latitud Fellowship (top 20%), LALA Start, Claude for Startups, AWS for Startups.
+- Team: Teodoro Trevisan (co-founder, from Porto Alegre, founded Voluntaria+) and Devansh Chopra (CTO, joining through Entrepreneur First).
+- Gabriel is a co-founder, not a CEO. It is a small team.
+- Stack: TypeScript, Next.js, Node.js, Supabase, PostgreSQL, AWS.
 
-## Highlights
+## Before
 
-- **Building HIBEEX** (January 2026 to present): backoffice AI for small and medium businesses. One of 6 startups in the Canastra Ventures AI Residency. Stack: TypeScript, Next.js, Node.js, Supabase, PostgreSQL, AWS.
-- **Fintech savings RCT**: designed and ran a randomized controlled trial with 208 public-school students on whether fintech apps change savings behavior, advised by Aaron Litvin, Ph.D. (Harvard). The treatment group saved 130% more.
-- **Chemical kinetics research** with Prof. Juliano Bonacin, Ph.D.: a 150-page monograph on the steady-state hypothesis (revised October 2026).
-- **28 olympiad medals** (19 gold, 5 international, at Mathématiques sans Frontières) across 39 academic olympiads. 1st of 10,000+ at IFT-UNESP. Gold at ONNEQ (top 0.675%). 1st at OBAQ (top 0.014%).
-- **Projeto Candela**: started a project that builds low-cost physics lab kits. 3,392 students in 28 public schools; physics failure rates went from 30% to 10%.
-- **SAT 1570/1600**, 99th+ percentile.
-- **Fundação Estudar PREP scholar**: one of about 70 from 10,000+ applicants (0.7% acceptance).
-- **Instituto Principia** (Escola de Talentos, 14 picked nationally): quantum mechanics, relativity, statistical physics.
-- **Built GSAT Education** (2025 to 2026): a test-prep platform built from scratch, EdTech for standardized test prep.
-- **President of the Olympic Club at Colégio Militar**: 17 initiatives, participation up 47%, national olympiad results up 62%.
+- Repaired 121 laptops in Salvador to pay for school, shipped to 21 states, all by referral. At 11 he wrote a Python script that translates and dubs Hindi repair tutorials into Portuguese.
+- In 2020, at 12, his father's clinic nearly closed. He built a chatbot with his mother's voice to answer the phone, an automation to collect what health plans owed, and a dashboard with the data and contracts.
+- Projeto Candela (2022 to present), founder: free low-cost physics lab kits for public schools, with the Federal University of Bahia. Visited 60+ schools before having a budget, funded by a research scholarship and crowdfunding. 140 kits, 28 public schools in Bahia and Ceará, 3,392 students. Physics grades up 40% and failure rates from 30% to 10%. Presented at the International Institute of Physics and at Fundação Estudar's annual meeting.
+- GSAT Education (November 2025 to May 2026): a test-prep platform he built from scratch.
+- President of the Olympic Club at Colégio Militar de Salvador (August 2024 to May 2026): 17 initiatives, participation up 47%, national olympiad results up 62%.
+
+## Research
+
+- The Steady-State Hypothesis (Instituto Principia, Escola de Talentos, 2023 to 2026, advisor Prof. Juliano Alves Bonacin): a 150-page monograph on when the steady-state approximation in chemical kinetics holds and how much it misses, from ozone photolysis to ammonia synthesis, with simulations and data from the SABIO-RK database. PDF: https://gabrielmr.com/research/chemical-kinetics/paper.pdf
+- Fintech savings RCT (Fundação Estudar research fellowship, 2025, mentored by Aaron Litvin, Ph.D., Harvard): randomized controlled trial with 208 public-school students; the treatment group saved 130% more.
+- Projeto Candela paper: https://gabrielmr.com/research/projeto-candela/paper.pdf
 
 ## Honors
 
-- Insper: 1st place admission, Computer Engineering
-- SAT 1570/1600 (99th+ percentile)
-- Fundação Estudar PREP (0.7% acceptance)
-- 28 olympiad medals (19 gold) across 39 olympiads
+- 28 olympiad medals across 39 science olympiads (math, physics, chemistry, biology, astronomy). 5 golds at Mathématiques sans Frontières (international). Gold at ONNEQ, 1st at OBAQ, gold at the Biotechnology Olympiad and ONC.
+- SAT 1570/1600 (Reading and Writing 770, Math 800), above the 99th percentile. Score report: https://gabrielmr.com/files/sat-score-report.pdf
+- Fundação Estudar PREP fellow: about 70 picked from 10,000+ applicants (0.7%).
+- Instituto Principia Escola de Talentos: 1 of 14 picked nationally.
+- Colégio Militar de Salvador: admitted at 10, one of 30 from 2,500+ applicants, perfect score in math.
+- Insper: 1st place admission, Computer Engineering.
+- Duolingo English Test 130 (C1).
 
 ## Education
 
-- Build year (2026 to present), going deep on HIBEEX before university
-- Colégio Militar de Salvador: admitted at 10, one of 30 from 2,500+ applicants, perfect score in mathematics
+- Colégio Ari de Sá, Fortaleza (2025): last year of high school, ITA/IME track, 9.41 average, full merit scholarship.
+- Colégio Militar de Salvador (2019 to 2024).
 
 ## Skills
 
-Frontend: React, Next.js, TypeScript, JavaScript, HTML, CSS, Tailwind CSS, Three.js, Framer Motion
-Backend: Node.js, Supabase, PostgreSQL, Python, REST APIs, GraphQL, AWS
-Tools: Git, GitHub, Docker, Vercel, LaTeX, MATLAB, Mathematica, Figma
+TypeScript, JavaScript, Python, Java, C++. Next.js, React, Node.js, Supabase, PostgreSQL, AWS, Claude API. MATLAB, Mathematica, LaTeX. Portuguese (native), English (C1).
 
 ## Site structure
 
-- /: portfolio (3D, terminal, hands-free gesture controls)
-- /blog: writing (nothing published yet)
+- /: portfolio (3D robot, globe with the four cities, terminal with Ctrl+K, hands-free gesture controls)
+- /story: personal story
+- /library: books he has read, with reviews
 - /news: press, mentions and posts
-- /story: personal statement
+- /one-pager: one page about Gabriel and HIBEEX, with a PDF
+- /files: school profiles, SAT report, resume
