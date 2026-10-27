@@ -1,3 +1,4 @@
+import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 import { defineConfig, type Plugin } from "vite";
 
@@ -58,7 +59,7 @@ function apiMockPlugin(): Plugin {
 }
 
 export default defineConfig({
-  plugins: [react(), apiMockPlugin()],
+  plugins: [react(), tailwindcss(), apiMockPlugin()],
   define: {
     // Rodapé: "site updated X ago"
     __BUILD_TIME__: JSON.stringify(new Date().toISOString()),

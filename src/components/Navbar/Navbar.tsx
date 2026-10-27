@@ -18,6 +18,7 @@ const links = [
   { name: 'Story.', href: '/story' },
   { name: 'Library.', href: '/library' },
   { name: 'News.', href: '/news' },
+  { name: 'Files.', href: '/files' },
 ];
 
 // Brand marks instead of the words: they read faster and take a third of the width.

@@ -1,0 +1,39 @@
+/*
+ * Tailwind, only for the shadcn-style components in src/components/ui.
+ * The rest of the site is SCSS. So: no preflight (the site keeps its own base
+ * styles), utilities generated from src/components/ui alone, and the shadcn
+ * colour names mapped onto the site's tokens so light and dark follow the
+ * site's own [data-theme].
+ */
+@layer theme, base, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities) source(none);
+@import "tw-animate-css";
+@source "../components/ui";
+/* The site already has a .outline class (the hero's outlined button); a bare
+   Tailwind .outline would draw a ring on it. */
+@source not inline("outline");
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+@theme inline {
+  --color-background: var(--bg);
+  --color-foreground: var(--fg);
+  --color-muted-foreground: var(--fg-muted);
+  --color-card: var(--surface);
+  --color-card-foreground: var(--fg);
+  --color-border: var(--border);
+  --color-ring: var(--focus-ring);
+}
+
+/* Without preflight, the browser's own button and list styles would show
+   through; reset them inside these components only. */
+@layer base {
+  [data-slot] button { margin: 0; padding: 0; border: 0; background: none; color: inherit; font: inherit; }
+  [data-slot] ul { margin: 0; padding: 0; list-style: none; }
+  [data-slot] :is(h2, h3, p) { margin: 0; }
+}
+
+/* The rail's lifted-garment view is a full-screen dialog; it must sit above
+   the site's fixed buttons (camera, theme, back to top, terminal). */
+[data-slot="clothing-rail-detail"] { z-index: 10000; }

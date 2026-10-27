@@ -18,6 +18,7 @@ import {
 } from '../components/Story/figures';
 import { EASE, Reveal } from '../components/Story/shared';
 import { TruckFigure } from '../components/Story/TruckFigure';
+import { Wardrobe } from '../components/Story/Wardrobe';
 import { blocks, FigureId, story } from '../content/story';
 import { useDocumentHead } from '../hooks/useDocumentHead';
 import '../styles/components/pages/story.scss';
@@ -115,6 +116,8 @@ function Story() {
           );
         })}
       </article>
+
+      <Wardrobe />
 
       <Footer />
     </main>

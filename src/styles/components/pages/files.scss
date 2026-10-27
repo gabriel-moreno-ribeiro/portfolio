@@ -63,6 +63,25 @@ $files-text: 720px;
   color: var(--fg-muted);
 }
 
+// ── Folders ───────────────────────────────────────────────────────────────────
+// One glass folder per group. They open upward, so the row keeps headroom.
+.files__shelf {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  justify-items: center;
+  gap: 40px 24px;
+  width: 100%;
+  margin: 0 auto 72px;
+  padding-top: 56px;
+
+  .gf-sheet { cursor: pointer; }
+
+  // The folders speak the site's type, not the system UI face.
+  .gf-root,
+  .gf-sheet-meta,
+  .gf-meta { font-family: inherit; }
+}
+
 // ── Groups ────────────────────────────────────────────────────────────────────
 .files__body {
   max-width: $files-text;
