@@ -15,6 +15,7 @@ interface ResearchItem {
 
 // Only probe for actually-uploaded media. Add slugs to this map when files exist.
 const RESEARCH_MEDIA_MANIFEST: Record<string, string[]> = {
+  'fintech-rct': ['01.webp'],
   'chemical-kinetics': ['01.webp'],
   'projeto-candela': ['01.webp'],
 };
@@ -22,14 +23,14 @@ const RESEARCH_MEDIA_MANIFEST: Record<string, string[]> = {
 const researchItems: ResearchItem[] = [
   {
     slug: 'fintech-rct',
-    title: 'Impact of Fintech Tools on Adolescent Savings Behavior',
+    title: 'Do Budgeting Tools Help Low-Income Students Save?',
     field: 'Behavioral Economics',
-    year: '2025',
+    year: '2025-2026',
     advisor: 'Aaron Litvin, Ph.D. (Harvard)',
     abstract:
-      'RCT with 208 public-school students on whether fintech apps change savings behavior. The treatment group saved 130% more than control over the study period.',
-    tags: ['RCT', 'Fintech', 'Behavioral Economics', 'Python', 'Statistics'],
-    // pdf: '/research/fintech-rct/paper.pdf', // TODO: upload PDF to enable badge
+      'RCT with 208 OBMEP scholarship students and three budgeting tools. Any tool raised reported saving by 52 pp, and the result survives every check. But the data cannot say how much of that is money actually saved, so I propose a follow-up with bank balances and a placebo arm.',
+    tags: ['RCT', 'Budgeting Tools', 'Behavioral Economics', 'Python', 'Statistics'],
+    pdf: '/research/fintech-rct/paper.pdf',
   },
   {
     slug: 'chemical-kinetics',
