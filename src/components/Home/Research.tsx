@@ -28,7 +28,7 @@ const researchItems: ResearchItem[] = [
     year: '2025-2026',
     advisor: 'Aaron Litvin, Ph.D. (Harvard)',
     abstract:
-      'RCT with 208 OBMEP scholarship students and three budgeting tools. Any tool raised reported saving by 52 pp, and the result survives every check. But the data cannot say how much of that is money actually saved, so I propose a follow-up with bank balances and a placebo arm.',
+      'A 175-page monograph. RCT with 208 OBMEP scholarship students and three budgeting tools. Any tool raised reported saving by 52 pp, and the result survives every check. But the data cannot say how much of that is money actually saved, so I propose a follow-up with bank balances and a placebo arm.',
     tags: ['RCT', 'Budgeting Tools', 'Behavioral Economics', 'Python', 'Statistics'],
     pdf: '/research/fintech-rct/paper.pdf',
   },
