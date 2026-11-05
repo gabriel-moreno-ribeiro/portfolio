@@ -1,15 +1,27 @@
+import katex from 'katex';
+import 'katex/dist/katex.min.css';
 import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 
 // A small Markdown renderer for the blog, built as React elements (no innerHTML).
 // Blocks: ## / ### headings, paragraphs, - and 1. lists, > quotes, ``` code,
-// ![alt](src) images, --- rules. Inline: **bold**, *italic*, `code`, [text](url).
+// ![alt](src) images, --- rules, | tables |, $$ math $$ blocks and <!-- notes -->
+// (skipped). Inline: **bold**, *italic*, `code`, [text](url), $math$.
+// Math is rendered by KaTeX from the post's own source (trusted, ours).
 
-const INLINE = /(\*\*[^*]+\*\*|\*[^*]+\*|`[^`]+`|\[[^\]]+\]\([^)\s]+\))/g;
+const INLINE = /(\$[^$\n]+\$|\*\*[^*]+\*\*|\*[^*]+\*|`[^`]+`|\[[^\]]+\]\([^)\s]+\))/g;
+
+function TeX({ tex, block }: { tex: string; block?: boolean }) {
+  const html = katex.renderToString(tex, { displayMode: !!block, throwOnError: false, output: 'htmlAndMathml' });
+  return block
+    ? <div className="blog-math" dangerouslySetInnerHTML={{ __html: html }} />
+    : <span dangerouslySetInnerHTML={{ __html: html }} />;
+}
 
 function inline(text: string, key = ''): ReactNode[] {
   return text.split(INLINE).filter(Boolean).map((part, i) => {
     const k = `${key}-${i}`;
+    if (part.length > 2 && part.startsWith('$') && part.endsWith('$')) return <TeX key={k} tex={part.slice(1, -1)} />;
     if (part.startsWith('**') && part.endsWith('**')) return <strong key={k}>{inline(part.slice(2, -2), k)}</strong>;
     if (part.startsWith('`') && part.endsWith('`')) return <code key={k}>{part.slice(1, -1)}</code>;
     if (part.startsWith('*') && part.endsWith('*') && part.length > 2) return <em key={k}>{inline(part.slice(1, -1), k)}</em>;
@@ -36,6 +48,42 @@ export default function Markdown({ source }: { source: string }) {
     const k = `b${i}`;
 
     if (!line.trim()) { i++; continue; }
+
+    if (line.startsWith('<!--')) {
+      while (i < lines.length && !lines[i].includes('-->')) i++;
+      i++;
+      continue;
+    }
+
+    if (line.trim().startsWith('$$')) {
+      const tex: string[] = [line.trim().slice(2)];
+      while (!tex[tex.length - 1].trim().endsWith('$$') && i + 1 < lines.length) tex.push(lines[++i]);
+      i++;
+      out.push(<TeX key={k} tex={tex.join('\n').trim().replace(/\$\$$/, '')} block />);
+      continue;
+    }
+
+    if (line.startsWith('|')) {
+      const rows: string[][] = [];
+      while (i < lines.length && lines[i].startsWith('|')) {
+        const cells = lines[i++].trim().replace(/^\||\|$/g, '').split('|').map((c) => c.trim());
+        if (!cells.every((c) => /^:?-+:?$/.test(c))) rows.push(cells);
+      }
+      const [head, ...body] = rows;
+      out.push(
+        <div key={k} className="blog-table" role="region" aria-label="Table" tabIndex={0}>
+          <table>
+            <thead><tr>{head.map((c, j) => <th key={j} scope="col">{inline(c, `${k}h${j}`)}</th>)}</tr></thead>
+            <tbody>
+              {body.map((r, ri) => (
+                <tr key={ri}>{r.map((c, j) => <td key={j}>{inline(c, `${k}r${ri}c${j}`)}</td>)}</tr>
+              ))}
+            </tbody>
+          </table>
+        </div>,
+      );
+      continue;
+    }
 
     if (line.startsWith('```')) {
       const code: string[] = [];
@@ -85,7 +133,7 @@ export default function Markdown({ source }: { source: string }) {
     }
 
     const para: string[] = [];
-    while (i < lines.length && lines[i].trim() && !/^(#{2,3}\s|```|>|[-*]\s|\d+\.\s|!\[)/.test(lines[i])) para.push(lines[i++]);
+    while (i < lines.length && lines[i].trim() && !/^(#{2,3}\s|```|>|[-*]\s|\d+\.\s|!\[|\||\$\$|<!--)/.test(lines[i])) para.push(lines[i++]);
     if (!para.length) para.push(lines[i++]);
     out.push(<p key={k}>{inline(para.join(' '), k)}</p>);
   }
