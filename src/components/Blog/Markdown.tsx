@@ -109,7 +109,6 @@ export default function Markdown({ source }: { source: string }) {
       out.push(
         <figure key={k}>
           <img src={img[2]} alt={img[1]} width={img[3]} height={img[4]} loading="lazy" decoding="async" />
-          {img[1] && <figcaption>{img[1]}</figcaption>}
         </figure>,
       );
       i++;
