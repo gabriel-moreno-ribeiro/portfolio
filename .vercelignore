@@ -4,3 +4,4 @@
 node_modules/
 *.md
 !src/content/*.md
+!src/content/blog/*.md
