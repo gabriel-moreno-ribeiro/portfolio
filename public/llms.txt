@@ -63,4 +63,5 @@ TypeScript, JavaScript, Python, Java, C++. Next.js, React, Node.js, Supabase, Po
 - /library: books he has read, with reviews
 - /news: press, mentions and posts
 - /one-pager: one page about Gabriel and HIBEEX, with a PDF
+- /blog: posts. First one: the Drake equation, factor by factor, and the time-dependent integral it is a special case of (/blog/drake-equation)
 - /files: school profiles, SAT report, resume

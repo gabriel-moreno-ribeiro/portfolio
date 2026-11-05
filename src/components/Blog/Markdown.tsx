@@ -103,11 +103,12 @@ export default function Markdown({ source }: { source: string }) {
 
     if (/^-{3,}\s*$/.test(line)) { out.push(<hr key={k} />); i++; continue; }
 
-    const img = line.match(/^!\[([^\]]*)\]\(([^)\s]+)\)\s*$/);
+    // ![alt](src "WxH"): the size reserves the box before the photo loads (no layout shift).
+    const img = line.match(/^!\[([^\]]*)\]\(([^)\s]+)(?:\s+"(\d+)x(\d+)")?\)\s*$/);
     if (img) {
       out.push(
         <figure key={k}>
-          <img src={img[2]} alt={img[1]} loading="lazy" decoding="async" />
+          <img src={img[2]} alt={img[1]} width={img[3]} height={img[4]} loading="lazy" decoding="async" />
           {img[1] && <figcaption>{img[1]}</figcaption>}
         </figure>,
       );

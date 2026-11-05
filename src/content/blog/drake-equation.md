@@ -2,14 +2,14 @@
 title: The Drake equation, with and without history
 date: 2026-11-05
 description: Seven factors on a blackboard in 1961, an integral that adds time to them, and why they're the same equation.
-draft: true
+draft: false
 ---
 
 When I was 14, $F = ma$ and the Drake equation looked equally impossible to me. Both were a few letters on a board. The difference is that you can roll a cart down a ramp and watch $F = ma$ happen. Nobody has a ramp for alien civilizations.
 
 So this post is my ramp. First the equation as Frank Drake wrote it in 1961, one factor at a time. Then a version with an integral in it, the one I used in my essay, which looks much scarier. Then the part I like most: the scary one contains the simple one. They're the same equation, one with history and one without.
 
-<!-- FOTO 1: sua folha com a equação clássica escrita à mão, de preferência com os fatores circulados. Salve em public/blog/drake-equation/ e troque este comentário por: ![legenda](/blog/drake-equation/01.webp) -->
+![The classic equation on grid paper, each factor circled with a note: stars born per year, have planets, habitable per system, life, smart, radio, and L underlined twice: for how long.](/blog/drake-equation/01.webp "1600x1336")
 
 ## A meeting agenda that became famous
 
@@ -49,7 +49,7 @@ With those 1961 ranges, $N$ came out anywhere between 20 and 50 million. That's 
 
 The planet rows are the ones that changed. When Drake wrote the equation, nobody had ever seen a planet outside the Solar System. As I write this, NASA's Exoplanet Archive lists 6,451 confirmed ones. Microlensing surveys found that a typical star has at least one planet, and Kepler data says that somewhere between a third and more than half of Sun-like stars have a rocky planet where water could be liquid.
 
-<!-- FOTO 2: rascunho comparando os números de 1961 com os de hoje (pode ser a tabela feita à mão). -->
+![Two hand-drawn columns, 1961 and today, for each factor. The old planet numbers are crossed out. At the bottom: exoplanets known, 1961 zero, November 5 2026, 6,451.](/blog/drake-equation/02.webp "1600x1735")
 
 ## The version with time in it
 
@@ -69,7 +69,7 @@ Read it from the inside out:
 
 In words: count the stars born at each moment in the galaxy's history, keep the ones that ended up with a civilization, and ask how many of those civilizations are still alive today.
 
-<!-- FOTO 3: a integral escrita à mão, com setas explicando cada pedaço (t', τ, S). -->
+![The time-dependent integral with arrows to each piece, and a timeline below it: galaxy starts, star born, civilization shows up, now.](/blog/drake-equation/03.webp "1600x1972")
 
 ## Where the integral turns into the blackboard
 
@@ -93,7 +93,7 @@ $$N = R_* \cdot f_p \cdot n_e \cdot f_l \cdot f_i \cdot f_c \cdot L$$
 
 The 1961 equation is the steady-state case of the integral. The "hard" formula and the "easy" one are the same thing; the integral just remembers that the galaxy has a past. Same as the university: admissions per year times years of stay only works if admissions didn't change and everyone stays exactly four years.
 
-<!-- FOTO 4: a demonstração feita no papel, com a substituição u = t − t′ − τ e o degrau de largura L desenhado. -->
+![The derivation on paper: constant star formation, S as a step of width L, the change of variables, and the 1961 equation boxed at the end, with a sketch of the step function labeled area equals L.](/blog/drake-equation/04.webp "1600x1860")
 
 ## So why is it so quiet?
 
@@ -105,7 +105,7 @@ Second, multiplying "typical" values hides how little we know. Anders Sandberg, 
 
 On the other side, Adam Frank and Woody Sullivan flipped the question: with the habitable planets we already know about, humanity is the only technological species in the universe's history only if the chance per planet is below about $10^{-24}$. And Tom Westby and Christopher Conselice estimated that if Earth is typical, there should be at least 36 civilizations in the Milky Way right now, the nearest one roughly 17,000 light-years away. That's too far to hear us, and it assumes each one lasts only 100 years, which is about how long we've been detectable.
 
-<!-- FOTO 5: algum rascunho seu sobre o paradoxo de Fermi ou sobre o L (se tiver). -->
+![A big blob labeled the sky next to a tiny tub labeled what we have searched, Wright 2018. Below, a long arrow for L with a tick near the start: us, about 100 years, and a question mark at the far end.](/blog/drake-equation/05.webp "1600x1616")
 
 ## What I think
 
