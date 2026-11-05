@@ -5,6 +5,7 @@ const pages = [
   { name: "Home.", to: "/" },
   { name: "Library.", to: "/library" },
   { name: "News.", to: "/news" },
+  { name: "Blog.", to: "/blog" },
   { name: "Story.", to: "/story" },
   { name: "Contact.", to: "/#contact" },
 ];

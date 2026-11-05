@@ -18,6 +18,7 @@ const links = [
   { name: 'Story.', href: '/story' },
   { name: 'Library.', href: '/library' },
   { name: 'News.', href: '/news' },
+  { name: 'Blog.', href: '/blog' },
   { name: 'Files.', href: '/files' },
 ];
 
@@ -67,7 +68,7 @@ function Navbar() {
   // Desktop open: name (202px) + icon + four links + two marks = 708px measured; 740 leaves air.
   // On phones the links drop to a second row, so the width only needs the name and the toggles.
   const collapsedWidth = isMobile ? '246px' : 'auto'; // +6: the dark theme adds a 2px border
-  const expandedWidth = isMobile ? 'calc(100vw - 32px)' : '740px';
+  const expandedWidth = isMobile ? 'calc(100vw - 32px)' : '810px';
 
   const navigate = useNavigate();
   const location = useLocation();
