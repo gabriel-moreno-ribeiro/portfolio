@@ -109,7 +109,15 @@ On the other side, Adam Frank and Woody Sullivan flipped the question: with the 
 
 ## What I think
 
-> TODO (Gabriel): this part is yours. Two possible hooks: (a) $L$ is an engineering and budget problem, not an astronomy one, which connects to Candela and to Adam Frank's *Light of the Stars*; (b) the equation works better as a list of questions than as a calculator, which is how Drake and Jill Tarter always treated it.
+Every factor in that equation is somebody's job. $R_*$ belongs to the astronomers, $f_p$ and $n_e$ to the Kepler people, $f_l$ to the chemists, $f_i$ to the biologists. Then there's $L$, and nobody owns $L$. It isn't a question about the galaxy. It's a question about us: how long a civilization keeps the lights on after it learns to build a transmitter.
+
+I think $L$ is an engineering problem, and a budget problem, long before it's an astronomy problem. Adam Frank makes the long version of that argument in *Light of the Stars*: civilizations change their planet's climate by using energy, and the ones that last are the ones that notice in time. My version is shorter. The truck in my grandfather's garage didn't die because of its engine. It died because of a fuse that cost less than a coffee, which we found after replacing three expensive parts. My father's clinic nearly closed over paperwork, not dentistry. In both cases the dangerous part was the cheap, boring one nobody was watching.
+
+Keeping a civilization running is mostly cheap, boring parts: schools with a lab, clean water, fuses. Project Candela is 140 physics kits in 28 public schools that had no lab. On the scale of the galaxy, that rounds to zero. On the scale of $L$, it's the whole game: 3,000 students ran their first experiment and found out that the wall between "broken" and "working" is thinner than it looks. I count each of them as a small vote for a bigger $L$.
+
+The other thing I believe is that Drake was right to treat his equation as an agenda and not a calculator. Sixty-five years later, the three factors that got answers are the three someone built an instrument to measure. Kepler stared at 150,000 stars for four years, and $f_p$ and $n_e$ went from guesses to data. The four factors that didn't get answers are the ones nobody has figured out how to measure yet. Read that way, the equation is less a formula than a to-do list, and it tells you what to build next.
+
+So I was half right at 14. It wasn't impossible. It was seven things nobody had measured, and three of them had just been crossed off.
 
 That's why the essay that sent you here ends where it does: first the people near me, then wherever the Drake equation says there's someone to teach.
 
