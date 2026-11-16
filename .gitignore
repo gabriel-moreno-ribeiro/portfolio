@@ -45,3 +45,9 @@ yarn-error.log*
 
 # estado local do verificador de design (impeccable); a config compartilhada vai para o git
 /.impeccable/hook.cache.json
+
+# saídas de QA, capturas e rascunhos de agentes: não vão para o git
+/qa/
+/overnight/
+/.playwright-cli/
+/screenshots/
