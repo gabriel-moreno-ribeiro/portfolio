@@ -15,6 +15,13 @@ export const education = {
 
 export const experience = [
   {
+    title: "Tech Intern",
+    company: "Second Chance",
+    date: "Present",
+    description:
+      "A program that helps students get into college.",
+  },
+  {
     title: "Building backoffice AI",
     company: "HIBEEX",
     date: "January 2026 - Present",

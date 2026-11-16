@@ -1,7 +1,22 @@
 [
   {
-    "id": "principia",
+    "id": "candela",
     "order": 1,
+    "org": "Projeto Candela",
+    "role": "Founder",
+    "start": "2022",
+    "end": "present",
+    "periodLabel": "2022 to present",
+    "city": "Salvador",
+    "cityTz": "America/Bahia",
+    "bullets": [
+      "Low-cost physics lab kits, built and taken to **28 public schools**. **3,392 students** so far.",
+      "Physics failure rates in those classes went from **30% to 10%**."
+    ]
+  },
+  {
+    "id": "principia",
+    "order": 2,
     "org": "Instituto Principia",
     "role": "Research scholar, Escola de Talentos",
     "start": "2023-06",
@@ -18,7 +33,7 @@
   },
   {
     "id": "estudar",
-    "order": 2,
+    "order": 3,
     "org": "Fundação Estudar",
     "role": "PREP Fellow",
     "start": "2025-01",
@@ -33,7 +48,7 @@
   },
   {
     "id": "fintech-rct",
-    "order": 3,
+    "order": 4,
     "org": "Fintech Savings RCT",
     "role": "Research Fellow in Economics, Fundação Estudar",
     "start": "2025",
@@ -50,7 +65,7 @@
   },
   {
     "id": "hibeex",
-    "order": 4,
+    "order": 5,
     "org": "HIBEEX",
     "role": "Co-founder",
     "start": "2026-01",
@@ -62,7 +77,22 @@
     "bullets": [
       "Back-office AI for small and medium businesses, sold through the accountant who already looks after them.",
       "One of **6 startups** in Canastra Ventures' 12-week AI Residency (0.55% acceptance). Teodoro and I are the youngest founders to graduate from it.",
-      "TypeScript, Next.js, Node.js, Supabase, PostgreSQL and AWS."
+      "TypeScript, Next.js, Node.js, Supabase, PostgreSQL and AWS.",
+      "Working from Ithaca Builders, a house for young tech founders."
+    ]
+  },
+  {
+    "id": "second-chance",
+    "order": 6,
+    "org": "Second Chance",
+    "role": "Tech Intern",
+    "start": "2026",
+    "end": "present",
+    "periodLabel": "Present",
+    "city": "",
+    "_placeholder": true,
+    "bullets": [
+      "A program that helps students get into college."
     ]
   }
 ]

@@ -158,7 +158,7 @@ export default function MedalsShowcase() {
             <dt>medals</dt>
           </div>
           <div>
-            <dd>39</dd>
+            <dd>38</dd>
             <dt>olympiads</dt>
           </div>
           <div>

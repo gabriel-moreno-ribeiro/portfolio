@@ -34,11 +34,11 @@ const SECTIONS = [
 // tablet column matters most, because a deep link to #contact mounts everything
 // above it at once.
 const RESERVE: Record<string, [desktop: number, tablet: number, mobile: number]> = {
-  background: [936, 1384, 902],
+  background: [959, 1384, 936],
   work: [2310, 4537, 3719],
   research: [1654, 2469, 3172],
   skills: [1000, 1000, 714],
-  'work-experience': [2029, 2427, 1971],
+  'work-experience': [2702, 3121, 2562],
   contact: [401, 818, 910],
 };
 const LAZY_IDS = new Set(Object.keys(RESERVE));
