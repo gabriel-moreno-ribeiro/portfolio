@@ -10,7 +10,7 @@ import { usePageVisible, useReducedMotion, useVisible } from '../../../lib/motio
 import { useThemeStore } from '../../../store/themeStore';
 import CityPhotoStage from '../CityPhotoStage';
 import labels from './labels.json';
-import { HOLD_MS, stillSrc, TRAVEL_MS } from './steps';
+import { stepMs, stillSrc } from './steps';
 import type { ClayStep } from './stories';
 import { TagMark } from './TagMark';
 
@@ -98,7 +98,7 @@ function usePlayer(count: number, active: boolean): Player {
 }
 
 /** Story-style progress: one segment per step, the current one fills with time. Each is a button. */
-function Controls({ title, steps, player }: { title: string; steps: ClayStep[]; player: Player }) {
+function Controls({ slug, title, steps, player }: { slug: string; title: string; steps: ClayStep[]; player: Player }) {
   const { index, playing, running } = player;
   return (
     <div className="clay-ctl" role="group" aria-label={`${title}: how it works, step by step`}>
@@ -110,7 +110,7 @@ function Controls({ title, steps, player }: { title: string; steps: ClayStep[]; 
                 // Remounted on every step, so the fill restarts from empty.
                 key={i === index ? `on-${index}` : 'off'}
                 className={i < index ? 'is-done' : i === index ? (playing ? 'is-filling' : 'is-done') : undefined}
-                style={i === index && playing ? { animationDuration: `${HOLD_MS + TRAVEL_MS}ms`, animationPlayState: running ? 'running' : 'paused' } : undefined}
+                style={i === index && playing ? { animationDuration: `${stepMs(slug, i)}ms`, animationPlayState: running ? 'running' : 'paused' } : undefined}
                 onAnimationEnd={i === index ? player.advance : undefined}
               />
             </button>
@@ -235,7 +235,7 @@ export function ClayRow({ project, steps }: { project: Project; steps: ClayStep[
       <div className="work-row__body">
         <Body project={project}>
           <Caption steps={steps} player={player} />
-          <Controls title={project.title} steps={steps} player={player} />
+          <Controls slug={project.slug} title={project.title} steps={steps} player={player} />
           <Link to={`/work/${project.slug}`} className="work-row__cta">
             View project <FiArrowUpRight aria-hidden="true" />
           </Link>
@@ -256,7 +256,7 @@ export function ClayPlayer({ project, steps }: { project: Project; steps: ClaySt
   return (
     <div className="clay-player" onKeyDown={arrows(player)}>
       <Stage slug={project.slug} label={stageLabel(project, steps, player.index)} index={player.index} live={false} onVisible={setVisible} />
-      <Controls title={project.title} steps={steps} player={player} />
+      <Controls slug={project.slug} title={project.title} steps={steps} player={player} />
       <Caption steps={steps} player={player} />
     </div>
   );

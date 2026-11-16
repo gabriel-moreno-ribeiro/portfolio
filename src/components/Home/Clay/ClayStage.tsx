@@ -11,7 +11,7 @@ import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import CandelaScene from './CandelaScene';
 import HibeexScene from './HibeexScene';
-import { ClayCtx, makeMats, type Play } from './kit';
+import { ClayCtx, makeMats, useClay, type Play } from './kit';
 import { TRAVEL_MS } from './steps';
 
 export interface ClayStageProps {
@@ -78,14 +78,20 @@ function Lights({ dark }: { dark: boolean }) {
 
 /** Moves the story towards `target`: one travel at a time, faster when it has to catch up. */
 function Clock({ play, target }: { play: Play; target: RefObject<number> }) {
-  useFrame((_, dt) => {
+  useFrame(({ clock }, dt) => {
+    // Held by a QA script: the whole scene stands at the moment it was given.
+    if (play.frozen) return void (clock.elapsedTime = play.age);
     const want = target.current;
-    if (play.t < 1) play.t = Math.min(1, play.t + (Math.min(dt, 0.1) * 1000) / (play.to === want ? TRAVEL_MS : TRAVEL_MS / 4));
+    const step = Math.min(dt, 0.1);
+    play.age += step;
+    if (play.t < 1) play.t = Math.min(1, play.t + (step * 1000) / (play.to === want ? TRAVEL_MS : TRAVEL_MS / 4));
     if (play.t >= 1) {
       play.from = play.to;
       if (play.to !== want) {
+        play.was = play.age;
         play.to = want;
         play.t = 0;
+        play.age = 0;
       }
     }
   }, -1);
@@ -101,7 +107,8 @@ const BUDGET_MS = 21; // slower than ~48 fps on average and the pass goes
  * the occlusion pass first, then the pixel ratio, when the budget is missed.
  */
 function Renderer({ bg, onReady }: { bg: string; onReady: () => void }) {
-  const { gl, scene, camera, size, viewport, setDpr, clock } = useThree();
+  const { gl, scene, camera, size, viewport, setDpr } = useThree();
+  const { play } = useClay();
   const pipe = useMemo(() => {
     const target = new THREE.WebGLRenderTarget(1, 1, { type: THREE.HalfFloatType, samples: 4 });
     const composer = new EffectComposer(gl, target);
@@ -143,10 +150,11 @@ function Renderer({ bg, onReady }: { bg: string; onReady: () => void }) {
   const draw = (withAO: boolean, dt = 0) => (withAO ? pipe.composer.render(dt) : gl.render(scene, camera));
 
   // Dev only, for the QA scripts in qa/surreal/clay: the cost of a frame with and without the
-  // occlusion pass (check.mjs), and a way to put the idle animations at a chosen moment (stills.mjs).
+  // occlusion pass (fps.mjs), and a way to hold the story at a chosen moment: `age` seconds into
+  // step `to`, coming from step `from` (stills.mjs, frames.mjs). Without arguments it runs again.
   useEffect(() => {
     if (!import.meta.env.DEV) return;
-    const el = gl.domElement as HTMLCanvasElement & { __bench?: (withAO: boolean, n?: number) => number; __setTime?: (t: number) => void };
+    const el = gl.domElement as HTMLCanvasElement & { __bench?: (withAO: boolean, n?: number) => number; __seek?: (from?: number, to?: number, age?: number) => void };
     el.__bench = (withAO, n = 40) => {
       const ctx = gl.getContext();
       const t0 = performance.now();
@@ -154,10 +162,14 @@ function Renderer({ bg, onReady }: { bg: string; onReady: () => void }) {
       ctx.finish();
       return (performance.now() - t0) / n;
     };
-    el.__setTime = (t) => void (clock.elapsedTime = t);
+    el.__seek = (from, to = from, age = 0) => {
+      play.frozen = from !== undefined;
+      if (from === undefined || to === undefined) return;
+      Object.assign(play, { from, to, age, was: 3, t: from === to ? 1 : Math.min(1, (age * 1000) / TRAVEL_MS) });
+    };
     return () => {
       delete el.__bench;
-      delete el.__setTime;
+      delete el.__seek;
     };
   });
 
@@ -189,7 +201,7 @@ function Renderer({ bg, onReady }: { bg: string; onReady: () => void }) {
 export default function ClayStage({ slug, target, active, dark, bg, onReady, onFail }: ClayStageProps) {
   const want = useRef(target);
   want.current = target;
-  const play = useMemo<Play>(() => ({ from: target, to: target, t: 1 }), []); // eslint-disable-line react-hooks/exhaustive-deps
+  const play = useMemo<Play>(() => ({ from: target, to: target, t: 1, age: 0, was: 0 }), []); // eslint-disable-line react-hooks/exhaustive-deps
   const mats = useMemo(() => makeMats(dark), [dark]);
   useEffect(
     () => () => {

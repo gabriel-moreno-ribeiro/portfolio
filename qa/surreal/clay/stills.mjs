@@ -10,9 +10,8 @@ import fs from 'node:fs';
 
 const BASE = process.env.BASE || 'http://localhost:5173';
 const STEPS = 5;
-const TRAVEL_MS = 1400;
-// The idle animations are put at a moment that shows the point of the step (seconds on the scene's clock).
-const MOMENT = { hibeex: [2.2, 3.1, 1.25 + 1.9 * 3, 2.4 * 2 + 0.85, 1], candela: [1.6, 2, 3.1, 1.55, 1.5] };
+// Every step is held at the moment of its performance that reads best on its own (seconds into the step).
+const MOMENT = { hibeex: [2.55, 1.5, 2.02, 1.58, 3.2], candela: [1.6, 1.5, 2.9, 2.9, 2.3] };
 const labels = {};
 
 const browser = await chromium.launch({ args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] });
@@ -32,9 +31,9 @@ for (const theme of ['light', 'dark']) {
     labels[slug] ??= [];
     for (let i = 0; i < STEPS; i++) {
       await row.locator('.clay-ctl__segs button').nth(i).click({ timeout: 8000 }).catch(async (e) => { throw new Error(`step ${i + 1} of ${slug}: ${(await overlay()) ?? e.message}`); });
-      await page.waitForTimeout(TRAVEL_MS + 900);
-      await stage.locator('canvas').evaluate((c, t) => c.__setTime(t), MOMENT[slug][i]);
-      await page.waitForTimeout(250);
+      await page.waitForTimeout(900);
+      await stage.locator('canvas').evaluate((c, [i, t]) => c.__seek(i, i, t), [i, MOMENT[slug][i]]);
+      await page.waitForTimeout(300);
       if (theme === 'light') {
         // Where every visible label is anchored, as a share of the stage.
         labels[slug][i] = await stage.evaluate((el) => {
@@ -54,6 +53,7 @@ for (const theme of ['light', 'dark']) {
       const file = `public/work/${slug}/clay-${i + 1}-${theme}.webp`;
       const info = await sharp(png).resize(1280, 800).webp({ quality: 80, effort: 6 }).toFile(file);
       console.log(file, `${info.width}x${info.height}`, `${Math.round(info.size / 1024)} KB`, theme === 'light' ? `${labels[slug][i].length} labels` : '');
+      await stage.locator('canvas').evaluate((c) => c.__seek());
     }
   }
   await ctx.close();

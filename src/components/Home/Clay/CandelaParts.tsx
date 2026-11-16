@@ -5,9 +5,12 @@ import { useMemo, useRef, type ReactNode } from 'react';
 import * as THREE from 'three';
 import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js';
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
-import { at, Box, Puck, Rod, Slab, Ticks, useClay, type V3 } from './kit';
+import { Act, ageOf, at, Box, bump, clamp01, ease, pop, Puck, ring, Rod, Slab, slice, spring, Ticks, useClay, type V3 } from './kit';
 
 const HALF_PI = Math.PI / 2;
+const lerp = THREE.MathUtils.lerp;
+/** A wobble that starts from rest and dies out: `f` swings a second. */
+const wobble = (t: number, f: number, d: number) => (t <= 0 ? 0 : Math.exp(-d * t) * Math.sin(t * f * Math.PI * 2));
 const curve = (pts: V3[]) => new THREE.CatmullRomCurve3(pts.map((p) => new THREE.Vector3(...p)));
 
 // ── The box ─────────────────────────────────────────────────────────────────
@@ -79,15 +82,17 @@ export function KitBox() {
   );
 }
 
-/** The lid, hinged along its back edge so it can peek open. Origin at the centre of its underside. */
-export function Lid({ peek = 0 }: { peek?: number }) {
+/** How far the lid stands open (radians), `age` seconds into the first step: it unlatches, flies up past its stop and settles. */
+export const lidOpen = (age: number) => 1.2 * spring(age - 0.2, 1.7, 4.5);
+
+/** The lid, hinged along its back edge. The first step is the opening. Origin at the centre of its underside. */
+export function Lid() {
   const { play } = useClay();
   const hinge = useRef<THREE.Group>(null);
   const handle = useMemo(() => curve([[-0.42, 0, 0], [-0.4, 0.13, 0], [0, 0.17, 0], [0.4, 0.13, 0], [0.42, 0, 0]]), []);
-  useFrame(({ clock }) => {
-    // While the first step holds, the lid lifts a little and settles back: something is in there.
-    const open = Math.max(0, Math.sin(clock.elapsedTime * 1.1)) ** 2 * peek * at(play, 0);
-    if (hinge.current) hinge.current.rotation.x = -open;
+  useFrame(() => {
+    // On the way to the next step it is thrown off and lands flat, so the hinge closes as it leaves.
+    if (hinge.current) hinge.current.rotation.x = -lidOpen(ageOf(play, 0)) * at(play, 0);
   });
   return (
     <group ref={hinge} position={[0, 0, -1]}>
@@ -114,12 +119,16 @@ function jawShape(dir: 1 | -1, long = 0.62) {
   return s;
 }
 
-/** Beam along X, jaws down, in the XY plane. The slider drifts open and shut. */
+/** Beam along X, jaws down, in the XY plane. Out of the box it snaps its jaws twice; then the slider drifts open and shut. */
 export function Caliper() {
+  const { play } = useClay();
   const slide = useRef<THREE.Group>(null);
   const shapes = useMemo(() => ({ fixed: jawShape(1), moving: jawShape(-1), beakA: jawShape(1, 0.25), beakB: jawShape(-1, 0.25) }), []);
   useFrame(({ clock }) => {
-    if (slide.current) slide.current.position.x = -0.32 + Math.sin(clock.elapsedTime * 0.8) * 0.11;
+    const a = ageOf(play, 1);
+    const chomp = Math.abs(Math.cos(slice(a, 0.75, 1.35) * Math.PI * 2)); // open, shut, open, shut, open
+    const snapping = at(play, 1) * slice(a, 0.6, 0.75) * (1 - slice(a, 1.35, 1.9));
+    if (slide.current) slide.current.position.x = lerp(-0.32 + Math.sin(clock.elapsedTime * 0.8) * 0.11, -0.57 + chomp * 0.42, snapping);
   });
   return (
     <group>
@@ -140,12 +149,16 @@ export function Caliper() {
   );
 }
 
-/** Face towards +Z. The long hand sweeps. */
+/** Face towards +Z. Out of the box its crown is clicked and the hand ticks round; on the bench it times the car. */
 export function Stopwatch() {
-  const { mats } = useClay();
+  const { play, mats } = useClay();
   const hand = useRef<THREE.Group>(null);
-  useFrame(({ clock }) => {
-    if (hand.current) hand.current.rotation.z = -clock.elapsedTime * 1.2;
+  const crown = useRef<THREE.Mesh>(null);
+  useFrame(() => {
+    const a = ageOf(play, 1);
+    crown.current?.position.setY(0.43 - 0.06 * bump(slice(a, 0.68, 0.9)) * at(play, 1));
+    // Ten ticks a second after the click; a smooth sweep from the moment the car is let go.
+    if (hand.current) hand.current.rotation.z = -(Math.floor(Math.max(0, a - 0.8) * 10) / 10) * 2.2 - Math.max(0, ageOf(play, 2) - CAR_GO) * 2.6;
   });
   return (
     <group>
@@ -161,7 +174,7 @@ export function Stopwatch() {
       </group>
       <Box size={[0.02, 0.1, 0.012]} r={0.005} position={[0.03, 0.035, 0.094]} rotation={[0, 0, -0.7]} />
       <Puck r={0.03} h={0.03} segments={14} position={[0, 0, 0.1]} rotation={[HALF_PI, 0, 0]} />
-      <Puck r={0.07} h={0.15} position={[0, 0.43, 0]} />
+      <Puck ref={crown} r={0.07} h={0.15} position={[0, 0.43, 0]} />
       <Puck r={0.045} h={0.1} position={[0.29, 0.32, 0]} rotation={[0, 0, -0.73]} />
       <Puck r={0.045} h={0.1} position={[-0.29, 0.32, 0]} rotation={[0, 0, 0.73]} />
       <mesh position={[0, 0.59, 0]} castShadow material={mats.clay}>
@@ -194,7 +207,10 @@ export function SpringScale({ bob }: { bob?: ReactNode }) {
   const geo = useMemo(() => new THREE.TubeGeometry(new Helix(0.062, 6, COIL), 150, 0.019, 8), []);
   const hook = useMemo(() => curve([[0, 0, 0], [-0.035, -0.09, 0], [0, -0.17, 0], [0.05, -0.13, 0], [0.04, -0.07, 0]]), []);
   useFrame(({ clock }) => {
-    const len = COIL + (0.09 + Math.sin(clock.elapsedTime * 2.4) * 0.13) * at(play, 2);
+    // Sprung out of the box, the hook rings. On the stand the weight is let go: it drops, swings and settles.
+    const hung = ageOf(play, 2) - 1;
+    const stretch = hung < 0 ? 0 : 0.11 * spring(hung, 2.4, 1.4) + 0.025 * Math.sin(clock.elapsedTime * 2.4) * slice(hung, 2.4, 3.4);
+    const len = COIL + 0.17 * ring(ageOf(play, 1) - 0.55, 3.2, 2.2) * at(play, 1) + stretch * at(play, 2);
     coil.current?.scale.setY(len / COIL);
     low.current?.position.setY(-HOUSING - len);
   });
@@ -217,10 +233,13 @@ export function SpringScale({ bob }: { bob?: ReactNode }) {
 
 /** A tape measure: the case standing on its edge, the blade pulled out along -X with its ticks and end hook. */
 export function Tape() {
+  const { play } = useClay();
   const blade = useRef<THREE.Group>(null);
   useFrame(({ clock }) => {
-    // The blade creeps in and out a little, as if someone were taking a measure.
-    if (blade.current) blade.current.scale.x = 1 + Math.sin(clock.elapsedTime * 0.9) * 0.07;
+    // Out of the box the blade shoots out, holds, and is reeled back with a snap. Otherwise it creeps a little, as if taking a measure.
+    const a = ageOf(play, 1);
+    const shot = 0.25 + 1.5 * spring(a - 0.65, 2.2, 5) * (1 - 0.8 * ease(slice(a, 1.9, 2.05)));
+    if (blade.current) blade.current.scale.x = lerp(1 + Math.sin(clock.elapsedTime * 0.9) * 0.07, shot, at(play, 1));
   });
   return (
     <group>
@@ -255,8 +274,18 @@ export function Weights() {
   return (
     <group>
       <Puck r={0.2} h={0.05} bevel={0.016} position={[0, 0.025, 0]} />
+      {/* Out of the box the masses drop onto the hanger one by one, each with a clack. */}
       {[0.06, 0.168, 0.276].map((y, i) => (
-        <Slab key={y} shape={disc} depth={0.075} bevel={0.014} position={[0, y, 0]} rotation={[-HALF_PI, 0, 0.5 + i * 2.2]} />
+        <Act
+          key={y}
+          f={(g, p) => {
+            const a = p.to === 1 ? p.age - 0.7 - i * 0.17 : 1;
+            g.position.y = 0.8 * (1 - clamp01(a / 0.2) ** 2) + 0.05 * bump(slice(a, 0.2, 0.42));
+            g.scale.setScalar(Math.max(slice(a, -0.04, 0.04), 1e-4));
+          }}
+        >
+          <Slab shape={disc} depth={0.075} bevel={0.014} position={[0, y, 0]} rotation={[-HALF_PI, 0, 0.5 + i * 2.2]} />
+        </Act>
       ))}
       <Puck r={0.024} h={0.56} segments={14} position={[0, 0.33, 0]} />
       <Rod path={hook} r={0.018} segments={24} position={[0, 0.6, 0]} />
@@ -267,8 +296,9 @@ export function Weights() {
 /** Graduated cylinder: hexagonal foot, open tube with a pouring lip, marks up the front. */
 export function Cylinder() {
   const { mats } = useClay();
+  // Out of the box it rocks on its foot like a skittle before it stands still.
   return (
-    <group>
+    <Act f={(g, p) => void (g.rotation.z = 0.3 * wobble(ageOf(p, 1) - 0.75, 2.6, 2.4) * at(p, 1))}>
       <Puck r={0.27} h={0.07} bevel={0.02} segments={6} position={[0, 0.035, 0]} />
       <Puck r={0.135} h={1.08} bevel={0.012} hole={0.112} position={[0, 0.6, 0]} />
       <mesh position={[0, 1.14, 0]} rotation={[HALF_PI, 0, 0]} castShadow material={mats.clay}>
@@ -283,7 +313,7 @@ export function Cylinder() {
           </mesh>
         );
       })}
-    </group>
+    </Act>
   );
 }
 
@@ -311,11 +341,13 @@ function lapAt(d: number) {
   return { x: -LAP_L / 2 - Math.sin(t) * LAP_R, z: -Math.cos(t) * LAP_R, a: Math.PI + t, bank: BANK * Math.sin((d / curveLen) * Math.PI) ** 2 };
 }
 
-/** The road swept along the lap: a kerb on each side, and the outside of each curve raised. */
+const ROWS = 200; // slices of road around the lap
+const ROW_INDICES = 7 * 6;
+/** The road swept along the lap: a kerb on each side, and the outside of each curve raised. Indexed slice by slice, so it can be laid progressively. */
 function trackGeometry() {
   // Cross-section: [across the road (outwards +), height]. The inner kerb, the road, the outer kerb.
   const profile: [number, number][] = [[-ROAD / 2, 0], [-ROAD / 2, 0.1], [-ROAD / 2 + 0.04, 0.1], [-ROAD / 2 + 0.04, 0.05], [ROAD / 2 - 0.04, 0.05], [ROAD / 2 - 0.04, 0.1], [ROAD / 2, 0.1], [ROAD / 2, 0]];
-  const rows = 200;
+  const rows = ROWS;
   const pos: number[] = [];
   const idx: number[] = [];
   for (let seg = 0; seg < profile.length - 1; seg++) {
@@ -332,7 +364,7 @@ function trackGeometry() {
     }
     for (let r = 0; r < rows; r++) {
       const a = base + r * 2;
-      idx.push(a, a + 1, a + 2, a + 1, a + 3, a + 2);
+      [a, a + 1, a + 2, a + 1, a + 3, a + 2].forEach((v, k) => (idx[r * ROW_INDICES + seg * 6 + k] = v));
     }
   }
   const g = new THREE.BufferGeometry();
@@ -358,15 +390,27 @@ function Pickup() {
   );
 }
 
+/** Seconds into the experiments at which the car is let go (the stopwatch starts with it). */
+export const CAR_GO = 1.1;
+
+/** The road lays itself around the lap, the car drops onto the line, pulls back and shoots off. */
 export function Track() {
-  const { mats } = useClay();
+  const { play, mats } = useClay();
   const car = useRef<THREE.Group>(null);
   const geo = useMemo(trackGeometry, []);
-  useFrame(({ clock }) => {
+  useFrame(() => {
+    const a = ageOf(play, 2);
+    geo.setDrawRange(0, Math.round(ROWS * ease(slice(a, 0.1, 0.75))) * ROW_INDICES);
     if (!car.current) return;
-    const p = lapAt(clock.elapsedTime * 1.15);
-    car.current.position.set(p.x, 0.05 + (ROAD / 2) * Math.tan(p.bank), p.z);
+    const go = a - CAR_GO;
+    // Pulled back on its springs, then off: a burst and a steady lap every 2.7 s.
+    const p = lapAt(go < 0 ? -0.14 * bump(slice(a, CAR_GO - 0.25, CAR_GO + 0.02)) : 3.1 * go + 0.5 * (1 - Math.exp(-5 * go)));
+    const drop = 1 - ease(slice(a, 0.68, 0.84));
+    car.current.position.set(p.x, 0.05 + (ROAD / 2) * Math.tan(p.bank) + drop * 0.6, p.z);
     car.current.rotation.set(-p.bank, p.a, 0, 'YXZ');
+    const size = 0.82 * pop(slice(a, 0.66, 0.84), 1.2);
+    const stretch = 0.22 * bump(slice(go, 0, 0.35)) - 0.14 * bump(slice(a, CAR_GO - 0.25, CAR_GO)) - 0.2 * bump(slice(a, 0.82, 0.98));
+    car.current.scale.set(Math.max(size * (1 + stretch), 1e-4), Math.max(size * (1 - stretch * 0.6), 1e-4), Math.max(size, 1e-4));
   });
   return (
     <group>
@@ -386,11 +430,14 @@ export const PULLEY_X = PIVOT[0] + 2.62 * Math.cos(TILT) - 0.16 * Math.sin(TILT)
 export const PULLEY_Y = PIVOT[1] + 2.62 * Math.sin(TILT) + 0.16 * Math.cos(TILT);
 export const DROP_X = PULLEY_X + 0.125;
 const TRAVEL = 0.42;
-/** How far the mass has dropped (0..TRAVEL): it falls and pulls the cart up, then the cart is let back down. */
-export const pull = (t: number) => {
-  const u = (t * 0.32) % 1;
-  // Falls with an ease, waits a beat at the bottom, comes back quicker.
-  return TRAVEL * (u < 0.55 ? (u / 0.55) ** 2 : u < 0.68 ? 1 : 1 - ((u - 0.68) / 0.32) ** 0.7);
+/**
+ * How far the mass has dropped (0..TRAVEL), `age` seconds into the experiments: it is let go, falls
+ * and yanks the cart up the plane, the cart rings against the stop, and it is all let back down.
+ */
+export const pull = (age: number) => {
+  if (age < 1) return 0;
+  const c = (age - 1) % 2.7;
+  return TRAVEL * (c < 0.42 ? (c / 0.42) ** 2 : c < 1.7 ? 1 - 0.09 * wobble(c - 0.42, 3.5, 5) : 1 - ease((c - 1.7) / 1));
 };
 
 function pulleyGeometry() {
@@ -399,32 +446,41 @@ function pulleyGeometry() {
 }
 
 export function Incline() {
-  const { mats } = useClay();
+  const { play, mats } = useClay();
   const cart = useRef<THREE.Group>(null);
   const wheel = useRef<THREE.Mesh>(null);
   const along = useRef<THREE.Mesh>(null);
   const down = useRef<THREE.Mesh>(null);
+  const plane = useRef<THREE.Group>(null);
+  const strut = useRef<THREE.Group>(null);
   const pulley = useMemo(pulleyGeometry, []);
-  useFrame(({ clock }) => {
-    const d = pull(clock.elapsedTime);
+  useFrame(() => {
+    const age = ageOf(play, 2);
+    // It builds itself: the plane swings up off the base past its angle and settles, the strut stands up under it.
+    plane.current?.rotation.set(0, 0, TILT * spring(age - 0.12, 1.6, 5.5));
+    strut.current?.scale.setY(Math.max(pop(slice(age, 0.3, 0.55), 1.2), 1e-4));
+    const d = pull(age);
     const x = 0.9 + d;
     cart.current?.position.setX(x);
     wheel.current?.rotation.set(HALF_PI, 0, d / 0.12);
-    // String along the plane, from the cart to the pulley; then down to the hanging mass.
+    // String along the plane, from the cart to the pulley; then down to the hanging mass. It is threaded once the plane stands.
+    const strung = slice(age, 0.5, 0.65);
     const a = x + 0.2;
     along.current?.position.setX((a + 2.6) / 2);
-    along.current?.scale.setY(2.6 - a);
+    along.current?.scale.set(strung, 2.6 - a, strung);
     const len = 0.22 + d;
     down.current?.position.setY(PULLEY_Y - len / 2);
-    down.current?.scale.setY(len);
+    down.current?.scale.set(strung, len, strung);
   });
   return (
     <group>
       <Box size={[2.95, 0.09, 0.39]} position={[0, 0.045, 0.2]} r={0.03} />
       <Box size={[2.95, 0.09, 0.39]} position={[0, 0.045, -0.2]} r={0.03} />
       <Puck r={0.07} h={0.66} bevel={0.02} segments={16} position={[PIVOT[0], PIVOT[1], 0]} rotation={[HALF_PI, 0, 0]} />
-      <Box size={[0.1, 0.9, 0.5]} position={[0.66, 0.5, 0]} r={0.03} rotation={[0, 0, -0.12]} />
-      <group position={PIVOT} rotation={[0, 0, TILT]}>
+      <group ref={strut} position={[0.71, 0.06, 0]}>
+        <Box size={[0.1, 0.9, 0.5]} position={[-0.05, 0.44, 0]} r={0.03} rotation={[0, 0, -0.12]} />
+      </group>
+      <group ref={plane} position={PIVOT} rotation={[0, 0, TILT]}>
         <Box size={[2.62, 0.08, 0.62]} position={[1.31, 0, 0]} r={0.03} />
         <group ref={cart} position={[0.9, 0.04, 0]}>
           <Box size={[0.4, 0.1, 0.3]} r={0.035} position={[0, 0.115, 0]} />
@@ -451,8 +507,8 @@ export function Incline() {
 export function Riding({ k, children }: { k: number; children: ReactNode }) {
   const { play } = useClay();
   const ref = useRef<THREE.Group>(null);
-  useFrame(({ clock }) => {
-    if (ref.current) ref.current.position.y = -pull(clock.elapsedTime) * k * at(play, 2);
+  useFrame(() => {
+    if (ref.current) ref.current.position.y = -pull(ageOf(play, 2)) * k * at(play, 2);
   });
   return <group ref={ref}>{children}</group>;
 }
@@ -461,20 +517,34 @@ export function Riding({ k, children }: { k: number; children: ReactNode }) {
 /** Where the spring hangs, in the stand's space. */
 export const HANG: V3 = [0.3, 2.55, -0.15];
 
+/** It builds itself: the rod grows out of the base, the clamp drops down it, the arm slides out. */
 export function Stand() {
   const { mats } = useClay();
   return (
     <group>
       <Box size={[1.35, 0.09, 1.1]} position={[0, 0.045, 0]} r={0.04} />
       <Puck r={0.09} h={0.1} bevel={0.03} segments={20} position={[-0.42, 0.13, HANG[2]]} />
-      <Puck r={0.045} h={2.7} bevel={0.02} segments={16} position={[-0.42, 1.43, HANG[2]]} />
+      <Act position={[-0.42, 0.08, HANG[2]]} f={(g, p) => void g.scale.setY(Math.max(pop(slice(ageOf(p, 2), 0.1, 0.4), 1.2), 1e-4))}>
+        <Puck r={0.045} h={2.7} bevel={0.02} segments={16} position={[0, 1.35, 0]} />
+      </Act>
       {/* The clamp that holds the arm, with its screw */}
-      <Box size={[0.2, 0.2, 0.2]} position={[-0.42, HANG[1] + 0.06, HANG[2]]} r={0.045} />
-      <Puck r={0.05} h={0.16} bevel={0.016} segments={14} position={[-0.42, HANG[1] + 0.06, HANG[2] + 0.15]} rotation={[HALF_PI, 0, 0]} />
-      <Puck r={0.034} h={0.92} bevel={0.014} segments={14} position={[-0.02, HANG[1] + 0.06, HANG[2]]} rotation={[0, 0, HALF_PI]} />
-      <mesh position={[HANG[0], HANG[1] + 0.005, HANG[2]]} castShadow material={mats.clay}>
-        <torusGeometry args={[0.05, 0.016, 8, 24]} />
-      </mesh>
+      <Act
+        position={[-0.42, HANG[1] + 0.06, HANG[2]]}
+        f={(g, p) => {
+          const a = ageOf(p, 2);
+          g.position.y = HANG[1] + 0.06 + 0.9 * (1 - spring(a - 0.3, 2, 6));
+          g.scale.setScalar(Math.max(slice(a, 0.3, 0.38), 1e-4));
+        }}
+      >
+        <Box size={[0.2, 0.2, 0.2]} r={0.045} />
+        <Puck r={0.05} h={0.16} bevel={0.016} segments={14} position={[0, 0, 0.15]} rotation={[HALF_PI, 0, 0]} />
+        <Act f={(g, p) => void g.scale.setX(Math.max(pop(slice(ageOf(p, 2), 0.45, 0.68), 1.3), 1e-4))}>
+          <Puck r={0.034} h={0.92} bevel={0.014} segments={14} position={[0.4, 0, 0]} rotation={[0, 0, HALF_PI]} />
+          <mesh position={[HANG[0] + 0.42, -0.055, 0]} castShadow material={mats.clay}>
+            <torusGeometry args={[0.05, 0.016, 8, 24]} />
+          </mesh>
+        </Act>
+      </Act>
     </group>
   );
 }
@@ -509,7 +579,7 @@ const windows = (xs: number[], y: number, z: number, w = 0.085, h = 0.12) =>
 const Y = 0.022; // the top of a school's yard
 /**
  * What makes each of them a school: the yard with its path, and over the front door a tower
- * `h` tall with a clock, a pointed roof and the flag flying from it.
+ * `h` tall with a clock, a pointed roof and a flagpole.
  */
 const entrance = (h: number) => [
   block(1.06, Y, 0.86, 0, 0, 0.05, 1, 0.01),
@@ -519,9 +589,12 @@ const entrance = (h: number) => [
   block(0.1, 0.17, 0.014, 0, Y, 0.102, GLASS, 0.004),
   toned(new THREE.CylinderGeometry(0.043, 0.043, 0.016, 16).rotateX(HALF_PI).translate(0, Y + h - 0.085, 0.104), GLASS),
   block(0.3, 0.014, 0.07, 0, Y, 0.135, 1, 0.005),
-  post(0.01, 0.34, 0, Y + h + 0.13, -0.02),
-  block(0.18, 0.105, 0.014, 0.1, Y + h + 0.36, -0.02, 1, 0.004),
+  post(0.01, 0.36, 0, Y + h + 0.13, -0.02),
 ];
+/** The flag of each kind of school, flying at the top of its pole (in the school's space). It is raised `FLAG_RISE` up the pole when the kit arrives. */
+export const FLAG_TOP = [0.43, 0.62, 0.43].map((h): V3 => [0.13, Y + h + 0.42, -0.02]);
+export const FLAG_RISE = 0.24;
+export const flagGeometry = () => new RoundedBoxGeometry(0.24, 0.14, 0.018, 1, 0.005);
 
 /** Three kinds of school, origin on the ground in the middle of the yard, front door towards +Z. */
 export function schoolGeometries() {
