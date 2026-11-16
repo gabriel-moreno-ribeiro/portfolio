@@ -89,12 +89,15 @@ function AppContent() {
   // The Ctrl+K tip, once per session, only where it shows (the home)
   useEffect(() => {
     if (!isHome || isMobile || window.innerWidth <= 1024 || sessionStorage.getItem("showedToast")) return;
-    const show = setTimeout(() => {
+    // Only after the first scroll: at rest it sat on the hero.
+    let hide = 0;
+    const show = () => {
       setTip(true);
       sessionStorage.setItem("showedToast", "true");
-    }, 3000);
-    const hide = setTimeout(() => setTip(false), 13000);
-    return () => { clearTimeout(show); clearTimeout(hide); };
+      hide = window.setTimeout(() => setTip(false), 10000);
+    };
+    window.addEventListener("scroll", show, { once: true, passive: true });
+    return () => { window.removeEventListener("scroll", show); clearTimeout(hide); };
   }, [isMobile, isHome]);
 
   return (

@@ -46,6 +46,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  min-height: 24px; // WCAG 2.5.8 (was 22px)
   padding: 4px 0;
   background: none;
   border: 0;

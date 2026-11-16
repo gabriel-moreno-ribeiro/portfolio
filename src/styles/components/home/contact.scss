@@ -45,7 +45,7 @@
     transition: background-color 0.2s, transform 0.2s;
 
     &:hover {
-      background-color: rgba($grey, 0.6);
+      background-color: color-mix(in srgb, var(--grey) 60%, transparent);
       transform: translateX(2px);
 
       .contact-section__channel-arrow {
@@ -62,8 +62,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgba($primary-orange, 0.12);
-    color: $primary-orange;
+    background-color: color-mix(in srgb, var(--accent-decor) 12%, transparent);
+    color: var(--accent-decor);
     font-size: 18px;
     flex-shrink: 0;
   }
@@ -137,7 +137,8 @@
       width: 100%;
       box-sizing: border-box;
       background-color: var(--bg);
-      border: 1.5px solid var(--border);
+      // --border on the card was 1.24:1; a control's edge needs 3:1 (WCAG 1.4.11)
+      border: 1.5px solid color-mix(in srgb, var(--fg) 45%, transparent);
       border-radius: 12px;
       padding: 12px 14px;
       font-size: 15px;

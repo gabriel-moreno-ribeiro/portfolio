@@ -1,0 +1,73 @@
+{
+ "desktop-light": {
+  "running": [
+   "exp-hazard",
+   "exp-hazard"
+  ],
+  "small": [
+   "city-timeline__dot 22x22 Missão Velha, Ceará",
+   "city-timeline__dot 22x22 Salvador, Bahia",
+   "city-timeline__dot 22x22 Fortaleza, Ceará",
+   "city-timeline__dot 22x22 São Paulo, SP",
+   "exp__d20-link 89x21 read the story",
+   "footer__cta-link 133x21 me@gabrielmr.com"
+  ],
+  "errors": []
+ },
+ "desktop-dark": {
+  "running": [
+   "exp-hazard",
+   "exp-hazard"
+  ],
+  "small": [
+   "city-timeline__dot 22x22 Missão Velha, Ceará",
+   "city-timeline__dot 22x22 Salvador, Bahia",
+   "city-timeline__dot 22x22 Fortaleza, Ceará",
+   "city-timeline__dot 22x22 São Paulo, SP",
+   "exp__d20-link 89x21 read the story",
+   "footer__cta-link 133x21 me@gabrielmr.com"
+  ],
+  "errors": []
+ },
+ "mobile-light": {
+  "running": [
+   "exp-hazard",
+   "exp-hazard"
+  ],
+  "small": [
+   "city-timeline__dot 22x22 Missão Velha, Ceará",
+   "city-timeline__dot 22x22 Salvador, Bahia",
+   "city-timeline__dot 22x22 Fortaleza, Ceará",
+   "city-timeline__dot 22x22 São Paulo, SP",
+   "exp__d20-link 83x20 read the story",
+   "footer__cta-link 133x21 me@gabrielmr.com"
+  ],
+  "errors": []
+ },
+ "mobile-dark": {
+  "running": [
+   "exp-hazard",
+   "exp-hazard"
+  ],
+  "small": [
+   "city-timeline__dot 22x22 Missão Velha, Ceará",
+   "city-timeline__dot 22x22 Salvador, Bahia",
+   "city-timeline__dot 22x22 Fortaleza, Ceará",
+   "city-timeline__dot 22x22 São Paulo, SP",
+   "exp__d20-link 83x20 read the story",
+   "footer__cta-link 133x21 me@gabrielmr.com"
+  ],
+  "errors": []
+ },
+ "reduced": {
+  "errors": [],
+  "videos": 0,
+  "afterPlay": [
+   {
+    "t": 6.4,
+    "paused": false,
+    "opacity": "1"
+   }
+  ]
+ }
+}

@@ -15,11 +15,6 @@
 
   .main-text {
     margin: 0 0 12px;
-    font-size: 24px;
-    font-weight: 600;
-    line-height: 1.35;
-    color: var(--black);
-    text-align: center;
     position: relative;
     z-index: 1;
     pointer-events: none;
@@ -59,6 +54,7 @@
   border-radius: 18px;
   background: var(--surface);
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  position: relative;
 
   img {
     width: 48px;
@@ -66,6 +62,18 @@
     object-fit: contain;
     user-select: none;
   }
+}
+
+// The tool's name, under its card.
+.skills-orb__name {
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--fg-muted);
+  white-space: nowrap;
 }
 
 [data-theme="dark"] .skills-orb__card {
@@ -92,32 +100,41 @@
     min-height: 0;
     padding: 32px 0 0;
 
-    .main-text {
-      font-size: 22px;
-      margin-bottom: 0;
-    }
+    .main-text { margin-bottom: 0; }
   }
 
   .skills-strip {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 12px;
+    gap: 14px 6px;
     max-width: 340px;
     margin: 24px auto 0;
     padding: 0;
     list-style: none;
 
+    // Four to a row: wide enough for the longest name under its logo.
     li {
-      display: grid;
-      place-items: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      width: 78px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--fg-muted);
+      text-align: center;
+    }
+
+    img {
+      box-sizing: border-box;
       width: 56px;
       height: 56px;
+      padding: 12px;
       border-radius: 14px;
       background: var(--surface);
       border: 1px solid var(--border);
+      object-fit: contain;
     }
-
-    img { width: 32px; height: 32px; object-fit: contain; }
   }
 }

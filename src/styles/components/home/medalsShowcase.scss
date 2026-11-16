@@ -5,13 +5,13 @@
 $ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 $orange: #f0732d;
 
-// Label colour per subject: light theme, then dark theme.
+// Label colour per subject: light theme (4.6:1 or more on the card), then dark theme.
 $subjects: (
   math: (#4f5f85, #a9b6d6),
-  chemistry: (#55724f, #a8c3a1),
-  physics: (#a35c33, #e3a784),
-  science: (#48737a, #9cc3c9),
-  energy: (#8c7230, #d6bd7a),
+  chemistry: (#53704d, #a8c3a1),
+  physics: (#9c5831, #e3a784),
+  science: (#456e75, #9cc3c9),
+  energy: (#7e672b, #d6bd7a),
   astronomy: (#66567f, #b9acd0),
   biology: (#8c5663, #d4a3ae),
 );
@@ -126,7 +126,7 @@ $scroll: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width
     font-size: 26px;
     font-weight: 700;
     line-height: 1;
-    color: var(--primary-orange);
+    color: var(--accent-hero); // 26px bold: 3:1 on the card (--primary-orange was 2.6)
   }
 
   dt {

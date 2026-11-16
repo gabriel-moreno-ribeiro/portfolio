@@ -549,12 +549,9 @@ img {
     color: #fff;
   }
 
+  // Phones already have the sticky CTA bar down there; the two together sat on the copy.
   @media screen and (max-width: 600px) {
-    right: 16px;
-    bottom: calc(106px + env(safe-area-inset-bottom));
-    width: 44px;
-    height: 44px;
-    font-size: 1.1rem;
+    display: none;
   }
 }
 

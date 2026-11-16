@@ -1,12 +1,19 @@
 // The "currently playing" card in the corner of the hero: the Uiverse card by
 // Praashoo7, with the tracks read from content/nowPlaying.ts; each opens on Spotify.
+import { useRef } from "react";
 import { SiSpotify } from "react-icons/si";
 import { nowPlaying } from "../../content/nowPlaying";
+import { usePageVisible, useVisible } from "../../lib/motion";
 import "../../styles/components/home/spotifyCard.scss";
 
 export default function SpotifyCard() {
+  const ref = useRef<HTMLElement>(null);
+  // The bars only move while the card is on screen and the tab is visible.
+  const onScreen = useVisible(ref);
+  const pageVisible = usePageVisible();
+  const live = onScreen && pageVisible;
   return (
-    <aside className="spotify-card" aria-label="Currently playing">
+    <aside ref={ref} className={`spotify-card${live ? "" : " is-paused"}`} aria-label="Currently playing">
       <div className="spotify-card__head">
         <SiSpotify className="spotify-card__logo" aria-hidden="true" />
         <p className="spotify-card__heading">Currently playing</p>

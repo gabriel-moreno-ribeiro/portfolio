@@ -433,7 +433,7 @@ $stage-mono: ui-monospace, 'SF Mono', 'Fira Code', Menlo, Consolas, monospace;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: border-color 0.2s, background-color 0.2s, transform 0.2s;
     position: relative;
     z-index: 1;
     font-family: inherit;
@@ -550,7 +550,7 @@ $stage-mono: ui-monospace, 'SF Mono', 'Fira Code', Menlo, Consolas, monospace;
   .city-timeline {
     margin-top: 36px;
     &__city { font-size: 11px; }
-    &__period { font-size: 9px; }
+    &__period { font-size: 11px; }
   }
 }
 
@@ -560,7 +560,6 @@ $stage-mono: ui-monospace, 'SF Mono', 'Fira Code', Menlo, Consolas, monospace;
     padding-left: 0;
     padding-right: 0;
     &__track { min-width: 0; }
-    &__city { font-size: 10px; }
   }
 }
 

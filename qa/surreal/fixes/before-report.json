@@ -1,0 +1,112 @@
+{
+ "desktop-light": {
+  "running": [
+   "spotify-bar",
+   "spotify-bar",
+   "spotify-bar",
+   "exp-hazard",
+   "exp-hazard"
+  ],
+  "small": [
+   "section-rail__item 45x22 Top",
+   "section-rail__item 71x22 Origins",
+   "section-rail__item 105x22 Cool Things",
+   "section-rail__item 85x22 Research",
+   "section-rail__item 61x22 Skills",
+   "section-rail__item 95x22 Experience",
+   "section-rail__item 79x22 Contact",
+   "city-timeline__dot 22x22 Missão Velha, Ceará",
+   "city-timeline__dot 22x22 Salvador, Bahia",
+   "city-timeline__dot 22x22 Fortaleza, Ceará",
+   "city-timeline__dot 22x22 São Paulo, SP",
+   "numbers-strip__label 88x20 SAT score  (score report",
+   "A 124x21 Open in Desmos  (opens i",
+   "A 124x21 Open in Desmos  (opens i",
+   "A 124x21 Open in Desmos  (opens i",
+   "A 210x18 ORCID 0009-0009-2574-664",
+   "exp__d20-link 89x21 read the story",
+   "footer__cta-link 133x21 me@gabrielmr.com"
+  ],
+  "errors": []
+ },
+ "desktop-dark": {
+  "running": [
+   "spotify-bar",
+   "spotify-bar",
+   "spotify-bar",
+   "exp-hazard",
+   "exp-hazard"
+  ],
+  "small": [
+   "section-rail__item 45x22 Top",
+   "section-rail__item 71x22 Origins",
+   "section-rail__item 105x22 Cool Things",
+   "section-rail__item 85x22 Research",
+   "section-rail__item 61x22 Skills",
+   "section-rail__item 95x22 Experience",
+   "section-rail__item 79x22 Contact",
+   "city-timeline__dot 22x22 Missão Velha, Ceará",
+   "city-timeline__dot 22x22 Salvador, Bahia",
+   "city-timeline__dot 22x22 Fortaleza, Ceará",
+   "city-timeline__dot 22x22 São Paulo, SP",
+   "numbers-strip__label 88x20 SAT score  (score report",
+   "A 124x21 Open in Desmos  (opens i",
+   "A 124x21 Open in Desmos  (opens i",
+   "A 124x21 Open in Desmos  (opens i",
+   "A 210x18 ORCID 0009-0009-2574-664",
+   "exp__d20-link 89x21 read the story",
+   "footer__cta-link 133x21 me@gabrielmr.com"
+  ],
+  "errors": []
+ },
+ "mobile-light": {
+  "running": [
+   "spotify-bar",
+   "spotify-bar",
+   "spotify-bar",
+   "exp-hazard",
+   "exp-hazard"
+  ],
+  "small": [
+   "city-timeline__dot 22x22 Missão Velha, Ceará",
+   "city-timeline__dot 22x22 Salvador, Bahia",
+   "city-timeline__dot 22x22 Fortaleza, Ceará",
+   "city-timeline__dot 22x22 São Paulo, SP",
+   "numbers-strip__label 88x20 SAT score  (score report",
+   "A 124x21 Open in Desmos  (opens i",
+   "A 124x21 Open in Desmos  (opens i",
+   "A 124x21 Open in Desmos  (opens i",
+   "A 210x18 ORCID 0009-0009-2574-664",
+   "exp__d20-link 83x20 read the story",
+   "footer__cta-link 133x21 me@gabrielmr.com"
+  ],
+  "errors": []
+ },
+ "mobile-dark": {
+  "running": [
+   "spotify-bar",
+   "spotify-bar",
+   "spotify-bar",
+   "exp-hazard",
+   "exp-hazard"
+  ],
+  "small": [
+   "city-timeline__dot 22x22 Missão Velha, Ceará",
+   "city-timeline__dot 22x22 Salvador, Bahia",
+   "city-timeline__dot 22x22 Fortaleza, Ceará",
+   "city-timeline__dot 22x22 São Paulo, SP",
+   "numbers-strip__label 88x20 SAT score  (score report",
+   "A 124x21 Open in Desmos  (opens i",
+   "A 124x21 Open in Desmos  (opens i",
+   "A 124x21 Open in Desmos  (opens i",
+   "A 210x18 ORCID 0009-0009-2574-664",
+   "exp__d20-link 83x20 read the story",
+   "footer__cta-link 133x21 me@gabrielmr.com"
+  ],
+  "errors": []
+ },
+ "reduced": {
+  "errors": [],
+  "videos": 3
+ }
+}

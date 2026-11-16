@@ -29,20 +29,25 @@ function Tile({ sketch }: { sketch: Sketch }) {
   const [ended, setEnded] = useState(false);
   // If the recording can't play here, the finished drawing underneath stays.
   const [failed, setFailed] = useState(false);
+  // Frame 0 of the recording is an empty graph: the video stays hidden over
+  // the finished drawing until it is actually playing.
+  const [started, setStarted] = useState(false);
+  // With reduced motion the recording isn't even mounted until the button asks.
+  const [wanted, setWanted] = useState(false);
 
   // It draws while on screen with the tab visible, and holds the last frame
   // once it is done. With reduced motion it waits for the button.
   useEffect(() => {
     const v = videoRef.current;
-    if (!v || reduced || ended) return;
+    if (!v || ended) return;
     v.playbackRate = SPEED;
     if (onScreen && pageVisible) v.play().catch(() => {});
     else v.pause();
-  }, [onScreen, pageVisible, reduced, ended]);
+  }, [onScreen, pageVisible, reduced, wanted, ended]);
 
   const replay = () => {
     const v = videoRef.current;
-    if (!v) return;
+    if (!v) return setWanted(true); // reduced motion, first press: mounting it starts it
     setEnded(false);
     v.currentTime = 0;
     v.playbackRate = SPEED;
@@ -62,14 +67,15 @@ function Tile({ sketch }: { sketch: Sketch }) {
           decoding="async"
           draggable={false}
         />
-        {near && !failed && (
+        {near && !failed && (!reduced || wanted) && (
           <video
             ref={videoRef}
-            className="desmos__video"
+            className={`desmos__video${started ? " is-started" : ""}`}
             src={`/work/desmos/${sketch.id}.mp4`}
             muted
             playsInline
             preload="auto"
+            onPlaying={() => setStarted(true)}
             onEnded={() => setEnded(true)}
             onError={() => setFailed(true)}
             aria-label={`${sketch.name} being drawn in Desmos`}
