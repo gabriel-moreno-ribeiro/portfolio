@@ -1,9 +1,10 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
-import { Link } from 'react-router-dom';
-import { useLocalData } from '../../../lib/data';
+import { Link, useLocation } from 'react-router-dom';
+import { config, useLocalData } from '../../../lib/data';
 import { useReducedMotion, useVisible } from '../../../lib/motion';
 import useIsMobile from '../../../hooks/useIsMobile';
 import Car, { type CarHandle } from './Car';
+import CityPin from './CityPin';
 import Odometer from './Odometer';
 import Road, { type RoadMarker } from './Road';
 import Stop from './Stop';
@@ -41,6 +42,18 @@ export default function Experience() {
   const entered = useVisible(sectionRef, { once: true });
 
   const [road, setRoad] = useState<RoadGeom | null>(null);
+
+  // Arriving from a city on the globe (#exp-<id>): mark that stop and hand it the focus.
+  // Home does the scrolling; the mark leaves with the focus.
+  const location = useLocation();
+  useEffect(() => {
+    if (!location.hash.startsWith('#exp-')) return;
+    const stop = document.getElementById(location.hash.slice(1));
+    if (!stop || !listRef.current?.contains(stop)) return;
+    stop.classList.add('is-arrived');
+    stop.addEventListener('blur', () => stop.classList.remove('is-arrived'), { once: true });
+    stop.focus({ preventScroll: true });
+  }, [location.hash, location.key]);
 
   // ── Geometria: mede a seção e os centros das paradas, gera o path ──────────
   useLayoutEffect(() => {
@@ -320,6 +333,19 @@ export default function Experience() {
         <h2 className="section-title">
           Professional <em>Experience</em>
         </h2>
+        {/* The cities of the Origins globe, in its order: the road runs through the same places. */}
+        <nav className="exp__route" aria-label="Cities on the globe">
+          <ol>
+            {config.cities.map((c) => (
+              <li key={c.id}>
+                <Link to={`#city-${c.id}`}>
+                  <CityPin />
+                  {c.name}
+                </Link>
+              </li>
+            ))}
+          </ol>
+        </nav>
       </header>
 
       <Odometer

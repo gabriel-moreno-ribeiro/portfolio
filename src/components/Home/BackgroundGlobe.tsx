@@ -1,11 +1,13 @@
 import createGlobe from 'cobe';
 import { AnimatePresence, motion } from 'motion/react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { FiArrowLeft, FiArrowRight } from 'react-icons/fi';
-import { config, useClock } from '../../lib/data';
+import { FiArrowDown, FiArrowLeft, FiArrowRight } from 'react-icons/fi';
+import { Link, useLocation } from 'react-router-dom';
+import { config, useClock, useLocalData } from '../../lib/data';
 import { usePageVisible, useReducedMotion } from '../../lib/motion';
 import { useThemeStore } from '../../store/themeStore';
 import CityPhotoStage, { type StagePhoto } from './CityPhotoStage';
+import CityPin from './Experience/CityPin';
 
 interface City {
   id: string;
@@ -16,6 +18,14 @@ interface City {
   headline: string;
   story: string[];
   role: string;
+  /** What this city is on the Experience road, when it is not a stop there. */
+  road?: RoadLink;
+}
+
+/** Where a globe city shows up on the Experience road. */
+interface RoadLink {
+  to: string;
+  label: string;
 }
 
 const CITIES: City[] = [
@@ -31,6 +41,8 @@ const CITIES: City[] = [
       'My father\'s family is from here, a small town in the Cariri valley, in the interior of Ceará. I spent most of my summers here as a kid.',
       'My grandfather has a garage in town. I started helping him fix cars when I was 6, mostly by handing him tools.',
     ],
+    // The truck that drives the road is from this garage (same line as the D-20 note there).
+    road: { to: '#work-experience', label: 'my grandfather\'s D-20' },
   },
   {
     id: 'salvador',
@@ -192,13 +204,43 @@ function GlobeCanvas({
     // open. Kept mild so the globe still reads as a globe and the other three
     // cities (about 20° apart) stay in view around the open one.
     let currentScale = 1;
-    // The poster stays until cobe has actually drawn: a few frames, not a timer.
+    // The poster stays until a drawn frame has a real globe in it (lit pixels read
+    // back from the canvas), not just until cobe has run: a software or broken GL
+    // draws a black disc. No good frame after MAX_CHECKS: the poster stays for good.
+    const MAX_CHECKS = 90;
     let frames = 0;
-    const reveal = () => {
-      if (canvas) canvas.style.opacity = '1';
-      onPaintedRef.current(true);
+    let revealed = false;
+    let dead = false;
+    const hasGlobe = () => {
+      const gl = (canvas.getContext('webgl2') ?? canvas.getContext('webgl')) as WebGLRenderingContext | null;
+      if (!gl || gl.isContextLost()) return false;
+      // A block in the middle of the sphere, where the four cities are. Measured on a
+      // real GPU: every pixel lit in the light theme, about 3% (the land dots) in the
+      // dark one; the black disc of software GL has none.
+      const n = Math.min(192, gl.drawingBufferWidth, gl.drawingBufferHeight);
+      const px = new Uint8Array(n * n * 4);
+      gl.readPixels((gl.drawingBufferWidth - n) >> 1, (gl.drawingBufferHeight - n) >> 1, n, n, gl.RGBA, gl.UNSIGNED_BYTE, px);
+      let lit = 0;
+      for (let i = 0; i < px.length; i += 4) {
+        if (px[i + 3] > 200 && Math.max(px[i], px[i + 1], px[i + 2]) > 48) lit++;
+      }
+      return lit > n * n * 0.005;
+    };
+    // Runs as a microtask of the frame cobe just drew: the drawing buffer is
+    // still there (it is cleared once the frame is composited).
+    const check = () => {
+      if (revealed || dead) return;
+      if (hasGlobe()) {
+        revealed = true;
+        canvas.style.opacity = '1';
+        onPaintedRef.current(true);
+      } else if (frames >= MAX_CHECKS) {
+        dead = true;
+        globe?.toggle(false);
+      }
     };
     const onLost = () => {
+      dead = true;
       canvas.style.opacity = '0';
       onPaintedRef.current(false);
     };
@@ -237,6 +279,8 @@ function GlobeCanvas({
       if (size === 0 || globe) return;
 
       const isMobileDevice = window.innerWidth < 768;
+      // No WebGL at all: cobe throws. The poster is already there.
+      try {
       globe = createGlobe(canvas, {
         devicePixelRatio: isMobileDevice ? 1.5 : 2,
         width: size * (isMobileDevice ? 1.5 : 2),
@@ -252,7 +296,7 @@ function GlobeCanvas({
         glowColor: darkMode ? [0.3, 0.17, 0.1] : [0.98, 0.95, 0.92],
         markers: CITIES.map((c) => ({ location: [c.lat, c.lon], size: 0.06 })),
         onRender: (state) => {
-          if (++frames === 3) reveal();
+          if (!revealed && !dead && ++frames >= 3) queueMicrotask(check);
           const focus = focusRef.current;
           const dragX = pointerMovement.current.x / 100;
           const dragY = pointerMovement.current.y / 150;
@@ -297,6 +341,10 @@ function GlobeCanvas({
           state.height = w * 2;
         },
       });
+      } catch {
+        dead = true;
+        return;
+      }
       // The observer may already have reported us off-screen before this ran
       globe.toggle(isInView);
     };
@@ -314,7 +362,7 @@ function GlobeCanvas({
     const io = new IntersectionObserver(
       ([e]) => {
         isInView = e.isIntersecting;
-        globe?.toggle(isInView);
+        if (!dead) globe?.toggle(isInView);
       },
       { threshold: 0 }
     );
@@ -345,10 +393,12 @@ function CityClock({ tz }: { tz: string }) {
 
 function CityPanel({
   city,
+  road,
   onClose,
   showClock,
 }: {
   city: City;
+  road?: RoadLink;
   onClose: () => void;
   showClock: boolean;
 }) {
@@ -376,6 +426,13 @@ function CityPanel({
         {city.story.map((para, i) => (
           <p key={i} className="city-panel__para">{para}</p>
         ))}
+        {road && (
+          <Link className="city-panel__road" to={road.to}>
+            <CityPin />
+            <span>On the road: {road.label}</span>
+            <FiArrowDown aria-hidden="true" />
+          </Link>
+        )}
       </div>
 
     </motion.div>
@@ -451,9 +508,28 @@ function BackgroundGlobe() {
   const [inView, setInView] = useState(false);
   const [globePainted, setGlobePainted] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
+  const headingRef = useRef<HTMLHeadingElement>(null);
   const { darkMode } = useThemeStore();
   const reduced = useReducedMotion();
   const pageVisible = usePageVisible();
+
+  // The same city is a stop on the Experience road when a job there names it.
+  // shortcut: first job per city only, list them all once two jobs share a city.
+  const { experience } = useLocalData();
+  const roadOf = (city: City): RoadLink | undefined => {
+    const stop = experience.find((e) => e.city && e.city === city.name.split(',')[0]);
+    return stop ? { to: `#exp-${stop.id}`, label: stop.org } : city.road;
+  };
+
+  // Arriving from a road stop (#city-<id>): open that city and stop the tour.
+  const location = useLocation();
+  useEffect(() => {
+    const city = CITIES.find((c) => location.hash === `#city-${c.id}`);
+    if (!city) return;
+    setPinned(true);
+    setSelected(city);
+    headingRef.current?.focus({ preventScroll: true });
+  }, [location.hash, location.key]);
 
   useEffect(() => {
     const el = sectionRef.current;
@@ -501,7 +577,11 @@ function BackgroundGlobe() {
       onFocus={() => setFocusInside(true)}
       onBlur={(e) => { if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setFocusInside(false); }}
     >
-      <h2 className="heading section-title" data-color-inverted="true">
+      {/* Targets for the road's city links: Home scrolls a hash target to the top. */}
+      {CITIES.map((c) => (
+        <span key={c.id} id={`city-${c.id}`} className="city-anchor" />
+      ))}
+      <h2 className="heading section-title" data-color-inverted="true" ref={headingRef} tabIndex={-1}>
         Where I Come <em>From</em>
       </h2>
 
@@ -549,6 +629,7 @@ function BackgroundGlobe() {
                     {c.story.map((para, i) => (
                       <p key={i} className="city-panel__para">{para}</p>
                     ))}
+                    {roadOf(c) && <span className="city-panel__road">On the road: {roadOf(c)?.label}</span>}
                   </div>
                 </div>
               ))}
@@ -556,6 +637,7 @@ function BackgroundGlobe() {
                 <CityPanel
                   key={selected.id}
                   city={selected}
+                  road={roadOf(selected)}
                   onClose={handleClose}
                   showClock={inView}
                 />

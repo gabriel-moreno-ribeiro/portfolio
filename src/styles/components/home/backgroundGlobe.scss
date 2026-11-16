@@ -187,7 +187,32 @@
     opacity: 0.72;
     margin: 0;
   }
+
+  // "On the road": this city's stop in Professional Experience. Same pin, same
+  // mono small type as the stop's own city line there.
+  &__road {
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-start;
+    gap: 7px;
+    min-height: 24px;
+    font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+    font-size: 12px;
+    line-height: 1.3;
+    color: var(--fg-muted);
+    text-decoration: none;
+
+    span { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+    svg { flex: none; }
+
+    &:hover { color: var(--fg); }
+    &:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 3px; border-radius: 4px; }
+  }
 }
+
+// Zero-height hash targets (#city-<id>) at the top of the section.
+.city-anchor { height: 0; }
+.background-section > .heading:focus { outline: none; } // focus lands here from a road link
 
 // ── City stepper: previous and next city by name, as text links ──
 // Under the card, at a fixed height, so the links stay put between cities.

@@ -36,7 +36,7 @@ const SECTIONS = [
 // tablet column matters most, because a deep link to #contact mounts everything
 // above it at once.
 const RESERVE: Record<string, [desktop: number, tablet: number, mobile: number]> = {
-  background: [925, 1350, 902],
+  background: [959, 1384, 943],
   graph: [2790, 2254, 2930],
   work: [2559, 5063, 4080],
   research: [1310, 2019, 2672],

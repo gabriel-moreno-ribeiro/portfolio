@@ -1,6 +1,8 @@
 import { memo } from 'react';
 import { FiArrowDown } from 'react-icons/fi';
-import { renderEmphasis, type ExperienceEntry } from '../../../lib/data';
+import { Link } from 'react-router-dom';
+import { config, renderEmphasis, type ExperienceEntry } from '../../../lib/data';
+import CityPin from './CityPin';
 
 interface StopProps {
   entry: ExperienceEntry;
@@ -16,6 +18,8 @@ interface StopProps {
  */
 function Stop({ entry, side, cta }: StopProps) {
   const present = entry.end === 'present';
+  // Same place as on the Origins globe: the city links back to it.
+  const globeCity = config.cities.find((c) => c.name === entry.city);
   return (
     <li
       id={`exp-${entry.id}`}
@@ -35,7 +39,18 @@ function Stop({ entry, side, cta }: StopProps) {
         {entry.role && <p className="exp__card-role">{entry.role}</p>}
         <p className="exp__card-period">
           {entry.periodLabel}
-          {entry.city && <span className="exp__card-city">{entry.city}</span>}
+          {entry.city && (
+            <span className="exp__card-city">
+              {globeCity ? (
+                <Link to={`#city-${globeCity.id}`} aria-label={`${entry.city}, on the globe`}>
+                  <CityPin />
+                  {entry.city}
+                </Link>
+              ) : (
+                entry.city
+              )}
+            </span>
+          )}
           {present && <span className="exp__tag">present</span>}
         </p>
         {entry.note && <p className="exp__card-note">{entry.note}</p>}
