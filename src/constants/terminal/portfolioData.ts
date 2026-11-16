@@ -29,13 +29,6 @@ export const experience = [
       "Designed and ran a randomized controlled trial with 208 public-school students on whether fintech apps change savings behavior. The treatment group saved 130% more.",
   },
   {
-    title: "Built a test-prep platform from scratch",
-    company: "GSAT Education",
-    date: "November 2025 - May 2026",
-    description:
-      "EdTech startup for standardized test prep. I built the product and ran go-to-market.",
-  },
-  {
     title: "President",
     company: "Olympic Club - Colégio Militar de Salvador",
     date: "August 2024 - May 2026",

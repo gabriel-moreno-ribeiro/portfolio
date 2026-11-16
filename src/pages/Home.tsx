@@ -11,7 +11,6 @@ import { NAVIGATE_EVENT, type NavigateDetail } from "../utils/scrollToComponent"
 
 const BackgroundGlobe = lazy(() => import("../components/Home/BackgroundGlobe"));
 const Skills = lazy(() => import("../components/Home/Skills"));
-const GraphOfWork = lazy(() => import("../components/Home/GraphOfWork/GraphOfWork"));
 const FindMyWork = lazy(() => import("../components/Home/FindMyWork"));
 const Research = lazy(() => import("../components/Home/Research"));
 const Experience = lazy(() => import("../components/Home/Experience/Experience"));
@@ -23,7 +22,6 @@ const StickerPeel = lazy(() => import("../components/ReactBits/StickerPeel"));
 const SECTIONS = [
   { id: 'main-content', label: 'Top' },
   { id: 'background', label: 'Origins' },
-  { id: 'graph', label: 'Graph' },
   { id: 'work', label: 'Cool Things' },
   { id: 'research', label: 'Research' },
   { id: 'skills', label: 'Skills' },
@@ -37,11 +35,10 @@ const SECTIONS = [
 // above it at once.
 const RESERVE: Record<string, [desktop: number, tablet: number, mobile: number]> = {
   background: [959, 1384, 943],
-  graph: [2790, 2254, 2930],
-  work: [2718, 5222, 4194],
+  work: [2310, 4537, 3719],
   research: [1654, 2469, 3172],
   skills: [1000, 1000, 714],
-  'work-experience': [2709, 3115, 2571],
+  'work-experience': [2369, 2775, 2271],
   contact: [401, 818, 910],
 };
 const LAZY_IDS = new Set(Object.keys(RESERVE));
@@ -204,9 +201,6 @@ function Home() {
       <MomentsStrip />
       <LazySection id="background" label="Where I come from" eager={mountAll}>
         <BackgroundGlobe />
-      </LazySection>
-      <LazySection id="graph" label="Graph of work" eager={mountAll}>
-        <GraphOfWork />
       </LazySection>
       <LazySection id="work" label="Cool things" eager={mountAll}>
         <FindMyWork />

@@ -4,7 +4,6 @@ import { createPortal } from 'react-dom';
 import { FiArrowLeft, FiArrowUpRight, FiChevronLeft, FiChevronRight, FiX } from 'react-icons/fi';
 import { lazy, Suspense } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import HowItWorks from '../components/Dioramas/HowItWorks';
 import Navbar from '../components/Navbar/Navbar';
 import Footer from '../components/Shared/Footer';
 import { Project, projectBySlug, projects } from '../content/projects';
@@ -21,6 +20,17 @@ const rise = (delay: number) => ({
   animate: { opacity: 1, y: 0 },
   transition: { duration: 0.55, ease: EASE, delay },
 });
+
+// Intrinsic size of each gallery photo (reserves the box before it decodes).
+const DIMS: Record<string, [number, number]> = {
+  'hibeex/01': [1200, 800], 'hibeex/02': [1200, 1600], 'hibeex/03': [1200, 800], 'hibeex/04': [1200, 800],
+  'candela/01': [1600, 1195], 'candela/02': [1600, 893], 'candela/03': [1600, 1600], 'candela/04': [1600, 1600],
+  'candela/05': [1600, 1195], 'candela/06': [1600, 1195], 'candela/07': [1600, 1195], 'candela/08': [1600, 1195],
+};
+const dims = (slug: string, file: string) => {
+  const d = DIMS[`${slug}/${file.replace(/\.webp$/, '')}`];
+  return d ? { width: d[0], height: d[1] } : {};
+};
 
 /** Full-bleed viewer for a gallery photo, closed with Escape or a click outside. */
 function Lightbox({
@@ -73,7 +83,7 @@ function Lightbox({
         }}
         onPointerCancel={() => { swipeStart.current = null; }}
       >
-        <img src={`/work/${project.slug}/${file}`} alt={project.captions?.[file] ?? project.title} />
+        <img src={`/work/${project.slug}/${file}`} alt={project.captions?.[file] ?? project.title} {...dims(project.slug, file)} />
         {project.captions?.[file] && <figcaption>{project.captions[file]}</figcaption>}
       </figure>
       {gallery.length > 1 && (
@@ -137,7 +147,6 @@ function ProjectPage() {
         </div>
       </motion.header>
 
-      <HowItWorks key={project.slug} slug={project.slug} />
 
       {hero && (
         <motion.button
@@ -150,6 +159,7 @@ function ProjectPage() {
           <img
             src={`/work/${project.slug}/${hero}`}
             alt={project.captions?.[hero] ?? project.title}
+            {...dims(project.slug, hero)}
             style={project.focus?.[hero] ? { objectPosition: project.focus[hero] } : undefined}
           />
         </motion.button>
@@ -208,7 +218,8 @@ function ProjectPage() {
                   src={`/work/${project.slug}/sm/${file}`}
                   srcSet={`/work/${project.slug}/sm/${file} 640w, /work/${project.slug}/${file} 1600w`}
                   sizes="(max-width: 600px) 100vw, 360px"
-                  alt={project.captions?.[file] ?? `${project.title} photo ${i + 2}`}
+                  alt={project.captions?.[file] ? '' : `${project.title} photo ${i + 2}`}
+                  {...dims(project.slug, file)}
                   loading="lazy"
                   style={project.focus?.[file] ? { objectPosition: project.focus[file] } : undefined}
                 />

@@ -64,23 +64,8 @@
     ]
   },
   {
-    "id": "gsat",
-    "order": 5,
-    "org": "GSAT Education",
-    "role": "",
-    "start": "2025-11",
-    "end": "2026-05",
-    "periodLabel": "November 2025 to May 2026",
-    "city": "",
-    "_placeholder": true,
-    "bullets": [
-      "Built a **test-prep platform** from scratch.",
-      "Did the product, the engineering and the go-to-market myself."
-    ]
-  },
-  {
     "id": "hibeex",
-    "order": 6,
+    "order": 5,
     "org": "HIBEEX",
     "role": "Co-founder",
     "start": "2026-01",

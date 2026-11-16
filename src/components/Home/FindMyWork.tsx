@@ -4,8 +4,6 @@ import { Link } from "react-router-dom";
 import { Project, projects } from "../../content/projects";
 import useIsMobile from "../../hooks/useIsMobile";
 import { Counter, usePageVisible, useReducedMotion, useVisible } from "../../lib/motion";
-import Diorama from "../Dioramas/Diorama";
-import { dioramas } from "../Dioramas/steps";
 import CandelaMark from "./CandelaMark";
 import DesmosSketches from "./DesmosSketches";
 import MedalsShowcase from "./MedalsShowcase";
@@ -143,12 +141,6 @@ function MediaCarousel({ project, paused, offset = 0 }: { project: Project; paus
 function ProjectRow({ project, index }: { project: Project; index: number }) {
   const hasMedia = (project.gallery?.length ?? 0) > 0;
   const [paused, setPaused] = useState(false);
-  // The card opens on the diagram of how the project works; the photos are one click away.
-  const hasDiagram = project.slug in dioramas;
-  const [photos, setPhotos] = useState(!hasDiagram);
-  // Hover or focus on a desktop replays the scene; touch keeps the still.
-  const desktop = !useIsMobile(900);
-  const live = paused && desktop && window.matchMedia("(hover: hover)").matches;
 
   return (
     <article
@@ -158,19 +150,9 @@ function ProjectRow({ project, index }: { project: Project; index: number }) {
       onFocus={() => setPaused(true)}
       onBlur={() => setPaused(false)}
     >
-      {(hasMedia || hasDiagram) && (
+      {hasMedia && (
         <div className="work-row__media">
-          {hasDiagram && (
-            <div className="work-view" role="group" aria-label={`${project.title}: what to show`}>
-              <button type="button" aria-pressed={!photos} onClick={() => setPhotos(false)}>How it works</button>
-              <button type="button" aria-pressed={photos} onClick={() => setPhotos(true)}>Photos</button>
-            </div>
-          )}
-          {photos ? (
-            <MediaCarousel project={project} paused={paused} offset={(index % 2) * (AUTOPLAY_MS / 2)} />
-          ) : (
-            <Diorama slug={project.slug} live={live} />
-          )}
+          <MediaCarousel project={project} paused={paused} offset={(index % 2) * (AUTOPLAY_MS / 2)} />
         </div>
       )}
       <div className="work-row__body">

@@ -250,7 +250,11 @@ Base: produção `7008960` (`master`) + 2 commits de pesquisa do `claude/keen-fe
 | 1 · auditoria | concluída | `9f6b0d3` | `qa/surreal/AUDIT.md`, `PRODUCT.md`, `DESIGN.md` |
 | 2–4 · build | concluída | `e9eb249`…`04baf86` | correções P1/P2, hero com ranking, Graph of work, dioramas 3D, heatmap do GitHub (`api/github-calendar`, `GITHUB_TOKEN` só no servidor) |
 | 5 · wow | concluída | `b2bf43c`…`3b517d7` | D-20 no trilho + vaga no Contact, medalhas reagrupáveis, globo ↔ estrada, gráfico por paper |
-| 6 · QA + polimento | em andamento | — | `qa/surreal/final/REPORT.md`: sem P0/P1; Lighthouse `/` 96 desktop, 74 mobile (antes 66) |
+| 6 · QA + polimento | concluída | ver `git log` | `qa/surreal/final/REPORT.md`: sem P0/P1; Lighthouse `/` 96 desktop, 74 mobile (antes 66) |
 
 Para o dono revisar: título de Skills ("Tools I *Build With*"); legenda "End of the road"; fonte do 30% → 10% do Candela
 (não está no PDF); `121 laptops` e `21 states` seguem `_placeholder`; cor das medalhas em `medals.ts` (só 6 de 28 têm).
+
+**16/11 — pedido do dono:** Graph of work e dioramas 3D removidos (ficaram ruins); GSAT Education removida do site inteiro
+(projetos, experiência, terminal, `llms.txt`, sitemap, fotos). Trabalho profissional a mostrar: Projeto Candela, HIBEEX,
+Second Chance e Taqtile — os dois últimos ainda sem dados no repositório (aguardando o dono).

@@ -25,24 +25,6 @@ export const work = [
     },
     {
       cardData: {
-        title: "GSAT Education",
-        url: null,
-        imgUrl: null,
-      },
-      modalData: {
-        title: "GSAT Education",
-        desc: "EdTech startup for standardized test prep. I built the platform from scratch as founder: product, engineering and go-to-market.",
-        infoHeading: "Technologies Used",
-        infoArr: [
-          "React",
-          "TypeScript",
-          "Node.js",
-          "PostgreSQL",
-        ],
-      },
-    },
-    {
-      cardData: {
         title: "Projeto Candela - Physics Lab Kits",
         url: null,
         imgUrl: null,

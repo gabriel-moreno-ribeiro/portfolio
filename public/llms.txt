@@ -28,7 +28,6 @@ Gabriel Moreno Ribeiro is 18 and Brazilian. He grew up between Salvador, Bahia, 
 - Repaired 121 laptops in Salvador to pay for school, shipped to 21 states, all by referral. At 11 he wrote a Python script that translates and dubs Hindi repair tutorials into Portuguese.
 - In 2020, at 12, his father's clinic nearly closed. He built a chatbot with his mother's voice to answer the phone, an automation to collect what health plans owed, and a dashboard with the data and contracts.
 - Projeto Candela (2022 to present), founder: free low-cost physics lab kits for public schools, with the Federal University of Bahia. Visited 60+ schools before having a budget, funded by a research scholarship and crowdfunding. 140 kits, 28 public schools in Bahia and Ceará, 3,392 students. Physics grades up 40% and failure rates from 30% to 10%. Presented at the International Institute of Physics and at Fundação Estudar's annual meeting.
-- GSAT Education (November 2025 to May 2026): a test-prep platform he built from scratch.
 - President of the Olympic Club at Colégio Militar de Salvador (August 2024 to May 2026): 17 initiatives, participation up 47%, national olympiad results up 62%.
 
 ## Research
