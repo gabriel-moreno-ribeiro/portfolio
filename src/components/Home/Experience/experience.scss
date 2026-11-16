@@ -443,6 +443,10 @@ a.exp__d20-link:visited {
   animation: exp-hazard 1s steps(1, end) infinite;
 }
 
+.exp[data-idle] .exp__hazard-dot {
+  animation-play-state: paused;
+}
+
 .exp__hazard-dot--l {
   transform: translate(var(--exp-tl-x, 0), var(--exp-tl-y, 0));
 }

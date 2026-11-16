@@ -34,6 +34,8 @@ export function TruckFigure() {
           <img
             src="/story/d20.webp"
             alt="A white Chevrolet D-20 pickup parked in a field at dusk"
+            width={1024}
+            height={768}
             loading="lazy"
             decoding="async"
           />

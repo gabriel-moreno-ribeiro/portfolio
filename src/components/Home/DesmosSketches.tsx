@@ -74,7 +74,7 @@ function Tile({ sketch }: { sketch: Sketch }) {
             src={`/work/desmos/${sketch.id}.mp4`}
             muted
             playsInline
-            preload="auto"
+            preload="none"
             onPlaying={() => setStarted(true)}
             onEnded={() => setEnded(true)}
             onError={() => setFailed(true)}

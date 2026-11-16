@@ -1,0 +1,208 @@
+{
+  "desktop /": {
+    "firstLoadKB": {
+      "total": 1077,
+      "byType": {
+        "Document": 4,
+        "Image": 723,
+        "Stylesheet": 22,
+        "Script": 217,
+        "Font": 110
+      },
+      "n": 36
+    },
+    "afterFullScrollKB": {
+      "total": 6773,
+      "byType": {
+        "Document": 4,
+        "Image": 2089,
+        "Stylesheet": 33,
+        "Script": 399,
+        "Font": 185,
+        "Media": 4064,
+        "Fetch": 0
+      },
+      "n": 190
+    },
+    "big": [
+      "/work/desmos/processor.mp4 1582KB",
+      "/work/desmos/laptop-flu.mp4 1292KB",
+      "/work/desmos/fixed-bug.mp4 1190KB",
+      "/assets/hero-slideshow/1-1920.avif 180KB"
+    ],
+    "scripts": [
+      "index-BQhqWB8a.js 51KB",
+      "motion-BSGRdcdn.js 46KB",
+      "vendor-react-DTNripJU.js 61KB",
+      "HeroSlideshow-ClMj_6PL.js 1KB",
+      "posthog-6pwzbHJx.js 57KB",
+      "config.js 1KB",
+      "StickerPeel-GVNg-_id.js 2KB",
+      "gsap-B6FFQTBZ.js 57KB",
+      "clock-gfrYOxg8.js 1KB",
+      "CityPin-C8vJYSa7.js 1KB",
+      "BackgroundGlobe-c9XsIFy9.js 12KB",
+      "portfolioData-BhFTCAI7.js 2KB",
+      "projects-C4lJQ5XL.js 2KB",
+      "GraphOfWork-BFC8SZpz.js 6KB",
+      "Diorama-CSenZA7M.js 3KB",
+      "FindMyWork-D3F9JMRb.js 6KB",
+      "Reveal-CpcJherw.js 1KB",
+      "Research-D-E-9CY6.js 3KB",
+      "ResearchChart-DZ0KZZob.js 8KB",
+      "chart-formatters-Bft5xydE.js 26KB",
+      "Skills-BTCOCwPp.js 20KB",
+      "format-BcgJamQ0.js 1KB",
+      "Experience-fLUaCnjr.js 12KB",
+      "ContactSection-BurcKr_r.js 2KB",
+      "index-D7epCiv0.js 2KB",
+      "FooterHeatmap-CJy6x1aL.js 16KB"
+    ]
+  },
+  "desktop /work/hibeex": {
+    "firstLoadKB": {
+      "total": 847,
+      "byType": {
+        "Document": 4,
+        "Image": 248,
+        "Stylesheet": 26,
+        "Script": 484,
+        "Font": 86
+      },
+      "n": 25
+    },
+    "afterFullScrollKB": {
+      "total": 892,
+      "byType": {
+        "Document": 4,
+        "Image": 248,
+        "Stylesheet": 26,
+        "Script": 529,
+        "Font": 86,
+        "Fetch": 0
+      },
+      "n": 30
+    },
+    "big": [
+      "/assets/three-Cau--iyM.js 181KB"
+    ],
+    "scripts": [
+      "index-BQhqWB8a.js 51KB",
+      "motion-BSGRdcdn.js 46KB",
+      "vendor-react-DTNripJU.js 61KB",
+      "project-BS-URFI1.js 1KB",
+      "Diorama-CSenZA7M.js 3KB",
+      "Project-CHXoCPxZ.js 4KB",
+      "projects-C4lJQ5XL.js 2KB",
+      "useDocumentHead-Dk7DC1fo.js 1KB",
+      "posthog-6pwzbHJx.js 57KB",
+      "config.js 1KB",
+      "DioramaCanvas-BFCWMCTb.js 3KB",
+      "react-three-BqqMnV2K.js 74KB",
+      "three-Cau--iyM.js 181KB",
+      "index-D7epCiv0.js 2KB",
+      "clock-gfrYOxg8.js 1KB",
+      "FooterHeatmap-CJy6x1aL.js 16KB",
+      "chart-formatters-Bft5xydE.js 26KB"
+    ]
+  },
+  "mobile /": {
+    "firstLoadKB": {
+      "total": 827,
+      "byType": {
+        "Document": 4,
+        "Image": 473,
+        "Stylesheet": 22,
+        "Script": 217,
+        "Font": 110
+      },
+      "n": 34
+    },
+    "afterFullScrollKB": {
+      "total": 6390,
+      "byType": {
+        "Document": 4,
+        "Image": 1765,
+        "Stylesheet": 32,
+        "Script": 340,
+        "Font": 185,
+        "Media": 4064,
+        "Fetch": 0
+      },
+      "n": 179
+    },
+    "big": [
+      "/work/desmos/processor.mp4 1582KB",
+      "/work/desmos/laptop-flu.mp4 1292KB",
+      "/work/desmos/fixed-bug.mp4 1190KB"
+    ],
+    "scripts": [
+      "index-BQhqWB8a.js 51KB",
+      "motion-BSGRdcdn.js 46KB",
+      "vendor-react-DTNripJU.js 61KB",
+      "HeroSlideshow-ClMj_6PL.js 1KB",
+      "posthog-6pwzbHJx.js 57KB",
+      "config.js 1KB",
+      "clock-gfrYOxg8.js 1KB",
+      "CityPin-C8vJYSa7.js 1KB",
+      "BackgroundGlobe-c9XsIFy9.js 12KB",
+      "GraphOfWork-BFC8SZpz.js 6KB",
+      "portfolioData-BhFTCAI7.js 2KB",
+      "projects-C4lJQ5XL.js 2KB",
+      "Diorama-CSenZA7M.js 3KB",
+      "FindMyWork-D3F9JMRb.js 6KB",
+      "Reveal-CpcJherw.js 1KB",
+      "Research-D-E-9CY6.js 3KB",
+      "ResearchChart-DZ0KZZob.js 8KB",
+      "chart-formatters-Bft5xydE.js 26KB",
+      "Skills-BTCOCwPp.js 20KB",
+      "format-BcgJamQ0.js 1KB",
+      "Experience-fLUaCnjr.js 12KB",
+      "ContactSection-BurcKr_r.js 2KB",
+      "index-D7epCiv0.js 2KB",
+      "FooterHeatmap-CJy6x1aL.js 16KB"
+    ]
+  },
+  "mobile /work/hibeex": {
+    "firstLoadKB": {
+      "total": 590,
+      "byType": {
+        "Document": 4,
+        "Image": 248,
+        "Stylesheet": 26,
+        "Script": 226,
+        "Font": 86
+      },
+      "n": 22
+    },
+    "afterFullScrollKB": {
+      "total": 635,
+      "byType": {
+        "Document": 4,
+        "Image": 248,
+        "Stylesheet": 26,
+        "Script": 271,
+        "Font": 86,
+        "Fetch": 0
+      },
+      "n": 27
+    },
+    "big": [],
+    "scripts": [
+      "index-BQhqWB8a.js 51KB",
+      "motion-BSGRdcdn.js 46KB",
+      "vendor-react-DTNripJU.js 61KB",
+      "project-BS-URFI1.js 1KB",
+      "Project-CHXoCPxZ.js 4KB",
+      "projects-C4lJQ5XL.js 2KB",
+      "Diorama-CSenZA7M.js 3KB",
+      "useDocumentHead-Dk7DC1fo.js 1KB",
+      "posthog-6pwzbHJx.js 57KB",
+      "config.js 1KB",
+      "clock-gfrYOxg8.js 1KB",
+      "index-D7epCiv0.js 2KB",
+      "FooterHeatmap-CJy6x1aL.js 16KB",
+      "chart-formatters-Bft5xydE.js 26KB"
+    ]
+  }
+}

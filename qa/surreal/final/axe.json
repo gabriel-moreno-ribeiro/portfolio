@@ -18,7 +18,7 @@
         "sel": [
           ".is-off.diorama__label--up.diorama__label:nth-child(3) > b"
         ],
-        "summary": "Fix any of the following: Element has insufficient color contrast of 1.04 (foreground color: #fafafa, background color: #ffffff, font size: 7.9pt (10.5px), font weight: normal). Expected contrast ratio of 4.5:1"
+        "summary": "Fix any of the following: Element has insufficient color contrast of 1.8 (foreground color: #c1c1c1, background color: #ffffff, font size: 7.9pt (10.5px), font weight: normal). Expected contrast ratio of 4.5:1"
       }
     ],
     "incomplete": [
@@ -27,40 +27,14 @@
   },
   "desktop light /work/candela": {
     "dataTheme": "light",
-    "violations": [
-      {
-        "id": "image-redundant-alt",
-        "impact": "minor",
-        "nodes": 7,
-        "sel": [
-          "img[src$=\"02.webp\"]",
-          "img[alt=\"Everything inside the box\"]",
-          "img[src$=\"04.webp\"]",
-          "img[alt=\"The protractor stand\"]",
-          "img[src$=\"06.webp\"]"
-        ],
-        "summary": "Fix all of the following: Element contains <img> element with alt text that duplicates existing text"
-      }
-    ],
+    "violations": [],
     "incomplete": [
       "color-contrast"
     ]
   },
   "desktop light /work/gsat": {
     "dataTheme": "light",
-    "violations": [
-      {
-        "id": "image-redundant-alt",
-        "impact": "minor",
-        "nodes": 3,
-        "sel": [
-          "img[src$=\"02.webp\"]",
-          "img[src$=\"03.webp\"]",
-          "img[alt=\"The GSAT cap, on a dog\"]"
-        ],
-        "summary": "Fix all of the following: Element contains <img> element with alt text that duplicates existing text"
-      }
-    ],
+    "violations": [],
     "incomplete": [
       "color-contrast"
     ]
@@ -98,7 +72,7 @@
         "sel": [
           ".is-off.diorama__label--up.diorama__label:nth-child(3) > b"
         ],
-        "summary": "Fix any of the following: Element has insufficient color contrast of 1.01 (foreground color: #221b16, background color: #211a15, font size: 7.9pt (10.5px), font weight: normal). Expected contrast ratio of 4.5:1"
+        "summary": "Fix any of the following: Element has insufficient color contrast of 1.04 (foreground color: #251e19, background color: #211a15, font size: 7.9pt (10.5px), font weight: normal). Expected contrast ratio of 4.5:1"
       }
     ],
     "incomplete": [
@@ -107,40 +81,14 @@
   },
   "desktop dark /work/candela": {
     "dataTheme": "dark",
-    "violations": [
-      {
-        "id": "image-redundant-alt",
-        "impact": "minor",
-        "nodes": 7,
-        "sel": [
-          "img[src$=\"02.webp\"]",
-          "img[alt=\"Everything inside the box\"]",
-          "img[src$=\"04.webp\"]",
-          "img[alt=\"The protractor stand\"]",
-          "img[src$=\"06.webp\"]"
-        ],
-        "summary": "Fix all of the following: Element contains <img> element with alt text that duplicates existing text"
-      }
-    ],
+    "violations": [],
     "incomplete": [
       "color-contrast"
     ]
   },
   "desktop dark /work/gsat": {
     "dataTheme": "dark",
-    "violations": [
-      {
-        "id": "image-redundant-alt",
-        "impact": "minor",
-        "nodes": 3,
-        "sel": [
-          "img[src$=\"02.webp\"]",
-          "img[src$=\"03.webp\"]",
-          "img[alt=\"The GSAT cap, on a dog\"]"
-        ],
-        "summary": "Fix all of the following: Element contains <img> element with alt text that duplicates existing text"
-      }
-    ],
+    "violations": [],
     "incomplete": [
       "color-contrast"
     ]
@@ -177,40 +125,14 @@
   },
   "mobile light /work/candela": {
     "dataTheme": "light",
-    "violations": [
-      {
-        "id": "image-redundant-alt",
-        "impact": "minor",
-        "nodes": 7,
-        "sel": [
-          "img[src$=\"02.webp\"]",
-          "img[alt=\"Everything inside the box\"]",
-          "img[src$=\"04.webp\"]",
-          "img[alt=\"The protractor stand\"]",
-          "img[src$=\"06.webp\"]"
-        ],
-        "summary": "Fix all of the following: Element contains <img> element with alt text that duplicates existing text"
-      }
-    ],
+    "violations": [],
     "incomplete": [
       "color-contrast"
     ]
   },
   "mobile light /work/gsat": {
     "dataTheme": "light",
-    "violations": [
-      {
-        "id": "image-redundant-alt",
-        "impact": "minor",
-        "nodes": 3,
-        "sel": [
-          "img[src$=\"02.webp\"]",
-          "img[src$=\"03.webp\"]",
-          "img[alt=\"The GSAT cap, on a dog\"]"
-        ],
-        "summary": "Fix all of the following: Element contains <img> element with alt text that duplicates existing text"
-      }
-    ],
+    "violations": [],
     "incomplete": [
       "color-contrast"
     ]
@@ -247,40 +169,14 @@
   },
   "mobile dark /work/candela": {
     "dataTheme": "dark",
-    "violations": [
-      {
-        "id": "image-redundant-alt",
-        "impact": "minor",
-        "nodes": 7,
-        "sel": [
-          "img[src$=\"02.webp\"]",
-          "img[alt=\"Everything inside the box\"]",
-          "img[src$=\"04.webp\"]",
-          "img[alt=\"The protractor stand\"]",
-          "img[src$=\"06.webp\"]"
-        ],
-        "summary": "Fix all of the following: Element contains <img> element with alt text that duplicates existing text"
-      }
-    ],
+    "violations": [],
     "incomplete": [
       "color-contrast"
     ]
   },
   "mobile dark /work/gsat": {
     "dataTheme": "dark",
-    "violations": [
-      {
-        "id": "image-redundant-alt",
-        "impact": "minor",
-        "nodes": 3,
-        "sel": [
-          "img[src$=\"02.webp\"]",
-          "img[src$=\"03.webp\"]",
-          "img[alt=\"The GSAT cap, on a dog\"]"
-        ],
-        "summary": "Fix all of the following: Element contains <img> element with alt text that duplicates existing text"
-      }
-    ],
+    "violations": [],
     "incomplete": [
       "color-contrast"
     ]

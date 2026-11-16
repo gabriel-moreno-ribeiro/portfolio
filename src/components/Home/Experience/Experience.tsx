@@ -1,7 +1,7 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { config, useLocalData } from '../../../lib/data';
-import { useReducedMotion, useVisible } from '../../../lib/motion';
+import { usePageVisible, useReducedMotion, useVisible } from '../../../lib/motion';
 import useIsMobile from '../../../hooks/useIsMobile';
 import Car, { type CarHandle } from './Car';
 import CityPin from './CityPin';
@@ -40,6 +40,10 @@ export default function Experience() {
   const narrow = useIsMobile(NARROW_MAX);
   const near = useVisible(sectionRef, { rootMargin: '800px 0px', once: true });
   const entered = useVisible(sectionRef, { once: true });
+  // The hazard blinks only while the section is on screen and the tab is visible.
+  const inView = useVisible(sectionRef);
+  const tabVisible = usePageVisible();
+  const idle = !inView || !tabVisible;
 
   const [road, setRoad] = useState<RoadGeom | null>(null);
 
@@ -328,7 +332,7 @@ export default function Experience() {
   }, [road, reduced, narrow]);
 
   return (
-    <section className="exp" id="work-experience" ref={sectionRef}>
+    <section className="exp" id="work-experience" ref={sectionRef} data-idle={idle || undefined}>
       <header className="exp__head">
         <h2 className="section-title">
           Professional <em>Experience</em>
