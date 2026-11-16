@@ -138,8 +138,96 @@ $scroll: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width
 // ── The wall ────────────────────────────────────────────────────────────────
 // Groups flow left to right and wrap, so the big math group takes a row of its
 // own and the small ones share one.
-.medal-wall {
+// The sort control: three real buttons, the pressed one inked in.
+.medal-sort {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 4px;
+  font: 600 12px/1 "DM Sans", sans-serif;
+
+  span {
+    margin-right: 6px;
+    color: var(--fg-muted);
+  }
+
+  button {
+    min-height: 32px;
+    padding: 0 14px;
+    border: 1px solid color-mix(in srgb, var(--fg) 45%, transparent);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--fg);
+    font: inherit;
+    cursor: pointer;
+
+    &[aria-pressed="true"] {
+      border-color: var(--fg);
+      background: var(--fg);
+      color: var(--bg);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--focus-ring);
+      outline-offset: 2px;
+    }
+  }
+}
+
+// Every grouping shares one grid cell, so the stage is always as tall as the tallest.
+.medal-stage {
   --medal: 60px;
+  position: relative;
+  display: grid;
+  align-items: start;
+
+  > .medal-wall { grid-area: 1 / 1; }
+}
+
+.medal-wall--ghost {
+  visibility: hidden;
+  pointer-events: none;
+
+  i {
+    display: block;
+    width: calc(var(--medal) + 6px);
+    height: calc(var(--medal) + 6px);
+  }
+}
+
+// After a regroup the labels fade in while the medals travel.
+.medal-wall.is-regrouped h4 { animation: medal-label-in 0.5s 0.15s $ease-out backwards; }
+@keyframes medal-label-in { from { opacity: 0; } }
+
+// Name tag under the medal, in the ink of the site's other tooltips. It is
+// clamped to the stage so it never leaves the card on a phone.
+.medal-tip {
+  --w: 220px;
+  position: absolute;
+  top: calc(var(--y) + 6px);
+  left: clamp(0px, calc(var(--x) - var(--w) / 2), calc(100% - var(--w)));
+  z-index: 2;
+  width: var(--w);
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: var(--fg);
+  color: var(--bg);
+  font: 500 12px/1.3 "DM Sans", sans-serif;
+  text-align: center;
+  pointer-events: none;
+  animation: medal-label-in 0.18s ease;
+
+  strong {
+    font: 400 15px/1.2 var(--font-serif);
+  }
+
+  em { opacity: 0.8; }
+}
+
+.medal-wall {
   display: flex;
   flex-wrap: wrap;
   gap: 18px 36px;
@@ -156,7 +244,7 @@ $scroll: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width
     font-weight: 600;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--subject);
+    color: var(--subject, var(--fg-muted));
 
     // A short rule after the name, the colour's only other appearance.
     &::after {
@@ -201,15 +289,6 @@ $scroll: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width
       border-radius: 8px;
     }
 
-    // Name tag under the medal (the global data-tip style anchors right).
-    &::after {
-      top: calc(100% + 2px);
-      right: auto;
-      left: 50%;
-      transform: translate(-50%, -4px);
-    }
-    &:hover::after,
-    &:focus-visible::after { transform: translate(-50%, 0); }
   }
 
   img {
@@ -226,7 +305,13 @@ $scroll: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width
   [data-theme="dark"] .medal-group.is-#{$id} { --subject: #{nth($pair, 2)}; }
 }
 
+.medal-group.is-gold { --subject: #7e672b; }
+[data-theme="dark"] .medal-group.is-gold { --subject: #d6bd7a; }
+
 @media (prefers-reduced-motion: reduce) {
+  .medal-wall.is-regrouped h4,
+  .medal-tip { animation: none; }
+
   .gold-frame,
   .medal-group button,
   .medal-group img { transition: none; }
@@ -253,10 +338,9 @@ $scroll: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width
 
   .gold-frame__mat { padding: 15px; }
 
-  .medal-wall {
-    --medal: 48px;
-    gap: 14px 24px;
-  }
+  .medal-stage { --medal: 48px; }
+  .medal-wall { gap: 14px 24px; }
+  .medal-sort button { min-height: 36px; }
 
   .find-my-work .medals-showcase__stats {
     gap: 8px 20px;

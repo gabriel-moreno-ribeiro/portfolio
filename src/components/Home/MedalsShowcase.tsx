@@ -1,7 +1,8 @@
 // The medals on the home page: Gabriel's portrait in a gilded frame and, beside
 // it, every photographed medal on the wall, grouped by subject under a small
 // label. Anything on the wall opens large in the viewer.
-import { lazy, Suspense, useCallback, useRef, useState } from "react";
+import { lazy, Suspense, useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { animate } from "motion/react";
 import { medals, type Medal, type Subject } from "../../content/medals";
 import { Counter, useReducedMotion, useVisible } from "../../lib/motion";
 import "../../styles/components/home/medalsShowcase.scss";
@@ -22,15 +23,54 @@ const SUBJECTS: { id: Subject; label: string }[] = [
   { id: "astronomy", label: "Astronomy" },
   { id: "biology", label: "Biology" },
 ];
-const GROUPS = SUBJECTS.map((s) => ({
-  ...s,
-  // i is the medal's place in the viewer (after the photo).
-  items: medals
-    .map((m, i) => ({ m, i }))
-    .filter(({ m }) => m.subject === s.id)
-    .sort((a, b) => (a.m.year ?? "").localeCompare(b.m.year ?? "")),
-}));
+
+// The three ways to sort the wall. Each reads one field of the medal data; a
+// medal that doesn't state it goes to a last group that says so.
+// The colour is the first word of the tier ("Gold medal, national champion").
+const colourOf = (m: Medal) => m.tier?.match(/^(gold|silver|bronze)/i)?.[1].toLowerCase();
+type Mode = "subject" | "year" | "colour";
+const MODES = ([
+  { id: "subject", label: "Subject" },
+  { id: "year", label: "Year" },
+  { id: "colour", label: "Colour" },
+// Only 6 of the 28 medals state a colour in medals.ts, which would contradict the "19 gold" count; the button returns once every medal has one.
+] as { id: Mode; label: string }[]).filter((m) => m.id !== "colour" || medals.every((x) => colourOf(x)));
+const KEY: Record<Mode, (m: Medal) => string | undefined> = {
+  subject: (m) => m.subject,
+  year: (m) => m.year,
+  colour: colourOf,
+};
+const UNKNOWN: Record<Mode, string> = {
+  subject: "",
+  year: "Year not on the medal",
+  colour: "Colour not on the medal",
+};
+const HEADS: Record<Mode, { id: string; label: string }[]> = {
+  subject: SUBJECTS,
+  year: [...new Set(medals.map((m) => m.year).filter(Boolean) as string[])].sort().map((y) => ({ id: y, label: y })),
+  colour: (["gold", "silver", "bronze"] as const)
+    .filter((c) => medals.some((m) => colourOf(m) === c))
+    .map((c) => ({ id: c, label: c[0].toUpperCase() + c.slice(1) })),
+};
+const groupsFor = (mode: Mode) =>
+  [...HEADS[mode], { id: "unknown", label: UNKNOWN[mode] }]
+    .map((h) => ({
+      ...h,
+      // i is the medal's place in the viewer (after the photo).
+      items: medals
+        .map((m, i) => ({ m, i }))
+        .filter(({ m }) => (KEY[mode](m) ?? "unknown") === h.id)
+        .sort((a, b) => (a.m.year ?? "").localeCompare(b.m.year ?? "")),
+    }))
+    .filter((g) => g.items.length);
+const GROUPS: Record<Mode, ReturnType<typeof groupsFor>> = {
+  subject: groupsFor("subject"),
+  year: groupsFor("year"),
+  colour: groupsFor("colour"),
+};
 const label = (m: Medal) => [m.name, m.year].filter(Boolean).join(" · ");
+const EASE = [0.16, 1, 0.3, 1] as const;
+const hooks = (stage: HTMLElement) => [...stage.querySelectorAll<HTMLElement>("li[data-num]")];
 
 export default function MedalsShowcase() {
   const ref = useRef<HTMLDivElement>(null);
@@ -39,6 +79,49 @@ export default function MedalsShowcase() {
   const [open, setOpen] = useState<number | null>(null);
   const step = useCallback((d: number) => setOpen((i) => (i === null ? i : (i + d + COUNT) % COUNT)), []);
   const close = useCallback(() => setOpen(null), []);
+
+  const [mode, setMode] = useState<Mode>("subject");
+  const [said, setSaid] = useState(""); // polite announcement, empty until the first regroup
+  // The name tag: which medal, and where under it (px inside the stage).
+  const [tip, setTip] = useState<{ m: Medal; x: number; y: number } | null>(null);
+  const stage = useRef<HTMLDivElement>(null);
+  const touch = useRef(false);
+  const showTip = (m: Medal, el: HTMLElement) => {
+    const s = stage.current!.getBoundingClientRect();
+    const r = el.getBoundingClientRect();
+    setTip({ m, x: r.left + r.width / 2 - s.left, y: r.bottom - s.top });
+  };
+  // FLIP: where each medal hangs now, read just before the regroup...
+  const from = useRef<Map<string, DOMRect> | null>(null);
+  const regroup = (next: Mode) => {
+    if (next === mode) return;
+    if (!reduced) from.current = new Map(hooks(stage.current!).map((li) => [li.dataset.num!, li.getBoundingClientRect()]));
+    setTip(null);
+    setMode(next);
+    setSaid(`Grouped by ${next}`);
+  };
+  // ...and after it, each one glides from the old hook to the new (transform only).
+  useLayoutEffect(() => {
+    const was = from.current;
+    from.current = null;
+    if (!was) return;
+    const runs = hooks(stage.current!).map((li, n) => {
+      const a = was.get(li.dataset.num!)!;
+      const b = li.getBoundingClientRect();
+      return animate(li, { x: [a.left - b.left, 0], y: [a.top - b.top, 0] }, { duration: 0.7, ease: EASE, delay: n * 0.012 });
+    });
+    return () => runs.forEach((r) => r.stop());
+  }, [mode]);
+
+  // A tap anywhere else puts the name tag away (touch has no blur to rely on).
+  useEffect(() => {
+    if (!tip) return;
+    const away = (e: PointerEvent) => {
+      if (!(e.target as Element).closest?.(".medal-group button")) setTip(null);
+    };
+    document.addEventListener("pointerdown", away);
+    return () => document.removeEventListener("pointerdown", away);
+  }, [tip]);
 
   return (
     <div ref={ref} className="featured-card medals-showcase">
@@ -88,30 +171,97 @@ export default function MedalsShowcase() {
           </div>
         </dl>
 
-        <div className="medal-wall">
-          {GROUPS.map((g) => (
-            <section key={g.id} className={`medal-group is-${g.id}`} aria-label={g.label}>
-              <h4>{g.label}</h4>
-              <ul>
-                {g.items.map(({ m, i }) => (
-                  <li key={m.num}>
-                    <button type="button" onClick={() => setOpen(i + 1)} aria-label={`${label(m)}. Open large`} data-tip={label(m)}>
-                      <img
-                        src={`/work/medals/wall/xs/${m.num}.webp`}
-                        srcSet={`/work/medals/wall/xs/${m.num}.webp 144w, /work/medals/wall/sm/${m.num}.webp 280w`}
-                        sizes="72px"
-                        alt=""
-                        width={144}
-                        height={144}
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </section>
+        <div className="medal-sort" role="group" aria-label="Group the medals by">
+          <span aria-hidden="true">Group by</span>
+          {MODES.map((o) => (
+            <button key={o.id} type="button" aria-pressed={mode === o.id} onClick={() => regroup(o.id)}>
+              {o.label}
+            </button>
           ))}
+        </div>
+        <p className="sr-only" aria-live="polite">{said}</p>
+
+        {/* Every grouping is laid out in the same cell; only the current one
+            shows. The box is as tall as the tallest, so regrouping never moves the page. */}
+        <div
+          ref={stage}
+          className="medal-stage"
+          onKeyDown={(e) => {
+            if (e.key === "Escape" && tip) {
+              e.stopPropagation();
+              setTip(null);
+            }
+          }}
+        >
+          {MODES.filter((o) => o.id !== mode).map((o) => (
+            <div key={o.id} className="medal-wall medal-wall--ghost" aria-hidden="true">
+              {GROUPS[o.id].map((g) => (
+                <div key={g.id} className="medal-group">
+                  <h4>{g.label}</h4>
+                  <ul>
+                    {g.items.map(({ m }) => (
+                      <li key={m.num}><i /></li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          ))}
+
+          <div className={`medal-wall${said ? " is-regrouped" : ""}`}>
+            {GROUPS[mode].map((g) => (
+              <section key={`${mode}-${g.id}`} className={`medal-group is-${g.id}`} aria-label={g.label}>
+                <h4>{g.label}</h4>
+                <ul>
+                  {g.items.map(({ m, i }) => (
+                    <li key={m.num} data-num={m.num}>
+                      <button
+                        type="button"
+                        aria-label={`${label(m)}. Open large`}
+                        aria-describedby={tip?.m === m ? "medal-tip" : undefined}
+                        onPointerDown={(e) => { touch.current = e.pointerType === "touch"; }}
+                        onPointerEnter={(e) => { if (e.pointerType === "mouse") showTip(m, e.currentTarget); }}
+                        onPointerLeave={(e) => { if (e.pointerType === "mouse") setTip(null); }}
+                        onFocus={(e) => { if (e.currentTarget.matches(":focus-visible")) showTip(m, e.currentTarget); }}
+                        onBlur={() => setTip(null)}
+                        onClick={(e) => {
+                          // Touch: the first tap names the medal, the second opens it. (detail 0 is the keyboard.)
+                          if (touch.current && e.detail !== 0 && tip?.m !== m) return showTip(m, e.currentTarget);
+                          setTip(null);
+                          setOpen(i + 1);
+                        }}
+                      >
+                        <img
+                          src={`/work/medals/wall/xs/${m.num}.webp`}
+                          srcSet={`/work/medals/wall/xs/${m.num}.webp 144w, /work/medals/wall/sm/${m.num}.webp 280w`}
+                          sizes="72px"
+                          alt=""
+                          width={144}
+                          height={144}
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            ))}
+          </div>
+
+          {tip && (
+            <div
+              id="medal-tip"
+              role="tooltip"
+              className="medal-tip"
+              style={{ "--x": `${tip.x}px`, "--y": `${tip.y}px` } as React.CSSProperties}
+            >
+              <strong>{tip.m.name}</strong>
+              {tip.m.fullName && tip.m.fullName !== tip.m.name && <span>{tip.m.fullName}</span>}
+              <span>{[tip.m.year ?? "Year not on the medal", tip.m.tier].filter(Boolean).join(" · ")}</span>
+              {touch.current && <em>Tap again to open</em>}
+            </div>
+          )}
         </div>
       </div>
 
