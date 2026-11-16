@@ -1,4 +1,6 @@
 import react from "@vitejs/plugin-react";
+import tailwindcss from "@tailwindcss/vite";
+import { fileURLToPath, URL } from "node:url";
 import { defineConfig, type Plugin } from "vite";
 
 // Local dev mock for /api/chat - simulates SSE streaming
@@ -58,7 +60,10 @@ function apiMockPlugin(): Plugin {
 }
 
 export default defineConfig({
-  plugins: [react(), apiMockPlugin()],
+  plugins: [react(), tailwindcss(), apiMockPlugin()],
+  resolve: {
+    alias: { "@": fileURLToPath(new URL("./src", import.meta.url)) },
+  },
   define: {
     // Rodapé: "site updated X ago"
     __BUILD_TIME__: JSON.stringify(new Date().toISOString()),

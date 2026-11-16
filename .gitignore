@@ -35,3 +35,10 @@ yarn-error.log*
 # clones de repositorios de terceiros (tem git proprio)
 /tools
 /.claude/refs
+
+# skills de design de terceiros (60 MB). Reinstalar na raiz do projeto:
+#   npx skills add nutlope/hallmark cathrynlavery/diagram-design bklit/bklit-ui --agent claude-code -y
+#   npx skills add https://github.com/Leonxlnx/taste-skill --skill design-taste-frontend --agent claude-code -y
+#   npx impeccable install -y --providers=claude --project
+#   npx ui-ux-pro-max-cli init --ai claude
+/.claude/skills/

@@ -1,0 +1,129 @@
+/*
+ * Tailwind só para os gráficos do bklit-ui (shadcn registry).
+ * Sem preflight: o reset quebraria o SCSS do site. As camadas perdem para o
+ * SCSS sem camada, então o estilo do site sempre ganha num conflito.
+ */
+@layer theme, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities) source(none);
+@source "../components/charts";
+@source "../components/shimmering-text.tsx";
+/* `outline` só aparece em comentários dos gráficos e colidiria com `.btn.outline` do Hero. */
+@source not inline("outline");
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-chart-line-primary: var(--chart-line-primary);
+  --color-chart-line-secondary: var(--chart-line-secondary);
+  --color-chart-brush-border: var(--chart-brush-border);
+  --color-chart-tooltip-background: var(--chart-tooltip-background);
+  --color-chart-tooltip-foreground: var(--chart-tooltip-foreground);
+  --color-chart-tooltip-muted: var(--chart-tooltip-muted);
+  --color-chart-scale-02: var(--chart-scale-02);
+  --color-chart-scale-03: var(--chart-scale-03);
+  --color-chart-scale-04: var(--chart-scale-04);
+  --color-chart-scale-05: var(--chart-scale-05);
+  --color-chart-segment-line: var(--chart-segment-line);
+  --color-chart-segment-background: var(--chart-segment-background);
+  --color-chart-marker-badge-foreground: var(--chart-marker-badge-foreground);
+  --color-chart-marker-badge-background: var(--chart-marker-badge-background);
+  --color-chart-indicator-secondary-color: var(--chart-indicator-secondary-color);
+  --color-chart-indicator-color: var(--chart-indicator-color);
+  --color-chart-scale-pattern-color: var(--chart-scale-pattern-color);
+  --color-chart-scale-01: var(--chart-scale-01);
+  --color-chart-scale-mix: var(--chart-scale-mix);
+  --color-chart-label: var(--chart-label);
+  --color-chart-marker-foreground: var(--chart-marker-foreground);
+  --color-chart-marker-border: var(--chart-marker-border);
+  --color-chart-marker-background: var(--chart-marker-background);
+  --color-chart-grid: var(--chart-grid);
+  --color-chart-crosshair: var(--chart-crosshair);
+  --color-chart-foreground-muted: var(--chart-foreground-muted);
+  --color-chart-foreground: var(--chart-foreground);
+  --color-chart-background: var(--chart-background);
+  --color-chart-negative: var(--chart-negative);
+  --color-chart-positive: var(--chart-positive);
+}
+
+/*
+ * Tokens do shadcn/bklit só dentro de .bk: no :root eles sobrescreveriam
+ * --accent e --border do site, que têm outro significado.
+ * Tudo deriva de --fg/--bg/--primary-orange, então serve aos dois temas.
+ */
+.bk {
+  --background: var(--bg);
+  --foreground: var(--fg);
+  --card: var(--surface);
+  --card-foreground: var(--fg);
+  --popover: var(--surface);
+  --popover-foreground: var(--fg);
+  --primary: var(--fg);
+  --primary-foreground: var(--bg);
+  --muted: color-mix(in oklab, var(--fg) 5%, transparent);
+  --muted-foreground: var(--fg-muted);
+  --accent: color-mix(in oklab, var(--fg) 5%, transparent);
+  --accent-foreground: var(--fg);
+  --radius: 0.625rem;
+
+  --chart-1: var(--primary-orange);
+  --chart-2: color-mix(in oklab, var(--primary-orange) 45%, var(--fg));
+  --chart-3: var(--fg-muted);
+  --chart-4: color-mix(in oklab, var(--fg) 30%, var(--bg));
+  --chart-5: var(--fg);
+  --chart-positive: oklch(0.7 0.15 160);
+  --chart-negative: oklch(0.64 0.2 25);
+
+  --chart-background: color-mix(in oklab, var(--fg) 8%, var(--bg));
+  --chart-foreground: var(--fg-muted);
+  --chart-foreground-muted: color-mix(in oklab, var(--fg) 20%, var(--bg));
+  --chart-line-primary: var(--chart-1);
+  --chart-line-secondary: var(--chart-2);
+  --chart-crosshair: color-mix(in oklab, var(--fg) 45%, var(--bg));
+  --chart-grid: color-mix(in oklab, var(--fg) 9%, transparent);
+  --chart-brush-border: var(--chart-grid);
+  --chart-tooltip-background: var(--popover);
+  --chart-tooltip-foreground: var(--popover-foreground);
+  --chart-tooltip-muted: var(--muted-foreground);
+  --chart-indicator-color: var(--fg);
+  --chart-indicator-secondary-color: var(--bg);
+  --chart-marker-background: color-mix(in oklab, var(--fg) 15%, var(--bg));
+  --chart-marker-border: color-mix(in oklab, var(--fg) 25%, var(--bg));
+  --chart-marker-foreground: var(--fg);
+  --chart-marker-badge-background: var(--fg);
+  --chart-marker-badge-foreground: var(--bg);
+  --chart-segment-background: color-mix(in oklab, var(--fg) 6%, transparent);
+  --chart-segment-line: color-mix(in oklab, var(--fg) 25%, transparent);
+  --chart-label: var(--fg-muted);
+  --legend: var(--surface);
+  --legend-foreground: var(--fg);
+  --legend-muted: color-mix(in oklab, var(--fg) 5%, var(--bg));
+  --legend-muted-foreground: var(--fg-muted);
+  --legend-track: color-mix(in oklab, var(--fg) 10%, var(--bg));
+
+  --chart-scale-mix: var(--bg);
+  --chart-scale-01: color-mix(in oklab, var(--fg) 8%, var(--bg));
+  --chart-scale-02: color-mix(in oklab, var(--chart-1) 25%, var(--chart-scale-mix));
+  --chart-scale-03: color-mix(in oklab, var(--chart-1) 50%, var(--chart-scale-mix));
+  --chart-scale-04: color-mix(in oklab, var(--chart-1) 75%, var(--chart-scale-mix));
+  --chart-scale-05: var(--chart-1);
+  --chart-scale-pattern-color: var(--background);
+}
