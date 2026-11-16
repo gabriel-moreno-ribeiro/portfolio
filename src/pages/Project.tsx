@@ -4,6 +4,7 @@ import { createPortal } from 'react-dom';
 import { FiArrowLeft, FiArrowUpRight, FiChevronLeft, FiChevronRight, FiX } from 'react-icons/fi';
 import { lazy, Suspense } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import HowItWorks from '../components/Dioramas/HowItWorks';
 import Navbar from '../components/Navbar/Navbar';
 import Footer from '../components/Shared/Footer';
 import { Project, projectBySlug, projects } from '../content/projects';
@@ -135,6 +136,8 @@ function ProjectPage() {
           {project.period && <span>{project.period}</span>}
         </div>
       </motion.header>
+
+      <HowItWorks key={project.slug} slug={project.slug} />
 
       {hero && (
         <motion.button

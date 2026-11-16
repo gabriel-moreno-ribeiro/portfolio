@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { Project, projects } from "../../content/projects";
 import useIsMobile from "../../hooks/useIsMobile";
 import { Counter, usePageVisible, useReducedMotion, useVisible } from "../../lib/motion";
+import Diorama from "../Dioramas/Diorama";
+import { dioramas } from "../Dioramas/steps";
 import CandelaMark from "./CandelaMark";
 import DesmosSketches from "./DesmosSketches";
 import MedalsShowcase from "./MedalsShowcase";
@@ -141,6 +143,12 @@ function MediaCarousel({ project, paused, offset = 0 }: { project: Project; paus
 function ProjectRow({ project, index }: { project: Project; index: number }) {
   const hasMedia = (project.gallery?.length ?? 0) > 0;
   const [paused, setPaused] = useState(false);
+  // The card opens on the diagram of how the project works; the photos are one click away.
+  const hasDiagram = project.slug in dioramas;
+  const [photos, setPhotos] = useState(!hasDiagram);
+  // Hover or focus on a desktop replays the scene; touch keeps the still.
+  const desktop = !useIsMobile(900);
+  const live = paused && desktop && window.matchMedia("(hover: hover)").matches;
 
   return (
     <article
@@ -150,9 +158,19 @@ function ProjectRow({ project, index }: { project: Project; index: number }) {
       onFocus={() => setPaused(true)}
       onBlur={() => setPaused(false)}
     >
-      {hasMedia && (
+      {(hasMedia || hasDiagram) && (
         <div className="work-row__media">
-          <MediaCarousel project={project} paused={paused} offset={(index % 2) * (AUTOPLAY_MS / 2)} />
+          {hasDiagram && (
+            <div className="work-view" role="group" aria-label={`${project.title}: what to show`}>
+              <button type="button" aria-pressed={!photos} onClick={() => setPhotos(false)}>How it works</button>
+              <button type="button" aria-pressed={photos} onClick={() => setPhotos(true)}>Photos</button>
+            </div>
+          )}
+          {photos ? (
+            <MediaCarousel project={project} paused={paused} offset={(index % 2) * (AUTOPLAY_MS / 2)} />
+          ) : (
+            <Diorama slug={project.slug} live={live} />
+          )}
         </div>
       )}
       <div className="work-row__body">
@@ -183,18 +201,14 @@ const STATS = [
     ),
     value: 3392, label: "students reached", note: "28 public schools",
   },
+  // The hero carries the ranked ones (SAT, Fundação Estudar, Canastra, medals); these are the rest.
   {
-    logo: <img className="sat-logo" src="/stats/sat-logo.webp" alt="" width={200} height={127} loading="lazy" decoding="async" />,
-    value: 1570, grouping: false, label: "SAT score", note: "of 1600, top <1% in the world", href: "/files/sat-score-report.pdf",
+    logo: <img src="/stats/obfep.webp" alt="" width={240} height={160} loading="lazy" decoding="async" />,
+    value: 49, label: "competitions", note: "",
   },
   {
-    logo: (
-      <>
-        <img className="only-light" src="/stats/fundacao-estudar.webp" alt="" width={260} height={108} loading="lazy" decoding="async" />
-        <img className="only-dark" src="/stats/fundacao-estudar-dark.webp" alt="" width={260} height={108} loading="lazy" decoding="async" />
-      </>
-    ),
-    value: 0.7, decimals: 1, suffix: "%", label: "acceptance rate", note: "about 70 of 10,000+ applicants",
+    logo: <img src="/stats/screwdriver.webp" alt="" width={121} height={240} loading="lazy" decoding="async" />,
+    value: 121, label: "laptops repaired", note: "sent to 21 states, all by referral",
   },
 ];
 
@@ -202,9 +216,6 @@ function NumbersStrip() {
   const ref = useRef<HTMLUListElement>(null);
   const shown = useVisible(ref, { once: true, rootMargin: "0px 0px -10% 0px" });
   const reduced = useReducedMotion();
-  const print = (s: (typeof STATS)[number]) =>
-    `${s.value.toLocaleString("en-US", { minimumFractionDigits: s.decimals ?? 0, useGrouping: s.grouping ?? true })}${s.suffix ?? ""}`;
-
   return (
     <ul className="numbers-strip" ref={ref} aria-label="By the numbers">
       {STATS.map((s) => (
@@ -212,19 +223,12 @@ function NumbersStrip() {
           <span className="numbers-strip__logo" aria-hidden="true">{s.logo}</span>
           <span className="numbers-strip__figure">
             {shown && !reduced ? (
-              <Counter value={s.value} decimals={s.decimals} grouping={s.grouping} suffix={s.suffix} />
+              <Counter value={s.value} />
             ) : (
-              print(s)
+              s.value.toLocaleString("en-US")
             )}
           </span>
-          {"href" in s ? (
-            <a className="numbers-strip__label numbers-strip__link" href={s.href} target="_blank" rel="noopener noreferrer">
-              {s.label} <FiArrowUpRight aria-hidden="true" />
-              <span className="sr-only"> (score report, opens in a new tab)</span>
-            </a>
-          ) : (
-            <span className="numbers-strip__label">{s.label}</span>
-          )}
+          <span className="numbers-strip__label">{s.label}</span>
           <span className="numbers-strip__note">{s.note}</span>
         </li>
       ))}

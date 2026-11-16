@@ -46,7 +46,7 @@
       border-bottom: 1px solid var(--border);
     }
 
-    &__media { min-width: 0; }
+    &__media { position: relative; min-width: 0; }
 
     &__body {
       display: flex;
@@ -133,6 +133,34 @@
     }
   }
 
+  // Diagram or photos: sits inside the media box, so switching moves nothing.
+  .work-view {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 3;
+    display: flex;
+    padding: 3px;
+    border: 1px solid var(--border);
+    border-radius: 36px;
+    background: var(--surface);
+
+    button {
+      padding: 5px 12px;
+      border: 0;
+      border-radius: 36px;
+      background: none;
+      font: inherit;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--fg-muted);
+      cursor: pointer;
+
+      &[aria-pressed="true"] { background: var(--fg); color: var(--bg); }
+      &:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+    }
+  }
+
   // ── The four numbers ────────────────────────────────────────────────────────
   .numbers-strip {
     display: grid;
@@ -192,7 +220,8 @@
       line-height: 1;
       letter-spacing: -0.02em;
       font-variant-numeric: tabular-nums;
-      color: var(--primary-orange);
+      // 40px numerals: large-text contrast (3.37:1 on cream); --primary-orange was 2.78:1
+      color: var(--accent-hero);
     }
 
     &__label {
