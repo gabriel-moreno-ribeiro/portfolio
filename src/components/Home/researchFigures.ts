@@ -10,6 +10,8 @@ export const RCT_ARMS = [
   { key: 'spreadsheet', label: 'Spreadsheet', color: 'var(--chart-2)', mean: [45.89, 67.45, 80.59, 91.4], sd: [22.7, 28.8, 12.4, 20.3] },
   { key: 'control', label: 'Control', color: 'var(--chart-3)', mean: [41.27, 42.33, 40.16, 44.25], sd: [13.5, 22.4, 15.7, 26.4] },
 ];
+/** "The gap between the control group and the treated groups is about 52.0 points" (p. 67), in October. */
+export const RCT_GAP = 52.0;
 
 /**
  * Kinetics, mechanism A → I → B. The three ratios k2/k1 are the ones drawn in Figure 18 (p. 41);

@@ -329,6 +329,26 @@
       color: var(--fg);
       font-variant-numeric: tabular-nums;
     }
+
+    small {
+      font-size: inherit;
+      font-variant-numeric: tabular-nums;
+    }
+  }
+
+  // RCT: the legend prints the month under the pointer. Fixed widths, so nothing moves when the numbers change.
+  &--rct &__legend {
+    column-gap: 12px;
+
+    li:not(.research-figure__when) b {
+      min-width: 48px;
+      text-align: right;
+    }
+
+    .research-figure__when {
+      flex-basis: 100%;
+      gap: 0.35em;
+    }
   }
 
   &__plot {
@@ -384,19 +404,10 @@
       border-radius: 50%;
     }
 
-    span,
-    small {
-      font-size: inherit;
-      font-weight: 400;
-      color: var(--fg-muted);
-    }
-
-    small {
-      margin-left: 8px;
-    }
-
     span {
       padding-right: 10px;
+      font-size: inherit;
+      color: var(--fg-muted);
     }
 
     b {
@@ -405,6 +416,58 @@
       text-align: right;
       font-variant-numeric: tabular-nums;
     }
+  }
+
+  // RCT: the names at the ends of the lines and the bracket of the October gap, in the plot's right margin.
+  .research-ends {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    pointer-events: none;
+    font-size: 12px;
+    line-height: 1;
+    color: var(--fg-muted);
+
+    span {
+      position: absolute;
+      left: 10px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      translate: 0 -50%;
+      white-space: nowrap;
+    }
+
+    i {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+    }
+
+    // The bracket: closed on the right, its label inside.
+    b {
+      position: absolute;
+      right: 2px;
+      width: 6px;
+      border: solid var(--fg-muted);
+      border-width: 1px 1px 1px 0;
+    }
+
+    em {
+      position: absolute;
+      top: 50%;
+      right: 12px;
+      translate: 0 -50%;
+      font-style: normal;
+      font-weight: 600;
+      color: var(--fg);
+      white-space: nowrap;
+    }
+  }
+
+  // RCT keeps bklit's crosshair and dots and leaves the panel out: the legend has the numbers.
+  .research-tipbox--none {
+    display: none;
   }
 
   &__caption {
@@ -478,6 +541,13 @@
     left: 50% !important;
     top: 4px !important;
     translate: -50% -100%;
+  }
+}
+
+// Phones fit two groups per line: the standard deviations stay on wider screens.
+@media (max-width: 600px) {
+  .research-figure__legend small {
+    display: none;
   }
 }
 

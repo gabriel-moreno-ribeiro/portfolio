@@ -15,7 +15,8 @@ interface ResearchFigure {
   kind: 'rct' | 'kinetics' | 'candela';
   /** Headline number and what it measures. Kinetics has none: its headline follows the chosen ratio. */
   stat?: { value: string; label: string };
-  legend: { label: string; value?: string; color: string; dashed?: boolean }[];
+  /** RCT has none here: its legend follows the hovered month (see ResearchFigureView). */
+  legend: { label: string; value?: string; note?: string; color: string; dashed?: boolean }[];
   caption: string;
   /** What the plot shows, for screen readers. */
   alt: string;
@@ -43,35 +44,6 @@ const RESEARCH_MEDIA_MANIFEST: Record<string, string[]> = {
 };
 
 const researchItems: ResearchItem[] = [
-  {
-    slug: 'fintech-rct',
-    title: 'Do Budgeting Tools Help Low-Income Students Save?',
-    field: 'Behavioral Economics',
-    year: '2025-2026',
-    advisor: 'Aaron Litvin, Ph.D. (Harvard)',
-    abstract:
-      'A 175-page monograph. RCT with 208 OBMEP scholarship students and three budgeting tools. Any tool raised reported saving by 52 pp, and the result survives every check. But the data cannot say how much of that is money actually saved, so I propose a follow-up with bank balances and a placebo arm.',
-    tags: ['RCT', 'Budgeting Tools', 'Behavioral Economics', 'Python', 'Statistics'],
-    pdf: '/research/fintech-rct/paper.pdf',
-    figure: {
-      kind: 'rct',
-      // "The gap between the control group and the treated groups is about 52.0 points" (p. 67).
-      stat: { value: '+52 pp', label: 'reported saving with any tool, against the control group, in October' },
-      legend: RCT_ARMS.map((arm) => ({
-        label: arm.label,
-        value: `${arm.mean[3].toFixed(2)}%`,
-        color: arm.color,
-        dashed: arm.key === 'control',
-      })),
-      caption:
-        'Average reported saving by group and month, as % of initial residual income. Shaded: the three months with the tools. Legend: October. Table 6.1, p. 67.',
-      alt: 'Line chart. The three groups with a budgeting tool rise from about 40% at baseline to between 91% and 101% in October; the control group stays near 42%.',
-      table: {
-        head: ['Month', ...RCT_ARMS.map((arm) => `${arm.label}, mean (standard deviation)`)],
-        rows: RCT_MONTHS.map((month, i) => [month, ...RCT_ARMS.map((arm) => `${arm.mean[i].toFixed(2)}% (${arm.sd[i]})`)]),
-      },
-    },
-  },
   {
     slug: 'chemical-kinetics',
     title: 'The Steady-State Hypothesis: when it holds and how much it misses',
@@ -115,6 +87,30 @@ const researchItems: ResearchItem[] = [
       table: {
         head: ['Experiment', 'Physics domain', 'Material cost'],
         rows: KIT_EXPERIMENTS.map((e) => [e.name, e.domain, `R$${e.cost}`]),
+      },
+    },
+  },
+  {
+    slug: 'fintech-rct',
+    title: 'Do Budgeting Tools Help Low-Income Students Save?',
+    field: 'Behavioral Economics',
+    year: '2025-2026',
+    advisor: 'Aaron Litvin, Ph.D. (Harvard)',
+    abstract:
+      'A 175-page monograph. RCT with 208 OBMEP scholarship students and three budgeting tools. Any tool raised reported saving by 52 pp, and the result survives every check. But the data cannot say how much of that is money actually saved, so I propose a follow-up with bank balances and a placebo arm.',
+    tags: ['RCT', 'Budgeting Tools', 'Behavioral Economics', 'Python', 'Statistics'],
+    pdf: '/research/fintech-rct/paper.pdf',
+    figure: {
+      kind: 'rct',
+      // "The gap between the control group and the treated groups is about 52.0 points" (p. 67).
+      stat: { value: '+52 pp', label: 'reported saving with any tool, against the control group, in October' },
+      legend: [],
+      caption:
+        'Average reported saving by group and month, as % of initial residual income. Shaded: the three months with the tools. Solid line: 100%, all of that income. Table 6.1, p. 67.',
+      alt: 'Line chart. The three groups with a budgeting tool rise from about 40% at baseline to between 91% and 101% in October; the control group stays near 42%.',
+      table: {
+        head: ['Month', ...RCT_ARMS.map((arm) => `${arm.label}, mean (standard deviation)`)],
+        rows: RCT_MONTHS.map((month, i) => [month, ...RCT_ARMS.map((arm) => `${arm.mean[i].toFixed(2)}% (${arm.sd[i]})`)]),
       },
     },
   },
@@ -162,10 +158,23 @@ function ResearchMediaCarousel({ slug, title }: { slug: string; title: string })
 
 function ResearchFigureView({ figure }: { figure: ResearchFigure }) {
   const ref = useRef<HTMLElement>(null);
-  // Mounted on arrival, so nothing draws itself off-screen.
-  const seen = useVisible(ref, { once: true });
+  // Mounted once the plot is well inside the viewport, so the drawing-in is seen, not missed below the fold.
+  const seen = useVisible(ref, { once: true, rootMargin: '0px 0px -25% 0px' });
   const [ratio, setRatio] = useState(KINETICS_RATIOS[0]);
   const kinetics = figure.kind === 'kinetics';
+  // RCT: the row of the table under the pointer; October while there is none.
+  const [hovered, setHovered] = useState<number | null>(null);
+  const month = hovered ?? RCT_MONTHS.length - 1;
+  const legend =
+    figure.kind === 'rct'
+      ? RCT_ARMS.map((arm) => ({
+          label: arm.label,
+          value: `${arm.mean[month].toFixed(2)}%`,
+          note: `±${arm.sd[month].toFixed(1)}`,
+          color: arm.color,
+          dashed: arm.key === 'control',
+        }))
+      : figure.legend;
   const stat = figure.stat ?? {
     value: ratio.maxError,
     label: `of the initial reactant: the most the approximation overstates the product when the second step is ${ratio.ratio}× faster`,
@@ -189,13 +198,19 @@ function ResearchFigureView({ figure }: { figure: ResearchFigure }) {
           </div>
         )}
       </div>
-      {figure.legend.length > 0 && (
+      {legend.length > 0 && (
         <ul className="research-figure__legend">
-          {figure.legend.map((item) => (
+          {figure.kind === 'rct' && (
+            <li className="research-figure__when">
+              <b>{RCT_MONTHS[month]}</b> mean<small> ± standard deviation</small>
+            </li>
+          )}
+          {legend.map((item) => (
             <li key={item.label}>
               <i style={{ borderColor: item.color }} data-dashed={item.dashed || undefined} aria-hidden="true" />
               {item.label}
               {item.value && <b>{item.value}</b>}
+              {item.note && <small>{item.note}</small>}
             </li>
           ))}
         </ul>
@@ -203,7 +218,7 @@ function ResearchFigureView({ figure }: { figure: ResearchFigure }) {
       <div className="research-figure__plot" role="img" aria-label={figure.alt}>
         {seen && (
           <Suspense fallback={null}>
-            <ResearchChart kind={figure.kind} ratio={ratio.ratio} />
+            <ResearchChart kind={figure.kind} ratio={ratio.ratio} onHoverRow={setHovered} />
           </Suspense>
         )}
       </div>
