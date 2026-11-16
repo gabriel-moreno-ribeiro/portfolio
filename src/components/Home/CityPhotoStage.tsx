@@ -137,10 +137,10 @@ function CityPhotoStage({ label, photos, onInteract, autoplay = false, onEnd }: 
                   {pad(i + 1)} / {pad(n)}
                 </span>
               </header>
-              {/* The box is always there (aspect-ratio); a photo more than two
+              {/* The box is always there (aspect-ratio); a photo more than three
                   slides away waits for its turn instead of loading behind the others */}
               <div className="photo-card__media">
-                {distance(i, active, n) <= 2 && (
+                {distance(i, active, n) <= 3 && (
                   <img
                     src={photo.src}
                     alt={slot === 'center' ? photo.alt : ''}

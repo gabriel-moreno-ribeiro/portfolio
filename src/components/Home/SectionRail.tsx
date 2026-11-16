@@ -1,7 +1,7 @@
 // Fixed rail on the left: one dot per section, a vertical line whose fill is the page progress,
 // and the current section marked with aria-current. Replaces the inline nav that lived in Home.tsx.
 // The marker is the D-20 from the Experience road: it drives along the rail with the scroll and
-// stops on the last dot, where Contact has its parking spot (Rail/ParkingSpot).
+// stops on the last dot.
 import { useEffect, useRef, useState } from 'react';
 import { usePageVisible, useReducedMotion } from '../../lib/motion';
 import { scrollToComponent } from '../../utils/scrollToComponent';

@@ -329,11 +329,11 @@ $stage-mono: ui-monospace, 'SF Mono', 'Fira Code', Menlo, Consolas, monospace;
   margin: 0;
   box-sizing: border-box;
   text-align: left;
-  // Only transform and opacity move. The side blur switches at once: easing a filter
-  // repaints the photo on every frame, which is what made the pass stutter.
+  // Only transform and opacity move. Every photo stays opaque: the side ones are dimmed by a
+  // veil over them (media::after), so on quick clicks no photo ever shows through another.
   transition:
-    transform 0.6s $stage-ease,
-    opacity 0.6s $stage-ease;
+    transform 0.45s $stage-ease,
+    opacity 0.45s $stage-ease;
   will-change: transform, opacity;
 
   &[data-slot='center'] {
@@ -343,16 +343,23 @@ $stage-mono: ui-monospace, 'SF Mono', 'Fira Code', Menlo, Consolas, monospace;
     .photo-card__media { box-shadow: var(--stage-shadow); }
   }
 
+  // Only the photo in front carries its header; one fading out two steps away
+  // used to leave a second "01 / 10" floating beside the new one.
+  &:not([data-slot='center']) .photo-card__head { visibility: hidden; }
+
   &[data-slot='prev'],
   &[data-slot='next'] {
     z-index: 1;
-    opacity: 0.5;
-    filter: blur(1.5px) saturate(0.8);
     cursor: pointer;
 
-    &:hover { opacity: 0.65; }
-    // Only the photos wait behind; their headers would show through the gap.
-    .photo-card__head { visibility: hidden; }
+    // The blur arrives once the photo has reached the side (easing a filter repaints it
+    // on every frame), and leaves at once when it is called to the front.
+    .photo-card__media img {
+      filter: blur(1.5px) saturate(0.8);
+      transition: filter 0s linear 0.45s;
+    }
+    .photo-card__media::after { opacity: 0.5; }
+    &:hover .photo-card__media::after { opacity: 0.35; }
   }
   &[data-slot='prev'] { transform: translateX(-64%) scale(0.9); }
   &[data-slot='next'] { transform: translateX(64%) scale(0.9); }
@@ -362,6 +369,8 @@ $stage-mono: ui-monospace, 'SF Mono', 'Fira Code', Menlo, Consolas, monospace;
     opacity: 0;
     transform: scale(0.8);
     pointer-events: none;
+
+    .photo-card__media::after { opacity: 0.5; }
   }
 
   &__head {
@@ -392,9 +401,20 @@ $stage-mono: ui-monospace, 'SF Mono', 'Fira Code', Menlo, Consolas, monospace;
 
   &__media {
     aspect-ratio: 16 / 10; // the per-photo positions in BackgroundGlobe assume this
+    position: relative;
     border-radius: 12px;
     overflow: hidden;
     background: var(--grey);
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--bg);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.45s $stage-ease;
+    }
 
     img {
       display: block;
@@ -411,7 +431,8 @@ $stage-mono: ui-monospace, 'SF Mono', 'Fira Code', Menlo, Consolas, monospace;
 
 .photo-stage[data-reduced='true'] {
   animation: none;
-  .photo-card { transition: none; }
+  .photo-card,
+  .photo-card__media::after { transition: none; }
 }
 
 // ── Horizontal timeline ──

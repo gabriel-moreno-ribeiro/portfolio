@@ -24,8 +24,8 @@ function RankedStats() {
     { n: 70, prefix: '~', of: 'of 10,000+', label: 'Fundação Estudar fellows' },
     // numbers.json (startups) + projects.ts: "One of 6 startups in the Canastra Ventures AI Residency"
     { n: 1, of: `of ${num('startups')}`, label: 'startups in the Canastra AI Residency' },
-    // numbers.json (sat): 1570, "SAT / 1600"
-    { n: num('sat'), of: 'of 1600', label: 'SAT score' },
+    // numbers.json (sat): 1570, "SAT / 1600"; llms.txt: "above the 99th percentile"
+    { n: num('sat'), of: 'of 1600', label: 'SAT score, top 1% in the world' },
     // numbers.json: medals 28 (sub "19 gold"), competitions 38 (label "olympiads")
     { n: num('medals'), of: 'medals', label: `in ${num('competitions')} science olympiads, 19 gold` },
   ];

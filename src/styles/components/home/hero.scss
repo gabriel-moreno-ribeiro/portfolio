@@ -106,38 +106,35 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 28px;
+      gap: 12px;
 
-      // Secondary actions: text links, so "See Work" is the only filled pill.
+      // Three pills of one size: "See Work" filled, the other two outlined.
+      .btn,
       .hero-link {
-        position: relative;
+        box-sizing: border-box;
+        height: 52px;
+        min-width: 172px;
+        padding: 0 22px;
+        gap: 10px;
+      }
+
+      .hero-link {
         display: inline-flex;
+        justify-content: center;
         align-items: center;
-        gap: 8px;
-        min-height: 44px;
+        border: 1.5px solid var(--border);
+        border-radius: 36px;
+        background: var(--surface);
         color: var(--fg);
         font-size: 16px;
         font-weight: 600;
         text-decoration: none;
+        transition: border-color 0.2s ease, transform 0.12s ease;
 
         svg { font-size: 18px; color: var(--accent); }
 
-        // Underline drawn from the left on hover (transform only).
-        &::after {
-          content: "";
-          position: absolute;
-          left: 0;
-          right: 0;
-          bottom: 8px;
-          height: 1.5px;
-          background: currentColor;
-          transform: scaleX(0);
-          transform-origin: left;
-          transition: transform 0.25s ease;
-        }
-
-        &:hover::after,
-        &:focus-visible::after { transform: scaleX(1); }
+        &:hover { border-color: var(--fg); }
+        &:active { transform: scale(0.97); }
       }
 
       .icon-arrow {
@@ -187,9 +184,10 @@
 
       .btn-flex {
         flex-wrap: wrap;
-        gap: 4px 24px;
+        gap: 10px;
 
         .btn { flex-basis: 100%; }
+        .hero-link { flex: 1 1 0; min-width: 0; }
       }
     }
   }

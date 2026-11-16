@@ -1,7 +1,6 @@
 import { FormEvent, useState } from 'react';
 import { FiArrowUpRight, FiCalendar, FiCheck, FiMail, FiSend } from 'react-icons/fi';
 import { SiGithub, SiLinkedin } from 'react-icons/si';
-import ParkingSpot from './Rail/ParkingSpot';
 
 interface FormErrors {
   name?: string;
@@ -83,7 +82,6 @@ function ContactSection() {
           <h2 className="section-title contact-section__title" data-color-inverted="true">
             Let's <em>Talk</em>
           </h2>
-          <ParkingSpot />
         </div>
         <p className="contact-section__lead">
           Building something, hiring, or just curious? Write to me.
