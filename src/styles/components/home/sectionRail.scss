@@ -31,6 +31,32 @@
   transform-origin: top center;
 }
 
+// The D-20 marker. Default (no script yet): on the first dot. The script only writes transform.
+.section-rail__truck {
+  position: absolute;
+  z-index: 2;
+  left: 4.5px; // centre of the track
+  top: 12px; // centre of the first item (24px tall)
+  width: 44px;
+  height: 44px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+
+  img {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 44px;
+    height: 44px;
+  }
+
+  // Nose down when scrolling down, tail view when going back up.
+  &[data-dir='down'] .section-rail__truck-up,
+  &[data-dir='up'] .section-rail__truck-down {
+    opacity: 0;
+  }
+}
+
 .section-rail__list {
   position: relative;
   z-index: 1;

@@ -1,6 +1,9 @@
 // Fixed rail on the left: one dot per section, a vertical line whose fill is the page progress,
 // and the current section marked with aria-current. Replaces the inline nav that lived in Home.tsx.
+// The marker is the D-20 from the Experience road: it drives along the rail with the scroll and
+// stops on the last dot, where Contact has its parking spot (Rail/ParkingSpot).
 import { useEffect, useRef, useState } from 'react';
+import { usePageVisible, useReducedMotion } from '../../lib/motion';
 import { scrollToComponent } from '../../utils/scrollToComponent';
 import '../../styles/components/home/sectionRail.scss';
 
@@ -17,6 +20,10 @@ const SCROLL_OFFSET = 60;
 function SectionRail({ sections }: { sections: RailSection[] }) {
   const [active, setActive] = useState(0);
   const fillRef = useRef<HTMLSpanElement>(null);
+  const truckRef = useRef<HTMLSpanElement>(null);
+  const listRef = useRef<HTMLUListElement>(null);
+  const reduced = useReducedMotion();
+  const pageVisible = usePageVisible();
   const sectionsRef = useRef(sections);
   sectionsRef.current = sections;
   // The array literal from the caller is a new object on every render; the ids are what matter.
@@ -29,8 +36,14 @@ function SectionRail({ sections }: { sections: RailSection[] }) {
   // layout in Chromium, so it is read in a task queued from the scroll event, which runs
   // right after that frame has painted (layout clean); the write shows on the next frame.
   useEffect(() => {
+    // Hidden tab: no listeners at all; coming back re-runs this effect, which measures again.
+    if (!pageVisible) return;
     let pending = false;
     let tops: number[] = [];
+    // Centre of each dot, relative to the first one (where the truck sits by default in CSS).
+    let stops: number[] = [];
+    let lastTruckY = -1;
+    let lastY = window.scrollY;
     let docHeight = 0;
     let vh = window.innerHeight;
     let y = 0;
@@ -43,6 +56,8 @@ function SectionRail({ sections }: { sections: RailSection[] }) {
         return el ? el.getBoundingClientRect().top + y : Infinity;
       });
       docHeight = document.documentElement.scrollHeight;
+      const items = listRef.current ? Array.from(listRef.current.children) as HTMLElement[] : [];
+      stops = items.map((li) => li.offsetTop - items[0].offsetTop);
     };
     const update = () => {
       const n = tops.length;
@@ -59,6 +74,27 @@ function SectionRail({ sections }: { sections: RailSection[] }) {
       if (fillRef.current && (ends || Math.abs(progress - lastProgress) >= 0.002)) {
         lastProgress = progress;
         fillRef.current.style.transform = `scaleY(${progress})`;
+      }
+      const truck = truckRef.current;
+      if (truck && stops.length === n) {
+        // Between two dots the truck is as far along as the page is between the two sections.
+        // Reduced motion: it only ever sits on the current dot.
+        let truckY = stops[idx];
+        if (!reduced && idx < n - 1) {
+          const from = idx === 0 ? tops[0] + line : tops[idx];
+          // A short last section never reaches the line; the page bottom stands in for it.
+          const to = Math.min(tops[idx + 1], max + line);
+          const frac = to > from ? Math.min(1, Math.max(0, (y + line - from) / (to - from))) : 0;
+          truckY += (stops[idx + 1] - stops[idx]) * frac;
+        }
+        if (Math.abs(truckY - lastTruckY) >= 0.25) {
+          lastTruckY = truckY;
+          truck.style.transform = `translate(-50%, calc(-50% + ${truckY.toFixed(2)}px))`;
+        }
+        // Parked on the last dot it always faces down; small layout nudges do not turn it round.
+        if (idx === n - 1) truck.dataset.dir = 'down';
+        else if (Math.abs(y - lastY) > 4) truck.dataset.dir = y > lastY ? 'down' : 'up';
+        lastY = y;
       }
     };
     // Only ever scheduled from a scroll or resize event, which do not fire on a hidden tab.
@@ -95,14 +131,18 @@ function SectionRail({ sections }: { sections: RailSection[] }) {
       window.removeEventListener('resize', onResize);
       channel.port1.close();
     };
-  }, [key]);
+  }, [key, reduced, pageVisible]);
 
   return (
     <nav className="section-rail" aria-label="Page sections">
       <span className="section-rail__track" aria-hidden="true">
         <span ref={fillRef} className="section-rail__fill" />
       </span>
-      <ul className="section-rail__list">
+      <span ref={truckRef} className="section-rail__truck" data-dir="down" aria-hidden="true">
+        <img className="section-rail__truck-down" src="/assets/car/car-00.webp" width={44} height={44} alt="" />
+        <img className="section-rail__truck-up" src="/assets/car/car-24.webp" width={44} height={44} alt="" />
+      </span>
+      <ul ref={listRef} className="section-rail__list">
         {sections.map((section, i) => (
           <li key={section.id}>
             <button

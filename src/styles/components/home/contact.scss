@@ -11,9 +11,17 @@
   scroll-margin-top: 80px;
 
   // Same title as every section (globals .section-title), set left in this split layout.
+  &__heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+    max-width: 460px; // same measure as the lead below
+    margin-bottom: 16px;
+  }
+
   &__title {
     text-align: left;
-    margin-bottom: 16px;
   }
 
   &__lead {
@@ -323,5 +331,79 @@
     &__submit {
       width: 100%;
     }
+  }
+}
+
+// ── Parking spot: where the D-20 from the section rail ends up (Rail/ParkingSpot.tsx) ──
+.parking-spot {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  pointer-events: none;
+
+  &__bay {
+    position: relative;
+    display: block;
+    width: 124px;
+    height: 46px;
+    // The kerb, and one painted line at the back of the bay.
+    border-bottom: 1px solid var(--border);
+    border-left: 1px dashed var(--border);
+  }
+
+  // 256px frame shown at 96px: the truck itself is about 82 x 43 inside it.
+  &__truck {
+    position: absolute;
+    left: 4px;
+    top: -25px;
+    display: block;
+    width: 96px;
+    height: 96px;
+    transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease;
+  }
+
+  &[data-mode='away'] &__truck {
+    transform: translateX(-48px);
+    opacity: 0;
+    transition: none;
+  }
+
+  // Sign on a post, standing on the kerb.
+  &__sign {
+    position: absolute;
+    right: 2px;
+    top: 2px;
+    width: 18px;
+    height: 18px;
+    box-sizing: border-box;
+    border: 1.5px solid var(--accent);
+    border-radius: 5px;
+    color: var(--accent);
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 15px;
+    text-align: center;
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 100%;
+      width: 1px;
+      height: 26px;
+      margin-top: 1.5px;
+      background: var(--border);
+    }
+  }
+
+  &__note {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--fg-muted);
+    white-space: nowrap;
   }
 }
