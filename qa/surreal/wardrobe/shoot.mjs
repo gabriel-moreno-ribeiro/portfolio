@@ -62,7 +62,7 @@ if (on('mobile')) {
 }
 
 if (on('home')) {
-  for (const [w, h] of [[1440, 900], [390, 844]]) {
+  for (const [w, h] of [[1440, 900], [768, 1024], [390, 844]]) {
     const { ctx, page } = await open('light', w, h, 'http://localhost:5173/#wardrobe');
     const m = await page.evaluate(() => { const s = document.querySelector('#wardrobe'); const r = s.getBoundingClientRect(); const cs = getComputedStyle(s); return { section: Math.round(r.height), marginBottom: cs.marginBottom, wrapper: Math.round((s.closest('[data-lazy-section], section')?.parentElement ?? s).getBoundingClientRect().height), overflowX: document.documentElement.scrollWidth - document.documentElement.clientWidth }; });
     console.log(`home ${w}:`, JSON.stringify(m));

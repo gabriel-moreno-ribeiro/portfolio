@@ -270,12 +270,6 @@ function clamp(value: number, min: number, max: number) {
   return Math.max(min, Math.min(max, value));
 }
 
-function lambert(angle: number) {
-  const r = (angle * Math.PI) / 180;
-  const diffuse = Math.max(0, Math.sin(r) * 0.42 + Math.cos(r) * 0.91);
-  return 0.66 + 0.34 * diffuse;
-}
-
 function Defs({ uid }: { uid: string }) {
   return (
     <svg aria-hidden="true" width="0" height="0" className="absolute" focusable="false">
@@ -547,7 +541,6 @@ export function ClothingRailHero({
   const turns = React.useRef([] as (HTMLSpanElement | null)[]);
   const sides = React.useRef([] as (HTMLSpanElement | null)[]);
   const drapes = React.useRef([] as (HTMLSpanElement | null)[]);
-  const shades = React.useRef([] as (HTMLSpanElement | null)[]);
   const shadows = React.useRef([] as (HTMLSpanElement | null)[]);
   const tags = React.useRef([] as (HTMLSpanElement | null)[]);
   const sim = React.useRef(emptySim());
@@ -635,8 +628,6 @@ export function ClothingRailHero({
     const lag = clamp(-(s.vswing[i] ?? 0) * 0.018, -5, 5);
     const dr = drapes.current[i];
     if (dr) dr.style.setProperty("--drape", `${lag.toFixed(3)}deg`);
-    const sh = shades.current[i];
-    if (sh) sh.style.setProperty("--shade", ((1 - lambert(angle)) * 0.62).toFixed(3));
     const shadow = shadows.current[i];
     if (shadow) shadow.style.transform = `translate3d(${(w * 0.05).toFixed(1)}px, ${(h * 0.035).toFixed(1)}px, 0) scaleX(${Math.max(0.12, Math.abs(Math.cos((angle * Math.PI) / 180))).toFixed(3)})`;
     const tag = tags.current[i];
@@ -931,7 +922,6 @@ export function ClothingRailHero({
       className={`relative isolate w-full overflow-hidden bg-background text-foreground ${className ?? ""}`}
     >
       <Defs uid={uid} />
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10" style={{ background: "radial-gradient(120% 70% at 18% 0%, color-mix(in oklab, var(--color-foreground) 7%, transparent), transparent 62%), linear-gradient(to bottom, transparent 55%, color-mix(in oklab, var(--color-foreground) 5%, transparent))" }} />
       {(eyebrow || heading) && (
         <header className="relative z-10 flex flex-col items-center gap-2 px-6 pt-8 text-center">
           {eyebrow && <p className="text-[11px] font-medium uppercase tracking-[0.28em] text-muted-foreground">{eyebrow}</p>}
@@ -1006,7 +996,6 @@ export function ClothingRailHero({
                         {item.image
                           ? <Photo src={(side === "back" ? item.backImage : undefined) ?? item.image} alt="" full={hanger === "none"} />
                           : <Fabric uid={uid} kind={kind} side={side} color={color} trim={trim} print={item.print} />}
-                        <span ref={side === "front" ? (node) => { shades.current[i] = node; } : undefined} className={`pointer-events-none absolute ${item.image ? photoBox : "inset-0"}`} style={{ background: "linear-gradient(90deg, rgb(0 0 0 / 0.95), rgb(0 0 0 / 0.3) 55%, rgb(0 0 0 / 0.08))", opacity: "var(--shade, 0.2)", WebkitMask: `${item.image ? `url("${(side === "back" ? item.backImage : undefined) ?? item.image}")` : silhouetteMask(kind, side)} top center / contain no-repeat`, mask: `${item.image ? `url("${(side === "back" ? item.backImage : undefined) ?? item.image}")` : silhouetteMask(kind, side)} top center / contain no-repeat` }} />
                       </span>
                     </span>
                   ))}
@@ -1180,7 +1169,7 @@ function Detail({ uid, item, index, total, hanger, labels, reduced, source, onLi
 
   const stage = (
     <div ref={figureRef} className="relative mx-auto aspect-[200/310] h-[min(62vh,560px)] max-h-full origin-top">
-      <div aria-hidden="true" className="pointer-events-none absolute -inset-x-[35%] -top-[8%] bottom-[6%]" style={{ background: "radial-gradient(closest-side, color-mix(in oklab, var(--color-foreground) 9%, transparent), transparent)" }} />
+      <div aria-hidden="true" className="pointer-events-none absolute -inset-x-[35%] -top-[8%] bottom-[6%] hidden dark:block" style={{ background: "radial-gradient(closest-side, color-mix(in oklab, var(--color-foreground) 9%, transparent), transparent)" }} />
       <div aria-hidden="true" className="absolute left-1/2 top-[-40vh] h-[40vh] w-[3px] -translate-x-1/2 rounded-full" style={{ background: "linear-gradient(to right, color-mix(in oklab, var(--color-muted-foreground) 50%, white), var(--color-muted-foreground), color-mix(in oklab, var(--color-muted-foreground) 50%, black))", top: `calc(-40vh + ${(HOOK_TOP / VB_H) * 100}%)` }} />
       <div
         className="absolute inset-0 cursor-grab touch-pan-y active:cursor-grabbing"

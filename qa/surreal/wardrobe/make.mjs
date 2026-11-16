@@ -29,10 +29,10 @@ const flip = (svg) => `<g transform="matrix(-1 0 0 1 200 0)">${svg}</g>`;
 const both = (fn) => fn() + flip(fn());
 
 // ── Fabric ───────────────────────────────────────────────────────────────────
-// sh/hi: shadow and highlight colours of the cloth; so/ho: how strong they read on it.
+// sh/hi: shadow and highlight colours of the cloth; so/ho: how strong they read on it; round: how much the whole piece is shaded as a rounded body.
 const TONES = {
   red: { base: '#b9252b', sh: '#3a0508', so: 0.9, hi: '#ff9a8c', ho: 0.3, streak: 0.5, grain: 0.1 },
-  navy: { base: '#1e2946', sh: '#04060f', so: 1, hi: '#9db1e6', ho: 0.32, streak: 0.5, grain: 0.06 },
+  navy: { base: '#1b2239', sh: '#03050c', so: 1, hi: '#8fa2d6', ho: 0.26, streak: 0, grain: 0.05, round: 0.45 }, // matte jersey: no drape streaks, little roundness
   cotton: { base: '#f4f3ef', sh: '#48526a', so: 0.6, hi: '#ffffff', ho: 1, streak: 0.14, grain: 0.03 },
   pique: { base: '#f0efea', sh: '#565c6b', so: 0.56, hi: '#ffffff', ho: 1, streak: 0.2, grain: 0.03, tex: 'pq' },
   fleece: { base: '#202024', sh: '#000000', so: 1, hi: '#d3d3de', ho: 0.2, streak: 0.4, grain: 0.07, blotch: 0.3 },
@@ -43,7 +43,7 @@ const noise = (id, freq, octaves, seed, color, gain, bias) => {
   const [r, g, b] = hex(color);
   return `<filter id="${id}" filterUnits="userSpaceOnUse" x="0" y="0" width="200" height="310" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="${freq}" numOctaves="${octaves}" seed="${seed}"/><feColorMatrix values="0 0 0 0 ${r}  0 0 0 0 ${g}  0 0 0 0 ${b}  ${gain} 0 0 0 ${bias}"/></filter>`;
 };
-const defs = (t, sil, extra = '') => `<defs>
+const defs = (t, sil, extra = '', v = t.round ?? 1) => `<defs>
   ${[['b1', 0.6], ['b2', 1.3], ['b3', 2.4], ['b5', 4.5], ['b9', 9]].map(([id, s]) => `<filter id="${id}" filterUnits="userSpaceOnUse" x="-30" y="-30" width="260" height="370"><feGaussianBlur stdDeviation="${s}"/></filter>`).join('')}
   ${noise('streakD', '0.05 0.005', 3, 4, t.sh, 5, -2.6)}
   ${noise('streakL', '0.045 0.006', 3, 11, t.hi, 5, -2.6)}
@@ -52,8 +52,8 @@ const defs = (t, sil, extra = '') => `<defs>
   ${noise('grainL', '1.1', 2, 13, '#ffffff', 3, -1.2)}
   <filter id="warp" filterUnits="userSpaceOnUse" x="-10" y="-10" width="220" height="330"><feTurbulence type="fractalNoise" baseFrequency="0.014 0.011" numOctaves="2" seed="9" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="5" xChannelSelector="R" yChannelSelector="G"/></filter>
   <linearGradient id="vol" gradientUnits="userSpaceOnUse" x1="0" x2="200" y1="0" y2="0">
-    <stop offset="0" stop-color="${t.sh}" stop-opacity="${0.3 * t.so}"/><stop offset="0.13" stop-color="${t.sh}" stop-opacity="${0.1 * t.so}"/><stop offset="0.3" stop-color="${t.hi}" stop-opacity="${0.16 * t.ho}"/>
-    <stop offset="0.52" stop-color="${t.hi}" stop-opacity="0"/><stop offset="0.86" stop-color="${t.sh}" stop-opacity="${0.14 * t.so}"/><stop offset="1" stop-color="${t.sh}" stop-opacity="${0.4 * t.so}"/>
+    <stop offset="0" stop-color="${t.sh}" stop-opacity="${0.3 * t.so * v}"/><stop offset="0.13" stop-color="${t.sh}" stop-opacity="${0.1 * t.so * v}"/><stop offset="0.3" stop-color="${t.hi}" stop-opacity="${0.16 * t.ho * v}"/>
+    <stop offset="0.52" stop-color="${t.hi}" stop-opacity="0"/><stop offset="0.86" stop-color="${t.sh}" stop-opacity="${0.14 * t.so * v}"/><stop offset="1" stop-color="${t.sh}" stop-opacity="${0.4 * t.so * v}"/>
   </linearGradient>
   <linearGradient id="drape" gradientUnits="userSpaceOnUse" x1="0" x2="0" y1="30" y2="245">
     <stop offset="0" stop-color="${t.hi}" stop-opacity="${0.3 * t.ho}"/><stop offset="0.25" stop-color="${t.hi}" stop-opacity="0"/><stop offset="0.7" stop-color="${t.sh}" stop-opacity="${0.06 * t.so}"/><stop offset="1" stop-color="${t.sh}" stop-opacity="${0.34 * t.so}"/>
@@ -249,49 +249,60 @@ async function render(name, t, sil, body, { extra = '', back = false, over = '' 
   }
 }
 
-// ── 3. Ari de Sá tee (17 to 18): navy, gold wings and the crest on the wearer's right, the school mark on the left ─
+// ── 3. Ari de Sá tee (17 to 18): navy crew-neck; gold wings over the crest on the wearer's right, the school mark on the left ─
 {
   const t = TONES.navy;
-  const SIDE = 'C62,38.5 48,43.5 36,50 C34,68 32.5,88 33,106 C34,150 32,196 33,231 C52,235.5 78,233.5 100,235';
-  const sleeve = 'M37.5,49 C29,54 18,74 7.5,98.5 C6.6,100.8 7.4,102.6 9.4,103.6 C17,108 26,111.6 35.5,113.6 C36,95 35,70 39,50 Z';
+  const SIDE = 'C65,39.5 51,44.5 38,50 C39.5,66 40,86 42.5,103 C43.5,140 44.6,190 44,232.6 C44,235.2 45,236.6 47.2,237 C60,239.4 70,241.4 82,240.2 C90,239.4 95,240.8 100,240.6';
+  const sleeve = 'M39,49.4 C30,56 20,78 9.6,104 C9,105.8 9.6,107.2 11.2,108 C19,112.4 28,117 36.6,120.6 C38.4,121.2 39.8,120.4 40.4,118.6 C42.4,112 44,107 47,102 L47,60 Z';
   const sil = (body) => `<path d="${body}"/><path d="${sleeve}"/><path d="${sleeve}" transform="matrix(-1 0 0 1 200 0)"/>`;
-  const sleeves = () => both(() => piece(t, sleeve, { cast: 0, inner: `
-    ${folds(t, [['M31,58 C25,72 19,86 14,99', 4, 0.8], ['M35,72 C31,84 27,96 24,107', 4, 0.6]])}${shade(t, 'M38,52 C35.4,72 36,95 35.8,114', 6, 0.5)}
-    ${shade(t, 'M8,100.6 C17,106 26,109.6 36,111.8', 3, 0.4, 'b2')}${stitch(t, 'M10.4,95.6 C18.4,100.4 27,104 35.8,105.8', 1.2)}${stitch(t, 'M11,94.2 C19,99 27.6,102.6 35.8,104.4', 1.2)}` }));
-  const hem = `${shade(t, 'M33,232 C52,236.5 78,234.5 100,236 C122,234.5 148,236.5 167,232', 5, 0.5)}${stitch(t, 'M34,224.4 C52,228.9 78,226.9 100,228.4 C122,226.9 148,228.9 166,224.4', 1.2)}${stitch(t, 'M34,225.9 C52,230.4 78,228.4 100,229.9 C122,228.4 148,230.4 166,225.9', 1.2)}`;
+  const sleeves = () => both(() => piece(t, sleeve, { cast: 0, edge: 0.7, edgeW: 4, inner: `
+    ${folds(t, [['M33,60 C27,76 20,92 15,105', 5, 0.5]], 'b5')}${shade(t, 'M40,58 C40.5,76 41.5,96 43,116', 7, 0.55)}${shade(t, 'M24,112 C30,116 36,119 42,121', 5, 0.5)}
+    ${stitch(t, 'M12.4,102.2 C20,106.4 30,111.4 39.6,116.4', 1.2)}${stitch(t, 'M13,100.9 C20.6,105.1 30.6,110.1 40.2,115.1', 1.2)}` }));
+  const hem = `${shade(t, 'M46,238 C60,240.4 70,242.4 82,241.2 C90,240.4 95,241.8 100,241.6 C105,241.8 110,240.4 118,241.2 C130,242.4 140,240.4 154,238', 4, 0.5)}
+    ${[0, 1.4].map((o) => stitch(t, `M45,${229.6 - o} C60,${232.4 - o} 70,${234.4 - o} 82,${233.2 - o} C90,${232.4 - o} 95,${233.8 - o} 100,${233.6 - o} C105,${233.8 - o} 110,${232.4 - o} 118,${233.2 - o} C130,${234.4 - o} 140,${232.4 - o} 155,${229.6 - o}`, 1.2)).join('')}`;
+  // Rib lines that follow the collar, between its inner and outer edge (each a cubic: the left half, mirrored, or the whole band).
+  const cubic = (p, k) => [0, 1].map((i) => (1 - k) ** 3 * p[i] + 3 * (1 - k) ** 2 * k * p[2 + i] + 3 * (1 - k) * k * k * p[4 + i] + k ** 3 * p[6 + i]);
+  const ribs = (inner, outer, n, whole = false) => (whole ? (fn) => fn() : both)(() => `<path d="${Array.from({ length: n }, (_, i) => { const a = cubic(inner, (i + 0.5) / n), b = cubic(outer, (i + 0.5) / n); return `M${a[0].toFixed(2)},${a[1].toFixed(2)} L${b[0].toFixed(2)},${b[1].toFixed(2)}`; }).join(' ')}" fill="none" stroke="${t.sh}" stroke-opacity="0.6" stroke-width="0.42"/>`);
   // front
   {
-    const body = sym(`M100,52.5 C90,52.5 81,47 76,35 ${SIDE}`);
-    const open = 'M76,35 C84,30.4 116,30.4 124,35 C119,47 110,52.5 100,52.5 C90,52.5 81,47 76,35 Z';
-    const rib = 'M76,35 C81,47 90,52.5 100,52.5 C110,52.5 119,47 124,35 L129.6,36.4 C124,51.5 112,58.8 100,58.8 C88,58.8 76,51.5 70.4,36.4 Z';
-    const wing = 'M-2.4,-1.3 C-5.5,-4.8 -10.5,-5.8 -15.8,-4.3 C-14.2,-3.5 -13.3,-2.7 -12.9,-1.8 C-11.7,-2.2 -10.8,-1.9 -10.2,-1 C-9.1,-1.4 -8.2,-1.1 -7.6,-0.2 C-6.5,-0.5 -5.5,-0.1 -4.9,0.8 C-3.9,0.7 -3,1.1 -2.4,1.9 Z';
-    const feathers = 'M-13,-3.4 C-10,-3.6 -6.6,-2.8 -3.4,-0.6 M-10.4,-2 C-8.2,-2 -5.8,-1.2 -3.6,0.4 M-7.8,-0.6 C-6.4,-0.4 -5,0.2 -3.6,1.2';
-    const shield = 'M-7.2,-9 C-4.2,-8 -1.6,-8.6 0,-9.8 C1.6,-8.6 4.2,-8 7.2,-9 V1 C7.2,5.8 3.7,8.8 0,10.6 C-3.7,8.8 -7.2,5.8 -7.2,1 Z';
-    const prints = `
-      <g transform="translate(71.5 88.5) scale(1.04)"><g fill="#000" fill-opacity="0.45" filter="url(#b1)" transform="translate(0.4 0.7)"><path d="${wing}"/><path d="${wing}" transform="scale(-1 1)"/></g>
-        ${[1, -1].map((k) => `<g transform="scale(${k} 1)"><path d="${wing}" fill="#e2b03a"/><path d="${wing}" fill="none" stroke="#8a6412" stroke-width="0.3"/><path d="${feathers}" fill="none" stroke="#8a6412" stroke-opacity="0.8" stroke-width="0.32" stroke-linecap="round"/><path d="M-14.6,-4.3 C-10.4,-5.3 -6,-4.4 -3,-1.6" fill="none" stroke="#fff3b8" stroke-opacity="0.7" stroke-width="0.4"/></g>`).join('')}
-        <circle r="3.3" fill="#e2b03a" stroke="#8a6412" stroke-width="0.3"/><circle r="2.3" fill="#2f66b3"/><circle r="0.9" fill="#dfe6f2"/></g>
-      <g transform="translate(71.5 115.5)"><path d="${shield}" fill="#000" fill-opacity="0.45" filter="url(#b1)" transform="translate(0.4 0.8)"/><path d="${shield}" fill="#e6eaf1"/>
-        <clipPath id="crest"><path d="${shield}" transform="scale(0.84)"/></clipPath><g clip-path="url(#crest)"><rect x="-8" y="-10" width="16" height="6.6" fill="#c0282f"/><rect x="-8" y="-3.4" width="16" height="15" fill="#2f66b3"/><rect x="-1.5" y="-3.4" width="3" height="15" fill="#dfe8f4"/><rect x="-4.6" y="-3.4" width="0.9" height="15" fill="#dfe8f4" fill-opacity="0.75"/><rect x="3.7" y="-3.4" width="0.9" height="15" fill="#dfe8f4" fill-opacity="0.75"/><rect x="-8" y="-3.8" width="16" height="0.8" fill="#e6eaf1"/></g>
-        <path d="${shield}" fill="none" stroke="#8d95a6" stroke-width="0.3"/></g>
-      <g transform="translate(125 84.5) scale(1.16)" fill="none" stroke="#f4f5f7" stroke-linecap="round" stroke-linejoin="round"><circle cx="-6.4" cy="0" r="5.1" fill="#f4f5f7" stroke="none"/><path d="M-9.1,2.9 L-6.4,-3.4 L-3.7,2.9 M-8.1,0.9 H-4.7" stroke="${t.base}" stroke-width="1.25"/>
+    const body = sym(`M100,53 C90.5,53 82,47.5 78,35.5 ${SIDE}`);
+    const open = 'M78,35.5 C86,29.6 114,29.6 122,35.5 C118,47.5 109.5,53 100,53 C90.5,53 82,47.5 78,35.5 Z';
+    const rib = 'M78,35.5 C82,47.5 90.5,53 100,53 C109.5,53 118,47.5 122,35.5 L128.4,37.3 C123.4,52.6 112,59.8 100,59.8 C88,59.8 76.6,52.6 71.6,37.3 Z';
+    const wing = 'M-3,-2.2 C-8,-5.8 -14,-6.2 -18.4,-4.6 Q-16.2,-3.6 -15.4,-1.5 Q-14.6,-2.3 -13.6,-1.9 Q-12.8,-1 -12.4,0 Q-11.6,-0.8 -10.6,-0.5 Q-10,0.3 -9.6,1.2 Q-8.8,0.5 -7.8,0.8 Q-7.2,1.5 -6.8,2.3 Q-6,1.7 -5,2 Q-4.4,2.5 -4,3.1 L-3,3.2 Z';
+    const feathers = 'M-3.4,-0.8 C-8,-3.8 -13,-4.6 -17,-4.3 M-3.6,0.5 C-7,-1.7 -11,-2.3 -14.4,-2 M-3.6,1.5 C-6,0.1 -9,-0.3 -11.4,0 M-3.6,2.4 C-5.4,1.6 -7.2,1.4 -8.8,1.6';
+    const shield = 'M-9,-11 H9 V2 C9,7.4 4.6,10.4 0,12 C-4.6,10.4 -9,7.4 -9,2 Z';
+    // Embroidered badges: a raised edge, satin-stitch hatching and a small shadow on the cloth.
+    const prints = `<defs><pattern id="satin" width="0.7" height="0.7" patternUnits="userSpaceOnUse" patternTransform="rotate(58)"><rect width="0.3" height="0.7" fill="#fff" fill-opacity="0.2"/><rect x="0.36" width="0.2" height="0.7" fill="#000" fill-opacity="0.16"/></pattern>
+        <linearGradient id="wingG" gradientUnits="userSpaceOnUse" x1="0" x2="0" y1="-6" y2="3.4"><stop offset="0" stop-color="#f7dc74"/><stop offset="0.5" stop-color="#dca92c"/><stop offset="1" stop-color="#a47312"/></linearGradient>
+        <clipPath id="crest"><path d="${shield}" transform="scale(0.86)"/></clipPath></defs>
+      <g transform="translate(71 89) scale(0.86)"><g fill="#000" fill-opacity="0.55" filter="url(#b1)" transform="translate(0.5 0.9)"><path d="${wing}"/><path d="${wing}" transform="scale(-1 1)"/><circle r="3.9"/></g>
+        ${[1, -1].map((k) => `<g transform="scale(${k} 1)"><path d="${wing}" fill="url(#wingG)"/><path d="${wing}" fill="url(#satin)"/><path d="${feathers}" fill="none" stroke="#7a560c" stroke-opacity="0.85" stroke-width="0.34" stroke-linecap="round"/><path d="${wing}" fill="none" stroke="#7a560c" stroke-width="0.36" stroke-linejoin="round"/><path d="M-17.4,-4.7 C-13.6,-5.9 -8,-5.5 -3.6,-2.5" fill="none" stroke="#fff6c8" stroke-opacity="0.75" stroke-width="0.4"/></g>`).join('')}
+        <circle r="3.8" fill="url(#wingG)" stroke="#7a560c" stroke-width="0.36"/><circle r="2.7" fill="#2a5aa6"/><circle r="2.7" fill="url(#satin)"/><circle r="1.15" fill="#eef1f6"/><circle cx="-1.1" cy="-1.2" r="0.7" fill="#fff" fill-opacity="0.35"/></g>
+      <g transform="translate(73 110.5) scale(0.92)"><path d="${shield}" fill="#000" fill-opacity="0.55" filter="url(#b1)" transform="translate(0.5 0.9)"/><path d="${shield}" fill="#eef1f6"/>
+        <g clip-path="url(#crest)"><rect x="-9" y="-12" width="18" height="8" fill="#c0282f"/><rect x="-9" y="-4" width="18" height="17" fill="#7db0dd"/><rect x="-9" y="-4.5" width="18" height="1" fill="#eef1f6"/>
+          <path d="M-1.4,-2.2 H1.4 V8 C1.4,8.8 0.8,9.4 0,9.6 C-0.8,9.4 -1.4,8.8 -1.4,8 Z" fill="#f3e9b6"/><path d="M-2.6,-2.6 H2.6 V-1.2 H-2.6 Z" fill="#f3e9b6"/><rect x="-9" y="-12" width="18" height="25" fill="url(#satin)"/></g>
+        <path d="${shield}" fill="none" stroke="#9aa3b5" stroke-width="0.36"/><path d="${shield}" fill="none" stroke="#fff" stroke-opacity="0.5" stroke-width="0.3" transform="scale(0.86)"/></g>
+      <g transform="translate(125.5 88.5) scale(1.15)" fill="none" stroke="#f4f5f7" stroke-linecap="round" stroke-linejoin="round" opacity="0.97"><circle cx="-6.4" cy="0" r="5.1" fill="#f4f5f7" stroke="none"/><path d="M-9.1,2.9 L-6.4,-3.4 L-3.7,2.9 M-8.1,0.9 H-4.7" stroke="${t.base}" stroke-width="1.25"/>
         <path d="M1.4,3.2 V-1.7 M1.4,0 C2.2,-1.3 3.3,-1.8 4.6,-1.5" stroke-width="1.5"/><path d="M7.4,3.2 V-1.6" stroke-width="1.5"/><circle cx="7.4" cy="-3.9" r="0.85" fill="#f4f5f7" stroke="none"/></g>`;
     const inner = `${prints}
-      ${folds(t, [['M41,56 C53,80 66,102 77,130', 7, 0.9], ['M159,56 C148,82 136,106 125,136', 7, 1], ['M60,140 C56,172 63,206 58,234', 7, 1], ['M84,152 C81,182 86,212 83,235', 5, 0.7], ['M117,148 C120,178 114,210 118,235', 5, 0.8], ['M141,138 C145,172 138,206 143,234', 7, 1]])}
-      ${folds(t, [['M36,106 C44,110 50,118 55,130', 3, 0.8], ['M164,106 C156,110 150,118 146,130', 3, 0.8], ['M78,64 C88,72 112,72 122,64', 4, 0.5]], 'b2')}${shade(t, 'M70,38 C76,54 88,61.5 100,61.5 C112,61.5 124,54 130,38', 3.4, 0.4, 'b2')}
-      ${seam(t, 'M77.4,38.2 C63,41.8 49,46.8 37.6,53.2', 0.7)}${hem}`;
+      ${folds(t, [['M46,60 C56,76 63,94 68,114', 9, 0.3], ['M154,60 C145,78 138,96 133,118', 9, 0.34], ['M62,198 C60,212 63,226 61,239', 7, 0.6], ['M84,206 C83,218 85,230 84,240', 6, 0.42], ['M118,204 C119,216 117,230 118,240', 6, 0.48], ['M140,196 C142,210 139,226 141,239', 7, 0.6]], 'b5')}
+      ${folds(t, [['M43,104 C52,108 60,116 66,128', 4, 0.7], ['M43.4,113 C50,118 55,128 58,140', 3.6, 0.5], ['M157,104 C148,109 141,118 136,131', 4, 0.7], ['M156.6,114 C150,120 146,130 144,142', 3.6, 0.5]])}
+      ${shade(t, 'M71,39 C76,55 88,63 100,63 C112,63 124,55 129,39', 4, 0.5, 'b2')}${shade(t, 'M42,60 C43,76 43.4,92 44,106', 4, 0.3)}${shade(t, 'M158,60 C157,76 156.6,92 156,106', 4, 0.3)}
+      ${seam(t, 'M79,38.6 C66,42.6 52,47.6 39.4,53.2', 0.7)}${hem}`;
     await render('ari-de-sa', t, sil(body) + `<path d="${open}"/>`,
-      `<path d="${open}" fill="#121a2e"/>${ribbed(t, 'M76,35 C84,30.4 116,30.4 124,35 L122.6,39.4 C114,35.8 86,35.8 77.4,39.4 Z', { fill: '#18213a', cast: 0, edge: 0.6, edgeW: 2 })}
-       <g clip-path="url(#open)">${WOOD}${shade(t, 'M76,37 C81,49 90,54.5 100,54.5 C110,54.5 119,49 124,37', 3, 0.6, 'b2')}</g>${sleeves()}${piece(t, body, { cast: 1, inner })}${ribbed(t, rib, { cast: 0.5, edge: 0.7, edgeW: 2.2 })}`,
+      `<path d="${open}" fill="#0f1526"/>${piece(t, 'M78,35.5 C86,29.6 114,29.6 122,35.5 L120.4,40.2 C113,35.4 87,35.4 79.6,40.2 Z', { fill: '#161d32', cast: 0, edge: 0.6, edgeW: 2 })}${ribs([78, 35.5, 86, 29.6, 114, 29.6, 122, 35.5], [79.6, 40.2, 87, 35.4, 113, 35.4, 120.4, 40.2], 34, true)}
+       <path d="M80.4,41.6 C88,37 112,37 119.6,41.6" fill="none" stroke="#2a3558" stroke-width="0.9"/>
+       <g clip-path="url(#open)">${WOOD}${shade(t, 'M78,37.5 C82,49.5 90.5,55 100,55 C109.5,55 118,49.5 122,37.5', 3.4, 0.7, 'b2')}</g>${sleeves()}${piece(t, body, { cast: 0.45, edge: 0.55, edgeW: 4, inner })}
+       ${piece(t, rib, { cast: 0.7, edge: 0.8, edgeW: 2.2 })}${ribs([78, 35.5, 82, 47.5, 90.5, 53, 100, 53], [71.6, 37.3, 76.6, 52.6, 88, 59.8, 100, 59.8], 20)}${stitch(t, 'M70.6,40.4 C76,54.6 88,61.6 100,61.6 C112,61.6 124,54.6 129.4,40.4', 1.1)}`,
       { extra: `<clipPath id="open"><path d="${open}"/></clipPath>` });
   }
   // back
   {
-    const body = sym(`M100,31.4 C91,31.4 82,32.6 76,35 ${SIDE}`);
-    const inner = `${folds(t, [['M41,56 C53,82 64,106 72,136', 7, 0.9], ['M159,56 C148,84 138,108 130,140', 7, 1], ['M62,130 C58,168 65,204 60,234', 7, 1], ['M86,120 C83,170 88,208 85,235', 5, 0.6], ['M115,116 C118,170 112,208 116,235', 5, 0.7], ['M139,130 C143,168 136,204 141,234', 7, 1]])}
-      ${folds(t, [['M36,106 C44,110 50,118 55,130', 3, 0.8], ['M164,106 C156,110 150,118 146,130', 3, 0.8]], 'b2')}${shade(t, 'M72,37 C84,43.6 116,43.6 128,37', 3.4, 0.4, 'b2')}${hem}`;
+    const body = sym(`M100,31 C91,31 83,32.8 78,35.5 ${SIDE}`);
+    const inner = `${folds(t, [['M46,60 C56,78 62,96 66,118', 9, 0.3], ['M154,60 C145,80 139,98 135,120', 9, 0.34], ['M64,198 C62,212 65,226 63,239', 7, 0.6], ['M88,206 C87,218 89,230 88,240', 6, 0.42], ['M114,204 C115,216 113,230 114,240', 6, 0.48], ['M138,196 C140,210 137,226 139,239', 7, 0.6]], 'b5')}
+      ${folds(t, [['M43,104 C52,108 60,116 66,128', 4, 0.7], ['M157,104 C148,109 141,118 136,131', 4, 0.7]])}${shade(t, 'M72,38 C84,45 116,45 128,38', 4, 0.45, 'b2')}${shade(t, 'M42,60 C43,76 43.4,92 44,106', 4, 0.3)}${shade(t, 'M158,60 C157,76 156.6,92 156,106', 4, 0.3)}${hem}`;
     await render('ari-de-sa-back', t, sil(body),
-      `${sleeves()}${piece(t, body, { cast: 1, inner })}${ribbed(t, 'M76,35 C82,32.6 91,31.4 100,31.4 C109,31.4 118,32.6 124,35 L125.4,39.8 C115,36.2 85,36.2 74.6,39.8 Z', { cast: 0.4, edge: 0.7, edgeW: 2 })}`,
+      `${sleeves()}${piece(t, body, { cast: 0.45, edge: 0.55, edgeW: 4, inner })}${piece(t, 'M78,35.5 C83,32.8 91,31 100,31 C109,31 117,32.8 122,35.5 L123.6,40.6 C114,36.6 86,36.6 76.4,40.6 Z', { cast: 0.5, edge: 0.7, edgeW: 2 })}${ribs([100, 31, 91, 31, 83, 32.8, 78, 35.5], [100, 36.9, 90, 36.9, 82, 38.4, 76.4, 40.6], 18)}${stitch(t, 'M75.6,42.4 C86,38.4 114,38.4 124.4,42.4', 1.1)}`,
       { back: true });
   }
 }
