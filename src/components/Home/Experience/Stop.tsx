@@ -3,14 +3,15 @@ import { FiArrowDown } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import { config, renderEmphasis, type ExperienceEntry } from '../../../lib/data';
 import CityPin from './CityPin';
+import type { Feature } from './geometry';
 
 interface StopProps {
   entry: ExperienceEntry;
   side: 'left' | 'right';
   /** Última parada: ganha o link de contato como última linha do card. */
   cta?: boolean;
-  /** Parada logo depois de uma manobra da estrada: respiro acima, onde a manobra acontece. */
-  room?: boolean;
+  /** Manobra da estrada que chega a esta parada: o respiro acima dela é onde a manobra acontece. */
+  room?: Feature | null;
 }
 
 /**
@@ -25,7 +26,7 @@ function Stop({ entry, side, cta, room }: StopProps) {
   return (
     <li
       id={`exp-${entry.id}`}
-      className={`exp__stop exp__stop--${side}${room ? ' exp__stop--room' : ''}`}
+      className={`exp__stop exp__stop--${side}${room ? ` exp__stop--after-${room}` : ''}`}
       tabIndex={-1}
     >
       <article className="exp__card">

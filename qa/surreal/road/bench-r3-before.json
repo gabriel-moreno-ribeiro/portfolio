@@ -1,0 +1,77 @@
+{
+ "label": "before5",
+ "1440@2000": {
+  "frames": 254,
+  "dt p50/p95/max (ms)": "8.3/9.2/9.4",
+  "longtask max (ms)": 0,
+  "slow frames (ms@section px)": "none",
+  "main thread per frame (ms): task/script/layout/style": "2.385/0.588/0.016/0.147",
+  "car step p95/max (px)": "46.2/48.5",
+  "off-lane max (px)": 1.5,
+  "heading jump max (deg)": 43.3,
+  "heading vs tangent p95/max (deg)": "2.9/4.8",
+  "car on screen y min/max (px of viewport)": "92/643",
+  "lane": 46,
+  "roadLength": 4232
+ },
+ "1440@400": {
+  "frames": 913,
+  "dt p50/p95/max (ms)": "8.3/9.2/9.4",
+  "longtask max (ms)": 0,
+  "slow frames (ms@section px)": "none",
+  "main thread per frame (ms): task/script/layout/style": "2.169/0.312/0.007/0.164",
+  "car step p95/max (px)": "9.6/17.3",
+  "off-lane max (px)": 1.5,
+  "heading jump max (deg)": 15,
+  "heading vs tangent p95/max (deg)": "3.4/5.4",
+  "car on screen y min/max (px of viewport)": "229/657",
+  "lane": 46,
+  "roadLength": 4232
+ },
+ "1440 errors": [],
+ "1440 section": {
+  "top": 9260.375,
+  "height": 3243.34375,
+  "width": 960,
+  "left": 307,
+  "vh": 900,
+  "doc": 13363
+ },
+ "390@2000": {
+  "frames": 236,
+  "dt p50/p95/max (ms)": "8.3/9.2/9.3",
+  "longtask max (ms)": 0,
+  "slow frames (ms@section px)": "none",
+  "main thread per frame (ms): task/script/layout/style": "3.178/0.75/0.013/0.301",
+  "car step p95/max (px)": "22.8/24.0",
+  "off-lane max (px)": 1.5,
+  "heading jump max (deg)": 11.6,
+  "heading vs tangent p95/max (deg)": "3.8/5.2",
+  "car on screen y min/max (px of viewport)": "184/646",
+  "lane": 18,
+  "roadLength": 2495
+ },
+ "390@400": {
+  "frames": 823,
+  "dt p50/p95/max (ms)": "8.3/9.3/16.7",
+  "longtask max (ms)": 0,
+  "slow frames (ms@section px)": "17@106 17@139",
+  "main thread per frame (ms): task/script/layout/style": "1.614/0.287/0.008/0.111",
+  "car step p95/max (px)": "4.6/5.5",
+  "off-lane max (px)": 1.5,
+  "heading jump max (deg)": 11.6,
+  "heading vs tangent p95/max (deg)": "4.3/5.8",
+  "car on screen y min/max (px of viewport)": "311/647",
+  "lane": 18,
+  "roadLength": 2495
+ },
+ "390 errors": [],
+ "390 section": {
+  "top": 11162.9375,
+  "height": 2883.078125,
+  "width": 358,
+  "left": 16,
+  "vh": 844,
+  "doc": 15577
+ }
+}

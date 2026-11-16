@@ -1,4 +1,5 @@
-// O que tinha de continuar funcionando: ids/foco pelo hash, legenda, odômetro, pisca-alerta, CTA, viaduto.
+// O que tinha de continuar funcionando: ids/foco pelo hash, legenda, odômetro, pisca-alerta, CTA,
+// e o que cobre o carro (morro do túnel, viaduto do trevo) só enquanto ele passa por baixo.
 import { chromium } from 'playwright';
 const browser = await chromium.launch();
 const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
@@ -16,14 +17,21 @@ const state = () => page.evaluate(() => {
     year: q('.exp__odo-year').textContent, odoAway: q('.exp__odo').classList.contains('is-away'),
     noteGone: q('.exp__d20').classList.contains('is-gone'), hazard: q('.exp__hazard').classList.contains('is-on'),
     cta: q('.exp__card-cta').classList.contains('is-on'), lit: [...document.querySelectorAll('.exp__stop.is-lit')].map((e) => e.id).join(),
-    deckOver: q('.exp__bridge-over')?.classList.contains('is-over'), routeLinks: document.querySelectorAll('.exp__route a').length,
+    covers: [...document.querySelectorAll('.exp__cover')].map((e) => (e.classList.contains('is-over') ? 'over' : '-')).join(), routeLinks: document.querySelectorAll('.exp__route a').length,
     cityLinks: [...document.querySelectorAll('.exp__card-city a')].map((a) => a.getAttribute('href')).join(),
   };
 });
 const top = await page.evaluate(() => document.querySelector('section.exp').getBoundingClientRect().top + scrollY);
 const h = await page.evaluate(() => document.querySelector('section.exp').offsetHeight);
 const out = { arrive };
-for (const [name, y] of [['start', top - 100], ['middle', top + h * 0.45], ['end', top + h - 700], ['past', top + h + 300]]) {
+// centro de cada parada, para pôr o carro no meio do túnel (trecho 5→6) e depois do laço do trevo (6→7)
+const ys = await page.evaluate(() => {
+  const s = document.querySelector('section.exp');
+  const t = s.getBoundingClientRect().top;
+  return [...s.querySelectorAll('.exp__stop')].map((li) => { const r = li.getBoundingClientRect(); return r.top - t + r.height / 2; });
+});
+const mid = (i, u) => top + ys[i] + (ys[i + 1] - ys[i]) * u - 450;
+for (const [name, y] of [['start', top - 100], ['middle', top + h * 0.45], ['tunnel', mid(4, 0.36)], ['afterTunnel', mid(4, 0.7)], ['cloverOver', mid(5, 0.2)], ['cloverUnder', mid(5, 0.62)], ['end', top + h - 700], ['past', top + h + 300]]) {
   await page.evaluate((v) => scrollTo({ top: v, behavior: 'instant' }), y);
   await page.waitForTimeout(1800);
   out[name] = await state();

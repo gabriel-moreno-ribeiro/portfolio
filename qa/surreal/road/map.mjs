@@ -1,5 +1,8 @@
-// Mapeamento rolagem → estrada: por trecho, quanto o carro fica acima/abaixo do meio da tela
-// e o pico de velocidade (px de estrada por px de rolagem). Usa o geometry.ts servido pelo Vite.
+// Mapeamento rolagem → estrada, por trecho: estrada / rolagem, quanto o perfil pede de rolagem
+// (nominal), pico de velocidade (px de estrada por px de rolagem), pico de giro da tangente
+// (graus por px de rolagem; ×25 = por quadro a 1500 px/s em 60 Hz, ×12,5 em 120 Hz) e quanto o
+// carro fica acima/abaixo do meio da tela. Usa o geometry.ts servido pelo Vite.
+//   node qa/surreal/road/map.mjs [larguras=1440,768]
 import { chromium } from 'playwright';
 const browser = await chromium.launch();
 for (const width of (process.argv[2] ?? '1440,768').split(',').map(Number)) {
@@ -26,17 +29,18 @@ for (const width of (process.argv[2] ?? '1440,768').split(',').map(Number)) {
     const ys = stops.map((p) => p.y);
     const rows = [];
     for (let i = 0; i < ys.length - 1; i++) {
-      let up = 0, down = 0, peak = 0, prev = null;
+      let up = 0, down = 0, peak = 0, turn = 0, prev = null, prevA = null;
       for (let c = ys[i]; c <= ys[i + 1]; c += 1) {
-        const at = g.carTargetS(c, ys, look.stopS);
+        const at = g.carTargetS(c, ys, look);
         const p = look.at(at);
         up = Math.min(up, p.y - c); down = Math.max(down, p.y - c);
-        if (prev !== null) peak = Math.max(peak, at - prev);
-        prev = at;
+        if (prev !== null) { peak = Math.max(peak, at - prev); turn = Math.max(turn, Math.abs(p.angle - prevA)); }
+        prev = at; prevA = p.angle;
       }
-      rows.push(`trecho ${i + 1}→${i + 2}: estrada ${Math.round(look.stopS[i + 1] - look.stopS[i])} / rolagem ${Math.round(ys[i + 1] - ys[i])} · pico ${peak.toFixed(2)}×  · carro vs meio da tela ${Math.round(up)}..+${Math.round(down)} px`);
+      const road = look.stopS[i + 1] - look.stopS[i], span = ys[i + 1] - ys[i];
+      rows.push(`${i + 1}→${i + 2} ${(narrow ? null : g.featureAt(i, ys.length)) ?? 's'}: estrada ${Math.round(road)} / rolagem ${Math.round(span)} (pede ${Math.round(look.need[i])}) · pico ${peak.toFixed(2)}× · giro ${turn.toFixed(2)}°/px · carro vs meio ${Math.round(up)}..+${Math.round(down)}`);
     }
-    return { length: Math.round(look.length), bridge: plan.bridge && [plan.bridge.x, plan.bridge.y].map(Math.round), hairpin: plan.hairpin, rows };
+    return { height: Math.round(box.height), length: Math.round(look.length), covers: plan.covers.map((c) => [Math.round(c.from), Math.round(c.to)]), rows };
   });
   console.log(width, JSON.stringify(out, null, 1));
   await page.close();

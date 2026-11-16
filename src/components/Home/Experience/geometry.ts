@@ -5,7 +5,7 @@
  * assim a estrada nunca distorce e as paradas caem exatamente no centro de cada `<li>`, que é
  * quem manda na altura (o conteúdo é HTML normal, não posicionado por JS).
  *
- * A estrada volta sobre si mesma (curva fechada, laço com viaduto), então não dá para
+ * A estrada volta sobre si mesma (zigue-zague, rotatória, trevo), então não dá para
  * procurá-la por altura: a amostragem é por COMPRIMENTO DE ARCO. Como somos nós que geramos
  * retas e cúbicas, avaliamos o polinômio direto em JS, uma vez por layout, numa tabela de
  * passo fixo; por quadro é um índice e uma interpolação. (`getPointAtLength` a cada 2 px
@@ -24,14 +24,29 @@ export function roadHalf(narrow: boolean): number {
   return (narrow ? ROAD_W.narrow : ROAD_W.wide) / 2 + 1;
 }
 
-/** No mobile todos os cards ficam à direita: entre duas paradas a estrada recua isso. */
-const NARROW_SWING = 22;
+/** No mobile todos os cards ficam à direita: entre duas paradas a estrada recua isto. */
+const NARROW_SWING = [22, 30, 14, 28, 16, 30] as const;
 
-/** Raios (px) das manobras no desktop. O carro tem ~100 px: abaixo disso ele gira no lugar. */
-const LOOP_R = 72;
-const HAIRPIN_R = { min: 46, max: 64 } as const;
-/** Quanto a curva fechada passa do eixo da parada seguinte antes de voltar. */
-const HAIRPIN_OVER = 60;
+// ── Medidas das manobras (px, graus). O carro tem ~100 px: abaixo de ~55 de raio ele gira no lugar.
+/** Reta depois de sair de uma parada e antes de chegar à seguinte (o marco de km fica livre). */
+const LEAD = 44;
+/** Folga entre a borda da estrada e a borda da coluna. */
+const EDGE = 12;
+/** Chicane: duas pernas inclinadas ligadas por um "S" apertado. */
+const ESS = { r: 62, turn: 66 } as const;
+/** Serra: três cotovelos empilhados, pistas inclinadas `slope` graus. */
+const SWB = { r: 58, rIn: 60, slope: 10, width: 400 } as const;
+/** Ponte: reta inclinada `turn` graus da vertical, sobre um rio de `width` px que serpenteia `sway` px. */
+const RIV = { r: 120, turn: 42, width: 62, sway: 15, wave: 300 } as const;
+/**
+ * Rotatória: anel de raio `r`, alças de entrada e saída de raio `rin` (`tight`: coluna estreita),
+ * `lift` px acima do vão do card seguinte.
+ */
+const RND = { r: 84, rin: 52, tight: { r: 70, rin: 40 }, lift: 15 } as const;
+/** Túnel e curvão: morro de até `hill` px de largura numa reta, depois 180° de raio `r` (`tight`: coluna estreita). */
+const TUN = { r: 105, rin: 70, tight: { r: 85, rin: 60 }, hill: 230, peak: 104 } as const;
+/** Trevo: laço de 270° de raio `r` que passa por baixo do próprio viaduto, `drop` px abaixo do card de cima. */
+const CLV = { r: 76, rOut: 70, drop: 70 } as const;
 
 export interface StopAnchor {
   /** x do eixo da estrada na parada (rente ao card), px da seção. */
@@ -52,37 +67,55 @@ export type RoadSegment =
   | { kind: 'L'; x0: number; y0: number; x1: number; y1: number }
   | { kind: 'C'; x0: number; y0: number; x1: number; y1: number; x2: number; y2: number; x3: number; y3: number };
 
+/** Cenário: traços prontos (a classe diz o que é), ícones e o tabuleiro do viaduto. */
+export type Scenery =
+  | { kind: 'path'; cls: 'rail' | 'kerb' | 'wash' | 'water' | 'pier' | 'island' | 'hill' | 'portal' | 'flag'; d: string }
+  | { kind: 'icon'; icon: 'tree' | 'pine' | 'cactus' | 'rock' | 'lamp'; x: number; y: number; flip?: boolean }
+  /** `s` = px de estrada até o meio do tabuleiro (alinha o tracejado dele ao da estrada). */
+  | { kind: 'deck'; x: number; y: number; angle: number; s: number };
+
+/** Cenário redesenhado POR CIMA do carro enquanto ele está entre `from` e `to` (px de estrada). */
+export interface Cover {
+  art: Scenery[];
+  from: number;
+  to: number;
+  /** Caixa do desenho, px da seção. */
+  box: { x: number; y: number; w: number; h: number };
+}
+
 export interface RoadPlan {
   d: string;
   segments: RoadSegment[];
   /** Índice do segmento que começa em cada parada. */
   stopSeg: number[];
-  /**
-   * Viaduto do laço: a estrada passa por cima em (x, y) na direção `angle` e, três quartos de
-   * volta depois, por baixo. `overSeg` = segmento a partir do qual o carro já está indo para
-   * baixo do viaduto (o tabuleiro passa a ser desenhado por cima dele). A passagem por cima
-   * fica `deckBack` px antes do fim do segmento `deckSeg`.
-   */
-  bridge: { x: number; y: number; angle: number; overSeg: number; deckSeg: number; deckBack: number } | null;
-  /** Curva fechada: centro, raio e para que lado fica o ápice (a defensa vai por fora). */
-  hairpin: { x: number; y: number; r: number; dir: 1 | -1 } | null;
+  /** Desenhado junto com a estrada (e apagado com ela, à frente do carro). */
+  scenery: Scenery[];
+  covers: Cover[];
 }
+
+export type Feature = 'esses' | 'switchback' | 'river' | 'roundabout' | 'tunnel' | 'clover';
+const ROUTE: Feature[] = ['esses', 'switchback', 'river', 'roundabout', 'tunnel'];
 
 /**
- * Manobra do trecho que sai da parada `i` (de `n`), no desktop: curva fechada no 2º trecho,
- * laço no antepenúltimo. A parada seguinte a uma manobra ganha um respiro acima (SCSS,
- * `.exp__stop--room`): é o espaço em que ela acontece, e a rolagem a mais para o carro
+ * Manobra do trecho que sai da parada `i` (de `n`), no desktop. A rota é um passeio, cada
+ * trecho com a sua cara: chicane, serra, ponte sobre o rio, rotatória, túnel com curvão e, na
+ * chegada, o trevo e a avenida. A parada seguinte ganha um respiro acima (SCSS,
+ * `.exp__stop--after-*`): é o espaço em que a manobra acontece, e a rolagem a mais para o carro
  * percorrê-la sem correr.
  */
-export function featureAt(i: number, n: number): 'hairpin' | 'loop' | null {
-  if (i === 1 && n > 2) return 'hairpin';
-  if (i === n - 3 && i > 1) return 'loop';
-  return null;
+export function featureAt(i: number, n: number): Feature | null {
+  if (i < 0 || i > n - 2) return null;
+  return i === n - 2 ? 'clover' : ROUTE[i % ROUTE.length];
 }
 
-const EMPTY: RoadPlan = { d: '', segments: [], stopSeg: [], bridge: null, hairpin: null };
+const EMPTY: RoadPlan = { d: '', segments: [], stopSeg: [], scenery: [], covers: [] };
 const RAD = Math.PI / 180;
 const f = (v: number) => +v.toFixed(2);
+
+interface Pt {
+  x: number;
+  y: number;
+}
 
 /** Caneta: reta, arco de círculo (em cúbicas de até 90°) e "S" de tangentes verticais. */
 function pen(x: number, y: number) {
@@ -95,9 +128,10 @@ function pen(x: number, y: number) {
     x = x3;
     y = y3;
   };
-  return {
+  const api = {
     segments,
     path: () => d,
+    pos: (): Pt => ({ x, y }),
     lineTo(nx: number, ny: number) {
       if (Math.hypot(nx - x, ny - y) < 0.5) return;
       segments.push({ kind: 'L', x0: x, y0: y, x1: nx, y1: ny });
@@ -105,22 +139,26 @@ function pen(x: number, y: number) {
       x = nx;
       y = ny;
     },
-    /** `turn` em graus: positivo = horário na tela (vira para a direita de quem dirige). */
-    arc(r: number, turn: number) {
+    /** Reta de `len` px na direção em que a caneta aponta. */
+    forward(len: number) {
+      api.lineTo(x + len * Math.cos(heading * RAD), y + len * Math.sin(heading * RAD));
+    },
+    /** `turn` em graus: positivo = horário na tela (vira para a direita de quem dirige). Devolve o centro. */
+    arc(r: number, turn: number): Pt {
       const n = Math.ceil(Math.abs(turn) / 90);
       const step = turn / n;
       const k = (4 / 3) * Math.tan((Math.abs(step) * RAD) / 4) * r;
       const side = Math.sign(turn);
+      const centre = { x: x - side * r * Math.sin(heading * RAD), y: y + side * r * Math.cos(heading * RAD) };
       for (let i = 0; i < n; i++) {
         const h0 = heading * RAD;
         const h1 = (heading + step) * RAD;
-        const cx = x - side * r * Math.sin(h0);
-        const cy = y + side * r * Math.cos(h0);
-        const ex = cx + side * r * Math.sin(h1);
-        const ey = cy - side * r * Math.cos(h1);
+        const ex = centre.x + side * r * Math.sin(h1);
+        const ey = centre.y - side * r * Math.cos(h1);
         cubic(x + k * Math.cos(h0), y + k * Math.sin(h0), ex - k * Math.cos(h1), ey - k * Math.sin(h1), ex, ey);
         heading += step;
       }
+      return centre;
     },
     /** "S" descendo de uma tangente vertical a outra. */
     sTo(nx: number, ny: number) {
@@ -128,6 +166,13 @@ function pen(x: number, y: number) {
       cubic(x, y + dy, nx, ny - dy, nx, ny);
     },
   };
+  return api;
+}
+
+/** Arco de raio `r` em volta de `c`, do ângulo `a0` ao `a1` (graus de tela, horário positivo). */
+function ring(c: Pt, r: number, a0: number, a1: number): string {
+  const at = (deg: number) => `${f(c.x + r * Math.cos(deg * RAD))} ${f(c.y + r * Math.sin(deg * RAD))}`;
+  return `M ${at(a0)} A ${f(r)} ${f(r)} 0 ${Math.abs(a1 - a0) > 180 ? 1 : 0} ${a1 > a0 ? 1 : 0} ${at(a1)}`;
 }
 
 /**
@@ -135,17 +180,12 @@ function pen(x: number, y: number) {
  * passa rente a cada card na altura do centro dele, com tangente vertical, e termina em
  * `endY` (o pé do último card): nada de ponta solta sobre a seção seguinte.
  *
- * Desktop — os cards alternam de lado, então ao lado de cada um sobra meia coluna vazia, e é
- * nela que a estrada faz as manobras (nunca por baixo de um card: os raios saem das caixas
- * medidas, e o que não couber vira o "S" simples):
- *   · trecho 2 (depois da 2ª parada): curva fechada — sai da parada, cruza a coluna, dá meia
- *     volta e retorna contornando o canto do card seguinte;
- *   · antepenúltimo trecho: laço — uma curva aberta até um viaduto, três quartos de volta e a
- *     estrada passa por baixo dele rumo à parada seguinte;
- *   · último trecho: o "S" termina cedo e a estrada chega reta à última parada, onde o carro
- *     estaciona;
- *   · os demais: "S" de um lado ao outro.
- * Mobile — cards sempre à direita, faixa estreita: só um ponto recuado entre duas paradas.
+ * Desktop — os cards alternam de lado, e a parada depois de cada manobra tem um respiro
+ * acima: entre o pé de um card e o topo do seguinte a coluna inteira fica livre, e ao lado de
+ * cada card sobra meia coluna. É aí que a estrada faz as manobras (ver `featureAt`), sempre a
+ * partir das caixas medidas: nada passa por baixo de um card, e o que não couber naquela
+ * largura vira o "S" simples.
+ * Mobile — cards sempre à direita, faixa estreita: só um recuo (que varia) entre duas paradas.
  */
 export function buildRoad(
   width: number,
@@ -165,78 +205,302 @@ export function buildRoad(
   const p = pen(stops[0].x, Math.max(0, stops[0].y - Math.min(200, gap * 0.55)));
   p.lineTo(stops[0].x, stops[0].y);
   const stopSeg = [p.segments.length];
-  let bridge: RoadPlan['bridge'] = null;
-  let hairpin: RoadPlan['hairpin'] = null;
-  const reach = CARD_GAP.wide + roadHalf(false);
+  const scenery: Scenery[] = [];
+  // Estrada que o carro não percorre: vai no mesmo `d` (mesmo traço, sem emenda), fora de `segments`.
+  let extra = '';
+  // Por cima do carro entre dois segmentos; `deck` = [segmento, px antes do fim dele].
+  const covers: { art: Scenery[]; fromSeg: number; toSeg: number; box: Cover['box'] }[] = [];
+  const decks: { item: Extract<Scenery, { kind: 'deck' }>; seg: number; back: number }[] = [];
+  const half = roadHalf(false);
+  const reach = CARD_GAP.wide + half;
+  const xmin = EDGE + half;
+  const xmax = width - EDGE - half;
+  const path = (cls: Extract<Scenery, { kind: 'path' }>['cls'], d: string) => scenery.push({ kind: 'path', cls, d });
+  const icon = (name: Extract<Scenery, { kind: 'icon' }>['icon'], x: number, y: number, flip?: boolean) =>
+    scenery.push({ kind: 'icon', icon: name, x, y, flip });
 
   for (let i = 0; i < n - 1; i++) {
     const a = stops[i];
     const b = stops[i + 1];
     if (narrow) {
-      p.sTo(Math.min(a.x, b.x) - NARROW_SWING, (a.y + b.y) / 2);
+      const mid = i % 2 ? 0.42 : 0.58;
+      p.sTo(Math.min(a.x, b.x) - NARROW_SWING[i % NARROW_SWING.length], a.y + (b.y - a.y) * mid);
       p.sTo(b.x, b.y);
       stopSeg.push(p.segments.length);
       continue;
     }
-    // Para que lado fica a parada seguinte: +1 direita, −1 esquerda.
+    // Para que lado fica a parada seguinte: +1 direita, −1 esquerda. O card de `a` fica do
+    // lado −dir da estrada; o de `b`, do lado +dir.
     const dir = b.x > a.x ? 1 : -1;
     const dx = Math.abs(b.x - a.x);
-    // A meia coluna vazia abaixo desta parada vai do pé do card de cima (mesmo lado do
-    // seguinte) até o topo do card seguinte.
-    const floor = (cards[i + 1]?.top ?? b.y) - reach;
-    const ceiling = i > 0 ? (cards[i - 1]?.bottom ?? a.y) + reach : -Infinity;
-    const room = floor - a.y;
-    const feature = featureAt(i, n);
+    const cardA = cards[i];
+    const cardB = cards[i + 1];
+    const top = a.y + LEAD;
+    const end = b.y - LEAD;
 
-    // Curva fechada: quarto de volta (r1), reta, meia-volta (r2) e um quarto de raio `reach`
-    // em torno do canto do card seguinte — a estrada fica a um vão constante dele.
-    const r2 = Math.max(HAIRPIN_R.min, Math.min(HAIRPIN_R.max, (room - 70) / 2));
-    const r1 = Math.min(room - 2 * r2, dx - 40);
-    const apexX = b.x + dir * (reach + HAIRPIN_OVER);
-    const apexEdge = apexX + dir * (r2 + roadHalf(false));
-    if (feature === 'hairpin' && r1 >= reach && floor - 2 * r2 >= ceiling && apexEdge > 8 && apexEdge < width - 8 && b.y - floor > reach + 20) {
-      p.lineTo(a.x, floor - 2 * r2 - r1);
+    /** Chicane: perna inclinada, "S" apertado com zebras por dentro, outra perna. */
+    const esses = (): boolean => {
+      const hl = (90 - ESS.turn) * RAD;
+      const leg = (dx - 2 * ESS.r * (1 - Math.sin(hl))) / (2 * Math.cos(hl));
+      const drop = 6 * ESS.r * Math.cos(hl) + 2 * leg * Math.sin(hl);
+      if (leg < 20 || top + drop > end) return false;
+      const kerb = (c: Pt, side: number) => {
+        const mid = 90 - 90 * side;
+        path('kerb', ring(c, ESS.r - half - 3, mid - 44, mid + 44));
+      };
+      p.lineTo(a.x, top + (end - top - drop) / 2);
+      p.arc(ESS.r, -dir * ESS.turn);
+      p.forward(leg);
+      kerb(p.arc(ESS.r, dir * 2 * ESS.turn), dir);
+      kerb(p.arc(ESS.r, -dir * 2 * ESS.turn), -dir);
+      p.forward(leg);
+      p.arc(ESS.r, dir * ESS.turn);
+      // Sertão: mandacarus nas duas meias colunas vazias (acima do card seguinte, abaixo do de cima).
+      icon('cactus', b.x + dir * 118, cardB.top - 104);
+      icon('cactus', b.x + dir * 150, cardB.top - 84);
+      icon('rock', b.x + dir * 96, cardB.top - 80);
+      icon('cactus', a.x - dir * 170, cardA.bottom + 118);
+      return true;
+    };
+
+    /**
+     * Serra: quatro pistas inclinadas ligadas por três cotovelos, defensa por fora de cada um,
+     * pinheiros nas cunhas. Fica um pouco acima do meio do espaço livre: o carro desce uma reta
+     * antes (adianta-se na tela), zigue-zagueia (atrasa-se) e desce outra reta até a parada.
+     */
+    const switchback = (): boolean => {
+      const sg = SWB.slope * RAD;
+      const cs = Math.cos(sg);
+      const ex = 1 - Math.sin(sg);
+      const far = dir < 0 ? Math.max(xmin, a.x - SWB.width) : Math.min(xmax, a.x + SWB.width);
+      const w = Math.abs(a.x - far);
+      const l1 = (w - ex * (SWB.rIn + SWB.r)) / cs;
+      const l2 = (w - 2 * ex * SWB.r) / cs;
+      const l4 = (Math.abs(b.x - far) - ex * (SWB.rIn + SWB.r)) / cs;
+      const drop = (2 * SWB.rIn + 6 * SWB.r) * cs + (l1 + 2 * l2 + l4) * Math.sin(sg);
+      // A última pista passa sobre a coluna do card seguinte: o fim da serra fica `reach` acima dele.
+      const slack = cardB.top - reach - drop - top;
+      if (l4 < 30 || l2 < 120 || slack < 0) return false;
+      const y0 = top + slack * 0.68;
+      const bend = (c: Pt, side: number) => {
+        const mid = 90 - 90 * side;
+        const inward = -Math.cos(mid * RAD);
+        path('rail', ring(c, SWB.r + half + 6, mid - 62, mid + 62));
+        icon('pine', c.x + inward * w * 0.6, c.y - 4);
+        icon('pine', c.x + inward * w * 0.68, c.y + 14);
+        icon('rock', c.x + inward * w * 0.44, c.y + 8);
+      };
+      const hairpin = 180 - 2 * SWB.slope;
+      p.lineTo(a.x, y0);
+      p.arc(SWB.rIn, -dir * (90 - SWB.slope));
+      p.forward(l1);
+      bend(p.arc(SWB.r, dir * hairpin), dir);
+      p.forward(l2);
+      bend(p.arc(SWB.r, -dir * hairpin), -dir);
+      p.forward(l2);
+      bend(p.arc(SWB.r, dir * hairpin), dir);
+      p.forward(l4);
+      p.arc(SWB.rIn, -dir * (90 - SWB.slope));
+      return true;
+    };
+
+    /**
+     * Ponte: a estrada cruza a coluna numa reta inclinada, e um rio a corta em ângulo reto,
+     * de uma borda da coluna à outra (até onde os cards deixam). O rio para nas muretas: não
+     * há nada por baixo do asfalto translúcido.
+     */
+    const river = (): boolean => {
+      const t = RIV.turn * RAD;
+      const leg = (dx - 2 * RIV.r * (1 - Math.cos(t))) / Math.sin(t);
+      const drop = 2 * RIV.r * Math.sin(t) + leg * Math.cos(t);
+      if (leg < RIV.width + 70 || top + drop > end) return false;
+      p.lineTo(a.x, top + (end - top - drop) / 2);
+      p.arc(RIV.r, -dir * RIV.turn);
+      const m0 = p.pos();
+      p.forward(leg);
+      const m1 = p.pos();
+      p.arc(RIV.r, dir * RIV.turn);
+
+      // Referencial da ponte: `al` ao longo dela, `ac` ao longo do rio. O rio cruza a ponte em
+      // ângulo reto e serpenteia para um lado só (`sway`), afinando até sumir na ponta.
+      const ux = (m1.x - m0.x) / leg;
+      const uy = (m1.y - m0.y) / leg;
+      const mx = (m0.x + m1.x) / 2;
+      const my = (m0.y + m1.y) / 2;
+      const sway = (ac: number) => RIV.sway * (Math.cos((2 * Math.PI * ac) / RIV.wave) - 1);
+      const xy = (al: number, ac: number): Pt => ({ x: mx + ux * (al + sway(ac)) - uy * ac, y: my + uy * (al + sway(ac)) + ux * ac });
+      const at = (al: number, ac: number) => {
+        const q = xy(al, ac);
+        return `${f(q.x)} ${f(q.y)}`;
+      };
+      const h = half + 4;
+      const span = RIV.width / 2 + 22;
+      const clear = RIV.width / 2 + CARD_GAP.wide;
+      for (const s of [-1, 1]) {
+        path('rail', `M ${at(-span - 7, s * (h + 6))} L ${at(-span, s * h)} L ${at(span, s * h)} L ${at(span + 7, s * (h + 6))}`);
+        path('pier', [-0.3, 0.3].map((k) => `M ${at(k * RIV.width, s * (h + 3))} L ${at(k * RIV.width, s * (h + 9))}`).join(' '));
+        // Até onde o rio vai para este lado: borda da coluna, ou o primeiro card no caminho.
+        let far = h + 4;
+        for (; far < 1400; far += 6) {
+          const q = xy(0, s * far);
+          if (q.x < 10 || q.x > width - 10 || q.y > b.y + 110 || q.y < a.y - 320) break;
+          if (cards.some((c) => q.x > c.left - clear && q.x < c.right + clear && q.y > c.top - clear && q.y < c.bottom + clear)) break;
+        }
+        if (far < h + 90) continue;
+        // Meia largura do leito: cheia até 110 px da ponta, depois afina.
+        const wide = (ac: number) => (RIV.width / 2) * Math.min(1, (far - ac) / 110) ** 0.6;
+        const bank = (side: number) => {
+          const pts: string[] = [];
+          for (let ac = h + 2; ac < far; ac += 10) pts.push(at(side * wide(ac), s * ac));
+          return pts;
+        };
+        path('wash', `M ${[...bank(-1), at(0, s * far), ...bank(1).reverse()].join(' L ')} Z`);
+        [-0.62, -0.14, 0.34, 0.7].forEach((o, k) => {
+          const stop = far - 60 - ((k * 37) % 70);
+          let d = `M ${at(o * wide(h + 8), s * (h + 8))}`;
+          for (let ac = h + 22, wig = 1; ac < stop; ac += 14, wig = -wig) {
+            d += ` Q ${at(o * wide(ac) + wig * 2.5, s * ac)} ${at(o * wide(ac + 7), s * (ac + 7))}`;
+          }
+          path('water', d);
+        });
+      }
+      return true;
+    };
+
+    /**
+     * Rotatória: a estrada chega de lado, entra por uma alça à direita, contorna a ilha no
+     * sentido da mão brasileira (anti-horário) e sai para baixo, na faixa da parada seguinte.
+     * O resto do anel, que o carro não percorre, fecha o desenho (`extra`). Fica logo acima do
+     * card seguinte.
+     */
+    const roundabout = (): boolean => {
+      const { r, rin } = dx < 200 ? RND.tight : RND;
+      const reachX = Math.sqrt((r + rin) ** 2 - rin ** 2);
+      const turnIn = Math.acos(rin / (r + rin)) / RAD;
+      const r1 = Math.min(60, dx - reachX - 6);
+      const c = { x: b.x, y: cardB.top - CARD_GAP.wide - RND.lift - (r + half) };
+      if (r1 < 44 || c.y - r1 < top || c.x - r - half < 8 || c.x + r + half > width - 8) return false;
+      const phiIn = Math.atan2(dir * rin, -dir * reachX) / RAD;
+      const phiOut = 180 - turnIn;
+      p.lineTo(a.x, c.y - r1);
       p.arc(r1, -dir * 90);
-      p.lineTo(apexX, floor - 2 * r2);
-      p.arc(r2, dir * 180);
-      hairpin = { x: apexX, y: floor - r2, r: r2, dir };
-      p.lineTo(b.x + dir * reach, floor);
+      p.lineTo(c.x - dir * reachX, c.y);
+      p.arc(rin, turnIn);
+      p.arc(r, -((((phiIn - phiOut) % 360) + 360) % 360));
+      p.arc(rin, turnIn);
+      // Da saída para a entrada: o tracejado começa na bifurcação da saída, não em cima do da entrada.
+      extra += ` ${ring(c, r, phiIn + ((((phiOut - phiIn) % 360) + 360) % 360), phiIn)}`;
+      path('island', ring(c, r - half - 7, 0, 359.9) + ' Z');
+      icon('tree', c.x - 9, c.y + 10);
+      icon('tree', c.x + 10, c.y + 16);
+      icon('rock', c.x + 2, c.y - 12);
+      return true;
+    };
+
+    /**
+     * Túnel e curvão: a estrada cruza a meia coluna vazia por dentro de um morro (o carro some
+     * e sai do outro lado), dá 180° largos rente à borda e volta por baixo, logo acima do
+     * card seguinte.
+     */
+    const tunnel = (): boolean => {
+      const far = dir > 0 ? xmax : xmin;
+      const { r, rin } = Math.abs(far - a.x) < 480 ? TUN.tight : TUN;
+      const cx = far - dir * r;
+      const yt = cardB.top - reach - 2 * r;
+      const run = Math.abs(cx - a.x) - rin;
+      const hill = Math.min(TUN.hill, run - 110);
+      if (yt - rin < top || hill < 150 || Math.abs(cx - b.x) < reach + 20) return false;
+      p.lineTo(a.x, yt - rin);
+      // O morro passa a cobrir o carro do meio da curva de entrada (ele já está na altura do
+      // túnel, com a estrada toda à vista) até o começo do curvão, já fora do morro.
+      p.arc(rin, -dir * 50);
+      const fromSeg = p.segments.length;
+      p.arc(rin, -dir * 40);
+      p.lineTo(cx, yt);
+      p.arc(r, dir * 30);
+      const toSeg = p.segments.length;
+      p.arc(r, dir * 150);
+      // Quarto de volta de raio `reach` em torno do canto do card seguinte: vão constante.
+      p.lineTo(b.x + dir * reach, yt + 2 * r);
       p.arc(reach, -dir * 90);
-      p.lineTo(b.x, b.y);
-      stopSeg.push(p.segments.length);
-      continue;
-    }
 
-    // Laço: quarto de volta aberto (rq) até a altura do viaduto, passa por cima em (b.x, yX),
-    // três quartos de volta para o lado de fora e desce por b.x, por baixo do viaduto. Fica o
-    // mais baixo que couber (rente ao card seguinte): enquanto o carro dá a volta ele não
-    // desce, e quanto mais baixo o laço, menos o carro sobe na tela em relação à rolagem.
-    const rq = Math.min(dx - 20, room);
-    const yX = a.y + Math.max(rq, room - 24);
-    const loopEdge = b.x + dir * (2 * LOOP_R + roadHalf(false));
-    if (feature === 'loop' && rq >= 90 && yX - 2 * LOOP_R >= ceiling && loopEdge > 8 && loopEdge < width - 8 && b.y - yX > 40) {
-      p.lineTo(a.x, yX - rq);
-      p.arc(rq, -dir * 90);
-      p.lineTo(b.x + dir * LOOP_R, yX);
-      const deckSeg = p.segments.length - 1;
-      p.arc(LOOP_R, -dir * 180);
-      bridge = { x: b.x, y: yX, angle: dir > 0 ? 0 : 180, overSeg: p.segments.length, deckSeg, deckBack: LOOP_R };
-      p.arc(LOOP_R, -dir * 90);
-      p.lineTo(b.x, b.y);
-      stopSeg.push(p.segments.length);
-      continue;
-    }
+      const base = yt + half + 6;
+      const hx = a.x + dir * (rin + run / 2);
+      const peak = (TUN.peak * hill) / TUN.hill;
+      const mound = (x0: number, x1: number, up: number) =>
+        `M ${f(x0)} ${f(base)} C ${f(x0 + (x1 - x0) * 0.16)} ${f(base - up * 1.35)} ${f(x1 - (x1 - x0) * 0.16)} ${f(base - up * 1.35)} ${f(x1)} ${f(base)} Z`;
+      const mouth = (x: number) => `M ${f(x)} ${f(yt - half - 3)} a 9 ${half + 3} 0 0 0 0 ${2 * (half + 3)} a 9 ${half + 3} 0 0 0 0 ${-2 * (half + 3)} Z`;
+      const art: Scenery[] = [
+        { kind: 'path', cls: 'hill', d: mound(hx - hill * 0.12, hx + hill * 0.5, peak * 1.16) },
+        { kind: 'icon', icon: 'pine', x: hx + hill * 0.3, y: base - peak * 1.06 },
+        { kind: 'path', cls: 'hill', d: mound(hx - hill / 2, hx + hill * 0.36, peak) },
+        { kind: 'path', cls: 'portal', d: `${mouth(hx - hill / 2 + 15)} ${mouth(hx + hill / 2 - 15)}` },
+        { kind: 'icon', icon: 'pine', x: hx - hill * 0.26, y: base - peak * 0.86 },
+        { kind: 'icon', icon: 'pine', x: hx - hill * 0.08, y: base - peak * 0.97 },
+        { kind: 'icon', icon: 'rock', x: hx + hill * 0.12, y: base - peak * 0.62 },
+      ];
+      scenery.push(...art);
+      covers.push({ art, fromSeg, toSeg, box: { x: hx - hill / 2 - 8, y: base - peak * 1.16 - 44, w: hill + 16, h: peak * 1.16 + 52 } });
+      icon('tree', cx - dir * 4, yt + r + 2);
+      icon('tree', cx + dir * 22, yt + r + 20);
+      icon('rock', cx + dir * 12, yt + r - 16);
+      return true;
+    };
 
-    // Último trecho: o "S" acaba antes, e a estrada chega reta à última parada.
-    if (i === n - 2) p.sTo(b.x, b.y - Math.min(110, (b.y - a.y) * 0.3));
-    else p.sTo(b.x, b.y);
+    /**
+     * Trevo e avenida: a estrada passa por cima de um viaduto, dá um laço de 270° para o lado
+     * de fora, volta por baixo dele e desce a avenida dos postes até a linha de chegada e a
+     * última parada.
+     */
+    const clover = (): boolean => {
+      const { r, rOut } = CLV;
+      const yx = cardA.bottom + reach + 8 + CLV.drop;
+      const edge = a.x - dir * (2 * r + half);
+      // 150 = a legenda da D-20 mora acima-ao-lado da última parada sob reduced-motion.
+      if (yx < top || edge < 8 || edge > width - 8 || dx + r < rOut + 20 || yx + 2 * r + half > b.y - 150) return false;
+      p.lineTo(a.x, yx + r);
+      const item: Extract<Scenery, { kind: 'deck' }> = { kind: 'deck', x: a.x, y: yx, angle: 90, s: 0 };
+      decks.push({ item, seg: p.segments.length - 1, back: r });
+      scenery.push(item);
+      p.arc(r, dir * 180);
+      covers.push({ art: [item], fromSeg: p.segments.length, toSeg: -1, box: { x: a.x - 60, y: yx - 60, w: 120, h: 120 } });
+      p.arc(r, dir * 90);
+      p.lineTo(b.x - dir * rOut, yx);
+      p.arc(rOut, dir * 90);
+      icon('tree', a.x - dir * r, yx + r + 8);
+      for (let y = yx + rOut + 22; y < b.y - 150; y += 72) icon('lamp', b.x - dir * (half + 13), y, dir > 0);
+      // Linha de chegada, quadriculada, um carro antes da última parada.
+      const flag: string[] = [];
+      for (let row = 0; row < 2; row++) {
+        for (let col = row; col < 6; col += 2) flag.push(`M ${f(b.x - 24 + 8 * col)} ${f(b.y - 92 + 6 * row)} h 8 v 6 h -8 Z`);
+      }
+      path('flag', flag.join(' '));
+      return true;
+    };
+
+    const feature = cardA && cardB ? featureAt(i, n) : null;
+    const drawn =
+      (feature === 'esses' && esses()) ||
+      (feature === 'switchback' && switchback()) ||
+      (feature === 'river' && river()) ||
+      (feature === 'roundabout' && roundabout()) ||
+      (feature === 'tunnel' && tunnel()) ||
+      (feature === 'clover' && clover());
+    // Sem manobra (ou sem espaço para ela): "S" de um lado ao outro; no último trecho ele
+    // acaba antes, e a estrada chega reta à última parada.
+    if (!drawn) p.sTo(b.x, i === n - 2 ? b.y - Math.min(110, (b.y - a.y) * 0.3) : b.y);
     p.lineTo(b.x, b.y);
     stopSeg.push(p.segments.length);
   }
 
   const last = stops[n - 1];
   p.lineTo(last.x, Math.max(last.y, Math.min(height, endY)));
-  return { d: p.path(), segments: p.segments, stopSeg, bridge, hairpin };
+  const plan: RoadPlan = { d: p.path() + extra, segments: p.segments, stopSeg, scenery, covers: [] };
+  // As distâncias saem da mesma tabela que o carro usa (fica em cache, pelo `d`).
+  const { segS } = roadLookup(plan);
+  for (const dk of decks) dk.item.s = (segS[dk.seg + 1] ?? 0) - dk.back;
+  plan.covers = covers.map((c) => ({ art: c.art, box: c.box, from: segS[c.fromSeg] ?? 0, to: c.toSeg < 0 ? Infinity : (segS[c.toSeg] ?? Infinity) }));
+  return plan;
 }
 
 /** Lado da tela em que o card daquela parada fica: oposto à faixa da estrada. */
@@ -256,18 +520,33 @@ export interface RoadLookup {
   length: number;
   /** Distância ao longo da estrada (px) de cada parada. */
   stopS: number[];
-  /** Distância a partir da qual o carro está indo para baixo do viaduto (Infinity sem laço). */
-  overS: number;
-  /** Distância em que a estrada passa por cima do viaduto (0 sem laço). */
-  deckS: number;
+  /** Distância (px) em que cada segmento do path começa; o último valor é o comprimento. */
+  segS: number[];
+  /**
+   * Por trecho entre paradas: fração da rolagem do trecho → distância na estrada, em
+   * `PROFILE_N` passos iguais (ver `carTargetS`).
+   */
+  profile: Float32Array[];
+  /** Por trecho: px de rolagem que o perfil pede para andar nos limites nominais (só QA). */
+  need: number[];
   /** Ponto e tangente a `s` px do início da estrada. */
   at(s: number): RoadSample;
   /** Ponto mais baixo (maior y) que a estrada já alcançou até `s`: é até onde ela "existe". */
   reachedY(s: number): number;
 }
 
-/** Passo da tabela, px de estrada. Bem abaixo do que se percebe; ~2 200 entradas no desktop. */
+/** Passo da tabela, px de estrada. Bem abaixo do que se percebe; ~4 500 entradas no desktop. */
 const STEP = 2;
+/** Passos da tabela rolagem → estrada de cada trecho. */
+const PROFILE_N = 512;
+/**
+ * Quem dirige: px de estrada por px de rolagem. Teto na reta, velocidade com que o carro sai
+ * de uma parada e chega à seguinte, quanto a tangente pode girar por px de rolagem (é o que
+ * freia o carro nas curvas: cotovelo devagar, reta depressa) e quanto ele acelera ou freia
+ * (v² por px de estrada). São os valores nominais: o trecho inteiro é depois ajustado à
+ * rolagem que existe entre as duas paradas.
+ */
+const DRIVE = { max: 2.8, stop: 0.5, turn: 1.25 * RAD, accel: 0.045 } as const;
 const lookupCache = new Map<string, RoadLookup>();
 
 export function roadLookup(road: RoadPlan): RoadLookup {
@@ -350,11 +629,46 @@ export function roadLookup(road: RoadPlan): RoadLookup {
     const v = s <= 0 ? 0 : s >= total ? count - 1 : s / STEP;
     return v > count - 1 ? count - 1 : v;
   };
+
+  // Perfil de velocidade, como o de uma volta de pista: teto pela curvatura, depois uma
+  // passada para a frente (aceleração) e outra para trás (frenagem). `time` = rolagem
+  // acumulada que esse perfil gasta até cada ponto da tabela.
+  const stopS = road.stopSeg.map((k) => segS[k] ?? total);
+  const v = new Float32Array(count);
+  for (let i = 0; i < count; i++) {
+    const bend = (Math.abs(as[Math.min(count - 1, i + 1)] - as[Math.max(0, i - 1)]) * RAD) / (2 * STEP);
+    v[i] = Math.min(DRIVE.max, DRIVE.turn / Math.max(bend, 1e-6));
+  }
+  for (const s of stopS) v[Math.min(count - 1, Math.round(s / STEP))] = DRIVE.stop;
+  for (let i = 1; i < count; i++) v[i] = Math.min(v[i], Math.sqrt(v[i - 1] * v[i - 1] + 2 * DRIVE.accel * STEP));
+  for (let i = count - 2; i >= 0; i--) v[i] = Math.min(v[i], Math.sqrt(v[i + 1] * v[i + 1] + 2 * DRIVE.accel * STEP));
+  const time = new Float32Array(count);
+  for (let i = 1; i < count; i++) time[i] = time[i - 1] + (2 * STEP) / (v[i - 1] + v[i]);
+  const profile: Float32Array[] = [];
+  const need: number[] = [];
+  for (let k = 0; k + 1 < stopS.length; k++) {
+    const i0 = Math.min(count - 1, Math.round(stopS[k] / STEP));
+    const i1 = Math.min(count - 1, Math.round(stopS[k + 1] / STEP));
+    const span = time[i1] - time[i0];
+    const table = new Float32Array(PROFILE_N + 1);
+    for (let q = 0, m = i0; q <= PROFILE_N; q++) {
+      const t = time[i0] + (span * q) / PROFILE_N;
+      while (m < i1 - 1 && time[m + 1] < t) m++;
+      const dt = time[m + 1] - time[m];
+      table[q] = (m + (dt > 0 ? Math.min(1, (t - time[m]) / dt) : 0)) * STEP;
+    }
+    table[0] = stopS[k];
+    table[PROFILE_N] = stopS[k + 1];
+    profile.push(table);
+    need.push(span);
+  }
+
   const lookup: RoadLookup = {
     length: total,
-    stopS: road.stopSeg.map((k) => segS[k] ?? total),
-    overS: road.bridge ? (segS[road.bridge.overSeg] ?? Infinity) : Infinity,
-    deckS: road.bridge ? (segS[road.bridge.deckSeg + 1] ?? 0) - road.bridge.deckBack : 0,
+    stopS,
+    segS,
+    profile,
+    need,
     at(s) {
       const v = index(s);
       const i = Math.min(count - 2, v | 0);
@@ -392,23 +706,6 @@ export interface RoadGeom extends RoadPlan {
   litWindowPx: number;
 }
 
-/** Fração de cada trecho gasta acelerando (e a mesma freando). */
-const RAMP = 0.2;
-
-/**
- * Perfil de velocidade em trapézio entre duas paradas: parte do zero, acelera durante `RAMP`
- * do trecho, segue em velocidade constante e freia até parar na parada seguinte. Contínuo na
- * velocidade (zero dos dois lados de cada parada, então não há tranco de um trecho ao outro)
- * e com pico de só 1/(1 − RAMP) = 1,25× a média: o seno de antes chegava a 2× e ficava quase
- * parado por um quinto do trecho.
- */
-function cruise(u: number): number {
-  const v = 1 / (1 - RAMP);
-  if (u < RAMP) return (v * u * u) / (2 * RAMP);
-  if (u > 1 - RAMP) return 1 - (v * (1 - u) * (1 - u)) / (2 * RAMP);
-  return v * (u - RAMP / 2);
-}
-
 /**
  * Distância ao longo da estrada em que o carro deve estar, dado `center` = altura (px da
  * seção) que está no meio da viewport.
@@ -416,18 +713,23 @@ function cruise(u: number): number {
  * Cada parada tem a sua altura (o centro do card) e a sua distância na estrada. Quando o
  * centro do card está no meio da tela — onde o leitor o põe para ler, e onde o índice o
  * deixa com `scrollIntoView` — o carro está parado rente a ele. Entre duas paradas a rolagem
- * percorre o trecho inteiro de estrada, por mais voltas que ele dê, no perfil de `cruise`.
- * Antes da 1ª parada e depois da última o carro fica estacionado nela.
+ * percorre o trecho inteiro de estrada, por mais voltas que ele dê, no perfil de velocidade do
+ * trecho (`RoadLookup.profile`: devagar nas curvas fechadas, depressa nas retas, saindo e
+ * chegando devagar). Antes da 1ª parada e depois da última o carro fica estacionado nela.
  */
-export function carTargetS(center: number, stopYs: number[], stopS: number[]): number {
+export function carTargetS(center: number, stopYs: number[], lookup: RoadLookup): number {
+  const stopS = lookup.stopS;
   const n = Math.min(stopYs.length, stopS.length);
   if (n === 0) return 0;
   if (center <= stopYs[0]) return stopS[0];
   for (let i = 1; i < n; i++) {
     if (center > stopYs[i]) continue;
     const span = stopYs[i] - stopYs[i - 1];
-    const u = span > 0 ? (center - stopYs[i - 1]) / span : 1;
-    return stopS[i - 1] + (stopS[i] - stopS[i - 1]) * cruise(u);
+    const table = lookup.profile[i - 1];
+    if (span <= 0 || !table) return stopS[i];
+    const q = ((center - stopYs[i - 1]) / span) * PROFILE_N;
+    const j = Math.min(PROFILE_N - 1, q | 0);
+    return table[j] + (table[j + 1] - table[j]) * (q - j);
   }
   return stopS[n - 1];
 }

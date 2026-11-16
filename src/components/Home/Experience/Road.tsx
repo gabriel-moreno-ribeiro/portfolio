@@ -1,7 +1,7 @@
 import { memo, type CSSProperties } from 'react';
-import { ROAD_W, type RoadPlan } from './geometry';
-// Estrada decorativa: traço creme-escuro, linha central tracejada laranja, marcos de km, a
-// defensa da curva fechada e o viaduto do laço.
+import { ROAD_W, type Scenery } from './geometry';
+// Estrada decorativa: traço creme-escuro, linha central tracejada laranja, marcos de km e o
+// cenário das manobras (defensas, zebras, rio, ilha da rotatória, morro do túnel, viaduto, postes).
 // Puramente visual — `aria-hidden`. O conteúdo real está no `<ol>` ao lado.
 interface RoadMarker {
   id: string;
@@ -32,16 +32,7 @@ interface RoadProps {
    * Antes, mover o `gradientTransform` do traço re-rasterizava a estrada inteira por quadro.
    */
   fog: { y: number; len: number } | null;
-  bridge: (BridgeAt & { angle: number }) | null;
-  hairpin: RoadPlan['hairpin'];
-}
-
-/** Onde fica o viaduto e a que distância do início da estrada (alinha o tracejado). */
-interface BridgeAt {
-  x: number;
-  y: number;
-  /** px de estrada até o meio do tabuleiro. */
-  s: number;
+  scenery: Scenery[];
 }
 
 const DASH = { wide: [18, 22], narrow: [10, 12] } as const;
@@ -55,7 +46,7 @@ const DECK = 34;
  * O tracejado do tabuleiro começa na mesma fase do tracejado da estrada naquele ponto: os
  * traços coincidem e a faixa segue sem emenda por cima do viaduto.
  */
-export function BridgeDeck({ x, y, s, angle }: BridgeAt & { angle: number }) {
+function BridgeDeck({ x, y, s, angle }: Extract<Scenery, { kind: 'deck' }>) {
   const lane = ROAD_W.wide;
   const span = `M ${-DECK} 0 H ${DECK}`;
   const rail = (side: 1 | -1) => {
@@ -80,20 +71,40 @@ export function BridgeDeck({ x, y, s, angle }: BridgeAt & { angle: number }) {
   );
 }
 
-/** Defensa por fora da curva fechada: um arco no mesmo traço do guarda-corpo do viaduto. */
-function guardRail(hairpin: NonNullable<RoadPlan['hairpin']>, lane: number) {
-  const r = hairpin.r + lane / 2 + 6;
-  const t = (64 * Math.PI) / 180;
-  const x = (hairpin.x + hairpin.dir * r * Math.cos(t)).toFixed(1);
-  const top = (hairpin.y - r * Math.sin(t)).toFixed(1);
-  const bottom = (hairpin.y + r * Math.sin(t)).toFixed(1);
-  return <path className="exp__bridge-rail" d={`M ${x} ${top} A ${r} ${r} 0 0 ${hairpin.dir > 0 ? 1 : 0} ${x} ${bottom}`} />;
+/** Ícones do cenário, desenhados a partir do pé (0, 0). Traço e preenchimento vêm do SCSS. */
+const ICONS = {
+  tree: 'M 0 0 V -8 M 0 -8 m -8 -7 a 8 8 0 1 0 16 0 a 8 8 0 1 0 -16 0',
+  pine: 'M 0 0 V -6 M -7 -6 L 0 -24 L 7 -6 Z',
+  cactus: 'M 0 0 V -21 M 0 -7 H -6 V -14 M 0 -10 H 6 V -17',
+  rock: 'M -8 0 L -5 -6 L 3 -8 L 8 0 Z',
+  lamp: 'M 0 0 V -24 H -9',
+} as const;
+
+/**
+ * Cenário de `buildRoad`: vai na estrada (some com ela, à frente do carro) e, o que cobre o
+ * carro — morro do túnel, tabuleiro do viaduto —, de novo por cima dele (Experience).
+ */
+export function Scene({ items }: { items: Scenery[] }) {
+  return (
+    <>
+      {items.map((it, i) => {
+        if (it.kind === 'path') return <path key={i} className={`exp__sc exp__sc--${it.cls}`} d={it.d} />;
+        if (it.kind === 'deck') return <BridgeDeck key={i} {...it} />;
+        return (
+          <g key={i} className={`exp__sc exp__sc--${it.icon}`} transform={`translate(${it.x.toFixed(1)} ${it.y.toFixed(1)})${it.flip ? ' scale(-1 1)' : ''}`}>
+            <path d={ICONS[it.icon]} />
+            {it.icon === 'lamp' && <circle cx={-9} cy={-22} r={2.4} />}
+          </g>
+        );
+      })}
+    </>
+  );
 }
 
 /** Folga lateral da faixa com máscara: os rótulos dos marcos não podem ser cortados por ela. */
 const FOG_BLEED = 220;
 
-function Road({ d, width, height, markers, narrow, fog, bridge, hairpin }: RoadProps) {
+function Road({ d, width, height, markers, narrow, fog, scenery }: RoadProps) {
   if (!d || width <= 0 || height <= 0) return null;
   const lane = narrow ? ROAD_W.narrow : ROAD_W.wide;
   const art = (
@@ -109,8 +120,7 @@ function Road({ d, width, height, markers, narrow, fog, bridge, hairpin }: RoadP
         strokeWidth={narrow ? 1.5 : 2.5}
         strokeDasharray={(narrow ? DASH.narrow : DASH.wide).join(' ')}
       />
-      {bridge && <BridgeDeck {...bridge} />}
-      {hairpin && guardRail(hairpin, lane)}
+      <Scene items={scenery} />
       {markers.map((m) => {
         const dir = m.side === 'left' ? -1 : 1;
         const tick = lane / 2 + (narrow ? 5 : 9);

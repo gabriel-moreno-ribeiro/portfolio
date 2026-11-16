@@ -20,8 +20,14 @@ $exp-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   --exp-stop-h: 340px; // was 560: too much road between one job and the next
   --exp-lead: 140px;
   --exp-tail: 120px;
-  // Respiro acima da parada que vem depois de uma manobra (curva fechada, laço).
-  --exp-room: 90px;
+  // Respiro acima da parada a que cada manobra chega (ver `featureAt` em geometry.ts): é onde
+  // ela acontece, e a rolagem que o carro tem para percorrê-la sem correr.
+  --exp-room-esses: 125px;
+  --exp-room-switchback: 730px;
+  --exp-room-river: 60px;
+  --exp-room-roundabout: 250px;
+  --exp-room-tunnel: 232px;
+  --exp-room-clover: 290px;
   // Onde o trilho do odômetro começa: abaixo do título.
   --exp-odo-top: 180px;
   // Cards alternam de lado e a estrada serpenteia entre eles. 56px = vão de 32px até a borda
@@ -180,7 +186,7 @@ $exp-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   opacity: 0.55;
 }
 
-// Viaduto do laço: tabuleiro opaco (tapa a estrada de baixo) e guarda-corpo.
+// Viaduto do trevo: tabuleiro opaco (tapa a estrada de baixo) e guarda-corpo.
 .exp__bridge {
   .exp__road-bed,
   .exp__road-edge {
@@ -193,8 +199,9 @@ $exp-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   stroke: var(--bg);
 }
 
-// Guarda-corpo do viaduto e defensa da curva fechada.
-.exp__bridge-rail {
+// Guarda-corpo do viaduto e da ponte, defensa dos cotovelos da serra.
+.exp__bridge-rail,
+.exp__sc--rail {
   fill: none;
   stroke: color-mix(in srgb, var(--fg) 34%, transparent);
   stroke-width: 2;
@@ -202,9 +209,80 @@ $exp-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   stroke-linejoin: round;
 }
 
-// O mesmo tabuleiro por cima do carro (dentro de .exp__car-layer, depois dele). O JS liga
-// `is-over` quando o carro vai cruzar por baixo; é troca seca, longe do viaduto.
-.exp__bridge-over {
+// ── Cenário das manobras (Scene, em Road.tsx) ────────────────────────────────
+// Desenho chapado, só com os tokens do tema; discreto: quem manda na página são os cards.
+.exp__sc {
+  fill: none;
+  stroke: color-mix(in srgb, var(--fg) 32%, transparent);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+// Zebra por dentro das curvas da chicane.
+.exp__sc--kerb {
+  stroke: var(--accent-decor);
+  stroke-width: 5;
+  stroke-linecap: butt;
+  stroke-dasharray: 7 7;
+  opacity: 0.75;
+}
+
+// Rio: leito claro e fios d'água.
+.exp__sc--wash {
+  fill: color-mix(in srgb, var(--fg) 6%, transparent);
+  stroke: none;
+}
+
+// Linha de chegada antes da última parada.
+.exp__sc--flag {
+  fill: color-mix(in srgb, var(--fg) 46%, transparent);
+  stroke: none;
+}
+
+.exp__sc--water {
+  stroke: color-mix(in srgb, var(--fg) 26%, transparent);
+  stroke-dasharray: 46 12;
+}
+
+.exp__sc--pier {
+  stroke: color-mix(in srgb, var(--fg) 34%, transparent);
+  stroke-width: 6;
+  stroke-linecap: butt;
+}
+
+// Opacos, da cor da página com um tom do texto: o morro tapa a estrada que entra nele.
+.exp__sc--island,
+.exp__sc--hill,
+.exp__sc--tree path,
+.exp__sc--pine path,
+.exp__sc--rock path {
+  fill: color-mix(in srgb, var(--fg) 7%, var(--bg));
+}
+
+// Boca do túnel: um buraco, mais escuro que o morro nos dois temas.
+.exp__sc--portal {
+  fill: color-mix(in srgb, var(--fg) 46%, var(--bg));
+  stroke: none;
+
+  [data-theme="dark"] & {
+    fill: var(--bg);
+    stroke: color-mix(in srgb, var(--fg) 32%, transparent);
+  }
+}
+
+.exp__sc--cactus path {
+  stroke-width: 3.5;
+}
+
+.exp__sc--lamp circle {
+  fill: var(--accent-decor);
+  stroke: none;
+}
+
+// O que cobre o carro, de novo por cima dele (dentro de .exp__car-layer, depois do carro). O JS
+// liga `is-over` enquanto o carro passa por baixo; o mesmo desenho já está na estrada, embaixo.
+.exp__cover {
   position: absolute;
   display: block;
   overflow: visible;
@@ -337,12 +415,12 @@ a.exp__d20-link:visited {
 
 .exp__d20--right {
   .exp__d20-lead { left: 20px; transform: rotate(40deg); }
-  .exp__d20-text { left: 52px; }
+  .exp__d20-text { left: 56px; } // 32 px da borda da estrada (meia-largura 24)
 }
 
 .exp__d20--left {
   .exp__d20-lead { right: 20px; transform: rotate(-40deg); }
-  .exp__d20-text { right: 52px; text-align: right; }
+  .exp__d20-text { right: 56px; text-align: right; }
 }
 
 // Mobile: acima do 1º card (abaixo do último sob reduced-motion), fio vertical até o carro.
@@ -538,7 +616,12 @@ a.exp__d20-link:visited {
 
   &--left { justify-content: flex-start; }
   &--right { justify-content: flex-end; }
-  &--room { margin-top: var(--exp-room); }
+  &--after-esses { margin-top: var(--exp-room-esses); }
+  &--after-switchback { margin-top: var(--exp-room-switchback); }
+  &--after-river { margin-top: var(--exp-room-river); }
+  &--after-roundabout { margin-top: var(--exp-room-roundabout); }
+  &--after-tunnel { margin-top: var(--exp-room-tunnel); }
+  &--after-clover { margin-top: var(--exp-room-clover); }
 
   &:focus-visible .exp__card,
   &.is-arrived .exp__card, // came from this city on the globe
@@ -704,7 +787,13 @@ a.exp__card-cta:visited {
     --exp-stop-h: 300px;
     --exp-lead: 200px;
     --exp-tail: 120px;
-    --exp-room: 0px; // sem manobras na faixa estreita
+    // sem manobras na faixa estreita
+    --exp-room-esses: 0px;
+    --exp-room-switchback: 0px;
+    --exp-room-river: 0px;
+    --exp-room-roundabout: 0px;
+    --exp-room-tunnel: 0px;
+    --exp-room-clover: 0px;
     --exp-odo-top: 130px;
     // 80px = faixa da estrada: ápice em x = 50 + meia-largura (18/2 + 1) + vão de 20px.
     --exp-card-w: calc(100% - 80px);

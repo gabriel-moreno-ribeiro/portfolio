@@ -6,15 +6,16 @@ import useIsMobile from '../../../hooks/useIsMobile';
 import Car, { type CarHandle } from './Car';
 import CityPin from './CityPin';
 import Odometer from './Odometer';
-import Road, { BridgeDeck, type RoadMarker } from './Road';
+import Road, { Scene, type RoadMarker } from './Road';
 import Stop from './Stop';
 import { CAR_SCREEN, CARD_GAP, buildRoad, cardSide, carTargetS, featureAt, nearestStop, roadHalf, roadLookup, type RoadGeom, type StopAnchor } from './geometry';
 import './experience.scss';
 
 /**
  * Professional Experience — uma estrada que desce a página, com uma parada por cargo. No
- * desktop ela faz uma curva fechada e um laço com viaduto no caminho (ver `buildRoad`); o
- * carro é levado por distância ao longo dela, não por altura.
+ * desktop cada trecho entre duas paradas é uma manobra diferente (chicane, serra, ponte,
+ * rotatória, túnel, trevo: ver `buildRoad`); o carro é levado por distância ao longo dela, não
+ * por altura.
  *
  * O conteúdo é HTML comum (`<ol>` de `<li>` com `<h3>`) e já está no estado final: estrada e
  * carro são decoração `aria-hidden` por cima. A geometria da estrada é medida da caixa real
@@ -107,7 +108,8 @@ export default function Experience() {
         stopYs: ys,
         stopXs: stops.map((st) => st.x),
         cards,
-        litWindowPx: spacing * 0.38,
+        // As paradas ficaram mais longe umas das outras (as manobras): a janela não cresce junto.
+        litWindowPx: Math.min(150, spacing * 0.38),
       });
     };
 
@@ -132,7 +134,7 @@ export default function Experience() {
     const stopS = lookup.stopS;
     const firstS = stopS[0] ?? 0;
     const lastS = stopS[stopS.length - 1] ?? 0;
-    const deck = section.querySelector<HTMLElement>('.exp__bridge-over');
+    const covers = Array.from(section.querySelectorAll<SVGElement>('.exp__cover'));
     // Janelas da névoa (ver Road): par [janela, estrada dentro dela], movidos só por transform.
     const fogSolid = section.querySelector<HTMLElement>('.exp__road-win--solid');
     const fogBand = section.querySelector<HTMLElement>('.exp__road-win--fog');
@@ -141,7 +143,7 @@ export default function Experience() {
     const odo = section.querySelector<HTMLElement>('.exp__odo');
     const note = noteRef.current;
     const fogAhead = narrow ? FOG_AHEAD.narrow : FOG_AHEAD.wide;
-    const prev = { lit: -2, year: '', atLast: null as boolean | null, fog: Number.NaN, gone: false, away: null as boolean | null, over: null as boolean | null };
+    const prev = { lit: -2, year: '', atLast: null as boolean | null, fog: Number.NaN, gone: false, away: null as boolean | null, over: [] as boolean[] };
     // Rolagem suavizada: é ela, e não o scroll cru, que posiciona o carro. `t` = último quadro,
     // para o lerp valer o mesmo em 60, 120 ou 30 Hz.
     const motion = { scrolled: Number.NaN, previous: 0, t: 0 };
@@ -209,7 +211,7 @@ export default function Experience() {
       motion.previous = motion.scrolled;
       // Distância ao longo da estrada: o carro para rente a cada card quando ele está no
       // meio da tela (ver `carTargetS`).
-      const s = reduced ? lastS : carTargetS(motion.scrolled + CAR_SCREEN * vh, road.stopYs, stopS);
+      const s = reduced ? lastS : carTargetS(motion.scrolled + CAR_SCREEN * vh, road.stopYs, lookup);
       const { index, distance } = nearestStop(s, stopS);
       const litIndex = distance <= road.litWindowPx ? index : -1;
       const atLast = s >= lastS - 0.5;
@@ -234,12 +236,15 @@ export default function Experience() {
         fogBandArt.style.transform = `translate3d(0, ${-fogY}px, 0)`;
         prev.fog = fogY;
       }
-      // Viaduto: na 1ª passagem o carro vai por cima; depois de meia volta no laço o tabuleiro
-      // passa a ser desenhado sobre ele, e o carro cruza por baixo.
-      const over = s >= lookup.overS;
-      if (deck && over !== prev.over) {
-        deck.classList.toggle('is-over', over);
-        prev.over = over;
+      // Morro do túnel, tabuleiro do viaduto: desenhados de novo sobre o carro só enquanto ele
+      // passa por baixo (no viaduto, da meia volta do laço em diante; antes ele vai por cima).
+      for (let k = 0; k < covers.length; k++) {
+        const cover = road.covers[k];
+        const over = !!cover && s >= cover.from && s < cover.to;
+        if (over !== prev.over[k]) {
+          covers[k].classList.toggle('is-over', over);
+          prev.over[k] = over;
+        }
       }
       // A legenda da D-20 sai assim que o carro deixa a 1ª parada.
       const gone = !reduced && s - firstS > NOTE_HIDE_PX;
@@ -343,12 +348,6 @@ export default function Experience() {
     return { side, style };
   }, [road, reduced, narrow]);
 
-  // Viaduto: posição, direção e a distância na estrada (para o tracejado do tabuleiro casar).
-  const bridge = useMemo(
-    () => (road?.bridge ? { x: road.bridge.x, y: road.bridge.y, angle: road.bridge.angle, s: roadLookup(road).deckS } : null),
-    [road],
-  );
-
   // Onde a estrada começa a se apagar no 1º render (o rAF assume dali em diante). Sob
   // reduced-motion não há apagamento: a estrada inteira fica à vista.
   const fog = useMemo(() => {
@@ -395,8 +394,7 @@ export default function Experience() {
           markers={markers}
           narrow={narrow}
           fog={fog}
-          bridge={bridge}
-          hairpin={road.hairpin}
+          scenery={road.scenery}
         />
       )}
       <div className="exp__car-layer" aria-hidden="true">
@@ -408,20 +406,21 @@ export default function Experience() {
           active={near}
           entered={entered}
         />
-        {/* O tabuleiro do viaduto de novo, por cima do carro: só aparece (`is-over`) quando o
-            carro vai cruzar por baixo. */}
-        {bridge && (
+        {/* O que cobre o carro (morro do túnel, tabuleiro do viaduto), de novo por cima dele:
+            só aparece (`is-over`) enquanto ele passa por baixo. */}
+        {road?.covers.map(({ art, box }, i) => (
           <svg
-            className="exp__bridge-over"
-            style={{ left: bridge.x - BRIDGE_BOX / 2, top: bridge.y - BRIDGE_BOX / 2 }}
-            width={BRIDGE_BOX}
-            height={BRIDGE_BOX}
-            viewBox={`${-BRIDGE_BOX / 2} ${-BRIDGE_BOX / 2} ${BRIDGE_BOX} ${BRIDGE_BOX}`}
+            key={i}
+            className="exp__cover"
+            style={{ left: box.x, top: box.y }}
+            width={box.w}
+            height={box.h}
+            viewBox={`${box.x} ${box.y} ${box.w} ${box.h}`}
             focusable="false"
           >
-            <BridgeDeck x={0} y={0} s={bridge.s} angle={bridge.angle} />
+            <Scene items={art} />
           </svg>
-        )}
+        ))}
       </div>
 
       {note && (
@@ -443,7 +442,7 @@ export default function Experience() {
             entry={entry}
             side={cardSide(i)}
             cta={i === entries.length - 1}
-            room={i > 0 && featureAt(i - 1, entries.length) !== null}
+            room={featureAt(i - 1, entries.length)}
           />
         ))}
       </ol>
@@ -463,8 +462,6 @@ const ODO_AWAY = 0.35;
 const NOTE_INSET = 28;
 /** Duração de referência de um quadro para K_SCROLL (60 Hz). */
 const FRAME_MS = 1000 / 60;
-/** Lado, em px, da caixa do tabuleiro do viaduto desenhado por cima do carro. */
-const BRIDGE_BOX = 120;
 /** Quanto o carro anda depois da 1ª parada até a legenda da D-20 sair. */
 const NOTE_HIDE_PX = 18;
 

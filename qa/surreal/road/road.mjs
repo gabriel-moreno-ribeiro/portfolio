@@ -2,7 +2,9 @@
  * QA da estrada da seção Experience.
  *   node qa/surreal/road/road.mjs bench [label]   → tempo de quadro sob CPU 4× + trilha do carro
  *   node qa/surreal/road/road.mjs shots           → capturas (1440 claro/escuro, 390, reduced-motion)
- *   node qa/surreal/road/road.mjs layout          → alturas e sobreposição estrada × texto por largura
+ *   node qa/surreal/road/road.mjs layout          → alturas e vão estrada/cenário × texto por largura (REDUCED=1: reduced-motion)
+ *   node qa/surreal/road/road.mjs moments [nome]  → cada manobra em 4 momentos (claro) e 1 (escuro)
+ *   node qa/surreal/road/road.mjs full [larguras] [dark] → a seção inteira numa imagem por largura
  * Servidor de dev já rodando em :5173.
  */
 import { chromium } from 'playwright';
@@ -11,7 +13,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
-const OUT = process.env.OUT ? path.join(HERE, process.env.OUT) : HERE;
+const OUT = process.env.OUT ? path.resolve(HERE, process.env.OUT) : HERE;
 fs.mkdirSync(OUT, { recursive: true });
 const URL_ = 'http://localhost:5173/#work-experience';
 const mode = process.argv[2] ?? 'bench';
@@ -119,7 +121,7 @@ if (mode === 'bench') {
     // Seção na tela do começo ao fim: o que se mede é ela, não as vizinhas montando.
     const range = { from: b.top - 200, to: b.top + b.height - b.vh + 200 };
     await run(page, 3000, range); // aquecimento: sprites decodificados, vizinhas montadas
-    for (const speed of [2000, 400]) {
+    for (const speed of [2000, 1500, 400]) {
       await page.evaluate((y) => scrollTo({ top: y, behavior: 'instant' }), range.from);
       await page.waitForTimeout(1500);
       const m0 = await metrics();
@@ -183,9 +185,9 @@ if (mode === 'shots') {
     { tag: '1440-light', vp: { width: 1440, height: 900 }, step: 400 },
     { tag: '1440-dark', vp: { width: 1440, height: 900, dark: true }, count: 6 },
     { tag: '390-light', vp: { width: 390, height: 844 }, step: 500 },
-    { tag: '1280-light', vp: { width: 1280, height: 720 }, count: 5 },
-    { tag: '1024-light', vp: { width: 1024, height: 768 }, count: 6 },
-    { tag: '768-light', vp: { width: 768, height: 1024 }, count: 5 },
+    { tag: '1280-light', vp: { width: 1280, height: 720 }, count: 8 },
+    { tag: '1024-light', vp: { width: 1024, height: 768 }, count: 8 },
+    { tag: '768-light', vp: { width: 768, height: 1024 }, count: 7 },
     { tag: '360-light', vp: { width: 360, height: 740 }, count: 3 },
     { tag: '390-dark', vp: { width: 390, height: 844, dark: true }, count: 3 },
     { tag: '1440-reduced', vp: { width: 1440, height: 900, reduced: true }, count: 4 },
@@ -219,7 +221,7 @@ if (mode === 'shots') {
 
 if (mode === 'layout') {
   for (const width of [1440, 1280, 1024, 768, 390, 360]) {
-    const { ctx, page, errors } = await open({ width, height: width < 700 ? 844 : 900 });
+    const { ctx, page, errors } = await open({ width, height: width < 700 ? 844 : 900, reduced: !!process.env.REDUCED });
     const b = await box(page);
     const road = await pathSamples(page);
     const info = await page.evaluate(({ pts, lane }) => {
@@ -241,6 +243,23 @@ if (mode === 'layout') {
         }
         return `${r.n} → ${min.toFixed(0)}px`;
       });
+      // cenário (traços amostrados, ícones e viaduto pela caixa) × caixas de texto
+      const scene = [];
+      for (const el of s.querySelector('.exp__road').querySelectorAll('.exp__sc, .exp__bridge')) {
+        if (el.tagName === 'path') {
+          const n = Math.ceil(el.getTotalLength() / 5);
+          for (let i = 0; i <= n; i++) { const q = el.getPointAtLength(i * 5); scene.push([q.x - 1, q.y - 1, q.x + 1, q.y + 1]); }
+        } else {
+          const r = el.getBoundingClientRect();
+          scene.push([r.left - sb.left, r.top - sb.top, r.right - sb.left, r.bottom - sb.top]);
+        }
+      }
+      let sceneGap = Infinity, sceneAt = '';
+      for (const r of rects) for (const q of scene) {
+        const d = Math.hypot(Math.max(r.l - q[2], 0, q[0] - r.r), Math.max(r.t - q[3], 0, q[1] - r.b));
+        if (d < sceneGap) { sceneGap = d; sceneAt = `${r.n} @ ${Math.round(q[0])},${Math.round(q[1])}`; }
+      }
+      const sx = scene.flatMap((q) => [q[0], q[2]]);
       const xs = pts.map((p) => p[0]);
       const de = document.documentElement;
       // estrada por px de rolagem em cada trecho (parada a parada)
@@ -250,6 +269,7 @@ if (mode === 'layout') {
       return {
         ratios,
         gaps,
+        scenery: scene.length ? `${scene.length} peças · mais perto de texto: ${sceneGap.toFixed(0)}px (${sceneAt}) · x ${Math.round(Math.min(...sx))}..${Math.round(Math.max(...sx))} de ${Math.round(sb.width)}` : 'nenhum',
         roadX: [Math.min(...xs) - half, Math.max(...xs) + half].map((v) => Math.round(v + sb.left)),
         hScroll: de.scrollWidth > de.clientWidth,
         scrollWidth: de.scrollWidth,
@@ -262,7 +282,8 @@ if (mode === 'layout') {
 }
 
 if (mode === 'full') {
-  // Estrada inteira (reduced-motion: sem névoa), em fatias de 1100 px da seção.
+  // Estrada inteira (reduced-motion: sem névoa): uma imagem por largura, `full-<largura>.png`.
+  // SLICES=1 grava também fatias de 1100 px (`full-<largura>-<n>.png`), para olhar de perto.
   for (const width of (process.argv[3] ?? '1440').split(',').map(Number)) {
     const { ctx, page, errors } = await open({ width, height: 900, reduced: true, dark: process.argv[4] === 'dark' });
     const b = await box(page);
@@ -270,11 +291,13 @@ if (mode === 'full') {
     await page.waitForTimeout(1200);
     const b2 = await box(page);
     const pad = width >= 1270 ? 160 : 8;
-    for (let y = 0, i = 0; y < b2.height - 300; y += 850, i++) {
-      await page.screenshot({
-        path: path.join(OUT, `full-${width}${process.argv[4] === 'dark' ? '-dark' : ''}-${i}.png`),
-        clip: { x: Math.max(0, b2.left - pad), y: b2.top + y, width: Math.min(width, b2.width + 2 * pad), height: Math.min(1100, b2.height - y) },
-      });
+    const tag = `full-${width}${process.argv[4] === 'dark' ? '-dark' : ''}`;
+    const clip = (y, height) => ({ x: Math.max(0, b2.left - pad), y: b2.top + y, width: Math.min(width, b2.width + 2 * pad), height });
+    await page.screenshot({ path: path.join(OUT, `${tag}.png`), clip: clip(0, b2.height) });
+    if (process.env.SLICES) {
+      for (let y = 0, i = 0; y < b2.height - 300; y += 850, i++) {
+        await page.screenshot({ path: path.join(OUT, `${tag}-${i}.png`), clip: clip(y, Math.min(1100, b2.height - y)) });
+      }
     }
     console.log(width, 'section', Math.round(b2.width), 'x', Math.round(b2.height), 'errors:', errors.length ? errors : 'none');
     await ctx.close();
@@ -282,7 +305,10 @@ if (mode === 'full') {
 }
 
 if (mode === 'moments') {
-  // Os momentos da curva fechada (trecho 2→3) e do laço (trecho 5→6), em frações da rolagem do trecho.
+  // Cada manobra (trecho entre duas paradas) em frações da rolagem do trecho: 4 momentos no
+  // claro, 1 no escuro. `node road.mjs moments [nome]` filtra por manobra.
+  const FEATURES = ['esses', 'switchback', 'river', 'roundabout', 'tunnel', 'clover'];
+  const only = process.argv[3];
   for (const dark of [false, true]) {
     const { ctx, page, errors } = await open({ width: 1440, height: 900, dark });
     const b = await box(page);
@@ -291,11 +317,11 @@ if (mode === 'moments') {
       const t = s.getBoundingClientRect().top;
       return [...s.querySelectorAll('.exp__stop')].map((li) => { const r = li.getBoundingClientRect(); return r.top - t + r.height / 2; });
     });
-    const plan = dark ? [['loop', 4, [0.6, 0.76]]] : [['hairpin', 1, [0.3, 0.5, 0.64, 0.8]], ['loop', 4, [0.3, 0.45, 0.6, 0.7, 0.76, 0.85]]];
-    for (const [name, seg, us] of plan) {
+    for (const [seg, name] of FEATURES.entries()) {
+      if (only && name !== only) continue;
       await page.evaluate((v) => scrollTo({ top: v, behavior: 'instant' }), b.top + ys[seg] - b.vh / 2 - 60);
       await page.waitForTimeout(900);
-      for (const u of us) {
+      for (const u of dark ? [0.55] : [0.25, 0.45, 0.65, 0.85]) {
         const target = b.top + ys[seg] + (ys[seg + 1] - ys[seg]) * u - b.vh / 2;
         const cur = await page.evaluate(() => scrollY);
         for (let k = 1; k <= 10; k++) {
