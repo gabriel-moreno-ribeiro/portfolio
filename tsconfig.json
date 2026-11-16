@@ -17,7 +17,9 @@
     "noFallthroughCasesInSwitch": true,
     "allowJs": true,
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".",
+    "paths": { "@/*": ["./src/*"] }
   },
   "include": ["src", "api"],
   "exclude": ["node_modules", "dist", "src/components/ReactBits"],

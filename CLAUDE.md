@@ -1,6 +1,6 @@
 # Project: gabrielmr.com (Portfolio)
 
-Tech stack: React 19 + Vite + TypeScript + SCSS (no Tailwind). motion/react v12+ for animations. React Three Fiber + Three.js for 3D. Deployed on Vercel.
+Tech stack: React 19 + Vite + TypeScript + SCSS. Tailwind v4 only for `src/components/ui` (shadcn-style) and bklit-ui charts (`src/components/charts`), scoped by `src/styles/tailwind.css`, wrap bklit charts in `.bk`; no preflight; never use Tailwind for site UI. motion/react v12+ for animations. React Three Fiber + Three.js for 3D. Deployed on Vercel.
 
 ## Behavioral Guidelines (Karpathy)
 
