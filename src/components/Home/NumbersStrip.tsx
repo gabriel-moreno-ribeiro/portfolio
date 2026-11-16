@@ -3,10 +3,11 @@ import { medals } from "../../content/medals";
 import useIsMobile from "../../hooks/useIsMobile";
 import { Counter, usePageVisible, useReducedMotion, useVisible } from "../../lib/motion";
 import { MAP_H, MAP_W, SALVADOR, STATES } from "./Numbers/brazilMap";
+import SchoolScene from "./Numbers/SchoolScene";
 import "../../styles/components/home/numbersStrip.scss";
 
 // The numbers the rest of the section doesn't already show, each as a drawing:
-// a town of the 28 schools, the real medals on a rail, a map of where the laptops went.
+// one of the 28 schools, the real medals in a case, a map of where the laptops went.
 const STUDENTS = 3392;
 const BAHIA = 17; // schools, as in the Candela story above (Bahia 17, Ceará 11)
 const CEARA = 11;
@@ -23,11 +24,6 @@ const isInternational = (k: number) => medals[k].fullName?.includes("Internacion
 const INTERNATIONAL = medals.filter((_, k) => isInternational(k)).length;
 
 const delay = (n: number) => ({ "--i": n }) as CSSProperties;
-// A steady pseudo-random number per index, so the drawing is the same on every render.
-const rand = (n: number) => {
-  const s = Math.sin(n * 12.9898) * 43758.5453;
-  return s - Math.floor(s);
-};
 
 // Pointer and arrow keys pick one mark of a drawing; Escape or leaving clears it.
 const pick = (set: (k: number | null) => void) => (e: PointerEvent) => {
@@ -46,103 +42,19 @@ const stepper = (at: number | null, n: number, set: (k: number | null) => void) 
   set(at === null ? (by > 0 ? 0 : n - 1) : (at + by + n) % n);
 };
 
-// ── 28 schoolhouses ─────────────────────────────────────────────────────────
-// Rows are [first x, pitch, how many, ground y]; Bahia's come first.
-type Row = [number, number, number, number];
-type Tag = { text: string; x: number; y: number; bracket?: [number, number] };
-type Plan = { w: number; h: number; rows: Row[]; kit: [number, number]; arc?: string; tags: Tag[] };
-const TOWN: Plan = {
-  w: 600, h: 152,
-  rows: [[92, 32, 9, 58], [108, 32, 8, 113], [402, 32, 6, 58], [418, 32, 5, 113]],
-  kit: [12, 72],
-  arc: "M36 64C110 2 430 -6 574 26",
-  tags: [
-    { text: `BAHIA · ${BAHIA}`, x: 220, y: 147, bracket: [78, 362] },
-    { text: `CEARÁ · ${CEARA}`, x: 482, y: 147, bracket: [388, 576] },
-  ],
-};
-const TOWN_PHONE: Plan = {
-  w: 340, h: 192,
-  rows: [[66, 32, 9, 46], [82, 32, 8, 97], [20, 30, 11, 172]],
-  kit: [4, 62],
-  tags: [{ text: `BAHIA · ${BAHIA}`, x: 4, y: 11 }, { text: `CEARÁ · ${CEARA}`, x: 4, y: 128 }],
-};
-const spots = (plan: Plan) => plan.rows.flatMap(([x0, pitch, count, y]) => Array.from({ length: count }, (_, k) => [x0 + k * pitch, y]));
 if (import.meta.env.DEV) {
-  console.assert(spots(TOWN).length === BAHIA + CEARA && spots(TOWN_PHONE).length === BAHIA + CEARA, "NumbersStrip: the town must have every school");
   console.assert(medals.length + 10 === OLYMPIADS && INTERNATIONAL === 5 && REACHED.length === 21, "NumbersStrip: the drawings must match the stated numbers");
 }
 
-// Three kinds of schoolhouse: gabled, long and low, two floors.
-const WALL = [[22, 15, 9], [26, 12, 6], [20, 20, 7]];
-function House({ x, y, n }: { x: number; y: number; n: number }) {
-  const v = n % 3;
-  const [w, h, roof] = WALL[v];
-  const top = y - h;
-  const win = (wx: number, wy: number) => `M${wx - 1.5} ${wy}h3v3h-3z`;
-  const side = v === 1 ? 8 : 6.5;
+// ── One school of the 28 ────────────────────────────────────────────────────
+function Schools({ phone }: { phone: boolean }) {
   return (
-    <g className="ns-town__house" style={delay(Math.round(x / 22))}>
-      <rect className="ns-paper" x={x - w / 2} y={top} width={w} height={h} rx={1} />
-      <path className="ns-ink" d={v === 1 ? `M${x - w / 2 - 2} ${top}l4 ${-roof}h${w - 4}l4 ${roof}z` : `M${x - w / 2 - 2} ${top}L${x} ${top - roof}L${x + w / 2 + 2} ${top}z`} />
-      <path className="ns-orange" d={`M${x - 2} ${y - 0.6}v-4.4a2 2 0 0 1 4 0v4.4z`} />
-      <path className="ns-ink" d={win(x - side, top + 3.5) + win(x + side, top + 3.5) + (v === 2 ? win(x - side, top + 11.5) + win(x + side, top + 11.5) : "")} />
-      {n % 2 === 0 && (
-        <>
-          <path className="ns-line" d={`M${x} ${top - roof}v-7`} />
-          <path className="ns-orange" d={`M${x} ${top - roof - 7}l5 1.8l-5 1.8z`} />
-        </>
-      )}
-    </g>
-  );
-}
-
-// A few pupils at each door: a head and a body, some with an orange backpack.
-function Pupils({ x, y, n }: { x: number; y: number; n: number }) {
-  let ink = "";
-  let packs = "";
-  const count = 3 + (rand(n) > 0.55 ? 1 : 0);
-  for (let k = 0; k < count; k++) {
-    const px = Math.round((x - 3.4 * (count - 1) + k * 6.8 + rand(n * 7 + k) * 1.4) * 10) / 10;
-    const py = Math.round((y + 14 + rand(n * 13 + k) * 3) * 10) / 10;
-    ink += `M${px - 2.2} ${py - 8}a2.2 2.2 0 1 0 4.4 0a2.2 2.2 0 1 0-4.4 0M${px - 2.6} ${py}v-3.4a2.6 2.6 0 0 1 5.2 0v3.4z`;
-    if (rand(n * 3 + k) < 0.3) packs += `M${px - 4.1} ${py - 5}h2.1v3.4h-2.1z`;
-  }
-  return (
-    <g className="ns-town__pupils" style={delay(Math.round(x / 22))}>
-      <path className="ns-ink" d={ink} />
-      {packs && <path className="ns-orange" d={packs} />}
-    </g>
-  );
-}
-
-function Town({ phone }: { phone: boolean }) {
-  const plan = phone ? TOWN_PHONE : TOWN;
-  const [kx, ky] = plan.kit;
-  return (
-    <div className="numbers-strip__art" aria-hidden="true" style={{ aspectRatio: `${plan.w} / ${plan.h}` }}>
-      <svg className="ns-town" viewBox={`0 0 ${plan.w} ${plan.h}`}>
-        {plan.rows.map(([x0, pitch, count, y], r) => <path key={r} className="ns-ground" d={`M${x0 - 20} ${y}H${x0 + (count - 1) * pitch + 20}`} />)}
-        {plan.arc && (
-          <g className="ns-town__arc">
-            <path className="ns-dash" d={plan.arc} />
-            <path className="ns-ink" d="M576 27l-7.4-0.4l3.4-5.4z" />
-          </g>
-        )}
-        {/* The kit box everything starts from, as in the clay story above. */}
-        <rect className="ns-paper" x={kx} y={ky} width={44} height={22} rx={2} />
-        <path className="ns-line" d={`M${kx} ${ky + 7}h44`} />
-        <rect className="ns-orange" x={kx + 10} y={ky + 11} width={24} height={6} rx={1} />
-        {!phone && <text className="ns-tag" x={kx + 22} y={ky + 35} textAnchor="middle">THE KIT</text>}
-        {spots(plan).map(([x, y], n) => <House key={n} x={x} y={y} n={n} />)}
-        {spots(plan).map(([x, y], n) => <Pupils key={n} x={x} y={y} n={n} />)}
-        {plan.tags.map((t) => (
-          <g key={t.text}>
-            {t.bracket && <path className="ns-bracket" d={`M${t.bracket[0]} ${t.y - 15}v4H${t.bracket[1]}v-4`} />}
-            <text className="ns-tag" x={t.x} y={t.y} textAnchor={t.bracket ? "middle" : "start"}>{t.text}</text>
-          </g>
-        ))}
-      </svg>
+    <div className="numbers-strip__art ns-school-box" aria-hidden="true">
+      <SchoolScene phone={phone} />
+      <p className="ns-school-count">
+        <span><em>× {BAHIA + CEARA}</em> schools</span>
+        <span>{BAHIA} Bahia · {CEARA} Ceará</span>
+      </p>
     </div>
   );
 }
@@ -282,7 +194,7 @@ export default function NumbersStrip() {
     <ul className="numbers-strip" aria-label="By the numbers">
       <Fact
         kind="town"
-        art={<Town phone={phone} />}
+        art={<Schools phone={phone} />}
         value={STUDENTS}
         label="students reached"
         note={<>in {BAHIA + CEARA} public schools in Bahia and Ceará, with Projeto Candela<span className="sr-only"> ({BAHIA} in Bahia, {CEARA} in Ceará)</span></>}

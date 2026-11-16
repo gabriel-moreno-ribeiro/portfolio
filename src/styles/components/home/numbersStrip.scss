@@ -1,4 +1,4 @@
-// By the numbers: three facts, each a drawing (NumbersStrip.tsx). A town of the
+// By the numbers: three facts, each a drawing (NumbersStrip.tsx). One of the
 // 28 schools and the case of medals share the left column; the map of Brazil
 // takes the right one. The drawings are complete by default; `.is-armed` /
 // `.is-in` only stage their arrival.
@@ -101,7 +101,6 @@ $ns-ease: cubic-bezier(0.22, 1, 0.36, 1);
 .ns-paper,
 .ns-line,
 .ns-dash,
-.ns-bracket,
 .ns-ground {
   fill: none;
   stroke: var(--fg);
@@ -111,7 +110,6 @@ $ns-ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 .ns-paper { fill: var(--bg); }
 .ns-dash { stroke-width: 1; stroke-dasharray: 3 3.4; }
-.ns-bracket { stroke: var(--fg-muted); stroke-width: 1; opacity: 0.7; }
 .ns-ground { stroke: var(--border); }
 .ns-tag {
   font-family: $ns-mono;
@@ -185,13 +183,43 @@ $ns-ease: cubic-bezier(0.22, 1, 0.36, 1);
 // Always two lines tall, so a name appearing never moves anything.
 .ns-caption { min-height: 2.7em; margin-top: 2px; text-wrap: balance; }
 
-// ── The town ──────────────────────────────────────────────────────────────────
-.ns-town__house {
-  transform-box: fill-box;
-  transform-origin: 50% 100%;
-  transition: transform 0.3s $ns-ease;
+// ── The school ────────────────────────────────────────────────────────────────
+// Lighter lines than the shared default, to sit with the map and the case.
+// The svg's viewBox gives it its height from the first paint.
+.ns-school-box { position: relative; > svg { height: auto; } }
+.ns-school {
+  .ns-paper, .ns-line { stroke-width: 0.9; }
+  .ns-thin { fill: none; stroke: var(--fg); stroke-width: 0.6; stroke-linecap: round; }
+  &__band { fill: color-mix(in srgb, var(--accent-decor) 20%, var(--bg)); }
+  &__plate { fill: color-mix(in srgb, var(--accent-decor) 55%, var(--bg)); }
+  &__leaves { fill: color-mix(in srgb, var(--fg) 5%, var(--bg)); stroke: var(--fg); stroke-width: 0.9; }
+  &__shade { fill: color-mix(in srgb, var(--fg) 6%, transparent); }
+  &__uniform { fill: color-mix(in srgb, var(--fg) 55%, var(--bg)); }
+  &__pendulum { transform-origin: 230px 148px; }
+}
+// "× 28 schools" in the sky over the flag; under the drawing on a phone.
+.ns-school-count {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  margin: 0;
+  font-family: $ns-mono;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
 
-  &:hover { transform: translateY(-2.5px); }
+  em {
+    margin-right: 4px;
+    font: italic 28px/1 var(--font-serif);
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--accent);
+  }
 }
 
 // The case and the map take the keyboard: Tab in, arrows walk the marks.
@@ -306,24 +334,23 @@ $ns-ease: cubic-bezier(0.22, 1, 0.36, 1);
 // and the keys can move them.
 @media (prefers-reduced-motion: no-preference) {
   .numbers-strip > .is-armed {
-    .ns-town__house,
-    .ns-town__pupils,
-    .ns-town__arc,
+    .ns-school__kid,
+    .ns-school__ball,
+    .ns-school-count,
     .ns-case__well img,
     .ns-map__lit,
     .ns-map__arc { opacity: 0; }
   }
 
   .numbers-strip > .is-in {
-    .ns-town__house {
-      animation: ns-rise 0.5s $ns-ease backwards;
-      animation-delay: calc(var(--i) * 38ms);
+    // The children walk in, the pendulum swings once and settles, the ball rolls down its ramp.
+    .ns-school__kid {
+      animation: ns-walk 0.6s $ns-ease backwards;
+      animation-delay: calc(var(--i) * 45ms);
     }
-    .ns-town__pupils {
-      animation: ns-walk 0.5s $ns-ease backwards;
-      animation-delay: calc(380ms + var(--i) * 38ms);
-    }
-    .ns-town__arc { animation: ns-fade 0.7s ease 0.2s backwards; }
+    .ns-school__pendulum { animation: ns-swing 2.6s ease-in-out 0.5s backwards; }
+    .ns-school__ball { animation: ns-roll 0.9s cubic-bezier(0.5, 0, 0.75, 1) 1s backwards; }
+    .ns-school-count { animation: ns-fade 0.6s ease 1.3s backwards; }
     // Each medal is set into its well, one after another; the empty ones were always there.
     .ns-case__well img {
       animation: ns-set 0.55s $ns-ease backwards;
@@ -341,11 +368,16 @@ $ns-ease: cubic-bezier(0.22, 1, 0.36, 1);
   }
 }
 
-@keyframes ns-rise {
-  from { opacity: 0; transform: scaleY(0.15); }
-  60% { transform: scaleY(1.06); }
+@keyframes ns-walk { from { opacity: 0; transform: translateX(14px); } }
+@keyframes ns-swing {
+  from { transform: rotate(28deg); }
+  20% { transform: rotate(-20deg); }
+  40% { transform: rotate(13deg); }
+  60% { transform: rotate(-7deg); }
+  80% { transform: rotate(3deg); }
 }
-@keyframes ns-walk { from { opacity: 0; transform: translateX(-9px); } }
+// Along the ramp, from its top by the box to where the ball rests (316,173).
+@keyframes ns-roll { from { opacity: 1; transform: translate(-32px, -8.6px); } }
 @keyframes ns-set {
   from { opacity: 0; transform: translateY(-10px) scale(1.25); }
   60% { opacity: 1; transform: translateY(1px) scale(0.97); }
@@ -413,10 +445,7 @@ $ns-ease: cubic-bezier(0.22, 1, 0.36, 1);
     // The cells have no side padding here: keep the pills inside them.
     .ns-key > button { margin: 0 -4px 0 0; padding: 0 9px 0 5px; }
   }
+  .ns-school-count { position: static; flex-direction: row; flex-wrap: wrap; align-items: baseline; gap: 0 10px; margin-top: 6px; }
   .ns-case { padding: 10px; border-radius: 16px; }
   .ns-case__wells { grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 5px; }
-}
-// The narrowest phones shrink the drawings: grow their labels back to 11px.
-@media screen and (max-width: 360px) {
-  .ns-town .ns-tag { font-size: 13px; }
 }

@@ -38,7 +38,7 @@ const SECTIONS = [
 const RESERVE: Record<string, [desktop: number, tablet: number, mobile: number]> = {
   background: [959, 1384, 936],
   wardrobe: [600, 518, 516],
-  work: [3736, 6310, 5155],
+  work: [3728, 6301, 5104],
   research: [2467, 3245, 4081],
   skills: [1000, 1000, 496],
   'work-experience': [5657, 6099, 2883],
