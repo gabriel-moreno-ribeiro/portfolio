@@ -1,0 +1,77 @@
+{
+ "label": "after4",
+ "1440@2000": {
+  "frames": 254,
+  "dt p50/p95/max (ms)": "8.3/9.2/24.8",
+  "longtask max (ms)": 0,
+  "slow frames (ms@section px)": "25@2543 17@2543",
+  "main thread per frame (ms): task/script/layout/style": "6.295/1.406/0.013/0.487",
+  "car step p95/max (px)": "44.9/51.4",
+  "off-lane max (px)": 1.5,
+  "heading jump max (deg)": 48.1,
+  "heading vs tangent p95/max (deg)": "2.9/4.8",
+  "car on screen y min/max (px of viewport)": "91/642",
+  "lane": 46,
+  "roadLength": 4232
+ },
+ "1440@400": {
+  "frames": 913,
+  "dt p50/p95/max (ms)": "8.3/9.2/25.0",
+  "longtask max (ms)": 0,
+  "slow frames (ms@section px)": "25@2543 17@2543",
+  "main thread per frame (ms): task/script/layout/style": "3.926/0.794/0.008/0.388",
+  "car step p95/max (px)": "9.5/11.7",
+  "off-lane max (px)": 1.5,
+  "heading jump max (deg)": 11.6,
+  "heading vs tangent p95/max (deg)": "3.3/5.4",
+  "car on screen y min/max (px of viewport)": "229/655",
+  "lane": 46,
+  "roadLength": 4232
+ },
+ "1440 errors": [],
+ "1440 section": {
+  "top": 16099.9375,
+  "height": 3243.34375,
+  "width": 960,
+  "left": 307,
+  "vh": 900,
+  "doc": 20202
+ },
+ "390@2000": {
+  "frames": 237,
+  "dt p50/p95/max (ms)": "8.3/9.2/16.6",
+  "longtask max (ms)": 0,
+  "slow frames (ms@section px)": "17@2239",
+  "main thread per frame (ms): task/script/layout/style": "3.692/0.805/0.012/0.346",
+  "car step p95/max (px)": "22.7/23.9",
+  "off-lane max (px)": 1.5,
+  "heading jump max (deg)": 11.6,
+  "heading vs tangent p95/max (deg)": "4.1/5.4",
+  "car on screen y min/max (px of viewport)": "187/649",
+  "lane": 18,
+  "roadLength": 2495
+ },
+ "390@400": {
+  "frames": 822,
+  "dt p50/p95/max (ms)": "8.3/9.2/9.4",
+  "longtask max (ms)": 0,
+  "slow frames (ms@section px)": "none",
+  "main thread per frame (ms): task/script/layout/style": "3.227/0.9/0.004/0.263",
+  "car step p95/max (px)": "4.7/5.2",
+  "off-lane max (px)": 1.5,
+  "heading jump max (deg)": 11.6,
+  "heading vs tangent p95/max (deg)": "4.3/5.8",
+  "car on screen y min/max (px of viewport)": "311/646",
+  "lane": 18,
+  "roadLength": 2495
+ },
+ "390 errors": [],
+ "390 section": {
+  "top": 13857.34375,
+  "height": 2883.078125,
+  "width": 358,
+  "left": 16,
+  "vh": 844,
+  "doc": 18272
+ }
+}

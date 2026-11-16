@@ -1,6 +1,7 @@
 import { memo, type CSSProperties } from 'react';
-import { ROAD_W } from './geometry';
-// Estrada decorativa: traço creme-escuro, linha central tracejada laranja e marcos de km.
+import { ROAD_W, type RoadPlan } from './geometry';
+// Estrada decorativa: traço creme-escuro, linha central tracejada laranja, marcos de km, a
+// defensa da curva fechada e o viaduto do laço.
 // Puramente visual — `aria-hidden`. O conteúdo real está no `<ol>` ao lado.
 interface RoadMarker {
   id: string;
@@ -31,12 +32,68 @@ interface RoadProps {
    * Antes, mover o `gradientTransform` do traço re-rasterizava a estrada inteira por quadro.
    */
   fog: { y: number; len: number } | null;
+  bridge: (BridgeAt & { angle: number }) | null;
+  hairpin: RoadPlan['hairpin'];
+}
+
+/** Onde fica o viaduto e a que distância do início da estrada (alinha o tracejado). */
+interface BridgeAt {
+  x: number;
+  y: number;
+  /** px de estrada até o meio do tabuleiro. */
+  s: number;
+}
+
+const DASH = { wide: [18, 22], narrow: [10, 12] } as const;
+
+/** Meio comprimento do tabuleiro do viaduto: cobre a estrada de baixo com folga. */
+const DECK = 34;
+
+/**
+ * Tabuleiro do viaduto: um trecho reto de estrada, opaco (tapa a estrada que passa por baixo),
+ * com guarda-corpo dos dois lados. Vai na estrada e, de novo, por cima do carro (Experience).
+ * O tracejado do tabuleiro começa na mesma fase do tracejado da estrada naquele ponto: os
+ * traços coincidem e a faixa segue sem emenda por cima do viaduto.
+ */
+export function BridgeDeck({ x, y, s, angle }: BridgeAt & { angle: number }) {
+  const lane = ROAD_W.wide;
+  const span = `M ${-DECK} 0 H ${DECK}`;
+  const rail = (side: 1 | -1) => {
+    const h = side * (lane / 2 + 3);
+    return `M ${-DECK - 7} ${h + side * 6} L ${-DECK} ${h} H ${DECK} L ${DECK + 7} ${h + side * 6}`;
+  };
+  return (
+    <g className="exp__bridge" transform={`translate(${x} ${y}) rotate(${angle})`}>
+      <path className="exp__bridge-clear" d={span} strokeWidth={lane + 2} />
+      <path className="exp__road-bed" d={span} strokeWidth={lane} />
+      <path className="exp__road-edge" d={span} strokeWidth={lane + 2} />
+      <path
+        className="exp__road-line"
+        d={span}
+        strokeWidth={2.5}
+        strokeDasharray={DASH.wide.join(' ')}
+        strokeDashoffset={(s - DECK) % (DASH.wide[0] + DASH.wide[1])}
+      />
+      <path className="exp__bridge-rail" d={rail(-1)} />
+      <path className="exp__bridge-rail" d={rail(1)} />
+    </g>
+  );
+}
+
+/** Defensa por fora da curva fechada: um arco no mesmo traço do guarda-corpo do viaduto. */
+function guardRail(hairpin: NonNullable<RoadPlan['hairpin']>, lane: number) {
+  const r = hairpin.r + lane / 2 + 6;
+  const t = (64 * Math.PI) / 180;
+  const x = (hairpin.x + hairpin.dir * r * Math.cos(t)).toFixed(1);
+  const top = (hairpin.y - r * Math.sin(t)).toFixed(1);
+  const bottom = (hairpin.y + r * Math.sin(t)).toFixed(1);
+  return <path className="exp__bridge-rail" d={`M ${x} ${top} A ${r} ${r} 0 0 ${hairpin.dir > 0 ? 1 : 0} ${x} ${bottom}`} />;
 }
 
 /** Folga lateral da faixa com máscara: os rótulos dos marcos não podem ser cortados por ela. */
 const FOG_BLEED = 220;
 
-function Road({ d, width, height, markers, narrow, fog }: RoadProps) {
+function Road({ d, width, height, markers, narrow, fog, bridge, hairpin }: RoadProps) {
   if (!d || width <= 0 || height <= 0) return null;
   const lane = narrow ? ROAD_W.narrow : ROAD_W.wide;
   const art = (
@@ -50,8 +107,10 @@ function Road({ d, width, height, markers, narrow, fog }: RoadProps) {
         className="exp__road-line"
         d={d}
         strokeWidth={narrow ? 1.5 : 2.5}
-        strokeDasharray={narrow ? '10 12' : '18 22'}
+        strokeDasharray={(narrow ? DASH.narrow : DASH.wide).join(' ')}
       />
+      {bridge && <BridgeDeck {...bridge} />}
+      {hairpin && guardRail(hairpin, lane)}
       {markers.map((m) => {
         const dir = m.side === 'left' ? -1 : 1;
         const tick = lane / 2 + (narrow ? 5 : 9);

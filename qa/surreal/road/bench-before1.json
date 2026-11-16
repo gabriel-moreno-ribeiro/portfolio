@@ -1,0 +1,73 @@
+{
+ "label": "before1",
+ "1440@2000": {
+  "frames": 244,
+  "dt p50/p95/max (ms)": "8.3/9.2/9.3",
+  "longtask max (ms)": 0,
+  "main thread per frame (ms): task/script/layout/style": "5.101/1.181/0.018/0.406",
+  "car step p95/max (px)": "41.5/55.3",
+  "off-lane max (px)": 1.5,
+  "heading jump max (deg)": 11.6,
+  "heading vs tangent p95/max (deg)": "3.4/5.0",
+  "car on screen y min/max (px of viewport)": "-2/648",
+  "lane": 46,
+  "roadLength": 3132
+ },
+ "1440@400": {
+  "frames": 859,
+  "dt p50/p95/max (ms)": "8.3/9.2/9.4",
+  "longtask max (ms)": 0,
+  "main thread per frame (ms): task/script/layout/style": "3.248/0.572/0.007/0.348",
+  "car step p95/max (px)": "10/13.1",
+  "off-lane max (px)": 1.5,
+  "heading jump max (deg)": 11.6,
+  "heading vs tangent p95/max (deg)": "3.5/5.3",
+  "car on screen y min/max (px of viewport)": "303/657",
+  "lane": 46,
+  "roadLength": 3132
+ },
+ "1440 errors": [],
+ "1440 section": {
+  "top": 15991.4375,
+  "height": 3063.34375,
+  "width": 960,
+  "left": 307,
+  "vh": 900,
+  "doc": 19914
+ },
+ "390@2000": {
+  "frames": 236,
+  "dt p50/p95/max (ms)": "8.3/9.3/17.5",
+  "longtask max (ms)": 0,
+  "main thread per frame (ms): task/script/layout/style": "2.332/0.373/0.011/0.176",
+  "car step p95/max (px)": "31.4/37.7",
+  "off-lane max (px)": 1.5,
+  "heading jump max (deg)": 11.6,
+  "heading vs tangent p95/max (deg)": "3.8/5.4",
+  "car on screen y min/max (px of viewport)": "-27/646",
+  "lane": 18,
+  "roadLength": 2495
+ },
+ "390@400": {
+  "frames": 822,
+  "dt p50/p95/max (ms)": "8.3/9.2/9.4",
+  "longtask max (ms)": 0,
+  "main thread per frame (ms): task/script/layout/style": "1.86/0.357/0.005/0.134",
+  "car step p95/max (px)": "6.7/7.7",
+  "off-lane max (px)": 1.5,
+  "heading jump max (deg)": 11.6,
+  "heading vs tangent p95/max (deg)": "4/5.8",
+  "car on screen y min/max (px of viewport)": "277/648",
+  "lane": 18,
+  "roadLength": 2495
+ },
+ "390 errors": [],
+ "390 section": {
+  "top": 13857.34375,
+  "height": 2883.078125,
+  "width": 358,
+  "left": 16,
+  "vh": 844,
+  "doc": 18272
+ }
+}

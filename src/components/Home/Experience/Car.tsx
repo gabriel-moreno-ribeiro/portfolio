@@ -83,11 +83,11 @@ function nearestReady(imgs: HTMLImageElement[], frame: number): HTMLImageElement
 
 export interface CarHandle {
   /**
-   * `y` = altura em px da seção; `speed` = px de rolagem suavizada por quadro (alimenta
-   * a opacidade da sombra).
+   * `s` = distância ao longo da estrada, em px; `speed` = px de rolagem suavizada por quadro
+   * (alimenta a opacidade da sombra).
    * Devolve `true` quando todos os lerps já assentaram (quem chama pode parar o rAF).
    */
-  draw(y: number, speed: number): boolean;
+  draw(s: number, speed: number): boolean;
 }
 
 interface CarProps {
@@ -108,7 +108,7 @@ const Car = forwardRef<CarHandle, CarProps>(function Car({ road, size, reduced, 
   const posterRef = useRef<HTMLImageElement>(null);
   const hazardRef = useRef<HTMLDivElement>(null);
   const imagesRef = useRef<HTMLImageElement[]>([]);
-  const drawRef = useRef<((y: number, speed: number) => boolean) | null>(null);
+  const drawRef = useRef<((s: number, speed: number) => boolean) | null>(null);
   const fxRef = useRef<HTMLDivElement>(null);
   const wheelFxRef = useRef<HTMLDivElement>(null);
   const shadeRef = useRef<HTMLSpanElement>(null);
@@ -116,22 +116,22 @@ const Car = forwardRef<CarHandle, CarProps>(function Car({ road, size, reduced, 
   const wheelBRef = useRef<HTMLSpanElement>(null);
   const stateRef = useRef({
     phase: 0,
-    lastY: -1,
+    lastS: -1,
     lastAngle: 90,
     frame: frameForHeading(90),
     roll: 0,
     wheelRate: 0,
     shade: 0.16,
     drawn: false,
-    y: -1,
+    s: -1,
     speed: 0,
   });
 
   useImperativeHandle(ref, () => ({
-    draw: (y, speed) => {
-      stateRef.current.y = y;
+    draw: (s, speed) => {
+      stateRef.current.s = s;
       stateRef.current.speed = speed;
-      return drawRef.current ? drawRef.current(y, speed) : true;
+      return drawRef.current ? drawRef.current(s, speed) : true;
     },
   }), []);
 
@@ -159,7 +159,7 @@ const Car = forwardRef<CarHandle, CarProps>(function Car({ road, size, reduced, 
         if (cancelled) return;
         const st = stateRef.current;
         // Primeiro desenho, ou o frame em que o carro está parado acabou de ficar pronto.
-        if (st.y >= 0 && (!st.drawn || img === imgs[st.frame])) drawRef.current?.(st.y, st.speed);
+        if (st.s >= 0 && (!st.drawn || img === imgs[st.frame])) drawRef.current?.(st.s, st.speed);
         idle(step);
       };
       (img.decode ? img.decode() : Promise.resolve()).then(next, next);
@@ -254,18 +254,22 @@ const Car = forwardRef<CarHandle, CarProps>(function Car({ road, size, reduced, 
       }
     };
 
-    drawRef.current = (y: number, speed: number): boolean => {
-      const p = lookup.sampleAtY(y);
+    drawRef.current = (s: number, speed: number): boolean => {
+      const p = lookup.at(s);
 
       // Frame do sprite com histerese: só troca quando o vizinho fica melhor que o atual por
-      // mais de FRAME_HYSTERESIS, e no máximo um frame por rAF. Sem isso a tangente oscilando
-      // em torno do meio-caminho entre dois yaws fazia o carro tremer na curva.
+      // mais de FRAME_HYSTERESIS. Sem isso a tangente oscilando em torno do meio-caminho entre
+      // dois yaws fazia o carro tremer na curva. Um frame por rAF; na curva fechada e no laço
+      // a tangente anda mais que isso por quadro, e aí o carro vai direto para o frame da
+      // tangente (senão ele seguiria de lado, atrasado).
       const want = frameForHeading(p.angle);
       if (want !== st.frame) {
         const n = FRAMES.length;
         const dir = (((want - st.frame) % n) + n + n / 2) % n - n / 2;
         const next = (st.frame + (dir > 0 ? 1 : -1) + n) % n;
-        if (angleDelta(FRAMES[next].heading, p.angle) + FRAME_HYSTERESIS < angleDelta(FRAMES[st.frame].heading, p.angle)) {
+        if (Math.abs(dir) > 1) {
+          st.frame = want;
+        } else if (angleDelta(FRAMES[next].heading, p.angle) + FRAME_HYSTERESIS < angleDelta(FRAMES[st.frame].heading, p.angle)) {
           st.frame = next;
         }
       }
@@ -285,8 +289,8 @@ const Car = forwardRef<CarHandle, CarProps>(function Car({ road, size, reduced, 
       }
 
       // Rodas: a taxa de giro também é amaciada, então o giro não engasga quando o frame troca.
-      const travel = Math.abs(y - (st.lastY < 0 ? y : st.lastY));
-      st.lastY = y;
+      const travel = Math.abs(s - (st.lastS < 0 ? s : st.lastS));
+      st.lastS = s;
       const targetRate = Math.min(0.7, travel / (WHEEL_R * pagePerSprite));
       st.wheelRate += (targetRate - st.wheelRate) * K_WHEEL;
       st.phase += st.wheelRate;
@@ -337,7 +341,7 @@ const Car = forwardRef<CarHandle, CarProps>(function Car({ road, size, reduced, 
       return settled;
     };
 
-    if (st.y >= 0) drawRef.current(st.y, st.speed);
+    if (st.s >= 0) drawRef.current(st.s, st.speed);
     return () => {
       drawRef.current = null;
     };

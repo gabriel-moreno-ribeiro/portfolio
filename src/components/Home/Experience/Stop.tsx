@@ -9,6 +9,8 @@ interface StopProps {
   side: 'left' | 'right';
   /** Última parada: ganha o link de contato como última linha do card. */
   cta?: boolean;
+  /** Parada logo depois de uma manobra da estrada: respiro acima, onde a manobra acontece. */
+  room?: boolean;
 }
 
 /**
@@ -16,14 +18,14 @@ interface StopProps {
  * `memo`: nenhuma prop muda depois da 1ª montagem, e o Experience re-renderiza quando o
  * `useVisible` dispara — sem isso os 6 cards eram remontados no meio do scroll.
  */
-function Stop({ entry, side, cta }: StopProps) {
+function Stop({ entry, side, cta, room }: StopProps) {
   const present = entry.end === 'present';
   // Same place as on the Origins globe: the city links back to it.
   const globeCity = config.cities.find((c) => c.name === entry.city);
   return (
     <li
       id={`exp-${entry.id}`}
-      className={`exp__stop exp__stop--${side}`}
+      className={`exp__stop exp__stop--${side}${room ? ' exp__stop--room' : ''}`}
       tabIndex={-1}
     >
       <article className="exp__card">

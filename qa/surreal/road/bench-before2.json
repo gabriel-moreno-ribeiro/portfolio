@@ -1,0 +1,79 @@
+{
+ "label": "before2",
+ "1440@2000": {
+  "frames": 244,
+  "dt p50/p95/max (ms)": "8.3/9.2/9.4",
+  "longtask max (ms)": 0,
+  "main thread per frame (ms): task/script/layout/style": "3.859/0.935/0.016/0.414",
+  "car step p95/max (px)": "43.1/53.7",
+  "off-lane max (px)": 1.5,
+  "heading jump max (deg)": 11.6,
+  "heading vs tangent p95/max (deg)": "3.5/5.3",
+  "car on screen y min/max (px of viewport)": "-1/650",
+  "lane": 46,
+  "roadLength": 3132
+ },
+ "1440@400": {
+  "frames": 859,
+  "dt p50/p95/max (ms)": "8.3/9.2/9.4",
+  "longtask max (ms)": 0,
+  "main thread per frame (ms): task/script/layout/style": "2.588/0.373/0.007/0.257",
+  "car step p95/max (px)": "9.9/13.4",
+  "off-lane max (px)": 1.5,
+  "heading jump max (deg)": 11.6,
+  "heading vs tangent p95/max (deg)": "3.5/5.3",
+  "car on screen y min/max (px of viewport)": "303/657",
+  "lane": 46,
+  "roadLength": 3132
+ },
+ "1440 errors": [
+  "pageerror: TypeError: Cannot destructure property 'step' of 'useClay(...)' as it is null.",
+  "pageerror: TypeError: Cannot destructure property 'step' of 'useClay(...)' as it is null.",
+  "pageerror: TypeError: Cannot destructure property 'step' of 'useClay(...)' as it is null.",
+  "%o\n\n%s\n\n%s\n TypeError: Cannot destructure property 'step' of 'useClay(...)' as it is null.\n    at Rig (http://localhost:5173/src/components/Home/Clay/kit.tsx?t=1794836031179:250:11)\n    at Object.react_stack_bottom_frame (http://localhost:5173/node_modules/.vite/deps/chunk-P5XVP5LY.js?v=fda92b9c:791",
+  "%o\n\n%s\n\n%s\n TypeError: Cannot destructure property 'step' of 'useClay(...)' as it is null.\n    at Rig (http://localhost:5173/src/components/Home/Clay/kit.tsx?t=1794836031179:250:11)\n    at Object.react_stack_bottom_frame (http://localhost:5173/node_modules/.vite/deps/chunk-P5XVP5LY.js?v=fda92b9c:791"
+ ],
+ "1440 section": {
+  "top": 15991.4375,
+  "height": 3063.34375,
+  "width": 960,
+  "left": 307,
+  "vh": 900,
+  "doc": 19914
+ },
+ "390@2000": {
+  "frames": 237,
+  "dt p50/p95/max (ms)": "8.3/9.2/16.3",
+  "longtask max (ms)": 0,
+  "main thread per frame (ms): task/script/layout/style": "2.643/0.461/0.011/0.191",
+  "car step p95/max (px)": "31.7/57.2",
+  "off-lane max (px)": 1.5,
+  "heading jump max (deg)": 11.6,
+  "heading vs tangent p95/max (deg)": "3.9/5.8",
+  "car on screen y min/max (px of viewport)": "-26/656",
+  "lane": 18,
+  "roadLength": 2495
+ },
+ "390@400": {
+  "frames": 821,
+  "dt p50/p95/max (ms)": "8.3/9.2/10.4",
+  "longtask max (ms)": 0,
+  "main thread per frame (ms): task/script/layout/style": "2.393/0.531/0.005/0.182",
+  "car step p95/max (px)": "6.7/7.9",
+  "off-lane max (px)": 1.5,
+  "heading jump max (deg)": 11.6,
+  "heading vs tangent p95/max (deg)": "4/5.8",
+  "car on screen y min/max (px of viewport)": "277/648",
+  "lane": 18,
+  "roadLength": 2495
+ },
+ "390 errors": [],
+ "390 section": {
+  "top": 13857.34375,
+  "height": 2883.078125,
+  "width": 358,
+  "left": 16,
+  "vh": 844,
+  "doc": 18272
+ }
+}

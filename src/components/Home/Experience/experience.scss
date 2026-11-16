@@ -14,12 +14,14 @@ $exp-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   box-sizing: border-box;
   color: var(--fg);
   // Nada da seção (carro, sombra, odômetro, marcos, legenda) passa do topo nem do pé dela.
-  // Nos lados sobra folga: o odômetro mora na margem direita a partir de 1270 px.
+  // Nos lados sobra folga: o odômetro mora na margem direita a partir de 1410 px.
   clip-path: inset(0 -220px);
 
   --exp-stop-h: 340px; // was 560: too much road between one job and the next
   --exp-lead: 140px;
   --exp-tail: 120px;
+  // Respiro acima da parada que vem depois de uma manobra (curva fechada, laço).
+  --exp-room: 90px;
   // Onde o trilho do odômetro começa: abaixo do título.
   --exp-odo-top: 180px;
   // Cards alternam de lado e a estrada serpenteia entre eles. 56px = vão de 32px até a borda
@@ -132,8 +134,9 @@ $exp-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   color: var(--accent);
 }
 
-// Coluna de 960 px: a partir daqui sobram 150+ px à direita, fora de qualquer card.
-@media screen and (min-width: 1270px) {
+// Coluna de 960 px, deslocada ~67 px para a direita pelo trilho lateral da Home: só a partir de
+// 1410 px sobram os 140 px à direita, fora de qualquer card (em 1270 o ano saía cortado da tela).
+@media screen and (min-width: 1410px) {
   .exp__odo-track {
     z-index: 5;
     width: 120px;
@@ -175,6 +178,41 @@ $exp-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   stroke: var(--accent-decor);
   stroke-linecap: butt;
   opacity: 0.55;
+}
+
+// Viaduto do laço: tabuleiro opaco (tapa a estrada de baixo) e guarda-corpo.
+.exp__bridge {
+  .exp__road-bed,
+  .exp__road-edge {
+    stroke-linecap: butt;
+  }
+}
+
+.exp__bridge-clear {
+  fill: none;
+  stroke: var(--bg);
+}
+
+// Guarda-corpo do viaduto e defensa da curva fechada.
+.exp__bridge-rail {
+  fill: none;
+  stroke: color-mix(in srgb, var(--fg) 34%, transparent);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+// O mesmo tabuleiro por cima do carro (dentro de .exp__car-layer, depois dele). O JS liga
+// `is-over` quando o carro vai cruzar por baixo; é troca seca, longe do viaduto.
+.exp__bridge-over {
+  position: absolute;
+  display: block;
+  overflow: visible;
+  opacity: 0;
+
+  &.is-over {
+    opacity: 1;
+  }
 }
 
 .exp__km {
@@ -500,6 +538,7 @@ a.exp__d20-link:visited {
 
   &--left { justify-content: flex-start; }
   &--right { justify-content: flex-end; }
+  &--room { margin-top: var(--exp-room); }
 
   &:focus-visible .exp__card,
   &.is-arrived .exp__card, // came from this city on the globe
@@ -665,6 +704,7 @@ a.exp__card-cta:visited {
     --exp-stop-h: 300px;
     --exp-lead: 200px;
     --exp-tail: 120px;
+    --exp-room: 0px; // sem manobras na faixa estreita
     --exp-odo-top: 130px;
     // 80px = faixa da estrada: ápice em x = 50 + meia-largura (18/2 + 1) + vão de 20px.
     --exp-card-w: calc(100% - 80px);
