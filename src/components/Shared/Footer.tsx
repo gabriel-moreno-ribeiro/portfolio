@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { SiGithub, SiLinkedin } from "react-icons/si";
 
@@ -23,47 +23,58 @@ function obfuscatedEmail() {
   return `${user}@${domain}`;
 }
 
-const activityPlaceholder = (
-  <>
-    <p className="footer__activity-head">GitHub contributions</p>
-    <div className="footer__activity-grid footer__activity-grid--empty" aria-hidden="true" />
-  </>
-);
+// "THANK YOU" spelled on a contribution-style grid: 7 rows, 53 columns, like a year of days.
+const GLYPHS: Record<string, string[]> = {
+  T: ['11111', '00100', '00100', '00100', '00100', '00100', '00100'],
+  H: ['10001', '10001', '10001', '11111', '10001', '10001', '10001'],
+  A: ['01110', '10001', '10001', '11111', '10001', '10001', '10001'],
+  N: ['10001', '11001', '10101', '10011', '10001', '10001', '10001'],
+  K: ['10001', '10010', '10100', '11000', '10100', '10010', '10001'],
+  Y: ['10001', '10001', '01010', '00100', '00100', '00100', '00100'],
+  O: ['01110', '10001', '10001', '10001', '10001', '10001', '01110'],
+  U: ['10001', '10001', '10001', '10001', '10001', '10001', '01110'],
+};
+// Each column is its 7 cells, top to bottom: two blank columns either side, one between
+// letters, three between the words.
+const THANKS: string[] = (() => {
+  const blank = '0000000';
+  const cols: string[] = [blank, blank];
+  'THANK YOU'.split('').forEach((ch, i, all) => {
+    if (ch === ' ') return void cols.push(blank, blank);
+    for (let c = 0; c < 5; c++) cols.push(GLYPHS[ch].map((row) => row[c]).join(''));
+    if (i < all.length - 1) cols.push(blank);
+  });
+  return [...cols, blank];
+})();
 
-// The chart chunk is fetched when the footer scrolls into view. If the chunk fails to
-// load, the static placeholder stays.
-const FooterHeatmap = lazy(() =>
-  import("./FooterHeatmap").catch(() => ({
-    default: ({ fallback }: { visible: boolean; fallback: ReactNode }) => <>{fallback}</>,
-  })),
-);
-
-function FooterActivity() {
-  const ref = useRef<HTMLElement>(null);
+function FooterThanks() {
+  const ref = useRef<HTMLDivElement>(null);
   const [seen, setSeen] = useState(false);
-  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
     const io = new IntersectionObserver(([entry]) => {
-      setVisible(entry.isIntersecting);
-      if (entry.isIntersecting) setSeen(true);
+      if (!entry.isIntersecting) return;
+      setSeen(true);
+      io.disconnect();
     });
     io.observe(el);
     return () => io.disconnect();
   }, []);
 
   return (
-    <section className="footer__activity" aria-label="GitHub activity" ref={ref}>
-      {seen ? (
-        <Suspense fallback={activityPlaceholder}>
-          <FooterHeatmap visible={visible} fallback={activityPlaceholder} />
-        </Suspense>
-      ) : (
-        activityPlaceholder
+    <div className="footer__thanks" role="img" aria-label="Thank you" data-seen={seen} ref={ref}>
+      {THANKS.map((col, c) =>
+        col.split('').map((on, r) => (
+          <i
+            key={`${c}-${r}`}
+            className={on === '1' ? `is-on is-l${(c * 7 + r * 3) % 3}` : undefined}
+            style={on === '1' ? ({ '--c': c } as React.CSSProperties) : undefined}
+          />
+        )),
       )}
-    </section>
+    </div>
   );
 }
 
@@ -119,7 +130,7 @@ function Footer() {
           </a>
         ))}
       </div>
-      <FooterActivity />
+      <FooterThanks />
       <p className="footer__copy">
         &copy; {new Date().getFullYear()} Gabriel Moreno Ribeiro
       </p>

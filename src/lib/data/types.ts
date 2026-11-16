@@ -155,15 +155,8 @@ export interface GitHubSummary {
   /** true quando `commitsThisYear` veio dos eventos públicos, não do GraphQL. */
   estimated: boolean;
   calendar: { date: string; count: number }[] | null;
-  /** De onde veio `calendar` (/api/github-calendar): `events` = estimativa de ~90 dias. */
-  calendarSource?: 'graphql' | 'events' | 'mock';
-  /** Total de contribuições do período de `calendar`. */
-  calendarTotal?: number;
   stars: number | null;
 }
-
-/** Só o calendário: o que `/api/github-calendar` entrega. */
-export type GitHubCalendar = Pick<GitHubSummary, 'calendar' | 'calendarSource' | 'calendarTotal'>;
 
 export interface Weather {
   tempC: number;

@@ -1,7 +1,7 @@
-// GitHub: REST público (sem chave, 60 req/h) + calendário por /api/github-calendar (token no servidor).
+// GitHub: REST público (sem chave, 60 req/h).
 // 4 requisições REST por refresh (10 min) = 24 req/h, dentro do limite anônimo.
 import { config } from './local';
-import type { GitHubCalendar, GitHubCommit, GitHubSummary } from './types';
+import type { GitHubCommit, GitHubSummary } from './types';
 import { DataError } from './useData';
 
 const API = 'https://api.github.com';
@@ -153,32 +153,6 @@ function commitFromRest(repo: string, commit: RestCommit | undefined): GitHubCom
     url: commit.html_url,
     at: commit.commit.author?.date ?? commit.commit.committer?.date ?? new Date().toISOString(),
   };
-}
-
-/**
- * Calendário de contribuições pela função do próprio site (o token fica no servidor).
- * Não toca o REST do GitHub, então não depende do limite anônimo do visitante.
- */
-export async function fetchGitHubCalendar(): Promise<GitHubCalendar> {
-  const res = await fetch('/api/github-calendar', { headers: { Accept: 'application/json' } });
-  if (!res.ok) throw new DataError(`github calendar: ${res.status}`);
-  const json = (await res.json()) as {
-    total?: unknown;
-    days?: { date?: unknown; count?: unknown }[];
-    source?: unknown;
-  };
-  const source = json.source;
-  if (!Array.isArray(json.days) || typeof json.total !== 'number') throw new DataError('github calendar: bad response');
-  if (source !== 'graphql' && source !== 'events' && source !== 'mock') throw new DataError('github calendar: bad source');
-  const calendar = json.days
-    .filter(
-      (d): d is { date: string; count: number } =>
-        typeof d?.date === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(d.date) && typeof d.count === 'number' && Number.isFinite(d.count),
-    )
-    .slice(-371)
-    .map((d) => ({ date: d.date, count: Math.max(0, Math.trunc(d.count)) }));
-  if (calendar.length === 0) throw new DataError('github calendar: empty');
-  return { calendar, calendarSource: source, calendarTotal: json.total };
 }
 
 export async function fetchGitHub(): Promise<GitHubSummary> {

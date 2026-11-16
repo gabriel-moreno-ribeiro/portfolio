@@ -2,22 +2,6 @@ import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 import { fileURLToPath, URL } from "node:url";
 import { defineConfig, type Plugin } from "vite";
-import { getCalendar } from "./api/github-calendar";
-
-// Dev stand-in for /api/github-calendar: a year of made-up days, flagged `source: "mock"`.
-function mockCalendar() {
-  const today = Date.now();
-  let seed = 1337;
-  const days = Array.from({ length: 365 }, (_, i) => {
-    const day = new Date(today - (364 - i) * 86_400_000);
-    seed = (seed * 1103515245 + 12345) % 2147483648;
-    const r = seed / 2147483648;
-    const weekend = day.getUTCDay() === 0 || day.getUTCDay() === 6;
-    const count = r < (weekend ? 0.55 : 0.18) ? 0 : Math.round(1 + r * (weekend ? 4 : 11));
-    return { date: day.toISOString().slice(0, 10), count };
-  });
-  return { total: days.reduce((sum, d) => sum + d.count, 0), days, source: "mock" };
-}
 
 // Local dev mock for /api/chat - simulates SSE streaming
 function apiMockPlugin(): Plugin {
@@ -39,17 +23,6 @@ function apiMockPlugin(): Plugin {
             res.end(JSON.stringify({ ok: true, mock: true }));
           }, 600);
         });
-      });
-      // Mock, unless GITHUB_TOKEN is exported in the shell: then the real function logic runs.
-      server.middlewares.use("/api/github-calendar", async (_req, res) => {
-        res.setHeader("Content-Type", "application/json");
-        const token = process.env.GITHUB_TOKEN;
-        try {
-          res.end(JSON.stringify(token ? await getCalendar(token) : mockCalendar()));
-        } catch {
-          res.statusCode = 503;
-          res.end(JSON.stringify({ error: "GitHub calendar unavailable" }));
-        }
       });
       server.middlewares.use("/api/chat", (req, res) => {
         if (req.method !== "POST") {

@@ -42,11 +42,10 @@ duplicar em JSON. O terminal `projects`/`open <slug>` lê dali.
 | Fonte | Endpoint | Chave | Refresh | Cache |
 |---|---|---|---|---|
 | GitHub REST | `api.github.com/users/:u`, `/users/:u/repos?sort=pushed&per_page=5`, `/users/:u/events/public?per_page=100`, `/repos/:u/:r/commits?per_page=1` | nenhuma (60 req/h) | 10 min | memória + `localStorage["hl:github"]` |
-| GitHub GraphQL | `contributionsCollection` (calendário, inclui privadas), via função `api/github-calendar` → `{ total, days, source }` | `GITHUB_TOKEN` só no servidor (Vercel); nunca `VITE_*` | 10 min (CDN 1 h) | idem |
 | Open-Meteo | `api.open-meteo.com/v1/forecast?latitude&longitude&current=temperature_2m,weather_code,is_day&timezone=auto` | nenhuma | 30 min | memória + `localStorage["hl:weather"]` |
 | Relógio | `Date` + `Intl.DateTimeFormat` com `timeZone` | — | 1 s | — |
 
-Sem `GITHUB_TOKEN`: a função cai para os eventos públicos (~90 dias, `source: 'events'`, `estimated: true`); REST público com cache agressivo; `commitsThisYear` estimado pelos
+REST público com cache agressivo; `commitsThisYear` estimado pelos
 eventos públicos (`source: 'mock'`? **não** — é `live` com `estimated: true`); `calendar: null`.
 Sem rede / erro: último cache com `stale: true`; sem cache: `mock` realista. `.env.example`
 documenta `VITE_GITHUB_TOKEN`. **Nunca commitar chave.**
@@ -54,8 +53,7 @@ documenta `VITE_GITHUB_TOKEN`. **Nunca commitar chave.**
 ## 3. Hooks de dados (`src/lib/data/index.ts`)
 
 ```ts
-useGitHub(): DataResult<GitHubSummary>          // calendar/calendarSource/calendarTotal vêm de useGitHubCalendar
-useGitHubCalendar(): DataResult<GitHubCalendar>  // uma chamada a /api/github-calendar; usado pelo rodapé
+useGitHub(): DataResult<GitHubSummary>
 useWeather(): DataResult<Weather>
 useClock(tz?: string): ClockValue                 // re-renderiza 1×/s só com aba visível
 useNowLine(): { text: string; kind: 'building'|'reading'|'time' }  // alterna a cada 6 s, gated
