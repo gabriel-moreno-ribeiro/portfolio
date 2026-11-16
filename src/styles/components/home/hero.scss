@@ -186,7 +186,8 @@
         flex-wrap: wrap;
         gap: 10px;
 
-        .btn { flex-basis: 100%; }
+        // Phone: See Work on its own row on top, the other two side by side under it.
+        .btn { flex-basis: 100%; order: -1; }
         .hero-link { flex: 1 1 0; min-width: 0; }
       }
     }

@@ -174,9 +174,10 @@ function Still({ slug, index, dark }: { slug: string; index: number; dark: boole
 /** The scene's box: the still of the current step first, the live canvas over it once it has drawn. */
 function Stage({ slug, label, index, live, onVisible }: { slug: string; label: string; index: number; live: boolean; onVisible: (v: boolean) => void }) {
   const ref = useRef<HTMLDivElement>(null);
-  const close = useVisible(ref, { rootMargin: '60% 0px', once: true });
-  // The story plays while most of the stage is on screen.
-  const inView = useVisible(ref, { threshold: 0.6 });
+  const close = useVisible(ref, { rootMargin: '150% 0px', once: true });
+  // The story plays once a good part of the stage is on screen.
+  const inView = useVisible(ref, { threshold: 0.35 });
+
   const pageVisible = usePageVisible();
   const dark = useThemeStore((s) => s.darkMode);
   const [state, setState] = useState<'still' | 'live' | 'failed'>('still');

@@ -80,6 +80,15 @@ function LazySection({ id, label, eager, children }: { id: string; label: string
 }
 
 function Home() {
+  // The clay 3D stories in Cool Things need three.js and their scenes (~1 MB). Fetch them
+  // once the page is idle on desktops that will play them, so they start as soon as they scroll in.
+  useEffect(() => {
+    const plays = matchMedia('(min-width: 900px) and (hover: hover) and (prefers-reduced-motion: no-preference)').matches;
+    if (!plays) return;
+    const idle = window.requestIdleCallback ?? ((cb: () => void) => window.setTimeout(cb, 2000));
+    const id = idle(() => { import('../components/Home/Clay/ClayStage').catch(() => {}); });
+    return () => (window.cancelIdleCallback ?? window.clearTimeout)(id);
+  }, []);
   const location = useLocation();
   // Everything mounts at once for a deep link, the first keypress (so Tab
   // reaches the whole page) and any in-page navigation.

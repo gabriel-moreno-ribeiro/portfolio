@@ -163,16 +163,10 @@ function Hero() {
           </div>
         </motion.div>
         <motion.p className="desc" {...rise(0.08)}>
-          On a build year, building HIBEEX: backoffice AI for small and medium businesses. Founder of Projeto Candela.
+          On a build year. Co-founder @ HIBEEX, Founder @ Projeto Candela.
         </motion.p>
         <motion.div className="btn-flex" {...rise(0.16)}>
-          {/* One primary action. The call and the resume are quiet links; LinkedIn lives in Contact and the footer. */}
-          <CommonButton
-            text="See Work"
-            Icon={<FiArrowRight className="icon-arrow" />}
-            iconPosition="right"
-            onClick={() => scrollToComponent('work')}
-          />
+          {/* The one filled pill sits in the middle, so the row balances; LinkedIn lives in Contact and the footer. */}
           <a
             className="hero-link"
             href="https://cal.com/gabrielmribeiro"
@@ -182,6 +176,12 @@ function Hero() {
             <FiCalendar aria-hidden="true" />
             Book a Call
           </a>
+          <CommonButton
+            text="See Work"
+            Icon={<FiArrowRight className="icon-arrow" />}
+            iconPosition="right"
+            onClick={() => scrollToComponent('work')}
+          />
           {/* A real link: the file downloads with a clean name */}
           <a
             className="hero-link"
