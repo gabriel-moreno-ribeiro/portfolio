@@ -33,19 +33,19 @@ export const experience = [
     company: "Fintech Savings RCT",
     date: "2025 · Advised by Aaron Litvin, Ph.D. (Harvard)",
     description:
-      "Designed and ran a randomized controlled trial with 208 public-school students on whether fintech apps change savings behavior. The treatment group saved 130% more.",
+      "Designed and ran a randomized controlled trial with 208 public-school students on whether fintech apps change savings behavior. Any of the three budgeting tools raised reported saving by 52 pp over the control group.",
   },
   {
     title: "Scholar - PREP Program",
     company: "Fundação Estudar",
-    date: "January 2025 - March 2026",
+    date: "January 2025 - April 2026",
     description:
       "One of about 70 picked from 10,000+ applicants, a 0.7% acceptance rate. Brazil's college access program for international universities.",
   },
   {
     title: "Researcher",
     company: "Instituto Principia (Escola de Talentos)",
-    date: "January 2023 - July 2025",
+    date: "June 2023 - June 2025",
     description:
       "One of 14 students picked nationally. Quantum mechanics, relativity, statistical physics. Chemical kinetics research with Prof. Juliano Bonacin, Ph.D.: a 150-page monograph on the steady-state hypothesis, revised in October 2026.",
   },

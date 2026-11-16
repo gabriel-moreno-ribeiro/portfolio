@@ -73,7 +73,7 @@ export const work = [
         infoHeading: "Selection",
         infoArr: [
           "0.7% acceptance",
-          "70 of 10,000+",
+          "~70 of 10,000+",
           "College Access",
           "Leadership",
         ],

@@ -90,11 +90,11 @@ export const projects: Project[] = [
     title: 'Projeto Candela',
     eyebrow: 'Project',
     summary:
-      'Low-cost physics lab kits, built and taken to 28 public schools in Salvador. 3,392 students so far.',
+      'Low-cost physics lab kits, built and taken to 28 public schools in Bahia and Ceará. 3,392 students so far.',
     cardDesc:
       'Low-cost physics lab kits I built and delivered to 28 public schools. 3,392 students so far. Physics failure rates in those classes went from 30% to 10%.',
     tags: ['3,392 students', '28 schools', '30% → 10%'],
-    period: '2023 - 2024',
+    period: '2022 to present',
     role: 'Founder',
     stats: [
       { value: '3,392', label: 'students reached' },

@@ -53,7 +53,7 @@ const CITIES: City[] = [
     role: 'Foundation',
     headline: 'Where I grew up.',
     story: [
-      'I lived in Salvador until I was 17. At 10 I got into Colégio Militar, one of 30 picked from 2,500 applicants, with a perfect score in math. That is where I started doing science olympiads.',
+      'I lived in Salvador until I was 17. At 10 I got into Colégio Militar, one of 30 picked from 2,500+ applicants, with a perfect score in math. That is where I started doing science olympiads.',
       'I also repaired laptops here to pay for school, and started Projeto Candela in the city\'s public schools.',
     ],
   },

@@ -35,7 +35,7 @@ Gabriel Moreno Ribeiro is 18 and Brazilian. He grew up between Salvador, Bahia, 
 ## Research
 
 - The Steady-State Hypothesis (Instituto Principia, Escola de Talentos, 2023 to 2026, advisor Prof. Juliano Alves Bonacin): a 150-page monograph on when the steady-state approximation in chemical kinetics holds and how much it misses, from ozone photolysis to ammonia synthesis, with simulations and data from the SABIO-RK database. PDF: https://gabrielmr.com/research/chemical-kinetics/paper.pdf
-- Fintech savings RCT (Fundação Estudar research fellowship, 2025, mentored by Aaron Litvin, Ph.D., Harvard): randomized controlled trial with 208 public-school students; the treatment group saved 130% more.
+- Fintech savings RCT (Fundação Estudar research fellowship, 2025, mentored by Aaron Litvin, Ph.D., Harvard): randomized controlled trial with 208 public-school students; any of the three budgeting tools raised reported saving by 52 pp over the control group.
 - Projeto Candela paper: https://gabrielmr.com/research/projeto-candela/paper.pdf
 
 ## Honors
