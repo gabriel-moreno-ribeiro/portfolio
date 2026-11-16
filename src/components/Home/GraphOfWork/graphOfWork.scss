@@ -1,0 +1,355 @@
+// Graph of work. Semantic tokens only (they follow the theme). Mono declared locally,
+// like the Experience section: the site has no global mono.
+
+$gow-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+.gow {
+  // Explicit width: the parent is an item of a centred flex column and would shrink to fit.
+  width: min(1200px, calc(100vw - 48px));
+  margin: 0 auto;
+  box-sizing: border-box;
+  color: var(--fg);
+
+  // Phones: the full column (the wrapper already pads 16px), so graph labels stay >= 11px at 360.
+  @media (max-width: 600px) {
+    width: calc(100vw - 32px);
+  }
+
+  &__steps {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__step-n {
+    display: block;
+    font: 600 12px/1 $gow-mono;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+  }
+
+  &__step-title {
+    margin: 10px 0 8px;
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 1.1;
+    color: var(--fg);
+  }
+
+  &__step-text {
+    margin: 0;
+    max-width: 46ch;
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--fg-muted);
+  }
+
+  &__caption {
+    margin: 0;
+    padding: 12px 16px;
+    border-top: 1px solid var(--border);
+    font-size: 14px;
+    line-height: 1.45;
+    color: var(--fg);
+  }
+
+  &__caption-tag {
+    margin-right: 6px;
+    font: 600 11px/1 $gow-mono;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  // ── Stacked: default, phones, short screens, reduced motion ───────────────
+  &--stacked {
+    padding: 80px 0;
+
+    .gow__title { margin-bottom: 40px; }
+
+    .gow__steps {
+      display: grid;
+      gap: 56px;
+      max-width: 760px; // a reduced-motion desktop gets the same column, not a 1200px graph
+      margin: 0 auto;
+    }
+
+    .gow__step { min-width: 0; }
+
+    .gow-panel { margin-top: 20px; }
+
+    // A phone gets the tall layout; keep it from ballooning on a wide phone.
+    .gow-graph--tall {
+      max-width: 420px;
+      margin: 0 auto;
+    }
+  }
+
+  // ── Pinned: the stage sticks while the section scrolls past ───────────────
+  &--pinned {
+    height: 310vh;
+
+    .gow__stage {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      box-sizing: border-box;
+      padding: 96px 0 28px; // clears the nav pill
+      display: grid;
+      grid-template-columns: minmax(260px, 1fr) minmax(0, 720px);
+      gap: 48px;
+    }
+
+    .gow__copy {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .gow__title {
+      text-align: left; // split layout, as in Contact
+      margin-bottom: 44px;
+    }
+
+    // The three steps share one cell; the scroll decides which one shows.
+    .gow__steps { display: grid; }
+
+    .gow__step {
+      grid-area: 1 / 1;
+      opacity: 0;
+      transform: translateY(8px);
+      pointer-events: none;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+
+      &[data-active="true"] {
+        opacity: 1;
+        transform: none;
+        pointer-events: auto;
+      }
+    }
+
+    .gow-panel {
+      height: 100%;
+      min-height: 0;
+    }
+
+    // Final state without the timeline: the graph, with the file out of the way.
+    .gow-doc {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      opacity: 0;
+      font-size: clamp(11px, 1.45vh, 13px);
+    }
+
+    .gow-graph {
+      position: absolute;
+      inset: 0;
+      height: 100%;
+    }
+  }
+
+  &__seg {
+    display: inline-flex;
+    align-self: flex-start;
+    gap: 2px;
+    margin-top: auto;
+    padding: 4px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--surface);
+  }
+
+  &__seg-btn {
+    appearance: none;
+    min-height: 40px;
+    padding: 8px 16px;
+    border: 0;
+    border-radius: 999px;
+    background: none;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--fg-muted);
+    cursor: pointer;
+    transition: transform 0.12s ease;
+
+    &:hover { color: var(--fg); }
+    &:active { transform: scale(0.96); }
+
+    &[aria-current] {
+      background: var(--fg);
+      color: var(--bg);
+    }
+
+    &:focus-visible {
+      outline: 3px solid var(--focus-ring);
+      outline-offset: 2px;
+    }
+  }
+}
+
+// ── Panel ───────────────────────────────────────────────────────────────────
+.gow-panel {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--surface);
+  overflow: hidden;
+
+  &__bar {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 11px 16px;
+    border-bottom: 1px solid var(--border);
+    font: 12px/1.3 $gow-mono;
+    color: var(--fg-muted);
+  }
+
+  &__layers {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+  }
+}
+
+// ── The profile file ────────────────────────────────────────────────────────
+.gow-doc {
+  margin: 0;
+  padding: 14px 16px 14px 0;
+  list-style: none;
+  counter-reset: gow-line;
+  font: 12.5px/1.65 $gow-mono;
+  color: var(--fg-muted);
+
+  &__line {
+    position: relative;
+    min-height: 1.65em;
+    padding-left: 48px;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    counter-increment: gow-line;
+
+    &::before {
+      content: counter(gow-line);
+      position: absolute;
+      left: 0;
+      width: 32px;
+      text-align: right;
+      opacity: 0.75;
+    }
+
+    &--h1,
+    &--h2 {
+      font-weight: 600;
+      color: var(--fg);
+    }
+  }
+}
+
+.gow-ent {
+  position: relative;
+  isolation: isolate;
+  display: inline-block;
+  max-width: 100%;
+  background: none;
+  color: var(--fg);
+
+  // The tint is its own element so it can arrive by opacity alone.
+  &__bg {
+    position: absolute;
+    inset: 0 -3px;
+    z-index: -1;
+    border-radius: 4px;
+    background: color-mix(in srgb, var(--accent-decor) 22%, transparent);
+  }
+}
+
+// A few relations as text (stacked layout, Connect step).
+.gow-triples {
+  margin: 0;
+  padding: 14px 16px;
+  list-style: none;
+  font: 12.5px/1.9 $gow-mono;
+  color: var(--fg-muted);
+
+  &__ent {
+    padding: 1px 4px;
+    border-radius: 4px;
+    background: color-mix(in srgb, var(--accent-decor) 22%, transparent);
+    color: var(--fg);
+  }
+}
+
+// ── The graph ───────────────────────────────────────────────────────────────
+.gow-graph {
+  display: block;
+  width: 100%;
+  height: auto;
+
+  // Labels sit on a halo of the panel colour, so a line passing behind never cuts a word.
+  text {
+    paint-order: stroke;
+    stroke: var(--surface);
+    stroke-width: 5px;
+    stroke-linejoin: round;
+  }
+
+  // The stacked layout shows the graph once, so what steps back must still be readable.
+  &--dim [data-now="false"] { opacity: 0.55; }
+  &--now .gow-node__halo { display: inline; }
+
+  &--tall {
+    .gow-node__label { font-size: 13.5px; }
+    .gow-edge__label { font-size: 12.5px; } // 11.3px on a 360px phone
+  }
+}
+
+.gow-node {
+  &__dot {
+    fill: var(--surface);
+    stroke: var(--fg-muted);
+    stroke-width: 1.5;
+  }
+
+  &__halo {
+    display: none;
+    fill: none;
+    stroke: var(--accent);
+    stroke-width: 1.5;
+  }
+
+  &__label {
+    font-size: 15px;
+    font-weight: 500;
+    fill: var(--fg);
+  }
+
+  // One focal colour: the person at the centre.
+  &__in--person {
+    .gow-node__dot {
+      fill: var(--accent);
+      stroke: none;
+    }
+    .gow-node__label { font-weight: 700; }
+  }
+}
+
+.gow-edge {
+  &__line,
+  &__tip {
+    fill: none;
+    stroke: var(--fg-muted);
+    stroke-width: 1.25;
+  }
+
+  &__label {
+    font-family: $gow-mono;
+    font-size: 14.5px;
+    fill: var(--fg-muted);
+  }
+}
