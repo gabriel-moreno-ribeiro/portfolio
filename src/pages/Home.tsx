@@ -11,6 +11,7 @@ import { NAVIGATE_EVENT, type NavigateDetail } from "../utils/scrollToComponent"
 
 const BackgroundGlobe = lazy(() => import("../components/Home/BackgroundGlobe"));
 const Skills = lazy(() => import("../components/Home/Skills"));
+const GraphOfWork = lazy(() => import("../components/Home/GraphOfWork/GraphOfWork"));
 const FindMyWork = lazy(() => import("../components/Home/FindMyWork"));
 const Research = lazy(() => import("../components/Home/Research"));
 const Experience = lazy(() => import("../components/Home/Experience/Experience"));
@@ -22,6 +23,7 @@ const StickerPeel = lazy(() => import("../components/ReactBits/StickerPeel"));
 const SECTIONS = [
   { id: 'main-content', label: 'Top' },
   { id: 'background', label: 'Origins' },
+  { id: 'graph', label: 'Graph' },
   { id: 'work', label: 'Cool Things' },
   { id: 'research', label: 'Research' },
   { id: 'skills', label: 'Skills' },
@@ -34,12 +36,13 @@ const SECTIONS = [
 // tablet column matters most, because a deep link to #contact mounts everything
 // above it at once.
 const RESERVE: Record<string, [desktop: number, tablet: number, mobile: number]> = {
-  background: [955, 1335, 975],
-  work: [2470, 3340, 3120],
-  research: [1120, 1240, 1640],
-  skills: [1000, 1000, 525],
-  'work-experience': [2450, 2500, 2250],
-  contact: [385, 785, 870],
+  background: [925, 1350, 902],
+  graph: [2790, 2254, 2930],
+  work: [2559, 5063, 4080],
+  research: [1310, 2019, 2672],
+  skills: [1000, 1000, 714],
+  'work-experience': [2709, 3115, 2571],
+  contact: [386, 783, 872],
 };
 const LAZY_IDS = new Set(Object.keys(RESERVE));
 
@@ -201,6 +204,9 @@ function Home() {
       <MomentsStrip />
       <LazySection id="background" label="Where I come from" eager={mountAll}>
         <BackgroundGlobe />
+      </LazySection>
+      <LazySection id="graph" label="Graph of work" eager={mountAll}>
+        <GraphOfWork />
       </LazySection>
       <LazySection id="work" label="Cool things" eager={mountAll}>
         <FindMyWork />
