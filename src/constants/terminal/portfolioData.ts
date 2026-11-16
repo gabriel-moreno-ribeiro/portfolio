@@ -29,13 +29,6 @@ export const experience = [
       "Designed and ran a randomized controlled trial with 208 public-school students on whether fintech apps change savings behavior. The treatment group saved 130% more.",
   },
   {
-    title: "President",
-    company: "Olympic Club - Colégio Militar de Salvador",
-    date: "August 2024 - May 2026",
-    description:
-      "Ran the board, rebuilt the club, and got 17 initiatives through. Student participation up 47%, national olympiad results up 62%.",
-  },
-  {
     title: "Scholar - PREP Program",
     company: "Fundação Estudar",
     date: "January 2025 - March 2026",

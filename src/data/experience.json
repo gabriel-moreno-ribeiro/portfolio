@@ -17,23 +17,8 @@
     ]
   },
   {
-    "id": "olympic-club",
-    "order": 2,
-    "org": "Olympic Club - Colégio Militar",
-    "role": "President",
-    "start": "2024-08",
-    "end": "2026-05",
-    "periodLabel": "August 2024 to May 2026",
-    "city": "Salvador",
-    "cityTz": "America/Bahia",
-    "bullets": [
-      "Ran the board for two years and got **17 initiatives** through it.",
-      "Student participation went up **47%**, and the school's results in national olympiads went up **62%**."
-    ]
-  },
-  {
     "id": "estudar",
-    "order": 3,
+    "order": 2,
     "org": "Fundação Estudar",
     "role": "PREP Fellow",
     "start": "2025-01",
@@ -48,7 +33,7 @@
   },
   {
     "id": "fintech-rct",
-    "order": 4,
+    "order": 3,
     "org": "Fintech Savings RCT",
     "role": "Research Fellow in Economics, Fundação Estudar",
     "start": "2025",
@@ -65,7 +50,7 @@
   },
   {
     "id": "hibeex",
-    "order": 5,
+    "order": 4,
     "org": "HIBEEX",
     "role": "Co-founder",
     "start": "2026-01",
