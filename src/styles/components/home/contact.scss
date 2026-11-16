@@ -247,6 +247,9 @@
     padding: 40px 16px;
     gap: 8px;
 
+    // Focused by script so the keyboard stays here; it is not a control.
+    &:focus { outline: none; }
+
     h3 {
       font-family: var(--font-serif);
       font-size: 32px;

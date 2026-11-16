@@ -1,0 +1,26 @@
+// Touch: does tapping a medal in the case / a state on the map leave its caption up?
+import { chromium } from 'playwright';
+const b = await chromium.launch();
+const ctx = await b.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true, deviceScaleFactor: 2 });
+await ctx.addInitScript(() => sessionStorage.setItem('showedToast', 'true'));
+const p = await ctx.newPage();
+await p.goto('http://localhost:5173/#work', { waitUntil: 'load' });
+await p.waitForTimeout(4000);
+const caps = () => p.evaluate(() => [...document.querySelectorAll('.ns-caption')].map(c => c.textContent));
+await p.$eval('.ns-case', e => e.scrollIntoView({ block: 'center' }));
+await p.waitForTimeout(1500);
+console.log('before', await caps());
+const well = await p.$('.ns-case__well:nth-child(3)');
+const bb = await well.boundingBox();
+await p.touchscreen.tap(bb.x + bb.width / 2, bb.y + bb.height / 2);
+await p.waitForTimeout(400);
+console.log('after tap medal', await caps());
+await p.$eval('.ns-map', e => e.scrollIntoView({ block: 'center' }));
+await p.waitForTimeout(1500);
+const st = await p.$('.ns-map__state.is-lit, .ns-map__state:nth-child(5)');
+const sb = await st.boundingBox();
+await p.touchscreen.tap(sb.x + sb.width / 2, sb.y + sb.height / 2);
+await p.waitForTimeout(400);
+console.log('after tap state', await caps());
+await p.screenshot({ path: 'qa/surreal/bughunt/touch-map-390.png' });
+await b.close();

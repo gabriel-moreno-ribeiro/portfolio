@@ -1,0 +1,24 @@
+== / light
+== /work/hibeex light
+== /work/candela light
+== /library light
+== /news light
+== /blog light
+== /blog/drake-equation light
+== /files light
+== /one-pager light
+== /obrigado light
+== /story light
+  serious aria-prohibited-attr x1: .nf-digits
+== / dark
+== /work/hibeex dark
+== /work/candela dark
+== /library dark
+== /news dark
+== /blog dark
+== /blog/drake-equation dark
+== /files dark
+== /one-pager dark
+== /obrigado dark
+== /story dark
+  serious aria-prohibited-attr x1: .nf-digits

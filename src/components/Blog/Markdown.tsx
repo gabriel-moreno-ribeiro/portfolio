@@ -1,6 +1,6 @@
 import katex from 'katex';
 import 'katex/dist/katex.min.css';
-import type { ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 
 // A small Markdown renderer for the blog, built as React elements (no innerHTML).
@@ -14,8 +14,31 @@ const INLINE = /(\$[^$\n]+\$|\*\*[^*]+\*\*|\*[^*]+\*|`[^`]+`|\[[^\]]+\]\([^)\s]+
 function TeX({ tex, block }: { tex: string; block?: boolean }) {
   const html = katex.renderToString(tex, { displayMode: !!block, throwOnError: false, output: 'htmlAndMathml' });
   return block
-    ? <div className="blog-math" dangerouslySetInnerHTML={{ __html: html }} />
+    ? <MathBlock html={html} />
     : <span dangerouslySetInnerHTML={{ __html: html }} />;
+}
+
+// A long equation scrolls sideways on a phone; only then is it a tab stop, so the keyboard can scroll it too.
+function MathBlock({ html }: { html: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [scrolls, setScrolls] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const check = () => setScrolls(el.scrollWidth > el.clientWidth + 1);
+    const ro = new ResizeObserver(check);
+    ro.observe(el);
+    document.fonts?.ready.then(check); // KaTeX's fonts widen the formula without resizing the box
+    return () => ro.disconnect();
+  }, []);
+  return (
+    <div
+      ref={ref}
+      className="blog-math"
+      {...(scrolls && { tabIndex: 0, role: 'region', 'aria-label': 'Equation' })}
+      dangerouslySetInnerHTML={{ __html: html }}
+    />
+  );
 }
 
 function inline(text: string, key = ''): ReactNode[] {

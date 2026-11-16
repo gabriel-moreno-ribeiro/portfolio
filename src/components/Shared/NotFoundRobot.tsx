@@ -53,6 +53,8 @@ function NotFoundRobot({ onScore }: Props) {
     downAt: 0, downX: 0, downY: 0, keptVX: 0, keptVY: 0,
     restSince: 0, recall: null as null | { t0: number; x0: number; y0: number },
     streak: 0, best: 0, lastT: 0,
+    // The robot juggles on its own; only headers after the visitor touched the zero count.
+    played: false,
   });
 
   const restPoint = () => {
@@ -178,9 +180,11 @@ function NotFoundRobot({ onScore }: Props) {
           b.vx = (cx - b.x) * 2.4 + (Math.random() - 0.5) * 0.12 * F;
           b.omega = (Math.random() < 0.5 ? -1 : 1) * (70 + Math.random() * 90);
           b.squash = 0.12;
-          b.streak += 1;
-          b.best = Math.max(b.best, b.streak);
-          report();
+          if (b.played) {
+            b.streak += 1;
+            b.best = Math.max(b.best, b.streak);
+            report();
+          }
           bump();
           return false;
         }
@@ -279,7 +283,7 @@ function NotFoundRobot({ onScore }: Props) {
     e.currentTarget.setPointerCapture(e.pointerId);
     const b = ball.current, p = toLocal(e);
     Object.assign(b, {
-      held: true, recall: null, restSince: 0,
+      held: true, recall: null, restSince: 0, played: true,
       grabDX: b.x - p.x, grabDY: b.y - p.y,
       downAt: performance.now(), downX: p.x, downY: p.y,
       keptVX: b.vx, keptVY: b.vy,
@@ -332,12 +336,14 @@ function NotFoundRobot({ onScore }: Props) {
     else if (e.key === 'ArrowLeft') { e.preventDefault(); b.recall = null; b.vx -= 1.2 * F; b.vy -= 0.6 * F; }
     else if (e.key === 'ArrowRight') { e.preventDefault(); b.recall = null; b.vx += 1.2 * F; b.vy -= 0.6 * F; }
     else return;
+    b.played = true;
     setHint(false);
   };
 
   return (
     <>
-      <p className="nf-digits" ref={sceneRef} aria-label="404">
+      <p className="nf-digits" ref={sceneRef}>
+        <span className="sr-only">404</span>
         <span className="nf-digit" aria-hidden="true" ref={(el) => { fourRefs.current[0] = el; }}>4</span>
         <span className="nf-slot" ref={slotRef} aria-hidden="true">
           <svg className="nf-robot" viewBox="0 0 200 250">

@@ -67,7 +67,9 @@ function AppContent() {
   useEffect(() => {
     if (location.hash) return;
     window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
-    if (mounted.current) pageRef.current?.focus({ preventScroll: true });
+    // Not when the navigation came from an open window (the terminal's `open`): it keeps the keyboard.
+    const inWindow = document.activeElement?.closest('[role="dialog"], .draggable-window');
+    if (mounted.current && !inWindow) pageRef.current?.focus({ preventScroll: true });
   }, [location.pathname, location.hash]);
   useEffect(() => {
     mounted.current = true;

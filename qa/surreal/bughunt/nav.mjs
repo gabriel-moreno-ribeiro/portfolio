@@ -1,0 +1,31 @@
+// SPA navigation: titles follow, focus moves, Back returns to where the visitor was.
+import { chromium } from 'playwright';
+const b = await chromium.launch();
+const ctx = await b.newContext({ viewport: { width: 1440, height: 900 } });
+await ctx.addInitScript(() => sessionStorage.setItem('showedToast', 'true'));
+const p = await ctx.newPage();
+const st = () => p.evaluate(() => ({ url: location.pathname + location.hash, title: document.title, y: Math.round(scrollY), canon: document.querySelector('link[rel=canonical]')?.href, active: document.activeElement?.className?.toString().slice(0, 30) }));
+await p.goto('http://localhost:5173/', { waitUntil: 'load' });
+await p.waitForTimeout(2500);
+await p.evaluate(() => document.querySelector('a.work-row__cta, a[href="/work/hibeex"]') || null);
+// scroll to Cool Things and open the HIBEEX project
+const link = await p.$('#work a[href="/work/hibeex"]').catch(() => null) || null;
+await p.evaluate(() => document.getElementById('work')?.scrollIntoView());
+await p.waitForTimeout(2500);
+const cta = await p.$('#work a.work-row__cta[href="/work/hibeex"], #work a[href="/work/hibeex"]');
+await cta.scrollIntoViewIfNeeded();
+await p.waitForTimeout(800);
+const yBefore = await p.evaluate(() => Math.round(scrollY));
+await cta.click();
+await p.waitForTimeout(1500);
+console.log('on project', await st());
+await p.goBack();
+await p.waitForTimeout(3000);
+console.log('after Back (was at y=' + yBefore + ')', await st());
+await p.goForward();
+await p.waitForTimeout(1500);
+console.log('after Forward', await st());
+await p.click('a[href="/#work"]').catch(e => console.log('no back link', e.message.slice(0, 60)));
+await p.waitForTimeout(3000);
+console.log('after project back-link', await st());
+await b.close();

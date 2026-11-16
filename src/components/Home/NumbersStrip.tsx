@@ -34,6 +34,10 @@ const pick = (set: (k: number | null) => void) => (e: PointerEvent) => {
   const k = (e.target as Element).closest("[data-k]")?.getAttribute("data-k");
   set(k == null ? null : Number(k));
 };
+// A finger lifts with a pointerleave right after the tap: only a mouse leaving clears the pick.
+const leave = (set: (k: number | null) => void) => (e: PointerEvent) => {
+  if (e.pointerType === "mouse") set(null);
+};
 const stepper = (at: number | null, n: number, set: (k: number | null) => void) => (e: KeyboardEvent) => {
   const by = e.key === "ArrowRight" || e.key === "ArrowDown" ? 1 : e.key === "ArrowLeft" || e.key === "ArrowUp" ? -1 : 0;
   if (e.key === "Escape") set(null);
@@ -156,7 +160,7 @@ function Case({ at, setAt }: { at: number | null; setAt: (k: number | null) => v
       onKeyDown={stepper(at, OLYMPIADS, setAt)}
       onBlur={() => setAt(null)}
       onPointerOver={pick(setAt)}
-      onPointerLeave={() => setAt(null)}
+      onPointerLeave={leave(setAt)}
     >
       <ol className="ns-case__wells" aria-hidden="true">
         {Array.from({ length: OLYMPIADS }, (_, k) => {
@@ -192,7 +196,7 @@ function BrazilMap({ phone, at, setAt }: { phone: boolean; at: number | null; se
       onKeyDown={stepper(at, STATES.length, setAt)}
       onBlur={() => setAt(null)}
     >
-      <svg className="ns-map" viewBox={`0 0 ${MAP_W + (phone ? 0 : 50)} ${MAP_H}`} aria-hidden="true" onPointerOver={pick(setAt)} onPointerLeave={() => setAt(null)}>
+      <svg className="ns-map" viewBox={`0 0 ${MAP_W + (phone ? 0 : 50)} ${MAP_H}`} aria-hidden="true" onPointerOver={pick(setAt)} onPointerLeave={leave(setAt)}>
         {STATES.map((s, k) => <path key={s.uf} data-k={k} className={`ns-map__state is-${stateKind(s.uf)}`} d={s.d} />)}
         {STATES.map((s, k) => stateKind(s.uf) === "lit" && <path key={s.uf} data-k={k} className="ns-map__lit" style={delay(k)} d={s.d} />)}
         {STATES.map((s, k) => stateKind(s.uf) === "lit" && s.uf !== "BA" && (

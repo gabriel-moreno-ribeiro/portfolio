@@ -76,8 +76,12 @@ $clay-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--fg-muted);
+      // A wrapped line began with a stray dot: every line starts 23px (one dot and its margins) to the left, in a clipped gutter.
+      margin-left: -23px;
+      clip-path: inset(0 0 0 23px);
 
       span { display: inline-flex; align-items: center; }
+      span:first-child { padding-left: 23px; }
 
       i {
         width: 3px;

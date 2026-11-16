@@ -121,7 +121,7 @@ function Footer() {
         {links.map((link, i) => (
           <a
             href={link.href}
-            target={link.href.startsWith("/") && !("newTab" in link) ? "_self" : "_blank"}
+            target={"newTab" in link ? "_blank" : "_self"}
             rel="noopener noreferrer"
             key={`footer-link-${i}`}
           >

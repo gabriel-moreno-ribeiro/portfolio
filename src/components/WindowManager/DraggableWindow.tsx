@@ -434,6 +434,17 @@ function DraggableWindow({
     windowRef.current?.focus({ preventScroll: true });
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") closeWindow(windowId);
+      // aria-modal: Tab cycles inside the window instead of walking off into the page behind.
+      const box = windowRef.current;
+      if (e.key !== "Tab" || !box) return;
+      const items = box.querySelectorAll<HTMLElement>('a[href], button:not([disabled]), input, textarea, select, [tabindex]:not([tabindex="-1"])');
+      if (!items.length) return;
+      const active = document.activeElement;
+      const edge = e.shiftKey ? items[0] : items[items.length - 1];
+      if (!box.contains(active) || active === box || active === edge) {
+        e.preventDefault();
+        (e.shiftKey ? items[items.length - 1] : items[0]).focus();
+      }
     };
     window.addEventListener("keydown", onKey);
     return () => {

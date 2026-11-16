@@ -1,4 +1,4 @@
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useRef, useState } from 'react';
 import { FiArrowUpRight, FiCalendar, FiCheck, FiMail, FiSend } from 'react-icons/fi';
 import { SiGithub, SiLinkedin } from 'react-icons/si';
 
@@ -25,6 +25,15 @@ function ContactSection() {
   const [errors, setErrors] = useState<FormErrors>({});
   const [submitting, setSubmitting] = useState(false);
   const [sent, setSent] = useState(false);
+  const sentRef = useRef<HTMLDivElement>(null);
+  const wasSent = useRef(false);
+
+  // The button that had focus disappears when the form swaps for the "sent" note (and back): keep focus in the card.
+  useEffect(() => {
+    if (sent) sentRef.current?.focus();
+    else if (wasSent.current) document.getElementById('contact-name')?.focus();
+    wasSent.current = sent;
+  }, [sent]);
 
   function validate(): FormErrors {
     const errs: FormErrors = {};
@@ -46,9 +55,14 @@ function ContactSection() {
     e.preventDefault();
     const validationErrors = validate();
     setErrors(validationErrors);
-    if (Object.keys(validationErrors).length > 0) return;
+    const firstInvalid = Object.keys(validationErrors)[0];
+    if (firstInvalid) {
+      document.getElementById(`contact-${firstInvalid}`)?.focus();
+      return;
+    }
 
     setSubmitting(true);
+    let sentOk = false;
     try {
       const res = await fetch('/api/contact', {
         method: 'POST',
@@ -56,6 +70,7 @@ function ContactSection() {
         body: JSON.stringify({ name: name.trim(), email: email.trim(), message: message.trim() }),
       });
       if (res.ok) {
+        sentOk = true;
         setSent(true);
       } else {
         setErrors({ message: 'Something went wrong. Please try again or email me directly.' });
@@ -65,6 +80,8 @@ function ContactSection() {
     } finally {
       setSubmitting(false);
     }
+    // The disabled button dropped focus; put it on the field that now carries the error.
+    if (!sentOk) document.getElementById('contact-message')?.focus();
   }
 
   function reset() {
@@ -84,7 +101,7 @@ function ContactSection() {
           </h2>
         </div>
         <p className="contact-section__lead">
-          Building something, hiring, or just curious? Write to me.
+          Building something, hiring or just curious? Write to me.
         </p>
         <ul className="contact-section__channels">
           {channels.map(({ label, value, href, Icon }) => (
@@ -109,7 +126,7 @@ function ContactSection() {
 
       <div className="contact-section__card">
         {sent ? (
-          <div className="contact-section__sent" role="status">
+          <div className="contact-section__sent" role="status" tabIndex={-1} ref={sentRef}>
             <span className="contact-section__sent-icon"><FiCheck /></span>
             <h3>Message sent.</h3>
             <p>Got it. I'll write back soon.</p>

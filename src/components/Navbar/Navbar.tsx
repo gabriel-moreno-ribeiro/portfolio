@@ -54,6 +54,21 @@ function Navbar() {
     };
   }, [isHovered, isMobile]);
 
+  // An open pill closes on a tap or click anywhere else, and on Escape (it covered the hero until its X was found).
+  useEffect(() => {
+    if (pinned || !isHovered) return;
+    const onDown = (e: PointerEvent) => {
+      if (!(e.target as Element | null)?.closest?.('nav.navbar')) setIsHovered(false);
+    };
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setIsHovered(false); };
+    document.addEventListener('pointerdown', onDown);
+    document.addEventListener('keydown', onKey);
+    return () => {
+      document.removeEventListener('pointerdown', onDown);
+      document.removeEventListener('keydown', onKey);
+    };
+  }, [pinned, isHovered]);
+
   const handleCameraClick = () => {
     if (!hasSeenIntro) {
       setShowIntroModal(true);

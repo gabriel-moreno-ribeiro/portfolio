@@ -13,9 +13,10 @@ function BlogPost() {
   const post = posts.find((p) => p.slug === slug);
 
   useDocumentHead({
-    title: post ? `${post.title} · Gabriel Moreno Ribeiro` : 'Blog · Gabriel Moreno Ribeiro',
-    description: post?.description || "Notes on what I'm building and reading.",
-    canonical: `https://gabrielmr.com/blog/${slug ?? ''}`,
+    // No post: this effect runs after NotFound's, so it repeats NotFound's head instead of overriding it.
+    title: post ? `${post.title} · Gabriel Moreno Ribeiro` : '404 · Gabriel Moreno Ribeiro',
+    description: post ? post.description || "Notes on what I'm building and reading." : 'Page not found.',
+    canonical: post ? `https://gabrielmr.com/blog/${slug ?? ''}` : undefined,
     noindex: !post || post.draft,
   });
 

@@ -37,18 +37,19 @@ const SECTIONS = [
 // above it at once.
 const RESERVE: Record<string, [desktop: number, tablet: number, mobile: number]> = {
   background: [959, 1384, 936],
-  wardrobe: [642, 560, 558],
+  wardrobe: [600, 518, 516],
   work: [3736, 6310, 5155],
   research: [2467, 3245, 4081],
   skills: [1000, 1000, 496],
   'work-experience': [5657, 6099, 2883],
-  contact: [401, 818, 910],
+  contact: [386, 783, 872],
 };
 const LAZY_IDS = new Set(Object.keys(RESERVE));
 
 // Gap left above a section reached through a URL hash or the rail (clears the navbar).
 const HASH_OFFSET = 90;
-const STOP_EVENTS = ['wheel', 'touchstart', 'keydown'];
+// pointerdown: a drag on the scroll bar (no wheel event) must also hand the page back to the visitor.
+const STOP_EVENTS = ['wheel', 'touchstart', 'keydown', 'pointerdown'];
 
 // Placeholder for a section that hasn't mounted (or is still downloading).
 // It carries the section id, so the rail, hash links and the active-section
