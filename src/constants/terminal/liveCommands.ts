@@ -65,7 +65,7 @@ const liveCommands: TerminalCommand[] = [
     execute: (ctx) => {
       ctx.writeln(yellow(`Projects (${projects.length})`));
       for (const project of projects) {
-        ctx.writeln(`  ${green(project.slug.padEnd(10))} ${project.title} — ${project.eyebrow}`);
+        ctx.writeln(`  ${green(project.slug.padEnd(10))} ${project.title} · ${project.eyebrow}`);
       }
       ctx.writeln("");
       ctx.writeln(`Type ${green("open <slug>")} to go to a project page.`);

@@ -10,22 +10,22 @@ import DraggableWindow from "../WindowManager/DraggableWindow";
 const gestures = [
   {
     icon: "👤",
-    title: "Head Tracking",
+    title: "Head tracking",
     desc: "Move your head to control the robot cursor",
   },
   {
     icon: "👌",
-    title: "Pinch to Click",
+    title: "Pinch to click",
     desc: "Pinch and release to click",
   },
   {
     icon: "👌",
-    title: "Pinch & Drag Scroll",
+    title: "Pinch and drag",
     desc: "Pinch and drag to scroll",
   },
   {
     icon: "🖐",
-    title: "Open Hand",
+    title: "Open hand",
     desc: "Show your palm to move the cursor around the page",
   },
 ];

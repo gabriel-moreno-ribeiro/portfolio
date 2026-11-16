@@ -113,8 +113,8 @@ export const projects: Project[] = [
       {
         heading: 'The kit',
         body: [
-          'A wooden box built to be carried between classrooms and stored in a cupboard. Inside: a caliper, a spring scale, a stopwatch, a measuring tape, weights, a graduated cylinder, and the parts for five experiments.',
-          'Nothing in it needs a technician, a power outlet, or a part that has to be ordered from out of state.',
+          'A wooden box built to be carried between classrooms and stored in a cupboard. Inside: a caliper, a spring scale, a stopwatch, a measuring tape, weights, a graduated cylinder and the parts for five experiments.',
+          'Nothing in it needs a technician, a power outlet or a part that has to be ordered from out of state.',
         ],
       },
       {

@@ -1,0 +1,26 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "italic-serif-display",
+        "value": "*",
+        "files": [
+          "public/404.html"
+        ],
+        "createdAt": "2026-11-16T19:53:25.810Z",
+        "reason": "Site brand: section titles use an italic DM Serif accent word (Cool Things, Research Papers); the 404 title follows it."
+      },
+      {
+        "rule": "side-tab",
+        "value": "*",
+        "files": [
+          "src/styles/components/pages/blog.scss"
+        ],
+        "createdAt": "2026-11-16T20:36:16.589Z",
+        "reason": "Blockquote rule in blog posts (a quotation convention), not a card side-tab."
+      }
+    ]
+  }
+}

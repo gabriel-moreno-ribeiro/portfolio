@@ -51,7 +51,7 @@ const researchItems: ResearchItem[] = [
     year: '2023-2026',
     advisor: 'Prof. Juliano Alves Bonacin, Ph.D.',
     abstract:
-      'A 150-page monograph on the approximation chemical kinetics uses for intermediates that appear and vanish too fast to measure: when it holds, how much it misses, and whether data can tell. Exact solutions of textbook mechanisms, the Chapman ozone cycle, the start-up of an ammonia reactor, 1,968 enzyme assays from the SABIO-RK database, and a bench test with invertase and a glucose meter, proposed and not yet run. Written at the Escola de Talentos of Instituto Principia and revised in October 2026.',
+      'A 150-page monograph on the approximation chemical kinetics uses for intermediates that appear and vanish too fast to measure: when it holds, how much it misses and whether data can tell. Exact solutions of textbook mechanisms, the Chapman ozone cycle, the start-up of an ammonia reactor, 1,968 enzyme assays from the SABIO-RK database, and a bench test with invertase and a glucose meter, proposed and not yet run. Written at the Escola de Talentos of Instituto Principia and revised in October 2026.',
     tags: ['Chemical Kinetics', 'Numerical Simulation', 'Python', 'LaTeX', '150 pages'],
     pdf: '/research/chemical-kinetics/paper.pdf',
     figure: {

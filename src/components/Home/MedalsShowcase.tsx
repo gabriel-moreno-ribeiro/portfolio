@@ -32,7 +32,7 @@ type Mode = "subject" | "year" | "colour";
 const MODES = ([
   { id: "subject", label: "Subject" },
   { id: "year", label: "Year" },
-  { id: "colour", label: "Colour" },
+  { id: "colour", label: "Color" },
 // Only 6 of the 28 medals state a colour in medals.ts, which would contradict the "19 gold" count; the button returns once every medal has one.
 ] as { id: Mode; label: string }[]).filter((m) => m.id !== "colour" || medals.every((x) => colourOf(x)));
 const KEY: Record<Mode, (m: Medal) => string | undefined> = {
@@ -43,7 +43,7 @@ const KEY: Record<Mode, (m: Medal) => string | undefined> = {
 const UNKNOWN: Record<Mode, string> = {
   subject: "",
   year: "Year not on the medal",
-  colour: "Colour not on the medal",
+  colour: "Color not on the medal",
 };
 const HEADS: Record<Mode, { id: string; label: string }[]> = {
   subject: SUBJECTS,

@@ -36,7 +36,7 @@ export const experience = [
       "Designed and ran a randomized controlled trial with 208 public-school students on whether fintech apps change savings behavior. Any of the three budgeting tools raised reported saving by 52 pp over the control group.",
   },
   {
-    title: "Scholar - PREP Program",
+    title: "Scholar, PREP Program",
     company: "Fundação Estudar",
     date: "January 2025 - April 2026",
     description:

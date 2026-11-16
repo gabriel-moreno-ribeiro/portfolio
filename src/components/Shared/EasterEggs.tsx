@@ -3,7 +3,7 @@
 // - Open the console: a note for whoever looks under the hood.
 import { useEffect } from 'react';
 
-const AWAY_TITLE = 'Pleasee, come back :)';
+const AWAY_TITLE = 'Please come back :)';
 
 function EasterEggs() {
   // The tab asks you back
@@ -26,7 +26,6 @@ function EasterEggs() {
     // eslint-disable-next-line no-console
     console.log(
       '%cLooking under the hood? Good.%c\n' +
-        'The wall between "broken" and "working" is thinner than people assume, and almost nobody bothers to look.\n' +
         'Press Ctrl + K for the terminal.',
       'font: 600 14px "DM Sans", sans-serif; color: #f0732d',
       'font: 13px "DM Sans", sans-serif',

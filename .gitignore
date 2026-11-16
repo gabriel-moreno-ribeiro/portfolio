@@ -42,3 +42,6 @@ yarn-error.log*
 #   npx impeccable install -y --providers=claude --project
 #   npx ui-ux-pro-max-cli init --ai claude
 /.claude/skills/
+
+# estado local do verificador de design (impeccable); a config compartilhada vai para o git
+/.impeccable/hook.cache.json

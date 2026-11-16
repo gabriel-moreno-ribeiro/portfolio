@@ -30,7 +30,7 @@ export const CLAY_STORIES: Record<string, ClayStep[]> = {
     },
     {
       title: 'Five experiments',
-      text: 'The parts turn into five experiments. Three of them: the car timed around the track, the inclined plane with the mass hanging, and the spring scale over the graduated cylinder.',
+      text: 'The parts turn into five experiments. Three of them: the car timed around the track, the inclined plane with the mass hanging and the spring scale over the graduated cylinder.',
     },
     { title: '28 public schools', text: 'The kits went to 28 public schools in Bahia and Ceará.' },
     {

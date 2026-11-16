@@ -79,7 +79,7 @@ const CITIES: City[] = [
     role: 'Building',
     headline: 'Building HIBEEX.',
     story: [
-      'I moved here in 2026 to build HIBEEX with Teodoro, my co-founder. We make back-office AI for small and medium businesses.',
+      'I moved here in 2026 to build HIBEEX with Teodoro, my co-founder. We make backoffice AI for small and medium businesses.',
       'HIBEEX was one of 6 startups in the Canastra Ventures AI Residency.',
     ],
   },
