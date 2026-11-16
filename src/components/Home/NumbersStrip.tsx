@@ -51,10 +51,6 @@ function Schools({ phone }: { phone: boolean }) {
   return (
     <div className="numbers-strip__art ns-school-box" aria-hidden="true">
       <SchoolScene phone={phone} />
-      <p className="ns-school-count">
-        <span><em>× {BAHIA + CEARA}</em> schools</span>
-        <span>{BAHIA} Bahia · {CEARA} Ceará</span>
-      </p>
     </div>
   );
 }
