@@ -4,8 +4,8 @@
 import { useFrame } from '@react-three/fiber';
 import { useEffect, useMemo, useRef } from 'react';
 import * as THREE from 'three';
-import { Arch, beat, Belt, Drum, fileAt, FILE_Z, Filer, GateKit, Intake, Pairer, Person, reamTop, Stamper, Tray } from './HibeexParts';
-import { Arrow, at, Bar, Box, Bracket, clamp01, ease, Morph, Rig, slice, Tag, useClay, wins, type Play, type V3 } from './kit';
+import { Arch, beat, Belt, Drum, fileAt, FILE_Z, Filer, GateKit, Intake, Pairer, Person, reamTop, Stamper, Tray, Waffle } from './HibeexParts';
+import { Arrow, at, Bar, Bracket, Chart, clamp01, ease, Morph, PLATE, Rig, slice, Tag, useClay, wins, type Play, type V3 } from './kit';
 
 const HALF_PI = Math.PI / 2;
 const LANES = [-1.9, 0, 1.9]; // z of each lane: reconciliation, collections, contracts
@@ -311,6 +311,8 @@ const NAMES = ['Domínio', 'Conta Azul', 'Nibo', 'Omie'];
 const AGENTS = ['Reconciliation', 'Collections', 'Contracts'];
 const PEOPLE = ['Accountant', 'Finance BPO', 'Lawyer'];
 const H = 2.7; // height of a "before" bar
+const STANDS = [-3.45, 0, 3.45]; // x of each result chart
+const W_STAND = wins({ '3>4': [0.12, 0.55] }, [0, 0.4]);
 
 // The machines arrive after the paper has started to move, and fold away before it lands elsewhere.
 const W_GEAR = wins({ '0>1': [0.2, 0.75], '1>2': [0.1, 0.7], '2>3': [0, 0.6], '3>4': [0, 0.28], '4>0': [0.3, 0.85] }, [0, 0.7]);
@@ -318,10 +320,10 @@ const W_LATE = wins({ '1>2': [0.3, 0.85], '2>3': [0.3, 0.9], '0>1': [0.35, 0.9],
 
 const CAMERA = [
   { pos: [0, 5, 10] as V3, look: [0, 0.55, 0.15] as V3 },
-  { pos: [3.4, 3.9, 9.3] as V3, look: [-0.05, 0.7, 0.2] as V3 },
-  { pos: [3.6, 6.3, 10.4] as V3, look: [0.6, 0.35, 0.35] as V3 },
+  { pos: [5.3, 6.1, 7.5] as V3, look: [0.1, 0.45, 0.3] as V3 }, // down the belt, on a diagonal
+  { pos: [2, 8.1, 9.6] as V3, look: [0.7, 0.2, 0.3] as V3 }, // over the three lanes, almost square on
   { pos: [2.2, 6.3, 10.8] as V3, look: [0.6, 0.55, 0.1] as V3 },
-  { pos: [0, 4.9, 11.4] as V3, look: [0, 1.4, 0] as V3 },
+  { pos: [0, 5, 11.7] as V3, look: [0, 1.65, 0] as V3 },
 ];
 
 /** 0..1: the person at desk `i` looks down while the decision lands in front of them. */
@@ -369,7 +371,7 @@ export default function HibeexScene() {
       ))}
       <Tag at={[-0.75, 1.45, 0.2]} dx={-34} dy={-40} on={[1]}>Clean</Tag>
       <Tag at={[-3.8, 0.3, 0.95]} dx={-6} dy={44} on={[1]}>Raw</Tag>
-      <Tag at={[TRAY_B[0], 0.75, 0.2]} dx={10} dy={-46} on={[1]}>In order</Tag>
+      <Tag at={[TRAY_B[0], 0.5, 0.2]} dx={-10} dy={-46} on={[1]}>In order</Tag>
 
       {/* 2 → 3 · the gate becomes three agents, one arch per lane */}
       {LANES.map((z, i) => (
@@ -387,32 +389,34 @@ export default function HibeexScene() {
               <Tray n={10} />
             </Morph>
           )}
-          <Tag at={[4.35, i < 2 ? 0.45 : 0.05, z]} dx={-12} dy={-24} on={[2]}>{AGENTS[i]}</Tag>
+          <Tag at={[3.3, 0.36, z - 0.56]} dx={-34} dy={-8} on={[2]}>{AGENTS[i]}</Tag>
 
           {/* 4 · back to the people */}
           <Morph k={[null, null, null, { p: [DESKS[i], 0, z], s: DESK_K }, null]} win={W_LATE}>
             <Person nod={() => nodOf(play, i, clock.current)} />
-            <Tag at={[1.05, 1.58, 0]} dx={14} dy={-20} on={[3]}>{PEOPLE[i]}</Tag>
+            <Tag at={[1.05, 1.58, 0]} dx={i === 1 ? 44 : 14} dy={-20} on={[3]}>{PEOPLE[i]}</Tag>
           </Morph>
           <Arrow a={[-0.45, 0.45, z]} b={[DESKS[i] - 0.38, 0.78, z]} lift={0.45} on={[3]} />
         </group>
       ))}
 
-      {/* 5 · result at one client: the tall bar is before, the orange one after */}
-      <Bar on={4} p={[-4.1, 0, 0]} w={1.1} h={H} />
-      <Bar on={4} accent p={[-2.8, 0, 0]} w={1.1} h={(H * 2) / 8} from={H} />
-      <Bracket a={[-4.7, H + 0.5, 0]} b={[-2.2, H + 0.5, 0]} on={[4]}>{'8h → 2h\nAccounting service'}</Bracket>
-
-      <Bar on={4} p={[-0.65, 0, 0]} w={1.1} h={H} delay={0.04} />
-      <Bar on={4} accent p={[0.65, 0, 0]} w={1.1} h={(H * 9) / 63.9} from={H} delay={0.04} />
-      <Bracket a={[-1.25, H + 0.5, 0]} b={[1.25, H + 0.5, 0]} on={[4]}>{'63.9 → 9\nDays to get paid'}</Bracket>
-
-      {/* 94 of every 100 reconciled right: the orange part of the column */}
-      <Bar on={4} accent p={[3.45, 0, 0]} w={1.1} h={H * 0.94} delay={0.08} />
-      <Morph k={[null, null, null, null, { p: [3.45, H * 0.94 + 0.03, 0] }]} win={wins({ '3>4': [0.75, 1] }, [0, 0.3])}>
-        <Box size={[1.1, H * 0.06, 1.1]} r={0.06} position={[0, H * 0.03, 0]} />
-      </Morph>
-      <Bracket a={[2.2, H + 0.5, 0]} b={[4.7, H + 0.5, 0]} on={[4]}>{'94% accurate\nReconciliation'}</Bracket>
+      {/* 5 · result at one client: three charts. Clay is before, orange is after. */}
+      {STANDS.map((x, i) => (
+        <Morph key={x} k={[null, null, null, null, { p: [x, 0, i === 2 ? -0.4 : 0] }]} win={W_STAND}>
+          {i === 0 ? <Chart w={2.7} h={H + 0.42} rules={9} top={H} /> : i === 1 ? <Chart w={2.7} h={H + 0.42} rules={7} top={(H * 60) / 63.9} /> : <Chart w={2.7} h={H + 0.42} d={0.7} />}
+        </Morph>
+      ))}
+      {/* 8 hours of work became 2: a quarter of the bar */}
+      <Bar on={4} p={[STANDS[0] - 0.62, PLATE, 0.1]} h={H} />
+      <Bar on={4} accent p={[STANDS[0] + 0.62, PLATE, 0.1]} h={(H * 2) / 8} from={H} />
+      <Bracket a={[STANDS[0] - 1.25, H + 0.95, -0.7]} b={[STANDS[0] + 1.25, H + 0.95, -0.7]} on={[4]}>{'8h → 2h\nAccounting service'}</Bracket>
+      {/* 63.9 days to get paid became 9 */}
+      <Bar on={4} p={[STANDS[1] - 0.62, PLATE, 0.1]} h={H} delay={0.04} />
+      <Bar on={4} accent p={[STANDS[1] + 0.62, PLATE, 0.1]} h={(H * 9) / 63.9} from={H} delay={0.04} />
+      <Bracket a={[STANDS[1] - 1.25, H + 0.95, -0.7]} b={[STANDS[1] + 1.25, H + 0.95, -0.7]} on={[4]}>{'63.9 → 9\nDays to get paid'}</Bracket>
+      {/* 94 of every 100 reconciled right */}
+      <Waffle on={4} n={94} p={[STANDS[2], PLATE + 0.1, -0.63]} />
+      <Bracket a={[STANDS[2] - 1.25, H + 0.95, -0.7]} b={[STANDS[2] + 1.25, H + 0.95, -0.7]} on={[4]}>{'94% accurate\nReconciliation'}</Bracket>
     </>
   );
 }

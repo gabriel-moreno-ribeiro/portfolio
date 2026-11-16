@@ -34,7 +34,8 @@ function poolTexture() {
   const g = c.getContext('2d')!;
   const grad = g.createRadialGradient(64, 64, 0, 64, 64, 64);
   grad.addColorStop(0, 'rgba(255,255,255,1)');
-  grad.addColorStop(0.45, 'rgba(255,255,255,0.55)');
+  grad.addColorStop(0.3, 'rgba(255,255,255,0.7)');
+  grad.addColorStop(0.65, 'rgba(255,255,255,0.16)');
   grad.addColorStop(1, 'rgba(255,255,255,0)');
   g.fillStyle = grad;
   g.fillRect(0, 0, 128, 128);
@@ -46,11 +47,11 @@ function Lights({ dark }: { dark: boolean }) {
   useEffect(() => () => pool.dispose(), [pool]);
   return (
     <>
-      <hemisphereLight args={['#ffffff', dark ? '#3d342e' : '#ddd6ce', dark ? 1.15 : 1.9]} />
+      <hemisphereLight args={['#ffffff', dark ? '#3a312b' : '#d9d1c8', dark ? 0.95 : 1.8]} />
       <directionalLight
         castShadow
         position={[-5, 9.5, 6]}
-        intensity={dark ? 3.1 : 1.7}
+        intensity={dark ? 2.5 : 1.85}
         shadow-mapSize={[1024, 1024]}
         shadow-bias={-0.0004}
         shadow-normalBias={0.025}
@@ -60,17 +61,17 @@ function Lights({ dark }: { dark: boolean }) {
         <orthographicCamera attach="shadow-camera" args={[-9.5, 9.5, 8, -8, 1, 34]} />
       </directionalLight>
       <directionalLight position={[7, 3, 5]} intensity={0.22} />
-      {/* The floor is the page: a pool of light, then only what darkens it. */}
-      <mesh rotation-x={-Math.PI / 2} position={[0, -0.03, 0.4]} renderOrder={0} userData={{ overlay: true }}>
-        <planeGeometry args={[16, 12]} />
-        <meshBasicMaterial map={pool} color={dark ? '#ffe6d0' : '#ffffff'} transparent opacity={dark ? 0.13 : 0.55} depthWrite={false} />
+      {/* The floor is the page: a pool of light, then only what darkens it. In the dark theme the pool is what lets the shadows show. */}
+      <mesh rotation-x={-Math.PI / 2} position={[0, -0.03, -0.6]} renderOrder={0} userData={{ overlay: true }}>
+        <planeGeometry args={[22, 18]} />
+        <meshBasicMaterial map={pool} color={dark ? '#ffe9d6' : '#ffffff'} transparent opacity={dark ? 0.24 : 0.6} depthWrite={false} />
       </mesh>
       <mesh rotation-x={-Math.PI / 2} position-y={-0.02} renderOrder={1} receiveShadow>
         <planeGeometry args={[80, 80]} />
-        <shadowMaterial transparent depthWrite={false} opacity={dark ? 0.55 : 0.26} />
+        <shadowMaterial transparent depthWrite={false} opacity={dark ? 0.72 : 0.36} />
       </mesh>
       {/* Just under the floor, looking up: models standing on y=0 show it their undersides. */}
-      <ContactShadows renderOrder={2} position={[0, -0.01, 0]} scale={26} resolution={512} blur={2.2} far={2.4} opacity={dark ? 0.8 : 0.6} color={dark ? '#000000' : '#3a2c22'} />
+      <ContactShadows renderOrder={2} position={[0, -0.01, 0]} scale={26} resolution={512} blur={2.2} far={2.4} opacity={dark ? 0.9 : 0.75} color={dark ? '#000000' : '#3a2c22'} />
     </>
   );
 }

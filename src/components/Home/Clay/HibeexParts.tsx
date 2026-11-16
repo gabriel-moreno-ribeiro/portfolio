@@ -3,7 +3,8 @@
 import { useFrame } from '@react-three/fiber';
 import { useMemo, useRef } from 'react';
 import * as THREE from 'three';
-import { Box, clamp01, ease, Puck, Rod, slice, useClay } from './kit';
+import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js';
+import { at, Box, clamp01, ease, pop, Puck, Rod, slice, useClay, type Mats, type V3 } from './kit';
 
 const HALF_PI = Math.PI / 2;
 
@@ -49,7 +50,12 @@ export function Intake() {
   return (
     <group>
       <Box accent size={[1.7, 0.56, 0.9]} position={[0, 0.28, 0]} r={0.13} />
+      {/* The mouth: a lip below and a hood above. The vents on top say there is a machine inside. */}
       <Box size={[1.1, 0.08, 0.14]} position={[0, 0.2, 0.42]} r={0.03} />
+      <Box size={[1.2, 0.045, 0.1]} position={[0, 0.37, 0.43]} r={0.02} />
+      {[-0.36, -0.18, 0, 0.18, 0.36].map((x) => (
+        <Box accent key={x} size={[0.07, 0.035, 0.46]} position={[x, 0.565, -0.05]} r={0.015} />
+      ))}
       {[-0.57, -0.19, 0.19, 0.57].map((x) => (
         <Puck key={x} r={0.075} h={0.1} bevel={0.025} segments={16} position={[x, 0.28, -0.44]} rotation={[HALF_PI, 0, 0]} />
       ))}
@@ -133,14 +139,19 @@ export const reamTop = (n = 22) => 0.062 + n * 0.016;
 // ── The three agents ────────────────────────────────────────────────────────
 // Each is an arch with a tool that does one thing to the sheet that stopped under it.
 // `on`: how much the agents are at work (0 while travelling in, 1 while their step holds).
+// Their tools are the orange thing of that step, and plain clay once the work goes back to the people.
+const lit = (m: THREE.Mesh | null, on: number, mats: Mats) => m && (m.material = on > 0.5 ? mats.accent : mats.clay);
 
 /** Reconciliation: two fingers come down outside a pair of sheets and push them together. */
 export function Pairer({ on }: { on: () => number }) {
   const left = useRef<THREE.Mesh>(null);
   const right = useRef<THREE.Mesh>(null);
+  const { mats } = useClay();
   useFrame(({ clock }) => {
     const { act } = beat(clock.elapsedTime);
     const w = on();
+    lit(left.current, w, mats);
+    lit(right.current, w, mats);
     const down = (slice(act, 0, 0.14) - slice(act, 0.72, 0.9)) * w;
     const close = (slice(act, 0.16, 0.42) - slice(act, 0.56, 0.72)) * w;
     left.current?.position.set(-0.8 + close * 0.1, 0.92 - down * 0.36, 0);
@@ -158,15 +169,18 @@ export function Pairer({ on }: { on: () => number }) {
 /** Collections: a stamp comes down on the sheet. */
 export function Stamper({ on }: { on: () => number }) {
   const head = useRef<THREE.Group>(null);
+  const stamp = useRef<THREE.Mesh>(null);
+  const { mats } = useClay();
   useFrame(({ clock }) => {
     const { act } = beat(clock.elapsedTime);
+    lit(stamp.current, on(), mats);
     const down = (ease(slice(act, 0.08, 0.3)) - ease(slice(act, 0.42, 0.7))) * on();
     head.current?.position.setY(0.78 - down * 0.4);
   });
   return (
     <group ref={head} position={[0, 0.78, 0]}>
       <Puck r={0.05} h={0.5} segments={14} position={[0, 0.16, 0]} />
-      <Puck r={0.17} h={0.1} bevel={0.03} segments={24} position={[0, -0.09, 0]} />
+      <Puck ref={stamp} r={0.17} h={0.1} bevel={0.03} segments={24} position={[0, -0.09, 0]} />
     </group>
   );
 }
@@ -187,8 +201,11 @@ export function fileAt(a: number, out: { y: number; z: number; tilt: number }) {
 export function Filer({ on }: { on: () => number }) {
   const pad = useRef<THREE.Group>(null);
   const where = useMemo(() => ({ y: 0, z: 0, tilt: 0 }), []);
+  const cup = useRef<THREE.Mesh>(null);
+  const { mats } = useClay();
   useFrame(({ clock }) => {
     const { act } = beat(clock.elapsedTime);
+    lit(cup.current, on(), mats);
     // It rides the sheet to the box and lets go, then comes back for the next one.
     const grip = slice(act, 0, 0.6) - slice(act, 0.7, 0.95);
     fileAt(act * on(), where);
@@ -199,7 +216,7 @@ export function Filer({ on }: { on: () => number }) {
       <Box size={[0.16, 0.12, 2.2]} r={0.04} position={[0, 1.02, 0.55]} />
       <group ref={pad} position={[0, 0.76, 0]}>
         <Puck r={0.04} h={0.34} segments={12} position={[0, 0.2, 0]} />
-        <Puck r={0.13} h={0.06} bevel={0.02} segments={20} />
+        <Puck ref={cup} r={0.13} h={0.06} bevel={0.02} segments={20} />
       </group>
       {/* The file box, with what is already filed standing in it */}
       <group position={[0, 0, FILE_Z]}>
@@ -252,4 +269,41 @@ export function Person({ nod }: { nod: () => number }) {
       </group>
     </group>
   );
+}
+
+// ── The result ──────────────────────────────────────────────────────────────
+const TILE = 0.25;
+/**
+ * 100 tiles in a 10 x 10 square standing in the XY plane, `n` of them orange, filled from the
+ * bottom row up. They pop in row by row when the story reaches step `on`. Origin: bottom centre.
+ */
+export function Waffle({ n, on, p }: { n: number; on: number; p: V3 }) {
+  const { play, mats } = useClay();
+  const ref = useRef<THREE.InstancedMesh>(null);
+  const { geo, mat } = useMemo(() => ({ geo: new RoundedBoxGeometry(TILE - 0.045, TILE - 0.045, 0.09, 2, 0.03), mat: new THREE.MeshStandardMaterial({ roughness: 0.9 }) }), []);
+  const o = useMemo(() => new THREE.Object3D(), []);
+  useFrame(({ clock }) => {
+    const m = ref.current;
+    if (!m) return;
+    const here = at(play, on);
+    m.visible = here > 0.001;
+    if (!m.visible) return;
+    const arriving = play.to === on;
+    for (let i = 0; i < 100; i++) {
+      const col = i % 10;
+      const row = Math.floor(i / 10);
+      const d = (row * 10 + col) / 100;
+      const size = arriving ? pop(slice(here, 0.3 + d * 0.45, 0.5 + d * 0.45), 1.4) : ease(slice(here, 0.6, 1));
+      // While the step holds, a glint runs up the square.
+      const glint = Math.max(0, Math.sin(clock.elapsedTime * 1.8 - row * 0.5 - col * 0.12)) ** 12 * 0.05 * slice(here, 0.95, 1);
+      o.position.set((col - 4.5) * TILE, (row + 0.5) * TILE, glint);
+      o.scale.setScalar(Math.max(size, 1e-4));
+      o.updateMatrix();
+      m.setMatrixAt(i, o.matrix);
+      m.setColorAt(i, i < n ? mats.accent.color : mats.clay.color);
+    }
+    m.instanceMatrix.needsUpdate = true;
+    if (m.instanceColor) m.instanceColor.needsUpdate = true;
+  });
+  return <instancedMesh ref={ref} args={[geo, mat, 100]} position={p} castShadow receiveShadow frustumCulled={false} />;
 }

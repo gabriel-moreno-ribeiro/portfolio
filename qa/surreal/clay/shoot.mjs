@@ -13,7 +13,7 @@ const TRAVEL_MS = 1400;
 const [W, H] = (process.env.SIZE || '1440x900').split('x').map(Number);
 
 const browser = await chromium.launch({ args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] });
-const ctx = await browser.newContext({ viewport: { width: W, height: H }, deviceScaleFactor: 1 });
+const ctx = await browser.newContext({ viewport: { width: W, height: H }, deviceScaleFactor: Number(process.env.DPR || 1) });
 await ctx.addInitScript((t) => { try { localStorage.setItem('darkMode', String(t === 'dark')); } catch {} }, theme);
 const page = await ctx.newPage();
 const errors = [];
@@ -26,11 +26,18 @@ await row.waitFor({ timeout: 20000 });
 // The home keeps re-aligning to the hash target until the visitor scrolls: tell it we did.
 await page.waitForTimeout(harness ? 300 : 1500);
 await page.evaluate(() => window.dispatchEvent(new WheelEvent('wheel')));
-await row.evaluate((el) => el.scrollIntoView({ block: 'center', behavior: 'instant' }));
+// The row is taller than the window (the photos sit under the scene): centre the scene itself.
+await row.locator('.clay-stage').evaluate((el) => el.scrollIntoView({ block: 'center', behavior: 'instant' }));
 await row.locator('.clay-stage--live, .clay-stage--failed').waitFor({ timeout: 20000 }).catch(() => errors.push('stage never went live'));
 
 const seg = (i) => row.locator('.clay-ctl__segs button').nth(i);
-const shoot = (name) => page.screenshot({ path: path.join(outDir, name + '.png') });
+// STAGE=1 shoots only the stage's box (for close looks); T=<seconds> freezes the idle clock there first.
+const shoot = async (name) => {
+  if (process.env.T) await row.locator('.clay-stage canvas').first().evaluate((c, t) => c.__setTime(t), Number(process.env.T));
+  if (process.env.T) await page.waitForTimeout(120);
+  const file = path.join(outDir, name + '.png');
+  return process.env.STAGE ? row.locator('.clay-stage').screenshot({ path: file }) : page.screenshot({ path: file });
+};
 const shots = [];
 if (mids) {
   for (const m of mids.split(',')) {
@@ -43,7 +50,8 @@ if (mids) {
     await shoot(shots.at(-1));
   }
 } else {
-  for (let i = 0; i < STEPS; i++) {
+  // ONLY=3,4 shoots just those steps (0-based).
+  for (const i of process.env.ONLY ? process.env.ONLY.split(',').map(Number) : [...Array(STEPS).keys()]) {
     await seg(i).click();
     await page.waitForTimeout(TRAVEL_MS + 1300);
     shots.push(`${slug}-step${i + 1}-${theme}`);

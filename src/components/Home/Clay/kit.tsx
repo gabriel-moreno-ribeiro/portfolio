@@ -23,7 +23,7 @@ export interface Mats {
 export function makeMats(dark: boolean): Mats {
   const inkColor = dark ? '#f1ebe4' : '#16120f';
   return {
-    clay: new THREE.MeshStandardMaterial({ color: dark ? '#9a9189' : '#f3f1ee', roughness: 0.95, metalness: 0 }),
+    clay: new THREE.MeshStandardMaterial({ color: dark ? '#c4bcb4' : '#f3f1ee', roughness: 0.95, metalness: 0 }),
     accent: new THREE.MeshStandardMaterial({ color: '#f0732d', roughness: 0.85, metalness: 0 }),
     ink: new THREE.MeshBasicMaterial({ color: inkColor }),
     inkColor,
@@ -198,7 +198,25 @@ export function Bar({ p, w = 1, h, from, accent, on, delay = 0 }: { p: V3; w?: n
   });
   return (
     <group ref={ref} position={p}>
-      <Box accent={accent} size={[w, h, w]} r={0.1} position={[0, h / 2, 0]} />
+      <Box accent={accent} size={[w, h, w]} r={0.05} position={[0, h / 2, 0]} />
+    </group>
+  );
+}
+
+/** Thickness of a chart's base plate: bars stand at this height. */
+export const PLATE = 0.08;
+/**
+ * What a result stands on: a base plate and a back board ruled like graph paper, `rules` raised
+ * lines from the plate up to `top` (every `major`-th one heavier). Origin on the floor, centre of the plate.
+ */
+export function Chart({ w, h, d = 1.5, rules, top, major = 2 }: { w: number; h: number; d?: number; rules?: number; top?: number; major?: number }) {
+  const z = -d / 2 + 0.04;
+  const size = useMemo<V3>(() => [w - 0.2, 0.014, 0.02], [w]);
+  return (
+    <group>
+      <Box size={[w, PLATE, d]} position={[0, PLATE / 2, 0]} r={0.035} />
+      <Box size={[w, h, 0.08]} position={[0, h / 2 + 0.02, z]} r={0.035} />
+      {rules && <Ticks n={rules} a={[0, PLATE, z + 0.045]} b={[0, PLATE + (top ?? h), z + 0.045]} size={size} major={major} grow={2.2} along={1} />}
     </group>
   );
 }
@@ -232,7 +250,7 @@ export function Arrow({ a, b, lift = 0.5, bend, on, head = true }: { a: V3; b: V
     const m = line.current?.material as (THREE.Material & { dashOffset: number }) | undefined;
     if (m) {
       m.opacity = o;
-      m.dashOffset -= dt * 0.3;
+      m.dashOffset -= dt * 0.42;
     }
     cone.current?.scale.setScalar(Math.max(o, 0.001));
   });
@@ -265,12 +283,12 @@ export function Tag({ at: anchor, dx = 0, dy = -44, on, children }: { at: V3; dx
   );
 }
 
-/** A measuring bracket (line with end ticks) with a centred label over it. */
-export function Bracket({ a, b, on, children }: { a: V3; b: V3; on: number[]; children: string }) {
+/** A measuring bracket (line with end ticks) with a centred label over it, or under it with `below` (for one lying on the floor). */
+export function Bracket({ a, b, on, below, children }: { a: V3; b: V3; on: number[]; below?: boolean; children: string }) {
   const { play, mats } = useClay();
   const group = useRef<THREE.Group>(null);
-  const tick = 0.14;
-  const points = useMemo<V3[]>(() => [[a[0], a[1] - tick, a[2]], a, b, [b[0], b[1] - tick, b[2]]], [a, b]);
+  const tick = below ? -0.14 : 0.14;
+  const points = useMemo<V3[]>(() => [[a[0], a[1] - tick, a[2]], a, b, [b[0], b[1] - tick, b[2]]], [a, b, tick]);
   useFrame(() => {
     if (group.current) group.current.visible = shown(play, on) > 0.5;
   });
@@ -279,7 +297,7 @@ export function Bracket({ a, b, on, children }: { a: V3; b: V3; on: number[]; ch
       <group ref={group} userData={OVERLAY}>
         <Line points={points} color={mats.inkColor} lineWidth={1} layers={1} />
       </group>
-      <Tag at={[(a[0] + b[0]) / 2, (a[1] + b[1]) / 2, (a[2] + b[2]) / 2]} dx={0} dy={-10} on={on}>
+      <Tag at={[(a[0] + b[0]) / 2, (a[1] + b[1]) / 2, (a[2] + b[2]) / 2]} dx={0} dy={below ? 10 : -10} on={on}>
         {children}
       </Tag>
     </>

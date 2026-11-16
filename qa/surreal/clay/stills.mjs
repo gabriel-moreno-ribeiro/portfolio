@@ -12,7 +12,7 @@ const BASE = process.env.BASE || 'http://localhost:5173';
 const STEPS = 5;
 const TRAVEL_MS = 1400;
 // The idle animations are put at a moment that shows the point of the step (seconds on the scene's clock).
-const MOMENT = { hibeex: [2.2, 3.1, 1.25 + 1.9 * 3, 2.4 * 2 + 0.85, 1], candela: [1.6, 2, 3.1, 1.2, 1.5] };
+const MOMENT = { hibeex: [2.2, 3.1, 1.25 + 1.9 * 3, 2.4 * 2 + 0.85, 1], candela: [1.6, 2, 3.1, 1.55, 1.5] };
 const labels = {};
 
 const browser = await chromium.launch({ args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] });
@@ -20,6 +20,8 @@ for (const theme of ['light', 'dark']) {
   const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1.6 });
   const page = await ctx.newPage();
   page.on('pageerror', (e) => console.error('pageerror:', String(e).slice(0, 300)));
+  // A compile error anywhere in the app (other work in progress) puts Vite's overlay over the page: say what it is.
+  const overlay = () => page.evaluate(() => document.querySelector('vite-error-overlay')?.shadowRoot?.textContent?.replace(/\s+/g, ' ').slice(0, 400));
   await page.goto(`${BASE}/qa/surreal/clay/harness.html${theme === 'dark' ? '?dark' : ''}`, { waitUntil: 'load' });
   for (const slug of ['hibeex', 'candela']) {
     const row = page.locator(`[data-clay="${slug}"]`);
@@ -29,7 +31,7 @@ for (const theme of ['light', 'dark']) {
     const stage = row.locator('.clay-stage');
     labels[slug] ??= [];
     for (let i = 0; i < STEPS; i++) {
-      await row.locator('.clay-ctl__segs button').nth(i).click();
+      await row.locator('.clay-ctl__segs button').nth(i).click({ timeout: 8000 }).catch(async (e) => { throw new Error(`step ${i + 1} of ${slug}: ${(await overlay()) ?? e.message}`); });
       await page.waitForTimeout(TRAVEL_MS + 900);
       await stage.locator('canvas').evaluate((c, t) => c.__setTime(t), MOMENT[slug][i]);
       await page.waitForTimeout(250);

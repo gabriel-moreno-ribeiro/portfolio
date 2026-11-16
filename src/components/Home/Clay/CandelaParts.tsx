@@ -3,6 +3,8 @@
 import { useFrame } from '@react-three/fiber';
 import { useMemo, useRef, type ReactNode } from 'react';
 import * as THREE from 'three';
+import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js';
+import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
 import { at, Box, Puck, Rod, Slab, Ticks, useClay, type V3 } from './kit';
 
 const HALF_PI = Math.PI / 2;
@@ -425,8 +427,8 @@ export function Incline() {
       <group position={PIVOT} rotation={[0, 0, TILT]}>
         <Box size={[2.62, 0.08, 0.62]} position={[1.31, 0, 0]} r={0.03} />
         <group ref={cart} position={[0.9, 0.04, 0]}>
-          <Box accent size={[0.4, 0.1, 0.3]} r={0.035} position={[0, 0.115, 0]} />
-          <Box accent size={[0.2, 0.09, 0.2]} r={0.035} position={[-0.04, 0.2, 0]} />
+          <Box size={[0.4, 0.1, 0.3]} r={0.035} position={[0, 0.115, 0]} />
+          <Box size={[0.2, 0.09, 0.2]} r={0.035} position={[-0.04, 0.2, 0]} />
           {[-0.13, 0.13].flatMap((x) => [-0.16, 0.16].map((z) => <Puck key={`${x}${z}`} r={0.052} h={0.04} bevel={0.014} segments={16} position={[x, 0.052, z]} rotation={[HALF_PI, 0, 0]} />))}
         </group>
         <mesh ref={along} position={[1.8, 0.16, 0]} rotation={[0, 0, HALF_PI]} material={mats.ink} userData={{ overlay: true }}>
@@ -475,4 +477,88 @@ export function Stand() {
       </mesh>
     </group>
   );
+}
+
+// ── The schools ─────────────────────────────────────────────────────────────
+// Each school is one piece of geometry (it is drawn 28 times). Glass and doors are a darker
+// tone of the same clay, carried in the vertex colours.
+const GLASS = 0.5;
+function toned(g: THREE.BufferGeometry, tone = 1) {
+  const flat = g.index ? g.toNonIndexed() : g;
+  flat.setAttribute('color', new THREE.Float32BufferAttribute(new Float32Array(flat.attributes.position.count * 3).fill(tone), 3));
+  return flat;
+}
+/** A box standing on `y`, centred on x and z. */
+const block = (w: number, h: number, d: number, x: number, y: number, z: number, tone = 1, r = 0.014) =>
+  toned(new RoundedBoxGeometry(w, h, d, 2, Math.min(r, Math.min(w, h, d) / 2 - 0.001)).translate(x, y + h / 2, z), tone);
+const post = (r: number, h: number, x: number, y: number, z: number) => toned(new THREE.CylinderGeometry(r, r, h, 8).translate(x, y + h / 2, z));
+/** A pitched roof sitting on `y`: `len` along its ridge, `span` across. The ridge runs along X, or along Z with `front`. */
+function gable(len: number, span: number, rise: number, x: number, y: number, z: number, front = false) {
+  const s = new THREE.Shape();
+  s.moveTo(-span / 2, 0);
+  s.lineTo(span / 2, 0);
+  s.lineTo(0, rise);
+  s.closePath();
+  const g = new THREE.ExtrudeGeometry(s, { depth: len - 0.02, bevelEnabled: true, bevelSize: 0.01, bevelThickness: 0.01, bevelSegments: 1 }).translate(0, 0, -len / 2 + 0.01);
+  if (!front) g.rotateY(HALF_PI);
+  return toned(g.translate(x, y, z));
+}
+/** A row of windows on a wall facing +Z. */
+const windows = (xs: number[], y: number, z: number, w = 0.085, h = 0.12) =>
+  xs.flatMap((x) => [block(w, h, 0.014, x, y, z, GLASS, 0.004), block(w + 0.03, 0.016, 0.03, x, y - 0.016, z + 0.004, 1, 0.005)]);
+const Y = 0.022; // the top of a school's yard
+/**
+ * What makes each of them a school: the yard with its path, and over the front door a tower
+ * `h` tall with a clock, a pointed roof and the flag flying from it.
+ */
+const entrance = (h: number) => [
+  block(1.06, Y, 0.86, 0, 0, 0.05, 1, 0.01),
+  block(0.14, 0.008, 0.32, 0, Y, 0.33, 1, 0.003),
+  block(0.26, h, 0.24, 0, Y, -0.02),
+  toned(new THREE.ConeGeometry(0.225, 0.17, 4).rotateY(Math.PI / 4).translate(0, Y + h + 0.085, -0.02)),
+  block(0.1, 0.17, 0.014, 0, Y, 0.102, GLASS, 0.004),
+  toned(new THREE.CylinderGeometry(0.043, 0.043, 0.016, 16).rotateX(HALF_PI).translate(0, Y + h - 0.085, 0.104), GLASS),
+  block(0.3, 0.014, 0.07, 0, Y, 0.135, 1, 0.005),
+  post(0.01, 0.34, 0, Y + h + 0.13, -0.02),
+  block(0.18, 0.105, 0.014, 0.1, Y + h + 0.36, -0.02, 1, 0.004),
+];
+
+/** Three kinds of school, origin on the ground in the middle of the yard, front door towards +Z. */
+export function schoolGeometries() {
+  // One storey of classrooms on each side of the door, under a low pitched roof.
+  const long = [
+    ...entrance(0.43),
+    block(1, 0.24, 0.34, 0, Y, -0.17),
+    gable(1.08, 0.44, 0.13, 0, Y + 0.24, -0.17),
+    ...windows([-0.42, -0.31, -0.2, 0.2, 0.31, 0.42], Y + 0.08, 0.002),
+  ];
+  // Two storeys, a flat roof with its parapet and the water tank.
+  const flat = [
+    ...entrance(0.62),
+    block(0.9, 0.43, 0.34, 0, Y, -0.17),
+    block(0.96, 0.035, 0.4, 0, Y + 0.43, -0.17, 1, 0.012),
+    block(0.18, 0.08, 0.14, 0.3, Y + 0.465, -0.2),
+    ...windows([-0.39, -0.29, -0.19, 0.19, 0.29, 0.39], Y + 0.07, 0.002, 0.075),
+    ...windows([-0.39, -0.29, -0.19, 0.19, 0.29, 0.39], Y + 0.27, 0.002, 0.075),
+  ];
+  // A classroom wing on one side of the door and, on the other, the vaulted roof of the covered court.
+  const court = [
+    ...entrance(0.43),
+    block(0.5, 0.24, 0.34, -0.27, Y, -0.17),
+    block(0.56, 0.035, 0.4, -0.27, Y + 0.24, -0.17, 1, 0.012),
+    ...windows([-0.42, -0.31, -0.2], Y + 0.08, 0.002),
+    toned(new THREE.CylinderGeometry(0.21, 0.21, 0.52, 14, 1, false, -HALF_PI, Math.PI).rotateX(-HALF_PI).scale(1, 0.6, 1).translate(0.34, Y + 0.19, -0.15)),
+    ...[-0.37, 0.07].flatMap((z) => [post(0.012, 0.19, 0.16, Y, z), post(0.012, 0.19, 0.52, Y, z)]),
+    block(0.36, 0.008, 0.46, 0.34, Y, -0.15, GLASS, 0.003),
+  ];
+  return [long, flat, court].map((parts) => mergeGeometries(parts)!);
+}
+
+/** A closed kit, small enough to be carried to a school. Origin at its bottom centre. */
+export function miniKitGeometry() {
+  return mergeGeometries([
+    new RoundedBoxGeometry(0.24, 0.1, 0.16, 2, 0.02).translate(0, 0.05, 0),
+    new RoundedBoxGeometry(0.26, 0.03, 0.18, 2, 0.012).translate(0, 0.112, 0),
+    new RoundedBoxGeometry(0.1, 0.03, 0.03, 2, 0.012).translate(0, 0.14, 0),
+  ])!;
 }
