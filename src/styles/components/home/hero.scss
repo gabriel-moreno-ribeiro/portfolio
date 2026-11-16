@@ -252,14 +252,6 @@
   }
 }
 
-.hero-section .hero-now {
-  // Beats the pinned-right rule in spotifyCard.scss: the card stays in the flow.
-  .spotify-card {
-    position: static;
-    margin: 40px auto 0;
-  }
-}
-
 @media screen and (max-width: 767px) {
   .ranked-stats {
     grid-template-columns: repeat(2, 1fr);

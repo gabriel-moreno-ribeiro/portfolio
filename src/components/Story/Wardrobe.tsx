@@ -3,6 +3,7 @@
 // right colour; swap in `image` / `backImage` / `sideImage` cut-outs (200 × 310)
 // when there are photos of the real ones.
 import ClothingRailHero, { type RailGarment } from '../ui/product-rail-gallery';
+import '../../styles/components/shared/wardrobe.scss';
 
 const WARDROBE: RailGarment[] = [
   {
@@ -49,10 +50,11 @@ const WARDROBE: RailGarment[] = [
   },
 ];
 
-export function Wardrobe() {
+export function Wardrobe({ id }: { id?: string }) {
   return (
     <ClothingRailHero
-      className="story__wardrobe"
+      id={id}
+      className="wardrobe-rail"
       items={WARDROBE}
       hanger="wood"
       eyebrow="Wardrobe · oldest on the left"

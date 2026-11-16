@@ -11,6 +11,7 @@ import { NAVIGATE_EVENT, type NavigateDetail } from "../utils/scrollToComponent"
 
 const BackgroundGlobe = lazy(() => import("../components/Home/BackgroundGlobe"));
 const Skills = lazy(() => import("../components/Home/Skills"));
+const Wardrobe = lazy(() => import("../components/Story/Wardrobe").then((m) => ({ default: m.Wardrobe })));
 const FindMyWork = lazy(() => import("../components/Home/FindMyWork"));
 const Research = lazy(() => import("../components/Home/Research"));
 const Experience = lazy(() => import("../components/Home/Experience/Experience"));
@@ -22,6 +23,7 @@ const StickerPeel = lazy(() => import("../components/ReactBits/StickerPeel"));
 const SECTIONS = [
   { id: 'main-content', label: 'Top' },
   { id: 'background', label: 'Origins' },
+  { id: 'wardrobe', label: 'Wardrobe' },
   { id: 'work', label: 'Cool Things' },
   { id: 'research', label: 'Research' },
   { id: 'skills', label: 'Skills' },
@@ -35,6 +37,7 @@ const SECTIONS = [
 // above it at once.
 const RESERVE: Record<string, [desktop: number, tablet: number, mobile: number]> = {
   background: [959, 1384, 936],
+  wardrobe: [650, 650, 487],
   work: [2310, 4537, 3719],
   research: [1654, 2469, 3172],
   skills: [1000, 1000, 714],
@@ -201,6 +204,9 @@ function Home() {
       <MomentsStrip />
       <LazySection id="background" label="Where I come from" eager={mountAll}>
         <BackgroundGlobe />
+      </LazySection>
+      <LazySection id="wardrobe" label="What I wore, growing up" eager={mountAll}>
+        <Wardrobe id="wardrobe" />
       </LazySection>
       <LazySection id="work" label="Cool things" eager={mountAll}>
         <FindMyWork />

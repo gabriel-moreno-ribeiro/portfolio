@@ -123,6 +123,12 @@
   }
 }
 
+// Sections already scrolled past keep their dot lit, like the line that reaches them.
+.section-rail__item--passed .section-rail__dot {
+  background: var(--accent-decor);
+  border-color: var(--accent-decor);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .section-rail__dot,
   .section-rail__label {

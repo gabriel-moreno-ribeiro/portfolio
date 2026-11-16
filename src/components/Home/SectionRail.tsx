@@ -147,7 +147,7 @@ function SectionRail({ sections }: { sections: RailSection[] }) {
           <li key={section.id}>
             <button
               type="button"
-              className={`section-rail__item ${active === i ? 'section-rail__item--active' : ''}`}
+              className={`section-rail__item ${active === i ? 'section-rail__item--active' : i < active ? 'section-rail__item--passed' : ''}`}
               onClick={() => scrollToComponent(section.id, SCROLL_OFFSET)}
               aria-current={active === i ? 'true' : undefined}
             >

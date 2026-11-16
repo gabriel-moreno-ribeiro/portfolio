@@ -117,9 +117,18 @@
   100% { transform: scaleY(0.14); }
 }
 
-// In the hero: in the flow below the buttons (hero.scss places it)
+// In the hero: pinned to the right at desktop widths, in the flow below the buttons otherwise
 .hero-section .spotify-card {
   margin: 28px auto 0;
+}
+
+@media screen and (min-width: 1200px) {
+  .hero-section .spotify-card {
+    position: absolute;
+    top: 96px;
+    right: 24px;
+    margin: 0;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

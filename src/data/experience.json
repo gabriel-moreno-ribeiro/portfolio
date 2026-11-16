@@ -82,8 +82,24 @@
     ]
   },
   {
-    "id": "second-chance",
+    "id": "taqtile",
     "order": 6,
+    "org": "Taqtile",
+    "role": "",
+    "start": "2026",
+    "end": "present",
+    "periodLabel": "Present",
+    "city": "São Paulo",
+    "cityTz": "America/Sao_Paulo",
+    "_placeholder": true,
+    "url": "https://www.taqtile.com.br/",
+    "bullets": [
+      "A São Paulo software company that has put engineering, design and AI into products since 2004."
+    ]
+  },
+  {
+    "id": "second-chance",
+    "order": 7,
     "org": "Second Chance",
     "role": "Tech Intern",
     "start": "2026",

@@ -1,0 +1,13 @@
+// The clothing rail (Story and Home). Imported by Wardrobe.tsx.
+.wardrobe-rail {
+  max-width: 1080px;
+  margin: 0 auto 80px;
+  border: 1px solid var(--border);
+  border-radius: 24px;
+}
+
+// Home's sections are centred flex items, which shrink to their content; the rail measures its own box.
+.home-wrapper .wardrobe-rail {
+  width: min(1080px, calc(100vw - 40px));
+  margin-bottom: 40px;
+}
