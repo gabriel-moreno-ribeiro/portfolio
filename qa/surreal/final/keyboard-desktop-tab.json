@@ -1,0 +1,2422 @@
+{
+  "count": 135,
+  "stops": [
+    {
+      "i": 0,
+      "sel": "a.skip-link",
+      "text": "Skip to content",
+      "href": "#main-content",
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 0,
+      "rect": [
+        16,
+        0,
+        146,
+        46
+      ]
+    },
+    {
+      "i": 1,
+      "sel": "button.section-rail__item.section-rail__item--active",
+      "text": "Top",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "2px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 0,
+      "rect": [
+        28,
+        333,
+        45,
+        24
+      ]
+    },
+    {
+      "i": 2,
+      "sel": "button.section-rail__item",
+      "text": "Origins",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "2px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 0,
+      "rect": [
+        28,
+        363,
+        71,
+        24
+      ]
+    },
+    {
+      "i": 3,
+      "sel": "button.section-rail__item",
+      "text": "Graph",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "2px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 0,
+      "rect": [
+        28,
+        393,
+        63,
+        24
+      ]
+    },
+    {
+      "i": 4,
+      "sel": "button.section-rail__item",
+      "text": "Cool Things",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "2px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 0,
+      "rect": [
+        28,
+        423,
+        105,
+        24
+      ]
+    },
+    {
+      "i": 5,
+      "sel": "button.section-rail__item",
+      "text": "Research",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "2px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 0,
+      "rect": [
+        28,
+        453,
+        85,
+        24
+      ]
+    },
+    {
+      "i": 6,
+      "sel": "button.section-rail__item",
+      "text": "Skills",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "2px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 0,
+      "rect": [
+        28,
+        483,
+        61,
+        24
+      ]
+    },
+    {
+      "i": 7,
+      "sel": "button.section-rail__item",
+      "text": "Experience",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "2px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 0,
+      "rect": [
+        28,
+        513,
+        95,
+        24
+      ]
+    },
+    {
+      "i": 8,
+      "sel": "button.section-rail__item",
+      "text": "Contact",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "2px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 0,
+      "rect": [
+        28,
+        543,
+        79,
+        24
+      ]
+    },
+    {
+      "i": 9,
+      "sel": "a",
+      "text": "Home.",
+      "href": "/",
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 0,
+      "rect": [
+        662,
+        27,
+        68,
+        28
+      ]
+    },
+    {
+      "i": 10,
+      "sel": "a",
+      "text": "Story.",
+      "href": "/story",
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 0,
+      "rect": [
+        736,
+        27,
+        63,
+        28
+      ]
+    },
+    {
+      "i": 11,
+      "sel": "a",
+      "text": "Library.",
+      "href": "/library",
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 0,
+      "rect": [
+        804,
+        27,
+        75,
+        28
+      ]
+    },
+    {
+      "i": 12,
+      "sel": "a",
+      "text": "News.",
+      "href": "/news",
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 0,
+      "rect": [
+        886,
+        27,
+        64,
+        28
+      ]
+    },
+    {
+      "i": 13,
+      "sel": "a",
+      "text": "Blog.",
+      "href": "/blog",
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 0,
+      "rect": [
+        956,
+        27,
+        55,
+        28
+      ]
+    },
+    {
+      "i": 14,
+      "sel": "a",
+      "text": "Files.",
+      "href": "/files",
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 0,
+      "rect": [
+        1017,
+        27,
+        57,
+        28
+      ]
+    },
+    {
+      "i": 15,
+      "sel": "a.links__social",
+      "text": "LinkedIn (opens in a new tab)",
+      "href": "https://linkedin.com/in/gabriel-moreno-ribeiro",
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 0,
+      "rect": [
+        1081,
+        26,
+        30,
+        30
+      ]
+    },
+    {
+      "i": 16,
+      "sel": "a.links__social",
+      "text": "GitHub (opens in a new tab)",
+      "href": "https://github.com/gabriel-moreno-ribeiro",
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 0,
+      "rect": [
+        1117,
+        26,
+        30,
+        30
+      ]
+    },
+    {
+      "i": 17,
+      "sel": "button.btn.primary",
+      "text": "See Work",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 0,
+      "rect": [
+        576,
+        614,
+        169,
+        56
+      ]
+    },
+    {
+      "i": 18,
+      "sel": "a.hero-link",
+      "text": "Book a Call",
+      "href": "https://cal.com/gabrielmribeiro",
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 0,
+      "rect": [
+        773,
+        620,
+        110,
+        44
+      ]
+    },
+    {
+      "i": 19,
+      "sel": "a.hero-link",
+      "text": "Resume",
+      "href": "/files/gabriel-moreno-ribeiro-resume.pdf",
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 0,
+      "rect": [
+        911,
+        620,
+        87,
+        44
+      ]
+    },
+    {
+      "i": 20,
+      "sel": "a.spotify-card__track",
+      "text": "Alone Again (Naturally)Gilbert O'Sulliva",
+      "href": "https://open.spotify.com/search/Alone%20Again%20(Naturally)%20Gilbert%20O'Sullivan",
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 52,
+      "rect": [
+        651,
+        844,
+        272,
+        56
+      ]
+    },
+    {
+      "i": 21,
+      "sel": "a.spotify-card__track",
+      "text": "Don't Look Back in AngerOasis",
+      "href": "https://open.spotify.com/search/Don't%20Look%20Back%20in%20Anger%20Oasis",
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 532,
+      "rect": [
+        651,
+        422,
+        272,
+        56
+      ]
+    },
+    {
+      "i": 22,
+      "sel": "a.spotify-card__track",
+      "text": "Wicked GameChris Isaak",
+      "href": "https://open.spotify.com/search/Wicked%20Game%20Chris%20Isaak",
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 532,
+      "rect": [
+        651,
+        480,
+        272,
+        56
+      ]
+    },
+    {
+      "i": 23,
+      "sel": "div.moments__row",
+      "text": "Photos, first row",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 532,
+      "rect": [
+        170,
+        599,
+        1234,
+        288
+      ]
+    },
+    {
+      "i": 24,
+      "sel": "div.moments__row.moments__row--reverse",
+      "text": "Photos, second row",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 811,
+      "rect": [
+        170,
+        612,
+        1234,
+        288
+      ]
+    },
+    {
+      "i": 25,
+      "sel": "button.city-panel__close",
+      "text": "Close",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 1469,
+      "rect": [
+        1275,
+        437,
+        27,
+        25
+      ]
+    },
+    {
+      "i": 26,
+      "sel": "a.city-panel__road",
+      "text": "On the road: my grandfather's D-20",
+      "href": "/#work-experience",
+      "pressed": null,
+      "fv": true,
+      "outline": "2px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 1469,
+      "rect": [
+        804,
+        623,
+        281,
+        24
+      ]
+    },
+    {
+      "i": 27,
+      "sel": "button.city-steps__step",
+      "text": "Previous city: São Paulo",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "2px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 1469,
+      "rect": [
+        781,
+        707,
+        94,
+        44
+      ]
+    },
+    {
+      "i": 28,
+      "sel": "button.city-steps__step.city-steps__step--next",
+      "text": "Next city: Salvador",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "2px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 1469,
+      "rect": [
+        1225,
+        707,
+        88,
+        44
+      ]
+    },
+    {
+      "i": 29,
+      "sel": "div.photo-stage__viewport",
+      "text": "Missão Velha photos. Use the left and ri",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 1588,
+      "rect": [
+        777,
+        646,
+        540,
+        255
+      ]
+    },
+    {
+      "i": 30,
+      "sel": "button.photo-stage__bar",
+      "text": "Show photo 1 of 10",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 2054,
+      "rect": [
+        820,
+        434,
+        40,
+        32
+      ]
+    },
+    {
+      "i": 31,
+      "sel": "button.photo-stage__bar",
+      "text": "Show photo 2 of 10",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 2054,
+      "rect": [
+        866,
+        434,
+        40,
+        32
+      ]
+    },
+    {
+      "i": 32,
+      "sel": "button.photo-stage__bar",
+      "text": "Show photo 3 of 10",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 2054,
+      "rect": [
+        912,
+        434,
+        40,
+        32
+      ]
+    },
+    {
+      "i": 33,
+      "sel": "button.photo-stage__bar",
+      "text": "Show photo 4 of 10",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 2054,
+      "rect": [
+        958,
+        434,
+        40,
+        32
+      ]
+    },
+    {
+      "i": 34,
+      "sel": "button.photo-stage__bar",
+      "text": "Show photo 5 of 10",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 2054,
+      "rect": [
+        1004,
+        434,
+        40,
+        32
+      ]
+    },
+    {
+      "i": 35,
+      "sel": "button.photo-stage__bar",
+      "text": "Show photo 6 of 10",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 2054,
+      "rect": [
+        1050,
+        434,
+        40,
+        32
+      ]
+    },
+    {
+      "i": 36,
+      "sel": "button.photo-stage__bar",
+      "text": "Show photo 7 of 10",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 2054,
+      "rect": [
+        1096,
+        434,
+        40,
+        32
+      ]
+    },
+    {
+      "i": 37,
+      "sel": "button.photo-stage__bar",
+      "text": "Show photo 8 of 10",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 2054,
+      "rect": [
+        1142,
+        434,
+        40,
+        32
+      ]
+    },
+    {
+      "i": 38,
+      "sel": "button.photo-stage__bar",
+      "text": "Show photo 9 of 10",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 2054,
+      "rect": [
+        1188,
+        434,
+        40,
+        32
+      ]
+    },
+    {
+      "i": 39,
+      "sel": "button.photo-stage__bar",
+      "text": "Show photo 10 of 10",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 2054,
+      "rect": [
+        1234,
+        434,
+        40,
+        32
+      ]
+    },
+    {
+      "i": 40,
+      "sel": "button.city-timeline__dot.city-timeline__dot--active",
+      "text": "Missão Velha, Ceará",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 2054,
+      "rect": [
+        596,
+        534,
+        22,
+        22
+      ]
+    },
+    {
+      "i": 41,
+      "sel": "button.city-timeline__dot",
+      "text": "Salvador, Bahia",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 2054,
+      "rect": [
+        716,
+        534,
+        22,
+        22
+      ]
+    },
+    {
+      "i": 42,
+      "sel": "button.city-timeline__dot",
+      "text": "Fortaleza, Ceará",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 2054,
+      "rect": [
+        836,
+        534,
+        22,
+        22
+      ]
+    },
+    {
+      "i": 43,
+      "sel": "button.city-timeline__dot",
+      "text": "São Paulo, SP",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 2054,
+      "rect": [
+        956,
+        534,
+        22,
+        22
+      ]
+    },
+    {
+      "i": 44,
+      "sel": "button.gow__seg-btn",
+      "text": "Extract",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 3140,
+      "rect": [
+        192,
+        827,
+        81,
+        40
+      ]
+    },
+    {
+      "i": 45,
+      "sel": "button.gow__seg-btn",
+      "text": "Connect",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 3140,
+      "rect": [
+        275,
+        827,
+        90,
+        40
+      ]
+    },
+    {
+      "i": 46,
+      "sel": "button.gow__seg-btn",
+      "text": "Now",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 3140,
+      "rect": [
+        367,
+        827,
+        62,
+        40
+      ]
+    },
+    {
+      "i": 47,
+      "sel": "button.gold-frame",
+      "text": "Open the photo large",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": true,
+      "inView": true,
+      "y": 5601,
+      "rect": [
+        294,
+        245,
+        330,
+        410
+      ]
+    },
+    {
+      "i": 48,
+      "sel": "button",
+      "text": "Subject",
+      "href": null,
+      "pressed": "true",
+      "fv": true,
+      "outline": "2px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 5601,
+      "rect": [
+        724,
+        256,
+        75,
+        32
+      ]
+    },
+    {
+      "i": 49,
+      "sel": "button",
+      "text": "Year",
+      "href": null,
+      "pressed": "false",
+      "fv": true,
+      "outline": "2px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 5601,
+      "rect": [
+        802,
+        256,
+        55,
+        32
+      ]
+    },
+    {
+      "i": 50,
+      "sel": "button",
+      "text": "Mandacaru. Open large",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "2px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 5601,
+      "rect": [
+        654,
+        318,
+        78,
+        78
+      ]
+    },
+    {
+      "i": 51,
+      "sel": "button",
+      "text": "Mandacaru. Open large",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "2px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 5601,
+      "rect": [
+        726,
+        318,
+        78,
+        78
+      ]
+    },
+    {
+      "i": 52,
+      "sel": "button",
+      "text": "Olimpíada de Matemática do CMS. Open lar",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "2px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 5601,
+      "rect": [
+        798,
+        318,
+        78,
+        78
+      ]
+    },
+    {
+      "i": 53,
+      "sel": "button",
+      "text": "OMPBA. Open large",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "2px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 5601,
+      "rect": [
+        870,
+        318,
+        78,
+        78
+      ]
+    },
+    {
+      "i": 54,
+      "sel": "button",
+      "text": "Canguru de Matemática. Open large",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "2px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 5601,
+      "rect": [
+        942,
+        318,
+        78,
+        78
+      ]
+    },
+    {
+      "i": 55,
+      "sel": "button",
+      "text": "Mandacaru. Open large",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "2px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 5601,
+      "rect": [
+        1014,
+        318,
+        78,
+        78
+      ]
+    },
+    {
+      "i": 56,
+      "sel": "button",
+      "text": "Mathématiques sans Frontières · 2021. Op",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "2px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 5601,
+      "rect": [
+        1086,
+        318,
+        78,
+        78
+      ]
+    },
+    {
+      "i": 57,
+      "sel": "button",
+      "text": "Mathématiques sans Frontières · 2022. Op",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "2px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 5601,
+      "rect": [
+        1158,
+        318,
+        78,
+        78
+      ]
+    },
+    {
+      "i": 58,
+      "sel": "button",
+      "text": "Mathématiques sans Frontières · 2022. Op",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "2px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 5601,
+      "rect": [
+        654,
+        390,
+        78,
+        78
+      ]
+    },
+    {
+      "i": 59,
+      "sel": "button",
+      "text": "Canguru de Matemática · 2023. Open large",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "2px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 5601,
+      "rect": [
+        726,
+        390,
+        78,
+        78
+      ]
+    },
+    {
+      "i": 60,
+      "sel": "button",
+      "text": "Mathématiques sans Frontières · 2023. Op",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "2px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 5601,
+      "rect": [
+        798,
+        390,
+        78,
+        78
+      ]
+    },
+    {
+      "i": 61,
+      "sel": "button",
+      "text": "Mathématiques sans Frontières · 2023. Op",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "2px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 5601,
+      "rect": [
+        870,
+        390,
+        78,
+        78
+      ]
+    },
+    {
+      "i": 62,
+      "sel": "button",
+      "text": "Canguru de Matemática · 2024. Open large",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "2px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 5601,
+      "rect": [
+        942,
+        390,
+        78,
+        78
+      ]
+    },
+    {
+      "i": 63,
+      "sel": "button",
+      "text": "OBMEP · 2024. Open large",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "2px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 5601,
+      "rect": [
+        1014,
+        390,
+        78,
+        78
+      ]
+    },
+    {
+      "i": 64,
+      "sel": "button",
+      "text": "OBMEP · 2024. Open large",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "2px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 5601,
+      "rect": [
+        1086,
+        390,
+        78,
+        78
+      ]
+    },
+    {
+      "i": 65,
+      "sel": "button",
+      "text": "ONNEQ. Open large",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "2px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 5601,
+      "rect": [
+        654,
+        499,
+        78,
+        78
+      ]
+    },
+    {
+      "i": 66,
+      "sel": "button",
+      "text": "OBQ Júnior · 2022. Open large",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "2px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 5601,
+      "rect": [
+        726,
+        499,
+        78,
+        78
+      ]
+    },
+    {
+      "i": 67,
+      "sel": "button",
+      "text": "OBQ Júnior · 2022. Open large",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "2px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 5601,
+      "rect": [
+        798,
+        499,
+        78,
+        78
+      ]
+    },
+    {
+      "i": 68,
+      "sel": "button",
+      "text": "OBQ · 2024. Open large",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "2px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 5601,
+      "rect": [
+        870,
+        499,
+        78,
+        78
+      ]
+    },
+    {
+      "i": 69,
+      "sel": "button",
+      "text": "OBFEP. Open large",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "2px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 5601,
+      "rect": [
+        972,
+        499,
+        78,
+        78
+      ]
+    },
+    {
+      "i": 70,
+      "sel": "button",
+      "text": "OBFEP. Open large",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "2px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 5601,
+      "rect": [
+        1044,
+        499,
+        78,
+        78
+      ]
+    },
+    {
+      "i": 71,
+      "sel": "button",
+      "text": "OBFEP. Open large",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "2px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 5601,
+      "rect": [
+        1116,
+        499,
+        78,
+        78
+      ]
+    },
+    {
+      "i": 72,
+      "sel": "button",
+      "text": "Olimpíada Nacional de Ciências · 2022. O",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "2px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 5601,
+      "rect": [
+        654,
+        607,
+        78,
+        78
+      ]
+    },
+    {
+      "i": 73,
+      "sel": "button",
+      "text": "Olimpíada Nacional de Ciências · 2023. O",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "2px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 5601,
+      "rect": [
+        726,
+        607,
+        78,
+        78
+      ]
+    },
+    {
+      "i": 74,
+      "sel": "button",
+      "text": "ONEE. Open large",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "2px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 5601,
+      "rect": [
+        828,
+        607,
+        78,
+        78
+      ]
+    },
+    {
+      "i": 75,
+      "sel": "button",
+      "text": "ONEE · 2022. Open large",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "2px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 5601,
+      "rect": [
+        900,
+        607,
+        78,
+        78
+      ]
+    },
+    {
+      "i": 76,
+      "sel": "button",
+      "text": "OBA · 2021. Open large",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "2px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 5601,
+      "rect": [
+        1002,
+        607,
+        78,
+        78
+      ]
+    },
+    {
+      "i": 77,
+      "sel": "button",
+      "text": "OBBiotec · 2023. Open large",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "2px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 5601,
+      "rect": [
+        1147,
+        607,
+        78,
+        78
+      ]
+    },
+    {
+      "i": 78,
+      "sel": "button",
+      "text": "How it works",
+      "href": null,
+      "pressed": "true",
+      "fv": true,
+      "outline": "2px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 6066,
+      "rect": [
+        275,
+        436,
+        98,
+        28
+      ]
+    },
+    {
+      "i": 79,
+      "sel": "button",
+      "text": "Photos",
+      "href": null,
+      "pressed": "false",
+      "fv": true,
+      "outline": "2px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 6066,
+      "rect": [
+        373,
+        436,
+        64,
+        28
+      ]
+    },
+    {
+      "i": 80,
+      "sel": "a.work-row__title",
+      "text": "HIBEEX",
+      "href": "/work/hibeex",
+      "pressed": null,
+      "fv": true,
+      "outline": "2px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 6066,
+      "rect": [
+        842,
+        512,
+        102,
+        42
+      ]
+    },
+    {
+      "i": 81,
+      "sel": "a.work-row__cta",
+      "text": "View project",
+      "href": "/work/hibeex",
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 6066,
+      "rect": [
+        842,
+        658,
+        143,
+        41
+      ]
+    },
+    {
+      "i": 82,
+      "sel": "button",
+      "text": "How it works",
+      "href": null,
+      "pressed": "true",
+      "fv": true,
+      "outline": "2px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 6066,
+      "rect": [
+        856,
+        840,
+        98,
+        28
+      ]
+    },
+    {
+      "i": 83,
+      "sel": "button",
+      "text": "Photos",
+      "href": null,
+      "pressed": "false",
+      "fv": true,
+      "outline": "2px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 6066,
+      "rect": [
+        954,
+        840,
+        64,
+        28
+      ]
+    },
+    {
+      "i": 84,
+      "sel": "a.work-row__title",
+      "text": "Projeto Candela",
+      "href": "/work/candela",
+      "pressed": null,
+      "fv": true,
+      "outline": "2px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 6103,
+      "rect": [
+        261,
+        858,
+        229,
+        42
+      ]
+    },
+    {
+      "i": 85,
+      "sel": "a.work-row__cta",
+      "text": "View project",
+      "href": "/work/candela",
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 6677,
+      "rect": [
+        261,
+        429,
+        143,
+        41
+      ]
+    },
+    {
+      "i": 86,
+      "sel": "button",
+      "text": "How it works",
+      "href": null,
+      "pressed": "true",
+      "fv": true,
+      "outline": "2px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 6677,
+      "rect": [
+        275,
+        589,
+        98,
+        28
+      ]
+    },
+    {
+      "i": 87,
+      "sel": "button",
+      "text": "Photos",
+      "href": null,
+      "pressed": "false",
+      "fv": true,
+      "outline": "2px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 6677,
+      "rect": [
+        373,
+        589,
+        64,
+        28
+      ]
+    },
+    {
+      "i": 88,
+      "sel": "a.work-row__title",
+      "text": "GSAT Education",
+      "href": "/work/gsat",
+      "pressed": null,
+      "fv": true,
+      "outline": "2px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 6677,
+      "rect": [
+        842,
+        678,
+        231,
+        42
+      ]
+    },
+    {
+      "i": 89,
+      "sel": "a.work-row__cta",
+      "text": "View project",
+      "href": "/work/gsat",
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 6677,
+      "rect": [
+        842,
+        799,
+        143,
+        41
+      ]
+    },
+    {
+      "i": 90,
+      "sel": "a",
+      "text": "Open in Desmos (opens in a new tab)",
+      "href": "https://www.desmos.com/calculator/axmfjf6rxv",
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 7778,
+      "rect": [
+        472,
+        438,
+        124,
+        24
+      ]
+    },
+    {
+      "i": 91,
+      "sel": "a",
+      "text": "Open in Desmos (opens in a new tab)",
+      "href": "https://www.desmos.com/calculator/kk7wibzqq1",
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 7778,
+      "rect": [
+        830,
+        438,
+        124,
+        24
+      ]
+    },
+    {
+      "i": 92,
+      "sel": "a",
+      "text": "Open in Desmos (opens in a new tab)",
+      "href": "https://www.desmos.com/calculator/gdohbfcp0i",
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 7778,
+      "rect": [
+        1187,
+        438,
+        124,
+        24
+      ]
+    },
+    {
+      "i": 93,
+      "sel": "a.research-card__link",
+      "text": "Do Budgeting Tools Help Low-Income Stude",
+      "href": "/research/fintech-rct/paper.pdf",
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 7778,
+      "rect": [
+        532,
+        746,
+        467,
+        24
+      ]
+    },
+    {
+      "i": 94,
+      "sel": "a.research-card__link",
+      "text": "The Steady-State Hypothesis: when it hol",
+      "href": "/research/chemical-kinetics/paper.pdf",
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 8555,
+      "rect": [
+        532,
+        422,
+        602,
+        24
+      ]
+    },
+    {
+      "i": 95,
+      "sel": "a.research-card__link",
+      "text": "Low-Cost Physics Lab Kits for Public Sch",
+      "href": "/research/projeto-candela/paper.pdf",
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 9076,
+      "rect": [
+        532,
+        422,
+        394,
+        24
+      ]
+    },
+    {
+      "i": 96,
+      "sel": "a",
+      "text": "ORCID 0009-0009-2574-6646",
+      "href": "https://orcid.org/0009-0009-2574-6646",
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 9076,
+      "rect": [
+        682,
+        772,
+        210,
+        27
+      ]
+    },
+    {
+      "i": 97,
+      "sel": "a",
+      "text": "Missão Velha",
+      "href": "/#city-missao-velha",
+      "pressed": null,
+      "fv": true,
+      "outline": "2px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 10720,
+      "rect": [
+        587,
+        438,
+        101,
+        24
+      ]
+    },
+    {
+      "i": 98,
+      "sel": "a",
+      "text": "Salvador",
+      "href": "/#city-salvador",
+      "pressed": null,
+      "fv": true,
+      "outline": "2px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 10720,
+      "rect": [
+        711,
+        438,
+        72,
+        24
+      ]
+    },
+    {
+      "i": 99,
+      "sel": "a",
+      "text": "Fortaleza",
+      "href": "/#city-fortaleza",
+      "pressed": null,
+      "fv": true,
+      "outline": "2px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 10720,
+      "rect": [
+        806,
+        438,
+        79,
+        24
+      ]
+    },
+    {
+      "i": 100,
+      "sel": "a",
+      "text": "São Paulo",
+      "href": "/#city-sao-paulo",
+      "pressed": null,
+      "fv": true,
+      "outline": "2px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 10720,
+      "rect": [
+        908,
+        438,
+        79,
+        24
+      ]
+    },
+    {
+      "i": 101,
+      "sel": "a.exp__d20-link",
+      "text": "read the story",
+      "href": "/story",
+      "pressed": null,
+      "fv": true,
+      "outline": "2px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 10720,
+      "rect": [
+        816,
+        699,
+        89,
+        21
+      ]
+    },
+    {
+      "i": 102,
+      "sel": "a",
+      "text": "Salvador, on the globe",
+      "href": "/#city-salvador",
+      "pressed": null,
+      "fv": true,
+      "outline": "2px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 11402,
+      "rect": [
+        1171,
+        438,
+        72,
+        24
+      ]
+    },
+    {
+      "i": 103,
+      "sel": "a",
+      "text": "HIBEEX",
+      "href": "https://www.hibeex.com.br/",
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 12718,
+      "rect": [
+        981,
+        434,
+        83,
+        32
+      ]
+    },
+    {
+      "i": 104,
+      "sel": "a",
+      "text": "São Paulo, on the globe",
+      "href": "/#city-sao-paulo",
+      "pressed": null,
+      "fv": true,
+      "outline": "2px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 12718,
+      "rect": [
+        996,
+        512,
+        79,
+        24
+      ]
+    },
+    {
+      "i": 105,
+      "sel": "a.exp__card-cta",
+      "text": "Let’s talk",
+      "href": "#contact",
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": true,
+      "inView": true,
+      "y": 12718,
+      "rect": [
+        981,
+        812,
+        145,
+        41
+      ]
+    },
+    {
+      "i": 106,
+      "sel": "a.contact-section__channel",
+      "text": "Emailme@gabrielmr.com",
+      "href": "mailto:me@gabrielmr.com",
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 13500,
+      "rect": [
+        286,
+        420,
+        441,
+        61
+      ]
+    },
+    {
+      "i": 107,
+      "sel": "a.contact-section__channel",
+      "text": "Book a callcal.com/gabrielmribeiro",
+      "href": "https://cal.com/gabrielmribeiro",
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 13500,
+      "rect": [
+        286,
+        487,
+        441,
+        61
+      ]
+    },
+    {
+      "i": 108,
+      "sel": "a.contact-section__channel",
+      "text": "LinkedIngabriel-moreno-ribeiro",
+      "href": "https://linkedin.com/in/gabriel-moreno-ribeiro",
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 13500,
+      "rect": [
+        286,
+        553,
+        441,
+        61
+      ]
+    },
+    {
+      "i": 109,
+      "sel": "a.contact-section__channel",
+      "text": "GitHubgabriel-moreno-ribeiro",
+      "href": "https://github.com/gabriel-moreno-ribeiro",
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 13500,
+      "rect": [
+        286,
+        620,
+        441,
+        61
+      ]
+    },
+    {
+      "i": 110,
+      "sel": "input#contact-name",
+      "text": "",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 13500,
+      "rect": [
+        816,
+        338,
+        206,
+        46
+      ]
+    },
+    {
+      "i": 111,
+      "sel": "input#contact-email",
+      "text": "",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 13500,
+      "rect": [
+        1037,
+        338,
+        206,
+        46
+      ]
+    },
+    {
+      "i": 112,
+      "sel": "textarea#contact-message",
+      "text": "",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 13500,
+      "rect": [
+        816,
+        427,
+        427,
+        139
+      ]
+    },
+    {
+      "i": 113,
+      "sel": "button.contact-section__submit",
+      "text": "Send message",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 13500,
+      "rect": [
+        816,
+        584,
+        186,
+        48
+      ]
+    },
+    {
+      "i": 114,
+      "sel": "a.footer__cta-link",
+      "text": "me@gabrielmr.com",
+      "href": "mailto:me@gabrielmr.com",
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 13500,
+      "rect": [
+        720,
+        773,
+        133,
+        21
+      ]
+    },
+    {
+      "i": 115,
+      "sel": "a",
+      "text": "Home.",
+      "href": "/",
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 13500,
+      "rect": [
+        577,
+        806,
+        68,
+        28
+      ]
+    },
+    {
+      "i": 116,
+      "sel": "a",
+      "text": "Library.",
+      "href": "/library",
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 13500,
+      "rect": [
+        647,
+        806,
+        75,
+        28
+      ]
+    },
+    {
+      "i": 117,
+      "sel": "a",
+      "text": "News.",
+      "href": "/news",
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 13500,
+      "rect": [
+        724,
+        806,
+        64,
+        28
+      ]
+    },
+    {
+      "i": 118,
+      "sel": "a",
+      "text": "Blog.",
+      "href": "/blog",
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 13500,
+      "rect": [
+        790,
+        806,
+        55,
+        28
+      ]
+    },
+    {
+      "i": 119,
+      "sel": "a",
+      "text": "Story.",
+      "href": "/story",
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 13500,
+      "rect": [
+        848,
+        806,
+        63,
+        28
+      ]
+    },
+    {
+      "i": 120,
+      "sel": "a",
+      "text": "Contact.",
+      "href": "/#contact",
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 13500,
+      "rect": [
+        912,
+        806,
+        85,
+        28
+      ]
+    },
+    {
+      "i": 121,
+      "sel": "a.footer__social",
+      "text": "LinkedIn (opens in a new tab)",
+      "href": "https://linkedin.com/in/gabriel-moreno-ribeiro",
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 13500,
+      "rect": [
+        565,
+        846,
+        32,
+        32
+      ]
+    },
+    {
+      "i": 122,
+      "sel": "a.footer__social",
+      "text": "GitHub (opens in a new tab)",
+      "href": "https://github.com/gabriel-moreno-ribeiro",
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 13500,
+      "rect": [
+        599,
+        846,
+        32,
+        32
+      ]
+    },
+    {
+      "i": 123,
+      "sel": "a",
+      "text": "Email.",
+      "href": "mailto:me@gabrielmr.com",
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 13500,
+      "rect": [
+        633,
+        846,
+        64,
+        32
+      ]
+    },
+    {
+      "i": 124,
+      "sel": "a",
+      "text": "Resume.",
+      "href": "/files/gabriel-moreno-ribeiro-resume.pdf",
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 13500,
+      "rect": [
+        699,
+        846,
+        83,
+        32
+      ]
+    },
+    {
+      "i": 125,
+      "sel": "a",
+      "text": "Privacy.",
+      "href": "/privacy",
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 13500,
+      "rect": [
+        784,
+        846,
+        77,
+        32
+      ]
+    },
+    {
+      "i": 126,
+      "sel": "a",
+      "text": "Terms.",
+      "href": "/terms",
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 13500,
+      "rect": [
+        863,
+        846,
+        69,
+        32
+      ]
+    },
+    {
+      "i": 127,
+      "sel": "a",
+      "text": "llms.txt",
+      "href": "/llms.txt",
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 13500,
+      "rect": [
+        934,
+        846,
+        75,
+        32
+      ]
+    },
+    {
+      "i": 128,
+      "sel": "button.footer__activity-retry",
+      "text": "Retry",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "2px solid rgb(240, 115, 45)",
+      "shadow": false,
+      "inView": true,
+      "y": 13506,
+      "rect": [
+        883,
+        884,
+        37,
+        16
+      ]
+    },
+    {
+      "i": 129,
+      "sel": "button.handsfree-button",
+      "text": "Hands-free mode (camera)",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 13506,
+      "rect": [
+        1320,
+        16,
+        44,
+        44
+      ]
+    },
+    {
+      "i": 130,
+      "sel": "button.toggle-button",
+      "text": "Switch to dark mode",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 13506,
+      "rect": [
+        1380,
+        16,
+        44,
+        44
+      ]
+    },
+    {
+      "i": 131,
+      "sel": "button.terminal-fab",
+      "text": "Open terminal (Ctrl+K)",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 13506,
+      "rect": [
+        1382,
+        842,
+        42,
+        42
+      ]
+    },
+    {
+      "i": 132,
+      "sel": "button.back-to-top",
+      "text": "Back to top",
+      "href": null,
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": true,
+      "y": 13506,
+      "rect": [
+        1308,
+        834,
+        50,
+        50
+      ]
+    },
+    {
+      "i": 133,
+      "none": true
+    },
+    {
+      "i": 134,
+      "sel": "a.skip-link",
+      "text": "Skip to content",
+      "href": "#main-content",
+      "pressed": null,
+      "fv": true,
+      "outline": "3px solid rgb(184, 80, 26)",
+      "shadow": false,
+      "inView": false,
+      "y": 1155,
+      "rect": [
+        16,
+        -1155,
+        146,
+        46
+      ]
+    }
+  ],
+  "errs": []
+}

@@ -1,0 +1,160 @@
+{
+  "hero-see-work-Enter": {
+    "scrolled": 5460
+  },
+  "hero-links": [
+    {
+      "t": "Book a Call",
+      "href": "https://cal.com/gabrielmribeiro",
+      "target": "_blank"
+    },
+    {
+      "t": "Resume",
+      "href": "/files/gabriel-moreno-ribeiro-resume.pdf",
+      "target": ""
+    }
+  ],
+  "graph-buttons": [
+    {
+      "key": "Enter",
+      "i": 0,
+      "current": "step",
+      "label": "Extract"
+    },
+    {
+      "key": "Enter",
+      "i": 1,
+      "current": "step",
+      "label": "Connect"
+    },
+    {
+      "key": "Enter",
+      "i": 2,
+      "current": "step",
+      "label": "Now"
+    },
+    {
+      "key": "Space",
+      "i": 0,
+      "current": "step",
+      "label": "Extract"
+    },
+    {
+      "key": "Space",
+      "i": 1,
+      "current": "step",
+      "label": "Connect"
+    },
+    {
+      "key": "Space",
+      "i": 2,
+      "current": "step",
+      "label": "Now"
+    }
+  ],
+  "graph-pinned-keyboard-scroll": {
+    "cls": "gow gow--pinned"
+  },
+  "cool-things-toggle": [
+    {
+      "key": "Enter",
+      "photosPressed": "true",
+      "howPressed": "true"
+    },
+    {
+      "key": "Space",
+      "photosPressed": "true",
+      "howPressed": "true"
+    }
+  ],
+  "medal-group-by": [
+    {
+      "key": "Enter",
+      "i": 0,
+      "pressed": "true",
+      "label": "Subject"
+    },
+    {
+      "key": "Enter",
+      "i": 1,
+      "pressed": "true",
+      "label": "Year"
+    },
+    {
+      "key": "Space",
+      "i": 0,
+      "pressed": "true",
+      "label": "Subject"
+    },
+    {
+      "key": "Space",
+      "i": 1,
+      "pressed": "true",
+      "label": "Year"
+    }
+  ],
+  "medal-tooltip-escape": {
+    "tipOnFocus": 1,
+    "describedby": "medal-tip",
+    "tipAfterEsc": 0,
+    "stillFocus": "",
+    "viewerOpen": 1,
+    "viewerAfterEsc": 0,
+    "focusReturnedTo": "OBA · 2021. Open large"
+  },
+  "globe-road-links": [
+    {
+      "href": null,
+      "t": "On the road: my grandfather's D-20"
+    },
+    {
+      "href": null,
+      "t": "On the road: Olympic Club - Colégio Militar"
+    },
+    {
+      "href": null,
+      "t": "On the road: HIBEEX"
+    },
+    {
+      "href": "/#work-experience",
+      "t": "On the road: my grandfather's D-20"
+    }
+  ],
+  "globe-city-controls": [
+    "Close",
+    "Previous city: São Paulo",
+    "Next city: Salvador",
+    "Show photo 1 of 10",
+    "Show photo 2 of 10",
+    "Show photo 3 of 10",
+    "Show photo 4 of 10",
+    "Show photo 5 of 10",
+    "Show photo 6 of 10",
+    "Show photo 7 of 10",
+    "Show photo 8 of 10",
+    "Show photo 9 of 10",
+    "Show photo 10 of 10",
+    "Missão Velha, Ceará",
+    "Salvador, Bahia",
+    "Fortaleza, Ceará",
+    "São Paulo, SP"
+  ],
+  "rail-d20": {
+    "items": 8,
+    "y": 13674,
+    "current": "Contact",
+    "truck": {
+      "rect": [
+        11,
+        533
+      ],
+      "hidden": "true"
+    }
+  },
+  "footer-heatmap": {
+    "retry": 1,
+    "before": "GitHub activity is unavailable right now.Retry",
+    "outlineOnFocus": "solid 2px",
+    "after": "GitHub activity is unavailable right now.Retry"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "desktop": {
+    "theme": "dark",
+    "lowContrast": [],
+    "lowContrastCount": 0,
+    "whiteBoxes": [
+      "button.btn 169x56 @y614 bg=rgb(255, 255, 255)",
+      "aside.spotify-card 300x234 @y844 bg=rgb(255, 255, 255)",
+      "button.gow__seg-btn 81x40 @y3570 bg=rgb(255, 255, 255)",
+      "button. 75x32 @y5857 bg=rgb(255, 255, 255)",
+      "button. 98x28 @y6502 bg=rgb(255, 255, 255)",
+      "button. 98x28 @y6906 bg=rgb(255, 255, 255)",
+      "button. 98x28 @y7266 bg=rgb(255, 255, 255)",
+      "div.desmos__frame 339x192 @y8014 bg=rgb(255, 255, 255)",
+      "img.desmos__poster 337x190 @y8015 bg=rgb(255, 255, 255)",
+      "div.desmos__frame 339x192 @y8014 bg=rgb(255, 255, 255)",
+      "img.desmos__poster 337x190 @y8015 bg=rgb(255, 255, 255)",
+      "div.desmos__frame 339x192 @y8014 bg=rgb(255, 255, 255)",
+      "img.desmos__poster 337x190 @y8015 bg=rgb(255, 255, 255)",
+      "button.contact-section__submit 186x48 @y14084 bg=rgb(255, 255, 255)"
+    ],
+    "whiteBoxCount": 14,
+    "bodyBg": "rgb(20, 16, 13)"
+  },
+  "mobile": {
+    "theme": "dark",
+    "lowContrast": [],
+    "lowContrastCount": 0,
+    "whiteBoxes": [
+      "button.btn 358x56 @y344 bg=rgb(255, 255, 255)",
+      "aside.spotify-card 300x234 @y758 bg=rgb(255, 255, 255)",
+      "button. 75x36 @y6082 bg=rgb(255, 255, 255)",
+      "button. 98x28 @y6845 bg=rgb(255, 255, 255)",
+      "button. 98x28 @y7365 bg=rgb(255, 255, 255)",
+      "button. 98x28 @y7886 bg=rgb(255, 255, 255)",
+      "div.desmos__frame 360x203 @y8807 bg=rgb(255, 255, 255)",
+      "img.desmos__poster 358x201 @y8808 bg=rgb(255, 255, 255)",
+      "div.desmos__frame 360x203 @y9068 bg=rgb(255, 255, 255)",
+      "img.desmos__poster 358x201 @y9069 bg=rgb(255, 255, 255)",
+      "div.desmos__frame 360x203 @y9330 bg=rgb(255, 255, 255)",
+      "img.desmos__poster 358x201 @y9331 bg=rgb(255, 255, 255)",
+      "button.contact-section__submit 320x48 @y16999 bg=rgb(255, 255, 255)"
+    ],
+    "whiteBoxCount": 13,
+    "bodyBg": "rgb(20, 16, 13)"
+  }
+}

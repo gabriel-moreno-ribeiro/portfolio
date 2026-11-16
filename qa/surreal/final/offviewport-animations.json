@@ -1,0 +1,22 @@
+{
+  "top": {
+    " spotify-bar IN": 3
+  },
+  "graph": {
+    "exp__hazard-dot exp-hazard OFF": 2
+  },
+  "work": {
+    "exp__hazard-dot exp-hazard OFF": 2
+  },
+  "research": {
+    "exp__hazard-dot exp-hazard OFF": 2
+  },
+  "skills": {
+    "skills-orb__card skills-bob IN": 26,
+    "exp__hazard-dot exp-hazard OFF": 2
+  },
+  "experience": {},
+  "contact": {
+    "exp__hazard-dot exp-hazard IN": 2
+  }
+}

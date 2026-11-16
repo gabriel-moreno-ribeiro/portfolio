@@ -1,0 +1,11 @@
+import { launch, BASE, VPS, slowScroll } from './common.mjs';
+const b = await launch(); const c = await b.newContext({ viewport: VPS.desktop }); const p = await c.newPage();
+await p.goto(BASE + '/'); await p.waitForTimeout(2500); await slowScroll(p, 300, 100);
+await p.evaluate(() => document.querySelector('.desmos__tile')?.scrollIntoView({ block: 'center', behavior: 'instant' })); await p.waitForTimeout(5000);
+const lum = () => p.evaluate(() => [...document.querySelectorAll('.desmos__video')].map((v) => { const cv = document.createElement('canvas'); cv.width = 64; cv.height = 36; const x = cv.getContext('2d'); x.drawImage(v, 0, 0, 64, 36); const d = x.getImageData(0, 0, 64, 36).data; let s = 0; for (let i = 0; i < d.length; i += 4) s += d[i]; return { paused: v.paused, t: +v.currentTime.toFixed(1), op: getComputedStyle(v).opacity, meanR: Math.round(s / (d.length / 4)), vis: v.className }; }));
+console.log('playing', JSON.stringify(await lum()));
+await p.evaluate(() => scrollBy(0, 1400)); await p.waitForTimeout(1500);
+console.log('scrolled away', JSON.stringify(await lum()));
+await p.evaluate(() => scrollBy(0, -1400)); await p.waitForTimeout(400);
+console.log('back 400ms', JSON.stringify(await lum()));
+await b.close();

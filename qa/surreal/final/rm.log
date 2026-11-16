@@ -1,0 +1,124 @@
+desktop / {
+ "pinnedSticky": [],
+ "gsapPin": [],
+ "graphClass": "gow gow--stacked",
+ "graphHeight": 2302,
+ "runningCssAnimations": 0,
+ "anims": [],
+ "lowOpacity": [
+  "p.city-panel__para op=0.72",
+  "p.city-panel__para op=0.72",
+  "figure.photo-card op=0.5",
+  "figure.photo-card op=0",
+  "figure.photo-card op=0",
+  "figure.photo-card op=0",
+  "figure.photo-card op=0",
+  "figure.photo-card op=0",
+  "figure.photo-card op=0",
+  "figure.photo-card op=0"
+ ],
+ "videos": [],
+ "posters": [
+  {
+   "src": "calhost:4173/work/desmos/laptop-flu.webp",
+   "vis": true,
+   "loaded": true
+  },
+  {
+   "src": "ocalhost:4173/work/desmos/processor.webp",
+   "vis": true,
+   "loaded": true
+  },
+  {
+   "src": "ocalhost:4173/work/desmos/fixed-bug.webp",
+   "vis": true,
+   "loaded": true
+  }
+ ],
+ "counters": [
+  "1",
+  "1570",
+  "1570",
+  "19",
+  "19"
+ ],
+ "visibleCanvases": 1,
+ "scrollH": 14086,
+ "hscroll": false
+}
+desktop /work/hibeex {
+ "pinnedSticky": [],
+ "gsapPin": [],
+ "graphHeight": null,
+ "runningCssAnimations": 0,
+ "anims": [],
+ "lowOpacity": [],
+ "videos": [],
+ "posters": [],
+ "counters": [],
+ "visibleCanvases": 0,
+ "scrollH": 3065,
+ "hscroll": false
+}
+mobile / {
+ "pinnedSticky": [],
+ "gsapPin": [],
+ "graphClass": "gow gow--stacked",
+ "graphHeight": 2930,
+ "runningCssAnimations": 0,
+ "anims": [],
+ "lowOpacity": [
+  "p.city-panel__para op=0.72",
+  "p.city-panel__para op=0.72",
+  "figure.photo-card op=0.5",
+  "figure.photo-card op=0",
+  "figure.photo-card op=0",
+  "figure.photo-card op=0",
+  "figure.photo-card op=0",
+  "figure.photo-card op=0",
+  "figure.photo-card op=0",
+  "figure.photo-card op=0"
+ ],
+ "videos": [],
+ "posters": [
+  {
+   "src": "calhost:4173/work/desmos/laptop-flu.webp",
+   "vis": true,
+   "loaded": true
+  },
+  {
+   "src": "ocalhost:4173/work/desmos/processor.webp",
+   "vis": true,
+   "loaded": true
+  },
+  {
+   "src": "ocalhost:4173/work/desmos/fixed-bug.webp",
+   "vis": true,
+   "loaded": true
+  }
+ ],
+ "counters": [
+  "1",
+  "1570",
+  "1570",
+  "19",
+  "19"
+ ],
+ "visibleCanvases": 1,
+ "scrollH": 17652,
+ "hscroll": false
+}
+mobile /work/hibeex {
+ "pinnedSticky": [],
+ "gsapPin": [],
+ "graphHeight": null,
+ "runningCssAnimations": 0,
+ "anims": [],
+ "lowOpacity": [],
+ "videos": [],
+ "posters": [],
+ "counters": [],
+ "visibleCanvases": 0,
+ "scrollH": 3765,
+ "hscroll": false
+}

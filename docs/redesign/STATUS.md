@@ -237,3 +237,20 @@ residência).
 
 Orquestrador: CTA fixo do mobile escondido também em `/news`; preload da foto do hero só na Home;
 cursor custom invisível até o primeiro movimento; título "Timeline" removido (o ano abre a seção).
+
+---
+
+# Status — `feat/surreal-prod` (reforma "surreal", nov/2026)
+
+Base: produção `7008960` (`master`) + 2 commits de pesquisa do `claude/keen-fermi` que tinham saído do ar.
+
+| Fase | Estado | Commits | Nota |
+|---|---|---|---|
+| 0 · setup | concluída | `637b915` | Tailwind só para `components/ui` e `components/charts` (bklit, tokens em `.bk`); skills de design instaladas no projeto (fora do git) |
+| 1 · auditoria | concluída | `9f6b0d3` | `qa/surreal/AUDIT.md`, `PRODUCT.md`, `DESIGN.md` |
+| 2–4 · build | concluída | `e9eb249`…`04baf86` | correções P1/P2, hero com ranking, Graph of work, dioramas 3D, heatmap do GitHub (`api/github-calendar`, `GITHUB_TOKEN` só no servidor) |
+| 5 · wow | concluída | `b2bf43c`…`3b517d7` | D-20 no trilho + vaga no Contact, medalhas reagrupáveis, globo ↔ estrada, gráfico por paper |
+| 6 · QA + polimento | em andamento | — | `qa/surreal/final/REPORT.md`: sem P0/P1; Lighthouse `/` 96 desktop, 74 mobile (antes 66) |
+
+Para o dono revisar: título de Skills ("Tools I *Build With*"); legenda "End of the road"; fonte do 30% → 10% do Candela
+(não está no PDF); `121 laptops` e `21 states` seguem `_placeholder`; cor das medalhas em `medals.ts` (só 6 de 28 têm).

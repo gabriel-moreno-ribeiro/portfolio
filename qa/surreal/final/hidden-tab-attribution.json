@@ -1,0 +1,173 @@
+{
+  "#root": {
+    "rafPerSec": 124,
+    "top": [
+      [
+        "at l (/assets/gsap-B6FFQTBZ.js < at <anonymous>",
+        360
+      ],
+      [
+        "at nl (/assets/gsap-B6FFQTBZ.js",
+        12
+      ]
+    ],
+    "anims": [
+      "exp__hazard-dot exp__hazard-dot--l exp-hazard",
+      "exp__hazard-dot exp__hazard-dot--r exp-hazard"
+    ],
+    "vids": 0
+  },
+  "#background": {
+    "rafPerSec": 130,
+    "top": [
+      [
+        "at l (/assets/gsap-B6FFQTBZ.js < at <anonymous>",
+        362
+      ],
+      [
+        "at _ (/assets/gsap-B6FFQTBZ.js < at <anonymous>",
+        16
+      ],
+      [
+        "at nl (/assets/gsap-B6FFQTBZ.js",
+        12
+      ]
+    ],
+    "anims": [
+      "exp__hazard-dot exp__hazard-dot--l exp-hazard",
+      "exp__hazard-dot exp__hazard-dot--r exp-hazard"
+    ],
+    "vids": 0
+  },
+  "#graph": {
+    "rafPerSec": 124,
+    "top": [
+      [
+        "at l (/assets/gsap-B6FFQTBZ.js < at <anonymous>",
+        360
+      ],
+      [
+        "at nl (/assets/gsap-B6FFQTBZ.js",
+        12
+      ]
+    ],
+    "anims": [
+      "exp__hazard-dot exp__hazard-dot--l exp-hazard",
+      "exp__hazard-dot exp__hazard-dot--r exp-hazard"
+    ],
+    "vids": 0
+  },
+  "#work": {
+    "rafPerSec": 124.3,
+    "top": [
+      [
+        "at l (/assets/gsap-B6FFQTBZ.js < at <anonymous>",
+        361
+      ],
+      [
+        "at nl (/assets/gsap-B6FFQTBZ.js",
+        12
+      ]
+    ],
+    "anims": [
+      "exp__hazard-dot exp__hazard-dot--l exp-hazard",
+      "exp__hazard-dot exp__hazard-dot--r exp-hazard"
+    ],
+    "vids": 0
+  },
+  "#research": {
+    "rafPerSec": 124,
+    "top": [
+      [
+        "at l (/assets/gsap-B6FFQTBZ.js < at <anonymous>",
+        360
+      ],
+      [
+        "at nl (/assets/gsap-B6FFQTBZ.js",
+        12
+      ]
+    ],
+    "anims": [
+      "exp__hazard-dot exp__hazard-dot--l exp-hazard",
+      "exp__hazard-dot exp__hazard-dot--r exp-hazard"
+    ],
+    "vids": 0
+  },
+  "#skills": {
+    "rafPerSec": 124.3,
+    "top": [
+      [
+        "at l (/assets/gsap-B6FFQTBZ.js < at <anonymous>",
+        361
+      ],
+      [
+        "at nl (/assets/gsap-B6FFQTBZ.js",
+        12
+      ]
+    ],
+    "anims": [
+      "skills-orb__card skills-bob",
+      "skills-orb__card skills-bob",
+      "skills-orb__card skills-bob",
+      "skills-orb__card skills-bob",
+      "skills-orb__card skills-bob",
+      "skills-orb__card skills-bob",
+      "skills-orb__card skills-bob",
+      "skills-orb__card skills-bob",
+      "skills-orb__card skills-bob",
+      "skills-orb__card skills-bob",
+      "skills-orb__card skills-bob",
+      "skills-orb__card skills-bob",
+      "skills-orb__card skills-bob",
+      "skills-orb__card skills-bob",
+      "skills-orb__card skills-bob",
+      "skills-orb__card skills-bob",
+      "skills-orb__card skills-bob",
+      "skills-orb__card skills-bob",
+      "skills-orb__card skills-bob",
+      "skills-orb__card skills-bob",
+      "skills-orb__card skills-bob",
+      "skills-orb__card skills-bob",
+      "skills-orb__card skills-bob",
+      "skills-orb__card skills-bob",
+      "skills-orb__card skills-bob",
+      "skills-orb__card skills-bob",
+      "exp__hazard-dot exp__hazard-dot--l exp-hazard",
+      "exp__hazard-dot exp__hazard-dot--r exp-hazard"
+    ],
+    "vids": 0
+  },
+  "#work-experience": {
+    "rafPerSec": 124.3,
+    "top": [
+      [
+        "at l (/assets/gsap-B6FFQTBZ.js < at <anonymous>",
+        361
+      ],
+      [
+        "at nl (/assets/gsap-B6FFQTBZ.js",
+        12
+      ]
+    ],
+    "anims": [],
+    "vids": 0
+  },
+  "#contact": {
+    "rafPerSec": 124,
+    "top": [
+      [
+        "at l (/assets/gsap-B6FFQTBZ.js < at <anonymous>",
+        360
+      ],
+      [
+        "at nl (/assets/gsap-B6FFQTBZ.js",
+        12
+      ]
+    ],
+    "anims": [
+      "exp__hazard-dot exp__hazard-dot--l exp-hazard",
+      "exp__hazard-dot exp__hazard-dot--r exp-hazard"
+    ],
+    "vids": 0
+  }
+}
