@@ -1,3 +1,4 @@
+import { lazy, Suspense, useEffect, useRef, useState, type ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { SiGithub, SiLinkedin } from "react-icons/si";
 
@@ -20,6 +21,50 @@ function obfuscatedEmail() {
   const user = 'me';
   const domain = 'gabrielmr.com';
   return `${user}@${domain}`;
+}
+
+const activityPlaceholder = (
+  <>
+    <p className="footer__activity-head">GitHub contributions</p>
+    <div className="footer__activity-grid footer__activity-grid--empty" aria-hidden="true" />
+  </>
+);
+
+// The chart chunk is fetched when the footer scrolls into view. If the chunk fails to
+// load, the static placeholder stays.
+const FooterHeatmap = lazy(() =>
+  import("./FooterHeatmap").catch(() => ({
+    default: ({ fallback }: { visible: boolean; fallback: ReactNode }) => <>{fallback}</>,
+  })),
+);
+
+function FooterActivity() {
+  const ref = useRef<HTMLElement>(null);
+  const [seen, setSeen] = useState(false);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([entry]) => {
+      setVisible(entry.isIntersecting);
+      if (entry.isIntersecting) setSeen(true);
+    });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  return (
+    <section className="footer__activity" aria-label="GitHub activity" ref={ref}>
+      {seen ? (
+        <Suspense fallback={activityPlaceholder}>
+          <FooterHeatmap visible={visible} fallback={activityPlaceholder} />
+        </Suspense>
+      ) : (
+        activityPlaceholder
+      )}
+    </section>
+  );
 }
 
 function Footer() {
@@ -74,6 +119,7 @@ function Footer() {
           </a>
         ))}
       </div>
+      <FooterActivity />
       <p className="footer__copy">
         &copy; {new Date().getFullYear()} Gabriel Moreno Ribeiro
       </p>

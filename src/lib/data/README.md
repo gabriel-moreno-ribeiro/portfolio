@@ -32,8 +32,11 @@ todos os componentes (uma requisição em voo por key, não importa quantos cons
 3. No `index.ts`: `useData<T>('<key>', fetch<Fonte>, { refreshMs, mock })`, com o intervalo vindo
    de `src/data/config.json` (`refresh`) — nunca hard-coded.
 
-## `VITE_GITHUB_TOKEN`
+## Calendário do GitHub (`GITHUB_TOKEN`, só no servidor)
 
-Opcional. Sem ele: REST público (60 req/h), `calendar: null`, `stars: null`, `commitsThisYear`
-estimado pelos eventos públicos (`estimated: true`). Com ele: GraphQL com calendário, stars e
-`estimated: false`. Só em `.env.local`; nunca commitar.
+`calendar`, `calendarSource` e `calendarTotal` (em `useGitHub()` e, sozinhos, em
+`useGitHubCalendar()`) vêm de `/api/github-calendar` (Vercel Function; em
+dev o Vite serve um mock com `source: 'mock'`). O token nunca vai para o client: `VITE_GITHUB_TOKEN`
+foi aposentado (toda `VITE_*` entra no JS público). Sem token a função estima ~90 dias pelos
+eventos públicos (`calendarSource: 'events'`); se ela falhar, `calendar: null`. `stars` é sempre
+`null` por enquanto.

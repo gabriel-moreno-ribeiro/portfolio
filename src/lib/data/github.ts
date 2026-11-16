@@ -1,7 +1,7 @@
-// GitHub: REST público (sem chave, 60 req/h) + GraphQL opcional com VITE_GITHUB_TOKEN.
+// GitHub: REST público (sem chave, 60 req/h) + calendário por /api/github-calendar (token no servidor).
 // 4 requisições REST por refresh (10 min) = 24 req/h, dentro do limite anônimo.
 import { config } from './local';
-import type { GitHubCommit, GitHubSummary } from './types';
+import type { GitHubCalendar, GitHubCommit, GitHubSummary } from './types';
 import { DataError } from './useData';
 
 const API = 'https://api.github.com';
@@ -155,62 +155,34 @@ function commitFromRest(repo: string, commit: RestCommit | undefined): GitHubCom
   };
 }
 
-interface GraphQLExtras {
-  calendar: { date: string; count: number }[];
-  commitsThisYear: number;
-  stars: number;
-}
-
-const GRAPHQL_QUERY = `query($login:String!){
-  user(login:$login){
-    contributionsCollection{
-      contributionCalendar{
-        totalContributions
-        weeks{ contributionDays{ date contributionCount } }
-      }
-    }
-    repositories(first:100, ownerAffiliations:OWNER, isFork:false){ nodes{ stargazerCount } }
-  }
-}`;
-
-async function fetchGraphQL(login: string, token: string): Promise<GraphQLExtras> {
-  const res = await fetch('https://api.github.com/graphql', {
-    method: 'POST',
-    headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ query: GRAPHQL_QUERY, variables: { login } }),
-  });
-  if (!res.ok) throw rateLimitError(res, '/graphql');
+/**
+ * Calendário de contribuições pela função do próprio site (o token fica no servidor).
+ * Não toca o REST do GitHub, então não depende do limite anônimo do visitante.
+ */
+export async function fetchGitHubCalendar(): Promise<GitHubCalendar> {
+  const res = await fetch('/api/github-calendar', { headers: { Accept: 'application/json' } });
+  if (!res.ok) throw new DataError(`github calendar: ${res.status}`);
   const json = (await res.json()) as {
-    errors?: { message: string }[];
-    data?: {
-      user: {
-        contributionsCollection: {
-          contributionCalendar: {
-            totalContributions: number;
-            weeks: { contributionDays: { date: string; contributionCount: number }[] }[];
-          };
-        };
-        repositories: { nodes: { stargazerCount: number }[] };
-      } | null;
-    };
+    total?: unknown;
+    days?: { date?: unknown; count?: unknown }[];
+    source?: unknown;
   };
-  if (json.errors?.length) throw new DataError(`GitHub GraphQL: ${json.errors[0].message}`);
-  const user = json.data?.user;
-  if (!user) throw new DataError('GitHub GraphQL: user not found');
-  const calendar = user.contributionsCollection.contributionCalendar.weeks.flatMap((week) =>
-    week.contributionDays.map((day) => ({ date: day.date, count: day.contributionCount })),
-  );
-  const year = String(new Date().getUTCFullYear());
-  return {
-    calendar,
-    commitsThisYear: calendar.filter((d) => d.date.startsWith(year)).reduce((sum, d) => sum + d.count, 0),
-    stars: user.repositories.nodes.reduce((sum, node) => sum + node.stargazerCount, 0),
-  };
+  const source = json.source;
+  if (!Array.isArray(json.days) || typeof json.total !== 'number') throw new DataError('github calendar: bad response');
+  if (source !== 'graphql' && source !== 'events' && source !== 'mock') throw new DataError('github calendar: bad source');
+  const calendar = json.days
+    .filter(
+      (d): d is { date: string; count: number } =>
+        typeof d?.date === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(d.date) && typeof d.count === 'number' && Number.isFinite(d.count),
+    )
+    .slice(-371)
+    .map((d) => ({ date: d.date, count: Math.max(0, Math.trunc(d.count)) }));
+  if (calendar.length === 0) throw new DataError('github calendar: empty');
+  return { calendar, calendarSource: source, calendarTotal: json.total };
 }
 
 export async function fetchGitHub(): Promise<GitHubSummary> {
   const { user, repo } = config.github;
-  const token = import.meta.env?.VITE_GITHUB_TOKEN as string | undefined;
 
   const blockedUntil = await rateLimitGuard();
   if (blockedUntil > 0) throw rateLimitedError(blockedUntil);
@@ -233,7 +205,7 @@ export async function fetchGitHub(): Promise<GitHubSummary> {
   }
   lastCommit = lastCommit ?? siteLastCommit;
 
-  const summary: GitHubSummary = {
+  return {
     login: profile.login,
     url: profile.html_url,
     publicRepos: profile.public_repos,
@@ -245,20 +217,4 @@ export async function fetchGitHub(): Promise<GitHubSummary> {
     calendar: null,
     stars: null,
   };
-
-  if (!token) return summary;
-  try {
-    const extras = await fetchGraphQL(user, token);
-    return {
-      ...summary,
-      commitsThisYear: extras.commitsThisYear,
-      estimated: false,
-      calendar: extras.calendar,
-      stars: extras.stars,
-    };
-  } catch (err) {
-    // GraphQL é opcional: o REST já respondeu, então entrega estimado em vez de falhar tudo.
-    console.error('[data] GitHub GraphQL falhou, seguindo com a estimativa do REST:', err);
-    return summary;
-  }
 }

@@ -1,10 +1,11 @@
 // Porta de entrada da camada de dados (CONTRACTS.md §3). Componentes importam só daqui.
+import { useMemo } from 'react';
 import { clockValue } from './clock';
-import { fetchGitHub } from './github';
+import { fetchGitHub, fetchGitHubCalendar } from './github';
 import { config, localData } from './local';
 import { MOCK_GITHUB } from './mock/github';
 import { MOCK_WEATHER } from './mock/weather';
-import type { ClockValue, DataResult, GitHubSummary, LocalData, Weather } from './types';
+import type { ClockValue, DataResult, GitHubCalendar, GitHubSummary, LocalData, Weather } from './types';
 import { peekCache, useData } from './useData';
 import { fetchWeather } from './weather';
 
@@ -15,12 +16,40 @@ export { formatRelative, renderEmphasis } from './format';
 export { useBuildYear, useNowLine } from './now';
 export { weatherLabel } from './weather';
 
-/** Perfil, último commit, commits no ano e (com token) calendário e stars. Refresh: 10 min. */
+/**
+ * Só o calendário de contribuições, de `/api/github-calendar` (uma chamada, sem gastar o REST do
+ * GitHub). Sem cache e com a função fora do ar: `calendar: null`, nunca um calendário inventado.
+ */
+export function useGitHubCalendar(): DataResult<GitHubCalendar> {
+  return useData<GitHubCalendar>('github-calendar', fetchGitHubCalendar, {
+    refreshMs: config.refresh.githubMs,
+    mock: { calendar: null },
+  });
+}
+
+/** Perfil, último commit, commits no ano e calendário (via /api/github-calendar). Refresh: 10 min. */
 export function useGitHub(): DataResult<GitHubSummary> {
-  return useData<GitHubSummary>('github', fetchGitHub, {
+  const rest = useData<GitHubSummary>('github', fetchGitHub, {
     refreshMs: config.refresh.githubMs,
     mock: MOCK_GITHUB,
   });
+  const calendar = useGitHubCalendar().data;
+  return useMemo(() => {
+    if (!rest.data || !calendar?.calendar) return rest;
+    const year = String(new Date().getUTCFullYear());
+    return {
+      ...rest,
+      data: {
+        ...rest.data,
+        ...calendar,
+        // Só o GraphQL cobre o ano inteiro; eventos públicos seguem como estimativa.
+        ...(calendar.calendarSource === 'graphql' && {
+          commitsThisYear: calendar.calendar.filter((d) => d.date.startsWith(year)).reduce((sum, d) => sum + d.count, 0),
+          estimated: false,
+        }),
+      },
+    };
+  }, [rest, calendar]);
 }
 
 /** Clima atual em `config.location`. Refresh: 30 min. */

@@ -37,6 +37,70 @@
     font-size: 12px;
   }
 
+  // GitHub contribution strip. Fixed height: the lazy chart never shifts the footer.
+  &__activity {
+    // The footer is a dark pill in both themes; the chart's .bk tokens derive from these.
+    --bg: #262626;
+    --fg: #{$white};
+    --fg-muted: #a8a8b8;
+    --surface: #1e1e1e;
+    --accent: #{$primary-orange};
+    width: 100%;
+    max-width: 530px;
+    height: 94px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &__activity-head {
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px 10px;
+    color: var(--fg-muted);
+    font-size: 12px;
+    line-height: 16px;
+    text-align: center;
+
+    strong { color: var(--fg); font-weight: 600; }
+  }
+
+  &__activity-retry {
+    padding: 0 4px;
+    border: 0;
+    background: none;
+    color: var(--fg);
+    font: inherit;
+    text-decoration: underline;
+    cursor: pointer;
+
+    &:focus-visible { outline: 2px solid $primary-orange; outline-offset: 2px; }
+  }
+
+  // Empty days need to read against the pill (the token's 8% is tuned for the page background).
+  &__activity .bk { --chart-scale-01: color-mix(in oklab, var(--fg) 14%, var(--bg)); }
+
+  &__activity-grid {
+    width: 100%;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+
+    // Static empty cells: loading, error, and before the chart chunk arrives.
+    &--empty {
+      $cell: linear-gradient(to right, #000 8px, transparent 8px) 0 0 / 10px 10px;
+      $row: linear-gradient(to bottom, #000 8px, transparent 8px) 0 0 / 10px 10px;
+      background: color-mix(in oklab, var(--fg) 14%, var(--bg));
+      -webkit-mask: $cell, $row;
+      -webkit-mask-composite: source-in;
+      mask: $cell, $row;
+      mask-composite: intersect;
+    }
+  }
+
 
 
   .links {
@@ -89,6 +153,21 @@
 
     .links a:hover { background-color: rgba(#fff, 0.08); }
   }
+
+  // Dark: the strip sits on the theme's own surface and uses its tokens.
+  .footer__activity {
+    --surface: inherit;
+    --fg: inherit;
+    --fg-muted: inherit;
+    --accent: inherit;
+    --bg: var(--surface);
+  }
+}
+
+@media screen and (max-width: 480px) {
+  // Room for the label to wrap onto a second line.
+  .footer__activity { height: 110px; }
+  .footer__activity-head { height: 32px; flex-wrap: wrap; }
 }
 
 @media screen and (max-width: 768px) {
