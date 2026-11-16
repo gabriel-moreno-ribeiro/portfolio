@@ -1,9 +1,10 @@
 // The clay kit: materials, step-keyed transforms, rounded primitives, arrows and labels.
 // Everything a scene needs to tell a story in the same white-clay language.
-import { Html, Line, RoundedBox } from '@react-three/drei';
+import { Html, Line } from '@react-three/drei';
 import { useFrame, type ThreeElements } from '@react-three/fiber';
 import { createContext, useContext, useMemo, useRef, type ReactNode, type Ref } from 'react';
 import * as THREE from 'three';
+import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js';
 import { TagMark } from './TagMark';
 
 export type V3 = [number, number, number];
@@ -143,11 +144,21 @@ export function Act({ f, children, ...props }: { f: (g: THREE.Group, play: Play,
 // ── Rounded primitives ──────────────────────────────────────────────────────
 type MeshProps = Omit<ThreeElements['mesh'], 'args' | 'ref'> & { ref?: Ref<THREE.Mesh> };
 
+// One geometry per size, shared by every box of that size and by both scenes. drei's RoundedBox
+// extruded and recomputed normals for each of the ~100 boxes on mount, freezing the page for ~1 s.
+const boxes = new Map<string, THREE.BufferGeometry>();
+function boxGeometry([w, h, d]: V3, r: number) {
+  const key = `${w},${h},${d},${r}`;
+  let g = boxes.get(key);
+  if (!g) boxes.set(key, (g = new RoundedBoxGeometry(w, h, d, 3, r)));
+  return g;
+}
+
 export function Box({ size, r, accent, ...props }: { size: V3; r?: number; accent?: boolean } & MeshProps) {
   const { mats } = useClay();
   const radius = Math.min(r ?? 0.04, Math.min(...size) / 2 - 0.001);
   return (
-    <RoundedBox args={size} radius={radius} smoothness={4} castShadow receiveShadow material={accent ? mats.accent : mats.clay} {...props} />
+    <mesh geometry={boxGeometry(size, radius)} castShadow receiveShadow material={accent ? mats.accent : mats.clay} {...props} />
   );
 }
 

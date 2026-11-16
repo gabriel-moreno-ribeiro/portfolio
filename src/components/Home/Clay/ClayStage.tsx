@@ -224,7 +224,11 @@ export default function ClayStage({ slug, target, active, dark, bg, onReady, onF
       frameloop={active ? 'always' : 'demand'}
       camera={{ fov: 30, near: 0.5, far: 80, position: [0, 5.6, 12.4] }}
       gl={{ alpha: false, antialias: true, powerPreference: 'high-performance' }}
-      onCreated={({ gl }) => gl.domElement.addEventListener('webglcontextlost', onFail)}
+      onCreated={({ gl }) => {
+        // Checking each shader for errors makes the page wait for the GPU to finish compiling it.
+        gl.debug.checkShaderErrors = import.meta.env.DEV;
+        gl.domElement.addEventListener('webglcontextlost', onFail);
+      }}
     >
       <ClayCtx.Provider value={ctx}>
         <Clock play={play} target={want} />
