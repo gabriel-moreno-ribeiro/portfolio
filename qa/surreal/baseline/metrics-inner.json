@@ -1,0 +1,654 @@
+{
+ "work-desktop-light": {
+  "scrollHeight": 2510,
+  "hScroll": false,
+  "scrollWidth": 1440,
+  "overflow": [],
+  "headings": [
+   "H1: HIBEEX",
+   "H2: What it does",
+   "H2: Where it is",
+   "H2: Stack",
+   "H2: Photos",
+   "H2: More"
+  ],
+  "imgsNoDims": [
+   "/work/hibeex/01.webp",
+   "/work/hibeex/sm/02.webp",
+   "/work/hibeex/sm/03.webp",
+   "/work/hibeex/sm/04.webp"
+  ],
+  "imgsNoAlt": 0,
+  "imgs": 4,
+  "canvases": 0,
+  "smallTargets": [
+   {
+    "s": "a.footer__cta-link",
+    "w": 133,
+    "h": 21,
+    "t": "me@gabrielmr.com"
+   }
+  ],
+  "under44": 25,
+  "unnamed": [],
+  "landmarks": "header:1 nav:4 main:1 footer:1",
+  "runningAnimations": 0,
+  "fonts": [
+   "DM Sans",
+   "DM Serif Display",
+   "Arial"
+  ],
+  "smallText": [],
+  "errors": [],
+  "shots": 3
+ },
+ "story-desktop-light": {
+  "scrollHeight": 8941,
+  "hScroll": false,
+  "scrollWidth": 1440,
+  "overflow": [],
+  "headings": [
+   "H1: My Story.",
+   "H2: What I wore, growing up."
+  ],
+  "imgsNoDims": [
+   "/background/missao-velha/01.webp",
+   "/story/d20.webp",
+   "/background/missao-velha/02.webp",
+   "/moments/mv07.webp",
+   "/background/missao-velha/05.webp",
+   "/moments/mv06.webp",
+   "/moments/ssa02.webp",
+   "/moments/ssa01.webp",
+   "/moments/ssa06.webp",
+   "/moments/ssa03.webp",
+   "/moments/mv04.webp"
+  ],
+  "imgsNoAlt": 0,
+  "imgs": 11,
+  "canvases": 0,
+  "smallTargets": [
+   {
+    "s": "a",
+    "w": 81,
+    "h": 16,
+    "t": "beto junqueira"
+   },
+   {
+    "s": "a.repos__link",
+    "w": 230,
+    "h": 20,
+    "t": "github.com/gabriel-moreno-ribe"
+   },
+   {
+    "s": "a.fig-end__back",
+    "w": 72,
+    "h": 21,
+    "t": "Back home"
+   },
+   {
+    "s": "a.footer__cta-link",
+    "w": 133,
+    "h": 21,
+    "t": "me@gabrielmr.com"
+   }
+  ],
+  "under44": 27,
+  "unnamed": [],
+  "landmarks": "header:2 nav:3 main:1 footer:1",
+  "runningAnimations": 14,
+  "fonts": [
+   "DM Sans",
+   "DM Serif Display",
+   "Noto Sans Devanagari",
+   "Arial"
+  ],
+  "smallText": [
+   "p.fig-kicker 11px",
+   "p.fig-kicker 11px",
+   "p.fig-kicker 11px",
+   "p.fig-truck__when 11px",
+   "span 11px",
+   "p.fig-truck__when 11px",
+   "span 11px",
+   "p.fig-truck__when 11px",
+   "span 11px",
+   "p.fig-truck__when 11px",
+   "span 11px",
+   "p.fig-kicker.fig-strip__eyebrow 11px",
+   "p.fig-kicker.fig-strip__eyebrow 11px",
+   "p.text-[11px].font-medium 11px"
+  ],
+  "errors": [],
+  "shots": 10
+ },
+ "blog-desktop-light": {
+  "scrollHeight": 932,
+  "hScroll": false,
+  "scrollWidth": 1440,
+  "overflow": [],
+  "headings": [
+   "H1: Blog",
+   "H2: The Drake equation, with and without history"
+  ],
+  "imgsNoDims": [],
+  "imgsNoAlt": 0,
+  "imgs": 0,
+  "canvases": 0,
+  "smallTargets": [
+   {
+    "s": "a.footer__cta-link",
+    "w": 133,
+    "h": 21,
+    "t": "me@gabrielmr.com"
+   }
+  ],
+  "under44": 24,
+  "unnamed": [],
+  "landmarks": "header:0 nav:2 main:1 footer:1",
+  "runningAnimations": 0,
+  "fonts": [
+   "DM Sans",
+   "DM Serif Display",
+   "Arial"
+  ],
+  "smallText": [],
+  "errors": [],
+  "shots": 2
+ },
+ "work-desktop-dark": {
+  "scrollHeight": 2512,
+  "hScroll": false,
+  "scrollWidth": 1440,
+  "overflow": [],
+  "headings": [
+   "H1: HIBEEX",
+   "H2: What it does",
+   "H2: Where it is",
+   "H2: Stack",
+   "H2: Photos",
+   "H2: More"
+  ],
+  "imgsNoDims": [
+   "/work/hibeex/01.webp",
+   "/work/hibeex/sm/02.webp",
+   "/work/hibeex/sm/03.webp",
+   "/work/hibeex/sm/04.webp"
+  ],
+  "imgsNoAlt": 0,
+  "imgs": 4,
+  "canvases": 0,
+  "smallTargets": [
+   {
+    "s": "a.footer__cta-link",
+    "w": 133,
+    "h": 21,
+    "t": "me@gabrielmr.com"
+   }
+  ],
+  "under44": 24,
+  "unnamed": [],
+  "landmarks": "header:1 nav:4 main:1 footer:1",
+  "runningAnimations": 0,
+  "fonts": [
+   "DM Sans",
+   "DM Serif Display",
+   "Arial"
+  ],
+  "smallText": [],
+  "errors": [],
+  "shots": 3
+ },
+ "story-desktop-dark": {
+  "scrollHeight": 8943,
+  "hScroll": false,
+  "scrollWidth": 1440,
+  "overflow": [],
+  "headings": [
+   "H1: My Story.",
+   "H2: What I wore, growing up."
+  ],
+  "imgsNoDims": [
+   "/background/missao-velha/01.webp",
+   "/story/d20.webp",
+   "/background/missao-velha/02.webp",
+   "/moments/mv07.webp",
+   "/background/missao-velha/05.webp",
+   "/moments/mv06.webp",
+   "/moments/ssa02.webp",
+   "/moments/ssa01.webp",
+   "/moments/ssa06.webp",
+   "/moments/ssa03.webp",
+   "/moments/mv04.webp"
+  ],
+  "imgsNoAlt": 0,
+  "imgs": 11,
+  "canvases": 0,
+  "smallTargets": [
+   {
+    "s": "a",
+    "w": 81,
+    "h": 16,
+    "t": "beto junqueira"
+   },
+   {
+    "s": "a.repos__link",
+    "w": 230,
+    "h": 20,
+    "t": "github.com/gabriel-moreno-ribe"
+   },
+   {
+    "s": "a.fig-end__back",
+    "w": 72,
+    "h": 21,
+    "t": "Back home"
+   },
+   {
+    "s": "a.footer__cta-link",
+    "w": 133,
+    "h": 21,
+    "t": "me@gabrielmr.com"
+   }
+  ],
+  "under44": 26,
+  "unnamed": [],
+  "landmarks": "header:2 nav:3 main:1 footer:1",
+  "runningAnimations": 14,
+  "fonts": [
+   "DM Sans",
+   "DM Serif Display",
+   "Noto Sans Devanagari",
+   "Arial"
+  ],
+  "smallText": [
+   "p.fig-kicker 11px",
+   "p.fig-kicker 11px",
+   "p.fig-kicker 11px",
+   "p.fig-truck__when 11px",
+   "span 11px",
+   "p.fig-truck__when 11px",
+   "span 11px",
+   "p.fig-truck__when 11px",
+   "span 11px",
+   "p.fig-truck__when 11px",
+   "span 11px",
+   "p.fig-kicker.fig-strip__eyebrow 11px",
+   "p.fig-kicker.fig-strip__eyebrow 11px",
+   "p.text-[11px].font-medium 11px"
+  ],
+  "errors": [],
+  "shots": 10
+ },
+ "blog-desktop-dark": {
+  "scrollHeight": 932,
+  "hScroll": false,
+  "scrollWidth": 1440,
+  "overflow": [],
+  "headings": [
+   "H1: Blog",
+   "H2: The Drake equation, with and without history"
+  ],
+  "imgsNoDims": [],
+  "imgsNoAlt": 0,
+  "imgs": 0,
+  "canvases": 0,
+  "smallTargets": [
+   {
+    "s": "a.footer__cta-link",
+    "w": 133,
+    "h": 21,
+    "t": "me@gabrielmr.com"
+   }
+  ],
+  "under44": 23,
+  "unnamed": [],
+  "landmarks": "header:0 nav:2 main:1 footer:1",
+  "runningAnimations": 0,
+  "fonts": [
+   "DM Sans",
+   "DM Serif Display",
+   "Arial"
+  ],
+  "smallText": [],
+  "errors": [],
+  "shots": 2
+ },
+ "work-mobile-light": {
+  "scrollHeight": 2975,
+  "hScroll": false,
+  "scrollWidth": 390,
+  "overflow": [
+   "a.links__social",
+   "svg",
+   "path"
+  ],
+  "headings": [
+   "H1: HIBEEX",
+   "H2: What it does",
+   "H2: Where it is",
+   "H2: Stack",
+   "H2: Photos",
+   "H2: More"
+  ],
+  "imgsNoDims": [
+   "/work/hibeex/01.webp",
+   "/work/hibeex/sm/02.webp",
+   "/work/hibeex/sm/03.webp",
+   "/work/hibeex/sm/04.webp"
+  ],
+  "imgsNoAlt": 0,
+  "imgs": 4,
+  "canvases": 0,
+  "smallTargets": [
+   {
+    "s": "a.footer__cta-link",
+    "w": 133,
+    "h": 21,
+    "t": "me@gabrielmr.com"
+   }
+  ],
+  "under44": 27,
+  "unnamed": [],
+  "landmarks": "header:1 nav:4 main:1 footer:1",
+  "runningAnimations": 0,
+  "fonts": [
+   "DM Sans",
+   "Arial",
+   "DM Serif Display"
+  ],
+  "smallText": [],
+  "errors": [],
+  "shots": 4
+ },
+ "story-mobile-light": {
+  "scrollHeight": 10911,
+  "hScroll": false,
+  "scrollWidth": 390,
+  "overflow": [
+   "a.links__social",
+   "svg",
+   "path"
+  ],
+  "headings": [
+   "H1: My Story.",
+   "H2: What I wore, growing up."
+  ],
+  "imgsNoDims": [
+   "/background/missao-velha/01.webp",
+   "/story/d20.webp",
+   "/background/missao-velha/02.webp",
+   "/moments/mv07.webp",
+   "/background/missao-velha/05.webp",
+   "/moments/mv06.webp",
+   "/moments/ssa02.webp",
+   "/moments/ssa01.webp",
+   "/moments/ssa06.webp",
+   "/moments/ssa03.webp",
+   "/moments/mv04.webp"
+  ],
+  "imgsNoAlt": 0,
+  "imgs": 11,
+  "canvases": 0,
+  "smallTargets": [
+   {
+    "s": "a",
+    "w": 81,
+    "h": 16,
+    "t": "beto junqueira"
+   },
+   {
+    "s": "a.repos__link",
+    "w": 342,
+    "h": 20,
+    "t": "github.com/gabriel-moreno-ribe"
+   },
+   {
+    "s": "a.fig-end__back",
+    "w": 72,
+    "h": 21,
+    "t": "Back home"
+   },
+   {
+    "s": "a.footer__cta-link",
+    "w": 133,
+    "h": 21,
+    "t": "me@gabrielmr.com"
+   }
+  ],
+  "under44": 29,
+  "unnamed": [],
+  "landmarks": "header:2 nav:3 main:1 footer:1",
+  "runningAnimations": 13,
+  "fonts": [
+   "DM Sans",
+   "Arial",
+   "DM Serif Display",
+   "Noto Sans Devanagari"
+  ],
+  "smallText": [
+   "p.fig-kicker 11px",
+   "p.fig-kicker 11px",
+   "p.fig-kicker 11px",
+   "p.fig-truck__when 11px",
+   "span 11px",
+   "p.fig-truck__when 11px",
+   "span 11px",
+   "p.fig-truck__when 11px",
+   "span 11px",
+   "p.fig-truck__when 11px",
+   "span 11px",
+   "p.fig-kicker.fig-strip__eyebrow 11px",
+   "p.fig-kicker.fig-strip__eyebrow 11px",
+   "p.text-[11px].font-medium 11px"
+  ],
+  "errors": [],
+  "shots": 13
+ },
+ "blog-mobile-light": {
+  "scrollHeight": 951,
+  "hScroll": false,
+  "scrollWidth": 390,
+  "overflow": [
+   "a.links__social",
+   "svg",
+   "path"
+  ],
+  "headings": [
+   "H1: Blog",
+   "H2: The Drake equation, with and without history"
+  ],
+  "imgsNoDims": [],
+  "imgsNoAlt": 0,
+  "imgs": 0,
+  "canvases": 0,
+  "smallTargets": [
+   {
+    "s": "a.footer__cta-link",
+    "w": 133,
+    "h": 21,
+    "t": "me@gabrielmr.com"
+   }
+  ],
+  "under44": 26,
+  "unnamed": [],
+  "landmarks": "header:0 nav:2 main:1 footer:1",
+  "runningAnimations": 0,
+  "fonts": [
+   "DM Sans",
+   "Arial",
+   "DM Serif Display"
+  ],
+  "smallText": [],
+  "errors": [],
+  "shots": 2
+ },
+ "work-mobile-dark": {
+  "scrollHeight": 2977,
+  "hScroll": false,
+  "scrollWidth": 390,
+  "overflow": [
+   "a.links__social",
+   "svg",
+   "path"
+  ],
+  "headings": [
+   "H1: HIBEEX",
+   "H2: What it does",
+   "H2: Where it is",
+   "H2: Stack",
+   "H2: Photos",
+   "H2: More"
+  ],
+  "imgsNoDims": [
+   "/work/hibeex/01.webp",
+   "/work/hibeex/sm/02.webp",
+   "/work/hibeex/sm/03.webp",
+   "/work/hibeex/sm/04.webp"
+  ],
+  "imgsNoAlt": 0,
+  "imgs": 4,
+  "canvases": 0,
+  "smallTargets": [
+   {
+    "s": "a.footer__cta-link",
+    "w": 133,
+    "h": 21,
+    "t": "me@gabrielmr.com"
+   }
+  ],
+  "under44": 27,
+  "unnamed": [],
+  "landmarks": "header:1 nav:4 main:1 footer:1",
+  "runningAnimations": 0,
+  "fonts": [
+   "DM Sans",
+   "Arial",
+   "DM Serif Display"
+  ],
+  "smallText": [],
+  "errors": [],
+  "shots": 4
+ },
+ "story-mobile-dark": {
+  "scrollHeight": 10913,
+  "hScroll": false,
+  "scrollWidth": 390,
+  "overflow": [
+   "a.links__social",
+   "svg",
+   "path"
+  ],
+  "headings": [
+   "H1: My Story.",
+   "H2: What I wore, growing up."
+  ],
+  "imgsNoDims": [
+   "/background/missao-velha/01.webp",
+   "/story/d20.webp",
+   "/background/missao-velha/02.webp",
+   "/moments/mv07.webp",
+   "/background/missao-velha/05.webp",
+   "/moments/mv06.webp",
+   "/moments/ssa02.webp",
+   "/moments/ssa01.webp",
+   "/moments/ssa06.webp",
+   "/moments/ssa03.webp",
+   "/moments/mv04.webp"
+  ],
+  "imgsNoAlt": 0,
+  "imgs": 11,
+  "canvases": 0,
+  "smallTargets": [
+   {
+    "s": "a",
+    "w": 81,
+    "h": 16,
+    "t": "beto junqueira"
+   },
+   {
+    "s": "a.repos__link",
+    "w": 342,
+    "h": 20,
+    "t": "github.com/gabriel-moreno-ribe"
+   },
+   {
+    "s": "a.fig-end__back",
+    "w": 72,
+    "h": 21,
+    "t": "Back home"
+   },
+   {
+    "s": "a.footer__cta-link",
+    "w": 133,
+    "h": 21,
+    "t": "me@gabrielmr.com"
+   }
+  ],
+  "under44": 29,
+  "unnamed": [],
+  "landmarks": "header:2 nav:3 main:1 footer:1",
+  "runningAnimations": 13,
+  "fonts": [
+   "DM Sans",
+   "Arial",
+   "DM Serif Display",
+   "Noto Sans Devanagari"
+  ],
+  "smallText": [
+   "p.fig-kicker 11px",
+   "p.fig-kicker 11px",
+   "p.fig-kicker 11px",
+   "p.fig-truck__when 11px",
+   "span 11px",
+   "p.fig-truck__when 11px",
+   "span 11px",
+   "p.fig-truck__when 11px",
+   "span 11px",
+   "p.fig-truck__when 11px",
+   "span 11px",
+   "p.fig-kicker.fig-strip__eyebrow 11px",
+   "p.fig-kicker.fig-strip__eyebrow 11px",
+   "p.text-[11px].font-medium 11px"
+  ],
+  "errors": [],
+  "shots": 13
+ },
+ "blog-mobile-dark": {
+  "scrollHeight": 953,
+  "hScroll": false,
+  "scrollWidth": 390,
+  "overflow": [
+   "a.links__social",
+   "svg",
+   "path"
+  ],
+  "headings": [
+   "H1: Blog",
+   "H2: The Drake equation, with and without history"
+  ],
+  "imgsNoDims": [],
+  "imgsNoAlt": 0,
+  "imgs": 0,
+  "canvases": 0,
+  "smallTargets": [
+   {
+    "s": "a.footer__cta-link",
+    "w": 133,
+    "h": 21,
+    "t": "me@gabrielmr.com"
+   }
+  ],
+  "under44": 26,
+  "unnamed": [],
+  "landmarks": "header:0 nav:2 main:1 footer:1",
+  "runningAnimations": 0,
+  "fonts": [
+   "DM Sans",
+   "Arial",
+   "DM Serif Display"
+  ],
+  "smallText": [],
+  "errors": [],
+  "shots": 2
+ }
+}

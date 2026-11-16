@@ -1,0 +1,36 @@
+[
+  {
+    "antipattern": "italic-serif-display",
+    "name": "Italic serif display headline",
+    "description": "Oversized italic serif (Fraunces, Recoleta, Playfair, Newsreader-italic) as the primary hero headline reads as taste in isolation but has become the universal AI-startup landing page hero. Set roman, or move to a non-serif display face. Editorial / magazine register may legitimately want this — judge by context.",
+    "severity": "warning",
+    "category": "slop",
+    "file": "http://localhost:5173/work/hibeex",
+    "line": 0,
+    "snippet": "italic serif h1 (dm serif display) at 72px \"HIBEEX\"",
+    "selector": "h1.project__title"
+  },
+  {
+    "antipattern": "straggler",
+    "name": "Straggler",
+    "description": "The last line of this paragraph holds one word, which leaves a hole under the block. Set text-wrap: pretty on body copy (Chrome, Safari) to pull a word down beside it. Where a browser ignores it, edit the last sentence or bind the last two words with a no-break space. Keep it if the break is intended.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "http://localhost:5173/work/hibeex",
+    "line": 0,
+    "snippet": "\"infrastructure.\" alone on the last of 2 lines (19% of the measure)",
+    "advisory": true,
+    "selector": "section.project__section:nth-of-type(3) > p"
+  },
+  {
+    "antipattern": "cream-palette",
+    "name": "Cream / beige palette",
+    "description": "A warm cream or beige page background has become the default \"tasteful\" AI surface, reached for by reflex. Choose a background that comes from a deliberate palette, not the safe warm off-white.",
+    "severity": "warning",
+    "category": "slop",
+    "file": "http://localhost:5173/work/hibeex",
+    "line": 0,
+    "snippet": "cream/beige page background rgb(255, 248, 244)",
+    "selector": "body"
+  }
+]

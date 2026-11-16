@@ -1,0 +1,63 @@
+render tier: 5 screenshots in /Users/ithaca3_/orca/portfolio/qa/surreal/skills/.hallmark/shots (1280x800, 1440x900, 1920x1080 folds; 1440 and 375 full pages)
+/Users/ithaca3_/orca/portfolio/src/styles/tailwind.css
+  FAIL 20 :1 no Hallmark stamp on the first non-empty line of any CSS | fix: The stamp comment is line 1 of the CSS; only @charset may precede it
+  FAIL 48 :111 oklch literal oklch(0.7 0.15 160) outside tokens (--chart-positive on .bk) | fix: Lift the value into the token block
+  FAIL 48 :112 oklch literal oklch(0.64 0.2 25) outside tokens (--chart-negative on .bk)
+  WARN F3 :79 no text-wrap: balance on any display head (1 head rule(s), e.g. [data-slot] :is(h2, h3, p)) | fix: Add text-wrap: balance to h1/h2-level heads
+  WARN F16 :1 browser surfaces unthemed: ::selection, scrollbar-color | fix: Theme the parts you did not draw from the palette
+/Users/ithaca3_/orca/portfolio/src/components/Home/BackgroundGlobe.tsx
+  FAIL 26a :1 no :focus-visible styling anywhere | fix: A focus ring at 3:1 or better, instant
+  FAIL 38i :504 <em>/<i> inside <h2> | fix: Roman headers; emphasis via weight or accent
+  REFLEX 26b :1 no :active styling anywhere | fix: All eight states; guard: not a form control, no aria-disabled anywhere
+  REFLEX 26b :1 no :disabled styling anywhere
+  WARN 28a :514 lazy-loaded first image (likely LCP) | fix: fetchpriority=high on the LCP element
+/Users/ithaca3_/orca/portfolio/src/components/Home/FindMyWork.tsx
+  FAIL 30a :116 emoji icon "▶" in <span class="carousel-thumb__video"> | fix: One icon library or custom SVG
+  FAIL 38i :238 <em>/<i> inside <h2>
+  REFLEX 28b :72 video without poster | fix: Add a poster frame; guard: below the fold and not the LCP
+  WARN F1 :242 straight quote in prose x2 (first: What I've built and w) | fix: Use typographic quotes: “ ” ’
+/Users/ithaca3_/orca/portfolio/src/components/Shared/GestureTutorial.tsx
+  FAIL 30a :12 emoji passed as an icon: 👤 | fix: One icon library, a custom SVG, or the word alone
+  FAIL 30a :17 emoji passed as an icon: 👌
+  FAIL 30a :22 emoji passed as an icon: 👌
+  FAIL 30a :27 emoji passed as an icon: 🖐
+/Users/ithaca3_/orca/portfolio/src/components/Shared/HandsfreeIntroModal.tsx
+  FAIL 30a :13 emoji passed as an icon: 👤
+  FAIL 30a :18 emoji passed as an icon: 👌
+  FAIL 30a :23 emoji passed as an icon: ✋
+  FAIL 30a :101 emoji icon "🖐️" in <span class="hf-intro__main-icon">
+  FAIL 30a :150 emoji icon "✨" in <span class="hf-intro__btn-icon">
+/Users/ithaca3_/orca/portfolio/src/components/Shared/CameraFeedback.tsx
+  FAIL 33 :216 <canvas> without aria-hidden or aria-label | fix: Add aria-hidden or an aria-label
+/Users/ithaca3_/orca/portfolio/src/components/Home/ContactSection.tsx
+  FAIL 38i :81 <em>/<i> inside <h2>
+  WARN F1 :82 straight quote in prose x2 (first: Let's Talk)
+/Users/ithaca3_/orca/portfolio/src/components/Home/Experience/Experience.tsx
+  FAIL 38i :320 <em>/<i> inside <h2>
+/Users/ithaca3_/orca/portfolio/src/components/Home/Research.tsx
+  FAIL 38i :166 <em>/<i> inside <h2>
+  REFLEX 28b :73 video without poster
+http://localhost:5173/
+  FAIL 40 :1 [1280px] contrast 2.78:1 against the pixels behind < 3:1 on span.numbers-strip__figure "3,392" | fix: Raise the contrast to threshold
+  FAIL 40 :1 [1440px] a field's edge is under 3:1 against what surrounds it: input 1.24:1, input 1.24:1, textarea 1.24:1 | fix: Draw the field in --color-muted, or fill it a step off the surface it sits on
+  FAIL 58 :1 [1440px] 218 words on one screen (from y=5050) | fix: One idea per screen: cut to about 80 words, make the section an object
+  REFLEX 39b :1 [1440px] control height outside 44 to 52px: button.btn 56px, a.btn 68px, a.btn 56px | fix: Marketing controls stand 44 to 52px; app UI 32 to 40px with a 44px hit target
+  REFLEX 44c :1 [1440px] hero ends at 457px of a 900px screen | fix: Fill the first screen with the visual or the headline, not with copy
+  REFLEX 49b :1 [375px] link "Do Budgeting Tools Help Low-Inco" wraps to 2 lines (a.research-card__link) | fix: Shorten the label or set nowrap
+  REFLEX 49b :1 [375px] link "The Steady-State Hypothesis: whe" wraps to 3 lines (a.research-card__link)
+  REFLEX 49b :1 [375px] link "Low-Cost Physics Lab Kits for Pu" wraps to 2 lines (a.research-card__link)
+  REFLEX 49b :1 [414px] link "The Steady-State Hypothesis: whe" wraps to 2 lines (a.research-card__link)
+  REFLEX 59 :1 [1440px] smallest gap between sections is 39px (gaps: 39, 86, 97, 133, 171, 176, 177, 69) | fix: 120px or more between sections, by the --section-gap steps
+  REFLEX 77 :1 [1440px] 1 thin section: "Where I Come From" (55% wide) | fix: Widen the body to ten of twelve columns and give it mass: a visual 300px tall or more, a set of three across, rows, or a statement (layout.md § 4 and § 5)
+  WARN 40 :1 [1280px] contrast drops to 4.30:1 over the gradient behind h4 "PHYSICS" | fix: Check the text where the gradient is darkest or lightest; give the label its own ground
+  WARN 59 :1 [1440px] 10 sections | fix: Six to nine sections a page, hero and footer included; merge or cut
+  WARN F19 :1 [1440px] 4 font weights in running use (400, 500, 600, 700) | fix: Three weights at most, display and body together, picked as extremes
+  WARN F26 :1 [375px] h3 "The Steady-State Hypothesis: whe" ends on a stub; h3 "Olympic Club - Colégio Militar" ends on a stub | fix: text-wrap: balance on heads and pretty on body copy, or rewrite the line; a <br> goes only between phrases and is checked at 375
+/Users/ithaca3_/orca/portfolio/src/components/Home/DesmosSketches.tsx
+  REFLEX 28b :66 video without poster
+  WARN 28a :55 lazy-loaded first image (likely LCP)
+/Users/ithaca3_/orca/portfolio/src/components/Home/MedalsShowcase.tsx
+  WARN 28a :50 lazy-loaded first image (likely LCP)
+/Users/ithaca3_/orca/portfolio/src/components/Home/SpotifyCard.tsx
+  WARN 28a :20 lazy-loaded first image (likely LCP)
+sloplint: 23 FAIL, 13 REFLEX, 12 WARN across 44 file(s) and 1 URL(s).
