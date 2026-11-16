@@ -14,6 +14,8 @@ export interface RailGarment {
   color?: string;
   /** Trim colour for ribs, cords and buttons. */
   trim?: string;
+  /** Print or badges for the front of the illustration: a transparent image on the same 200 × 310 canvas, drawn on the fabric so the folds shade it. */
+  print?: string;
   /** Front photo. Best as a transparent cut-out on a 200 × 310 portrait canvas. Front, back and side photos of one piece must share the same canvas and scale, or the piece changes size as it turns. */
   image?: string;
   /** Back photo; the front photo is reused when omitted. */
@@ -402,7 +404,7 @@ function SideHanger({ uid, material }: { uid: string; material: "wood" | "matte"
   );
 }
 
-function Fabric({ uid, kind, side, color, trim }: { uid: string; kind: GarmentKind; side: "front" | "back"; color: string; trim: string }) {
+function Fabric({ uid, kind, side, color, trim, print }: { uid: string; kind: GarmentKind; side: "front" | "back"; color: string; trim: string; print?: string }) {
   const art = artFor(kind, side);
   const clip = `url(#${uid}-clip-${kind}-${side})`;
   const knitted = kind === "knit";
@@ -415,6 +417,7 @@ function Fabric({ uid, kind, side, color, trim }: { uid: string; kind: GarmentKi
         {art.panels.map((panel) => <path key={panel.d} d={panel.d} fill={mix(color, panel.t)} />)}
         {art.ribs.map((d) => <path key={d} d={d} fill={mix(trim, 0)} />)}
         {art.ribs.map((d) => <path key={`${d}-rib`} d={d} fill={`url(#${uid}-rib)`} />)}
+        {print && side === "front" && <image href={print} width={VB_W} height={VB_H} />}
         <g filter={`url(#${uid}-soft)`} fill="none" strokeLinecap="round">
           {art.folds.map((d) => <path key={d} d={d} stroke="black" strokeOpacity="0.22" strokeWidth="4" />)}
           {art.folds.map((d) => <path key={`${d}-hi`} d={d} stroke="white" strokeOpacity="0.1" strokeWidth="2" transform="translate(2.2 0)" />)}
@@ -1000,7 +1003,7 @@ export function ClothingRailHero({
                       <span ref={side === "front" ? (node) => { drapes.current[i] = node; } : undefined} data-drape className="absolute inset-0 origin-top [transform:skewX(var(--drape,0deg))]" style={side === "back" ? { transform: "skewX(calc(var(--drape, 0deg) * -1))" } : undefined}>
                         {item.image
                           ? <Photo src={(side === "back" ? item.backImage : undefined) ?? item.image} alt="" full={hanger === "none"} />
-                          : <Fabric uid={uid} kind={kind} side={side} color={color} trim={trim} />}
+                          : <Fabric uid={uid} kind={kind} side={side} color={color} trim={trim} print={item.print} />}
                         <span ref={side === "front" ? (node) => { shades.current[i] = node; } : undefined} className={`pointer-events-none absolute bg-black ${item.image ? photoBox : "inset-0"}`} style={{ opacity: "var(--shade, 0.2)", WebkitMask: `${item.image ? `url("${(side === "back" ? item.backImage : undefined) ?? item.image}")` : silhouetteMask(kind, side)} top center / contain no-repeat`, mask: `${item.image ? `url("${(side === "back" ? item.backImage : undefined) ?? item.image}")` : silhouetteMask(kind, side)} top center / contain no-repeat` }} />
                       </span>
                     </span>
@@ -1190,7 +1193,7 @@ function Detail({ uid, item, index, total, hanger, labels, reduced, source, onLi
               <Hanger uid={uid} side={face} kind={item.image ? null : kind} material={hanger} />
               {item.image
                 ? <Photo src={(face === "back" ? item.backImage : undefined) ?? item.image} alt={face === "front" ? item.name : ""} full={hanger === "none"} />
-                : <Fabric uid={uid} kind={kind} side={face} color={color} trim={trim} />}
+                : <Fabric uid={uid} kind={kind} side={face} color={color} trim={trim} print={item.print} />}
             </div>
           ))}
         </div>

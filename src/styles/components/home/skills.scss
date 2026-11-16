@@ -64,18 +64,6 @@
   }
 }
 
-// The tool's name, under its card.
-.skills-orb__name {
-  position: absolute;
-  top: calc(100% + 5px);
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--fg-muted);
-  white-space: nowrap;
-}
-
 [data-theme="dark"] .skills-orb__card {
   border-color: rgba(255, 255, 255, 0.16);
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.45);
@@ -107,34 +95,22 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 14px 6px;
+    gap: 12px;
     max-width: 340px;
     margin: 24px auto 0;
     padding: 0;
     list-style: none;
 
-    // Four to a row: wide enough for the longest name under its logo.
     li {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 5px;
-      width: 78px;
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--fg-muted);
-      text-align: center;
-    }
-
-    img {
-      box-sizing: border-box;
+      display: grid;
+      place-items: center;
       width: 56px;
       height: 56px;
-      padding: 12px;
       border-radius: 14px;
       background: var(--surface);
       border: 1px solid var(--border);
-      object-fit: contain;
     }
+
+    img { width: 32px; height: 32px; object-fit: contain; }
   }
 }

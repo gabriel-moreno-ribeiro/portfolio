@@ -205,15 +205,17 @@
 // Fixed row height and fixed columns: the count-in never moves anything.
 .ranked-stats {
   list-style: none;
-  margin: 8px 0 0;
-  padding: 20px 0 0;
+  margin: 16px auto 0;
+  padding: 24px 0 0;
+  width: 100%;
+  max-width: 940px;
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   border-top: 1px solid var(--border);
+  text-align: left;
 
   &__item {
-    padding: 0 12px;
-    text-align: center;
+    padding: 2px 16px 2px 24px;
 
     & + & { border-left: 1px solid var(--border); }
   }
@@ -221,32 +223,33 @@
   &__rank {
     margin: 0;
     display: flex;
-    justify-content: center;
     align-items: baseline;
-    gap: 6px;
+    gap: 8px;
     white-space: nowrap;
-    height: 44px;
-    line-height: 44px;
+    height: 46px;
+    line-height: 46px;
   }
 
   &__n {
     display: inline-block;
-    font-family: var(--font-serif);
-    font-size: 38px;
+    font-size: 40px;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    font-variant-numeric: tabular-nums;
     color: var(--fg);
   }
 
   &__of {
-    font-size: 14px;
+    font-size: 18px;
     font-weight: 500;
-    color: var(--accent);
+    letter-spacing: -0.01em;
+    color: var(--fg-muted);
   }
 
   &__label {
-    margin: 4px 0 0;
-    font-size: 12px;
-    line-height: 1.35;
-    letter-spacing: 0.04em;
+    margin: 6px 0 0;
+    font-size: 14px;
+    line-height: 1.4;
     color: var(--fg-muted);
     text-wrap: balance;
   }
@@ -255,16 +258,19 @@
 @media screen and (max-width: 767px) {
   .ranked-stats {
     grid-template-columns: repeat(2, 1fr);
-    row-gap: 18px;
+    row-gap: 22px;
 
     &__item {
+      padding: 0 8px 0 16px;
+
       & + & { border-left: 0; }
       &:nth-child(even) { border-left: 1px solid var(--border); }
-      &:last-child { grid-column: 1 / -1; }
     }
 
     &__n { font-size: 30px; }
+    &__of { font-size: 15px; }
     &__rank { height: 36px; line-height: 36px; }
+    &__label { font-size: 13px; }
   }
 }
 

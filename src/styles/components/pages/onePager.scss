@@ -573,7 +573,7 @@ $column: 760px;
   }
 
   .op__top, .op__time, .op__mail, .op__copied,
-  body:has(.op) .page-nav, body:has(.op) .footer, body:has(.op) .handsfree-button, body:has(.op) .custom-mouse { display: none !important; }
+  body:has(.op) .page-nav, body:has(.op) .footer, body:has(.op) .handsfree-button { display: none !important; }
 
   .op__head { column-gap: 8mm; padding-bottom: 2.5mm; }
   .op__head-side { padding-top: 1mm; font-size: 6.8pt; line-height: 1.4; li + li { margin-top: 0.3mm; } }

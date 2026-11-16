@@ -312,7 +312,6 @@ function Playground({ urls, enter, still }: { urls: string[]; enter: boolean; st
         >
           <span className="skills-orb__card" style={{ "--i": i } as React.CSSProperties}>
             <img src={src} alt="" width={48} height={48} draggable={false} decoding="async" />
-            <span className="skills-orb__name">{TOOLS[i].name}</span>
           </span>
         </span>
       ))}
@@ -356,7 +355,6 @@ const Skills: React.FC = () => {
           {urls.map((src, i) => (
             <li key={TOOLS[i].name}>
               <img src={src} alt="" width={40} height={40} loading="lazy" decoding="async" />
-              <span>{TOOLS[i].name}</span>
             </li>
           ))}
         </ul>

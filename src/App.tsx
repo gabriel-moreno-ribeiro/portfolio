@@ -1,7 +1,6 @@
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
-import CustomMouse from "./components/Shared/CustomMouse";
 import DarkModeButton from "./components/Shared/DarkModeButton";
 import HandsfreeButton from "./components/Shared/HandsfreeButton";
 import BackToTop from "./components/Shared/BackToTop";
@@ -144,7 +143,6 @@ function AppContent() {
           <HandsfreeUI />
         </Suspense>
       )}
-      <CustomMouse />
       <EasterEggs />
       {!isReading && <MobileStickyCTA />}
       {!isLibrary && <BackToTop />}
