@@ -862,25 +862,6 @@ $exp-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   white-space: nowrap;
 }
 
-// Mesmo serif itálico da legenda, só sublinhado.
-a.exp__d20-link,
-a.exp__d20-link:visited {
-  white-space: nowrap;
-  color: inherit;
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 3px;
-
-  &:hover {
-    color: var(--fg);
-  }
-
-  &:focus-visible {
-    outline: 2px solid var(--focus-ring);
-    outline-offset: 2px;
-  }
-}
-
 .exp__d20--right {
   .exp__d20-lead { left: 20px; transform: rotate(40deg); }
   .exp__d20-text { left: 56px; } // 32 px da borda da estrada (meia-largura 24)

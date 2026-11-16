@@ -11,7 +11,7 @@ import { NAVIGATE_EVENT, type NavigateDetail } from "../utils/scrollToComponent"
 
 const BackgroundGlobe = lazy(() => import("../components/Home/BackgroundGlobe"));
 const Skills = lazy(() => import("../components/Home/Skills"));
-const Wardrobe = lazy(() => import("../components/Story/Wardrobe").then((m) => ({ default: m.Wardrobe })));
+const Wardrobe = lazy(() => import("../components/Home/Wardrobe").then((m) => ({ default: m.Wardrobe })));
 const FindMyWork = lazy(() => import("../components/Home/FindMyWork"));
 const Research = lazy(() => import("../components/Home/Research"));
 const Experience = lazy(() => import("../components/Home/Experience/Experience"));

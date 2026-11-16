@@ -15,7 +15,6 @@ const supportsCamera =
 
 const links = [
   { name: 'Home.', href: '/' },
-  { name: 'Story.', href: '/story' },
   { name: 'Library.', href: '/library' },
   { name: 'News.', href: '/news' },
   { name: 'Blog.', href: '/blog' },
@@ -32,7 +31,7 @@ function Navbar() {
   // Below the pinned bar (1200px) the pill is the compact two-row one; the 740px
   // desktop pill ran off tablet screens and under the floating buttons.
   const isMobile = useIsMobile(1199);
-  // From 1200px up the links stay on show, so Story, Library and News are one click
+  // From 1200px up the links stay on show, so Library and News are one click
   // away; below that the pill would run over the page, so it opens on hover/tap.
   const pinned = !useIsMobile(1199);
   const [isHovered, setIsHovered] = useState<boolean>(false);

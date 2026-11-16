@@ -7,7 +7,6 @@ const pages = [
   { name: "Library.", to: "/library" },
   { name: "News.", to: "/news" },
   { name: "Blog.", to: "/blog" },
-  { name: "Story.", to: "/story" },
   { name: "Contact.", to: "/#contact" },
 ];
 
@@ -44,7 +43,7 @@ const THANKS: string[] = (() => {
     for (let c = 0; c < 5; c++) cols.push(GLYPHS[ch].map((row) => row[c]).join(''));
     if (i < all.length - 1) cols.push(blank);
   });
-  return [...cols, blank];
+  return [...cols, blank, blank];
 })();
 
 function FooterThanks() {

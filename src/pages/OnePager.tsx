@@ -1,5 +1,5 @@
 // /one-pager: Gabriel first, Hibeex second, for the Behring Founders phase 3
-// and any intro. A page of this site like /story and /files: the name in serif
+// and any intro. A page of this site like /files: the name in serif
 // italic, one hairline, DM Sans, and the ask as an ink card drawn the way the
 // site draws its cards. The only thing that says Hibeex is the bee. Below the
 // rule, two columns: the left one is Gabriel and the people around Hibeex,

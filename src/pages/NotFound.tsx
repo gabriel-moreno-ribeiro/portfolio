@@ -6,7 +6,6 @@ import { useDocumentHead } from '../hooks/useDocumentHead';
 import '../styles/components/shared/notFound.scss';
 
 const ELSEWHERE = [
-  { to: '/story', label: 'Story' },
   { to: '/library', label: 'Library' },
   { to: '/news', label: 'News' },
 ];

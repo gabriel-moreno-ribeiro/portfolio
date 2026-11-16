@@ -60,7 +60,6 @@ TypeScript, JavaScript, Python, Java, C++. Next.js, React, Node.js, Supabase, Po
 ## Site structure
 
 - /: portfolio (3D robot, globe with the four cities, terminal with Ctrl+K, hands-free gesture controls)
-- /story: personal story
 - /library: books he has read, with reviews
 - /news: press, mentions and posts
 - /one-pager: one page about Gabriel and HIBEEX, with a PDF

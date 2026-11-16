@@ -527,10 +527,7 @@ export default function Experience() {
         <div className={`exp__d20 exp__d20--${note.side}`} ref={noteRef} style={note.style}>
           <span className="exp__d20-lead" aria-hidden="true" />
           <p className="exp__d20-text">
-            My grandfather Adalberto&rsquo;s red Chevrolet <span className="exp__nowrap">D-20</span>, from his garage in Missão Velha.{' '}
-            <Link className="exp__d20-link" to="/story">
-              read the story
-            </Link>
+            My grandfather Adalberto&rsquo;s red Chevrolet <span className="exp__nowrap">D-20</span>, from his garage in Missão Velha.
           </p>
         </div>
       )}
