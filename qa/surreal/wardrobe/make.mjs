@@ -1,13 +1,16 @@
 // Builds the wardrobe artwork in public/wardrobe from the owner's photos (pasted on 2026-11-16, not in the repo):
-//   node qa/surreal/wardrobe/make.mjs <dir with spider-cut.png (background already removed) and taqtile.png>
+//   node qa/surreal/wardrobe/make.mjs <dir with spider-cut.png (background already removed), taqtile.png and, optionally, logo-{ari,ita,ime}.png>
 // Every piece is one SVG on the rail's 200 x 310 canvas (hook top at y = 0, garment below), rasterised x4, front and back.
 // The Spider-Man tee is the real cut-out; the other four are drawn from the photos (they show the clothes being worn),
-// with the bee from public/hibeex.webp and the taqtile wordmark lifted from the photo.
+// with the bee from public/hibeex.webp, the taqtile wordmark lifted from the photo and the Ari tee's three real logos
+// (kept, cleaned, in qa/surreal/wardrobe/src so the tee can be rebuilt without the owner's originals).
+import { existsSync, mkdirSync } from 'node:fs';
 import sharp from 'sharp';
 
 const src = process.argv[2];
 if (!src) { console.error('usage: node qa/surreal/wardrobe/make.mjs <dir with the shirt photos>'); process.exit(1); }
 const OUT = 'public/wardrobe';
+const KEEP = 'qa/surreal/wardrobe/src';
 const K = 4;
 const uri = (buf) => `data:image/png;base64,${buf.toString('base64')}`;
 
@@ -249,7 +252,27 @@ async function render(name, t, sil, body, { extra = '', back = false, over = '' 
   }
 }
 
-// ── 3. Ari de Sá tee (17 to 18): navy crew-neck; gold wings over the crest on the wearer's right, the school mark on the left ─
+// A logo of the Ari tee, `units` wide on the canvas. Given the owner's original in the shirts dir, it is cleaned (the Ari mark
+// keyed out of its blue square to plain white; the others trimmed) and kept in KEEP; without it, the kept copy is used.
+async function logo(name, units) {
+  const given = `${src}/logo-${name}.png`, kept = `${KEEP}/${name}.png`;
+  if (existsSync(given)) {
+    mkdirSync(KEEP, { recursive: true });
+    let img = sharp(given).ensureAlpha();
+    if (name === 'ari') {
+      const { data, info } = await img.raw().toBuffer({ resolveWithObject: true });
+      const [br, bg] = data; // the square's blue, from its corner
+      for (let p = 0; p < data.length; p += 4) { const a = ((data[p] - br) / (255 - br) + (data[p + 1] - bg) / (255 - bg)) / 2; data[p] = 245; data[p + 1] = 246; data[p + 2] = 248; data[p + 3] = Math.max(0, Math.min(255, Math.round((a - 0.04) * 266))); }
+      img = sharp(data, { raw: info });
+    }
+    await sharp(await img.png().toBuffer()).trim().png({ compressionLevel: 9 }).toFile(kept);
+  }
+  if (!existsSync(kept)) throw new Error(`no ${given} and no ${kept}`);
+  const out = await sharp(kept).resize({ width: Math.round(units * K * 2) }).png().toBuffer({ resolveWithObject: true });
+  return { uri: uri(out.data), w: out.info.width, h: out.info.height };
+}
+
+// ── 3. Ari de Sá tee (17 to 18): navy crew-neck; the ITA wings over the IME crest on the wearer's right, the school mark on the left ─
 {
   const t = TONES.navy;
   const SIDE = 'C65,39.5 51,44.5 38,50 C39.5,66 40,86 42.5,103 C43.5,140 44.6,190 44,232.6 C44,235.2 45,236.6 47.2,237 C60,239.4 70,241.4 82,240.2 C90,239.4 95,240.8 100,240.6';
@@ -268,22 +291,11 @@ async function render(name, t, sil, body, { extra = '', back = false, over = '' 
     const body = sym(`M100,53 C90.5,53 82,47.5 78,35.5 ${SIDE}`);
     const open = 'M78,35.5 C86,29.6 114,29.6 122,35.5 C118,47.5 109.5,53 100,53 C90.5,53 82,47.5 78,35.5 Z';
     const rib = 'M78,35.5 C82,47.5 90.5,53 100,53 C109.5,53 118,47.5 122,35.5 L128.4,37.3 C123.4,52.6 112,59.8 100,59.8 C88,59.8 76.6,52.6 71.6,37.3 Z';
-    const wing = 'M-3,-2.2 C-8,-5.8 -14,-6.2 -18.4,-4.6 Q-16.2,-3.6 -15.4,-1.5 Q-14.6,-2.3 -13.6,-1.9 Q-12.8,-1 -12.4,0 Q-11.6,-0.8 -10.6,-0.5 Q-10,0.3 -9.6,1.2 Q-8.8,0.5 -7.8,0.8 Q-7.2,1.5 -6.8,2.3 Q-6,1.7 -5,2 Q-4.4,2.5 -4,3.1 L-3,3.2 Z';
-    const feathers = 'M-3.4,-0.8 C-8,-3.8 -13,-4.6 -17,-4.3 M-3.6,0.5 C-7,-1.7 -11,-2.3 -14.4,-2 M-3.6,1.5 C-6,0.1 -9,-0.3 -11.4,0 M-3.6,2.4 C-5.4,1.6 -7.2,1.4 -8.8,1.6';
-    const shield = 'M-9,-11 H9 V2 C9,7.4 4.6,10.4 0,12 C-4.6,10.4 -9,7.4 -9,2 Z';
-    // Embroidered badges: a raised edge, satin-stitch hatching and a small shadow on the cloth.
-    const prints = `<defs><pattern id="satin" width="0.7" height="0.7" patternUnits="userSpaceOnUse" patternTransform="rotate(58)"><rect width="0.3" height="0.7" fill="#fff" fill-opacity="0.2"/><rect x="0.36" width="0.2" height="0.7" fill="#000" fill-opacity="0.16"/></pattern>
-        <linearGradient id="wingG" gradientUnits="userSpaceOnUse" x1="0" x2="0" y1="-6" y2="3.4"><stop offset="0" stop-color="#f7dc74"/><stop offset="0.5" stop-color="#dca92c"/><stop offset="1" stop-color="#a47312"/></linearGradient>
-        <clipPath id="crest"><path d="${shield}" transform="scale(0.86)"/></clipPath></defs>
-      <g transform="translate(71 89) scale(0.86)"><g fill="#000" fill-opacity="0.55" filter="url(#b1)" transform="translate(0.5 0.9)"><path d="${wing}"/><path d="${wing}" transform="scale(-1 1)"/><circle r="3.9"/></g>
-        ${[1, -1].map((k) => `<g transform="scale(${k} 1)"><path d="${wing}" fill="url(#wingG)"/><path d="${wing}" fill="url(#satin)"/><path d="${feathers}" fill="none" stroke="#7a560c" stroke-opacity="0.85" stroke-width="0.34" stroke-linecap="round"/><path d="${wing}" fill="none" stroke="#7a560c" stroke-width="0.36" stroke-linejoin="round"/><path d="M-17.4,-4.7 C-13.6,-5.9 -8,-5.5 -3.6,-2.5" fill="none" stroke="#fff6c8" stroke-opacity="0.75" stroke-width="0.4"/></g>`).join('')}
-        <circle r="3.8" fill="url(#wingG)" stroke="#7a560c" stroke-width="0.36"/><circle r="2.7" fill="#2a5aa6"/><circle r="2.7" fill="url(#satin)"/><circle r="1.15" fill="#eef1f6"/><circle cx="-1.1" cy="-1.2" r="0.7" fill="#fff" fill-opacity="0.35"/></g>
-      <g transform="translate(73 110.5) scale(0.92)"><path d="${shield}" fill="#000" fill-opacity="0.55" filter="url(#b1)" transform="translate(0.5 0.9)"/><path d="${shield}" fill="#eef1f6"/>
-        <g clip-path="url(#crest)"><rect x="-9" y="-12" width="18" height="8" fill="#c0282f"/><rect x="-9" y="-4" width="18" height="17" fill="#7db0dd"/><rect x="-9" y="-4.5" width="18" height="1" fill="#eef1f6"/>
-          <path d="M-1.4,-2.2 H1.4 V8 C1.4,8.8 0.8,9.4 0,9.6 C-0.8,9.4 -1.4,8.8 -1.4,8 Z" fill="#f3e9b6"/><path d="M-2.6,-2.6 H2.6 V-1.2 H-2.6 Z" fill="#f3e9b6"/><rect x="-9" y="-12" width="18" height="25" fill="url(#satin)"/></g>
-        <path d="${shield}" fill="none" stroke="#9aa3b5" stroke-width="0.36"/><path d="${shield}" fill="none" stroke="#fff" stroke-opacity="0.5" stroke-width="0.3" transform="scale(0.86)"/></g>
-      <g transform="translate(125.5 88.5) scale(1.15)" fill="none" stroke="#f4f5f7" stroke-linecap="round" stroke-linejoin="round" opacity="0.97"><circle cx="-6.4" cy="0" r="5.1" fill="#f4f5f7" stroke="none"/><path d="M-9.1,2.9 L-6.4,-3.4 L-3.7,2.9 M-8.1,0.9 H-4.7" stroke="${t.base}" stroke-width="1.25"/>
-        <path d="M1.4,3.2 V-1.7 M1.4,0 C2.2,-1.3 3.3,-1.8 4.6,-1.5" stroke-width="1.5"/><path d="M7.4,3.2 V-1.6" stroke-width="1.5"/><circle cx="7.4" cy="-3.9" r="0.85" fill="#f4f5f7" stroke="none"/></g>`;
+    // The real artwork, sized as on the shirt in the photo: ITA wings over the IME crest on the wearer's right, the Ari mark on
+    // the left. Each sits under the folds, so the cloth shades it, with a hair of shadow so it reads as a patch (or a print).
+    const badge = async (name, cx, cy, w, shadow) => { const l = await logo(name, w); const h = (w * l.h) / l.w; return `<image x="${cx - w / 2}" y="${(cy - h / 2).toFixed(2)}" width="${w}" height="${h.toFixed(2)}" xlink:href="${l.uri}" href="${l.uri}" filter="url(#${shadow})"/>`; };
+    const lift = (id, blur, dy, o) => `<filter id="${id}" x="-15%" y="-15%" width="130%" height="140%" color-interpolation-filters="sRGB"><feGaussianBlur in="SourceAlpha" stdDeviation="${blur}"/><feOffset dx="${dy / 2}" dy="${dy}"/><feComponentTransfer result="sh"><feFuncA type="linear" slope="${o}"/></feComponentTransfer><feMerge><feMergeNode in="sh"/><feMergeNode in="SourceGraphic"/></feMerge></filter>`;
+    const prints = `<defs>${lift('patch', 0.5, 0.6, 0.75)}${lift('print', 0.35, 0.3, 0.4)}</defs>${await badge('ita', 72, 89.5, 29, 'patch')}${await badge('ime', 74.5, 113.5, 15.5, 'patch')}<g opacity="0.96">${await badge('ari', 122, 89, 23, 'print')}</g>`;
     const inner = `${prints}
       ${folds(t, [['M46,60 C56,76 63,94 68,114', 9, 0.3], ['M154,60 C145,78 138,96 133,118', 9, 0.34], ['M62,198 C60,212 63,226 61,239', 7, 0.6], ['M84,206 C83,218 85,230 84,240', 6, 0.42], ['M118,204 C119,216 117,230 118,240', 6, 0.48], ['M140,196 C142,210 139,226 141,239', 7, 0.6]], 'b5')}
       ${folds(t, [['M43,104 C52,108 60,116 66,128', 4, 0.7], ['M43.4,113 C50,118 55,128 58,140', 3.6, 0.5], ['M157,104 C148,109 141,118 136,131', 4, 0.7], ['M156.6,114 C150,120 146,130 144,142', 3.6, 0.5]])}
