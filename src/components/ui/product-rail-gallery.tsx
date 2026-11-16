@@ -22,6 +22,8 @@ export interface RailGarment {
   backImage?: string;
   /** Side-on photo shown while the piece rests on the rail; omit to show the front photo turned away. */
   sideImage?: string;
+  /** Lowest point of a photographed garment on its canvas, 0 to 310. The stage ends under the longest piece instead of under the canvas. */
+  hem?: number;
   /** Short hang-tag text such as a price or a size. */
   tag?: string;
   /** Short facts listed in the detail view. */
@@ -58,7 +60,7 @@ const VB_H = 310;
 const ASPECT = VB_W / VB_H;
 const HOOK_TOP = 4;
 const RAIL_R = 4.6;
-const REST = -70;
+const REST = -52;
 const PERSPECTIVE = 1100;
 const GAP = 0.035;
 const MAX_H = 400;
@@ -559,7 +561,7 @@ export function ClothingRailHero({
   const returnFocus = React.useRef(null as number | null);
   const pendingOpen = React.useRef(-1);
   const pointer = React.useRef({ id: -1, index: -1, x: 0, y: 0, t: 0, moved: false, kind: "", swipe: 0, lastX: 0, lastT: 0, v: 0 });
-  const sideWidths = React.useMemo(() => items.map((item) => (item.image ? (item.sideImage ? 0.3 : 0.4) : SIDE[item.kind ?? "tee"].width)), [items]);
+  const sideWidths = React.useMemo(() => items.map((item) => (item.image ? (item.sideImage ? 0.3 : 0.58) : SIDE[item.kind ?? "tee"].width)), [items]);
   const live = React.useRef({ active: null as number | null, size, reduced, count, openIndex: null as number | null, carouselIndex: 0, sideWidths });
   live.current = { ...live.current, active, size, reduced, count, openIndex, sideWidths };
 
@@ -634,11 +636,11 @@ export function ClothingRailHero({
     const dr = drapes.current[i];
     if (dr) dr.style.setProperty("--drape", `${lag.toFixed(3)}deg`);
     const sh = shades.current[i];
-    if (sh) sh.style.setProperty("--shade", (1 - lambert(angle)).toFixed(3));
+    if (sh) sh.style.setProperty("--shade", ((1 - lambert(angle)) * 0.62).toFixed(3));
     const shadow = shadows.current[i];
     if (shadow) shadow.style.transform = `translate3d(${(w * 0.05).toFixed(1)}px, ${(h * 0.035).toFixed(1)}px, 0) scaleX(${Math.max(0.12, Math.abs(Math.cos((angle * Math.PI) / 180))).toFixed(3)})`;
     const tag = tags.current[i];
-    if (tag) tag.style.transform = `rotate(${(-12 + (s.tag[i] ?? 0)).toFixed(2)}deg)`;
+    if (tag) tag.style.transform = `rotate(${(-5 + (s.tag[i] ?? 0) * 0.6).toFixed(2)}deg)`;
   }, []);
 
   const step = React.useCallback((now: number) => {
@@ -917,7 +919,7 @@ export function ClothingRailHero({
   const boxW = h * ASPECT;
   const railY = Math.round(h * 0.07) + 10;
   const railR = Math.max(3, Math.round((RAIL_R / VB_H) * h * 10) / 10);
-  const bottom = count ? Math.max(...items.map((item) => (item.image ? VB_H : SIDE[item.kind ?? "tee"].hem + 8))) / VB_H : 1;
+  const bottom = count ? Math.max(...items.map((item) => (item.image ? (item.hem ?? VB_H) : SIDE[item.kind ?? "tee"].hem + 8))) / VB_H : 1;
 
   return (
     <section
@@ -982,11 +984,11 @@ export function ClothingRailHero({
               aria-describedby={`${uid}-caption`}
               aria-pressed={turned}
               className="absolute left-0 cursor-pointer rounded-xl outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
-              style={{ top: railY - (HOOK_TOP / VB_H) * h, width: boxW, height: h, zIndex: turned ? 30 : 10 + i, visibility: lifted === i ? "hidden" : undefined, transform: `translate3d(${((sim.current.x[i] ?? 0) - boxW / 2).toFixed(2)}px,0,0)` }}
+              style={{ top: railY - (HOOK_TOP / VB_H) * h, width: boxW, height: Math.round(h * bottom), zIndex: turned ? 30 : 10 + i, visibility: lifted === i ? "hidden" : undefined, transform: `translate3d(${((sim.current.x[i] ?? 0) - boxW / 2).toFixed(2)}px,0,0)` }}
               onFocus={() => { setFocusIndex(i); if (pointer.current.id < 0) { stop(); choose(i); } }}
               onClick={(event) => { const pending = pendingOpen.current; pendingOpen.current = -1; if (event.detail === 0 || pending === i) open(i); }}
             >
-              <span ref={(node) => { swings.current[i] = node; }} className="absolute inset-0" style={{ transformOrigin: `50% ${(HOOK_TOP / VB_H) * 100}%` }}>
+              <span ref={(node) => { swings.current[i] = node; }} className="absolute inset-x-0 top-0" style={{ height: h, transformOrigin: `50% ${(HOOK_TOP / VB_H) * 100}%` }}>
                 <span aria-hidden="true" className="pointer-events-none absolute inset-0" style={{ filter: `blur(${Math.max(3, h * 0.022).toFixed(1)}px)` }}>
                   <span ref={(node) => { shadows.current[i] = node; }} className={`absolute block bg-black opacity-[0.16] dark:opacity-60 ${item.image ? photoBox : "inset-0"}`} style={{ WebkitMask: `${mask} top center / contain no-repeat`, mask: `${mask} top center / contain no-repeat` }} />
                 </span>
@@ -1004,16 +1006,16 @@ export function ClothingRailHero({
                         {item.image
                           ? <Photo src={(side === "back" ? item.backImage : undefined) ?? item.image} alt="" full={hanger === "none"} />
                           : <Fabric uid={uid} kind={kind} side={side} color={color} trim={trim} print={item.print} />}
-                        <span ref={side === "front" ? (node) => { shades.current[i] = node; } : undefined} className={`pointer-events-none absolute bg-black ${item.image ? photoBox : "inset-0"}`} style={{ opacity: "var(--shade, 0.2)", WebkitMask: `${item.image ? `url("${(side === "back" ? item.backImage : undefined) ?? item.image}")` : silhouetteMask(kind, side)} top center / contain no-repeat`, mask: `${item.image ? `url("${(side === "back" ? item.backImage : undefined) ?? item.image}")` : silhouetteMask(kind, side)} top center / contain no-repeat` }} />
+                        <span ref={side === "front" ? (node) => { shades.current[i] = node; } : undefined} className={`pointer-events-none absolute ${item.image ? photoBox : "inset-0"}`} style={{ background: "linear-gradient(90deg, rgb(0 0 0 / 0.95), rgb(0 0 0 / 0.3) 55%, rgb(0 0 0 / 0.08))", opacity: "var(--shade, 0.2)", WebkitMask: `${item.image ? `url("${(side === "back" ? item.backImage : undefined) ?? item.image}")` : silhouetteMask(kind, side)} top center / contain no-repeat`, mask: `${item.image ? `url("${(side === "back" ? item.backImage : undefined) ?? item.image}")` : silhouetteMask(kind, side)} top center / contain no-repeat` }} />
                       </span>
                     </span>
                   ))}
                 </span>
                 {item.tag && (
-                  <span ref={(node) => { tags.current[i] = node; }} aria-hidden="true" className="pointer-events-none absolute left-1/2 origin-top" style={{ top: (32 / VB_H) * h, transform: "rotate(-12deg)" }}>
-                    <span className="block h-[14px] w-px translate-x-[3px] bg-foreground/35" />
-                    <span className="block -translate-x-1/2 translate-x-[3px] whitespace-nowrap rounded-[3px] border border-foreground/10 bg-card px-1.5 pb-1 pt-2 text-[9px] font-semibold leading-none tracking-wide text-card-foreground shadow-[0_2px_6px_color-mix(in_oklab,var(--color-foreground)_18%,transparent)]">
-                      <span className="absolute left-1/2 top-[3px] size-[3px] -translate-x-1/2 rounded-full bg-foreground/30" />
+                  <span ref={(node) => { tags.current[i] = node; }} aria-hidden="true" className="pointer-events-none absolute flex origin-top flex-col items-center" style={{ top: ((HOOK_TOP + RAIL_R) / VB_H) * h - 1, right: `calc(50% + ${(boxW * 0.2).toFixed(1)}px)`, transform: "rotate(-5deg)" }}>
+                    <span className="block h-[5px] w-px bg-foreground/40" />
+                    <span className="relative block whitespace-nowrap rounded-[3px] border border-foreground/10 bg-card px-1.5 pb-1 pt-[7px] text-[9px] font-semibold leading-none tracking-wide text-card-foreground shadow-[0_2px_6px_color-mix(in_oklab,var(--color-foreground)_18%,transparent)]">
+                      <span className="absolute left-1/2 top-[2px] size-[3px] -translate-x-1/2 rounded-full bg-foreground/30" />
                       {item.tag}
                     </span>
                   </span>
@@ -1178,6 +1180,7 @@ function Detail({ uid, item, index, total, hanger, labels, reduced, source, onLi
 
   const stage = (
     <div ref={figureRef} className="relative mx-auto aspect-[200/310] h-[min(62vh,560px)] max-h-full origin-top">
+      <div aria-hidden="true" className="pointer-events-none absolute -inset-x-[35%] -top-[8%] bottom-[6%]" style={{ background: "radial-gradient(closest-side, color-mix(in oklab, var(--color-foreground) 9%, transparent), transparent)" }} />
       <div aria-hidden="true" className="absolute left-1/2 top-[-40vh] h-[40vh] w-[3px] -translate-x-1/2 rounded-full" style={{ background: "linear-gradient(to right, color-mix(in oklab, var(--color-muted-foreground) 50%, white), var(--color-muted-foreground), color-mix(in oklab, var(--color-muted-foreground) 50%, black))", top: `calc(-40vh + ${(HOOK_TOP / VB_H) * 100}%)` }} />
       <div
         className="absolute inset-0 cursor-grab touch-pan-y active:cursor-grabbing"

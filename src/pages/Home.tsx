@@ -37,7 +37,7 @@ const SECTIONS = [
 // above it at once.
 const RESERVE: Record<string, [desktop: number, tablet: number, mobile: number]> = {
   background: [959, 1384, 936],
-  wardrobe: [685, 685, 471],
+  wardrobe: [642, 642, 558],
   work: [3286, 5669, 4495],
   research: [1654, 2469, 3172],
   skills: [1000, 1000, 496],
