@@ -63,14 +63,14 @@ for (const [w, h] of [[1440, 900], [768, 1024], [390, 844]]) {
     }));
     if (tag !== 'before' && w === 1440) {
       await toStrip(page);
-      await page.locator('.ns-schools svg').nth(9).hover(); await page.waitForTimeout(400); await shot(page, `${w}-${theme}-hover-school`);
-      await page.locator('.ns-laptops use').nth(70).hover(); await page.waitForTimeout(400); await shot(page, `${w}-${theme}-hover-laptop`);
-      await page.locator('.ns-key button').nth(1).hover(); await page.waitForTimeout(400); await shot(page, `${w}-${theme}-hover-key`);
+      await page.locator('.ns-case__well').nth(6).hover({ force: true }); await page.waitForTimeout(500); await shot(page, `${w}-${theme}-hover-medal`);
+      await page.locator('.ns-map__lit').nth(8).hover({ force: true }); await page.waitForTimeout(400); await shot(page, `${w}-${theme}-hover-map`);
+      await page.locator('.ns-key button').first().hover(); await page.waitForTimeout(400); await shot(page, `${w}-${theme}-hover-key`);
       await page.mouse.move(5, 5);
-      await page.locator('.ns-key button').first().focus(); await page.keyboard.press('Tab'); await page.keyboard.press('Shift+Tab');
-      await page.waitForTimeout(400); await shot(page, `${w}-${theme}-focus-key`);
-      await page.keyboard.press('Tab'); await page.keyboard.press('Tab'); await page.keyboard.press('Enter'); await page.keyboard.press('Tab'); await page.keyboard.press('Tab');
-      await page.waitForTimeout(400); await shot(page, `${w}-${theme}-pressed-key`);
+      await page.locator('.ns-pick-box').first().focus(); for (let k = 0; k < 4; k++) await page.keyboard.press('ArrowRight');
+      await page.waitForTimeout(500); await shot(page, `${w}-${theme}-focus-medal`);
+      await page.locator('.ns-pick-box').last().focus(); for (let k = 0; k < 3; k++) await page.keyboard.press('ArrowRight');
+      await page.waitForTimeout(400); await shot(page, `${w}-${theme}-focus-map`);
     }
     await ctx.close();
   }

@@ -1,0 +1,74 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Students: rough directions</title>
+<style>
+  body { margin: 0; padding: 24px; background: #fff8f4; font: 12px ui-monospace, Menlo, monospace; color: #5f5f5f; }
+  figure { margin: 0 0 28px; width: 620px; }
+  svg { display: block; width: 600px; overflow: visible; }
+  figcaption { margin-top: 8px; letter-spacing: .04em; text-transform: uppercase; }
+  .ink { fill: #111; } .line { fill: none; stroke: #111; stroke-width: 1.2; stroke-linecap: round; stroke-linejoin: round; }
+  .paper { fill: #fff8f4; stroke: #111; stroke-width: 1.2; stroke-linejoin: round; }
+  .or { fill: #f0732d; } .orl { fill: none; stroke: #f0732d; stroke-width: 1.2; stroke-linecap: round; }
+  .dash { fill: none; stroke: #111; stroke-width: 1; stroke-dasharray: 3 3; stroke-linecap: round; }
+  text { font: 7px ui-monospace, Menlo, monospace; letter-spacing: .08em; fill: #5f5f5f; }
+</style>
+<figure id="a"><svg viewBox="0 0 600 170"></svg><figcaption>A · a town of 28 schoolhouses, the kit box at the left, pupils walking in</figcaption></figure>
+<figure id="b"><svg viewBox="0 0 600 170"></svg><figcaption>B · the schoolyard crowd under a string of 28 pennants</figcaption></figure>
+<figure id="c"><svg viewBox="0 0 600 170"></svg><figcaption>C · a classroom seen from above, a kit on every desk</figcaption></figure>
+<script>
+let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+const kid = (x, y, s = 1, pack = false) => `<g transform="translate(${x} ${y}) scale(${s})"><circle class="ink" cx="0" cy="-7.4" r="1.9"/><path class="ink" d="M-2.2 0V-3.2a2.2 2.2 0 0 1 4.4 0V0z"/>${pack ? '<rect class="or" x="-3.4" y="-4.6" width="2.2" height="3" rx=".6"/>' : ''}</g>`;
+
+// A ── town
+(() => {
+  let o = '';
+  const house = (x, y, v, flag) => {
+    const w = [22, 26, 20][v], h = [15, 12, 20][v], rh = [9, 6, 7][v];
+    let s = `<rect class="paper" x="${x - w / 2}" y="${y - h}" width="${w}" height="${h}" rx="1"/>`;
+    s += v === 1 ? `<path class="ink" d="M${x - w / 2 - 2} ${y - h}l4 ${-rh}h${w - 4}l4 ${rh}z"/>` : `<path class="ink" d="M${x - w / 2 - 2} ${y - h}L${x} ${y - h - rh}L${x + w / 2 + 2} ${y - h}z"/>`;
+    s += `<rect class="or" x="${x - 2}" y="${y - 7}" width="4" height="7" rx=".6"/>`;
+    for (const dx of [-7, 7]) s += `<rect class="ink" x="${x + dx - 1.5}" y="${y - h + 4}" width="3" height="3" rx=".4"/>`;
+    if (v === 2) for (const dx of [-7, 7]) s += `<rect class="ink" x="${x + dx - 1.5}" y="${y - 8}" width="3" height="3" rx=".4"/>`;
+    if (flag) s += `<path class="line" d="M${x} ${y - h - rh}v-7"/><path class="or" d="M${x} ${y - h - rh - 7}l5 1.8l-5 1.8z"/>`;
+    return s;
+  };
+  const cols = [...Array(9).keys()].map((i) => 96 + i * 34).concat([...Array(6).keys()].map((i) => 96 + 9 * 34 + 26 + i * 34));
+  let n = 0; const spots = [];
+  for (const [row, y, off] of [[0, 78, 0], [1, 132, 17]]) cols.forEach((x, i) => {
+    const bahia = i < 9; if ((bahia && row === 1 && i === 8) || (!bahia && row === 1 && i === 14)) return;
+    spots.push([x + off, y, bahia]); o += house(x + off, y, (i + row * 2) % 3, (i + row) % 2 === 0); n++;
+  });
+  o += `<path class="line" d="M70 78H586M70 132H586" opacity=".25"/>`;
+  for (const [x, y] of spots) for (let k = 0; k < 3; k++) o += kid(x - 8 + k * 6 + rnd() * 3, y + 9 + rnd() * 5, .8, rnd() < .3);
+  // the kit box and its arrow
+  o += `<rect class="paper" x="14" y="92" width="44" height="22" rx="2"/><path class="line" d="M14 99H58"/><rect class="or" x="24" y="103" width="24" height="6" rx="1"/>`;
+  o += `<path class="dash" d="M40 86C120 6 380 2 560 46"/><path class="ink" d="M560 46l-7-1l3-5z"/>`;
+  o += `<path class="line" d="M88 150v4H384v-4M400 150v4H586v-4" opacity=".5"/><text x="236" y="165" text-anchor="middle">BAHIA · 17</text><text x="493" y="165" text-anchor="middle">CEARÁ · 11</text>`;
+  document.querySelector('#a svg').innerHTML = o; document.title += ' ' + n;
+})();
+
+// B ── crowd under bunting
+(() => {
+  let o = `<path class="line" d="M6 14Q300 44 594 14"/>`;
+  for (let i = 0; i < 28; i++) { const t = (i + .5) / 28, x = 6 + 588 * t, y = 14 + 60 * t * (1 - t) * 1; o += `<path class="${i % 3 === 0 ? 'or' : 'paper'}" d="M${x - 6} ${y + 1}h12l-6 13z"/>`; }
+  for (let r = 0; r < 4; r++) for (let i = 0; i < 30 - r; i++) {
+    const s = .9 + r * .22, x = 14 + i * (572 / (29 - r)) + (r % 2) * 6 + rnd() * 4, y = 84 + r * 26 + rnd() * 3;
+    const hair = Math.floor(rnd() * 3), shirt = rnd() < .14;
+    o += `<g transform="translate(${x} ${y}) scale(${s})"><path class="${shirt ? 'or' : 'paper'}" ${shirt ? 'stroke="#111" stroke-width="1.2"' : ''} d="M-8 12V6a8 6 0 0 1 16 0v6z"/><circle class="paper" cx="0" cy="-5" r="5"/><path class="ink" d="${['M-5-5a5 5 0 0 1 10 0q-5-3-10 0z', 'M-5.6-4a5.6 5.6 0 0 1 11.2 0l-1.6-2q-4-2-8 0z', 'M-5-5a5 5 0 0 1 10 0v4l-1.4-4q-3.6-2-7.2 0l-1.4 4z'][hair]}"/></g>`;
+  }
+  o += `<rect class="paper" x="278" y="146" width="44" height="20" rx="2"/><rect class="or" x="288" y="153" width="24" height="6" rx="1"/>`;
+  document.querySelector('#b svg').innerHTML = o;
+})();
+
+// C ── classroom from above
+(() => {
+  let o = `<rect class="paper" x="6" y="6" width="588" height="158" rx="6"/><rect class="ink" x="20" y="60" width="5" height="50" rx="1.5"/><text x="34" y="52">BOARD</text>`;
+  o += `<rect class="paper" x="40" y="72" width="26" height="26" rx="2"/><circle class="ink" cx="78" cy="85" r="6"/>`;
+  for (let c = 0; c < 12; c++) for (let r = 0; r < 4; r++) {
+    const x = 120 + c * 39, y = 22 + r * 36;
+    o += `<rect class="paper" x="${x}" y="${y}" width="22" height="16" rx="2"/><rect class="or" x="${x + 6}" y="${y + 4}" width="10" height="7" rx="1"/>`;
+    o += `<ellipse class="ink" cx="${x + 30}" cy="${y + 8}" rx="3" ry="6.5"/><circle class="paper" cx="${x + 29}" cy="${y + 8}" r="3.6"/>`;
+  }
+  document.querySelector('#c svg').innerHTML = o;
+})();
+</script>

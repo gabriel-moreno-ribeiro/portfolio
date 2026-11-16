@@ -1,33 +1,52 @@
-// By the numbers: three facts, each drawn one unit at a time (NumbersStrip.tsx).
-// The drawings are complete by default; `.is-armed` / `.is-in` only stage their arrival.
+// By the numbers: three facts, each a drawing (NumbersStrip.tsx). A town of the
+// 28 schools and the case of medals share the left column; the map of Brazil
+// takes the right one. The drawings are complete by default; `.is-armed` /
+// `.is-in` only stage their arrival.
 $ns-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 $ns-ease: cubic-bezier(0.22, 1, 0.36, 1);
 
 .numbers-strip {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  grid-template-areas: "town map" "medals map";
   margin: 0;
   padding: 0;
   list-style: none;
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
-  // The discs fly in from outside their box; never let that widen the page.
-  overflow-x: clip;
 
-  > li {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
+  &__cell {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas: "art art art" "fig label extra" "fig note extra";
+    column-gap: 16px;
+    align-content: space-between;
     min-width: 0;
-    padding: 24px 24px 16px;
+    padding: 22px 24px 18px;
     text-align: left;
 
-    & + li { border-left: 1px solid var(--border); }
+    &--town { grid-area: town; }
+    // The key and the names sit under the words, in the same column.
+    &--medals {
+      grid-area: medals;
+      grid-template-columns: auto minmax(0, 1fr);
+      grid-template-areas: "art art" "fig label" "fig note" ". extra";
+      border-top: 1px solid var(--border);
+
+      .numbers-strip__extra { width: auto; margin-top: 10px; }
+    }
+    &--map {
+      grid-area: map;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      border-left: 1px solid var(--border);
+    }
   }
 
-  // Every drawing lives in the same 300 x 176 box, reserved before anything paints.
+  // The box is reserved from the first paint (aspect-ratio is set per drawing).
   &__art {
-    aspect-ratio: 300 / 176;
+    grid-area: art;
     margin-bottom: 14px;
     color: var(--fg);
 
@@ -35,6 +54,8 @@ $ns-ease: cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   &__figure {
+    grid-area: fig;
+    align-self: center;
     font-size: 40px;
     font-weight: 700;
     line-height: 1;
@@ -45,7 +66,8 @@ $ns-ease: cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   &__label {
-    margin-top: 6px;
+    grid-area: label;
+    align-self: end;
     font-size: 15px;
     font-weight: 600;
     line-height: 1.3;
@@ -53,27 +75,68 @@ $ns-ease: cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   &__note {
+    grid-area: note;
     font-size: 13px;
     line-height: 1.35;
     color: var(--fg-muted);
   }
+
+  &__extra {
+    grid-area: extra;
+    align-self: center;
+    width: 214px;
+  }
+
+  &__cell--map {
+    .numbers-strip__art { aspect-ratio: 250 / 211; margin-bottom: 8px; border-radius: 12px; }
+    .numbers-strip__figure { align-self: flex-start; }
+    .numbers-strip__label { align-self: flex-start; margin-top: 4px; }
+    .numbers-strip__extra { align-self: stretch; width: auto; margin-top: 6px; }
+  }
 }
 
-// ── The key under each fact ───────────────────────────────────────────────────
+// ── One hand for all three drawings: ink line, paper fill, one orange ────────
+.ns-ink { fill: var(--fg); }
+.ns-orange { fill: var(--accent-decor); }
+.ns-paper,
+.ns-line,
+.ns-dash,
+.ns-bracket,
+.ns-ground {
+  fill: none;
+  stroke: var(--fg);
+  stroke-width: 1.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.ns-paper { fill: var(--bg); }
+.ns-dash { stroke-width: 1; stroke-dasharray: 3 3.4; }
+.ns-bracket { stroke: var(--fg-muted); stroke-width: 1; opacity: 0.7; }
+.ns-ground { stroke: var(--border); }
+.ns-tag {
+  font-family: $ns-mono;
+  font-size: 11px; // viewBox units: 11px or more on screen down to 361px wide
+  letter-spacing: 0.09em;
+  fill: var(--fg-muted);
+}
+
+// ── The key and the caption under a drawing ───────────────────────────────────
+.ns-key,
+.ns-caption {
+  margin: 0;
+  font-family: $ns-mono;
+  font-size: 11px;
+  line-height: 1.35;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
 .ns-key {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 0 14px;
-  min-height: 48px; // two lines, so the three cards end on the same line
-  align-content: flex-start;
-  margin: 8px 0 0;
-  font-family: $ns-mono;
-  font-size: 10.5px;
-  line-height: 1.3;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--fg-muted);
 
   > span,
   > button {
@@ -82,9 +145,6 @@ $ns-ease: cubic-bezier(0.22, 1, 0.36, 1);
     gap: 6px;
     min-height: 24px;
   }
-  > span { min-width: 0; }
-  // In a narrow column the count goes under the tiles instead of being cut.
-  > .ns-key__states { flex-wrap: wrap; }
 
   > button {
     margin: 0 -7px;
@@ -106,205 +166,257 @@ $ns-ease: cubic-bezier(0.22, 1, 0.36, 1);
     &:focus-visible { border-radius: 12px; outline-offset: 1px; }
   }
 
-  &__dot,
-  &__disc {
+  &__dot {
     flex: none;
     box-sizing: border-box;
-    width: 8px;
-    height: 8px;
+    width: 9px;
+    height: 9px;
     border-radius: 50%;
     background: currentColor;
   }
-  // A dotted disc, like the ones in the drawing.
-  &__disc {
-    width: 11px;
-    height: 11px;
-    background: radial-gradient(currentColor 38%, transparent 42%) 0 0 / 3.67px 3.67px;
-  }
-  &__thread {
-    flex: none;
-    width: 18px;
-    border-top: 1.5px dashed currentColor;
-  }
-
-  .is-gold .ns-key__dot { background: var(--accent-decor); }
-  .is-intl .ns-key__dot { background: var(--accent-decor); box-shadow: inset 0 0 0 1.6px var(--accent-decor), inset 0 0 0 3px var(--bg); }
-  .is-medal .ns-key__dot { background: var(--fg); }
-  .is-none .ns-key__dot { background: none; border: 1.2px dashed currentColor; }
+  .is-intl .ns-key__dot { background: var(--accent-decor); }
+  .is-bare .ns-key__dot { background: none; border: 1px dashed currentColor; }
+  .is-lit .ns-key__dot { border-radius: 2.5px; background: var(--accent-decor); }
+  .is-out .ns-key__dot { border-radius: 2.5px; background: none; border: 1.2px dashed currentColor; }
+  .is-pin { display: none !important; } // only on a phone, where the map is too small to label
+  .is-pin .ns-key__dot { background: var(--fg); box-shadow: 0 0 0 1.5px var(--bg), 0 0 0 2.5px var(--fg); width: 7px; height: 7px; margin: 0 1px; }
 }
 
-// ── 3,392 students ────────────────────────────────────────────────────────────
-.ns-schools {
-  display: grid;
-  grid-template-columns: repeat(7, minmax(0, 1fr));
-  align-content: space-between;
-  height: 100%;
+// Always two lines tall, so a name appearing never moves anything.
+.ns-caption { min-height: 2.7em; margin-top: 2px; text-wrap: balance; }
 
-  svg {
-    display: block;
-    width: 100%;
-    height: auto;
-    overflow: visible;
-    transition: color 0.2s, transform 0.3s $ns-ease;
-
-    &:hover { color: var(--accent-decor); transform: scale(1.14); }
-  }
-
-  path {
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 1.45;
-    stroke-linecap: round;
-  }
-}
-
-// ── 38 olympiads ──────────────────────────────────────────────────────────────
-.ns-medals__rail {
-  fill: none;
-  stroke: var(--fg);
-  stroke-width: 1.6;
-  stroke-linecap: round;
-}
-
-.ns-medal {
+// ── The town ──────────────────────────────────────────────────────────────────
+.ns-town__house {
   transform-box: fill-box;
-  transform-origin: 50% 0;
-  transition: opacity 0.25s, transform 0.4s $ns-ease;
+  transform-origin: 50% 100%;
+  transition: transform 0.3s $ns-ease;
 
-  path {
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 1.3;
-    stroke-linejoin: round;
-    stroke-linecap: round;
-  }
-  circle { fill: currentColor; }
-  .ns-medal__ring { fill: none; stroke: var(--bg); stroke-width: 1.3; }
-
-  &.is-gold { color: var(--accent-decor); }
-  &.is-none {
-    color: var(--fg-muted);
-
-    path { opacity: 0.45; }
-    circle { fill: none; stroke: currentColor; stroke-width: 1.1; stroke-dasharray: 2 2.2; }
-  }
-
-  // A medal swings on its hook when touched.
-  &:hover { transform: rotate(9deg); }
+  &:hover { transform: translateY(-2.5px); }
 }
 
-@each $kind in gold, intl, medal, none {
-  [data-hl="#{$kind}"] .ns-medal:not(.is-#{$kind}) { opacity: 0.16; }
-}
+// The case and the map take the keyboard: Tab in, arrows walk the marks.
+.ns-pick-box:focus-visible { outline-offset: 4px; border-radius: 12px; }
 
-// ── 121 laptops ───────────────────────────────────────────────────────────────
-.ns-laptops {
-  &__thread {
-    fill: none;
+// ── The case ──────────────────────────────────────────────────────────────────
+// A shallow box with a round well per olympiad; the medal photos are the only
+// photographs in the strip, so the case itself stays plain.
+.ns-case {
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: var(--surface);
+
+  &__wells {
+    display: grid;
+    grid-template-columns: repeat(13, minmax(0, 1fr));
+    gap: 6px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__well {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--fg) 5%, var(--surface));
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: opacity 0.25s, box-shadow 0.25s;
+
+    img {
+      display: block;
+      width: 92%;
+      height: 92%;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 2.5px rgba(0, 0, 0, 0.22));
+      transition: transform 0.35s $ns-ease;
+    }
+
+    // An olympiad without a medal: an empty place in the same rhythm.
+    &.is-empty {
+      background: none;
+      box-shadow: none;
+      border: 1px dashed color-mix(in srgb, var(--fg) 30%, transparent);
+    }
+
+    &:hover img,
+    &.is-at img { transform: translateY(-2px) scale(1.12); }
+    &.is-at { box-shadow: 0 0 0 1.5px var(--accent-decor); }
+    &.is-empty.is-at { border-color: var(--accent-decor); box-shadow: none; }
+  }
+}
+[data-theme="dark"] .ns-case__well {
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.45);
+
+  img { filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.55)); }
+}
+[data-hl="intl"] .ns-case__well:not(.is-intl),
+[data-hl="bare"] .ns-case__well:not(.is-empty) { opacity: 0.2; }
+[data-hl="bare"] .ns-case__well.is-empty { border-color: var(--accent-decor); }
+
+// ── The map ───────────────────────────────────────────────────────────────────
+.ns-map {
+  &__state {
+    fill: var(--bg);
     stroke: var(--fg-muted);
-    stroke-width: 1;
-    stroke-dasharray: 1.5 3.5;
-    stroke-linecap: round;
-    opacity: 0.7;
+    stroke-width: 0.7;
+    stroke-linejoin: round;
+    stroke-dasharray: 1.6 1.8;
+
+    // Not a state: neither lit nor left out.
+    &.is-df { fill: color-mix(in srgb, var(--fg) 22%, var(--bg)); stroke: none; }
   }
-
-  use {
-    color: var(--fg);
-    transition: color 0.15s;
+  // Orange shapes with a paper-coloured seam between them, like cut paper.
+  &__lit {
+    fill: var(--accent-decor);
+    stroke: var(--bg);
+    stroke-width: 0.8;
+    stroke-linejoin: round;
   }
-  // The chain up to the laptop under the pointer: who told whom.
-  use:hover,
-  use:has(~ use:hover) { color: var(--accent-decor); }
-}
+  &__arc {
+    pointer-events: none;
 
-#ns-laptop {
-  rect { fill: var(--bg); stroke: currentColor; stroke-width: 1.2; }
-  path { fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; }
-}
-
-.ns-states {
-  display: flex;
-  gap: 2px;
-  width: 180px;
-  max-width: 100%;
-
-  i {
-    flex: 1;
-    height: 9px;
-    border-radius: 1.5px;
-    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--fg-muted) 55%, transparent);
-
-    &.is-on { background: var(--accent-decor); box-shadow: none; }
+    path { fill: none; stroke: var(--fg); stroke-width: 0.55; stroke-linecap: round; opacity: 0.75; }
+    circle { fill: var(--fg); }
   }
+  &__at {
+    fill: none;
+    stroke: var(--fg);
+    stroke-width: 1.5;
+    stroke-linejoin: round;
+    pointer-events: none;
+  }
+  &__handle { fill: none; stroke: var(--accent-decor); stroke-width: 2.6; stroke-linecap: round; }
+  &__pin { fill: var(--fg); stroke: var(--bg); stroke-width: 1.2; }
+  // One ripple from Salvador on arrival; gone at rest.
+  &__pulse {
+    fill: none;
+    stroke: var(--fg);
+    stroke-width: 0.6;
+    opacity: 0;
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+  .ns-tag { font-size: 7.8px; }
 }
 
 // ── Arrival: once, when each fact is first on screen ──────────────────────────
 // `backwards` only: after the arrival the marks go back to plain CSS, so hover
-// and the medal key can move them.
+// and the keys can move them.
 @media (prefers-reduced-motion: no-preference) {
   .numbers-strip > .is-armed {
-    .ns-schools svg,
-    .ns-medal,
-    .ns-laptops use,
-    .ns-laptops__thread,
-    .ns-states i { opacity: 0; }
+    .ns-town__house,
+    .ns-town__pupils,
+    .ns-town__arc,
+    .ns-case__well img,
+    .ns-map__lit,
+    .ns-map__arc { opacity: 0; }
   }
 
   .numbers-strip > .is-in {
-    .ns-schools svg {
-      animation: ns-pour 0.75s $ns-ease backwards;
-      animation-delay: calc(var(--i) * 40ms);
+    .ns-town__house {
+      animation: ns-rise 0.5s $ns-ease backwards;
+      animation-delay: calc(var(--i) * 38ms);
     }
-    .ns-medal {
-      animation: ns-hang 0.6s $ns-ease backwards;
+    .ns-town__pupils {
+      animation: ns-walk 0.5s $ns-ease backwards;
+      animation-delay: calc(380ms + var(--i) * 38ms);
+    }
+    .ns-town__arc { animation: ns-fade 0.7s ease 0.2s backwards; }
+    // Each medal is set into its well, one after another; the empty ones were always there.
+    .ns-case__well img {
+      animation: ns-set 0.55s $ns-ease backwards;
       animation-delay: calc(var(--i) * 32ms);
     }
-    .ns-laptops__thread { animation: ns-fade-thread 0.6s ease backwards; }
-    .ns-laptops use {
-      animation: ns-fade 0.3s ease backwards;
-      animation-delay: calc(var(--i) * 11ms);
+    .ns-map__lit {
+      animation: ns-fade 0.45s ease backwards;
+      animation-delay: calc(250ms + var(--i) * 70ms);
     }
-    .ns-states i {
-      animation: ns-fade 0.3s ease backwards;
-      animation-delay: calc(900ms + var(--i) * 22ms);
+    .ns-map__arc {
+      animation: ns-fade 0.45s ease backwards;
+      animation-delay: calc(150ms + var(--i) * 70ms);
+    }
+    .ns-map__pulse { animation: ns-pulse 1.4s ease-out 2; }
+  }
+}
+
+@keyframes ns-rise {
+  from { opacity: 0; transform: scaleY(0.15); }
+  60% { transform: scaleY(1.06); }
+}
+@keyframes ns-walk { from { opacity: 0; transform: translateX(-9px); } }
+@keyframes ns-set {
+  from { opacity: 0; transform: translateY(-10px) scale(1.25); }
+  60% { opacity: 1; transform: translateY(1px) scale(0.97); }
+}
+@keyframes ns-fade { from { opacity: 0; } }
+@keyframes ns-pulse {
+  from { opacity: 0.8; transform: scale(1); }
+  to { opacity: 0; transform: scale(9); }
+}
+
+// ── Tablet: one fact under the other; the map sits beside its words ───────────
+@media screen and (max-width: 900px) {
+  .numbers-strip {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "town" "medals" "map";
+
+    &__cell--map {
+      display: grid;
+      grid-template-columns: minmax(0, 300px) minmax(0, 1fr);
+      grid-template-areas: "art fig" "art label" "art note" "art extra";
+      grid-template-rows: auto auto auto 1fr;
+      align-content: center;
+      column-gap: 24px;
+      border-left: 0;
+      border-top: 1px solid var(--border);
+
+      .numbers-strip__art { margin-bottom: 0; }
+      .ns-map .ns-tag { font-size: 10px; }
+      .numbers-strip__figure { align-self: end; }
+      .numbers-strip__extra { align-self: start; }
     }
   }
 }
 
-@keyframes ns-pour {
-  from { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0.35); }
-  60% { opacity: 1; }
-}
-@keyframes ns-hang {
-  from { opacity: 0; transform: translateY(-10px) rotate(-16deg); }
-  55% { transform: rotate(5deg); }
-}
-@keyframes ns-fade { from { opacity: 0; } }
-@keyframes ns-fade-thread { from { opacity: 0; } }
-
-// ── Phone: one fact under the other, each drawing the full width ──────────────
+// ── Phone: the drawing on top, the words under it ─────────────────────────────
 @media screen and (max-width: 600px) {
   .numbers-strip {
-    grid-template-columns: 1fr;
-
-    > li {
-      display: grid;
+    &__cell {
       grid-template-columns: auto minmax(0, 1fr);
+      grid-template-areas: "art art" "fig label" "note note" "extra extra";
       align-items: baseline;
       gap: 2px 10px;
-      padding: 22px 0 14px;
-
-      & + li { border-left: 0; border-top: 1px solid var(--border); }
+      padding: 16px 0 12px;
     }
-
-    &__art,
-    &__note,
-    .ns-key { grid-column: 1 / -1; }
-    &__art { margin-bottom: 12px; }
+    &__art { margin-bottom: 10px; }
     &__figure { font-size: 30px; }
-    &__label { margin: 0; }
-    .ns-key { min-height: 0; margin-top: 6px; }
+    &__label { align-self: baseline; }
+    &__extra { width: auto; margin-top: 4px; }
+
+    // The map beside its words, the key under both; Salvador is named in the key.
+    &__cell--map {
+      grid-template-columns: minmax(0, 50%) minmax(0, 1fr);
+      grid-template-areas: "art fig" "art label" "art note" "extra extra";
+      grid-template-rows: auto auto 1fr auto;
+      align-items: start;
+      column-gap: 12px;
+
+      .numbers-strip__art { aspect-ratio: 200 / 211; margin-bottom: 6px; }
+      .numbers-strip__figure { align-self: end; margin-top: 16px; }
+      .numbers-strip__label { align-self: start; margin-top: 2px; }
+      .ns-key .is-pin { display: inline-flex !important; }
+    }
+    // One line is enough for a medal's name here.
+    &__cell--medals .ns-caption { min-height: 1.35em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     // The cells have no side padding here: keep the pills inside them.
     .ns-key > button { margin: 0 -4px 0 0; padding: 0 9px 0 5px; }
   }
+  .ns-case { padding: 10px; border-radius: 16px; }
+  .ns-case__wells { grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 5px; }
+}
+// The narrowest phones shrink the drawings: grow their labels back to 11px.
+@media screen and (max-width: 360px) {
+  .ns-town .ns-tag { font-size: 13px; }
 }
