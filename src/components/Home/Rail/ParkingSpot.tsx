@@ -29,7 +29,6 @@ function ParkingSpot() {
     <span ref={ref} className="parking-spot" data-mode={mode} aria-hidden="true">
       <span className="parking-spot__bay">
         <img className="parking-spot__truck" src="/assets/car/car-12.webp" width={96} height={96} alt="" loading="lazy" />
-        <span className="parking-spot__sign">P</span>
       </span>
       <span className="parking-spot__note">End of the road</span>
     </span>

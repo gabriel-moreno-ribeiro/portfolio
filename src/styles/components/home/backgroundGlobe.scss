@@ -329,11 +329,12 @@ $stage-mono: ui-monospace, 'SF Mono', 'Fira Code', Menlo, Consolas, monospace;
   margin: 0;
   box-sizing: border-box;
   text-align: left;
+  // Only transform and opacity move. The side blur switches at once: easing a filter
+  // repaints the photo on every frame, which is what made the pass stutter.
   transition:
     transform 0.6s $stage-ease,
-    opacity 0.6s $stage-ease,
-    filter 0.6s $stage-ease;
-  will-change: transform;
+    opacity 0.6s $stage-ease;
+  will-change: transform, opacity;
 
   &[data-slot='center'] {
     position: relative;
