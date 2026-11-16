@@ -77,6 +77,8 @@
   [data-slot] button { margin: 0; padding: 0; border: 0; background: none; color: inherit; font: inherit; }
   [data-slot] ul { margin: 0; padding: 0; list-style: none; }
   [data-slot] :is(h2, h3, p) { margin: 0; }
+  /* Tailwind's bare `border` is currentColor; shadcn expects the border token. */
+  .bk * { border-color: var(--border); }
 }
 
 /* The rail's lifted-garment view is a full-screen dialog; it must sit above
@@ -105,6 +107,8 @@
 
   --chart-1: var(--primary-orange);
   --chart-2: color-mix(in oklab, var(--primary-orange) 45%, var(--fg));
+  /* Between --chart-1 and --chart-2: a third step of the orange ramp (Research, three tools). */
+  --chart-warm-2: color-mix(in oklab, var(--primary-orange) 72%, var(--fg));
   --chart-3: var(--fg-muted);
   --chart-4: color-mix(in oklab, var(--fg) 30%, var(--bg));
   --chart-5: var(--fg);

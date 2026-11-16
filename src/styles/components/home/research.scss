@@ -215,58 +215,204 @@
 }
 
 // ── One chart per paper ──
-// The plot box is reserved; the labels under it are plain text, so every number
-// is there before (and without) the lazy chart.
+// The plot box is reserved; the headline and the legend are plain text, so the
+// numbers are there before (and without) the lazy chart.
 .research-figure {
-  margin: 8px 0 4px;
+  // Above the card's stretched link: the chart and its buttons take the pointer.
+  position: relative;
+  z-index: 2;
+  margin: 12px 0 8px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+  cursor: default;
 
-  &__plot {
-    height: 64px;
-    border-bottom: 1px solid var(--border);
-
-    // bklit sizes its root by aspect-ratio; here the box has a fixed height.
-    .bk,
-    .bk > div {
-      height: 100%;
-    }
+  &__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 12px 24px;
   }
 
-  &__labels {
+  &__stat {
     display: flex;
-    margin: 6px 0 0;
-    padding: 0;
-    list-style: none;
-
-    li {
-      flex: 1 1 0;
-      min-width: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      line-height: 1.3;
-    }
+    align-items: baseline;
+    gap: 10px;
+    margin: 0;
 
     strong {
-      font-size: 12px;
-      font-weight: 600;
+      flex: none;
+      font-size: 30px;
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: -0.02em;
       color: var(--fg);
       font-variant-numeric: tabular-nums;
     }
 
     span {
-      font-size: 11px;
+      max-width: 36ch;
+      font-size: 13px;
+      line-height: 1.35;
       color: var(--fg-muted);
-      white-space: nowrap;
+    }
+  }
+
+  // Same control as the medals' sort: real buttons, the pressed one inked in.
+  &__toggle {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font: 600 12px/1 "DM Sans", sans-serif;
+
+    > span {
+      margin-right: 6px;
+      color: var(--fg-muted);
+    }
+
+    button {
+      min-width: 48px;
+      min-height: 32px;
+      padding: 0 12px;
+      border: 1px solid color-mix(in srgb, var(--fg) 45%, transparent);
+      border-radius: 999px;
+      background: transparent;
+      color: var(--fg);
+      font: inherit;
+      cursor: pointer;
+
+      &[aria-pressed="true"] {
+        border-color: var(--fg);
+        background: var(--fg);
+        color: var(--bg);
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--focus-ring);
+        outline-offset: 2px;
+      }
+    }
+  }
+
+  &__legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 18px;
+    margin: 14px 0 0;
+    padding: 0;
+    list-style: none;
+    font-size: 12px;
+    line-height: 1.3;
+    color: var(--fg-muted);
+
+    li {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    // The swatch is a piece of the series' own stroke.
+    i {
+      flex: none;
+      width: 16px;
+      border-top: 3px solid;
+      border-radius: 2px;
+
+      &[data-dashed] {
+        border-top-style: dashed;
+        border-radius: 0;
+      }
+    }
+
+    b {
+      font-weight: 600;
+      color: var(--fg);
+      font-variant-numeric: tabular-nums;
+    }
+  }
+
+  &__plot {
+    height: 264px;
+    margin-top: 6px;
+    font-family: "DM Sans", sans-serif;
+
+    // bklit sizes its root by aspect-ratio; here the box has a fixed height.
+    > div {
+      height: 100%;
+    }
+
+    // Five bars: any wider and they turn into slabs; any narrower (phone) and "R$15" no longer fits in one.
+    .research-figure--candela & {
+      max-width: 520px;
+    }
+
+    // bklit takes every touch for itself: let the page scroll through the plot.
+    &,
+    * {
+      touch-action: pan-y !important;
+    }
+  }
+
+  // Shown in the plot box when the chart's chunk fails to load.
+  &__error {
+    margin: 0;
+    padding-top: 24px;
+    font-size: 13px;
+    color: var(--fg-muted);
+  }
+
+  // The tooltip's rows (bklit draws the panel around them).
+  .research-tip {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 6px 8px;
+    align-items: center;
+    margin: 0;
+    padding: 10px 12px;
+    list-style: none;
+    font-size: 12px;
+    line-height: 1.2;
+    white-space: nowrap;
+
+    li {
+      display: contents;
+    }
+
+    i {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    span,
+    small {
+      font-size: inherit;
+      font-weight: 400;
+      color: var(--fg-muted);
+    }
+
+    small {
+      margin-left: 8px;
+    }
+
+    span {
+      padding-right: 10px;
+    }
+
+    b {
+      font-weight: 600;
+      color: var(--fg);
+      text-align: right;
+      font-variant-numeric: tabular-nums;
     }
   }
 
   &__caption {
-    margin-top: 8px;
+    margin-top: 4px;
     font-size: 12px;
-    line-height: 1.4;
+    line-height: 1.45;
     color: var(--fg-muted);
-    max-width: 65ch;
+    max-width: 78ch;
   }
 }
 
@@ -318,9 +464,20 @@
     font-size: 16px;
   }
 
-  // Seven columns share ~290px here.
-  .research-figure__labels strong {
-    font-size: 11px;
+  .research-figure__plot {
+    height: 232px;
+  }
+
+  .research-figure__stat strong {
+    font-size: 26px;
+  }
+
+  // bklit hangs the tooltip beside the finger and lets it run off a narrow plot: dock it
+  // over the legend instead (its rows carry the same colours), clear of the data.
+  .research-tipbox {
+    left: 50% !important;
+    top: 4px !important;
+    translate: -50% -100%;
   }
 }
 
@@ -372,7 +529,8 @@
 
   // Hover, or keyboard focus on the link. Not :focus-within: a click leaves the
   // card focused, so the preview stayed open after the paper opened in its tab.
-  &:hover &__preview,
+  // Not while the pointer is on the chart either: the page would cover its tooltip.
+  &:hover:not(:has(.research-figure:hover)) &__preview,
   &:has(&__link:focus-visible) &__preview {
     opacity: 1;
     transform: translateY(0);
