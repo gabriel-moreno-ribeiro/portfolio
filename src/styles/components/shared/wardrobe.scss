@@ -2,9 +2,8 @@
 .wardrobe-rail {
   max-width: 1080px;
   margin: 0 auto 80px;
-  border: 1px solid var(--border);
-  border-radius: 24px;
-  background: var(--surface);
+  // Bare: no card, no border, straight on the page.
+  background: none;
 }
 
 // Home's sections are centred flex items, which shrink to their content; the rail measures its own box.
