@@ -77,12 +77,6 @@ export default function MomentsStrip() {
       aria-label="A few moments"
       ref={sectionRef}
     >
-      <p className="moments__eyebrow">
-        <span>Salvador</span><i />
-        <span>Missão Velha</span><i />
-        <span>Fortaleza</span><i />
-        <span>São Paulo</span>
-      </p>
       <Row items={rowOne} duration={75} priority label="Photos, first row" />
       <Row items={rowTwo} duration={85} reverse label="Photos, second row" />
     </section>

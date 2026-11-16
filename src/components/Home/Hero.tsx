@@ -12,6 +12,7 @@ import useIsMobile from '../../hooks/useIsMobile';
 import { useReducedMotion, useVisible } from '../../lib/motion';
 import { scrollToComponent } from '../../utils/scrollToComponent';
 import CommonButton from '../Shared/CommonButton';
+import RankedStats from './RankedStats';
 import SpotifyCard from './SpotifyCard';
 import ScrambleText from '../Shared/ScrambleText';
 
@@ -162,10 +163,10 @@ function Hero() {
           </div>
         </motion.div>
         <motion.p className="desc" {...rise(0.08)}>
-          Building Backoffice AI for Small and Medium Businesses @ HIBEEX. Founder of Projeto Candela.
+          On a build year, building HIBEEX: backoffice AI for small and medium businesses. Founder of Projeto Candela.
         </motion.p>
         <motion.div className="btn-flex" {...rise(0.16)}>
-          {/* Three calls to action: the work first, then a call, then the resume. LinkedIn lives in Contact and the footer. */}
+          {/* One primary action. The call and the resume are quiet links; LinkedIn lives in Contact and the footer. */}
           <CommonButton
             text="See Work"
             Icon={<FiArrowRight className="icon-arrow" />}
@@ -173,26 +174,32 @@ function Hero() {
             onClick={() => scrollToComponent('work')}
           />
           <a
-            className="btn outline"
+            className="hero-link"
             href="https://cal.com/gabrielmribeiro"
             target="_blank"
             rel="noopener noreferrer"
           >
-            <p className="text">Book a Call</p>
-            <div className="icon"><FiCalendar className="icon-link" aria-hidden="true" /></div>
+            <FiCalendar aria-hidden="true" />
+            Book a Call
           </a>
-          {/* A real link (the file downloads with a clean name), black in both themes */}
+          {/* A real link: the file downloads with a clean name */}
           <a
-            className="btn hero-resume"
+            className="hero-link"
             href="/files/gabriel-moreno-ribeiro-resume.pdf"
             download="Gabriel-Moreno-Ribeiro-Resume.pdf"
           >
-            <p className="text">Resume</p>
-            <div className="icon"><FiDownload className="icon-link" aria-hidden="true" /></div>
+            <FiDownload aria-hidden="true" />
+            Resume
           </a>
         </motion.div>
+        <motion.div {...rise(0.24)}>
+          <RankedStats />
+        </motion.div>
       </div>
-      <SpotifyCard />
+      {/* Below the proof, in the flow at every width: it no longer competes with the name. */}
+      <div className="hero-now">
+        <SpotifyCard />
+      </div>
     </div>
   );
 }

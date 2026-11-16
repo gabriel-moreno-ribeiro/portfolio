@@ -1,29 +1,8 @@
 // ── Moments strip (photo marquee under the hero) ─────────────────────────────
 .moments {
   width: 100%;
-  margin: 8px 0 24px;
+  margin: 28px 0 24px; // the city line is gone (Origins has the cities): its space stays as air above the photos
   overflow: hidden;
-}
-
-.moments__eyebrow {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  margin: 0 0 22px;
-  padding: 0 16px;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--fg-muted);
-  text-align: center;
-
-  i {
-    width: 22px;
-    height: 1px;
-    background: var(--accent-decor);
-  }
 }
 
 .moments__row {
@@ -94,7 +73,6 @@
 
 @media screen and (max-width: 700px) {
   .moments { margin: 0 0 8px; }
-  .moments__eyebrow { display: none; }
   .moments__row { -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 6%, #000 94%, transparent 100%); mask-image: linear-gradient(to right, transparent 0%, #000 6%, #000 94%, transparent 100%); }
   .moments__track { gap: 12px; padding-right: 12px; animation-duration: 60s !important; }
   .moments__item {

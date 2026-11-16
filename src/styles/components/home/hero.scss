@@ -89,11 +89,16 @@
     }
 
 
+    // The lead: what he is doing now, in ink, not grey.
     .desc {
-      color: var(--text-grey);
-      font-size: 18px;
+      color: var(--fg);
+      font-size: 20px;
+      line-height: 1.45;
       text-align: center;
       font-weight: 400;
+      margin: 0 auto;
+      max-width: 34em;
+      text-wrap: balance;
     }
 
     .btn-flex {
@@ -101,30 +106,38 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 16px;
+      gap: 28px;
 
-      .icon-link {
-        padding: 4px;
-        font-size: 24px;
-      }
-
-      // Resume: black in both themes, white on hover. Anchors need the underline
-      // off and the text block reset.
-      .hero-resume {
-        box-sizing: border-box; // buttons are border-box by default; the anchor was 68px tall against 56
+      // Secondary actions: text links, so "See Work" is the only filled pill.
+      .hero-link {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        min-height: 44px;
+        color: var(--fg);
+        font-size: 16px;
+        font-weight: 600;
         text-decoration: none;
-        background-color: #111;
-        color: #fff;
-        border: 2px solid #111;
-        transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-        .text { margin: 0; }
 
-        &:hover,
-        &:focus-visible {
-          background-color: #fff;
-          color: #111;
-          border-color: #111;
+        svg { font-size: 18px; color: var(--accent); }
+
+        // Underline drawn from the left on hover (transform only).
+        &::after {
+          content: "";
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 8px;
+          height: 1.5px;
+          background: currentColor;
+          transform: scaleX(0);
+          transform-origin: left;
+          transition: transform 0.25s ease;
         }
+
+        &:hover::after,
+        &:focus-visible::after { transform: scaleX(1); }
       }
 
       .icon-arrow {
@@ -170,24 +183,114 @@
       }
 
 
+      .desc { font-size: 18px; }
+
       .btn-flex {
         flex-wrap: wrap;
-        gap: 12px;
+        gap: 4px 24px;
+
+        .btn { flex-basis: 100%; }
       }
     }
   }
-}
-
-// On the dark page a black pill needs an edge to read as a button
-[data-theme="dark"] .hero-section .btn-flex .hero-resume {
-  border-color: rgba(255, 255, 255, 0.3);
-
-  &:hover,
-  &:focus-visible { border-color: #fff; }
 }
 
 // 601–767px: no robot slot (Hero.tsx) but the fixed pill is still on top, so the
 // name needs the same clearance as on phones.
 @media screen and (min-width: 601px) and (max-width: 767px) {
   .hero-section { margin-top: 88px; }
+}
+
+// ── Ranked stats ("N of M") ──────────────────────────────────────────────────
+// Fixed row height and fixed columns: the count-in never moves anything.
+.ranked-stats {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 20px 0 0;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  border-top: 1px solid var(--border);
+
+  &__item {
+    padding: 0 12px;
+    text-align: center;
+
+    & + & { border-left: 1px solid var(--border); }
+  }
+
+  &__rank {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    gap: 6px;
+    white-space: nowrap;
+    height: 44px;
+    line-height: 44px;
+  }
+
+  &__n {
+    display: inline-block;
+    font-family: var(--font-serif);
+    font-size: 38px;
+    color: var(--fg);
+  }
+
+  &__of {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--accent);
+  }
+
+  &__label {
+    margin: 4px 0 0;
+    font-size: 12px;
+    line-height: 1.35;
+    letter-spacing: 0.04em;
+    color: var(--fg-muted);
+    text-wrap: balance;
+  }
+}
+
+.hero-section .hero-now {
+  // Beats the pinned-right rule in spotifyCard.scss: the card stays in the flow.
+  .spotify-card {
+    position: static;
+    margin: 40px auto 0;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .ranked-stats {
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 18px;
+
+    &__item {
+      & + & { border-left: 0; }
+      &:nth-child(even) { border-left: 1px solid var(--border); }
+      &:last-child { grid-column: 1 / -1; }
+    }
+
+    &__n { font-size: 30px; }
+    &__rank { height: 36px; line-height: 36px; }
+  }
+}
+
+// Short desktop windows (1280x720): the robot and the name give up height so the
+// proof row still lands on the first screen. The robot is scaled, not resized: the
+// canvas inside has a fixed 300px box.
+@media screen and (min-width: 768px) and (max-height: 800px) {
+  .hero-section {
+    .hero-robot {
+      transform: scale(0.6);
+      transform-origin: top center;
+      margin-bottom: -120px;
+    }
+
+    .heading-section {
+      gap: 16px;
+
+      .hero-name { font-size: 64px; }
+    }
+  }
 }
