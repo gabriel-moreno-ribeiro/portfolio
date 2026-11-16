@@ -3,12 +3,12 @@ import { FiArrowUpRight, FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { Project, projects } from "../../content/projects";
 import useIsMobile from "../../hooks/useIsMobile";
-import { Counter, usePageVisible, useReducedMotion, useVisible } from "../../lib/motion";
-import CandelaMark from "./CandelaMark";
+import { usePageVisible, useReducedMotion, useVisible } from "../../lib/motion";
 import { ClayPlayer, ClayRow, useClayLive } from "./Clay/ClayStory";
 import { CLAY_STORIES } from "./Clay/stories";
 import DesmosSketches from "./DesmosSketches";
 import MedalsShowcase from "./MedalsShowcase";
+import NumbersStrip from "./NumbersStrip";
 
 const AUTOPLAY_MS = 6000;
 
@@ -179,53 +179,6 @@ function ProjectRow({ project, index }: { project: Project; index: number }) {
       </div>
       {story && <ClayPlayer project={project} steps={story} />}
     </article>
-  );
-}
-
-// The numbers the rest of the section doesn't already show, each beside the
-// mark of where it comes from. Each counts up once.
-const STATS = [
-  {
-    logo: (
-      <span className="candela-lockup">
-        <CandelaMark />
-        <span>Projeto<br />Candela</span>
-      </span>
-    ),
-    value: 3392, label: "students reached", note: "28 public schools",
-  },
-  // The hero carries the ranked ones (SAT, Fundação Estudar, Canastra, medals); these are the rest.
-  {
-    logo: <img src="/stats/obfep.webp" alt="" width={240} height={160} loading="lazy" decoding="async" />,
-    value: 38, label: "olympiads", note: "",
-  },
-  {
-    logo: <img src="/stats/screwdriver.webp" alt="" width={121} height={240} loading="lazy" decoding="async" />,
-    value: 121, label: "laptops repaired", note: "sent to 21 states, all by referral",
-  },
-];
-
-function NumbersStrip() {
-  const ref = useRef<HTMLUListElement>(null);
-  const shown = useVisible(ref, { once: true, rootMargin: "0px 0px -10% 0px" });
-  const reduced = useReducedMotion();
-  return (
-    <ul className="numbers-strip" ref={ref} aria-label="By the numbers">
-      {STATS.map((s) => (
-        <li key={s.label}>
-          <span className="numbers-strip__logo" aria-hidden="true">{s.logo}</span>
-          <span className="numbers-strip__figure">
-            {shown && !reduced ? (
-              <Counter value={s.value} />
-            ) : (
-              s.value.toLocaleString("en-US")
-            )}
-          </span>
-          <span className="numbers-strip__label">{s.label}</span>
-          <span className="numbers-strip__note">{s.note}</span>
-        </li>
-      ))}
-    </ul>
   );
 }
 

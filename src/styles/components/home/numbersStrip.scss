@@ -1,0 +1,310 @@
+// By the numbers: three facts, each drawn one unit at a time (NumbersStrip.tsx).
+// The drawings are complete by default; `.is-armed` / `.is-in` only stage their arrival.
+$ns-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+$ns-ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+.numbers-strip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  // The discs fly in from outside their box; never let that widen the page.
+  overflow-x: clip;
+
+  > li {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+    padding: 24px 24px 16px;
+    text-align: left;
+
+    & + li { border-left: 1px solid var(--border); }
+  }
+
+  // Every drawing lives in the same 300 x 176 box, reserved before anything paints.
+  &__art {
+    aspect-ratio: 300 / 176;
+    margin-bottom: 14px;
+    color: var(--fg);
+
+    > svg { display: block; width: 100%; height: 100%; overflow: visible; }
+  }
+
+  &__figure {
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+    // 40px numerals: large-text contrast (3.37:1 on cream)
+    color: var(--accent-hero);
+  }
+
+  &__label {
+    margin-top: 6px;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--fg);
+  }
+
+  &__note {
+    font-size: 13px;
+    line-height: 1.35;
+    color: var(--fg-muted);
+  }
+}
+
+// ── The key under each fact ───────────────────────────────────────────────────
+.ns-key {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 14px;
+  min-height: 48px; // two lines, so the three cards end on the same line
+  align-content: flex-start;
+  margin: 8px 0 0;
+  font-family: $ns-mono;
+  font-size: 10.5px;
+  line-height: 1.3;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+
+  > span,
+  > button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 24px;
+  }
+  > span { min-width: 0; }
+  // In a narrow column the count goes under the tiles instead of being cut.
+  > .ns-key__states { flex-wrap: wrap; }
+
+  > button {
+    margin: 0 -7px;
+    padding: 0 7px;
+    border: 0;
+    border-radius: 12px;
+    background: none;
+    font: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+    color: inherit;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+
+    &:hover,
+    &:focus-visible,
+    &[aria-pressed="true"] { color: var(--fg); background: color-mix(in srgb, var(--fg) 7%, transparent); }
+    &[aria-pressed="true"] { box-shadow: inset 0 0 0 1px var(--border); }
+    &:focus-visible { border-radius: 12px; outline-offset: 1px; }
+  }
+
+  &__dot,
+  &__disc {
+    flex: none;
+    box-sizing: border-box;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+  // A dotted disc, like the ones in the drawing.
+  &__disc {
+    width: 11px;
+    height: 11px;
+    background: radial-gradient(currentColor 38%, transparent 42%) 0 0 / 3.67px 3.67px;
+  }
+  &__thread {
+    flex: none;
+    width: 18px;
+    border-top: 1.5px dashed currentColor;
+  }
+
+  .is-gold .ns-key__dot { background: var(--accent-decor); }
+  .is-intl .ns-key__dot { background: var(--accent-decor); box-shadow: inset 0 0 0 1.6px var(--accent-decor), inset 0 0 0 3px var(--bg); }
+  .is-medal .ns-key__dot { background: var(--fg); }
+  .is-none .ns-key__dot { background: none; border: 1.2px dashed currentColor; }
+}
+
+// ── 3,392 students ────────────────────────────────────────────────────────────
+.ns-schools {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  align-content: space-between;
+  height: 100%;
+
+  svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+    transition: color 0.2s, transform 0.3s $ns-ease;
+
+    &:hover { color: var(--accent-decor); transform: scale(1.14); }
+  }
+
+  path {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.45;
+    stroke-linecap: round;
+  }
+}
+
+// ── 38 olympiads ──────────────────────────────────────────────────────────────
+.ns-medals__rail {
+  fill: none;
+  stroke: var(--fg);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+}
+
+.ns-medal {
+  transform-box: fill-box;
+  transform-origin: 50% 0;
+  transition: opacity 0.25s, transform 0.4s $ns-ease;
+
+  path {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.3;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+  }
+  circle { fill: currentColor; }
+  .ns-medal__ring { fill: none; stroke: var(--bg); stroke-width: 1.3; }
+
+  &.is-gold { color: var(--accent-decor); }
+  &.is-none {
+    color: var(--fg-muted);
+
+    path { opacity: 0.45; }
+    circle { fill: none; stroke: currentColor; stroke-width: 1.1; stroke-dasharray: 2 2.2; }
+  }
+
+  // A medal swings on its hook when touched.
+  &:hover { transform: rotate(9deg); }
+}
+
+@each $kind in gold, intl, medal, none {
+  [data-hl="#{$kind}"] .ns-medal:not(.is-#{$kind}) { opacity: 0.16; }
+}
+
+// ── 121 laptops ───────────────────────────────────────────────────────────────
+.ns-laptops {
+  &__thread {
+    fill: none;
+    stroke: var(--fg-muted);
+    stroke-width: 1;
+    stroke-dasharray: 1.5 3.5;
+    stroke-linecap: round;
+    opacity: 0.7;
+  }
+
+  use {
+    color: var(--fg);
+    transition: color 0.15s;
+  }
+  // The chain up to the laptop under the pointer: who told whom.
+  use:hover,
+  use:has(~ use:hover) { color: var(--accent-decor); }
+}
+
+#ns-laptop {
+  rect { fill: var(--bg); stroke: currentColor; stroke-width: 1.2; }
+  path { fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; }
+}
+
+.ns-states {
+  display: flex;
+  gap: 2px;
+  width: 180px;
+  max-width: 100%;
+
+  i {
+    flex: 1;
+    height: 9px;
+    border-radius: 1.5px;
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--fg-muted) 55%, transparent);
+
+    &.is-on { background: var(--accent-decor); box-shadow: none; }
+  }
+}
+
+// ── Arrival: once, when each fact is first on screen ──────────────────────────
+// `backwards` only: after the arrival the marks go back to plain CSS, so hover
+// and the medal key can move them.
+@media (prefers-reduced-motion: no-preference) {
+  .numbers-strip > .is-armed {
+    .ns-schools svg,
+    .ns-medal,
+    .ns-laptops use,
+    .ns-laptops__thread,
+    .ns-states i { opacity: 0; }
+  }
+
+  .numbers-strip > .is-in {
+    .ns-schools svg {
+      animation: ns-pour 0.75s $ns-ease backwards;
+      animation-delay: calc(var(--i) * 40ms);
+    }
+    .ns-medal {
+      animation: ns-hang 0.6s $ns-ease backwards;
+      animation-delay: calc(var(--i) * 32ms);
+    }
+    .ns-laptops__thread { animation: ns-fade-thread 0.6s ease backwards; }
+    .ns-laptops use {
+      animation: ns-fade 0.3s ease backwards;
+      animation-delay: calc(var(--i) * 11ms);
+    }
+    .ns-states i {
+      animation: ns-fade 0.3s ease backwards;
+      animation-delay: calc(900ms + var(--i) * 22ms);
+    }
+  }
+}
+
+@keyframes ns-pour {
+  from { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0.35); }
+  60% { opacity: 1; }
+}
+@keyframes ns-hang {
+  from { opacity: 0; transform: translateY(-10px) rotate(-16deg); }
+  55% { transform: rotate(5deg); }
+}
+@keyframes ns-fade { from { opacity: 0; } }
+@keyframes ns-fade-thread { from { opacity: 0; } }
+
+// ── Phone: one fact under the other, each drawing the full width ──────────────
+@media screen and (max-width: 600px) {
+  .numbers-strip {
+    grid-template-columns: 1fr;
+
+    > li {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      align-items: baseline;
+      gap: 2px 10px;
+      padding: 22px 0 14px;
+
+      & + li { border-left: 0; border-top: 1px solid var(--border); }
+    }
+
+    &__art,
+    &__note,
+    .ns-key { grid-column: 1 / -1; }
+    &__art { margin-bottom: 12px; }
+    &__figure { font-size: 30px; }
+    &__label { margin: 0; }
+    .ns-key { min-height: 0; margin-top: 6px; }
+    // The cells have no side padding here: keep the pills inside them.
+    .ns-key > button { margin: 0 -4px 0 0; padding: 0 9px 0 5px; }
+  }
+}
