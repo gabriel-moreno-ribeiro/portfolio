@@ -38,11 +38,11 @@ const SECTIONS = [
 const RESERVE: Record<string, [desktop: number, tablet: number, mobile: number]> = {
   background: [959, 1384, 943],
   graph: [2790, 2254, 2930],
-  work: [2559, 5063, 4080],
-  research: [1310, 2019, 2672],
+  work: [2718, 5222, 4194],
+  research: [1654, 2469, 3172],
   skills: [1000, 1000, 714],
   'work-experience': [2709, 3115, 2571],
-  contact: [386, 783, 872],
+  contact: [401, 818, 910],
 };
 const LAZY_IDS = new Set(Object.keys(RESERVE));
 
