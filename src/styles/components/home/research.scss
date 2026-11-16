@@ -214,6 +214,62 @@
   }
 }
 
+// ── One chart per paper ──
+// The plot box is reserved; the labels under it are plain text, so every number
+// is there before (and without) the lazy chart.
+.research-figure {
+  margin: 8px 0 4px;
+
+  &__plot {
+    height: 64px;
+    border-bottom: 1px solid var(--border);
+
+    // bklit sizes its root by aspect-ratio; here the box has a fixed height.
+    .bk,
+    .bk > div {
+      height: 100%;
+    }
+  }
+
+  &__labels {
+    display: flex;
+    margin: 6px 0 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+      flex: 1 1 0;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      line-height: 1.3;
+    }
+
+    strong {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--fg);
+      font-variant-numeric: tabular-nums;
+    }
+
+    span {
+      font-size: 11px;
+      color: var(--fg-muted);
+      white-space: nowrap;
+    }
+  }
+
+  &__caption {
+    margin-top: 8px;
+    font-size: 12px;
+    line-height: 1.4;
+    color: var(--fg-muted);
+    max-width: 65ch;
+  }
+}
+
 // ── Dark mode ──
 [data-theme="dark"] {
   .research-card {
@@ -260,6 +316,11 @@
 
   .research-card__title {
     font-size: 16px;
+  }
+
+  // Seven columns share ~290px here.
+  .research-figure__labels strong {
+    font-size: 11px;
   }
 }
 
