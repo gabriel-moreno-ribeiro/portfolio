@@ -1,6 +1,8 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
 import { CAR_SPRITES } from './carSprites';
 import { roadLookup, type RoadGeom } from './geometry';
+import HibeexMark from '../../OnePager/HibeexMark';
+import { roveFocus, roveKey } from './Roadside';
 
 /**
  * A D-20 sobre a estrada.
@@ -18,6 +20,11 @@ import { roadLookup, type RoadGeom } from './geometry';
  * ~5° perto do perfil). Cada frame carrega o `heading` que o eixo frontal do carro tem NA
  * TELA naquele yaw, e escolhemos o frame cujo `heading` está mais perto da tangente do path.
  * `FRAME_BY_DEG` resolve isso em O(1).
+ *
+ * O que o carro FAZ também sai da distância na estrada, sem relógio: derrapa nos cotovelos (a
+ * tabela dá o `yaw`, adiantado à tangente), salta sobre o rio (sobe, cresce e larga a sombra
+ * no chão; ao pousar a suspensão trabalha), levanta poeira na terra e carrega o que pegou nas
+ * paradas. A única coisa clicável é a buzina: um botão do tamanho do carro, que anda com ele.
  */
 
 const FRAMES = CAR_SPRITES.frames;
@@ -88,6 +95,10 @@ export interface CarHandle {
    * Devolve `true` quando todos os lerps já assentaram (quem chama pode parar o rAF).
    */
   draw(s: number, speed: number): boolean;
+  /** Onde o carro foi desenhado por último, px da seção (o mesmo objeto, atualizado em `draw`). */
+  pos: { x: number; y: number };
+  /** O que o carro carrega: ids separados por espaço (ver `.exp__cargo` no SCSS). */
+  setLoad(got: string): void;
 }
 
 interface CarProps {
@@ -99,9 +110,19 @@ interface CarProps {
   active: boolean;
   /** Seção realmente visível: dispara o "engasga" uma vez (classe CSS, sem timer contínuo). */
   entered: boolean;
+  /** O caroneiro subiu: vai na caçamba. */
+  kid: boolean;
+  /** Prêmio de quem achou todas as surpresas: pintura dourada. */
+  gold: boolean;
+  onHonk(): void;
 }
 
-const Car = forwardRef<CarHandle, CarProps>(function Car({ road, size, reduced, active, entered }, ref) {
+/** Quanto o carro sobe e cresce no auge do salto, e quanto a suspensão afunda ao pousar. */
+const AIR = { lift: 0.26, grow: 0.22, squash: 0.07 } as const;
+/** Quanto tempo a buzina fica à vista, ms. */
+const HONK_MS = 900;
+
+const Car = forwardRef<CarHandle, CarProps>(function Car({ road, size, reduced, active, entered, kid, gold, onHonk }, ref) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const bodyRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -114,6 +135,11 @@ const Car = forwardRef<CarHandle, CarProps>(function Car({ road, size, reduced, 
   const shadeRef = useRef<HTMLSpanElement>(null);
   const wheelARef = useRef<HTMLSpanElement>(null);
   const wheelBRef = useRef<HTMLSpanElement>(null);
+  const cargoRef = useRef<HTMLDivElement>(null);
+  const lampsRef = useRef<HTMLDivElement>(null);
+  const dustRef = useRef<HTMLDivElement>(null);
+  const posRef = useRef({ x: 0, y: 0 });
+  const honkTimer = useRef(0);
   const stateRef = useRef({
     phase: 0,
     lastS: -1,
@@ -133,7 +159,24 @@ const Car = forwardRef<CarHandle, CarProps>(function Car({ road, size, reduced, 
       stateRef.current.speed = speed;
       return drawRef.current ? drawRef.current(s, speed) : true;
     },
+    pos: posRef.current,
+    setLoad: (got) => {
+      if (cargoRef.current && cargoRef.current.dataset.got !== got) cargoRef.current.dataset.got = got;
+    },
   }), []);
+
+  // Buzina: balão "BEEP!" e faróis piscando por um instante. Classe direto no DOM, um timer só.
+  useEffect(() => () => window.clearTimeout(honkTimer.current), []);
+  const honk = () => {
+    const wrap = wrapRef.current;
+    if (!wrap) return;
+    wrap.classList.remove('is-honk');
+    void wrap.offsetWidth; // reinicia a animação se buzinar de novo em seguida
+    wrap.classList.add('is-honk');
+    window.clearTimeout(honkTimer.current);
+    honkTimer.current = window.setTimeout(() => wrap.classList.remove('is-honk'), HONK_MS);
+    onHonk();
+  };
 
   // Baixa os 48 sprites quando a seção se aproxima e encadeia os `decode()` em idle,
   // começando pelo frame do poster: os 48 decodes de uma vez competiam com o scroll.
@@ -210,8 +253,12 @@ const Car = forwardRef<CarHandle, CarProps>(function Car({ road, size, reduced, 
     const wheels = [wheelARef.current, wheelBRef.current];
     // Últimos valores escritos: só toca no DOM quando mudam (cada escrita de estilo é um
     // recálculo de estilo no quadro).
-    let lastRoll = '';
+    let lastPose = '';
     let lastShade = '';
+    let dusty = false;
+    const jump = road.jump;
+    const dirt = road.dirt;
+    const pos = posRef.current;
     let lastPhase = Number.NaN;
     let placedFrame = -1;
     let drawnImg: HTMLImageElement | null = null;
@@ -245,6 +292,28 @@ const Car = forwardRef<CarHandle, CarProps>(function Car({ road, size, reduced, 
         wheelAt[i] = `translate3d(${(w.x * pagePerSprite).toFixed(1)}px, ${(w.y * pagePerSprite).toFixed(1)}px, 0)`;
       });
       lastPhase = Number.NaN; // força reescrever o brilho na posição nova
+      // Carga, faróis e poeira seguem o eixo traseira → frente daquele frame.
+      const tx = (a.tailL.x + a.tailR.x) / 2;
+      const ty = (a.tailL.y + a.tailR.y) / 2;
+      const ax = a.nose.x - tx;
+      const ay = a.nose.y - ty;
+      if (cargoRef.current) {
+        const style = cargoRef.current.style;
+        const at = (t: number, up: number) => `${((tx + ax * t) * pagePerSprite).toFixed(1)}px, ${((ty + ay * t - up) * pagePerSprite).toFixed(1)}px`;
+        style.setProperty('--exp-bed', at(0.2, 2));
+        style.setProperty('--exp-roof', at(0.56, 40));
+      }
+      if (lampsRef.current) {
+        const style = lampsRef.current.style;
+        style.setProperty('--exp-ll', `${(a.lampL.x * pagePerSprite).toFixed(1)}px, ${(a.lampL.y * pagePerSprite).toFixed(1)}px`);
+        style.setProperty('--exp-lr', `${(a.lampR.x * pagePerSprite).toFixed(1)}px, ${(a.lampR.y * pagePerSprite).toFixed(1)}px`);
+      }
+      if (dustRef.current) {
+        const style = dustRef.current.style;
+        const len = Math.hypot(ax, ay) || 1;
+        style.setProperty('--exp-du', `${(tx * pagePerSprite).toFixed(1)}px, ${((ty + 10) * pagePerSprite).toFixed(1)}px`);
+        style.setProperty('--exp-du-to', `${((tx - (ax / len) * 60) * pagePerSprite).toFixed(1)}px, ${((ty + 10 - (ay / len) * 60) * pagePerSprite).toFixed(1)}px`);
+      }
       if (hazardRef.current) {
         const style = hazardRef.current.style;
         style.setProperty('--exp-tl-x', `${(a.tailL.x * pagePerSprite).toFixed(1)}px`);
@@ -262,14 +331,16 @@ const Car = forwardRef<CarHandle, CarProps>(function Car({ road, size, reduced, 
       // dois yaws fazia o carro tremer na curva. Um frame por rAF; na curva fechada e no laço
       // a tangente anda mais que isso por quadro, e aí o carro vai direto para o frame da
       // tangente (senão ele seguiria de lado, atrasado).
-      const want = frameForHeading(p.angle);
+      pos.x = p.x;
+      pos.y = p.y;
+      const want = frameForHeading(p.yaw);
       if (want !== st.frame) {
         const n = FRAMES.length;
         const dir = (((want - st.frame) % n) + n + n / 2) % n - n / 2;
         const next = (st.frame + (dir > 0 ? 1 : -1) + n) % n;
         if (Math.abs(dir) > 1) {
           st.frame = want;
-        } else if (angleDelta(FRAMES[next].heading, p.angle) + FRAME_HYSTERESIS < angleDelta(FRAMES[st.frame].heading, p.angle)) {
+        } else if (angleDelta(FRAMES[next].heading, p.yaw) + FRAME_HYSTERESIS < angleDelta(FRAMES[st.frame].heading, p.yaw)) {
           st.frame = next;
         }
       }
@@ -282,10 +353,25 @@ const Car = forwardRef<CarHandle, CarProps>(function Car({ road, size, reduced, 
       st.lastAngle = p.angle;
       const targetRoll = Math.max(-4, Math.min(4, dAngle * 0.8));
       st.roll += (targetRoll - st.roll) * K_ROLL;
-      const roll = st.roll.toFixed(2);
-      if (body && roll !== lastRoll) {
-        body.style.transform = `rotate(${roll}deg)`;
-        lastRoll = roll;
+      // Salto: do começo ao fim do vão o carro sobe e cresce (a sombra fica no chão); daí até
+      // `land` a suspensão afunda e volta. Tudo função de `s`.
+      let lift = 0;
+      let grow = 1;
+      let air = 0;
+      if (jump && s > jump.from && s < jump.land) {
+        if (s < jump.to) {
+          air = Math.sin((Math.PI * (s - jump.from)) / (jump.to - jump.from));
+          lift = AIR.lift * size * air;
+          grow = 1 + AIR.grow * air;
+        } else {
+          const u = (s - jump.to) / (jump.land - jump.to);
+          grow = 1 - AIR.squash * Math.sin(2 * Math.PI * u) * (1 - u);
+        }
+      }
+      const pose = `translate3d(0, ${(-lift).toFixed(1)}px, 0) scale(${grow.toFixed(3)}) rotate(${st.roll.toFixed(2)}deg)`;
+      if (body && pose !== lastPose) {
+        body.style.transform = pose;
+        lastPose = pose;
       }
 
       // Rodas: a taxa de giro também é amaciada, então o giro não engasga quando o frame troca.
@@ -297,6 +383,13 @@ const Car = forwardRef<CarHandle, CarProps>(function Car({ road, size, reduced, 
 
       const targetShade = 0.16 + Math.min(0.16, speed / 120);
       st.shade += (targetShade - st.shade) * K_SHADE;
+
+      // Poeira: só na terra, e só andando (a animação em loop para junto com o carro).
+      const nowDusty = !!dirt && s > dirt.from && s < dirt.to && st.wheelRate > 0.03;
+      if (nowDusty !== dusty) {
+        wrap.classList.toggle('is-dusty', nowDusty);
+        dusty = nowDusty;
+      }
 
       const settled =
         Math.abs(targetRoll - st.roll) < SETTLED &&
@@ -320,7 +413,7 @@ const Car = forwardRef<CarHandle, CarProps>(function Car({ road, size, reduced, 
       }
 
       // Sombra de contato: opacidade ∝ velocidade. Brilho girando nas rodas.
-      const shadeOp = st.shade.toFixed(3);
+      const shadeOp = (st.shade * (1 + 1.6 * air)).toFixed(3); // no ar a sombra fica sozinha no chão: mais marcada
       if (shade && shadeOp !== lastShade) {
         shade.style.opacity = shadeOp;
         lastShade = shadeOp;
@@ -358,11 +451,17 @@ const Car = forwardRef<CarHandle, CarProps>(function Car({ road, size, reduced, 
   };
 
   return (
-    <div className="exp__car" ref={wrapRef} aria-hidden="true" style={{ width: size, height: size }}>
-      <div className="exp__car-body" ref={bodyRef}>
+    <div className="exp__car" ref={wrapRef} data-gold={gold || undefined} style={{ width: size, height: size }}>
+      {/* A sombra fica fora do corpo: no salto ele sobe e ela fica no chão. */}
+      <div className="exp__car-fx" ref={fxRef} aria-hidden="true">
+        <span className="exp__shade" ref={shadeRef} />
+      </div>
+      <div className="exp__car-body" ref={bodyRef} aria-hidden="true">
         <div className="exp__car-shake">
-          <div className="exp__car-fx" ref={fxRef}>
-            <span className="exp__shade" ref={shadeRef} />
+          <div className="exp__dust" ref={dustRef}>
+            <i />
+            <i />
+            <i />
           </div>
           <img
             className="exp__poster"
@@ -378,6 +477,34 @@ const Car = forwardRef<CarHandle, CarProps>(function Car({ road, size, reduced, 
             <span className="exp__wheel" ref={wheelARef} style={wheelStyle} />
             <span className="exp__wheel" ref={wheelBRef} style={wheelStyle} />
           </div>
+          {/* O que ele pegou nas paradas (e o caroneiro): aparece conforme `data-got`. */}
+          <div className="exp__cargo" ref={cargoRef} data-got="" data-kid={kid || undefined}>
+            <span className="exp__cargo-bed">
+              <svg viewBox="0 0 30 22" width="30" height="22">
+                <g className="exp__load exp__load--kid">
+                  <circle className="a-fill" cx="6" cy="6" r="4.5" />
+                </g>
+                <g className="exp__load exp__load--candela">
+                  <rect className="a-box" x="9" y="9" width="12" height="11" rx="1.5" />
+                  <path className="a-line" d="M9 13 H21 M15 9 V13" />
+                </g>
+                <g className="exp__load exp__load--principia">
+                  <path className="a-book" d="M21 12 l7 -2 l1.5 8 l-7 2 Z" />
+                </g>
+                <g className="exp__load exp__load--taqtile">
+                  <path className="a-fill" d="M11 8 L20 6 L21 1 L12 3 Z" />
+                  <path className="a-line" d="M10 9 L21 6.5" />
+                </g>
+              </svg>
+            </span>
+            <span className="exp__cargo-roof">
+<HibeexMark className="exp__load exp__load--hibeex" />
+            </span>
+          </div>
+          <div className="exp__lamps" ref={lampsRef}>
+            <span />
+            <span />
+          </div>
           {!reduced && (
             <div className="exp__hazard" ref={hazardRef}>
               <span className="exp__hazard-dot exp__hazard-dot--l" />
@@ -386,6 +513,11 @@ const Car = forwardRef<CarHandle, CarProps>(function Car({ road, size, reduced, 
           )}
         </div>
       </div>
+      <span className="exp__beep" aria-hidden="true">
+        BEEP!
+      </span>
+      {/* A buzina: o ponto de entrada (Tab) do grupo de surpresas; as setas levam às outras. */}
+      <button type="button" className="exp__honk" data-egg="honk" aria-label="Honk the D-20&rsquo;s horn" onClick={honk} onKeyDown={roveKey} onFocus={roveFocus} />
     </div>
   );
 });

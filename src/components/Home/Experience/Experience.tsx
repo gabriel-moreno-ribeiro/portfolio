@@ -7,22 +7,25 @@ import Car, { type CarHandle } from './Car';
 import CityPin from './CityPin';
 import Odometer from './Odometer';
 import Road, { Scene, type RoadMarker } from './Road';
+import Roadside, { ActorArt, Confetti, useEggList, useEggs, type FoundId } from './Roadside';
 import Stop from './Stop';
-import { CAR_SCREEN, CARD_GAP, buildRoad, cardSide, carTargetS, featureAt, nearestStop, roadHalf, roadLookup, type RoadGeom, type StopAnchor } from './geometry';
+import { CAR_SCREEN, CARD_GAP, buildRoad, cardSide, carTargetS, featureAt, nearestStop, roadHalf, roadLookup, type Actor, type Egg, type RoadGeom, type StopAnchor } from './geometry';
 import './experience.scss';
 
 /**
  * Professional Experience — uma estrada que desce a página, com uma parada por cargo. No
- * desktop cada trecho entre duas paradas é uma manobra diferente (chicane, serra, ponte,
- * rotatória, túnel, trevo: ver `buildRoad`); o carro é levado por distância ao longo dela, não
- * por altura.
+ * desktop cada trecho entre duas paradas é uma manobra diferente (chicane de terra, serra,
+ * salto sobre o rio, pedágio e rotatória, túnel, trevo e passagem de nível: ver `buildRoad`);
+ * o carro é levado por distância ao longo dela, não por altura, e os figurantes (cancelas,
+ * trem, capivara) também. À beira da estrada há surpresas para achar (ver `Roadside`).
  *
  * O conteúdo é HTML comum (`<ol>` de `<li>` com `<h3>`) e já está no estado final: estrada e
  * carro são decoração `aria-hidden` por cima. A geometria da estrada é medida da caixa real
  * da seção (ResizeObserver), não de um viewBox fixo — assim a estrada passa a um vão fixo
  * da borda de cada card, pelo lado de fora da curva, mesmo que o texto quebre diferente.
  *
- * **Nada aqui re-renderiza durante o scroll.** Um único rAF por frame: lê o rect da seção
+ * **Nada aqui re-renderiza durante o scroll** (a única exceção é achar uma surpresa: um render,
+ * uma vez por surpresa). Um único rAF por frame: lê o rect da seção
  * (uma leitura, antes de qualquer escrita) e depois escreve tudo direto no DOM — transform do
  * carro, classes `is-lit`, texto do odômetro, transform das janelas que apagam a estrada à frente do carro. O que existia antes
  * (`setState` por frame) custava até 799 ms de scheduler do React num frame sob CPU 4×.
@@ -49,6 +52,16 @@ export default function Experience() {
   const idle = !inView || !tabVisible;
 
   const [road, setRoad] = useState<RoadGeom | null>(null);
+
+  // Surpresas: o que já foi achado (sessão) e quais existem nesta largura. O rAF avisa das
+  // passivas por `findRef`, para o efeito dele não depender de nada daqui.
+  const { found, find } = useEggs();
+  const eggIds = useEggList(road?.eggs ?? NO_EGGS, reduced);
+  const foundCount = eggIds.filter((id) => found.has(id)).length;
+  const won = eggIds.length > 1 && foundCount === eggIds.length;
+  const findRef = useRef(find);
+  findRef.current = find;
+  const honked = useRef(() => findRef.current('honk')).current;
 
   // Arriving from a city on the globe (#exp-<id>): mark that stop and hand it the focus.
   // Home does the scrolling; the mark leaves with the focus.
@@ -134,7 +147,23 @@ export default function Experience() {
     const stopS = lookup.stopS;
     const firstS = stopS[0] ?? 0;
     const lastS = stopS[stopS.length - 1] ?? 0;
-    const covers = Array.from(section.querySelectorAll<SVGElement>('.exp__cover'));
+    const covers: (SVGElement | undefined)[] = [];
+    section.querySelectorAll<SVGElement>('.exp__cover').forEach((el) => {
+      covers[Number(el.dataset.k)] = el;
+    });
+    // Figurantes (na ordem de `road.actors`), faróis do túnel, confete, e o que só aparece
+    // quando a estrada chega lá.
+    const actors = Array.from(section.querySelectorAll<HTMLElement>('.exp__actor'));
+    const beam = section.querySelector<SVGElement>('.exp__beam');
+    const confetti = section.querySelector<HTMLElement>('.exp__confetti');
+    const camera = section.querySelector<HTMLElement>('.exp__egg--camera');
+    const fades = Array.from(section.querySelectorAll<HTMLElement>('.exp__fade')).map((el) => ({ el, y: Number(el.dataset.y) }));
+    const passive = road.eggs.filter((e): e is Egg & { at: number } => e.at !== undefined);
+    const pickS = PICKUPS.map((id) => {
+      const i = entries.findIndex((e) => e.id === id);
+      return i < 0 ? Infinity : (stopS[i] ?? Infinity);
+    });
+    let flashTimer = 0;
     // Janelas da névoa (ver Road): par [janela, estrada dentro dela], movidos só por transform.
     const fogSolid = section.querySelector<HTMLElement>('.exp__road-win--solid');
     const fogBand = section.querySelector<HTMLElement>('.exp__road-win--fog');
@@ -143,7 +172,7 @@ export default function Experience() {
     const odo = section.querySelector<HTMLElement>('.exp__odo');
     const note = noteRef.current;
     const fogAhead = narrow ? FOG_AHEAD.narrow : FOG_AHEAD.wide;
-    const prev = { lit: -2, year: '', atLast: null as boolean | null, fog: Number.NaN, gone: false, away: null as boolean | null, over: [] as boolean[] };
+    const prev = { lit: -2, year: '', atLast: null as boolean | null, fog: Number.NaN, gone: false, away: null as boolean | null, over: [] as boolean[], act: [] as number[], fade: [] as boolean[], beam: false, got: -1, s: Number.NaN };
     // Rolagem suavizada: é ela, e não o scroll cru, que posiciona o carro. `t` = último quadro,
     // para o lerp valer o mesmo em 60, 120 ou 30 Hz.
     const motion = { scrolled: Number.NaN, previous: 0, t: 0 };
@@ -217,7 +246,8 @@ export default function Experience() {
       const atLast = s >= lastS - 0.5;
       const year = String(Math.round(yearAt(s, stopS, years)));
       // ---- escritas ----
-      const settled = carRef.current ? carRef.current.draw(s, speed) : true;
+      const car = carRef.current;
+      const settled = car ? car.draw(s, speed) : true;
       if (litIndex !== prev.lit) {
         if (prev.lit >= 0) stops[prev.lit]?.classList.remove('is-lit');
         if (litIndex >= 0) stops[litIndex]?.classList.add('is-lit');
@@ -235,6 +265,14 @@ export default function Experience() {
         fogBand.style.transform = `translate3d(0, ${fogY}px, 0)`;
         fogBandArt.style.transform = `translate3d(0, ${-fogY}px, 0)`;
         prev.fog = fogY;
+        // O que está à beira de uma estrada que ainda não existe também não existe.
+        for (let k = 0; k < fades.length; k++) {
+          const ahead = fades[k].y > fogY + FADE_AHEAD;
+          if (ahead !== prev.fade[k]) {
+            fades[k].el.toggleAttribute('data-ahead', ahead);
+            prev.fade[k] = ahead;
+          }
+        }
       }
       // Morro do túnel, tabuleiro do viaduto: desenhados de novo sobre o carro só enquanto ele
       // passa por baixo (no viaduto, da meia volta do laço em diante; antes ele vai por cima).
@@ -242,9 +280,50 @@ export default function Experience() {
         const cover = road.covers[k];
         const over = !!cover && s >= cover.from && s < cover.to;
         if (over !== prev.over[k]) {
-          covers[k].classList.toggle('is-over', over);
+          covers[k]?.classList.toggle('is-over', over);
           prev.over[k] = over;
         }
+      }
+      // Figurantes: posição pela distância do carro. Fora da janela de cada um, nada é escrito.
+      for (let k = 0; k < actors.length; k++) {
+        const a = road.actors[k];
+        if (!a) continue;
+        const t = s <= a.from ? 0 : s >= a.to ? 1 : (s - a.from) / (a.to - a.from);
+        if (t !== prev.act[k]) {
+          actors[k].style.transform = actorPose(a, t);
+          prev.act[k] = t;
+        }
+      }
+      // Túnel: o carro está sob o morro; por cima dele vão só os faróis.
+      const lit = !!road.beam && s >= road.beam.from && s < road.beam.to;
+      if (beam && car) {
+        if (lit) beam.style.transform = `translate3d(${car.pos.x.toFixed(1)}px, ${car.pos.y.toFixed(1)}px, 0)`;
+        if (lit !== prev.beam) {
+          beam.classList.toggle('is-on', lit);
+          prev.beam = lit;
+        }
+      }
+      // Carga: o que ele pegou nas paradas de onde já saiu (aparece quando ele arranca).
+      let got = 0;
+      for (let k = 0; k < pickS.length; k++) if (s >= pickS[k] + PICKUP_AFTER) got |= 1 << k;
+      if (car && got !== prev.got) {
+        car.setLoad(PICKUPS.filter((_, k) => got & (1 << k)).join(' '));
+        prev.got = got;
+      }
+      // Surpresas passivas: acontecem quando o carro passa por elas, andando para a frente.
+      if (s !== prev.s) {
+        for (const egg of passive) {
+          if (!(prev.s < egg.at && s >= egg.at)) continue;
+          if (egg.id === 'camera') {
+            // O radar só dispara para quem passa correndo (px de rolagem por quadro de 60 Hz).
+            if (speed / frames < SPEED_TRAP || !camera) continue;
+            camera.toggleAttribute('data-flash', true);
+            window.clearTimeout(flashTimer);
+            flashTimer = window.setTimeout(() => camera.removeAttribute('data-flash'), 900);
+          }
+          findRef.current(egg.id);
+        }
+        prev.s = s;
       }
       // A legenda da D-20 sai assim que o carro deixa a 1ª parada.
       const gone = !reduced && s - firstS > NOTE_HIDE_PX;
@@ -259,6 +338,7 @@ export default function Experience() {
       if (atLast !== prev.atLast) {
         cta?.classList.toggle('is-on', atLast);
         hazard?.classList.toggle('is-on', atLast);
+        confetti?.classList.toggle('is-on', atLast);
         prev.atLast = atLast;
       }
       return (settled && Math.abs(rawScrolled - motion.scrolled) < 0.3) || !onScreen;
@@ -280,6 +360,7 @@ export default function Experience() {
     window.addEventListener('scroll', onScroll, { passive: true });
     if (reduced) {
       return () => {
+        window.clearTimeout(flashTimer);
         window.removeEventListener('scroll', onScroll);
         bodyRO.disconnect();
         window.removeEventListener('resize', refreshDocTop);
@@ -312,8 +393,9 @@ export default function Experience() {
       window.removeEventListener('scroll', onScroll);
       document.removeEventListener('visibilitychange', onScroll);
       if (raf) cancelAnimationFrame(raf);
+      window.clearTimeout(flashTimer);
     };
-  }, [road, reduced, narrow, years]);
+  }, [road, reduced, narrow, years, entries]);
 
   const markers: RoadMarker[] = useMemo(() => {
     if (!road) return [];
@@ -382,6 +464,8 @@ export default function Experience() {
       <Odometer
         yearRef={yearRef}
         firstYear={years[0] ?? 2023}
+        found={foundCount}
+        total={eggIds.length}
         // O trilho termina na última parada: o ano nunca desce abaixo dela.
         trackEnd={road ? road.height - (road.stopYs[road.stopYs.length - 1] ?? road.height) : undefined}
       />
@@ -397,7 +481,17 @@ export default function Experience() {
           scenery={road.scenery}
         />
       )}
-      <div className="exp__car-layer" aria-hidden="true">
+      <div className="exp__car-layer">
+        {/* Marcas de pneu: por baixo do carro, ficam (`is-over`) depois que ele derrapa ali. */}
+        {road?.covers.map((cover, i) => cover.under && <CoverArt key={i} k={i} cover={cover} />)}
+        {/* Figurantes. O estado final (carro já passou) é o default; o rAF os põe no lugar. */}
+        {road?.actors.map((a, i) => (
+          <div key={i} className={`exp__actor exp__actor--${a.kind} exp__fade`} data-y={Math.round(a.y)} style={{ left: a.x, top: a.y, transform: actorPose(a, 1) }} aria-hidden="true">
+            <span className={a.flip ? 'exp__actor-flip' : undefined}>
+              <ActorArt kind={a.kind} />
+            </span>
+          </div>
+        ))}
         <Car
           ref={carRef}
           road={road}
@@ -405,22 +499,28 @@ export default function Experience() {
           reduced={reduced}
           active={near}
           entered={entered}
+          kid={found.has('hitch')}
+          gold={won}
+          onHonk={honked}
         />
-        {/* O que cobre o carro (morro do túnel, tabuleiro do viaduto), de novo por cima dele:
-            só aparece (`is-over`) enquanto ele passa por baixo. */}
-        {road?.covers.map(({ art, box }, i) => (
-          <svg
-            key={i}
-            className="exp__cover"
-            style={{ left: box.x, top: box.y }}
-            width={box.w}
-            height={box.h}
-            viewBox={`${box.x} ${box.y} ${box.w} ${box.h}`}
-            focusable="false"
-          >
-            <Scene items={art} />
+        {/* O que cobre o carro (morro do túnel, tabuleiro do viaduto, pórtico), de novo por cima
+            dele: só aparece (`is-over`) enquanto ele passa por baixo. */}
+        {road?.covers.map((cover, i) => !cover.under && <CoverArt key={i} k={i} cover={cover} />)}
+        {road?.beam && (
+          <svg className="exp__beam" width="1" height="1" viewBox="0 0 1 1" aria-hidden="true" focusable="false">
+            <defs>
+              <linearGradient id="exp-beam" x1="0" x2="1" y1="0" y2="0">
+                <stop offset="0" stopColor="var(--accent-decor)" stopOpacity="0.75" />
+                <stop offset="1" stopColor="var(--accent-decor)" stopOpacity="0" />
+              </linearGradient>
+            </defs>
+            <g transform={road.beam.dir < 0 ? 'scale(-1 1)' : undefined} fill="url(#exp-beam)">
+              <path d="M 40 -13 L 170 -40 L 170 4 Z" />
+              <path d="M 40 13 L 170 40 L 170 -4 Z" />
+            </g>
           </svg>
-        ))}
+        )}
+        {road?.finish && <Confetti x={road.finish.x} y={road.finish.y} won={won} />}
       </div>
 
       {note && (
@@ -446,9 +546,46 @@ export default function Experience() {
           />
         ))}
       </ol>
+
+      {road && road.eggs.length > 0 && <Roadside eggs={road.eggs} found={found} onFind={find} reduced={reduced} />}
     </section>
   );
 }
+
+/** Cenário numa camada própria, ligado (`is-over`) pelo rAF enquanto o carro está na faixa dele. */
+function CoverArt({ k, cover }: { k: number; cover: RoadGeom['covers'][number] }) {
+  const { art, box } = cover;
+  return (
+    <svg
+      className={`exp__cover${cover.under ? ' exp__cover--under' : ''}`}
+      data-k={k}
+      style={{ left: box.x, top: box.y }}
+      width={box.w}
+      height={box.h}
+      viewBox={`${box.x} ${box.y} ${box.w} ${box.h}`}
+      aria-hidden="true"
+      focusable="false"
+    >
+      <Scene items={art} />
+    </svg>
+  );
+}
+
+/** Onde um figurante está quando o carro andou a fração `t` da janela dele. A capivara gingando. */
+function actorPose(a: Actor, t: number): string {
+  const rot = a.kind === 'capy' ? (t < 1 ? 5 * Math.sin(t * 38) : 0) : a.rot * t;
+  return `translate3d(${(a.dx * t).toFixed(1)}px, ${(a.dy * t).toFixed(1)}px, 0) rotate(${rot.toFixed(1)}deg)`;
+}
+
+const NO_EGGS: Egg[] = [];
+/** Paradas em que o carro pega carga, pelo id do cargo (casa com `.exp__load--<id>` no SCSS). */
+const PICKUPS = ['candela', 'principia', 'hibeex', 'taqtile'] as const;
+/** Quanto o carro anda depois de uma parada até a carga dela aparecer na caçamba, px de estrada. */
+const PICKUP_AFTER = 26;
+/** Rolagem (px por quadro de 60 Hz) acima da qual o radar dispara: ~1 300 px/s. */
+const SPEED_TRAP = 22;
+/** Uma surpresa aparece quando a estrada chega a isto (px) dela. */
+const FADE_AHEAD = 190;
 
 /** Até essa largura (px) a seção usa o layout de uma coluna (casa com o SCSS). */
 const NARROW_MAX = 760;

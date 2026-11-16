@@ -78,11 +78,12 @@ const ICONS = {
   cactus: 'M 0 0 V -21 M 0 -7 H -6 V -14 M 0 -10 H 6 V -17',
   rock: 'M -8 0 L -5 -6 L 3 -8 L 8 0 Z',
   lamp: 'M 0 0 V -24 H -9',
+  cone: 'M -6 0 H 6 M -4 0 L -1 -11 H 1 L 4 0 Z',
 } as const;
 
 /**
  * Cenário de `buildRoad`: vai na estrada (some com ela, à frente do carro) e, o que cobre o
- * carro — morro do túnel, tabuleiro do viaduto —, de novo por cima dele (Experience).
+ * carro — morro do túnel, tabuleiro do viaduto, pórtico —, de novo por cima dele (Experience).
  */
 export function Scene({ items }: { items: Scenery[] }) {
   return (
@@ -90,6 +91,13 @@ export function Scene({ items }: { items: Scenery[] }) {
       {items.map((it, i) => {
         if (it.kind === 'path') return <path key={i} className={`exp__sc exp__sc--${it.cls}`} d={it.d} />;
         if (it.kind === 'deck') return <BridgeDeck key={i} {...it} />;
+        if (it.kind === 'text') {
+          return (
+            <text key={i} className={`exp__sc-text exp__sc-text--${it.cls}`} x={it.x.toFixed(1)} y={it.y.toFixed(1)} textAnchor="middle" transform={it.rot ? `rotate(${it.rot} ${it.x.toFixed(1)} ${it.y.toFixed(1)})` : undefined}>
+              {it.text}
+            </text>
+          );
+        }
         return (
           <g key={i} className={`exp__sc exp__sc--${it.icon}`} transform={`translate(${it.x.toFixed(1)} ${it.y.toFixed(1)})${it.flip ? ' scale(-1 1)' : ''}`}>
             <path d={ICONS[it.icon]} />
@@ -101,6 +109,8 @@ export function Scene({ items }: { items: Scenery[] }) {
   );
 }
 
+const isUnder = (it: Scenery) => it.kind === 'path' && it.cls === 'shortcut';
+
 /** Folga lateral da faixa com máscara: os rótulos dos marcos não podem ser cortados por ela. */
 const FOG_BLEED = 220;
 
@@ -109,6 +119,8 @@ function Road({ d, width, height, markers, narrow, fog, scenery }: RoadProps) {
   const lane = narrow ? ROAD_W.narrow : ROAD_W.wide;
   const art = (
     <>
+      {/* a trilha do atalho passa por baixo do asfalto */}
+      <Scene items={scenery.filter(isUnder)} />
       {/* asfalto */}
       <path className="exp__road-bed" d={d} strokeWidth={lane} />
       {/* acostamento */}
@@ -120,7 +132,7 @@ function Road({ d, width, height, markers, narrow, fog, scenery }: RoadProps) {
         strokeWidth={narrow ? 1.5 : 2.5}
         strokeDasharray={(narrow ? DASH.narrow : DASH.wide).join(' ')}
       />
-      <Scene items={scenery} />
+      <Scene items={scenery.filter((it) => !isUnder(it))} />
       {markers.map((m) => {
         const dir = m.side === 'left' ? -1 : 1;
         const tick = lane / 2 + (narrow ? 5 : 9);

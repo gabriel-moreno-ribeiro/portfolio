@@ -22,12 +22,12 @@ $exp-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   --exp-tail: 120px;
   // Respiro acima da parada a que cada manobra chega (ver `featureAt` em geometry.ts): é onde
   // ela acontece, e a rolagem que o carro tem para percorrê-la sem correr.
-  --exp-room-esses: 125px;
-  --exp-room-switchback: 730px;
-  --exp-room-river: 60px;
-  --exp-room-roundabout: 250px;
-  --exp-room-tunnel: 232px;
-  --exp-room-clover: 290px;
+  --exp-room-esses: 190px;
+  --exp-room-switchback: 830px;
+  --exp-room-river: 84px;
+  --exp-room-roundabout: 630px;
+  --exp-room-tunnel: 340px;
+  --exp-room-clover: 520px;
   // Onde o trilho do odômetro começa: abaixo do título.
   --exp-odo-top: 180px;
   // Cards alternam de lado e a estrada serpenteia entre eles. 56px = vão de 32px até a borda
@@ -219,13 +219,115 @@ $exp-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   stroke-linejoin: round;
 }
 
-// Zebra por dentro das curvas da chicane.
-.exp__sc--kerb {
-  stroke: var(--accent-decor);
-  stroke-width: 5;
+// Chão batido da chicane, por cima do asfalto: borda pedregosa, leito opaco e dois sulcos.
+.exp__sc--dirt-edge {
+  stroke: color-mix(in srgb, var(--fg) 34%, transparent);
+  stroke-width: 52px;
   stroke-linecap: butt;
-  stroke-dasharray: 7 7;
-  opacity: 0.75;
+  stroke-dasharray: 2 7;
+}
+
+.exp__sc--dirt,
+.exp__sc--dirt-mid {
+  stroke: color-mix(in srgb, var(--accent-decor) 15%, var(--bg));
+  stroke-width: 48px;
+  stroke-linecap: butt;
+}
+
+.exp__sc--dirt-rut {
+  stroke: color-mix(in srgb, var(--fg) 20%, var(--bg));
+  stroke-width: 25px;
+  stroke-linecap: butt;
+  stroke-dasharray: 26 5;
+}
+
+.exp__sc--dirt-mid {
+  stroke-width: 20px;
+}
+
+// Rampas do salto.
+.exp__sc--ramp {
+  fill: color-mix(in srgb, var(--accent-decor) 24%, var(--bg));
+}
+
+.exp__sc--chevron {
+  stroke: var(--accent-decor);
+  stroke-width: 3;
+}
+
+// Marcas de pneu nos cotovelos da serra.
+.exp__sc--skid {
+  stroke: color-mix(in srgb, var(--fg) 26%, transparent);
+  stroke-width: 3;
+}
+
+// Atalho escondido: trilha a pé, pontilhada e apagada, que corta a serra por baixo do asfalto.
+.exp__sc--shortcut {
+  stroke: color-mix(in srgb, var(--fg) 22%, transparent);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 0.1 9;
+}
+
+// Passagem de nível: dormentes, trilhos e batentes.
+.exp__sc--tie {
+  stroke: color-mix(in srgb, var(--fg) 24%, transparent);
+  stroke-width: 14px;
+  stroke-linecap: butt;
+  stroke-dasharray: 3 8;
+}
+
+.exp__sc--track {
+  stroke: color-mix(in srgb, var(--fg) 50%, transparent);
+}
+
+.exp__sc--buffer {
+  stroke: color-mix(in srgb, var(--fg) 50%, transparent);
+  stroke-width: 4;
+}
+
+.exp__sc--booth,
+.exp__sc--arch {
+  fill: var(--surface);
+  stroke: color-mix(in srgb, var(--fg) 44%, transparent);
+}
+
+// Pracinha do fim da estrada: do tom do asfalto, opaca (tapa a ponta redonda do traço).
+.exp__sc--plaza {
+  fill: color-mix(in srgb, var(--fg) 12%, var(--bg));
+  stroke: var(--border);
+  stroke-width: 1;
+}
+
+.exp__sc--barrier {
+  stroke: var(--accent-decor);
+  stroke-width: 6;
+  stroke-linecap: butt;
+  stroke-dasharray: 9 6;
+}
+
+.exp__sc--cone path {
+  fill: color-mix(in srgb, var(--accent-decor) 35%, var(--bg));
+  stroke: var(--accent-decor);
+}
+
+.exp__sc-text {
+  font-family: $exp-mono;
+  font-weight: 700;
+  fill: var(--fg-muted);
+}
+
+.exp__sc-text--banner {
+  font-size: 7.5px;
+  letter-spacing: 0.14em;
+}
+
+// Pichação do túnel: só existe na cópia do morro que cobre o carro (faróis acesos).
+.exp__sc-text--graffiti {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 17px;
+  fill: var(--accent-decor);
 }
 
 // Rio: leito claro e fios d'água.
@@ -243,12 +345,6 @@ $exp-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 .exp__sc--water {
   stroke: color-mix(in srgb, var(--fg) 26%, transparent);
   stroke-dasharray: 46 12;
-}
-
-.exp__sc--pier {
-  stroke: color-mix(in srgb, var(--fg) 34%, transparent);
-  stroke-width: 6;
-  stroke-linecap: butt;
 }
 
 // Opacos, da cor da página com um tom do texto: o morro tapa a estrada que entra nele.
@@ -291,6 +387,378 @@ $exp-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   &.is-over {
     opacity: 1;
   }
+}
+
+// Marcas de pneu: por baixo do carro, aparecem aos poucos atrás dele.
+.exp__cover--under {
+  transition: opacity 0.5s ease;
+}
+
+// ── Figurantes (cancelas, trem, capivara) ────────────────────────────────────
+// Âncora de tamanho zero no ponto de partida; o rAF escreve translate/rotate pela distância do
+// carro. O estado final (carro já passou) vem no `style` inicial.
+.exp__actor {
+  position: absolute;
+  width: 0;
+  height: 0;
+  will-change: transform;
+
+  > span {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 0;
+    height: 0;
+  }
+}
+
+.exp__actor-flip {
+  transform: scaleX(-1);
+}
+
+.exp__actor-art {
+  position: absolute;
+  display: block;
+  overflow: visible;
+
+  &--gate { top: -7px; left: -7px; }
+  &--train { top: -10px; left: -66px; }
+  &--capy { top: -14px; left: -23px; }
+}
+
+// O que fica à beira de um trecho que ainda não existe (à frente do carro) espera invisível.
+.exp__fade {
+  transition: opacity 0.35s ease;
+
+  &[data-ahead] {
+    opacity: 0;
+  }
+}
+
+// Faróis dentro do túnel: dois cones por cima do morro, na posição do carro (rAF).
+.exp__beam {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  overflow: visible;
+  opacity: 0;
+  will-change: transform;
+
+  &.is-on {
+    opacity: 1;
+  }
+}
+
+// Traços dos desenhos pequenos (surpresas, figurantes, carga): só tokens do tema.
+.exp {
+  .a-line {
+    fill: none;
+    stroke: color-mix(in srgb, var(--fg) 50%, transparent);
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .a-fill,
+  .a-box,
+  .a-book,
+  .a-capy {
+    fill: var(--surface);
+    stroke: color-mix(in srgb, var(--fg) 50%, transparent);
+    stroke-width: 1.5;
+    stroke-linejoin: round;
+  }
+
+  .a-sign { stroke: var(--accent-decor); }
+  .a-limit { stroke: var(--accent-decor); stroke-width: 4; }
+  .a-box,
+  .a-loco { fill: color-mix(in srgb, var(--accent-decor) 34%, var(--surface)); }
+  .a-capy { fill: color-mix(in srgb, var(--accent-decor) 26%, color-mix(in srgb, var(--fg) 26%, var(--bg))); }
+  .a-lens { fill: color-mix(in srgb, var(--fg) 55%, var(--bg)); }
+
+  .a-dots {
+    fill: none;
+    stroke: var(--accent-decor);
+    stroke-width: 3.5;
+    stroke-linecap: round;
+  }
+
+  .a-arm {
+    fill: none;
+    stroke: var(--surface);
+    stroke-width: 6;
+    stroke-linecap: round;
+  }
+
+  .a-arm-stripes {
+    fill: none;
+    stroke: var(--accent-decor);
+    stroke-width: 6;
+    stroke-dasharray: 7 7;
+  }
+
+  .a-text {
+    font-family: $exp-mono;
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-anchor: middle;
+    fill: var(--fg-muted);
+
+    &--big { font-size: 10.5px; fill: var(--fg); }
+    &--start { text-anchor: start; }
+    &--end { text-anchor: end; }
+  }
+}
+
+// ── Surpresas à beira da estrada (Roadside.tsx) ──────────────────────────────
+// Botões de verdade, um grupo só (roving tabindex). A camada fica acima dos cards mas não pega
+// o ponteiro; nenhuma surpresa nem balão fica sobre texto (posições saem das caixas medidas).
+.exp__roadside {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.exp__egg {
+  position: absolute;
+  display: block;
+  min-width: 24px;
+  min-height: 24px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  // (left, top) = pé do desenho
+  transform: translate(-50%, -100%);
+  pointer-events: auto;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+
+  svg {
+    display: block;
+    overflow: visible;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 3px;
+    border-radius: 6px;
+    opacity: 1;
+  }
+}
+
+.exp__egg-art {
+  display: block;
+  transition: transform 0.15s ease;
+}
+
+.exp__egg:hover .exp__egg-art {
+  transform: translateY(-2px);
+}
+
+// Balão: abre para o lado livre, na altura do meio do desenho.
+.exp__say {
+  position: absolute;
+  top: 50%;
+  width: max-content;
+  max-width: 200px;
+  padding: 8px 11px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--fg);
+  font-size: 13px;
+  line-height: 1.35;
+  text-align: left;
+  opacity: 0;
+  transform: translateY(-50%) scale(0.96);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  pointer-events: none;
+
+  .exp__egg--right & { left: calc(100% + 10px); }
+  .exp__egg--left & { right: calc(100% + 10px); }
+  .exp__egg.is-open & {
+    opacity: 1;
+    transform: translateY(-50%);
+  }
+}
+
+// À frente do carro ainda não dá para clicar (o teclado chega: o foco a mostra).
+.exp__egg[data-ahead]:not(:focus-visible) {
+  pointer-events: none;
+}
+
+// Radar: cenário (não é botão); o clarão é ligado pelo rAF.
+.exp__egg--camera {
+  pointer-events: none;
+  cursor: default;
+}
+
+.exp__flash {
+  fill: var(--accent-decor);
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.exp__egg--camera[data-flash] .exp__flash {
+  animation: exp-flash 0.8s ease-out 1;
+}
+
+@keyframes exp-flash {
+  0% { opacity: 0.95; transform: scale(0.4); }
+  100% { opacity: 0; transform: scale(1.7); }
+}
+
+// Caroneiro: o polegar aponta para a estrada; depois da carona ele vai na caçamba.
+.exp__egg--hitch.exp__egg--right .exp__egg-art > svg {
+  transform: scaleX(-1);
+}
+
+.exp__kid {
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.exp__egg--hitch.is-found {
+  .exp__kid { opacity: 0; transform: translateX(12px); }
+}
+
+// Disco voador: o raio pisca e ele vai embora.
+.exp__ufo {
+  transition: opacity 0.8s ease 0.45s, transform 0.9s cubic-bezier(0.5, 0, 0.9, 0.4) 0.45s;
+}
+
+.exp__ufo-ray {
+  fill: color-mix(in srgb, var(--accent-decor) 40%, transparent);
+  opacity: 0;
+}
+
+.exp__egg--ufo.is-open .exp__ufo-ray {
+  animation: exp-ray 0.5s ease-out 1;
+}
+
+.exp__egg--ufo.is-found .exp__ufo {
+  opacity: 0;
+  transform: translate(130px, -170px) scale(0.3);
+}
+
+@keyframes exp-ray {
+  0%, 100% { opacity: 0; }
+  30%, 70% { opacity: 1; }
+}
+
+// Outdoor do HIBEEX: placa em dois pés; a abelha dá uma volta ao clicar.
+.exp__bb {
+  position: relative;
+  display: block;
+  width: 132px;
+  padding-bottom: 28px;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    width: 2px;
+    height: 30px;
+    background: color-mix(in srgb, var(--fg) 50%, transparent);
+  }
+
+  &::before { left: 28px; }
+  &::after { right: 28px; }
+}
+
+.exp__bb-board {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 62px;
+  border: 1.5px solid color-mix(in srgb, var(--fg) 50%, transparent);
+  border-radius: 4px;
+  background: var(--surface);
+}
+
+.exp__bb-bee {
+  width: 44px;
+  height: 26px;
+  color: var(--accent-decor);
+}
+
+.exp__bb-name {
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: var(--fg);
+}
+
+.exp__egg--billboard.is-open .exp__bb-bee {
+  animation: exp-bee 1.3s ease-in-out 1;
+}
+
+@keyframes exp-bee {
+  0%, 100% { transform: none; }
+  25% { transform: translate(6px, -18px) rotate(-12deg); }
+  50% { transform: translate(26px, -8px) rotate(10deg); }
+  75% { transform: translate(8px, -22px) rotate(-6deg); }
+}
+
+// Contador: pequeno, sob o ano; só existe depois da primeira surpresa achada.
+.exp__found {
+  display: block;
+  margin-top: 6px;
+  font-family: $exp-mono;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  color: var(--fg-muted);
+
+  &.is-all {
+    color: var(--accent);
+  }
+}
+
+// Confete da chegada: só para quem achou tudo (`data-won`), quando o carro estaciona (`is-on`).
+// Em repouso os papéis ficam espalhados na pista, entre o pórtico e o carro.
+.exp__confetti {
+  position: absolute;
+  width: 0;
+  height: 0;
+  visibility: hidden;
+
+  &[data-won].is-on {
+    visibility: visible;
+  }
+
+  i {
+    position: absolute;
+    top: -2px;
+    left: -3px;
+    width: 6px;
+    height: 4px;
+    background: var(--accent-decor);
+    transform: translate(var(--x), var(--y)) rotate(var(--r));
+
+    &:nth-child(3n) { background: var(--fg-muted); }
+    &:nth-child(3n + 1) { background: var(--accent); }
+  }
+
+  &[data-won].is-on i {
+    animation: exp-confetti 1.4s cubic-bezier(0.2, 0.7, 0.3, 1) 1 both;
+  }
+}
+
+@keyframes exp-confetti {
+  0% { opacity: 0; transform: translate(0, -14px) rotate(0deg) scale(0.4); }
+  15% { opacity: 1; }
+  100% { opacity: 1; transform: translate(var(--x), var(--y)) rotate(var(--r)); }
 }
 
 .exp__km {
@@ -530,6 +998,192 @@ a.exp__d20-link:visited {
   border-bottom-color: rgba(255, 236, 214, 0.55);
   border-radius: 50%;
   will-change: transform;
+}
+
+// Buzina: botão redondo sobre o carro (anda com ele); é a entrada do grupo de surpresas.
+.exp__honk {
+  position: absolute;
+  inset: 20%;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  pointer-events: auto;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+
+  &:focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+  }
+}
+
+.exp__beep {
+  position: absolute;
+  bottom: 84%;
+  left: 50%;
+  padding: 3px 9px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--accent);
+  font-family: $exp-mono;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translate(-50%, 6px) scale(0.8);
+  pointer-events: none;
+}
+
+.exp__car.is-honk .exp__beep {
+  animation: exp-beep 0.9s ease-out 1 both;
+}
+
+@keyframes exp-beep {
+  0% { opacity: 0; transform: translate(-50%, 6px) scale(0.8); }
+  15%, 75% { opacity: 1; transform: translate(-50%, 0) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -8px) scale(1); }
+}
+
+// Faróis: dois brilhos nas lanternas dianteiras do frame, piscam com a buzina.
+.exp__lamps span {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 18px;
+  height: 18px;
+  margin: -9px;
+  border-radius: 50%;
+  background: radial-gradient(circle closest-side, var(--accent-decor), transparent);
+  opacity: 0;
+  transform: translate(var(--exp-ll, 0px, 0px));
+
+  & + span { transform: translate(var(--exp-lr, 0px, 0px)); }
+}
+
+.exp__car.is-honk .exp__lamps span {
+  animation: exp-lamps 0.9s steps(1, end) 1;
+}
+
+@keyframes exp-lamps {
+  0%, 40% { opacity: 1; }
+  20%, 60%, 100% { opacity: 0; }
+}
+
+// Carga: o que ele pegou nas paradas (`data-got`, escrito pelo Experience) e o caroneiro.
+// Fica em pé, como adesivo; a âncora (caçamba, teto) vem de cada frame do sprite.
+.exp__cargo {
+  position: absolute;
+  inset: 0;
+}
+
+.exp__cargo-bed,
+.exp__cargo-roof {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+}
+
+.exp__cargo-bed {
+  transform: translate(var(--exp-bed, 0px, 0px));
+
+  svg {
+    position: absolute;
+    bottom: -5px;
+    left: -15px;
+    display: block;
+    overflow: visible;
+    transform: scale(0.82);
+    transform-origin: 50% 100%;
+  }
+}
+
+.exp__cargo-roof {
+  transform: translate(var(--exp-roof, 0px, 0px));
+
+  svg {
+    position: absolute;
+    top: -6px;
+    left: -10px;
+    display: block;
+    width: 20px;
+    height: 12px;
+    color: var(--fg);
+  }
+}
+
+.exp__load {
+  opacity: 0;
+  transform: translateY(-7px) scale(0.5);
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  transition: opacity 0.25s ease, transform 0.3s ease;
+}
+
+.exp__cargo[data-got~="candela"] .exp__load--candela,
+.exp__cargo[data-got~="principia"] .exp__load--principia,
+.exp__cargo[data-got~="hibeex"] .exp__load--hibeex,
+.exp__cargo[data-got~="taqtile"] .exp__load--taqtile,
+.exp__cargo[data-kid] .exp__load--kid {
+  opacity: 1;
+  transform: none;
+}
+
+// Poeira na terra: três bolhas saem da traseira (posição e rumo vêm do frame do sprite).
+.exp__dust {
+  position: absolute;
+  inset: 0;
+  visibility: hidden;
+
+  i {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 24px;
+    height: 24px;
+    margin: -12px;
+    border-radius: 50%;
+    // a cor do chão batido, um pouco mais escura
+    background: color-mix(in srgb, var(--accent-decor) 30%, color-mix(in srgb, var(--fg) 30%, var(--bg)));
+    opacity: 0;
+    transform: translate(var(--exp-du, 0px, 0px)) scale(0.4);
+
+    // uma nuvem de cada roda, outra no meio
+    &:nth-child(1) { margin-left: -20px; }
+    &:nth-child(3) { margin-left: -4px; }
+  }
+}
+
+.exp__car.is-dusty .exp__dust {
+  visibility: visible;
+
+  i {
+    animation: exp-dust 0.66s linear infinite;
+
+    &:nth-child(2) { animation-delay: 0.22s; }
+    &:nth-child(3) { animation-delay: 0.44s; }
+  }
+}
+
+.exp[data-idle] .exp__dust i {
+  animation-play-state: paused;
+}
+
+@keyframes exp-dust {
+  0% { opacity: 0.8; transform: translate(var(--exp-du, 0px, 0px)) scale(0.5); }
+  100% { opacity: 0; transform: translate(var(--exp-du-to, 0px, 0px)) scale(2); }
+}
+
+// Prêmio de quem achou tudo: a D-20 dourada (filtro fixo, não animado).
+.exp__car[data-gold] {
+  .exp__sprite,
+  .exp__poster {
+    filter: sepia(1) saturate(2.6) hue-rotate(-6deg) brightness(1.06);
+  }
 }
 
 .exp__hazard {
@@ -832,6 +1486,8 @@ a.exp__card-cta:visited {
 
   .exp__bullets li { font-size: 13.5px; }
 
+  // Na faixa estreita o carro tem 52 px: a carga não cabe nele.
+  .exp__cargo { display: none; }
 }
 
 // ── Reduced motion: estado final, sem transições ─────────────────────────────
@@ -844,9 +1500,36 @@ a.exp__card-cta:visited {
     transition: none;
   }
 
+  .exp__fade,
+  .exp__cover--under,
+  .exp__egg-art,
+  .exp__say,
+  .exp__kid,
+  .exp__ufo,
+  .exp__load {
+    transition: none;
+  }
+
   .exp__car-body.is-cranking .exp__car-shake,
-  .exp__hazard.is-on .exp__hazard-dot {
+  .exp__hazard.is-on .exp__hazard-dot,
+  .exp__car.is-honk .exp__lamps span,
+  .exp__car.is-dusty .exp__dust i,
+  .exp__egg--camera[data-flash] .exp__flash,
+  .exp__egg--ufo.is-open .exp__ufo-ray,
+  .exp__egg--billboard.is-open .exp__bb-bee,
+  .exp__confetti[data-won].is-on i {
     animation: none;
+  }
+
+  // A buzina ainda responde: o balão aparece parado, com os faróis acesos.
+  .exp__car.is-honk .exp__beep {
+    animation: none;
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+
+  .exp__car.is-honk .exp__lamps span {
+    opacity: 1;
   }
 }
 

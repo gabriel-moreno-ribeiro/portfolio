@@ -1,6 +1,8 @@
 /**
  * QA da estrada da seção Experience.
  *   node qa/surreal/road/road.mjs bench [label]   → tempo de quadro sob CPU 4× + trilha do carro
+ *       ("heading vs tangent" inclui a derrapagem da serra: até ~24° é de propósito)
+ * Ver também stunts.mjs (o carro em cada façanha), eggs.mjs (surpresas), keep.mjs, map.mjs.
  *   node qa/surreal/road/road.mjs shots           → capturas (1440 claro/escuro, 390, reduced-motion)
  *   node qa/surreal/road/road.mjs layout          → alturas e vão estrada/cenário × texto por largura (REDUCED=1: reduced-motion)
  *   node qa/surreal/road/road.mjs moments [nome]  → cada manobra em 4 momentos (claro) e 1 (escuro)
@@ -63,7 +65,14 @@ const pathSamples = (page) => page.evaluate(() => {
   for (let i = 0; i <= n; i++) {
     const a = el.getPointAtLength(i * 3);
     const b = el.getPointAtLength(i * 3 + 1);
-    out.push([a.x, a.y, (Math.atan2(b.y - a.y, b.x - a.x) * 180) / Math.PI]);
+    const ang = (Math.atan2(b.y - a.y, b.x - a.x) * 180) / Math.PI;
+    // vão sem asfalto (o salto): o carro passa em linha reta, então a referência também
+    const prev = out[out.length - 1];
+    if (prev && Math.hypot(a.x - prev[0], a.y - prev[1]) > 8) {
+      const n = Math.ceil(Math.hypot(a.x - prev[0], a.y - prev[1]) / 3);
+      for (let k = 1; k < n; k++) out.push([prev[0] + ((a.x - prev[0]) * k) / n, prev[1] + ((a.y - prev[1]) * k) / n, prev[2]]);
+    }
+    out.push([a.x, a.y, ang]);
   }
   return { pts: out, length: el.getTotalLength(), lane: +el.getAttribute('stroke-width') };
 });
@@ -245,7 +254,7 @@ if (mode === 'layout') {
       });
       // cenário (traços amostrados, ícones e viaduto pela caixa) × caixas de texto
       const scene = [];
-      for (const el of s.querySelector('.exp__road').querySelectorAll('.exp__sc, .exp__bridge')) {
+      for (const el of [...s.querySelector('.exp__road').querySelectorAll('.exp__sc, .exp__sc-text, .exp__bridge'), ...s.querySelectorAll('.exp__egg, .exp__actor-art > *, .exp__cover .exp__sc, .exp__cover .exp__sc-text, .exp__cover .exp__bridge, .exp__confetti i')]) {
         if (el.tagName === 'path') {
           const n = Math.ceil(el.getTotalLength() / 5);
           for (let i = 0; i <= n; i++) { const q = el.getPointAtLength(i * 5); scene.push([q.x - 1, q.y - 1, q.x + 1, q.y + 1]); }

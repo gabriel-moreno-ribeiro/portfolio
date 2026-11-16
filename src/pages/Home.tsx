@@ -41,7 +41,7 @@ const RESERVE: Record<string, [desktop: number, tablet: number, mobile: number]>
   work: [3736, 6310, 5155],
   research: [2467, 3245, 4081],
   skills: [1000, 1000, 496],
-  'work-experience': [4750, 5192, 2883],
+  'work-experience': [5657, 6099, 2883],
   contact: [401, 818, 910],
 };
 const LAZY_IDS = new Set(Object.keys(RESERVE));

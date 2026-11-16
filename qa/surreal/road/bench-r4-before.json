@@ -1,0 +1,108 @@
+{
+ "label": "r4-before",
+ "1440@2000": {
+  "frames": 345,
+  "dt p50/p95/max (ms)": "8.3/9.2/9.4",
+  "longtask max (ms)": 0,
+  "slow frames (ms@section px)": "none",
+  "main thread per frame (ms): task/script/layout/style": "2.833/0.372/0.014/0.277",
+  "car step p95/max (px)": "48.4/55.7",
+  "off-lane max (px)": 1.5,
+  "heading jump max (deg)": 32.8,
+  "heading vs tangent p95/max (deg)": "1.3/3.1",
+  "car on screen y min/max (px of viewport)": "22/651",
+  "lane": 46,
+  "roadLength": 7666
+ },
+ "1440@1500": {
+  "frames": 430,
+  "dt p50/p95/max (ms)": "8.3/9.3/9.4",
+  "longtask max (ms)": 0,
+  "slow frames (ms@section px)": "none",
+  "main thread per frame (ms): task/script/layout/style": "3.424/0.539/0.012/0.322",
+  "car step p95/max (px)": "35.2/41.0",
+  "off-lane max (px)": 1.5,
+  "heading jump max (deg)": 23.3,
+  "heading vs tangent p95/max (deg)": "1.3/2.7",
+  "car on screen y min/max (px of viewport)": "25/647",
+  "lane": 46,
+  "roadLength": 7666
+ },
+ "1440@400": {
+  "frames": 1351,
+  "dt p50/p95/max (ms)": "8.3/9.2/108.0",
+  "longtask max (ms)": 108,
+  "slow frames (ms@section px)": "108@1675 100@1695 17@1715 25@1722 17@1732",
+  "main thread per frame (ms): task/script/layout/style": "3.555/0.541/0.077/0.324",
+  "car step p95/max (px)": "10.1/43.3",
+  "off-lane max (px)": 6.4,
+  "heading jump max (deg)": 11.6,
+  "heading vs tangent p95/max (deg)": "1.3/3.8",
+  "car on screen y min/max (px of viewport)": "160/655",
+  "lane": 46,
+  "roadLength": 7666
+ },
+ "1440 errors": [],
+ "1440 section": {
+  "top": 10090.984375,
+  "height": 4750.34375,
+  "width": 960,
+  "left": 307,
+  "vh": 900,
+  "doc": 15649
+ },
+ "390@2000": {
+  "frames": 238,
+  "dt p50/p95/max (ms)": "8.3/9.2/9.4",
+  "longtask max (ms)": 0,
+  "slow frames (ms@section px)": "none",
+  "main thread per frame (ms): task/script/layout/style": "2.454/0.529/0.007/0.241",
+  "car step p95/max (px)": "23.8/27.3",
+  "off-lane max (px)": 1.5,
+  "heading jump max (deg)": 11.6,
+  "heading vs tangent p95/max (deg)": "4.3/5.3",
+  "car on screen y min/max (px of viewport)": "189/648",
+  "lane": 18,
+  "roadLength": 2500
+ },
+ "390@1500": {
+  "frames": 286,
+  "dt p50/p95/max (ms)": "8.3/9.2/9.4",
+  "longtask max (ms)": 0,
+  "slow frames (ms@section px)": "none",
+  "main thread per frame (ms): task/script/layout/style": "1.277/0.178/0.006/0.106",
+  "car step p95/max (px)": "17.6/18.7",
+  "off-lane max (px)": 1.5,
+  "heading jump max (deg)": 11.6,
+  "heading vs tangent p95/max (deg)": "4.4/6.1",
+  "car on screen y min/max (px of viewport)": "193/646",
+  "lane": 18,
+  "roadLength": 2500
+ },
+ "390@400": {
+  "frames": 814,
+  "dt p50/p95/max (ms)": "8.3/9.2/75.6",
+  "longtask max (ms)": 51,
+  "slow frames (ms@section px)": "76@1118 16@1138 50@1144",
+  "main thread per frame (ms): task/script/layout/style": "2.746/0.622/0.056/0.236",
+  "car step p95/max (px)": "4.9/5.8",
+  "off-lane max (px)": 1.5,
+  "heading jump max (deg)": 11.6,
+  "heading vs tangent p95/max (deg)": "4.6/5.9",
+  "car on screen y min/max (px of viewport)": "317/649",
+  "lane": 18,
+  "roadLength": 2500
+ },
+ "390 errors": [
+  "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+  "[vite] Failed to reload /src/styles/index.scss. This could be due to syntax errors or importing non-existent modules. (see errors above)"
+ ],
+ "390 section": {
+  "top": 12167.953125,
+  "height": 2883.078125,
+  "width": 358,
+  "left": 16,
+  "vh": 844,
+  "doc": 16475
+ }
+}
