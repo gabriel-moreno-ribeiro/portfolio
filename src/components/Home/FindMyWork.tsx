@@ -12,15 +12,12 @@ import MedalsShowcase from "./MedalsShowcase";
 
 const AUTOPLAY_MS = 6000;
 
-// `at` / `onAt`: the photo is chosen from outside (the thumbnail strip of a story row), so
-// the carousel shows that one, reports its arrows there and leaves its own picker out.
-function MediaCarousel({ project, paused, offset = 0, at, onAt }: { project: Project; paused: boolean; offset?: number; at?: number; onAt?: (i: number) => void }) {
+function MediaCarousel({ project, paused, offset = 0 }: { project: Project; paused: boolean; offset?: number }) {
   const available = project.gallery ?? [];
   const count = available.length;
   // `under` is the photo being left: it stays beneath while the new one fades in.
-  const [{ idx, under }, setState] = useState<{ idx: number; under: number | null }>({ idx: at ?? 0, under: null });
-  if (at !== undefined && at !== idx) setState({ idx: at, under: idx });
-  const setIdx = (fn: (i: number) => number) => (onAt ? onAt(fn(idx)) : setState((s) => ({ idx: fn(s.idx), under: s.idx })));
+  const [{ idx, under }, setState] = useState<{ idx: number; under: number | null }>({ idx: 0, under: null });
+  const setIdx = (fn: (i: number) => number) => setState((s) => ({ idx: fn(s.idx), under: s.idx }));
   // Only the first step waits the extra offset, so rows one above the other
   // don't change photos on the same beat.
   const firstStep = useRef(true);
@@ -107,7 +104,7 @@ function MediaCarousel({ project, paused, offset = 0, at, onAt }: { project: Pro
           <button className="carousel-arrow right" onClick={next} aria-label="Next photo">
             <FiChevronRight />
           </button>
-          {!onAt && <div className={`carousel-thumbs${compact ? " carousel-thumbs--dots" : ""}`}>
+          <div className={`carousel-thumbs${compact ? " carousel-thumbs--dots" : ""}`}>
             {available.map((file, i) => (
               <button
                 key={file}
@@ -134,7 +131,7 @@ function MediaCarousel({ project, paused, offset = 0, at, onAt }: { project: Pro
                 )}
               </button>
             ))}
-          </div>}
+          </div>
         </>
       )}
     </div>
@@ -146,13 +143,13 @@ function MediaCarousel({ project, paused, offset = 0, at, onAt }: { project: Pro
 function ProjectRow({ project, index }: { project: Project; index: number }) {
   const hasMedia = (project.gallery?.length ?? 0) > 0;
   const [paused, setPaused] = useState(false);
-  // A project with a story: the live 3D scene with the photos one click away on desktop,
+  // A project with a story: the live 3D scene with the photos under it on desktop,
   // the photos first and the story as stills elsewhere.
   const story = CLAY_STORIES[project.slug];
   const live = useClayLive();
 
   if (story && live) {
-    return <ClayRow project={project} steps={story} photos={(at, onAt) => <MediaCarousel project={project} paused at={at} onAt={onAt} />} />;
+    return <ClayRow project={project} steps={story} />;
   }
 
   return (

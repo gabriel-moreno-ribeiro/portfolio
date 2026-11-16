@@ -3,11 +3,12 @@
 // the live scene; phones, tablets, reduced-motion and no-WebGL get the same steps as stills.
 // The words never wait for WebGL.
 import { Component, lazy, Suspense, useEffect, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
-import { FiArrowUpRight, FiBox, FiPause, FiPlay } from 'react-icons/fi';
+import { FiArrowUpRight, FiPause, FiPlay } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import type { Project } from '../../../content/projects';
 import { usePageVisible, useReducedMotion, useVisible } from '../../../lib/motion';
 import { useThemeStore } from '../../../store/themeStore';
+import CityPhotoStage from '../CityPhotoStage';
 import labels from './labels.json';
 import { HOLD_MS, stillSrc, TRAVEL_MS } from './steps';
 import type { ClayStep } from './stories';
@@ -219,75 +220,30 @@ function Body({ project, children }: { project: Project; children?: ReactNode })
 const stageLabel = (project: Project, steps: ClayStep[], i: number) => `${project.title}, how it works. Step ${i + 1} of ${steps.length}: ${steps[i].title}`;
 
 /**
- * Desktop: text on the left; on the right the scene, and under it a strip with the story
- * tile and one thumbnail per photo. A thumbnail opens that photo in the scene's box.
+ * Desktop: text on the left; on the right the scene, and under it the project's photos on
+ * the same stage as the ones beside the globe.
  */
-export function ClayRow({ project, steps, photos }: { project: Project; steps: ClayStep[]; photos: (index: number, onIndex: (i: number) => void) => ReactNode }) {
-  const gallery = project.gallery ?? [];
-  const [photo, setPhoto] = useState<number | null>(null);
+export function ClayRow({ project, steps }: { project: Project; steps: ClayStep[] }) {
   const [visible, setVisible] = useState(false);
-  const player = usePlayer(steps.length, visible && photo === null);
-  const storyTile = useRef<HTMLButtonElement>(null);
-  const onStep = arrows(player);
-
-  const onKeyDown = (e: KeyboardEvent) => {
-    if (photo === null) return onStep(e);
-    if ((e.target as HTMLElement).tagName === 'VIDEO') return;
-    // With a photo open the arrows turn the photos, and Escape goes back to the story.
-    if (e.key === 'Escape') {
-      setPhoto(null);
-      storyTile.current?.focus();
-    } else if (e.key === 'ArrowRight') setPhoto((photo + 1) % gallery.length);
-    else if (e.key === 'ArrowLeft') setPhoto((photo - 1 + gallery.length) % gallery.length);
-    else return;
-    e.preventDefault();
-  };
-  // Choosing a step always brings the story back.
-  const stepping: Player = { ...player, go: (i) => (setPhoto(null), player.go(i)) };
+  const player = usePlayer(steps.length, visible);
+  const photos = (project.gallery ?? [])
+    .filter((file) => !file.endsWith('.mp4'))
+    .map((file) => ({ src: `/work/${project.slug}/sm/${file}`, alt: project.captions?.[file] ?? project.title, position: project.focus?.[file] ?? 'center' }));
 
   return (
-    <article className="work-row clay-row" data-clay={project.slug} onKeyDown={onKeyDown}>
+    <article className="work-row clay-row" data-clay={project.slug} onKeyDown={arrows(player)}>
       <div className="work-row__body">
         <Body project={project}>
           <Caption steps={steps} player={player} />
-          <Controls title={project.title} steps={steps} player={stepping} />
+          <Controls title={project.title} steps={steps} player={player} />
           <Link to={`/work/${project.slug}`} className="work-row__cta">
             View project <FiArrowUpRight aria-hidden="true" />
           </Link>
         </Body>
       </div>
       <div className="work-row__media clay-row__media">
-        <div className="clay-row__box">
-          {/* The scene stays mounted under the photo, so coming back costs nothing. */}
-          <div hidden={photo !== null}>
-            <Stage slug={project.slug} label={stageLabel(project, steps, player.index)} index={player.index} live onVisible={setVisible} />
-          </div>
-          {photo !== null && photos(photo, setPhoto)}
-        </div>
-        {gallery.length > 0 && (
-          <ul className="clay-strip" aria-label={`${project.title}: the story and ${gallery.length} photos`}>
-            <li>
-              <button ref={storyTile} type="button" className="clay-strip__story" onClick={() => setPhoto(null)} aria-pressed={photo === null} aria-label="The 3D story">
-                <FiBox aria-hidden="true" />
-              </button>
-            </li>
-            {gallery.map((file, i) => (
-              <li key={file}>
-                <button type="button" onClick={() => setPhoto(i)} aria-pressed={photo === i} aria-label={`Photo ${i + 1} of ${gallery.length}${project.captions?.[file] ? `: ${project.captions[file]}` : ''}`}>
-                  <img
-                    src={`/work/${project.slug}/thumbs/${file.replace(/\.\w+$/, '.webp')}`}
-                    alt=""
-                    width={60}
-                    height={40}
-                    loading="lazy"
-                    decoding="async"
-                    style={project.focus?.[file] ? { objectPosition: project.focus[file] } : undefined}
-                  />
-                </button>
-              </li>
-            ))}
-          </ul>
-        )}
+        <Stage slug={project.slug} label={stageLabel(project, steps, player.index)} index={player.index} live onVisible={setVisible} />
+        {photos.length > 0 && <CityPhotoStage label={project.title} photos={photos} />}
       </div>
     </article>
   );

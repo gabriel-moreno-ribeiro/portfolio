@@ -246,7 +246,13 @@ function Playground({ urls, enter, still }: { urls: string[]; enter: boolean; st
   // Rest positions stretch with wide viewports
   useEffect(() => {
     const place = () => {
-      const scale = Math.max(1, window.innerWidth / 1400);
+      // Stretch on wide screens, but never past the window: the field is centred on the
+      // content column, which the side rail pushes off the middle of the viewport.
+      const r = fieldRef.current?.getBoundingClientRect();
+      const cx = r ? r.left + r.width / 2 : window.innerWidth / 2;
+      const room = Math.min(cx, window.innerWidth - cx) - 12;
+      const reach = Math.max(...REST.map((p) => Math.abs(p.x))) + 40; // half a card
+      const scale = Math.min(Math.max(1, window.innerWidth / 1400), room / reach);
       cards.current.forEach((c, i) => { c.rx = REST[i].x * scale; c.ry = REST[i].y; });
       if (mode.current === "rest") {
         cards.current.forEach((c) => { c.x = c.rx; c.y = c.ry; });
