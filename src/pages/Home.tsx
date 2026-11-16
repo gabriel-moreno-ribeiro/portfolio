@@ -37,10 +37,10 @@ const SECTIONS = [
 // above it at once.
 const RESERVE: Record<string, [desktop: number, tablet: number, mobile: number]> = {
   background: [959, 1384, 936],
-  wardrobe: [650, 650, 487],
-  work: [10227, 6455, 6986],
+  wardrobe: [685, 685, 471],
+  work: [2797, 5669, 4495],
   research: [1654, 2469, 3172],
-  skills: [1000, 1000, 714],
+  skills: [1000, 1000, 496],
   'work-experience': [3243, 3685, 2883],
   contact: [401, 818, 910],
 };

@@ -1,8 +1,5 @@
 $clay-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-// Dark theme: a faint pool of light on the floor of a clay scene, so its shadows have something to fall on.
-$clay-pool: radial-gradient(ellipse 62% 50% at 50% 58%, rgba(255, 232, 210, 0.085), rgba(255, 232, 210, 0.03) 55%, transparent 78%);
-
-// The home centres each section at its content's width. A pinned story wants the whole
+// The home centres each section at its content's width. A story row wants the whole
 // column, so the section's wrapper stretches while one is on the page (desktop only).
 .home-wrapper > :has(> .find-my-work .clay-row) {
   align-self: stretch;
@@ -144,8 +141,9 @@ $clay-pool: radial-gradient(ellipse 62% 50% at 50% 58%, rgba(255, 232, 210, 0.08
   }
 
   // ── Clay stories ────────────────────────────────────────────────────────────
-  // A row that tells how the project works: it pins, and the scroll scrubs a 3D scene.
-  // The list's column opens up only for these rows; everything else keeps its width.
+  // A row that tells how the project works: words on the left, a 3D scene that plays by
+  // itself on the right, the photos in a strip under it. The list's column opens up only
+  // for these rows; everything else keeps its width.
   .work-list:has(> .clay-row) {
     max-width: none;
 
@@ -158,23 +156,15 @@ $clay-pool: radial-gradient(ellipse 62% 50% at 50% 58%, rgba(255, 232, 210, 0.08
   }
 
   .clay-row {
-    // 75vh of scroll per step, plus the screen the pin fills.
-    height: calc(100vh + var(--clay-steps) * 75vh);
-
-    &__pin {
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      grid-template-columns: minmax(250px, 0.42fr) minmax(0, 1fr);
-      gap: 44px;
-    }
+    grid-template-columns: minmax(250px, 0.4fr) minmax(0, 1fr);
+    gap: 44px;
 
     // The step being shown. Its height is reserved so a longer caption never moves the row.
     &__step {
       display: flex;
       flex-direction: column;
       gap: 6px;
-      min-height: 132px;
+      min-height: 124px;
       padding-top: 14px;
       border-top: 1px solid var(--border);
       align-self: stretch;
@@ -198,88 +188,109 @@ $clay-pool: radial-gradient(ellipse 62% 50% at 50% 58%, rgba(255, 232, 210, 0.08
       color: var(--fg-muted);
     }
 
-    &__dots {
+    // The scene and a photo share this box, so swapping them moves nothing.
+    &__box {
+      position: relative;
+      aspect-ratio: 16 / 10;
+
+      .media-carousel { position: absolute; inset: 0; height: 100%; }
+    }
+  }
+
+  // Story-style progress: a segment per step, the current one fills with time.
+  .clay-ctl {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    align-self: stretch;
+
+    &__segs {
+      flex: 1;
       display: flex;
-      gap: 4px;
-      margin: -6px 0 0;
+      gap: 5px;
+      max-width: 300px;
+      margin: 0;
       padding: 0;
       list-style: none;
 
+      li { flex: 1; }
+
       button {
         display: block;
-        width: 30px;
-        height: 24px;
+        position: relative;
+        width: 100%;
+        height: 26px;
         padding: 0;
         border: 0;
         border-radius: 4px;
-        background: none;
+        background: linear-gradient(var(--border), var(--border)) center / 100% 3px no-repeat;
         cursor: pointer;
 
-        &::before {
-          content: "";
-          display: block;
+        span {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: calc(50% - 1.5px);
           height: 3px;
           border-radius: 2px;
-          background: var(--border);
-          transition: background-color 0.25s;
+          background: var(--accent);
+          transform: scaleX(0);
+          transform-origin: 0 50%;
         }
 
-        &:hover::before { background: var(--fg-muted); }
-        &[aria-current]::before { background: var(--accent); }
+        .is-done { transform: none; }
+        .is-filling { animation: clay-fill linear both; }
+
+        &:hover { background-image: linear-gradient(var(--fg-muted), var(--fg-muted)); }
         &:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 1px; }
       }
     }
 
-    &__actions {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 10px;
-
-      .work-row__cta { margin-top: 0; }
-    }
-
-    &__pill {
-      min-height: 30px;
-      padding: 0 12px;
+    &__play {
+      display: grid;
+      place-items: center;
+      width: 30px;
+      height: 30px;
+      padding: 0;
       border: 1px solid var(--border);
-      border-radius: 999px;
+      border-radius: 50%;
       background: none;
-      font: 500 11px/1 $clay-mono;
-      letter-spacing: 0.06em;
       color: var(--fg-muted);
       cursor: pointer;
       transition: border-color 0.2s, color 0.2s;
 
-      &:hover,
-      &[aria-pressed="true"] { border-color: var(--fg); color: var(--fg); }
+      svg { width: 12px; height: 12px; }
+
+      &:hover { border-color: var(--fg); color: var(--fg); }
       &:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
     }
   }
 
-  // The scene's box. No frame: the models and their shadows fade into the page.
+  // The scene's box. No frame: the models stand on the page and their shadows fade into it.
   .clay-stage {
     position: relative;
     width: 100%;
     aspect-ratio: 16 / 10;
     container-type: inline-size;
-    $side: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
-    $ends: linear-gradient(to bottom, transparent, #000 5%, #000 93%, transparent);
+    border-radius: 18px;
+    $side: linear-gradient(to right, transparent, #000 5%, #000 95%, transparent);
+    $ends: linear-gradient(to bottom, transparent, #000 5%, #000 95%, transparent);
     mask-image: $side, $ends;
     mask-composite: intersect;
     -webkit-mask-image: $side, $ends;
     -webkit-mask-composite: source-in;
 
+    &:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; mask-image: none; -webkit-mask-image: none; }
+
     &__still {
       position: absolute;
       inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
       transition: opacity 0.4s;
-    }
 
-    [data-theme="dark"] & { background: $clay-pool; }
+      img { display: block; width: 100%; height: 100%; object-fit: contain; }
+
+      &.is-in { animation: media-in 0.45s ease-out both; }
+    }
 
     // The canvas arrives over the still of the same step.
     &__canvas {
@@ -291,7 +302,7 @@ $clay-pool: radial-gradient(ellipse 62% 50% at 50% 58%, rgba(255, 232, 210, 0.08
     &--live .clay-stage__still { opacity: 0; }
   }
 
-  // Labels on the scene: real text pinned to a 3D point, with a 1px leader.
+  // Labels on the scene: real text pinned to a point, with a 1px leader.
   .clay-tag {
     position: absolute;
     left: 0;
@@ -299,7 +310,7 @@ $clay-pool: radial-gradient(ellipse 62% 50% at 50% 58%, rgba(255, 232, 210, 0.08
     font: 500 clamp(8.5px, 1.16cqw, 10.5px) / 1 $clay-mono;
     letter-spacing: 0.09em;
     text-transform: uppercase;
-    white-space: nowrap;
+    white-space: pre;
     color: var(--fg);
 
     i {
@@ -319,32 +330,52 @@ $clay-pool: radial-gradient(ellipse 62% 50% at 50% 58%, rgba(255, 232, 210, 0.08
     }
   }
 
-  // The same steps without the canvas: stills, one under the other.
-  .clay-steps {
-    grid-column: 1 / -1;
-    order: 3; // after the photos, also in the rows that flip them to the right
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 22px 18px;
-    margin: 0;
+  // The story tile and one thumbnail per photo, in plain sight under the scene.
+  .clay-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 10px 0 0;
     padding: 0;
     list-style: none;
 
-    li {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      text-align: left;
-    }
-
-    img {
+    button {
       display: block;
-      width: 100%;
-      height: auto;
-      margin-bottom: 4px;
+      width: 60px;
+      height: 40px;
+      padding: 0;
+      border: 1.5px solid var(--border);
+      border-radius: 7px;
+      overflow: hidden;
+      background: none;
+      color: var(--fg-muted);
+      cursor: pointer;
+      opacity: 0.72;
+      transition: opacity 0.2s, border-color 0.2s, color 0.2s;
 
-      [data-theme="dark"] & { background: $clay-pool; }
+      img { display: block; width: 100%; height: 100%; object-fit: cover; }
+      svg { display: block; width: 18px; height: 18px; margin: auto; }
+
+      &:hover { opacity: 1; }
+      &:focus-visible { opacity: 1; outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+      &[aria-pressed="true"] { opacity: 1; border-color: var(--accent); color: var(--accent); }
     }
+  }
+
+  // Without the live scene (phones, tablets, reduced-motion): the same player on stills,
+  // under the photos and the words.
+  .clay-player {
+    grid-column: 1 / -1;
+    order: 3; // after the photos, also in the rows that flip them to the right
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-width: 640px;
+    text-align: left;
+
+    .clay-row__step { min-height: 96px; padding-top: 0; border-top: 0; }
+    .clay-ctl__segs { max-width: none; }
   }
 
   // ── The four numbers ────────────────────────────────────────────────────────
@@ -734,4 +765,9 @@ $clay-pool: radial-gradient(ellipse 62% 50% at 50% 58%, rgba(255, 232, 210, 0.08
 @media screen and (min-width: 601px) and (max-width: 900px) {
   .find-my-work .work-row { grid-template-columns: 1fr; gap: 20px; }
   .find-my-work .work-row--flip .work-row__media { order: 0; }
+}
+
+@keyframes clay-fill {
+  from { transform: scaleX(0); }
+  to { transform: none; }
 }
