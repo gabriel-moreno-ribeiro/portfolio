@@ -5,6 +5,8 @@ import { Project, projects } from "../../content/projects";
 import useIsMobile from "../../hooks/useIsMobile";
 import { Counter, usePageVisible, useReducedMotion, useVisible } from "../../lib/motion";
 import CandelaMark from "./CandelaMark";
+import { ClayRow, ClaySteps, useClayPinned } from "./Clay/ClayStory";
+import { CLAY_STORIES } from "./Clay/stories";
 import DesmosSketches from "./DesmosSketches";
 import MedalsShowcase from "./MedalsShowcase";
 
@@ -141,6 +143,13 @@ function MediaCarousel({ project, paused, offset = 0 }: { project: Project; paus
 function ProjectRow({ project, index }: { project: Project; index: number }) {
   const hasMedia = (project.gallery?.length ?? 0) > 0;
   const [paused, setPaused] = useState(false);
+  // A project with a story: pinned and scroll-scrubbed on desktop, a list of stills elsewhere.
+  const story = CLAY_STORIES[project.slug];
+  const pinned = useClayPinned();
+
+  if (story && pinned) {
+    return <ClayRow project={project} steps={story} photos={<MediaCarousel project={project} paused={false} />} />;
+  }
 
   return (
     <article
@@ -167,6 +176,7 @@ function ProjectRow({ project, index }: { project: Project; index: number }) {
           View project <FiArrowUpRight aria-hidden="true" />
         </Link>
       </div>
+      {story && <ClaySteps slug={project.slug} title={project.title} steps={story} />}
     </article>
   );
 }
@@ -186,7 +196,7 @@ const STATS = [
   // The hero carries the ranked ones (SAT, Fundação Estudar, Canastra, medals); these are the rest.
   {
     logo: <img src="/stats/obfep.webp" alt="" width={240} height={160} loading="lazy" decoding="async" />,
-    value: 49, label: "competitions", note: "",
+    value: 38, label: "olympiads", note: "",
   },
   {
     logo: <img src="/stats/screwdriver.webp" alt="" width={121} height={240} loading="lazy" decoding="async" />,

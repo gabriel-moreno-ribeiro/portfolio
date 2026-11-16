@@ -38,7 +38,7 @@ const SECTIONS = [
 const RESERVE: Record<string, [desktop: number, tablet: number, mobile: number]> = {
   background: [959, 1384, 936],
   wardrobe: [650, 650, 487],
-  work: [2310, 4537, 3719],
+  work: [10227, 6455, 6986],
   research: [1654, 2469, 3172],
   skills: [1000, 1000, 714],
   'work-experience': [3243, 3685, 2883],
@@ -176,7 +176,8 @@ function Home() {
   // interaction, or 6 s, instead of competing with the hero for the main thread.
   const [showSticker, setShowSticker] = useState(false);
   // No mobile o sticker fica 0x0 escondido: nem monta (evita 600 ms de módulo no meio da rolagem).
-  const stickerMobile = useIsMobile(600);
+  // Below 1200px there is no left gutter, so the sticker would sit on the content.
+  const stickerMobile = useIsMobile(1200);
   useEffect(() => {
     const events = ['pointermove', 'keydown', 'touchstart', 'scroll'];
     const show = () => {
