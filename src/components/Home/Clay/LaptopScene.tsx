@@ -5,18 +5,17 @@
 // Between steps, what leaves goes first and what arrives comes after, so nothing passes through anything.
 import * as THREE from 'three';
 import { Act, ageOf, Arrow, at, Box, bump, ease, Morph, pop, Rig, ring, settle, slice, spring, Tag, useClay, wins, type Play, type Shot, type V3, type Wins } from './kit';
-import { Bench, Crack, Fan, Mat, MAT, MAT_CENTER } from './LaptopBench';
+import { Bench, CoverOff, FAN_AT, Mat, MAT, MAT_CENTER, OpenLaptop } from './LaptopBench';
 import {
   BrazilMap,
   Carton,
   H_BASE,
   landAt,
+  Hand,
   Laptop,
   LiveTag,
   onScreen,
   Phone,
-  PHONE_FRAME,
-  PHONE_LEAN,
   PHONE_LENS,
   PHONE_SCREEN,
   SALVADOR_AT,
@@ -52,35 +51,36 @@ const here = (p: Play, i: number) => (p.to === i ? (p.from === i ? 1 : p.t) : p.
 const CARTON_AT: V3 = [-1.7, 0, -0.35];
 const CARTON_YAW = 0.2;
 const BENCH: V3 = [0, MAT[1], -0.15];
-const WIFI_AT: V3 = [-1.3, MAT[1], -0.85];
+const TUTORIAL_AT: V3 = [-1.6, 0, 0.3];
 /** The laptop at each step: position and turn about Y. */
 const SPOT: { p: V3; yaw: number }[] = [
   { p: [1.4, 0, 0.55], yaw: -0.2 }, // out of the carton
   { p: BENCH, yaw: 0 }, // taken apart on the mat
   { p: BENCH, yaw: 0 }, // put back together
-  { p: [-1.6, 0, 0.3], yaw: 0.42 }, // playing the tutorial
-  { p: WIFI_AT, yaw: 0.25 }, // on a mat, beside the broken part
-  { p: WIFI_AT, yaw: 0.25 }, // gone
+  { p: TUTORIAL_AT, yaw: 0.42 }, // playing the tutorial
+  { p: TUTORIAL_AT, yaw: 0.42 }, // gone: the WiFixit step has its own laptop, open on a mat
+  { p: TUTORIAL_AT, yaw: 0.42 }, // gone
 ];
 const TERMINAL: V3 = [1.6, 0, -0.3];
 const TERMINAL_YAW = -0.35;
 const WAVE_AT: V3 = [0.25, 0, 1.2];
-const PHONE_AT: V3 = [1.5, MAT[1], 1.0];
-const PHONE_YAW = 0.5;
-const PHONE_K = 1.3;
-const BROKEN_AT: V3 = [0.3, MAT[1] + 0.06, 0.15];
-const BROKEN_K = 2.4;
-const WIFI_MAT: V3 = [-0.1, 0, -0.05];
-const WIFI_MAT_SIZE: V3 = [5.4, MAT[1], 3.9];
+// The WiFixit step: a laptop open on a mat (upside down, the cover off and lying behind it), and a
+// hand that holds a phone over it, the screen up towards us and the camera on its back looking down
+// at the broken fan.
+const OPEN_AT: V3 = [-1.0, MAT[1], -0.25];
+const OPEN_YAW = Math.PI - 0.12;
+const OPEN_K = 1.1;
+const COVER_AT: V3 = [-1.25, MAT[1], -2.12];
+const WIFI_MAT: V3 = [-0.7, 0, -0.95];
+const WIFI_MAT_SIZE: V3 = [4.6, MAT[1], 4.4];
+const HOLD_AT: V3 = [1.48, 0.82, 1.3]; // the bottom of the phone
+const HOLD_K = 1.25;
+const HOLD = new THREE.Euler(-0.95, 0.8, 0, 'YXZ'); // tipped back, turned a little towards the fan
 
 /** A point given in something's own space (at `o`, turned `yaw`, scaled `k`), in the world. */
 const place = (o: V3, yaw: number, [x, y, z]: V3, k = 1): V3 => [o[0] + (x * Math.cos(yaw) + z * Math.sin(yaw)) * k, o[1] + y * k, o[2] + (-x * Math.sin(yaw) + z * Math.cos(yaw)) * k];
-/** A point in the phone's leaning frame, in the world. */
-const onPhone = ([x, y, z]: V3): V3 => {
-  const c = Math.cos(PHONE_LEAN);
-  const s = Math.sin(PHONE_LEAN);
-  return place(PHONE_AT, PHONE_YAW, [PHONE_FRAME[0] + x, PHONE_FRAME[1] + y * c - z * s, PHONE_FRAME[2] + y * s + z * c], PHONE_K);
-};
+/** A point in the held phone's own space, in the world. */
+const onPhone = (v: V3): V3 => new THREE.Vector3(...v).multiplyScalar(HOLD_K).applyEuler(HOLD).add(new THREE.Vector3(...HOLD_AT)).toArray() as V3;
 
 // ── 1 · It comes in ──────────────────────────────────────────────────────────
 // The flaps spring open one by one, the laptop is lifted out and set down beside the carton, its lid
@@ -107,7 +107,7 @@ function laptopAt(step: number, age: number, o: Pose) {
   o.z = s.p[2];
   o.yaw = s.yaw;
   o.tilt = 0;
-  o.s = step === MAP ? 0 : 1;
+  o.s = step >= WIFIXIT ? 0 : 1;
   // Fixed, it gives a small jump of joy as the screen comes on.
   if (step === BACK) o.y += 0.09 * bump(slice(age, T.on + 0.02, T.on + 0.3));
   if (step !== 0) return;
@@ -159,8 +159,7 @@ const screenOf = (p: Play) => {
   if (s === 0) return ageOf(p, 0) > SAD_AT ? SCREEN.sad : SCREEN.off;
   if (s === BACK) return ageOf(p, BACK) > T.on ? SCREEN.on : SCREEN.off;
   if (s === HINDI) return ageOf(p, HINDI) > SWAP ? SCREEN.portuguese : SCREEN.hindi;
-  // Beside its broken part it is as sad as when it came in.
-  return s === WIFIXIT ? SCREEN.sad : SCREEN.off;
+  return SCREEN.off;
 };
 // Broken, the screen flickers twice as it tries to start. Fixed, it flashes up and settles: the end of the repair.
 const glowOf = (p: Play) => {
@@ -231,24 +230,36 @@ function Subtitle({ portuguese }: { portuguese?: boolean }) {
 }
 
 // ── 5 · WiFixit ──────────────────────────────────────────────────────────────
-// A broken fan lies by the laptop. The phone takes aim, photographs it, thinks, and the repair guide
-// for it comes up on its screen, step by step.
-const AIM = 0.74;
-const FLASH = 1.05;
-const GUIDE: [number, number] = [1.45, 1.8];
+// A laptop lies open on the mat, its fan broken. A hand comes in with a phone, holds it over the
+// laptop, the thumb goes to the button and presses, the flash fires, the phone thinks, and the repair
+// guide for the fan comes up on its screen, step by step, still in the hand.
+const IN: [number, number] = [0.5, 1.02];
+const AIM = 1.0;
+const FLASH = 1.3;
+const GUIDE: [number, number] = [1.72, 2.06];
 const tickAt = (i: number) => GUIDE[1] - 0.05 + i * 0.13;
 const phoneScreen = (p: Play) => {
   const a = ageOf(p, WIFIXIT);
   return a < FLASH ? SCREEN.viewfinder : a < FLASH + 0.14 ? SCREEN.flash : SCREEN.waiting;
 };
 const phoneGlow = (p: Play) => 1.4 * bump(slice(ageOf(p, WIFIXIT), FLASH - 0.02, FLASH + 0.2));
-// The phone hops and leans in to take aim, and flinches as it shoots.
-const snapAct = (g: THREE.Group, p: Play) => {
+// The thumb swings over to the button, presses as the flash fires, and goes back to the edge of the phone.
+const thumbOf = (p: Play) => {
   const a = ageOf(p, WIFIXIT);
-  const here = at(p, WIFIXIT);
-  g.position.y = 0.1 * bump(slice(a, AIM - 0.3, AIM)) * here;
-  g.rotation.x = -0.1 * ease(slice(a, AIM - 0.3, AIM)) * (1 - ease(slice(a, GUIDE[0] - 0.2, GUIDE[0] + 0.1))) * here;
-  g.scale.y = 1 - 0.07 * bump(slice(a, FLASH, FLASH + 0.18));
+  return ease(slice(a, AIM - 0.02, FLASH - 0.04)) * (1 - ease(slice(a, FLASH + 0.12, FLASH + 0.42)));
+};
+// The hand comes in along its own forearm from outside the frame, a little past its place and back
+// (taking aim), kicks as it shoots, and never holds quite still. It leaves the way it came.
+const ARM = new THREE.Vector3(0, -1, 0).applyEuler(HOLD);
+const handAct = (g: THREE.Group, p: Play, time: number) => {
+  const a = ageOf(p, WIFIXIT);
+  const k = p.to === WIFIXIT ? settle(slice(a, IN[0], IN[1]), 0.8) : p.from === WIFIXIT ? 1 - ease(slice(p.t, 0, 0.4)) : 0;
+  g.visible = k > 0.001;
+  if (!g.visible) return;
+  const out = (1 - k) * 3.4 - 0.06 * bump(slice(a, FLASH, FLASH + 0.22));
+  g.position.set(HOLD_AT[0] + ARM.x * out, HOLD_AT[1] + ARM.y * out + Math.sin(time * 2.3) * 0.012, HOLD_AT[2] + ARM.z * out);
+  g.rotation.order = 'YXZ';
+  g.rotation.set(HOLD.x + Math.sin(time * 1.7) * 0.012 - 0.05 * bump(slice(a, FLASH, FLASH + 0.25)), HOLD.y, 0);
 };
 const cardAct = (g: THREE.Group, p: Play) => {
   const u = slice(ageOf(p, WIFIXIT), GUIDE[0], GUIDE[1]);
@@ -259,12 +270,14 @@ const cardAct = (g: THREE.Group, p: Play) => {
 };
 const tickOf = (p: Play, i: number) => pop(slice(ageOf(p, WIFIXIT), tickAt(i), tickAt(i) + 0.22), 2.2);
 const LENS = onPhone(PHONE_LENS);
+const FAN = place(OPEN_AT, OPEN_YAW, FAN_AT, OPEN_K);
 // The camera's view: from the lens to the two sides of the fan.
 const VIEW: V3[] = [
-  [BROKEN_AT[0] - 0.44, BROKEN_AT[1], BROKEN_AT[2] - 0.16],
-  [BROKEN_AT[0] + 0.4, BROKEN_AT[1], BROKEN_AT[2] + 0.24],
+  [FAN[0] - 0.3, FAN[1] + 0.03, FAN[2] - 0.08],
+  [FAN[0] + 0.3, FAN[1] + 0.03, FAN[2] + 0.08],
 ];
-const VIEW_TOP: V3 = [(LENS[0] + VIEW[0][0]) / 2, (LENS[1] + VIEW[0][1]) / 2, (LENS[2] + VIEW[0][2]) / 2];
+// Where "Photo of the problem" hangs on the view: near the lens, so the label sits on the empty page above.
+const VIEW_TAG: V3 = [THREE.MathUtils.lerp(VIEW[0][0], LENS[0], 0.8), THREE.MathUtils.lerp(VIEW[0][1], LENS[1], 0.8), THREE.MathUtils.lerp(VIEW[0][2], LENS[2], 0.8)];
 
 // ── 6 · 21 states ────────────────────────────────────────────────────────────
 const landed = (p: Play) => {
@@ -306,7 +319,7 @@ const CAMERA: Shot[] = [
     ],
   },
   { pos: [0, 3.8, 8.7], look: [0, 0.8, 0.2], to: { pos: [0, 3.6, 8.2], look: [0, 0.8, 0.2] }, over: [0.5, 2.3] },
-  { pos: [0.1, 4.6, 7.9], look: [-0.1, 0.45, -0.05], to: { pos: [0.3, 4.2, 7.3], look: [0, 0.5, 0] }, over: [0.5, 2.2] },
+  { pos: [0.15, 5.2, 6.3], look: [-0.25, 0.3, -0.75], to: { pos: [0.25, 4.9, 5.9], look: [-0.2, 0.35, -0.7] }, over: [0.5, 2.2] },
   { pos: [0.3, 7.9, 8.4], look: [0.15, 0, 0.15], to: { pos: [0.3, 7.5, 7.9], look: [0.15, 0, 0.15] }, over: [0.5, 2.6] },
 ];
 
@@ -361,32 +374,33 @@ export default function LaptopScene() {
         <Tag at={[0.6, 0.2, 0]} dx={40} dy={30} on={[HINDI]} after={SWAP + 0.25}>Portuguese dub</Tag>
       </Act>
 
-      {/* 5 · WiFixit: a broken part of the laptop on the mat beside it, the phone photographs it, and the repair guide comes back to it */}
+      {/* 5 · WiFixit: a laptop open on the mat with a broken fan, a hand photographs it with a phone, and the repair guide comes back on the phone */}
       <Morph k={[null, null, null, null, { p: WIFI_MAT }, null]} win={io([WIFIXIT], { '3>4': [0.2, 0.55] }, [0.3, 0.65])}>
         <group position={[0, MAT[1], 0]}>
           <Mat size={WIFI_MAT_SIZE} />
         </group>
       </Morph>
-      <Morph k={[null, null, null, null, { p: BROKEN_AT, r: [0, 0.4, 0], s: BROKEN_K }, null]} win={io([WIFIXIT], { '3>4': [0.5, 0.88] })} bounce={0.12} twirl={0.5}>
-        <Fan broken />
-        <Crack />
-        <Tag at={[-0.14, 0.03, 0.1]} dx={-50} dy={40} on={[WIFIXIT]} after={0.3}>Hardware problem</Tag>
+      <Morph k={[null, null, null, null, { p: OPEN_AT, r: [0, OPEN_YAW, 0], s: OPEN_K }, null]} win={io([WIFIXIT], { '3>4': [0.42, 0.88] })} bounce={0.08}>
+        <OpenLaptop />
+        <Tag at={[FAN_AT[0] + 0.12, FAN_AT[1] + 0.03, FAN_AT[2] + 0.12]} dx={-30} dy={84} on={[WIFIXIT]} after={0.35}>Hardware problem</Tag>
       </Morph>
-      <Morph k={[null, null, null, null, { p: PHONE_AT, r: [0, PHONE_YAW, 0], s: PHONE_K }, null]} win={io([WIFIXIT], { '3>4': [0.6, 1] })} bounce={0.1}>
-        <Act f={snapAct}>
-          <Phone screen={phoneScreen} glow={phoneGlow}>
-            <Act f={cardAct}>
-              <TutorialCard step={tickOf} />
-            </Act>
-            <Tag at={[0.3, 0.95, 0.05]} dx={46} dy={-14} on={[WIFIXIT]} after={GUIDE[1]}>Tutorial</Tag>
-          </Phone>
-        </Act>
-        <Tag at={[0.34, 0.06, 0.3]} dx={40} dy={26} on={[WIFIXIT]}>WiFixit</Tag>
+      <Morph k={[null, null, null, null, { p: COVER_AT, r: [0, 0.14, 0], s: OPEN_K }, null]} win={io([WIFIXIT], { '3>4': [0.55, 1] })} bounce={0.08}>
+        <CoverOff />
       </Morph>
+      <Act f={handAct} scale={HOLD_K}>
+        <Phone screen={phoneScreen} glow={phoneGlow}>
+          <Act f={cardAct}>
+            <TutorialCard step={tickOf} />
+          </Act>
+          <Hand thumb={thumbOf} />
+          <Tag at={[0.3, 1.0, 0.05]} dx={52} dy={-20} on={[WIFIXIT]} after={GUIDE[1]}>Tutorial</Tag>
+          <Tag at={[0.34, 0.5, 0.05]} dx={56} dy={14} on={[WIFIXIT]} after={IN[1]}>WiFixit</Tag>
+        </Phone>
+      </Act>
       {VIEW.map((v, i) => (
         <Arrow key={i} a={LENS} b={v} lift={0} head={false} on={[WIFIXIT]} after={AIM} />
       ))}
-      <Tag at={VIEW_TOP} dx={6} dy={-46} on={[WIFIXIT]} after={FLASH + 0.05}>{'Photo of\nthe problem'}</Tag>
+      <Tag at={VIEW_TAG} dx={-12} dy={-94} on={[WIFIXIT]} after={FLASH + 0.05}>{'Photo of\nthe problem'}</Tag>
 
       {/* 6 · 121 laptops, 21 states: one laptop after another from Salvador; each state turns orange as its laptop lands */}
       <BrazilMap />

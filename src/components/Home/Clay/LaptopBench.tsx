@@ -5,7 +5,7 @@ import { Line } from '@react-three/drei';
 import { Children, useEffect, useMemo, useState, type ReactNode } from 'react';
 import * as THREE from 'three';
 import { Act, ageOf, at, Box, ease, Puck, Rod, Slab, slice, Ticks, useClay, type Play, type V3 } from './kit';
-import { COVER_SCREWS, Cover, D, HB, HINGE_SCREWS, LiveTag, ScrewShape } from './LaptopParts';
+import { COVER_SCREWS, Cover, D, HB, HINGE_SCREWS, LiveTag, ScrewShape, Shell } from './LaptopParts';
 import { apart, APART, BACK, benchScale, N_PARTS, N_SCREWS, T, track, TURN, type Key6, type Win } from './teardown';
 
 const HALF_PI = Math.PI / 2;
@@ -123,7 +123,7 @@ export function Ram({ accent }: { accent?: boolean }) {
 const PIPE = new THREE.CatmullRomCurve3([new THREE.Vector3(0.14, -0.006, 0), new THREE.Vector3(0.45, -0.012, -0.02), new THREE.Vector3(0.8, -0.012, -0.03)]);
 const PIPE_FINS = new THREE.CatmullRomCurve3([new THREE.Vector3(0, -0.01, -0.16), new THREE.Vector3(0, -0.01, -0.33)]);
 const FIN: V3 = [0.012, 0.06, 0.1];
-/** The fan, dark blades in a light ring, with its heat pipe: to a plate that sits on the processor, and to the fins at the vent. */
+/** The fan, dark blades in a light ring, with its heat pipe: to a plate that sits on the processor, and to the fins at the vent. Broken, its ring is orange and two blades are gone. */
 export function Fan({ broken }: { broken?: boolean }) {
   const { mats } = useClay();
   return (
@@ -134,15 +134,11 @@ export function Fan({ broken }: { broken?: boolean }) {
       {Array.from({ length: broken ? 5 : 7 }, (_, i) => (
         <Box key={i} size={[0.11, 0.01, 0.05]} r={0.004} material={mats.shade.dark} position={[Math.cos((i * Math.PI * 2) / 7) * 0.1, 0, Math.sin((i * Math.PI * 2) / 7) * 0.1]} rotation={[0.4, (-i * Math.PI * 2) / 7, 0]} />
       ))}
-      {!broken && (
-        <>
-          <Rod path={PIPE} r={0.022} segments={20} />
-          <Box size={[0.24, 0.012, 0.24]} position={[0.8, -0.008, -0.03]} r={0.006} />
-          <Rod path={PIPE_FINS} r={0.022} segments={8} />
-          <Box size={[0.36, 0.012, 0.11]} position={[0, -0.036, -0.36]} r={0.004} material={mats.shade.board} />
-          <Ticks n={10} a={[-0.16, -0.01, -0.36]} b={[0.16, -0.01, -0.36]} size={FIN} major={99} along={0} />
-        </>
-      )}
+      <Rod path={PIPE} r={0.022} segments={20} />
+      <Box size={[0.24, 0.012, 0.24]} position={[0.8, -0.008, -0.03]} r={0.006} />
+      <Rod path={PIPE_FINS} r={0.022} segments={8} />
+      <Box size={[0.36, 0.012, 0.11]} position={[0, -0.036, -0.36]} r={0.004} material={mats.shade.board} />
+      <Ticks n={10} a={[-0.16, -0.01, -0.36]} b={[0.16, -0.01, -0.36]} size={FIN} major={99} along={0} />
     </group>
   );
 }
@@ -375,6 +371,39 @@ function Staged({ children }: { children: ReactNode }) {
     return () => cancel(id);
   }, [n, list.length]);
   return <>{list.slice(0, n)}</>;
+}
+
+const FAN = 3;
+/** Where the fan is inside the open base (the base's own space, upside down, y = 0 where it stands). */
+export const FAN_AT = PARTS[FAN].at;
+/**
+ * The laptop as the teardown leaves it, standing still (the WiFixit step): upside down, the bottom
+ * cover off, every part in its place, and the fan broken. Origin where it stands.
+ */
+export function OpenLaptop() {
+  return (
+    <Staged>
+      <group position={[0, HB, 0]} rotation={[0, 0, Math.PI]}>
+        <Shell />
+      </group>
+      <Board />
+      <Posts />
+      {PARTS.map((part, i) => (
+        <group key={i} position={part.at}>
+          {i === FAN ? <Fan broken /> : part.node}
+          {i === FAN && <Crack />}
+        </group>
+      ))}
+    </Staged>
+  );
+}
+/** The bottom cover lying on the mat, outside up. Origin under its centre. */
+export function CoverOff() {
+  return (
+    <group position={[0, 0.035, 0]} rotation={[0, 0, Math.PI]}>
+      <Cover />
+    </group>
+  );
 }
 
 /** When part `i` has landed on the mat, in step 2. */

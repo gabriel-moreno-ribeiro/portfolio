@@ -334,6 +334,33 @@ function Display({ mat }: { mat: THREE.Material }) {
 }
 
 const PORTS: [number, number, number][] = [[-1, -0.42, 0.16], [-1, -0.18, 0.16], [-1, 0.1, 0.24], [1, -0.4, 0.2], [1, -0.1, 0.1]];
+/** The base without its bottom cover: the walls, the deck and everything on it. Origin at the bottom centre, right way up. */
+export function Shell() {
+  const { mats } = useClay();
+  return (
+    <>
+      {/* The walls, the deck and its keys */}
+      <Box size={[W, 0.14, 0.05]} position={[0, 0.105, D / 2 - 0.025]} r={0.02} />
+      <Box size={[W, 0.14, 0.05]} position={[0, 0.105, -D / 2 + 0.025]} r={0.02} />
+      <Box size={[0.05, 0.14, D - 0.1]} position={[W / 2 - 0.025, 0.105, 0]} r={0.02} />
+      <Box size={[0.05, 0.14, D - 0.1]} position={[-W / 2 + 0.025, 0.105, 0]} r={0.02} />
+      <Box size={[W, 0.04, D]} position={[0, DECK - 0.02, 0]} r={0.02} />
+      <Keyboard />
+      <Box size={[0.8, 0.025, 0.12]} position={[0.02, DECK + 0.0125, 0.03]} r={0.01} />
+      {/* The trackpad and its button line; the ports on the sides; the notch that opens the lid */}
+      <Box size={[0.74, 0.012, 0.42]} position={[0, DECK + 0.004, 0.5]} r={0.005} />
+      <Box size={[0.66, 0.004, 0.012]} position={[0, DECK + 0.0095, 0.62]} r={0.002} material={mats.shade.mid} />
+      {PORTS.map(([side, z, w]) => (
+        <Box key={`${side}${z}`} size={[0.012, 0.042, w]} position={[side * (W / 2 + 0.001), 0.1, z]} r={0.004} material={mats.shade.dark} />
+      ))}
+      <Box size={[0.46, 0.022, 0.012]} position={[0, 0.165, D / 2 + 0.001]} r={0.004} material={mats.shade.mid} />
+      {HINGE_SCREWS.map(([x, , z]) => (
+        <Box key={x} size={[0.2, 0.008, 0.11]} position={[x, DECK + 0.002, z]} r={0.004} />
+      ))}
+      <Holes at={HINGE_HOLES} />
+    </>
+  );
+}
 /**
  * The laptop. `lid`: how open (0..1 of OPEN). `screen`: which picture. `flip`: 0 upright, 1 upside
  * down. `detached`: 0 the screen is on its hinge, 1 it lies aside. `cover` and `screw`: how far the
@@ -349,7 +376,6 @@ export function Laptop({ lid, screen, glow, flip, detached, cover, screw, hinge 
   screw: (p: Play, k: number) => number;
   hinge: (p: Play, k: number) => number;
 }) {
-  const { mats } = useClay();
   const mat = useScreen(screen, glow);
   const shell = useRef<THREE.Group>(null);
   const screws = useRef<(THREE.Group | null)[]>([]);
@@ -377,25 +403,7 @@ export function Laptop({ lid, screen, glow, flip, detached, cover, screw, hinge 
               <ScrewShape />
             </group>
           ))}
-          {/* The walls, the deck and its keys */}
-          <Box size={[W, 0.14, 0.05]} position={[0, 0.105, D / 2 - 0.025]} r={0.02} />
-          <Box size={[W, 0.14, 0.05]} position={[0, 0.105, -D / 2 + 0.025]} r={0.02} />
-          <Box size={[0.05, 0.14, D - 0.1]} position={[W / 2 - 0.025, 0.105, 0]} r={0.02} />
-          <Box size={[0.05, 0.14, D - 0.1]} position={[-W / 2 + 0.025, 0.105, 0]} r={0.02} />
-          <Box size={[W, 0.04, D]} position={[0, DECK - 0.02, 0]} r={0.02} />
-          <Keyboard />
-          <Box size={[0.8, 0.025, 0.12]} position={[0.02, DECK + 0.0125, 0.03]} r={0.01} />
-          {/* The trackpad and its button line; the ports on the sides; the notch that opens the lid */}
-          <Box size={[0.74, 0.012, 0.42]} position={[0, DECK + 0.004, 0.5]} r={0.005} />
-          <Box size={[0.66, 0.004, 0.012]} position={[0, DECK + 0.0095, 0.62]} r={0.002} material={mats.shade.mid} />
-          {PORTS.map(([side, z, w]) => (
-            <Box key={`${side}${z}`} size={[0.012, 0.042, w]} position={[side * (W / 2 + 0.001), 0.1, z]} r={0.004} material={mats.shade.dark} />
-          ))}
-          <Box size={[0.46, 0.022, 0.012]} position={[0, 0.165, D / 2 + 0.001]} r={0.004} material={mats.shade.mid} />
-          {HINGE_SCREWS.map(([x, , z]) => (
-            <Box key={x} size={[0.2, 0.008, 0.11]} position={[x, DECK + 0.002, z]} r={0.004} />
-          ))}
-          <Holes at={HINGE_HOLES} />
+          <Shell />
         </group>
       </Act>
       {HINGE_SCREWS.map((s, k) => (
@@ -548,27 +556,53 @@ export function Wave({ on }: { on: (p: Play) => number }) {
   );
 }
 
-// ── The phone ───────────────────────────────────────────────────────────────
-// Origin at the bottom centre of its stand, screen towards +Z, leaning back a little.
-export const PHONE_LEAN = -0.2;
-/** The leaning frame of the phone, inside its stand. Children of `Phone` live in it. */
-export const PHONE_FRAME: V3 = [0, 0.07, 0.06];
+// ── The phone, and the hand that holds it ───────────────────────────────────
+// Origin at the bottom centre of the phone, screen towards +Z, its length along +Y.
 export const PHONE_SCREEN: V3 = [0, 0.68, 0.04];
 export const PHONE_LENS: V3 = [-0.18, 1.12, -0.05];
 export function Phone({ screen, glow, children }: { screen: (p: Play) => number; glow: (p: Play) => number; children?: ReactNode }) {
   const mat = useScreen(screen, glow);
   return (
     <group>
-      <Box size={[0.78, 0.06, 0.62]} position={[0, 0.03, 0]} r={0.03} />
-      <Box size={[0.7, 0.08, 0.12]} position={[0, 0.1, 0.17]} r={0.03} />
-      <group position={PHONE_FRAME} rotation={[PHONE_LEAN, 0, 0]}>
-        <Box size={[0.66, 1.28, 0.07]} position={[0, 0.66, 0]} r={0.08} />
-        <mesh position={[PHONE_SCREEN[0], PHONE_SCREEN[1], 0.0365]} material={mat}>
-          <planeGeometry args={[0.56, 1.02]} />
-        </mesh>
-        <Puck r={0.065} h={0.03} segments={20} position={PHONE_LENS} rotation={[HALF_PI, 0, 0]} />
-        {children}
-      </group>
+      <Box size={[0.66, 1.28, 0.07]} position={[0, 0.66, 0]} r={0.08} />
+      <mesh position={[PHONE_SCREEN[0], PHONE_SCREEN[1], 0.0365]} material={mat}>
+        <planeGeometry args={[0.56, 1.02]} />
+      </mesh>
+      <Puck r={0.065} h={0.03} segments={20} position={PHONE_LENS} rotation={[HALF_PI, 0, 0]} />
+      {children}
+    </group>
+  );
+}
+
+// A right hand, in the phone's own space: the phone lies in the palm, the four fingers come round
+// its left edge, the thumb round its right edge onto the screen, and the wrist goes down into a
+// sleeve. `thumb`: 0 resting along the edge, 1 on the shutter button (it swings over and presses).
+const FINGERS: [number, number, number, number][] = [[0.79, 0.215, 0.135, 0.1], [0.635, 0.235, 0.14, 0.03], [0.48, 0.225, 0.135, -0.04], [0.335, 0.19, 0.118, -0.1]];
+export function Hand({ thumb }: { thumb: (p: Play) => number }) {
+  const { mats } = useClay();
+  return (
+    <group>
+      <Box size={[0.6, 0.74, 0.24]} position={[0.05, 0.46, -0.16]} r={0.11} />
+      {FINGERS.map(([y, w, h, turn]) => (
+        <Box key={y} size={[w, h, 0.21]} position={[-0.325 - w / 2 + 0.1, y, -0.04]} rotation={[0, 0, turn]} r={0.062} />
+      ))}
+      {/* The ball of the thumb, then the thumb itself */}
+      <Box size={[0.24, 0.4, 0.24]} position={[0.36, 0.24, -0.09]} rotation={[0, 0, 0.2]} r={0.1} />
+      <Act
+        position={[0.4, 0.2, 0.055]}
+        f={(g, p) => {
+          const k = thumb(p);
+          g.rotation.z = lerp(-1.3, -0.28, ease(k));
+          g.position.z = 0.075 - 0.03 * bump(slice(k, 0.55, 1.45));
+        }}
+      >
+        <Box size={[0.4, 0.135, 0.12]} position={[-0.17, 0, 0]} r={0.058} />
+      </Act>
+      {/* The heel of the hand, the wrist, and the sleeve it goes into (cuff first) */}
+      <Box size={[0.56, 0.3, 0.25]} position={[0.1, 0.02, -0.17]} rotation={[0, 0, -0.06]} r={0.11} />
+      <Box size={[0.42, 0.42, 0.22]} position={[0.16, -0.22, -0.19]} rotation={[0, 0, -0.14]} r={0.1} />
+      <Box size={[0.58, 0.13, 0.34]} position={[0.21, -0.44, -0.2]} rotation={[0, 0, -0.14]} r={0.055} material={mats.shade.mid} />
+      <Box size={[0.52, 2, 0.3]} position={[0.35, -1.42, -0.2]} rotation={[0, 0, -0.14]} r={0.09} material={mats.shade.mid} />
     </group>
   );
 }
