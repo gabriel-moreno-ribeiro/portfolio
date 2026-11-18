@@ -35,58 +35,113 @@
     }
   }
 
-  // The robot's speech bubble, to its left, with the tail pointing at it.
+  // The robot's callout, to its left: the nav pill's frosted glass, and a hairline
+  // leader ending in a dot on the robot (the way the clay stories label their objects).
   .hero-invite {
     position: absolute;
     z-index: 2; // above the canvas, which reaches under it
-    top: 96px;
-    right: calc(100% - 28px);
-    width: 212px;
+    top: 92px;
+    right: calc(100% + 2px);
+    width: 204px;
     box-sizing: border-box;
-    padding: 12px 14px;
+    padding: 14px 16px 15px;
     display: flex;
     flex-direction: column;
-    gap: 4px;
-    border: 1.5px solid var(--border);
-    border-radius: 16px;
-    background: var(--surface);
+    gap: 5px;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    background: color-mix(in srgb, var(--surface) 80%, transparent);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
     color: var(--fg);
     font: inherit;
-    font-size: 13px;
-    line-height: 1.35;
     text-align: left;
     animation: hero-invite-in 0.35s ease-out 0.9s backwards;
 
+    // Leader and its dot.
+    &::before,
     &::after {
       content: '';
       position: absolute;
-      top: 26px;
-      right: -7px;
-      width: 12px;
-      height: 12px;
-      border-top: 1.5px solid var(--border);
-      border-right: 1.5px solid var(--border);
-      background: var(--surface);
-      transform: rotate(45deg);
+      top: 36px;
+    }
+    &::before {
+      left: 100%;
+      width: 50px;
+      height: 1px;
+      background: var(--fg-muted);
+    }
+    &::after {
+      left: calc(100% + 48px);
+      width: 5px;
+      height: 5px;
+      margin-top: -2px;
+      border-radius: 50%;
+      background: var(--accent-decor);
     }
 
-    strong { font-size: 15px; font-weight: 700; }
-    > span { color: var(--fg-muted); }
+    // Meta lines: mono, uppercase, tracked (the rail and the clay labels).
+    &__label {
+      font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--fg-muted);
+
+      &--live::before {
+        content: '';
+        display: inline-block;
+        width: 6px;
+        height: 6px;
+        margin-right: 7px;
+        border-radius: 50%;
+        background: var(--accent-decor);
+      }
+    }
+
+    // The robot's line: the site's serif italic, in the text orange.
+    em {
+      font-family: var(--font-serif);
+      font-size: 25px;
+      line-height: 1.1;
+      color: var(--accent);
+    }
+
+    &__text {
+      font-size: 13px;
+      line-height: 1.4;
+      color: var(--fg-muted);
+    }
 
     &__cta {
-      margin-top: 4px;
+      margin-top: 6px;
       display: inline-flex;
       align-items: center;
       gap: 6px;
+      font-size: 13px;
       font-weight: 600;
-      color: var(--accent) !important;
+
+      svg { font-size: 15px; color: var(--accent-decor); transition: transform 0.2s ease; }
     }
 
-    ul { margin: 2px 0 0; padding: 0; list-style: none; display: grid; gap: 2px; }
-    li { color: var(--fg-muted); border-radius: 6px; }
-    li.is-hit { color: var(--fg); font-weight: 600; animation: hero-invite-hit 0.5s ease-out; }
+    // The gestures: a ruled strip of line icons; the one just seen turns orange.
+    ul {
+      margin: 6px 0 2px;
+      padding: 7px 0;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      border-block: 1px solid var(--border);
+    }
+    li {
+      display: inline-flex;
+      font-size: 19px;
+      color: var(--fg);
+    }
+    li.is-hit { color: var(--accent-decor); animation: hero-invite-hit 0.5s ease-out; }
+    &__label--said { color: var(--accent); min-height: 13px; }
 
-    // The first bubble waits for the robot to arrive; the list of gestures does not.
+    // The first callout waits for the robot to arrive; the list of gestures does not.
     &.is-on { animation-delay: 0s; }
   }
 
@@ -94,8 +149,8 @@
     cursor: pointer;
     transition: border-color 0.2s ease, transform 0.12s ease;
 
-    &:hover { border-color: var(--accent); transform: translateY(-2px); }
-    &:hover::after { border-color: var(--accent); }
+    &:hover { border-color: var(--accent-decor); transform: translateY(-2px); }
+    &:hover .hero-invite__cta svg { transform: translateX(3px); }
     &:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 3px; }
   }
 
@@ -223,7 +278,7 @@
 }
 
 @keyframes hero-invite-hit {
-  from { transform: scale(1.12); }
+  from { transform: scale(1.3); }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -359,7 +414,7 @@
       height: 180px;
     }
 
-    .hero-invite { top: 44px; }
+    .hero-invite { top: 14px; right: calc(100% + 26px); }
 
     .heading-section {
       gap: 16px;

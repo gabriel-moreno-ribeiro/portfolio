@@ -1,17 +1,20 @@
-// The robot's speech bubble in the hero. Off: says what hands-free mode does and turns it
-// on. On: lists the gestures the robot answers and marks the one it has just seen.
-import { FiVideo } from 'react-icons/fi';
+// The robot's callout in the hero. Off: says what hands-free mode does and turns it on.
+// On: lists the gestures the robot answers and marks the one it has just seen.
+import type { IconType } from 'react-icons';
+import { FiArrowRight } from 'react-icons/fi';
+import { PiHandFist, PiHandPalm, PiHandPeace, PiHandWaving, PiPersonArmsSpread, PiThumbsUp } from 'react-icons/pi';
 import { toggleHandsfree, useHandsfreeStore } from '../../store/handsfreeStore';
 import { useInputSourceStore, type RobotMove } from '../../store/inputSourceStore';
 
 const supportsCamera = typeof navigator !== 'undefined' && !!navigator.mediaDevices?.getUserMedia;
 
-const TRICKS: { move: RobotMove; sign: string; does: string }[] = [
-  { move: 'wave', sign: '👋', does: 'waves back' },
-  { move: 'spin', sign: '✌️', does: 'spins' },
-  { move: 'jump', sign: '✊ → ✋', does: 'jumps' },
-  { move: 'nod', sign: '👍', does: 'nods' },
-  { move: 'cheer', sign: '🙌', does: 'parties' },
+// What the visitor does (the icons, with a name for screen readers) and what the robot does back.
+const TRICKS: { move: RobotMove; icons: IconType[]; sign: string; does: string }[] = [
+  { move: 'wave', icons: [PiHandWaving], sign: 'Wave', does: 'waves back' },
+  { move: 'spin', icons: [PiHandPeace], sign: 'Peace sign', does: 'spins' },
+  { move: 'jump', icons: [PiHandFist, PiHandPalm], sign: 'Fist, then open hand', does: 'jumps' },
+  { move: 'nod', icons: [PiThumbsUp], sign: 'Thumbs up', does: 'nods' },
+  { move: 'cheer', icons: [PiPersonArmsSpread], sign: 'Both hands up', does: 'parties' },
 ];
 
 export default function HandsfreeInvite() {
@@ -23,30 +26,42 @@ export default function HandsfreeInvite() {
   if (!isEnabled || !tracking) {
     return (
       <button type="button" className="hero-invite" onClick={toggleHandsfree}>
-        <strong>Wave at me 👋</strong>
-        <span>Turn on your camera and I copy your moves.</span>
+        <span className="hero-invite__label">Hands-free</span>
+        <em>Wave at me.</em>
+        <span className="hero-invite__text">Turn on your camera and I copy your face and hands.</span>
         <span className="hero-invite__cta">
-          <FiVideo aria-hidden="true" /> Try hands-free
+          Try it <FiArrowRight aria-hidden="true" />
         </span>
       </button>
     );
   }
 
+  const hit = TRICKS.find((t) => t.move === last?.kind);
   return (
     <div className="hero-invite is-on">
-      <strong>I copy your face</strong>
-      <span>Blink, smile, open your mouth, tilt your head. And with your hands:</span>
+      <span className="hero-invite__label hero-invite__label--live">Camera on</span>
+      <em>I copy you.</em>
+      <span className="hero-invite__label">Blink · smile · yawn</span>
       <ul>
         {TRICKS.map((t) => (
           // The key changes with every new trick, so the highlight replays each time.
-          <li key={t.move === last?.kind ? `${t.move}-${last.at}` : t.move} className={t.move === last?.kind ? 'is-hit' : undefined}>
-            <span aria-hidden="true">{t.sign}</span> {t.does}
+          <li
+            key={t === hit ? `${t.move}-${last!.at}` : t.move}
+            className={t === hit ? 'is-hit' : undefined}
+            role="img"
+            aria-label={`${t.sign}: the robot ${t.does}`}
+            title={`${t.sign}: the robot ${t.does}`}
+          >
+            {t.icons.map((Icon, i) => (
+              <Icon key={i} aria-hidden="true" />
+            ))}
           </li>
         ))}
       </ul>
-      <p className="sr-only" aria-live="polite">
-        {last ? `The robot ${TRICKS.find((t) => t.move === last.kind)?.does}` : ''}
-      </p>
+      {/* Says what the robot has just done; until then, what to do. */}
+      <span className="hero-invite__label hero-invite__label--said" aria-live="polite">
+        {hit ? `${hit.sign} · ${hit.does}` : 'Now try a gesture'}
+      </span>
     </div>
   );
 }
