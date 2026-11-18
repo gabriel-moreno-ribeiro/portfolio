@@ -6,7 +6,6 @@ import useIsMobile from "../../hooks/useIsMobile";
 import { usePageVisible, useReducedMotion, useVisible } from "../../lib/motion";
 import { ClayPlayer, ClayRow, useClayLive } from "./Clay/ClayStory";
 import { CLAY_STORIES } from "./Clay/stories";
-import DesmosSketches from "./DesmosSketches";
 import MedalsShowcase from "./MedalsShowcase";
 import NumbersStrip from "./NumbersStrip";
 
@@ -197,7 +196,6 @@ function FindMyWork() {
           <ProjectRow key={project.slug} project={project} index={i} />
         ))}
         <NumbersStrip />
-        <DesmosSketches />
       </div>
     </div>
   );

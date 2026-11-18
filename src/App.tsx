@@ -30,6 +30,7 @@ const NewsPage = lazy(() => import("./pages/News"));
 const ProjectPage = lazy(() => import("./pages/Project"));
 const FilesPage = lazy(() => import("./pages/Files"));
 const OnePagerPage = lazy(() => import("./pages/OnePager"));
+const SketchesPage = lazy(() => import("./pages/Sketches"));
 const ContactPage = lazy(() => import("./pages/Contact"));
 const ThankYouPage = lazy(() => import("./pages/ThankYou"));
 const NotFoundPage = lazy(() => import("./pages/NotFound"));
@@ -126,6 +127,7 @@ function AppContent() {
           <Route path="/work/:slug" element={<ProjectPage />} />
           <Route path="/files" element={<FilesPage />} />
           <Route path="/one-pager" element={<OnePagerPage />} />
+          <Route path="/sketches" element={<SketchesPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/obrigado" element={<ThankYouPage />} />
           <Route path="/" element={<Home />} />

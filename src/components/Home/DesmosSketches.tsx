@@ -1,4 +1,4 @@
-// The Desmos hobby, at the end of Cool Things: three drawings made of
+// The Desmos hobby, on its own unlisted page (/sketches): three drawings made of
 // equations, side by side as a sketchbook. Each tile draws itself as it scrolls
 // into view and stops on the finished drawing; a small button replays it and a
 // link opens the live graph in Desmos.

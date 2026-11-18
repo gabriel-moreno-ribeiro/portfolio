@@ -77,6 +77,13 @@ const liveCommands: TerminalCommand[] = [
     description: "Open a project page: open <slug>",
     execute: (ctx) => {
       const slug = (ctx.args[0] || "").toLowerCase();
+      // Not a project and not listed anywhere: the Desmos drawings page.
+      if (slug === "sketches") {
+        ctx.writeln("Opening the drawings made of equations…");
+        window.history.pushState({}, "", "/sketches");
+        window.dispatchEvent(new PopStateEvent("popstate"));
+        return;
+      }
       const project = projects.find((p) => p.slug === slug);
       if (!project) {
         if (slug) ctx.writeln(red(`open: ${slug}: no such project`));
