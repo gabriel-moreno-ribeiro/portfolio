@@ -20,7 +20,7 @@
     "readAge": 7,
     "readPeriod": "2014 - 2015",
     "finishedAt": "2015-06-01",
-    "review": "I was seven and my copy still smelled like fresh paint. The experiments assume you're actually going to do them at the kitchen table, which felt very different from watching adults do them on TV. The homemade rocket chapter kept me up past midnight with a plastic bottle. It's also where I got the 'what happens if I mix these' question from.",
+    "review": "I was seven and my copy still smelled like fresh paint. The experiments assume you're going to do them yourself at the kitchen table, which felt very different from watching adults do them on TV. The homemade rocket chapter kept me up past midnight with a plastic bottle. It's also where I got the 'what happens if I mix these' question from.",
     "accentColor": "#6d1729"
   },
   {
@@ -159,7 +159,7 @@
     "readAge": 11,
     "readPeriod": "2018 - 2019",
     "finishedAt": "2019-05-01",
-    "review": "João Grilo wins every fight by being the smartest guy around and also the one most willing to look like an idiot. Suassuna builds an entire theology out of Northeastern folk culture, and somehow it holds together. The trial in the third act is the funniest thing I read before fifteen. It's also sad once you think about what João Grilo wants and what he actually gets. I haven't read anything else in Brazilian literature that's quite like it."
+    "review": "João Grilo wins every fight by being the smartest guy around and also the one most willing to look like an idiot. Suassuna builds an entire theology out of Northeastern folk culture, and somehow it holds together. The trial in the third act is the funniest thing I read before fifteen. It's also sad once you think about what João Grilo wants and what he gets. I haven't read anything else in Brazilian literature that's quite like it."
   },
   {
     "id": "extraordinario",
@@ -206,7 +206,7 @@
     "readAge": 13,
     "readPeriod": "2020 - 2021",
     "finishedAt": "2021-03-01",
-    "review": "I still don't know if Capitu did it, and I'm pretty sure Machado wanted it that way. Bentinho is an unreliable narrator who doesn't know he's unreliable, and Machado pulls it off without ever winking at the reader. The prose is very good. Four stars because the jealousy spiral gets repetitive halfway through and I caught myself skimming for the moment the evidence becomes real. (It never does, I know.)",
+    "review": "I still don't know if Capitu did it, and I'm pretty sure Machado wanted it that way. Bentinho is an unreliable narrator who doesn't know he's unreliable, and Machado pulls it off without ever winking at the reader. The prose is very good. It loses a star because the jealousy spiral gets repetitive halfway through, and I caught myself skimming for the moment the evidence becomes real. (It never does, I know.)",
     "accentColor": "#af886b"
   },
   {
@@ -254,7 +254,7 @@
     "readAge": 14,
     "readPeriod": "2021 - 2022",
     "finishedAt": "2022-04-01",
-    "review": "After the mechanics chapter I stopped thinking of forces as things that push objects and started seeing them as constraints on motion. Renato Brito's problems actually have a logic to them, so solving them feels like following an argument and less like grinding. I did every single exercise in this volume, and it's the reason I started doing well in physics olympiads."
+    "review": "After the mechanics chapter I stopped thinking of forces as things that push objects and started seeing them as constraints on motion. Renato Brito's problems have a logic to them, so solving them feels like following an argument and less like grinding. I did every single exercise in this volume, and it's the reason I started doing well in physics olympiads."
   },
   {
     "id": "fisica-rb-2",
@@ -300,7 +300,7 @@
     "readAge": 14,
     "readPeriod": "2021 - 2022",
     "finishedAt": "2022-09-01",
-    "review": "It's the standard Brazilian physics textbook, and it reads exactly like one. The explanations and problem sets are solid and there are no surprises. I used it mostly to cross-check what I'd learned from Renato Brito, and it was good for that. The optics diagrams are cleaner than most. Four stars because it does the job without much elegance. It has everything you need for vestibular, but if you want to actually enjoy physics I'd start somewhere else.",
+    "review": "It's the standard Brazilian physics textbook, and it reads exactly like one. The explanations and problem sets are solid and there are no surprises. I used it mostly to cross-check what I'd learned from Renato Brito, and it was good for that. The optics diagrams are cleaner than most. It does the job without much elegance, so four stars. It has everything you need for vestibular, but if you want to enjoy physics I'd start somewhere else.",
     "accentColor": "#2d2a17"
   },
   {
@@ -325,7 +325,7 @@
     "readPeriod": "2021 - 2022",
     "finishedAt": "2022-11-01",
     "quote": "Fear is the mind-killer.",
-    "review": "The ecology of Arrakis is more carefully thought out than most real political science. Herbert piles ecology, religion, colonial economics and messianic psychology into one story without watering any of it down. I read it in Portuguese at fourteen and kept stopping to figure out what the Fremen were actually saying to each other under the conversation. The ending isn't happy, and that bothered me at first, until I understood why it had to end that way."
+    "review": "The ecology of Arrakis is more carefully thought out than most real political science. Herbert piles ecology, religion, colonial economics and messianic psychology into one story without watering any of it down. I read it in Portuguese at fourteen and kept stopping to figure out what the Fremen were saying to each other under the conversation. The ending isn't happy, and that bothered me at first, until I understood why it had to end that way."
   },
   {
     "id": "frankenstein",
@@ -416,7 +416,7 @@
     "readAge": 16,
     "readPeriod": "2023 - 2024",
     "finishedAt": "2024-01-01",
-    "review": "I read university-level physical chemistry at sixteen because my research needed the thermodynamics. I spent most of my time in the quantum chapters, and Atkins explains molecular orbital theory well enough that the math stops feeling abstract. The electrochemistry sections assume lab experience I didn't have. Four stars because it's written to go with a course and I was reading it alone, so some parts took a lot of patience. As a reference it's excellent.",
+    "review": "I read university-level physical chemistry at sixteen because my research needed the thermodynamics. I spent most of my time in the quantum chapters, and Atkins explains molecular orbital theory well enough that the math stops feeling abstract. The electrochemistry sections assume lab experience I didn't have. It's written to go with a course and I was reading it alone, so some parts took a lot of patience, and that cost it a star. As a reference it's excellent.",
     "accentColor": "#a76ea0"
   },
   {
@@ -552,7 +552,7 @@
     "readAge": 17,
     "readPeriod": "2024 - 2025",
     "finishedAt": "2025-04-01",
-    "review": "In some ways it's better written than the first one, because Belfort can't dress up what's happening. The interesting part is the cooperation process: who flips first, what the FBI actually needs, and how long a front holds up once there's an investigation. The moments where he starts respecting the agents chasing him are the most honest pages. Four stars because the middle third drags and some of the legal detail stops being interesting. Read it after the first one."
+    "review": "In some ways it's better written than the first one, because Belfort can't dress up what's happening. The interesting part is the cooperation process: who flips first, what the FBI needs, and how long a front holds up once there's an investigation. The moments where he starts respecting the agents chasing him are the most honest pages. Four stars because the middle third drags and some of the legal detail stops being interesting. Read it after the first one."
   },
   {
     "id": "way-of-the-wolf",
