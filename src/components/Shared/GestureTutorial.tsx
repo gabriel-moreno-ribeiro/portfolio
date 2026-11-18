@@ -1,4 +1,4 @@
-import { motion } from "motion/react";
+import { PiArrowsDownUp, PiHandPalm, PiHandTap, PiSmiley } from "react-icons/pi";
 import { useEffect } from "react";
 import { useHandsfreeStore } from "../../store/handsfreeStore";
 import {
@@ -6,28 +6,13 @@ import {
   useWindow,
 } from "../../store/windowManagerStore";
 import DraggableWindow from "../WindowManager/DraggableWindow";
+import { TRICKS } from "../Home/HandsfreeInvite";
 
-const gestures = [
-  {
-    icon: "🤖",
-    title: "Use your face",
-    desc: "The robot turns, tilts, blinks, smiles and opens its mouth with you",
-  },
-  {
-    icon: "👋",
-    title: "Wave, ✌️, 👍, 🙌",
-    desc: "It waves back, spins, nods and parties. ✊ then ✋ makes it jump",
-  },
-  {
-    icon: "🖐",
-    title: "Open hand",
-    desc: "Show your palm to move the cursor around the page",
-  },
-  {
-    icon: "👌",
-    title: "Pinch",
-    desc: "Pinch and release to click. Pinch and drag to scroll",
-  },
+// What moves the page (what moves the robot is the callout's own list, TRICKS).
+const PAGE = [
+  { Icon: PiHandPalm, text: "An open hand moves the cursor" },
+  { Icon: PiHandTap, text: "Pinch and release to click" },
+  { Icon: PiArrowsDownUp, text: "Pinch and drag to scroll" },
 ];
 
 const GestureTutorial: React.FC = () => {
@@ -42,7 +27,7 @@ const GestureTutorial: React.FC = () => {
       const modalWidth = Math.min(540, window.innerWidth - 40);
       openWindow({
         id: "gesture-tutorial",
-        title: "Hand Gestures",
+        title: "Gestures",
         type: "gesture-tutorial",
         status: "open",
         position: {
@@ -70,42 +55,46 @@ const GestureTutorial: React.FC = () => {
   if (!win || win.status === "minimized") return null;
 
   return (
-    <DraggableWindow windowId="gesture-tutorial" title="Hand Gestures">
-      <div className="gesture-tutorial-body">
-        <h2 className="gesture-tutorial__title">Hand Gestures</h2>
-        <p className="gesture-tutorial__subtitle">
-          How it works
-        </p>
+    <DraggableWindow windowId="gesture-tutorial" title="Gestures">
+      <div className="hf-sheet gesture-tutorial-body">
+        <span className="hf-sheet__label hf-sheet__label--live">Camera on</span>
+        <h2 className="hf-sheet__title">
+          Now <em>try</em> it.
+        </h2>
 
-        <div className="gesture-tutorial__grid">
-          {gestures.map((g, i) => (
-            <motion.div
-              key={g.title}
-              className="gesture-card"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{
-                opacity: 1,
-                y: 0,
-                transition: { delay: 0.1 + i * 0.1 },
-              }}
-            >
-              <div className="gesture-card__icon">{g.icon}</div>
-              <div className="gesture-card__info">
-                <span className="gesture-card__name">{g.title}</span>
-                <span className="gesture-card__desc">{g.desc}</span>
-              </div>
-            </motion.div>
+        <p className="hf-sheet__group">The robot</p>
+        <ul className="hf-sheet__legend">
+          <li>
+            <span className="hf-sheet__sign"><PiSmiley aria-hidden="true" /></span>
+            Your face: it copies you
+          </li>
+          {TRICKS.map((t) => (
+            <li key={t.move} data-move={t.move}>
+              <span className="hf-sheet__sign" role="img" aria-label={t.sign}>
+                {t.icons.map((Icon, i) => (
+                  <Icon key={i} aria-hidden="true" />
+                ))}
+              </span>
+              {t.sign}: it {t.does}
+            </li>
           ))}
-        </div>
+        </ul>
 
-        <motion.button
-          className="gesture-tutorial__dismiss"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={dismiss}
-        >
-          Got it!
-        </motion.button>
+        <p className="hf-sheet__group">The page</p>
+        <ul className="hf-sheet__legend">
+          {PAGE.map(({ Icon, text }) => (
+            <li key={text}>
+              <span className="hf-sheet__sign"><Icon aria-hidden="true" /></span>
+              {text}
+            </li>
+          ))}
+        </ul>
+
+        <div className="hf-sheet__actions">
+          <button type="button" className="btn primary gesture-tutorial__dismiss" onClick={dismiss}>
+            Got it
+          </button>
+        </div>
       </div>
     </DraggableWindow>
   );

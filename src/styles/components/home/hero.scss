@@ -35,8 +35,7 @@
     }
   }
 
-  // The robot's callout, to its left: the nav pill's frosted glass, and a hairline
-  // leader ending in a dot on the robot (the way the clay stories label their objects).
+  // The robot's callout, to its left, in the nav pill's frosted glass.
   .hero-invite {
     position: absolute;
     z-index: 2; // above the canvas, which reaches under it
@@ -57,28 +56,6 @@
     font: inherit;
     text-align: left;
     animation: hero-invite-in 0.35s ease-out 0.9s backwards;
-
-    // Leader and its dot.
-    &::before,
-    &::after {
-      content: '';
-      position: absolute;
-      top: 36px;
-    }
-    &::before {
-      left: 100%;
-      width: 50px;
-      height: 1px;
-      background: var(--fg-muted);
-    }
-    &::after {
-      left: calc(100% + 48px);
-      width: 5px;
-      height: 5px;
-      margin-top: -2px;
-      border-radius: 50%;
-      background: var(--accent-decor);
-    }
 
     // Meta lines: mono, uppercase, tracked (the rail and the clay labels).
     &__label {
@@ -139,6 +116,7 @@
       color: var(--fg);
     }
     li.is-hit { color: var(--accent-decor); animation: hero-invite-hit 0.5s ease-out; }
+    li[data-move='cheer'] svg:first-child { transform: scaleX(-1); }
     &__label--said { color: var(--accent); min-height: 13px; }
 
     // The first callout waits for the robot to arrive; the list of gestures does not.
@@ -414,7 +392,7 @@
       height: 180px;
     }
 
-    .hero-invite { top: 14px; right: calc(100% + 26px); }
+    .hero-invite { top: 14px; right: calc(100% + 12px); }
 
     .heading-section {
       gap: 16px;

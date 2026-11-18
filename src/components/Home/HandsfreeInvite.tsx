@@ -2,19 +2,20 @@
 // On: lists the gestures the robot answers and marks the one it has just seen.
 import type { IconType } from 'react-icons';
 import { FiArrowRight } from 'react-icons/fi';
-import { PiHandFist, PiHandPalm, PiHandPeace, PiHandWaving, PiPersonArmsSpread, PiThumbsUp } from 'react-icons/pi';
+import { PiHandFist, PiHandPalm, PiHandPeace, PiHandWaving, PiThumbsUp } from 'react-icons/pi';
 import { toggleHandsfree, useHandsfreeStore } from '../../store/handsfreeStore';
 import { useInputSourceStore, type RobotMove } from '../../store/inputSourceStore';
 
 const supportsCamera = typeof navigator !== 'undefined' && !!navigator.mediaDevices?.getUserMedia;
 
 // What the visitor does (the icons, with a name for screen readers) and what the robot does back.
-const TRICKS: { move: RobotMove; icons: IconType[]; sign: string; does: string }[] = [
+export const TRICKS: { move: RobotMove; icons: IconType[]; sign: string; does: string }[] = [
   { move: 'wave', icons: [PiHandWaving], sign: 'Wave', does: 'waves back' },
   { move: 'spin', icons: [PiHandPeace], sign: 'Peace sign', does: 'spins' },
   { move: 'jump', icons: [PiHandFist, PiHandPalm], sign: 'Fist, then open hand', does: 'jumps' },
   { move: 'nod', icons: [PiThumbsUp], sign: 'Thumbs up', does: 'nods' },
-  { move: 'cheer', icons: [PiPersonArmsSpread], sign: 'Both hands up', does: 'parties' },
+  // Two open palms; the first is mirrored in CSS so they read as a left and a right hand.
+  { move: 'cheer', icons: [PiHandPalm, PiHandPalm], sign: 'Both hands up', does: 'parties' },
 ];
 
 export default function HandsfreeInvite() {
@@ -48,6 +49,7 @@ export default function HandsfreeInvite() {
           <li
             key={t === hit ? `${t.move}-${last!.at}` : t.move}
             className={t === hit ? 'is-hit' : undefined}
+            data-move={t.move}
             role="img"
             aria-label={`${t.sign}: the robot ${t.does}`}
             title={`${t.sign}: the robot ${t.does}`}

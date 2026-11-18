@@ -1,397 +1,153 @@
-// ── Handsfree Intro Modal (redesigned) ──
+// ── Hands-free windows (the intro and the gestures) ──
+// Same voice as the robot's callout in the hero: mono labels, one serif italic word in
+// the title, hairline rules, line icons and the site's black pill. Left-aligned.
+$hf-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
 
-.hf-intro {
-  padding: 0;
-  width: 100%;
+.hf-sheet {
   box-sizing: border-box;
+  width: 100%;
+  padding: 26px 28px 22px;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  gap: 10px;
+  background: var(--surface);
+  color: var(--fg);
+  text-align: left;
 
-  &__hero {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100px;
-    background: linear-gradient(135deg, rgba($primary-orange, 0.08) 0%, rgba($primary-orange, 0.02) 100%);
-    border-bottom: 1px solid rgba($primary-orange, 0.1);
+  &__label,
+  &__group {
+    margin: 0;
+    font-family: $hf-mono;
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
   }
-
-  &__icon-ring {
-    position: absolute;
-    width: 72px;
-    height: 72px;
-    border: 1.5px dashed rgba($primary-orange, 0.3);
-    border-radius: 50%;
-  }
-
-  &__orbit-dot {
-    position: absolute;
+  &__label--live::before {
+    content: '';
+    display: inline-block;
     width: 6px;
     height: 6px;
-    background: $primary-orange;
+    margin-right: 7px;
     border-radius: 50%;
-    opacity: 0.5;
-
-    &:nth-child(1) { top: -3px; left: 50%; transform: translateX(-50%); }
-    &:nth-child(2) { bottom: 8px; right: 2px; }
-    &:nth-child(3) { bottom: 8px; left: 2px; }
+    background: var(--accent-decor);
   }
-
-  &__main-icon {
-    font-size: 32px;
-    z-index: 1;
-  }
-
-  &__content {
-    padding: 20px 24px 12px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
+  &__group { margin-top: 10px; }
 
   &__title {
-    font-size: 20px;
+    margin: 0;
+    font-size: 26px;
     font-weight: 700;
-    color: var(--black);
-    margin: 0;
-    text-align: center;
-    letter-spacing: -0.3px;
+    line-height: 1.12;
+    letter-spacing: -0.01em;
+
+    em { font-family: var(--font-serif); font-weight: 400; color: var(--accent); }
   }
 
-  &__subtitle {
+  &__lead {
+    margin: 0 0 6px;
     font-size: 14px;
-    color: var(--fg-muted);
-    text-align: center;
     line-height: 1.5;
+    color: var(--fg-muted);
+  }
+
+  // What the mode does: ruled rows, an icon and two lines each.
+  &__rows {
     margin: 0;
+    padding: 0;
+    list-style: none;
+    border-bottom: 1px solid var(--border);
+
+    li {
+      display: grid;
+      grid-template-columns: 36px 1fr;
+      padding: 12px 0;
+      border-top: 1px solid var(--border);
+    }
+    svg { margin-top: 1px; font-size: 22px; }
+    strong { display: block; font-size: 14px; font-weight: 600; }
+    span { font-size: 13px; line-height: 1.4; color: var(--fg-muted); }
   }
 
-  &__features {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin: 4px 0;
-  }
+  // The gestures: a two-column legend, the sign and what it does.
+  &__legend {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 24px;
 
-  &__feature {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 10px 14px;
-    border-radius: 10px;
-    background: rgba($grey, 0.5);
-    border: 1px solid rgba(0, 0, 0, 0.04);
-    transition: background 0.2s;
-
-    &:hover {
-      background: rgba($primary-orange, 0.06);
+    li {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 0;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      line-height: 1.3;
+      color: var(--fg-muted);
     }
   }
-
-  &__feature-icon {
-    font-size: 20px;
-    width: 28px;
-    text-align: center;
+  &__sign {
+    display: inline-flex;
     flex-shrink: 0;
+    gap: 2px;
+    width: 42px;
+    font-size: 19px;
+    color: var(--fg);
   }
+  li[data-move='cheer'] svg:first-child { transform: scaleX(-1); } // a left and a right hand
 
-  &__feature-text {
-    display: flex;
-    flex-direction: column;
-    gap: 1px;
-  }
-
-  &__feature-title {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--black);
-  }
-
-  &__feature-desc {
-    font-size: 12px;
-    color: var(--fg-muted);
-    line-height: 1.3;
-  }
-
+  // The models loading while the visitor reads.
   &__progress {
-    width: 100%;
-    height: 3px;
-    background: rgba($grey, 0.6);
-    border-radius: 2px;
-    overflow: hidden;
-  }
+    height: 2px;
+    background: var(--border);
 
-  &__progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, $primary-orange, lighten($primary-orange, 10%));
-    border-radius: 2px;
-    transition: width 0.3s ease;
-  }
-
-  &__privacy {
-    font-size: 11px;
-    color: var(--fg-muted);
-    text-align: center;
-    margin: 0;
-    opacity: 0.8;
+    div {
+      height: 100%;
+      background: var(--accent-decor);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
   }
 
   &__actions {
-    padding: 12px 24px 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  &__btn {
-    width: 100%;
-    border: none;
-    border-radius: 10px;
-    padding: 12px 20px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    font-family: inherit;
+    margin-top: 12px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 8px;
-    transition: box-shadow 0.2s;
+    gap: 18px;
 
-    &--primary {
-      background: linear-gradient(135deg, $primary-orange, darken($primary-orange, 6%));
-      color: #fff;
-      box-shadow: 0 4px 12px rgba($primary-orange, 0.3);
-
-      &:hover {
-        box-shadow: 0 6px 20px rgba($primary-orange, 0.4);
-      }
-    }
-
-    &--ghost {
-      background: transparent;
-      color: var(--fg-muted);
-      font-weight: 500;
-
-      &:hover {
-        color: var(--black);
-        background: rgba(0, 0, 0, 0.03);
-      }
-    }
+    .btn { padding: 8px 22px; font-size: 15px; }
   }
-
-  &__btn-icon {
-    font-size: 16px;
-  }
-}
-
-// ── Gesture Tutorial ──
-
-// Legacy overlay (no longer used - handled by window-overlay-backdrop)
-.gesture-tutorial-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.75);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 10000;
-}
-
-.gesture-tutorial-body,
-.gesture-tutorial {
-  background: var(--white);
-  padding: 28px 32px 24px;
-  width: 100%;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-
-  &__title {
-    font-size: 22px;
-    font-weight: 700;
-    color: var(--black);
-    margin: 0;
-  }
-
-  &__subtitle {
+  &__skip {
+    padding: 8px 4px;
+    border: 0;
+    background: none;
+    font: inherit;
     font-size: 14px;
+    font-weight: 600;
     color: var(--fg-muted);
-    margin: 0;
-    text-align: center;
-  }
-
-  &__grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    width: 100%;
-    padding: 8px 0;
-  }
-
-  &__dismiss {
-    background-color: $primary-orange;
-    color: #fff;
-    border: none;
-    border-radius: 10px;
-    padding: 10px 36px;
-    font-size: 15px;
-    font-weight: 600;
     cursor: pointer;
-    font-family: inherit;
-    margin-top: 4px;
-    transition: background-color 0.2s;
 
-    &:hover {
-      background-color: darken($primary-orange, 8%);
-    }
-  }
-}
-
-.gesture-card {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 14px 16px;
-  border-radius: 12px;
-  background: rgba($grey, 0.25);
-  border: 1px solid rgba($grey, 0.3);
-  min-width: 0;
-  overflow: hidden;
-
-  &__icon {
-    font-size: 28px;
-    flex-shrink: 0;
-    width: 36px;
-    text-align: center;
+    &:hover { color: var(--fg); text-decoration: underline; text-underline-offset: 3px; }
   }
 
-  &__info {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    min-width: 0;
-  }
-
-  &__name {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--black);
-  }
-
-  &__desc {
+  &__note {
+    margin: 4px 0 0;
     font-size: 12px;
     color: var(--fg-muted);
-    line-height: 1.4;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
+
+    a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
   }
 }
 
-// ── Mobile ──
-
 @media screen and (max-width: 600px) {
-  .hf-intro {
-    &__hero {
-      height: 80px;
-    }
-
-    &__icon-ring {
-      width: 56px;
-      height: 56px;
-    }
-
-    &__main-icon {
-      font-size: 26px;
-    }
-
-    &__content {
-      padding: 16px 18px 10px;
-    }
-
-    &__title {
-      font-size: 18px;
-    }
-
-    &__subtitle {
-      font-size: 13px;
-    }
-
-    &__feature {
-      padding: 8px 12px;
-    }
-
-    &__feature-icon {
-      font-size: 18px;
-      width: 24px;
-    }
-
-    &__feature-title {
-      font-size: 12px;
-    }
-
-    &__feature-desc {
-      font-size: 11px;
-    }
-
-    &__actions {
-      padding: 10px 18px 16px;
-    }
-
-    &__btn {
-      padding: 10px 16px;
-      font-size: 13px;
-    }
-  }
-
-  .gesture-tutorial {
+  .hf-sheet {
     padding: 20px 18px 18px;
-    max-width: 92%;
-    gap: 12px;
 
-    &__title {
-      font-size: 18px;
-    }
-
-    &__subtitle {
-      font-size: 13px;
-    }
-
-    &__grid {
-      grid-template-columns: 1fr;
-      gap: 8px;
-      padding: 4px 0;
-    }
-
-    &__dismiss {
-      padding: 8px 28px;
-      font-size: 14px;
-    }
-  }
-
-  .gesture-card {
-    padding: 10px 12px;
-    gap: 10px;
-
-    &__icon {
-      font-size: 22px;
-      width: 30px;
-    }
-
-    &__name {
-      font-size: 13px;
-    }
-
-    &__desc {
-      font-size: 11px;
-    }
+    &__title { font-size: 22px; }
+    &__legend { grid-template-columns: 1fr; }
   }
 }
 
@@ -495,44 +251,6 @@
 }
 
 [data-theme='dark'] {
-  .hf-intro {
-    &__hero {
-      background: linear-gradient(135deg, rgba($primary-orange, 0.12) 0%, rgba($primary-orange, 0.03) 100%);
-      border-bottom-color: rgba($primary-orange, 0.15);
-    }
-
-    &__feature {
-      background: rgba(#fff, 0.04);
-      border-color: rgba(#fff, 0.06);
-
-      &:hover {
-        background: rgba($primary-orange, 0.08);
-      }
-    }
-
-    &__progress {
-      background: rgba(#fff, 0.08);
-    }
-
-    &__btn--ghost:hover {
-      background: rgba(#fff, 0.05);
-    }
-  }
-
-  .gesture-tutorial-overlay {
-    background-color: rgba(0, 0, 0, 0.9);
-  }
-
-  .gesture-tutorial,
-  .gesture-tutorial-body {
-    background: #1e1e1e;
-  }
-
-  .gesture-card {
-    background: rgba(#fff, 0.05);
-    border-color: rgba(#fff, 0.08);
-  }
-
   .handsfree-loader-overlay {
     background: rgba(0, 0, 0, 0.85);
   }

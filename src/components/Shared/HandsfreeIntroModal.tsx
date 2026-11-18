@@ -5,24 +5,24 @@ import {
   useWindow,
 } from "../../store/windowManagerStore";
 import DraggableWindow from "../WindowManager/DraggableWindow";
-import { motion } from "motion/react";
+import { PiHandTap, PiHandWaving, PiSmiley } from "react-icons/pi";
 import { preloadModels, stopCameraInput } from "../../providers/CameraInputProvider";
 
 const FEATURES = [
   {
-    icon: "🤖",
-    title: "The robot copies you",
-    desc: "Blink, smile, open your mouth or tilt your head, and it does the same",
+    Icon: PiSmiley,
+    title: "The robot copies your face",
+    desc: "Blink, smile, yawn or tilt your head, and it does the same.",
   },
   {
-    icon: "👋",
+    Icon: PiHandWaving,
     title: "It answers your gestures",
-    desc: "Wave, ✌️ to spin, ✊ then ✋ to jump, 👍 for a nod",
+    desc: "A wave, a peace sign, a thumbs up, or a fist that opens.",
   },
   {
-    icon: "👌",
+    Icon: PiHandTap,
     title: "Your hand is the mouse",
-    desc: "Pinch to click, pinch and drag to scroll",
+    desc: "Pinch to click. Pinch and drag to scroll.",
   },
 ];
 
@@ -43,7 +43,7 @@ const HandsfreeIntroModal: React.FC = () => {
       const modalWidth = Math.min(420, window.innerWidth - 40);
       openWindow({
         id: "handsfree-intro",
-        title: "Handsfree Mode",
+        title: "Hands-free",
         type: "handsfree-intro",
         status: "open",
         position: {
@@ -88,78 +88,43 @@ const HandsfreeIntroModal: React.FC = () => {
   if (!win || win.status === "minimized") return null;
 
   return (
-    <DraggableWindow windowId="handsfree-intro" title="Handsfree Mode">
-      <div className="hf-intro">
-        <div className="hf-intro__hero">
-          <motion.div
-            className="hf-intro__icon-ring"
-            animate={{ rotate: 360 }}
-            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          >
-            <div className="hf-intro__orbit-dot" />
-            <div className="hf-intro__orbit-dot" />
-            <div className="hf-intro__orbit-dot" />
-          </motion.div>
-          <span className="hf-intro__main-icon">🖐️</span>
-        </div>
+    <DraggableWindow windowId="handsfree-intro" title="Hands-free">
+      <div className="hf-sheet hf-intro">
+        <span className="hf-sheet__label">Hands-free mode</span>
+        <h2 className="hf-sheet__title">
+          Use the site with your <em>hands</em>.
+        </h2>
+        <p className="hf-sheet__lead">Your webcam follows your face and hands. No mouse needed.</p>
 
-        <div className="hf-intro__content">
-          <h2 className="hf-intro__title">Use the site with your hands</h2>
-          <p className="hf-intro__subtitle">
-            Your webcam follows your head and hands. No mouse needed.
-          </p>
+        <ul className="hf-sheet__rows">
+          {FEATURES.map(({ Icon, title, desc }) => (
+            <li key={title}>
+              <Icon aria-hidden="true" />
+              <div>
+                <strong>{title}</strong>
+                <span>{desc}</span>
+              </div>
+            </li>
+          ))}
+        </ul>
 
-          <div className="hf-intro__features">
-            {FEATURES.map((f, i) => (
-              <motion.div
-                key={f.title}
-                className="hf-intro__feature"
-                initial={{ opacity: 0, x: -12 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.15 + i * 0.1, duration: 0.4 }}
-              >
-                <span className="hf-intro__feature-icon">{f.icon}</span>
-                <div className="hf-intro__feature-text">
-                  <span className="hf-intro__feature-title">{f.title}</span>
-                  <span className="hf-intro__feature-desc">{f.desc}</span>
-                </div>
-              </motion.div>
-            ))}
+        {modelLoadProgress > 0 && modelLoadProgress < 100 && (
+          <div className="hf-sheet__progress" aria-hidden="true">
+            <div style={{ transform: `scaleX(${modelLoadProgress / 100})` }} />
           </div>
+        )}
 
-
-          {modelLoadProgress > 0 && modelLoadProgress < 100 && (
-            <div className="hf-intro__progress">
-              <div
-                className="hf-intro__progress-fill"
-                style={{ width: `${modelLoadProgress}%` }}
-              />
-            </div>
-          )}
-
-          <p className="hf-intro__privacy">
-            Camera frames never leave your device. <a href="/privacy" target="_blank" rel="noopener" style={{ color: 'inherit', textDecoration: 'underline' }}>Privacy policy</a>
-          </p>
-        </div>
-
-        <div className="hf-intro__actions">
-          <motion.button
-            className="hf-intro__btn hf-intro__btn--primary"
-            whileHover={{ scale: 1.03, y: -1 }}
-            whileTap={{ scale: 0.97 }}
-            onClick={handleEnable}
-          >
+        <div className="hf-sheet__actions">
+          <button type="button" className="btn primary hf-intro__btn--primary" onClick={handleEnable}>
             Turn on the camera
-          </motion.button>
-          <motion.button
-            className="hf-intro__btn hf-intro__btn--ghost"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.97 }}
-            onClick={handleDecline}
-          >
+          </button>
+          <button type="button" className="hf-sheet__skip hf-intro__btn--ghost" onClick={handleDecline}>
             Not now
-          </motion.button>
+          </button>
         </div>
+        <p className="hf-sheet__note">
+          Camera frames never leave your device. <a href="/privacy" target="_blank" rel="noopener">Privacy policy</a>
+        </p>
       </div>
     </DraggableWindow>
   );
