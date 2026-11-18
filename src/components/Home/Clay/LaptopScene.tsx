@@ -46,16 +46,19 @@ const SPOT: { p: V3; yaw: number }[] = [
   { p: BENCH, yaw: 0 }, // taken apart on the mat
   { p: BENCH, yaw: 0 }, // put back together
   { p: [-1.75, 0, 0.25], yaw: 0.42 }, // playing the tutorial
-  { p: [-1.05, 0, -0.55], yaw: 0.2 }, // beside the broken part
-  { p: [-1.05, 0, -0.55], yaw: 0.2 }, // gone
+  { p: [-1.35, MAT[1], -0.85], yaw: 0.2 }, // on a mat, beside the broken part
+  { p: [-1.35, MAT[1], -0.85], yaw: 0.2 }, // gone
 ];
 const TERMINAL: V3 = [1.6, 0, -0.35];
 const TERMINAL_YAW = -0.35;
 const WAVE_AT: V3 = [0.3, 0, 1.15];
-const PHONE_AT: V3 = [1.45, 0, 0.95];
-const PHONE_YAW = 0.68;
+const PHONE_AT: V3 = [1.55, MAT[1], 1.45];
+const PHONE_YAW = 0.75;
 const PHONE_K = 1.15;
-const BROKEN_AT: V3 = [0.55, 0.04, 0.1];
+const BROKEN_AT: V3 = [0.45, MAT[1] + 0.06, 0.45];
+const BROKEN_K = 2.4;
+const WIFI_MAT: V3 = [-0.3, 0, 0];
+const WIFI_MAT_SIZE: V3 = [5.2, MAT[1], 3.8];
 
 /** A point given in something's own space (at `o`, turned `yaw`, scaled `k`), in the world. */
 const place = (o: V3, yaw: number, [x, y, z]: V3, k = 1): V3 => [o[0] + (x * Math.cos(yaw) + z * Math.sin(yaw)) * k, o[1] + y * k, o[2] + (-x * Math.sin(yaw) + z * Math.cos(yaw)) * k];
@@ -124,7 +127,9 @@ const laptopAct = (g: THREE.Group, p: Play) => {
 const stepOf = (p: Play) => (p.t > 0.5 ? p.to : p.from);
 const SWAP = 2.05; // the subtitles come back in Portuguese
 const screenOf = (p: Play) =>
-  [SCREEN.off, SCREEN.off, ageOf(p, BACK) > T.on ? SCREEN.on : SCREEN.off, ageOf(p, HINDI) > SWAP ? SCREEN.portuguese : SCREEN.hindi, SCREEN.on, SCREEN.off][stepOf(p)];
+  [SCREEN.off, SCREEN.off, ageOf(p, BACK) > T.on ? SCREEN.on : SCREEN.off, ageOf(p, HINDI) > SWAP ? SCREEN.portuguese : SCREEN.hindi, SCREEN.off, SCREEN.off][stepOf(p)];
+// The screen coming on is the end of the repair: it flashes up, then settles.
+const glowOf = (p: Play) => 0.9 * bump(slice(ageOf(p, BACK), T.on, T.on + 0.7)) * at(p, BACK);
 const flipOf = (p: Play) => apart(p, T.flip);
 const detachedOf = (p: Play) => apart(p, T.display);
 const coverOf = (p: Play) => apart(p, T.cover);
@@ -171,8 +176,8 @@ const cardAct = (g: THREE.Group, p: Play) => {
 const LENS = onPhone(PHONE_LENS);
 // The camera's view: from the lens to the two sides of the fan.
 const VIEW: V3[] = [
-  [BROKEN_AT[0] - 0.3, 0.06, BROKEN_AT[2] - 0.12],
-  [BROKEN_AT[0] + 0.26, 0.06, BROKEN_AT[2] + 0.22],
+  [BROKEN_AT[0] - 0.44, BROKEN_AT[1], BROKEN_AT[2] - 0.16],
+  [BROKEN_AT[0] + 0.4, BROKEN_AT[1], BROKEN_AT[2] + 0.24],
 ];
 const VIEW_TOP: V3 = [(LENS[0] + VIEW[0][0]) / 2, (LENS[1] + VIEW[0][1]) / 2, (LENS[2] + VIEW[0][2]) / 2];
 
@@ -185,13 +190,39 @@ const landed = (p: Play) => {
 };
 
 // ── Camera: a frame per step and a move inside each ──────────────────────────
+const WIDE = { pos: [-0.1, 5.7, 4.6] as V3, look: [-0.1, 0, 0.45] as V3 };
+const SCREWS = { pos: [0.1, 4.7, 4.5] as V3, look: [0, 0.1, -0.15] as V3 };
 const CAMERA: Shot[] = [
   { pos: [0, 4.3, 9.7], look: [-0.15, 0.75, 0.1], to: { pos: [0.15, 3.9, 9], look: [-0.1, 0.7, 0.1] }, over: [0.8, 2.8] },
-  // Close on the laptop for the screen and the turn, then back to see the whole mat as the parts come out.
-  { pos: [0.3, 4.4, 6.2], look: [0, 0.35, -0.3], to: { pos: [0, 8.8, 5.0], look: [0, 0, -0.6] }, over: [1.3, 4.4] },
-  { pos: [0, 8.8, 5.0], look: [0, 0, -0.6], to: { pos: [0.3, 3.7, 5.7], look: [0.05, 0.6, -0.35] }, over: [3.4, 5.5] },
+  // Close on the laptop for the screen and the turn, over the screws, down into the open laptop (held),
+  // then back just enough to see the parts laid out around it.
+  {
+    pos: [0.3, 4.2, 5.8],
+    look: [0, 0.3, -0.3],
+    path: [
+      { at: 0, pos: [0.3, 4.2, 5.8], look: [0, 0.3, -0.3] },
+      { at: 2.0, pos: [0.3, 4.2, 5.8], look: [0, 0.3, -0.3] },
+      { at: 2.6, ...SCREWS },
+      { at: 3.6, ...SCREWS },
+      { at: 4.15, pos: [0, 3.7, 2.2], look: [0, 0, -0.1] },
+      { at: 4.75, pos: [0, 3.7, 2.2], look: [0, 0, -0.1] },
+      { at: 5.8, ...WIDE },
+    ],
+  },
+  {
+    pos: WIDE.pos,
+    look: WIDE.look,
+    path: [
+      { at: 0, ...WIDE },
+      { at: 2.3, ...WIDE },
+      { at: 2.9, ...SCREWS },
+      { at: 3.85, ...SCREWS },
+      { at: 4.4, pos: [0.2, 4.0, 5.4], look: [0, 0.4, -0.4] },
+      { at: 5.4, pos: [0.15, 2.6, 4.5], look: [0, 0.7, -0.5] },
+    ],
+  },
   { pos: [0, 4.4, 10.3], look: [-0.1, 0.85, 0], to: { pos: [0, 4.2, 9.8], look: [-0.1, 0.85, 0] } },
-  { pos: [0.4, 3.9, 8.4], look: [0.1, 0.55, 0], to: { pos: [0.5, 3.6, 7.8], look: [0.2, 0.6, 0.05] }, over: [0.6, 2.6] },
+  { pos: [0.2, 3.7, 6.9], look: [-0.05, 0.55, 0.1], to: { pos: [0.3, 3.4, 6.4], look: [0.05, 0.6, 0.15] }, over: [0.6, 2.6] },
   { pos: [0.3, 7.9, 8.4], look: [0.15, 0, 0.15], to: { pos: [0.3, 7.5, 7.9], look: [0.15, 0, 0.15] }, over: [0.6, 3.2] },
 ];
 
@@ -208,9 +239,9 @@ export default function LaptopScene() {
 
       {/* 1 to 5 · the laptop */}
       <Act f={laptopAct}>
-        <Laptop lid={lidOf} screen={screenOf} flip={flipOf} detached={detachedOf} cover={coverOf} screw={screwOf} hinge={hingeOf} />
+        <Laptop lid={lidOf} screen={screenOf} glow={glowOf} flip={flipOf} detached={detachedOf} cover={coverOf} screw={screwOf} hinge={hingeOf} />
         <Tag at={onScreen(0.7, 1.2)} dx={40} dy={-34} on={[0]} after={LID_AT + 0.45}>Broken</Tag>
-        <Tag at={onScreen(0.6, 1.25)} dx={44} dy={-30} on={[BACK]} after={T.on + 0.2}>Works again</Tag>
+        <Tag at={onScreen(0.6, 1.25)} dx={44} dy={-30} on={[BACK]} after={T.on + 0.3}>Works again</Tag>
         <Tag at={onScreen(0, 1.42)} dx={0} dy={-22} on={[HINDI]}>Hindi tutorial</Tag>
       </Act>
 
@@ -236,11 +267,16 @@ export default function LaptopScene() {
         <Tag at={[0.6, 0.2, 0]} dx={40} dy={30} on={[HINDI]} after={SWAP + 0.3}>Portuguese dub</Tag>
       </Act>
 
-      {/* 5 · WiFixit: a broken part, the phone photographs it, and the repair guide comes back to it */}
-      <Morph k={[null, null, null, null, { p: BROKEN_AT, r: [0, 0.4, 0], s: 1.7 }, null]} win={wins({ '3>4': [0.55, 0.9] }, [0, 0.3])} bounce={0.1}>
+      {/* 5 · WiFixit: a broken part of the laptop on the mat beside it, the phone photographs it, and the repair guide comes back to it */}
+      <Morph k={[null, null, null, null, { p: WIFI_MAT }, null]} win={wins({ '3>4': [0.25, 0.6] }, [0, 0.3])}>
+        <group position={[0, MAT[1], 0]}>
+          <Mat size={WIFI_MAT_SIZE} />
+        </group>
+      </Morph>
+      <Morph k={[null, null, null, null, { p: BROKEN_AT, r: [0, 0.4, 0], s: BROKEN_K }, null]} win={wins({ '3>4': [0.55, 0.9] }, [0, 0.3])} bounce={0.1}>
         <Fan broken />
         <Crack />
-        <Tag at={[-0.15, 0.03, 0.1]} dx={-56} dy={34} on={[WIFIXIT]} after={0.3}>Hardware problem</Tag>
+        <Tag at={[-0.14, 0.03, 0.1]} dx={-50} dy={40} on={[WIFIXIT]} after={0.3}>Hardware problem</Tag>
       </Morph>
       <Morph k={[null, null, null, null, { p: PHONE_AT, r: [0, PHONE_YAW, 0], s: PHONE_K }, null]} win={wins({ '3>4': [0.6, 1] }, [0, 0.3])} bounce={0.08}>
         <Act f={snapAct}>

@@ -269,25 +269,27 @@ function Keyboard() {
 
 /** A screw, head up: the head with its cross, the thread under it. Origin at the head's centre. */
 export function ScrewShape() {
+  const { mats } = useClay();
   return (
     <>
-      <Puck r={0.032} h={0.012} bevel={0.005} segments={14} />
-      <Box size={[0.036, 0.004, 0.007]} r={0.002} position={[0, 0.006, 0]} />
-      <Box size={[0.007, 0.004, 0.036]} r={0.002} position={[0, 0.006, 0]} />
-      <Puck r={0.011} h={0.07} segments={8} position={[0, -0.04, 0]} />
+      <Puck r={0.045} h={0.016} bevel={0.006} segments={16} />
+      <Box size={[0.05, 0.006, 0.01]} r={0.002} position={[0, 0.007, 0]} material={mats.shade.dark} />
+      <Box size={[0.01, 0.006, 0.05]} r={0.002} position={[0, 0.007, 0]} material={mats.shade.dark} />
+      <Puck r={0.013} h={0.07} segments={8} position={[0, -0.042, 0]} />
     </>
   );
 }
 
 /** The bottom cover, in the base's space: a plate with vents and four feet. */
 export function Cover() {
+  const { mats } = useClay();
   return (
     <group>
       <Box size={[W, 0.035, D]} position={[0, 0.0175, 0]} r={0.03} />
       {[-0.3, -0.15, 0, 0.15, 0.3].map((z) => (
-        <Box key={z} size={[0.9, 0.006, 0.05]} position={[0.3, 0.001, z - 0.25]} r={0.003} />
+        <Box key={z} size={[0.9, 0.006, 0.05]} position={[0.3, 0.001, z - 0.25]} r={0.003} material={mats.shade.board} />
       ))}
-      {[-0.95, 0.95].flatMap((x) => [-0.5, 0.5].map((z) => <Box key={`${x}${z}`} size={[0.2, 0.008, 0.08]} position={[x, 0.0, z]} r={0.004} />))}
+      {[-0.95, 0.95].flatMap((x) => [-0.5, 0.5].map((z) => <Box key={`${x}${z}`} size={[0.2, 0.008, 0.08]} position={[x, 0.0, z]} r={0.004} material={mats.shade.mid} />))}
     </group>
   );
 }
@@ -314,16 +316,17 @@ function Display({ mat }: { mat: THREE.Material }) {
  * down. `detached`: 0 the screen is on its hinge, 1 it lies aside. `cover` and `screw`: how far the
  * cover and each screw are out (above 0, the bench's loose copy takes over).
  */
-export function Laptop({ lid, screen, flip, detached, cover, screw, hinge }: {
+export function Laptop({ lid, screen, glow, flip, detached, cover, screw, hinge }: {
   lid: (p: Play) => number;
   screen: (p: Play) => number;
+  glow?: (p: Play) => number;
   flip: (p: Play) => number;
   detached: (p: Play) => number;
   cover: (p: Play) => number;
   screw: (p: Play, k: number) => number;
   hinge: (p: Play, k: number) => number;
 }) {
-  const mat = useScreen(screen);
+  const mat = useScreen(screen, glow);
   const shell = useRef<THREE.Group>(null);
   const screws = useRef<(THREE.Group | null)[]>([]);
   const hinges = useRef<(THREE.Group | null)[]>([]);

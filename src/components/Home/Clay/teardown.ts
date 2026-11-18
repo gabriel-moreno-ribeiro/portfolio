@@ -19,7 +19,7 @@ export const T = {
   flip: [2.0, 3.9, 0.45] as Win,
   screws: Array.from({ length: N_SCREWS }, (_, i): Win => [2.5 + i * 0.12, 2.85 + i * 0.1, 0.3]),
   cover: [3.65, 2.42, 0.38] as Win,
-  parts: Array.from({ length: N_PARTS }, (_, i): Win => [4.05 + i * 0.12, 1.2 + (N_PARTS - 1 - i) * 0.12, 0.34]),
+  parts: Array.from({ length: N_PARTS }, (_, i): Win => [4.7 + i * 0.12, 1.2 + (N_PARTS - 1 - i) * 0.12, 0.34]),
   swap: [0.75, 1.15] as [number, number], // step 3: the old part and the new one change places
   on: 5.6, // step 3: the screen comes on
 };

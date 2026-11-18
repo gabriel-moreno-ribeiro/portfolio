@@ -209,6 +209,7 @@ export default function ClayStage({ slug, target, active, dark, bg, onReady, onF
       mats.clay.dispose();
       mats.accent.dispose();
       mats.ink.dispose();
+      Object.values(mats.shade).forEach((m) => m.dispose());
     },
     [mats],
   );

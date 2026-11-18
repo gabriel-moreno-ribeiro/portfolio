@@ -23,15 +23,24 @@ export interface Mats {
   accent: THREE.MeshStandardMaterial;
   ink: THREE.MeshBasicMaterial;
   inkColor: string;
+  /** Darker shades of the same clay, for things that need a tone of their own (a cutting mat, circuit boards, grey parts). */
+  shade: { mat: THREE.MeshStandardMaterial; mid: THREE.MeshStandardMaterial; board: THREE.MeshStandardMaterial; dark: THREE.MeshStandardMaterial };
 }
 
 export function makeMats(dark: boolean): Mats {
   const inkColor = dark ? '#f1ebe4' : '#16120f';
+  const clay = new THREE.MeshStandardMaterial({ color: dark ? '#c4bcb4' : '#f3f1ee', roughness: 0.95, metalness: 0 });
+  const shade = (k: number) => {
+    const m = clay.clone();
+    m.color.multiplyScalar(k);
+    return m;
+  };
   return {
-    clay: new THREE.MeshStandardMaterial({ color: dark ? '#c4bcb4' : '#f3f1ee', roughness: 0.95, metalness: 0 }),
+    clay,
     accent: new THREE.MeshStandardMaterial({ color: '#f0732d', roughness: 0.85, metalness: 0 }),
     ink: new THREE.MeshBasicMaterial({ color: inkColor }),
     inkColor,
+    shade: { mat: shade(dark ? 0.5 : 0.56), mid: shade(0.76), board: shade(0.36), dark: shade(0.24) },
   };
 }
 
@@ -349,7 +358,14 @@ export function Bracket({ a, b, on, after, below, children }: { a: V3; b: V3; on
 }
 
 /** A camera position per step. With `to`, the camera travels there while the step plays (a push-in on its key moment), over the `over` seconds. */
-export interface Shot { pos: V3; look: V3; to?: { pos: V3; look: V3 }; over?: [number, number] }
+export interface Shot {
+  pos: V3;
+  look: V3;
+  to?: { pos: V3; look: V3 };
+  over?: [number, number];
+  /** Instead of `to`: several frames in a row, each reached at `at` seconds into the step (a long step's camera). */
+  path?: { at: number; pos: V3; look: V3 }[];
+}
 
 /** Camera keyed per step. It never stops: a slow orbit and breath keep the frame alive while a step holds. */
 export function Rig({ k }: { k: Shot[] }) {
@@ -362,21 +378,36 @@ export function Rig({ k }: { k: Shot[] }) {
         pos2: new THREE.Vector3(...(c.to ?? c).pos),
         look2: new THREE.Vector3(...(c.to ?? c).look),
         over: c.over ?? [0.5, 2.6],
+        path: c.path?.map((f) => ({ at: f.at, pos: new THREE.Vector3(...f.pos), look: new THREE.Vector3(...f.look) })),
       })),
     [k],
   );
-  const tmp = useMemo(() => ({ look: new THREE.Vector3(), arm: new THREE.Vector3(), a: new THREE.Vector3(), b: new THREE.Vector3() }), []);
+  type Key = (typeof keys)[number];
+  const tmp = useMemo(() => ({ look: new THREE.Vector3(), arm: new THREE.Vector3(), pa: new THREE.Vector3(), la: new THREE.Vector3(), pb: new THREE.Vector3(), lb: new THREE.Vector3() }), []);
+  /** Where step `c`'s camera is `age` seconds in. */
+  const frame = (c: Key, age: number, pos: THREE.Vector3, look: THREE.Vector3) => {
+    const p = c.path;
+    if (p) {
+      let i = 0;
+      while (i < p.length - 2 && age > p[i + 1].at) i++;
+      const u = ease(slice(age, p[i].at, p[i + 1].at));
+      pos.lerpVectors(p[i].pos, p[i + 1].pos, u);
+      look.lerpVectors(p[i].look, p[i + 1].look, u);
+      return;
+    }
+    const f = ease(slice(age, c.over[0], c.over[1]));
+    pos.lerpVectors(c.pos, c.pos2, f);
+    look.lerpVectors(c.look, c.look2, f);
+  };
   useFrame(({ camera, clock }) => {
     const f = ease(play.t);
     const t = clock.elapsedTime;
-    const { look, arm, a, b } = tmp;
-    const from = keys[play.from];
-    const to = keys[play.to];
+    const { look, arm, pa, la, pb, lb } = tmp;
     // Each end is where its own step's move has got to, so the travel starts exactly where the camera was.
-    const fa = ease(slice(play.was, from.over[0], from.over[1]));
-    const fb = ease(slice(play.age, to.over[0], to.over[1]));
-    look.lerpVectors(a.lerpVectors(from.look, from.look2, fa), b.lerpVectors(to.look, to.look2, fb), f);
-    camera.position.lerpVectors(a.lerpVectors(from.pos, from.pos2, fa), b.lerpVectors(to.pos, to.pos2, fb), f);
+    frame(keys[play.from], play.was, pa, la);
+    frame(keys[play.to], play.age, pb, lb);
+    look.lerpVectors(la, lb, f);
+    camera.position.lerpVectors(pa, pb, f);
     // Orbit a few degrees around what it looks at, and push in and out a touch.
     arm.subVectors(camera.position, look).applyAxisAngle(UP, Math.sin(t * 0.19) * 0.05).multiplyScalar(1 + Math.sin(t * 0.13) * 0.018);
     camera.position.addVectors(look, arm);
