@@ -186,6 +186,113 @@ function Model({ onReady, ...props }) {
 
 useGLTF.preload("/assets/3d/robot.glb");
 
+// The party (both hands up): confetti thrown from behind the robot and a string of
+// lights above it. Nothing is drawn, and no frames are asked for, outside a party.
+const PARTY_S = 3.2;
+const PARTY_COLORS = ["#f0732d", "#ffc857", "#ff6b8a", "#36c5b0", "#ffffff"].map((c) => new THREE.Color(c));
+const CONFETTI = 150;
+const BULBS = 11;
+const GRAVITY = 3.6;
+
+function Party() {
+  const confetti = useRef();
+  const string = useRef();
+  const bulbs = useRef();
+  const invalidate = useThree((s) => s.invalidate);
+  const started = useRef(-Infinity);
+  const seen = useRef(0);
+  const dummy = useMemo(() => new THREE.Object3D(), []);
+  const tint = useMemo(() => new THREE.Color(), []);
+  // One throw per piece, drawn once and replayed at every party.
+  const pieces = useMemo(
+    () =>
+      Array.from({ length: CONFETTI }, () => ({
+        x: (Math.random() - 0.5) * 1.4,
+        vx: (Math.random() - 0.5) * 5,
+        vy: 4.5 + Math.random() * 3.8,
+        vz: (Math.random() - 0.5) * 2,
+        spin: 4 + Math.random() * 8,
+        tilt: Math.random() * Math.PI,
+        delay: Math.random() * 0.3,
+      })),
+    []
+  );
+  // The bulbs hang on a sagging line above the robot's head.
+  const hang = useMemo(
+    () => Array.from({ length: BULBS }, (_, i) => {
+      const u = (i / (BULBS - 1)) * 2 - 1;
+      // Just above the head: any higher and the page's nav bar covers it.
+      return new THREE.Vector3(u * 2.6, 2.52 - 0.3 * (1 - u * u), 0.4);
+    }),
+    []
+  );
+  const wire = useMemo(() => new THREE.BufferGeometry().setFromPoints(hang), [hang]);
+
+  useEffect(() => {
+    pieces.forEach((_, i) => confetti.current.setColorAt(i, PARTY_COLORS[i % PARTY_COLORS.length]));
+    confetti.current.instanceColor.needsUpdate = true;
+    hang.forEach((at, i) => {
+      dummy.position.copy(at);
+      dummy.rotation.set(0, 0, 0);
+      dummy.scale.setScalar(1);
+      dummy.updateMatrix();
+      bulbs.current.setMatrixAt(i, dummy.matrix);
+    });
+  }, [pieces, hang, dummy]);
+
+  useFrame(() => {
+    const move = useInputSourceStore.getState().robotMove;
+    if (move?.kind === "cheer" && move.at !== seen.current) {
+      seen.current = move.at;
+      started.current = performance.now();
+    }
+    const t = (performance.now() - started.current) / 1000;
+    const on = t < PARTY_S;
+    confetti.current.visible = string.current.visible = on;
+    if (!on) return;
+
+    // Confetti: up from behind the shoulders, then down, tumbling, and gone before the end.
+    const fade = Math.min(1, (PARTY_S - t) / 0.5);
+    pieces.forEach((c, i) => {
+      const s = Math.max(0, t - c.delay);
+      dummy.position.set(c.x + c.vx * s, 0.9 + c.vy * s - GRAVITY * s * s, -0.7 + c.vz * s);
+      dummy.rotation.set(c.tilt + s * c.spin, s * c.spin * 0.7, c.tilt);
+      dummy.scale.setScalar(s > 0 ? fade : 0);
+      dummy.updateMatrix();
+      confetti.current.setMatrixAt(i, dummy.matrix);
+    });
+    confetti.current.instanceMatrix.needsUpdate = true;
+
+    // Lights: the string drops in, the bulbs take turns being bright, then it lifts away.
+    const show = Math.min(1, t / 0.3, (PARTY_S - t) / 0.3);
+    string.current.scale.setScalar(show);
+    for (let i = 0; i < BULBS; i++) {
+      const lit = (Math.floor(t * 5) + i) % 2 === 0;
+      bulbs.current.setColorAt(i, tint.copy(PARTY_COLORS[i % PARTY_COLORS.length]).multiplyScalar(lit ? 1 : 0.35));
+    }
+    bulbs.current.instanceColor.needsUpdate = true;
+    invalidate();
+  });
+
+  return (
+    <>
+      <instancedMesh ref={confetti} args={[undefined, undefined, CONFETTI]} visible={false} frustumCulled={false}>
+        <planeGeometry args={[0.19, 0.11]} />
+        <meshBasicMaterial side={THREE.DoubleSide} toneMapped={false} />
+      </instancedMesh>
+      <group ref={string} visible={false}>
+        <line geometry={wire}>
+          <lineBasicMaterial color="#6b6b6b" />
+        </line>
+        <instancedMesh ref={bulbs} args={[undefined, undefined, BULBS]} frustumCulled={false}>
+          <sphereGeometry args={[0.085, 12, 10]} />
+          <meshBasicMaterial toneMapped={false} />
+        </instancedMesh>
+      </group>
+    </>
+  );
+}
+
 // The canvas is bigger than the robot box (hero.scss) so a jump or a sidestep is not cut
 // off. The camera still frames that box; the extra canvas shows what is around it.
 const ROOM_SIDE = 110; // .hero-robot__canvas insets in hero.scss
@@ -241,6 +348,7 @@ export default function CanvasComponent({ onReady }) {
       <ambientLight intensity={1} />
       <directionalLight position={[10, 10, 10]} intensity={2} />
       <Model onReady={onReady} position={[0, -1.8, 0]} />
+      <Party />
       <OrbitControls enableZoom={false} />
     </Canvas>
   );
