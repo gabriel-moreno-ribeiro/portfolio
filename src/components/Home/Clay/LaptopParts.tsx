@@ -128,11 +128,33 @@ function screenTextures() {
       g.fillRect(0, 0, 320, 200);
       dialog(g, 70, 40, 1);
     }),
-    // The phone's camera, pointed at the problem.
+    // The phone's camera, pointed at the problem: the broken fan, cracked.
     draw(160, 290, (g) => {
       g.fillStyle = '#d9d3cc';
       g.fillRect(0, 0, 160, 290);
-      dialog(g, 26, 112, 0.6);
+      g.strokeStyle = '#f0732d';
+      g.lineWidth = 12;
+      g.beginPath();
+      g.arc(80, 148, 40, 0, Math.PI * 2);
+      g.stroke();
+      g.fillStyle = '#b3aaa0';
+      g.beginPath();
+      g.arc(80, 148, 12, 0, Math.PI * 2);
+      g.fill();
+      g.strokeStyle = '#b3aaa0';
+      g.lineWidth = 7;
+      for (let i = 0; i < 5; i++) {
+        const a = (i / 7) * Math.PI * 2;
+        g.beginPath();
+        g.moveTo(80 + Math.cos(a) * 14, 148 + Math.sin(a) * 14);
+        g.lineTo(80 + Math.cos(a + 0.4) * 30, 148 + Math.sin(a + 0.4) * 30);
+        g.stroke();
+      }
+      g.strokeStyle = '#3a2f28';
+      g.lineWidth = 2.5;
+      g.beginPath();
+      [[44, 128], [62, 140], [56, 152], [78, 160], [92, 156], [114, 170]].forEach(([x, y], i) => (i ? g.lineTo(x, y) : g.moveTo(x, y)));
+      g.stroke();
       g.strokeStyle = '#8f857b';
       g.lineWidth = 4;
       g.lineCap = 'round';
@@ -207,14 +229,23 @@ export function LiveTag({ at: anchor, dx, dy, on, text, children }: { at: V3; dx
 export const showOn = (steps: number[], after = 0) => (p: Play) => shown(p, steps, after);
 
 // ── The laptop ──────────────────────────────────────────────────────────────
-// Origin at the bottom centre, front edge towards +Z. The base is 2.4 x 1.6 and 0.22 thick.
-const W = 2.4;
-const D = 1.6;
-const DECK = 0.2; // top of the keyboard deck
+// Origin at the bottom centre, front edge towards +Z. The base is 2.4 x 1.6: a bottom cover held
+// by eight screws, the walls, the keyboard deck. The screen (the lid with its hinge) is held by two
+// screws on the deck and comes off whole. For the repair the base turns upside down.
+export const W = 2.4;
+export const D = 1.6;
+const DECK = 0.21; // top of the keyboard deck
+export const HB = 0.235; // the base's height, keys included: upside down it rests on them
 const PIVOT: V3 = [0, 0.255, -0.79]; // the hinge
 export const OPEN = 1.88; // radians: how far the lid stands open
 const KEYS_X = 13;
 const KEYS_Z = 4;
+/** The cover's screws, in the base's own space (heads on the underside). */
+export const COVER_SCREWS: V3[] = [-1.08, -0.42, 0.42, 1.08].flatMap((x) => [-0.7, 0.7].map((z): V3 => [x, 0.004, z]));
+/** The screws that hold the screen, on the deck behind the keys (the head's centre). */
+export const HINGE_SCREWS: V3[] = [[-0.98, 0.221, -0.715], [0.98, 0.221, -0.715]];
+/** Where the screen lies while it is off, screen up (its hinge, in the laptop's space at the bench). */
+export const DISPLAY_ASIDE: V3 = [-1.35, 0.06, -1.26];
 /** Where a point on the screen is (x across, z from the hinge, 0.21 to 1.39), in the laptop's own space, lid open. */
 export const onScreen = (x: number, z: number): V3 => [x, PIVOT[1] + z * Math.sin(OPEN), PIVOT[2] + z * Math.cos(OPEN)];
 
@@ -227,7 +258,7 @@ function Keyboard() {
     if (!m) return;
     const o = new THREE.Object3D();
     for (let i = 0; i < KEYS_X * KEYS_Z; i++) {
-      o.position.set(-0.96 + (i % KEYS_X) * 0.16 + (Math.floor(i / KEYS_X) % 2) * 0.04, DECK + 0.012, -0.6 + Math.floor(i / KEYS_X) * 0.155);
+      o.position.set(-0.96 + (i % KEYS_X) * 0.16 + (Math.floor(i / KEYS_X) % 2) * 0.04, DECK + 0.0125, -0.6 + Math.floor(i / KEYS_X) * 0.155);
       o.updateMatrix();
       m.setMatrixAt(i, o.matrix);
     }
@@ -236,219 +267,124 @@ function Keyboard() {
   return <instancedMesh ref={lay} args={[geo, mats.clay, KEYS_X * KEYS_Z]} castShadow receiveShadow />;
 }
 
-function Fan({ spin }: { spin: (p: Play) => number }) {
-  const { play } = useClay();
-  const blades = useRef<THREE.Group>(null);
-  useFrame((_, dt) => {
-    if (blades.current) blades.current.rotation.y -= dt * 9 * spin(play);
-  });
-  return (
-    <group position={[0.72, 0.085, -0.42]}>
-      <Puck r={0.21} h={0.05} hole={0.18} segments={32} />
-      <group ref={blades}>
-        <Puck r={0.06} h={0.05} segments={16} />
-        {[0, 1, 2, 3, 4].map((i) => (
-          <Box key={i} size={[0.12, 0.012, 0.055]} r={0.005} position={[Math.cos((i * Math.PI * 2) / 5) * 0.11, 0, Math.sin((i * Math.PI * 2) / 5) * 0.11]} rotation={[0.45, (-i * Math.PI * 2) / 5, 0]} />
-        ))}
-      </group>
-    </group>
-  );
-}
-
-/**
- * The laptop. `lid`: how open it is (0..1 of OPEN). `screen`: which picture. `deck`: moves the keyboard
- * deck (it lifts off for the repair). `fan`: how fast the fan turns.
- */
-export function Laptop({ lid, screen, deck, fan }: { lid: (p: Play) => number; screen: (p: Play) => number; deck: (g: THREE.Group, p: Play) => void; fan: (p: Play) => number }) {
-  const mat = useScreen(screen);
-  return (
-    <group>
-      {/* The base: a shell with walls, open on top under the deck */}
-      <Box size={[W, 0.06, D]} position={[0, 0.03, 0]} r={0.03} />
-      <Box size={[W, 0.12, 0.06]} position={[0, 0.12, D / 2 - 0.03]} r={0.02} />
-      <Box size={[W, 0.12, 0.06]} position={[0, 0.12, -D / 2 + 0.03]} r={0.02} />
-      <Box size={[0.06, 0.12, D - 0.12]} position={[W / 2 - 0.03, 0.12, 0]} r={0.02} />
-      <Box size={[0.06, 0.12, D - 0.12]} position={[-W / 2 + 0.03, 0.12, 0]} r={0.02} />
-      {/* Inside: the board, the battery, a chip, the fan and the slot of the part that gets swapped */}
-      <Box size={[2, 0.02, 0.8]} position={[0, 0.07, 0.22]} r={0.006} />
-      <Box size={[1.35, 0.07, 0.48]} position={[-0.38, 0.095, -0.42]} r={0.02} />
-      <Box size={[0.26, 0.03, 0.26]} position={[-0.5, 0.095, 0.22]} r={0.01} />
-      <Box size={[0.07, 0.04, 0.3]} position={[0.13, 0.1, 0.3]} r={0.01} />
-      <Fan spin={fan} />
-      {/* The hinge */}
-      <Puck r={0.045} h={1.7} segments={20} position={[0, PIVOT[1], PIVOT[2] + 0.02]} rotation={[0, 0, HALF_PI]} />
-      {/* The keyboard deck */}
-      <Act f={deck}>
-        <Box size={[W, 0.04, D]} position={[0, DECK - 0.02, 0]} r={0.02} />
-        <Keyboard />
-        <Box size={[0.8, 0.025, 0.12]} position={[0.02, DECK + 0.012, 0.03]} r={0.01} />
-        <Box size={[0.74, 0.008, 0.4]} position={[0, DECK + 0.004, 0.52]} r={0.004} />
-      </Act>
-      {/* The lid on its hinge: a shell, a bezel around the inside, and the screen set back inside the bezel */}
-      <Act position={PIVOT} f={(g, p) => void (g.rotation.x = -OPEN * lid(p))}>
-        <Box size={[W, 0.055, D - 0.02]} position={[0, 0.0275, 0.79]} r={0.03} />
-        <Box size={[W - 0.08, 0.012, 0.16]} position={[0, -0.006, 1.49]} r={0.005} />
-        <Box size={[W - 0.08, 0.012, 0.18]} position={[0, -0.006, 0.12]} r={0.005} />
-        <Box size={[0.16, 0.012, 1.18]} position={[1.07, -0.006, 0.8]} r={0.005} />
-        <Box size={[0.16, 0.012, 1.18]} position={[-1.07, -0.006, 0.8]} r={0.005} />
-        <mesh position={[0, -0.001, 0.8]} rotation={[HALF_PI, 0, 0]} material={mat}>
-          <planeGeometry args={[1.98, 1.18]} />
-        </mesh>
-      </Act>
-    </group>
-  );
-}
-
-// ── The repair ──────────────────────────────────────────────────────────────
-// All in the laptop's own space (y = 0 is the top of the mat it stands on). The deck comes off
-// first; then the screwdriver goes to each screw and turns it out; the old part comes out and
-// the new one goes in.
-export const PART: V3 = [0.45, 0.0925, 0.3];
-const PART_SIZE: V3 = [0.5, 0.025, 0.26];
-const SCREWS: V3[] = [[0.76, 0.0925, 0.21], [0.76, 0.0925, 0.39]];
-export const DISH: V3 = [1.75, 0, 0.78];
-export const WAITING: V3 = [1.8, 0.0125, -0.42]; // the new part, on the mat
-export const OLD_REST: V3 = [1.8, 0.0125, 0.16]; // where the old part is laid down
-export const DRIVER_REST: V3 = [1.05, 0.085, 1.14];
-export const REPAIR = { deck: [0.75, 1.15], out: [2.42, 2.78], in: [2.84, 3.24], fixed: 3.3 } as const;
-
-/** A point in a track: [time, x, y, z, tilt about Z]. */
-type Key5 = [number, number, number, number, number];
-function track(keys: Key5[], a: number, out: number[]) {
-  let i = 0;
-  while (i < keys.length - 2 && a > keys[i + 1][0]) i++;
-  const [t0, ...p] = keys[i];
-  const [t1, ...q] = keys[i + 1];
-  const u = ease(clamp01((a - t0) / (t1 - t0)));
-  for (let k = 0; k < 4; k++) out[k] = lerp(p[k], q[k], u);
-}
-const TOP = 0.105; // the top of a screw head
-const DRIVER: Key5[] = [
-  [1.15, ...DRIVER_REST, HALF_PI],
-  [1.42, SCREWS[0][0], 0.42, SCREWS[0][2], 0],
-  [1.52, SCREWS[0][0], TOP, SCREWS[0][2], 0],
-  [1.78, SCREWS[0][0], TOP + 0.08, SCREWS[0][2], 0],
-  [1.9, SCREWS[1][0], 0.3, SCREWS[1][2], 0],
-  [1.98, SCREWS[1][0], TOP, SCREWS[1][2], 0],
-  [2.24, SCREWS[1][0], TOP + 0.08, SCREWS[1][2], 0],
-  [2.45, ...DRIVER_REST, HALF_PI],
-];
-const TURNS: [number, number][] = [[1.52, 1.78], [1.98, 2.24]];
-/** In and out with the step: grows in place at the end of the travel to step 2, shrinks at the start of the travel away. */
-const toolScale = (p: Play) => (p.to === 1 ? (p.from === 1 ? 1 : pop(slice(p.t, 0.7, 1))) : p.from === 1 ? 1 - ease(slice(p.t, 0, 0.3)) : 0);
-/** Things that sit in the laptop's slot: seen only while the deck is off. */
-const inSlot = (p: Play) => (p.to === 1 && p.from === 1) || (p.from === 1 && p.t < 0.4);
-
-export function Screwdriver() {
-  const tip = useMemo(() => [0, 0, 0, 0], []);
-  return (
-    <Act
-      f={(g, p) => {
-        const a = ageOf(p, 1);
-        track(DRIVER, a, tip);
-        g.position.set(tip[0], tip[1], tip[2]);
-        g.rotation.set(0, TURNS.reduce((s, [t0, t1]) => s + slice(a, t0, t1), 0) * Math.PI * 6, tip[3]);
-        const s = toolScale(p);
-        g.scale.setScalar(Math.max(s, 1e-4));
-        g.visible = s > 0.001;
-      }}
-    >
-      <Puck r={0.012} h={0.06} segments={8} position={[0, 0.03, 0]} />
-      <Puck r={0.022} h={0.5} segments={10} position={[0, 0.3, 0]} />
-      <Puck r={0.05} h={0.08} bevel={0.02} segments={16} position={[0, 0.57, 0]} />
-      <Puck r={0.085} h={0.4} bevel={0.04} segments={10} position={[0, 0.81, 0]} />
-    </Act>
-  );
-}
-
-/** A screw: turned out, then dropped in the dish. */
-export function Screw({ k }: { k: number }) {
-  const [x, y, z] = SCREWS[k];
-  const [t0, t1] = TURNS[k];
-  return (
-    <Act
-      f={(g, p) => {
-        const a = ageOf(p, 1);
-        const out = slice(a, t1 + 0.02, t1 + 0.3);
-        const e = ease(out);
-        g.position.set(lerp(x, DISH[0] + (k - 0.5) * 0.1, e), lerp(y + 0.08 * slice(a, t0, t1), DISH[1] + 0.03, e) + bump(out) * 0.4, lerp(z, DISH[2], e));
-        g.rotation.set(0, slice(a, t0, t1) * Math.PI * 6, out * 1.4);
-        g.visible = inSlot(p) || (out > 0 && toolScale(p) > 0.001);
-        g.scale.setScalar(Math.max(out > 0 ? toolScale(p) : 1, 1e-4));
-      }}
-    >
-      <Puck r={0.034} h={0.025} bevel={0.01} segments={14} />
-      <Box size={[0.04, 0.008, 0.008]} r={0.003} position={[0, 0.013, 0]} />
-    </Act>
-  );
-}
-
-function PartShape({ accent }: { accent?: boolean }) {
+/** A screw, head up: the head with its cross, the thread under it. Origin at the head's centre. */
+export function ScrewShape() {
   return (
     <>
-      <Box accent={accent} size={PART_SIZE} r={0.008} />
-      <Box accent={accent} size={[0.08, 0.02, 0.08]} position={[-0.12, 0.02, 0]} r={0.006} />
-      <Box accent={accent} size={[0.08, 0.02, 0.08]} position={[0.04, 0.02, 0]} r={0.006} />
+      <Puck r={0.032} h={0.012} bevel={0.005} segments={14} />
+      <Box size={[0.036, 0.004, 0.007]} r={0.002} position={[0, 0.006, 0]} />
+      <Box size={[0.007, 0.004, 0.036]} r={0.002} position={[0, 0.006, 0]} />
+      <Puck r={0.011} h={0.07} segments={8} position={[0, -0.04, 0]} />
     </>
   );
 }
 
-export function OldPart() {
-  return (
-    <Act
-      f={(g, p) => {
-        const a = ageOf(p, 1);
-        const u = slice(a, REPAIR.out[0], REPAIR.out[1]);
-        const e = settle(u, 0.5);
-        g.position.set(lerp(PART[0], OLD_REST[0], e), lerp(PART[1], OLD_REST[1], e) + bump(u) * 0.55, lerp(PART[2], OLD_REST[2], e));
-        g.rotation.set(0, ease(u) * 0.3, -bump(u) * 0.35);
-        g.visible = u > 0 ? toolScale(p) > 0.001 : inSlot(p);
-        g.scale.setScalar(Math.max(u > 0 ? toolScale(p) : 1, 1e-4));
-      }}
-    >
-      <PartShape />
-    </Act>
-  );
-}
-
-export function NewPart() {
-  return (
-    <Act
-      f={(g, p) => {
-        const a = ageOf(p, 1);
-        const u = slice(a, REPAIR.in[0], REPAIR.in[1]);
-        const e = settle(u, 0.6);
-        g.position.set(lerp(WAITING[0], PART[0], e), lerp(WAITING[1], PART[1], e) + bump(u) * 0.6, lerp(WAITING[2], PART[2], e));
-        g.rotation.set(0, (1 - ease(u)) * 0.35, 0);
-        // On the mat it comes and goes with the tools; once in the slot, it stays under the deck.
-        g.visible = u >= 1 ? inSlot(p) : toolScale(p) > 0.001;
-        g.scale.setScalar(Math.max(u >= 1 ? 1 : toolScale(p), 1e-4));
-      }}
-    >
-      <PartShape accent />
-    </Act>
-  );
-}
-
-/** The repair mat, with a raised rim and a dish for the screws. Origin at the top centre of the mat. */
-export const MAT: V3 = [6.1, 0.03, 2.9];
-export function Mat() {
-  const [w, h, d] = MAT;
+/** The bottom cover, in the base's space: a plate with vents and four feet. */
+export function Cover() {
   return (
     <group>
-      <Box size={[w, h, d]} position={[0, -h / 2, 0]} r={0.012} />
-      <Box size={[w, 0.02, 0.06]} position={[0, 0.01, d / 2 - 0.03]} r={0.008} />
-      <Box size={[w, 0.02, 0.06]} position={[0, 0.01, -d / 2 + 0.03]} r={0.008} />
-      <Box size={[0.06, 0.02, d - 0.12]} position={[w / 2 - 0.03, 0.01, 0]} r={0.008} />
-      <Box size={[0.06, 0.02, d - 0.12]} position={[-w / 2 + 0.03, 0.01, 0]} r={0.008} />
+      <Box size={[W, 0.035, D]} position={[0, 0.0175, 0]} r={0.03} />
+      {[-0.3, -0.15, 0, 0.15, 0.3].map((z) => (
+        <Box key={z} size={[0.9, 0.006, 0.05]} position={[0.3, 0.001, z - 0.25]} r={0.003} />
+      ))}
+      {[-0.95, 0.95].flatMap((x) => [-0.5, 0.5].map((z) => <Box key={`${x}${z}`} size={[0.2, 0.008, 0.08]} position={[x, 0.0, z]} r={0.004} />))}
     </group>
   );
 }
-export function Dish() {
+
+/** The screen: the lid with its bezel and the screen set back inside it, and the hinge. Origin at the hinge. */
+function Display({ mat }: { mat: THREE.Material }) {
+  return (
+    <>
+      <Puck r={0.045} h={1.7} segments={20} position={[0, 0, 0.02]} rotation={[0, 0, HALF_PI]} />
+      <Box size={[W, 0.055, D - 0.02]} position={[0, 0.0275, 0.79]} r={0.03} />
+      <Box size={[W - 0.08, 0.012, 0.16]} position={[0, -0.006, 1.49]} r={0.005} />
+      <Box size={[W - 0.08, 0.012, 0.18]} position={[0, -0.006, 0.12]} r={0.005} />
+      <Box size={[0.16, 0.012, 1.18]} position={[1.07, -0.006, 0.8]} r={0.005} />
+      <Box size={[0.16, 0.012, 1.18]} position={[-1.07, -0.006, 0.8]} r={0.005} />
+      <mesh position={[0, -0.001, 0.8]} rotation={[HALF_PI, 0, 0]} material={mat}>
+        <planeGeometry args={[1.98, 1.18]} />
+      </mesh>
+    </>
+  );
+}
+
+/**
+ * The laptop. `lid`: how open (0..1 of OPEN). `screen`: which picture. `flip`: 0 upright, 1 upside
+ * down. `detached`: 0 the screen is on its hinge, 1 it lies aside. `cover` and `screw`: how far the
+ * cover and each screw are out (above 0, the bench's loose copy takes over).
+ */
+export function Laptop({ lid, screen, flip, detached, cover, screw, hinge }: {
+  lid: (p: Play) => number;
+  screen: (p: Play) => number;
+  flip: (p: Play) => number;
+  detached: (p: Play) => number;
+  cover: (p: Play) => number;
+  screw: (p: Play, k: number) => number;
+  hinge: (p: Play, k: number) => number;
+}) {
+  const mat = useScreen(screen);
+  const shell = useRef<THREE.Group>(null);
+  const screws = useRef<(THREE.Group | null)[]>([]);
+  const hinges = useRef<(THREE.Group | null)[]>([]);
   return (
     <group>
-      <Puck r={0.17} h={0.05} hole={0.13} segments={32} position={[0, 0.025, 0]} />
-      <Puck r={0.14} h={0.012} segments={28} position={[0, 0.006, 0]} />
+      <Act
+        f={(g, p) => {
+          const f = flip(p);
+          // Turned over in the air, high enough that its corners clear the mat.
+          g.position.set(0, HB / 2 + Math.sin(f * Math.PI) * 1.25, 0);
+          g.rotation.set(0, 0, Math.PI * ease(f));
+          if (shell.current) shell.current.visible = cover(p) <= 0;
+          screws.current.forEach((s, k) => s && (s.visible = screw(p, k) <= 0));
+          hinges.current.forEach((s, k) => s && (s.visible = hinge(p, k) <= 0));
+        }}
+      >
+        <group position={[0, -HB / 2, 0]}>
+          <group ref={shell}>
+            <Cover />
+          </group>
+          {COVER_SCREWS.map((s, k) => (
+            <group key={k} ref={(g) => void (screws.current[k] = g)} position={s} rotation={[Math.PI, 0, 0]}>
+              <ScrewShape />
+            </group>
+          ))}
+          {/* The walls, the deck and its keys */}
+          <Box size={[W, 0.14, 0.05]} position={[0, 0.105, D / 2 - 0.025]} r={0.02} />
+          <Box size={[W, 0.14, 0.05]} position={[0, 0.105, -D / 2 + 0.025]} r={0.02} />
+          <Box size={[0.05, 0.14, D - 0.1]} position={[W / 2 - 0.025, 0.105, 0]} r={0.02} />
+          <Box size={[0.05, 0.14, D - 0.1]} position={[-W / 2 + 0.025, 0.105, 0]} r={0.02} />
+          <Box size={[W, 0.04, D]} position={[0, DECK - 0.02, 0]} r={0.02} />
+          <Keyboard />
+          <Box size={[0.8, 0.025, 0.12]} position={[0.02, DECK + 0.0125, 0.03]} r={0.01} />
+          <Box size={[0.74, 0.008, 0.4]} position={[0, DECK + 0.004, 0.52]} r={0.004} />
+          {HINGE_SCREWS.map(([x, , z]) => (
+            <Box key={x} size={[0.2, 0.008, 0.11]} position={[x, DECK + 0.002, z]} r={0.004} />
+          ))}
+        </group>
+      </Act>
+      {HINGE_SCREWS.map((s, k) => (
+        <group key={k} ref={(g) => void (hinges.current[k] = g)} position={s}>
+          <ScrewShape />
+        </group>
+      ))}
+      {/* The screen: on its hinge, or lifted off and laid aside, screen up */}
+      <Act
+        f={(g, p) => {
+          const d = detached(p);
+          const open = -OPEN * (d > 0 ? 1 : lid(p));
+          if (d <= 0) {
+            g.position.set(...PIVOT);
+            g.rotation.set(open, 0, 0);
+            return;
+          }
+          const e = ease(d);
+          g.position.set(lerp(PIVOT[0], DISPLAY_ASIDE[0], e), lerp(PIVOT[1], DISPLAY_ASIDE[1], e) + bump(d) * 0.45, lerp(PIVOT[2], DISPLAY_ASIDE[2], e));
+          g.rotation.set(lerp(open, -Math.PI, ease(slice(d, 0.25, 1))), 0, 0);
+        }}
+      >
+        <Display mat={mat} />
+      </Act>
     </group>
   );
 }
@@ -596,17 +532,23 @@ export function Phone({ screen, glow, children }: { screen: (p: Play) => number;
   );
 }
 
-/** What comes back: a tutorial card, numbered steps and their lines. Faces +Z, the size of the phone's screen. */
+/** What comes back: a repair guide for the part. A small drawing of the fan, then numbered steps. Faces +Z, the size of the phone's screen. */
 export function TutorialCard() {
   return (
     <group>
       <Box size={[0.54, 0.98, 0.022]} r={0.03} />
-      <Box size={[0.38, 0.05, 0.012]} position={[-0.04, 0.38, 0.015]} r={0.006} />
+      <group position={[0, 0.3, 0.014]} rotation={[HALF_PI, 0, 0]}>
+        <Puck r={0.12} h={0.014} hole={0.1} segments={24} />
+        <Puck r={0.035} h={0.014} segments={14} />
+        {[0, 1, 2, 3, 4].map((i) => (
+          <Box key={i} size={[0.07, 0.01, 0.026]} r={0.004} position={[Math.cos((i * Math.PI * 2) / 5) * 0.065, 0, Math.sin((i * Math.PI * 2) / 5) * 0.065]} rotation={[0, (-i * Math.PI * 2) / 5, 0]} />
+        ))}
+      </group>
       {[0, 1, 2].map((i) => (
-        <group key={i} position={[0, 0.16 - i * 0.24, 0.015]}>
-          <Puck accent r={0.045} h={0.02} segments={16} position={[-0.17, 0, 0]} rotation={[HALF_PI, 0, 0]} />
-          <Box size={[0.26, 0.035, 0.012]} position={[0.07, 0.03, 0]} r={0.006} />
-          <Box size={[0.2 - i * 0.04, 0.035, 0.012]} position={[0.04 - i * 0.02, -0.035, 0]} r={0.006} />
+        <group key={i} position={[0, 0.05 - i * 0.18, 0.015]}>
+          <Puck accent r={0.04} h={0.02} segments={16} position={[-0.17, 0, 0]} rotation={[HALF_PI, 0, 0]} />
+          <Box size={[0.26, 0.032, 0.012]} position={[0.07, 0.026, 0]} r={0.006} />
+          <Box size={[0.2 - i * 0.04, 0.032, 0.012]} position={[0.04 - i * 0.02, -0.03, 0]} r={0.006} />
         </group>
       ))}
     </group>
@@ -618,7 +560,7 @@ export function TutorialCard() {
 export const MAP_K = 0.03;
 export const toWorld = ([x, y]: [number, number], h = 0): V3 => [(x - MAP_W / 2) * MAP_K, h, (y - MAP_H / 2) * MAP_K];
 // The five states no laptop went to (the owner's list). The Federal District is not a state and is
-// not counted either way: it stays plain, like the states not reached, and no laptop goes to it.
+// not counted either way: it stays plain, like the five states no laptop went to, and no laptop goes to it.
 const NOT_REACHED = ['AC', 'AM', 'RR', 'AP', 'MS'];
 export const stateKind = (uf: string) => (uf === 'DF' ? 'df' : NOT_REACHED.includes(uf) ? 'out' : 'lit');
 export const REACHED = STATES.filter((s) => stateKind(s.uf) === 'lit');
@@ -689,6 +631,7 @@ function miniLaptopGeometry() {
 /** When the laptop for reached state `k` (0 = nearest to Salvador) lands, seconds into the step. */
 export const landAt = (k: number) => 1.3 + k * 0.09;
 export const SALVADOR_AT = toWorld(SALVADOR, H_BASE);
+const MAP_STEP = 5; // the story's last step
 
 /** The country rises out of the page in one piece; then one laptop after another leaves Salvador, and each state turns orange as its laptop lands. */
 export function BrazilMap() {
@@ -744,11 +687,11 @@ function MapBody({ geos }: { geos: MapGeos }) {
   }, []);
   const o = useMemo(() => new THREE.Object3D(), []);
   useFrame(() => {
-    const here = at(play, 4);
+    const here = at(play, MAP_STEP);
     const on = here > 0.001;
-    const age = ageOf(play, 4);
+    const age = ageOf(play, MAP_STEP);
     // Up in the second half of the travel (the laptop has gone by then), down in the first half of the travel away.
-    const up = play.to === 4 ? (play.from === 4 ? 1 : settle(slice(play.t, 0.36, 1), 0.4)) : 1 - ease(slice(play.t, 0, 0.4));
+    const up = play.to === MAP_STEP ? (play.from === MAP_STEP ? 1 : settle(slice(play.t, 0.36, 1), 0.4)) : 1 - ease(slice(play.t, 0, 0.4));
     // Flat, it would still cover the floor: it is only there once it has some height.
     const there = on && up > 0.02;
     const g = country.current;
@@ -800,9 +743,9 @@ function MapBody({ geos }: { geos: MapGeos }) {
       <Act
         position={SALVADOR_AT}
         f={(g, p) => {
-          const u = p.to === 4 ? (p.from === 4 ? 1 : pop(slice(p.t, 0.8, 1))) : 1 - ease(slice(p.t, 0, 0.3));
+          const u = p.to === MAP_STEP ? (p.from === MAP_STEP ? 1 : pop(slice(p.t, 0.8, 1))) : 1 - ease(slice(p.t, 0, 0.3));
           g.scale.setScalar(Math.max(u, 1e-4));
-          g.visible = at(p, 4) > 0.001;
+          g.visible = at(p, MAP_STEP) > 0.001;
         }}
       >
         <Puck r={0.012} h={0.2} segments={8} position={[0, 0.1, 0]} />

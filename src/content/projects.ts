@@ -155,7 +155,7 @@ export const projects: Project[] = [
     eyebrow: 'Repairs',
     summary: '121 laptops repaired in Salvador to pay for school, sent to 21 states, all by referral.',
     cardDesc:
-      'I repaired laptops in Salvador to pay for school: 121 of them, sent to 21 states, all by referral. At 11 I wrote a Python script that dubs Hindi repair tutorials into Portuguese. And WiFixit: take a photo of the problem, get the tutorial that fixes it.',
+      'I repaired laptops in Salvador to pay for school: 121 of them, sent to 21 states, all by referral. At 11 I wrote a Python script that dubs Hindi repair tutorials into Portuguese. And WiFixit, for hardware problems: take a photo of the problem, get the tutorial that fixes it.',
     tags: ['121 laptops', '21 states', 'All by referral'],
     stats: [
       { value: '121', label: 'laptops repaired' },
@@ -175,11 +175,11 @@ export const projects: Project[] = [
       },
       {
         heading: 'WiFixit',
-        body: ['Take a photo of the problem, get the tutorial that fixes it.'],
+        body: ['For hardware problems: take a photo of the problem, get the tutorial that fixes it.'],
       },
       {
         heading: 'Where they went',
-        body: ['21 states. The five they did not reach: Acre, Amazonas, Roraima, Amapá and Mato Grosso do Sul.'],
+        body: ['21 states, all by referral.'],
       },
     ],
     // PLACEHOLDER (owner): photos to come. Drop them in public/work/laptops/ (01.webp, 02.webp, …,

@@ -179,9 +179,13 @@ export function puckGeometry(r: number, h: number, bevel = Math.min(r, h / 2) * 
   return new THREE.LatheGeometry(pts, segments);
 }
 
+const pucks = new Map<string, THREE.BufferGeometry>();
 export function Puck({ r, h, bevel, segments, hole, accent, ...props }: { r: number; h: number; bevel?: number; segments?: number; hole?: number; accent?: boolean } & MeshProps) {
   const { mats } = useClay();
-  const geo = useMemo(() => puckGeometry(r, h, bevel, segments, hole), [r, h, bevel, segments, hole]);
+  // Like Box: one geometry per shape, shared (the laptop's screws alone are 20 of the same pucks).
+  const key = `${r},${h},${bevel},${segments},${hole}`;
+  let geo = pucks.get(key);
+  if (!geo) pucks.set(key, (geo = puckGeometry(r, h, bevel, segments, hole)));
   return <mesh geometry={geo} castShadow receiveShadow material={accent ? mats.accent : mats.clay} {...props} />;
 }
 
