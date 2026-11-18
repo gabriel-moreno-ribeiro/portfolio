@@ -38,4 +38,17 @@ export const CLAY_STORIES: Record<string, ClayStep[]> = {
       text: 'In the classrooms that used them, physics failure rates went from 30% to 10%.',
     },
   ],
+  laptops: [
+    { title: 'It comes in', text: 'A broken laptop arrives. Every one of them came by referral.' },
+    { title: 'On the bench', text: 'In Salvador I opened them, fixed them and closed them again. The repairs paid for school.' },
+    {
+      title: 'Hindi to Portuguese',
+      text: 'Some problems were software, and the only tutorials for them were in Hindi. At 11 I wrote a Python script that translates and dubs them into Portuguese.',
+    },
+    { title: 'WiFixit', text: 'Take a photo of the problem, get the tutorial that fixes it.' },
+    {
+      title: '21 states',
+      text: '121 laptops, sent to 21 states, all by referral. Not reached: Acre, Amazonas, Roraima, Amapá and Mato Grosso do Sul.',
+    },
+  ],
 };

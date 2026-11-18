@@ -4,6 +4,7 @@
 // The words never wait for WebGL.
 import { Component, lazy, Suspense, useEffect, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
 import { FiArrowUpRight, FiPause, FiPlay } from 'react-icons/fi';
+import { PiCameraLight } from 'react-icons/pi';
 import { Link } from 'react-router-dom';
 import type { Project } from '../../../content/projects';
 import { usePageVisible, useReducedMotion, useVisible } from '../../../lib/motion';
@@ -218,6 +219,40 @@ function Body({ project, children }: { project: Project; children?: ReactNode })
   );
 }
 
+/**
+ * Photos promised but not sent yet: the photo stage's own cards, each a marked, empty box of the
+ * same size, so the row does not move when the real photos replace them (see `photosToCome`).
+ */
+export function PhotosToCome({ project }: { project: Project }) {
+  const n = project.photosToCome ?? 0;
+  if (n === 0 || (project.gallery?.length ?? 0) > 0) return null;
+  const pad = (i: number) => String(i).padStart(2, '0');
+  const slot = (i: number) => (i === 0 ? 'center' : i === 1 ? 'next' : i === n - 1 ? 'prev' : 'hidden');
+  return (
+    <section className="photo-stage photo-stage--todo" aria-label={`Photos from ${project.title}`} data-reduced="true">
+      <p className="sr-only">Photos to come.</p>
+      <div className="photo-stage__viewport" aria-hidden="true">
+        {Array.from({ length: n }, (_, i) => (
+          <figure key={i} className="photo-card" data-slot={slot(i)}>
+            <header className="photo-card__head">
+              <span className="photo-card__label">{project.title}</span>
+              <span className="photo-card__count">{pad(i + 1)} / {pad(n)}</span>
+            </header>
+            <div className="photo-card__media photo-card__todo">
+              <PiCameraLight />
+              <span>Photo {pad(i + 1)} to come</span>
+              {import.meta.env.DEV && <code>public/work/{project.slug}/{pad(i + 1)}.webp</code>}
+            </div>
+          </figure>
+        ))}
+      </div>
+      <div className="photo-stage__bars" aria-hidden="true">
+        {Array.from({ length: n }, (_, i) => <span key={i} className="photo-stage__bar" aria-current={i === 0 ? 'true' : undefined} />)}
+      </div>
+    </section>
+  );
+}
+
 const stageLabel = (project: Project, steps: ClayStep[], i: number) => `${project.title}, how it works. Step ${i + 1} of ${steps.length}: ${steps[i].title}`;
 
 /**
@@ -244,7 +279,7 @@ export function ClayRow({ project, steps }: { project: Project; steps: ClayStep[
       </div>
       <div className="work-row__media clay-row__media">
         <Stage slug={project.slug} label={stageLabel(project, steps, player.index)} index={player.index} live onVisible={setVisible} />
-        {photos.length > 0 && <CityPhotoStage label={project.title} photos={photos} />}
+        {photos.length > 0 ? <CityPhotoStage label={project.title} photos={photos} /> : <PhotosToCome project={project} />}
       </div>
     </article>
   );

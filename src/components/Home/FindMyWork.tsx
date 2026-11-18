@@ -4,10 +4,9 @@ import { Link } from "react-router-dom";
 import { Project, projects } from "../../content/projects";
 import useIsMobile from "../../hooks/useIsMobile";
 import { usePageVisible, useReducedMotion, useVisible } from "../../lib/motion";
-import { ClayPlayer, ClayRow, useClayLive } from "./Clay/ClayStory";
+import { ClayPlayer, ClayRow, PhotosToCome, useClayLive } from "./Clay/ClayStory";
 import { CLAY_STORIES } from "./Clay/stories";
 import MedalsShowcase from "./MedalsShowcase";
-import NumbersStrip from "./NumbersStrip";
 
 const AUTOPLAY_MS = 6000;
 
@@ -140,7 +139,8 @@ function MediaCarousel({ project, paused, offset = 0 }: { project: Project; paus
 // One project: its photos on one side, the words on the other, no box around
 // it. Rows alternate sides. The tags are the site's dotted meta line.
 function ProjectRow({ project, index }: { project: Project; index: number }) {
-  const hasMedia = (project.gallery?.length ?? 0) > 0;
+  const hasPhotos = (project.gallery?.length ?? 0) > 0;
+  const hasMedia = hasPhotos || (project.photosToCome ?? 0) > 0;
   const [paused, setPaused] = useState(false);
   // A project with a story: the live 3D scene with the photos under it on desktop,
   // the photos first and the story as stills elsewhere.
@@ -161,7 +161,7 @@ function ProjectRow({ project, index }: { project: Project; index: number }) {
     >
       {hasMedia && (
         <div className="work-row__media">
-          <MediaCarousel project={project} paused={paused} offset={(index % 2) * (AUTOPLAY_MS / 2)} />
+          {hasPhotos ? <MediaCarousel project={project} paused={paused} offset={(index % 2) * (AUTOPLAY_MS / 2)} /> : <PhotosToCome project={project} />}
         </div>
       )}
       <div className="work-row__body">
@@ -195,7 +195,6 @@ function FindMyWork() {
         {projects.map((project, i) => (
           <ProjectRow key={project.slug} project={project} index={i} />
         ))}
-        <NumbersStrip />
       </div>
     </div>
   );

@@ -4,6 +4,7 @@ export const TRAVEL_MS = 700;
 const STEP_MS: Record<string, number[]> = {
   hibeex: [3000, 3000, 3300, 3200, 3400],
   candela: [2600, 3100, 3600, 3300, 3300],
+  laptops: [3000, 3600, 2900, 3100, 3300],
 };
 export const stepMs = (slug: string, index: number): number => STEP_MS[slug]?.[index] ?? 3100;
 

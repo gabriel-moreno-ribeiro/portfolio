@@ -11,6 +11,7 @@ import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import CandelaScene from './CandelaScene';
 import HibeexScene from './HibeexScene';
+import LaptopScene from './LaptopScene';
 import { ClayCtx, makeMats, useClay, type Play } from './kit';
 import { TRAVEL_MS } from './steps';
 
@@ -212,7 +213,7 @@ export default function ClayStage({ slug, target, active, dark, bg, onReady, onF
     [mats],
   );
   const ctx = useMemo(() => ({ play, mats, dark }), [play, mats, dark]);
-  const Scene = slug === 'candela' ? CandelaScene : HibeexScene;
+  const Scene = slug === 'candela' ? CandelaScene : slug === 'laptops' ? LaptopScene : HibeexScene;
 
   return (
     <Canvas

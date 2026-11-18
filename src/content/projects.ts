@@ -40,6 +40,8 @@ export interface Project {
   captions?: Record<string, string>;
   /** Where the crop sits (CSS object-position) keyed by gallery filename; default centre. */
   focus?: Record<string, string>;
+  /** Photos promised but not here yet: that many marked, reserved boxes while `gallery` is empty. */
+  photosToCome?: number;
 }
 
 export const projects: Project[] = [
@@ -146,6 +148,44 @@ export const projects: Project[] = [
       '07.webp': '50% 20%',
       '08.webp': '50% 60%',
     },
+  },
+  {
+    slug: 'laptops',
+    title: 'Laptop repair',
+    eyebrow: 'Repairs',
+    summary: '121 laptops repaired in Salvador to pay for school, sent to 21 states, all by referral.',
+    cardDesc:
+      'I repaired laptops in Salvador to pay for school: 121 of them, sent to 21 states, all by referral. At 11 I wrote a Python script that dubs Hindi repair tutorials into Portuguese. And WiFixit: take a photo of the problem, get the tutorial that fixes it.',
+    tags: ['121 laptops', '21 states', 'All by referral'],
+    stats: [
+      { value: '121', label: 'laptops repaired' },
+      { value: '21', label: 'states they went to' },
+      { value: '11', label: 'my age when I wrote the dubbing script' },
+    ],
+    sections: [
+      {
+        heading: 'Why',
+        body: ['I repaired laptops in Salvador to pay for school. 121 of them, sent to 21 states, all by referral.'],
+      },
+      {
+        heading: 'Hindi to Portuguese',
+        body: [
+          'Some of the problems were software, and the only tutorials that covered them were in Hindi. At 11 I wrote a Python script that translates and dubs those videos into Portuguese.',
+        ],
+      },
+      {
+        heading: 'WiFixit',
+        body: ['Take a photo of the problem, get the tutorial that fixes it.'],
+      },
+      {
+        heading: 'Where they went',
+        body: ['21 states. The five they did not reach: Acre, Amazonas, Roraima, Amapá and Mato Grosso do Sul.'],
+      },
+    ],
+    // PLACEHOLDER (owner): photos to come. Drop them in public/work/laptops/ (01.webp, 02.webp, …,
+    // plus sm/ and thumbs/ copies like the other projects), list them here and remove photosToCome.
+    gallery: [],
+    photosToCome: 3,
   },
 ];
 

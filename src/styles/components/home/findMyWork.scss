@@ -199,6 +199,26 @@ $clay-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
     }
   }
 
+  // Photos promised but not here yet: the photo stage's cards, empty, dashed and labelled.
+  .photo-stage--todo .photo-card__media { box-shadow: none; }
+  .photo-card__todo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-sizing: border-box;
+    border: 1px dashed color-mix(in srgb, var(--fg) 30%, transparent);
+    background: color-mix(in srgb, var(--fg) 3%, var(--bg));
+    font: 500 11px/1.4 $clay-mono;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+
+    svg { width: 28px; height: 28px; color: var(--accent-decor); }
+    code { font: inherit; font-size: 10px; letter-spacing: 0.02em; text-transform: none; opacity: 0.75; }
+  }
+
   // Story-style progress: a segment per step, the current one fills with time.
   .clay-ctl {
     display: flex;
