@@ -40,3 +40,11 @@ export const useHandsfreeStore = create<HandsfreeState>((set) => ({
   setModelLoadProgress: (progress) => set({ modelLoadProgress: progress }),
   setCameraError: (error) => set({ cameraError: error }),
 }));
+
+// The camera button and the robot's speech bubble do the same thing: the first time,
+// explain; after that, switch.
+export function toggleHandsfree() {
+  const s = useHandsfreeStore.getState();
+  if (!s.hasSeenIntro) s.setShowIntroModal(true);
+  else s.setEnabled(!s.isEnabled);
+}

@@ -31,7 +31,7 @@ const HandsfreeLoader: React.FC = () => {
         >
           <div className="handsfree-loader-card" role="status" aria-live="polite">
             <div className="handsfree-loader-spinner" />
-            <p className="handsfree-loader-text">Loading the hand model…</p>
+            <p className="handsfree-loader-text">Starting the camera…</p>
             <div className="handsfree-loader-bar">
               <motion.div
                 className="handsfree-loader-fill"

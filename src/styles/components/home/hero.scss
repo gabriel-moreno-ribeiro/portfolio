@@ -27,10 +27,73 @@
       &[data-hidden="true"] { opacity: 0; }
     }
 
+    // Larger than the box: room for the robot's jumps, tilts and sidesteps in hands-free
+    // mode. Framing (and the 90px) in CanvasComponent.jsx.
     &__canvas {
       position: absolute;
-      inset: 0;
+      inset: -90px -110px -44px;
     }
+  }
+
+  // The robot's speech bubble, to its left, with the tail pointing at it.
+  .hero-invite {
+    position: absolute;
+    z-index: 2; // above the canvas, which reaches under it
+    top: 96px;
+    right: calc(100% - 28px);
+    width: 212px;
+    box-sizing: border-box;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    border: 1.5px solid var(--border);
+    border-radius: 16px;
+    background: var(--surface);
+    color: var(--fg);
+    font: inherit;
+    font-size: 13px;
+    line-height: 1.35;
+    text-align: left;
+    animation: hero-invite-in 0.35s ease-out 0.9s backwards;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 26px;
+      right: -7px;
+      width: 12px;
+      height: 12px;
+      border-top: 1.5px solid var(--border);
+      border-right: 1.5px solid var(--border);
+      background: var(--surface);
+      transform: rotate(45deg);
+    }
+
+    strong { font-size: 15px; font-weight: 700; }
+    > span { color: var(--fg-muted); }
+
+    &__cta {
+      margin-top: 4px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 600;
+      color: var(--accent) !important;
+    }
+
+    ul { margin: 2px 0 0; padding: 0; list-style: none; display: grid; gap: 2px; }
+    li { color: var(--fg-muted); border-radius: 6px; }
+    li.is-hit { color: var(--fg); font-weight: 600; animation: hero-invite-hit 0.5s ease-out; }
+  }
+
+  button.hero-invite {
+    cursor: pointer;
+    transition: border-color 0.2s ease, transform 0.12s ease;
+
+    &:hover { border-color: var(--accent); transform: translateY(-2px); }
+    &:hover::after { border-color: var(--accent); }
+    &:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 3px; }
   }
 
   .heading-section {
@@ -150,6 +213,14 @@
     }
 
   }
+}
+
+@keyframes hero-invite-in {
+  from { opacity: 0; transform: translateX(8px) scale(0.96); }
+}
+
+@keyframes hero-invite-hit {
+  from { transform: scale(1.12); }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -278,11 +349,14 @@
 // canvas inside has a fixed 300px box.
 @media screen and (min-width: 768px) and (max-height: 800px) {
   .hero-section {
+    // A smaller slot, not a scaled one: the 3D canvas measures its box, so a transform
+    // shrank the robot twice (it drew at 108px inside a 180px slot).
     .hero-robot {
-      transform: scale(0.6);
-      transform-origin: top center;
-      margin-bottom: -120px;
+      width: 180px;
+      height: 180px;
     }
+
+    .hero-invite { top: 44px; }
 
     .heading-section {
       gap: 16px;

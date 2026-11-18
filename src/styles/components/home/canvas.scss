@@ -1,6 +1,7 @@
 .robot-canvas {
-  height: 300px !important;
-  width: 300px !important;
+  // Fills .hero-robot__canvas, which is larger than the 300px robot box (hero.scss).
+  height: 100% !important;
+  width: 100% !important;
   cursor: grab;
   background-color: transparent !important;
 }

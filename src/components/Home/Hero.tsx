@@ -13,6 +13,7 @@ import { useReducedMotion, useVisible } from '../../lib/motion';
 import { scrollToComponent } from '../../utils/scrollToComponent';
 import CommonButton from '../Shared/CommonButton';
 import RankedStats from './RankedStats';
+import HandsfreeInvite from './HandsfreeInvite';
 import SpotifyCard from './SpotifyCard';
 import ScrambleText from '../Shared/ScrambleText';
 
@@ -108,7 +109,7 @@ function Hero() {
   return (
     <div className="hero-section" ref={heroRef}>
       {!isNarrowViewport && (
-        <div className="hero-robot" aria-hidden="true">
+        <div className="hero-robot">
           {/* The poster is in the DOM before anything heavy loads, and it is the
               whole robot under reduced motion. */}
           <img
@@ -123,6 +124,7 @@ function Hero() {
           {use3D && CanvasComponent && (
             <motion.div
               className="hero-robot__canvas"
+              aria-hidden="true"
               initial={{ opacity: 0 }}
               animate={{ opacity: showRobot ? 1 : 0 }}
               transition={{ duration: 0.8, ease: 'easeOut' }}
@@ -132,6 +134,8 @@ function Hero() {
               </Suspense>
             </motion.div>
           )}
+          {/* Only where the robot is live: under reduced motion it is a still picture. */}
+          {use3D && <HandsfreeInvite />}
         </div>
       )}
       <div className="heading-section">

@@ -17,12 +17,36 @@ const BOB_PERIOD_S = 2;
 const STARTLE_MS = 300;
 const INPUT_EVENTS = ["mousemove", "scroll", "keydown", "pointerdown", "touchstart"];
 
+// Tricks played back when the camera sees a gesture (hands-free mode): how long each
+// lasts, and what it adds on top of the head tracking at progress p (0..1).
+const MOVE_MS = { wave: 1400, spin: 900, jump: 700, nod: 900, cheer: 1600 };
+function moveOffsets(kind, p) {
+  const arc = Math.sin(p * Math.PI); // 0 → 1 → 0
+  switch (kind) {
+    case "wave": // rock side to side, like a hand waving
+      return { rz: Math.sin(p * Math.PI * 6) * 0.32 * arc, y: arc * 0.12 };
+    case "spin": // one full turn with a small hop
+      return { ry: (p < 0.5 ? 2 * p * p : 1 - 2 * (1 - p) * (1 - p)) * Math.PI * 2, y: arc * 0.3 };
+    case "jump": // stretch on the way up, squash on landing
+      return { y: arc * 0.9, stretch: Math.sin(p * Math.PI * 2) * 0.1 };
+    case "nod":
+      return { rx: Math.sin(p * Math.PI * 4) * 0.3 * arc };
+    case "cheer": // three hops, rocking
+      return { y: Math.abs(Math.sin(p * Math.PI * 3)) * 0.55, rz: Math.sin(p * Math.PI * 6) * 0.18 };
+    default:
+      return {};
+  }
+}
+const clamp = (v, lim) => Math.max(-lim, Math.min(lim, v));
+
 function Model({ onReady, ...props }) {
   const { scene } = useGLTF("/assets/3d/robot.glb");
   const group = useRef();
   const lastInput = useRef(0);
   const wokeAt = useRef(-Infinity);
   const baseY = useRef(props.position?.[1] ?? 0);
+  // Where the head tracking has the robot; the tricks are added on top of this each frame.
+  const pose = useRef({ rx: 0, ry: 0, rz: 0, x: 0, y: props.position?.[1] ?? 0, s: 1 });
   const invalidate = useThree((s) => s.invalidate);
   const frameloop = useThree((s) => s.frameloop);
   // Back from a hidden tab or from off screen: settle (or keep bobbing) without waiting for input
@@ -51,7 +75,10 @@ function Model({ onReady, ...props }) {
       invalidate();
     };
     INPUT_EVENTS.forEach((ev) => window.addEventListener(ev, bump, { passive: true }));
-    const unsub = useInputSourceStore.subscribe(() => invalidate());
+    // With the camera on there is no mouse or keyboard: a head or a hand in the picture is the input.
+    const unsub = useInputSourceStore.subscribe((st, was) =>
+      st.inputSource === "camera" && (st.headPosition !== was.headPosition || st.handPositions.length) ? bump() : invalidate()
+    );
     return () => {
       INPUT_EVENTS.forEach((ev) => window.removeEventListener(ev, bump));
       unsub();
@@ -67,27 +94,35 @@ function Model({ onReady, ...props }) {
     const asleep = now - lastInput.current > IDLE_MS;
     const startle = Math.max(0, 1 - (now - wokeAt.current) / STARTLE_MS);
 
-    const { headPosition } = useInputSourceStore.getState();
-    let targetY = asleep ? 0 : headPosition.x * 0.4;
-    let targetX = asleep ? SLEEP_TILT : headPosition.y * 0.4;
-    // Waking up: a short flinch backwards before the head settles on the cursor.
-    if (startle > 0) targetX -= startle * 0.14;
-
+    const { headPosition: head, robotMove } = useInputSourceStore.getState();
+    const b = pose.current;
+    const target = {
+      ry: asleep ? 0 : head.x * 0.4,
+      // Waking up: a short flinch backwards before the head settles on the cursor.
+      rx: (asleep ? SLEEP_TILT : head.y * 0.4) - startle * 0.14,
+      // Camera only: tilt, sidestep and lean in with the visitor.
+      rz: asleep ? 0 : clamp(head.roll ?? 0, 0.6) * 0.9,
+      x: asleep ? 0 : (head.shift ?? 0) * 0.55,
+      s: asleep ? 1 : head.near ?? 1,
+      y: baseY.current + (asleep ? Math.sin((t * 2 * Math.PI) / BOB_PERIOD_S) * 0.04 : 0),
+    };
     const damp = asleep ? 0.03 : startle > 0 ? 0.35 : 0.2;
-    g.rotation.y += (targetY - g.rotation.y) * damp;
-    g.rotation.x += (targetX - g.rotation.x) * damp;
+    let settling = false;
+    for (const k in target) {
+      b[k] += (target[k] - b[k]) * (k === "y" ? 0.05 : damp);
+      if (Math.abs(target[k] - b[k]) > 0.0005) settling = true;
+    }
 
-    const bob = asleep ? Math.sin((t * 2 * Math.PI) / BOB_PERIOD_S) * 0.04 : 0;
-    g.position.y += (baseY.current + bob - g.position.y) * 0.05;
+    const p = robotMove ? (now - robotMove.at) / MOVE_MS[robotMove.kind] : 1;
+    const m = p < 1 ? moveOffsets(robotMove.kind, p) : {};
+    const stretch = m.stretch ?? 0;
+    g.rotation.set(b.rx + (m.rx ?? 0), b.ry + (m.ry ?? 0), b.rz + (m.rz ?? 0));
+    g.position.x = b.x;
+    g.position.y = b.y + (m.y ?? 0);
+    g.scale.set(b.s * (1 - stretch / 2), b.s * (1 + stretch), b.s * (1 - stretch / 2));
 
     // Keep rendering while anything is still settling (or while it bobs in its sleep)
-    const moving =
-      asleep ||
-      startle > 0 ||
-      Math.abs(targetY - g.rotation.y) > 0.0005 ||
-      Math.abs(targetX - g.rotation.x) > 0.0005 ||
-      Math.abs(baseY.current - g.position.y) > 0.0005;
-    if (moving) invalidate();
+    if (asleep || startle > 0 || settling || p < 1) invalidate();
   });
 
   return (
@@ -98,6 +133,22 @@ function Model({ onReady, ...props }) {
 }
 
 useGLTF.preload("/assets/3d/robot.glb");
+
+// The canvas is bigger than the robot box (hero.scss) so a jump or a sidestep is not cut
+// off. The camera still frames that box; the extra canvas shows what is around it.
+const ROOM_SIDE = 110; // .hero-robot__canvas insets in hero.scss
+const ROOM_ABOVE = 90;
+function Framing() {
+  const camera = useThree((s) => s.camera);
+  const size = useThree((s) => s.size);
+  useEffect(() => {
+    camera.manual = true; // keep the fiber from resetting the aspect on resize
+    camera.aspect = 1;
+    const box = size.width - ROOM_SIDE * 2;
+    camera.setViewOffset(box, box, -ROOM_SIDE, -ROOM_ABOVE, size.width, size.height);
+  }, [camera, size.width, size.height]);
+  return null;
+}
 
 export default function CanvasComponent({ onReady }) {
   const pageVisible = usePageVisible();
@@ -134,6 +185,7 @@ export default function CanvasComponent({ onReady }) {
     >
       {/* Same light in both themes: the dimmed dark-mode rig turned the orange
           shell maroon, and the static poster it replaces is lit like this */}
+      <Framing />
       <ambientLight intensity={1} />
       <directionalLight position={[10, 10, 10]} intensity={2} />
       <Model onReady={onReady} position={[0, -1.8, 0]} />

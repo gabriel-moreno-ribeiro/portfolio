@@ -9,24 +9,24 @@ import DraggableWindow from "../WindowManager/DraggableWindow";
 
 const gestures = [
   {
-    icon: "👤",
-    title: "Head tracking",
-    desc: "Move your head to control the robot cursor",
+    icon: "🤖",
+    title: "Move your head",
+    desc: "The robot turns, tilts and leans with you",
   },
   {
-    icon: "👌",
-    title: "Pinch to click",
-    desc: "Pinch and release to click",
-  },
-  {
-    icon: "👌",
-    title: "Pinch and drag",
-    desc: "Pinch and drag to scroll",
+    icon: "👋",
+    title: "Wave, ✌️, 👍, 🙌",
+    desc: "It waves back, spins, nods and parties. ✊ then ✋ makes it jump",
   },
   {
     icon: "🖐",
     title: "Open hand",
     desc: "Show your palm to move the cursor around the page",
+  },
+  {
+    icon: "👌",
+    title: "Pinch",
+    desc: "Pinch and release to click. Pinch and drag to scroll",
   },
 ];
 
@@ -46,8 +46,9 @@ const GestureTutorial: React.FC = () => {
         type: "gesture-tutorial",
         status: "open",
         position: {
-          x: Math.max(20, (window.innerWidth - modalWidth) / 2),
-          y: Math.max(20, (window.innerHeight - 440) / 2),
+          // Bottom right, so the robot stays in view while the visitor tries the gestures.
+          x: Math.max(20, window.innerWidth - modalWidth - 24),
+          y: Math.max(20, window.innerHeight - 470),
         },
         size: { width: modalWidth, height: 0 },
       });

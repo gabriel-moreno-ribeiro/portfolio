@@ -6,23 +6,23 @@ import {
 } from "../../store/windowManagerStore";
 import DraggableWindow from "../WindowManager/DraggableWindow";
 import { motion } from "motion/react";
-import { cameraErrorKind } from "../../providers/CameraInputProvider";
+import { preloadModels, stopCameraInput } from "../../providers/CameraInputProvider";
 
 const FEATURES = [
   {
-    icon: "👤",
-    title: "Head tracking",
-    desc: "Move your head to control the cursor",
+    icon: "🤖",
+    title: "The robot copies you",
+    desc: "Turn, tilt or lean in, and it does the same",
+  },
+  {
+    icon: "👋",
+    title: "It answers your gestures",
+    desc: "Wave, ✌️ to spin, ✊ then ✋ to jump, 👍 for a nod",
   },
   {
     icon: "👌",
-    title: "Pinch gestures",
-    desc: "Pinch to click, drag to scroll",
-  },
-  {
-    icon: "✋",
-    title: "Chips mode",
-    desc: "Play with skill icons using your hands",
+    title: "Your hand is the mouse",
+    desc: "Pinch to click, pinch and drag to scroll",
   },
 ];
 
@@ -32,8 +32,6 @@ const HandsfreeIntroModal: React.FC = () => {
     setShowIntroModal,
     setHasSeenIntro,
     setEnabled,
-    setCameraPermission,
-    setCameraError,
     modelLoadProgress,
   } = useHandsfreeStore();
   const openWindow = useWindowManagerStore((s) => s.openWindow);
@@ -57,9 +55,16 @@ const HandsfreeIntroModal: React.FC = () => {
     }
   }, [showIntroModal, win, openWindow]);
 
+  // The models (~12 MB) start loading while the visitor reads, so the camera is quick to start.
+  useEffect(() => {
+    if (showIntroModal) preloadModels().catch(() => {});
+  }, [showIntroModal]);
+
+  // Closed from the title bar: same as "Not now".
   useEffect(() => {
     if (!win && showIntroModal) {
       setShowIntroModal(false);
+      if (!useHandsfreeStore.getState().isEnabled) stopCameraInput();
     }
   }, [win, showIntroModal, setShowIntroModal]);
 
@@ -69,18 +74,15 @@ const HandsfreeIntroModal: React.FC = () => {
     setShowIntroModal(false);
   };
 
-  const handleEnable = async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-      stream.getTracks().forEach((t) => t.stop());
-      setCameraPermission("granted");
-      handleClose();
-      setEnabled(true);
-    } catch (err) {
-      // The robot card (CameraOops) explains it and offers a retry.
-      setCameraError(cameraErrorKind(err));
-      handleClose();
-    }
+  // The camera is asked for once, by the mode itself; a refusal shows the robot card (CameraOops).
+  const handleEnable = () => {
+    handleClose();
+    setEnabled(true);
+  };
+
+  const handleDecline = () => {
+    stopCameraInput(); // drops the models that were loading
+    handleClose();
   };
 
   if (!win || win.status === "minimized") return null;
@@ -102,9 +104,9 @@ const HandsfreeIntroModal: React.FC = () => {
         </div>
 
         <div className="hf-intro__content">
-          <h2 className="hf-intro__title">Go Handsfree</h2>
+          <h2 className="hf-intro__title">Use the site with your hands</h2>
           <p className="hf-intro__subtitle">
-            Move around the site with your hands. No mouse.
+            Your webcam follows your head and hands. No mouse needed.
           </p>
 
           <div className="hf-intro__features">
@@ -147,16 +149,15 @@ const HandsfreeIntroModal: React.FC = () => {
             whileTap={{ scale: 0.97 }}
             onClick={handleEnable}
           >
-            <span className="hf-intro__btn-icon">✨</span>
-            Enable Handsfree
+            Turn on the camera
           </motion.button>
           <motion.button
             className="hf-intro__btn hf-intro__btn--ghost"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.97 }}
-            onClick={handleClose}
+            onClick={handleDecline}
           >
-            Continue with mouse
+            Not now
           </motion.button>
         </div>
       </div>

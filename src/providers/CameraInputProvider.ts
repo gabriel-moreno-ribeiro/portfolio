@@ -1,4 +1,4 @@
-import { useInputSourceStore } from "../store/inputSourceStore";
+import { useInputSourceStore, type HeadPose, type RobotMove } from "../store/inputSourceStore";
 import { useHandsfreeStore, type CameraError } from "../store/handsfreeStore";
 
 let videoEl: HTMLVideoElement | null = null;
@@ -8,52 +8,74 @@ let handLandmarker: any = null;
 let rafId: number | null = null;
 let frameCount = 0;
 
-async function loadModels(
-  onProgress: (progress: number) => void
-) {
-  const { FaceLandmarker, HandLandmarker, FilesetResolver } = await import(
-    "@mediapipe/tasks-vision"
-  );
+const MODELS = "https://storage.googleapis.com/mediapipe-models";
+const bytes = (url: string) =>
+  fetch(url).then((r) => {
+    if (!r.ok) throw new Error(`model ${r.status}`);
+    return r.arrayBuffer();
+  }).then((b) => new Uint8Array(b));
 
-  onProgress(10);
-
+// Everything is fetched at once (the library, its wasm and the two models, ~12 MB);
+// only building the two trackers, which is quick, happens one after the other.
+async function loadModels(onProgress: (progress: number) => void) {
+  let done = 0;
+  const step = <T,>(p: Promise<T>) => p.then((v) => (onProgress(10 + ++done * 20), v));
+  const [{ FaceLandmarker, HandLandmarker, FilesetResolver }, faceModel, handModel] = await Promise.all([
+    step(import("@mediapipe/tasks-vision")),
+    step(bytes(`${MODELS}/face_landmarker/face_landmarker/float16/1/face_landmarker.task`)),
+    step(bytes(`${MODELS}/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task`)),
+  ]);
   const filesetResolver = await FilesetResolver.forVisionTasks(
     "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.32/wasm" // keep in step with package.json
   );
 
-  onProgress(30);
-
   const face = await FaceLandmarker.createFromOptions(filesetResolver, {
-    baseOptions: {
-      modelAssetPath:
-        "https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task",
-      delegate: "GPU",
-    },
+    baseOptions: { modelAssetBuffer: faceModel, delegate: "GPU" },
     runningMode: "VIDEO",
     outputFaceBlendshapes: false,
     outputFacialTransformationMatrixes: false,
     numFaces: 1,
   });
-
-  onProgress(65);
+  onProgress(85);
 
   const hand = await HandLandmarker.createFromOptions(filesetResolver, {
-    baseOptions: {
-      modelAssetPath:
-        "https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task",
-      delegate: "GPU",
-    },
+    baseOptions: { modelAssetBuffer: handModel, delegate: "GPU" },
     runningMode: "VIDEO",
     numHands: 2,
   });
-
   onProgress(100);
   return { face, hand };
 }
 
+// The models don't need the camera: the intro window starts them, so they are usually
+// ready by the time the visitor allows the camera. One load at a time, shared.
+type Models = Awaited<ReturnType<typeof loadModels>>;
+let modelsPromise: Promise<Models> | null = null;
+let modelPct = 0;
+let cameraUp = false;
+// The loader stays up until the camera is running too, however early the models arrive.
+const reportProgress = () =>
+  useHandsfreeStore.getState().setModelLoadProgress(cameraUp ? modelPct : Math.min(modelPct, 95));
+
+export function preloadModels(): Promise<Models> {
+  if (!modelsPromise) {
+    modelPct = 5;
+    reportProgress();
+    const mine = (modelsPromise = loadModels((pct) => {
+      if (modelsPromise !== mine) return;
+      modelPct = pct;
+      reportProgress();
+    }));
+    mine.catch(() => {
+      if (modelsPromise === mine) modelsPromise = null;
+    });
+  }
+  return modelsPromise;
+}
+
 function extractHeadPoseFromLandmarks(
   landmarks: { x: number; y: number; z: number }[]
-): { x: number; y: number } {
+): HeadPose {
   // Use face landmarks directly — more reliable than matrix decomposition.
   // Nose tip (4) relative to face center (midpoint of eyes) gives yaw/pitch.
   const nose = landmarks[4];
@@ -79,7 +101,12 @@ function extractHeadPoseFromLandmarks(
   const normalizedX = Math.max(-1, Math.min(1, -rawYaw * 3));
   const normalizedY = Math.max(-1, Math.min(1, rawPitch * 3));
 
-  return { x: normalizedX, y: normalizedY };
+  // Sideways tilt from the line between the eyes; where the face is and how big it looks.
+  const roll = Math.atan2(leftEye.y - rightEye.y, leftEye.x - rightEye.x);
+  const shift = Math.max(-1, Math.min(1, -(faceCenterX - 0.5) * 2.5));
+  const near = Math.max(0.9, Math.min(1.18, 1 + (faceWidth - 0.16) * 1.6));
+
+  return { x: normalizedX, y: normalizedY, roll, shift, near };
 }
 
 function countExtendedFingers(landmarks: any[]): number {
@@ -366,6 +393,92 @@ function processPinchGesture(
   return { isPinching: state.isPinching, isScrolling: state.isScrolling };
 }
 
+// ── Gestures the hero robot answers (wave, peace sign, fist then open, thumbs up, both hands up) ──
+const HOLD_FRAMES = 8; // a pose must last this long, so a passing hand shape doesn't count
+const MOVE_COOLDOWN_MS = 1700; // the longest trick, so they never overlap
+const WAVE_SWING = 0.05; // how far the palm travels (share of the frame) before a turn counts
+const WAVE_WINDOW_MS = 1300;
+const makeGestureState = () => ({ peace: 0, thumb: 0, fist: 0, dir: 0, edge: 0, turns: [] as number[] });
+let gestureStates = [makeGestureState(), makeGestureState()];
+let bothUp = 0;
+let lastMoveAt = 0;
+
+function fingersUp(lm: any[]): boolean[] {
+  const wrist = lm[0];
+  const d = (i: number) => Math.hypot(lm[i].x - wrist.x, lm[i].y - wrist.y);
+  return [[4, 2], [8, 5], [12, 9], [16, 13], [20, 17]].map(([tip, mcp]) => d(tip) > d(mcp) * 1.15);
+}
+
+/** Which trick, if any, the hands in this frame ask for. Exported so it can be exercised without a camera. */
+export function readRobotMove(hands: any[][], now: number): RobotMove | null {
+  const asked: RobotMove[] = [];
+  const open = hands.map((lm) => fingersUp(lm).filter(Boolean).length >= 4);
+
+  // Both palms open in the top half of the picture.
+  bothUp = hands.length === 2 && open[0] && open[1] && hands.every((lm) => lm[9].y < 0.45) ? bothUp + 1 : 0;
+  if (bothUp >= HOLD_FRAMES) asked.push("cheer");
+
+  hands.slice(0, 2).forEach((lm, i) => {
+    const g = gestureStates[i];
+    const [thumb, index, middle, ring, pinky] = fingersUp(lm);
+    const palm = Math.hypot(lm[9].x - lm[0].x, lm[9].y - lm[0].y);
+
+    // An open palm swinging side to side: count the turns.
+    if (open[i]) {
+      const x = lm[9].x;
+      if (!g.dir) {
+        g.dir = 1;
+        g.edge = x;
+      }
+      if ((x - g.edge) * g.dir > 0) g.edge = x; // still going the same way
+      else if (Math.abs(x - g.edge) > WAVE_SWING) {
+        g.dir = -g.dir;
+        g.edge = x;
+        g.turns.push(now);
+      }
+      g.turns = g.turns.filter((t) => now - t < WAVE_WINDOW_MS);
+      if (g.turns.length >= 3) {
+        asked.push("wave");
+        g.turns = [];
+      }
+    } else g.dir = 0;
+
+    g.peace = index && middle && !ring && !pinky ? g.peace + 1 : 0;
+    if (g.peace >= HOLD_FRAMES) {
+      asked.push("spin");
+      g.peace = 0;
+    }
+
+    // Thumb out and pointing up (y grows downwards), the other four curled.
+    const thumbUp = thumb && !index && !middle && !ring && !pinky && lm[4].y < lm[0].y - palm * 0.9;
+    g.thumb = thumbUp ? g.thumb + 1 : 0;
+    if (g.thumb >= HOLD_FRAMES) {
+      asked.push("nod");
+      g.thumb = 0;
+    }
+
+    // A closed hand that then opens.
+    const closed = !index && !middle && !ring && !pinky && !thumbUp;
+    if (closed) g.fist++;
+    else if (open[i]) {
+      if (g.fist >= HOLD_FRAMES) asked.push("jump");
+      g.fist = 0;
+    } else g.fist = Math.max(0, g.fist - 1);
+  });
+
+  // "cheer" comes first in the list, so two waving hands held high cheer instead of waving.
+  if (!asked.length || now - lastMoveAt < MOVE_COOLDOWN_MS) return null;
+  lastMoveAt = now;
+  bothUp = 0;
+  return asked[0];
+}
+
+function resetGestures() {
+  gestureStates = [makeGestureState(), makeGestureState()];
+  bothUp = 0;
+  lastMoveAt = 0;
+}
+
 function processFrame() {
   if (!videoEl || videoEl.readyState < 2) {
     rafId = requestAnimationFrame(processFrame);
@@ -404,6 +517,8 @@ function processFrame() {
       );
       if (handResult.landmarks && handResult.landmarks.length > 0) {
         latestHandLandmarks = handResult.landmarks;
+        const move = readRobotMove(handResult.landmarks, performance.now());
+        if (move) store.setRobotMove(move);
         const hands = handResult.landmarks.map(
           (landmarks: any[], idx: number) => {
             if (idx > 1) return null; // max 2 hands
@@ -489,7 +604,10 @@ export async function startCameraInput() {
 
   try {
     handsfreeState.setCameraError(null);
-    handsfreeState.setModelLoadProgress(5);
+    cameraUp = false;
+    // The models download while the browser asks for the camera.
+    const loading = preloadModels();
+    loading.catch(() => {}); // reported below; this only keeps a camera refusal from leaving it unhandled
 
     const granted = await navigator.mediaDevices.getUserMedia({
       video: { width: 640, height: 480, facingMode: "user" },
@@ -511,23 +629,16 @@ export async function startCameraInput() {
     videoEl.style.width = "1px";
     videoEl.style.height = "1px";
     document.body.appendChild(videoEl);
-    await videoEl.play();
-
-    const models = await loadModels((progress) => {
-      handsfreeState.setModelLoadProgress(progress);
-    });
-    // Cancelled meanwhile: the stop already released the camera; drop only these
-    // models and leave any newer session alone.
-    if (mine !== session) {
-      models.face.close();
-      models.hand.close();
-      return;
-    }
+    const [models] = await Promise.all([loading, videoEl.play()]);
+    // Cancelled meanwhile: the stop already released the camera and these models.
+    if (mine !== session) return;
     faceLandmarker = models.face;
     handLandmarker = models.hand;
 
     useInputSourceStore.getState().setInputSource("camera");
     frameCount = 0;
+    cameraUp = true;
+    reportProgress();
     rafId = requestAnimationFrame(processFrame);
   } catch (err) {
     const kind = cameraErrorKind(err);
@@ -554,10 +665,14 @@ export function stopCameraInput() {
     videoEl = null;
   }
 
-  faceLandmarker?.close();
+  // Also drops models that were preloaded (or are still loading) and never used.
+  const loaded = modelsPromise;
+  modelsPromise = null;
+  loaded?.then((m) => (m.face.close(), m.hand.close())).catch(() => {});
   faceLandmarker = null;
-  handLandmarker?.close();
   handLandmarker = null;
+  modelPct = 0;
+  cameraUp = false;
 
   latestFaceLandmarks = null;
   latestHandLandmarks = null;
@@ -569,10 +684,13 @@ export function stopCameraInput() {
   for (const sh of smoothedHands) sh.initialized = false;
   scrollState.velocity = 0;
   stopMomentumScroll();
+  resetGestures();
 
   const inputStore = useInputSourceStore.getState();
   inputStore.setInputSource("mouse");
   inputStore.setHandPositions([]);
+  inputStore.setHeadPosition({ x: 0, y: 0 });
+  inputStore.setRobotMove(null);
 
   useHandsfreeStore.getState().setModelLoadProgress(0);
 }
