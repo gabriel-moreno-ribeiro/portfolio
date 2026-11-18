@@ -1,20 +1,20 @@
-// The repair bench (steps 2 and 3): the mat, the insides of the laptop, and every loose piece of
-// the teardown. Everything here is in the laptop's own space while it stands on the mat (y = 0 is the
-// top of the mat), with the base upside down: what was its bottom is now on top.
+// The repair bench (taking apart, the photo, putting back): the mat, the insides of the laptop, and
+// every loose piece. Everything here is in the laptop's own space while it stands on the mat (y = 0 is
+// the top of the mat), with the base upside down: what was its bottom is now on top.
 import { Line } from '@react-three/drei';
 import { Children, useEffect, useMemo, useState, type ReactNode } from 'react';
 import * as THREE from 'three';
-import { Act, ageOf, at, Box, ease, Puck, Rod, Slab, slice, Ticks, useClay, type Play, type V3 } from './kit';
-import { COVER_SCREWS, Cover, D, HB, HINGE_SCREWS, LiveTag, ScrewShape, Shell } from './LaptopParts';
-import { apart, APART, BACK, benchScale, N_PARTS, N_SCREWS, T, track, TURN, type Key6, type Win } from './teardown';
+import { Act, ageOf, at, Box, ease, pop, Puck, ring, Rod, Slab, slice, Ticks, useClay, type Play, type V3 } from './kit';
+import { COVER_SCREWS, Cover, D, HB, HINGE_SCREWS, LiveTag, ScrewShape } from './LaptopParts';
+import { apart, APART, BACK, benchScale, N_SCREWS, OPENED, PHOTO, SHOT, stepOf, T, track, TURN, type Key6, type Win } from './teardown';
 
 const HALF_PI = Math.PI / 2;
 const lerp = THREE.MathUtils.lerp;
 const HIDE = 1e-4;
 
 /** The repair mat: thin, with round corners and a ruler printed along its front edge. Origin at the top centre. */
-export const MAT: V3 = [5.7, 0.03, 4.4];
-export const MAT_CENTER: V3 = [0, 0, -0.74]; // in the bench's space
+export const MAT: V3 = [5.7, 0.03, 4.56];
+export const MAT_CENTER: V3 = [0, 0, -0.66]; // in the bench's space
 const MAT_TICK: V3 = [0.012, 0.004, 0.06];
 export function Mat({ size = MAT }: { size?: V3 }) {
   const { mats } = useClay();
@@ -106,37 +106,40 @@ function Wifi() {
     </group>
   );
 }
-/** A dark stick with light chips and orange contacts along one edge. The new one is all orange. */
-export function Ram({ accent }: { accent?: boolean }) {
+/** A dark stick with light chips and orange contacts along one edge. */
+function Ram() {
   const { mats } = useClay();
-  const board = accent ? mats.accent : mats.shade.board;
   return (
     <group>
-      <Box size={[0.56, 0.014, 0.17]} r={0.005} material={board} />
+      <Box size={[0.56, 0.014, 0.17]} r={0.005} material={mats.shade.board} />
       {[-0.18, -0.06, 0.06, 0.18].map((x) => (
-        <Box key={x} size={[0.09, 0.01, 0.07]} position={[x, 0.01, -0.01]} r={0.003} material={accent ? mats.accent : mats.clay} />
+        <Box key={x} size={[0.09, 0.01, 0.07]} position={[x, 0.01, -0.01]} r={0.003} />
       ))}
-      <Box size={[0.5, 0.006, 0.026]} position={[0, 0.008, 0.07]} r={0.002} material={accent ? mats.clay : mats.accent} />
+      <Box accent size={[0.5, 0.006, 0.026]} position={[0, 0.008, 0.07]} r={0.002} />
     </group>
   );
 }
 const PIPE = new THREE.CatmullRomCurve3([new THREE.Vector3(0.14, -0.006, 0), new THREE.Vector3(0.45, -0.012, -0.02), new THREE.Vector3(0.8, -0.012, -0.03)]);
 const PIPE_FINS = new THREE.CatmullRomCurve3([new THREE.Vector3(0, -0.01, -0.16), new THREE.Vector3(0, -0.01, -0.33)]);
 const FIN: V3 = [0.012, 0.06, 0.1];
-/** The fan, dark blades in a light ring, with its heat pipe: to a plate that sits on the processor, and to the fins at the vent. Broken, its ring is orange and two blades are gone. */
-export function Fan({ broken }: { broken?: boolean }) {
+/**
+ * The fan, dark blades in a light ring, with its heat pipe: to a plate that sits on the processor, and
+ * to the fins at the vent. `broken`: two blades are gone (the crack is drawn over it, see `Crack`).
+ * `accent`: the new one, in orange.
+ */
+function Fan({ broken, accent }: { broken?: boolean; accent?: boolean }) {
   const { mats } = useClay();
   return (
     <group>
-      <Puck accent={broken} r={0.19} h={0.05} hole={0.165} segments={28} />
+      <Puck accent={accent} r={0.19} h={0.05} hole={0.165} segments={28} />
       <Puck r={0.19} h={0.008} segments={28} position={[0, -0.021, 0]} material={mats.shade.board} />
-      <Puck r={0.05} h={0.04} segments={16} />
+      <Puck accent={accent} r={0.05} h={0.04} segments={16} />
       {Array.from({ length: broken ? 5 : 7 }, (_, i) => (
         <Box key={i} size={[0.11, 0.01, 0.05]} r={0.004} material={mats.shade.dark} position={[Math.cos((i * Math.PI * 2) / 7) * 0.1, 0, Math.sin((i * Math.PI * 2) / 7) * 0.1]} rotation={[0.4, (-i * Math.PI * 2) / 7, 0]} />
       ))}
-      <Rod path={PIPE} r={0.022} segments={20} />
-      <Box size={[0.24, 0.012, 0.24]} position={[0.8, -0.008, -0.03]} r={0.006} />
-      <Rod path={PIPE_FINS} r={0.022} segments={8} />
+      <Rod accent={accent} path={PIPE} r={0.022} segments={20} />
+      <Box accent={accent} size={[0.24, 0.012, 0.24]} position={[0.8, -0.008, -0.03]} r={0.006} />
+      <Rod accent={accent} path={PIPE_FINS} r={0.022} segments={8} />
       <Box size={[0.36, 0.012, 0.11]} position={[0, -0.036, -0.36]} r={0.004} material={mats.shade.board} />
       <Ticks n={10} a={[-0.16, -0.01, -0.36]} b={[0.16, -0.01, -0.36]} size={FIN} major={99} along={0} />
     </group>
@@ -144,7 +147,7 @@ export function Fan({ broken }: { broken?: boolean }) {
 }
 // The crack on the broken fan: a zigzag across the housing, drawn over the clay.
 const CRACK: V3[] = [[-0.16, 0.03, -0.08], [-0.08, 0.03, -0.02], [-0.1, 0.03, 0.04], [-0.01, 0.03, 0.08], [0.05, 0.03, 0.06], [0.13, 0.03, 0.12]];
-export function Crack() {
+function Crack() {
   const { mats } = useClay();
   return (
     <group userData={{ overlay: true }}>
@@ -153,29 +156,26 @@ export function Crack() {
   );
 }
 
-// ── Where every part is: inside the open base, and laid out on the mat ──────
-// Laid out like a tidy bench: the screen and the cover behind the base, the big parts in a column on
-// its left, the small ones in two on its right, the tools in front.
-interface Part { at: V3; laid: V3; yaw?: number; lift: number; clip?: boolean; node: ReactNode }
-// Removed in this order (the battery first, as it should be), put back in the reverse order.
-const RAM_X = 1.86;
-const SMALL_X = 2.5;
-export const PARTS: Part[] = [
-  { at: [0.05, 0.105, 0.45], laid: [-1.72, 0.04, 0], yaw: HALF_PI, lift: 0.85, node: <Battery /> },
-  { at: [0.55, 0.093, -0.2], laid: [RAM_X, 0.007, -0.4], lift: 0.6, clip: true, node: <Ram /> },
-  { at: [0.55, 0.093, -0.45], laid: [RAM_X, 0.007, -0.64], lift: 0.75, clip: true, node: <Ram /> },
-  { at: [-0.7, 0.11, -0.32], laid: [-2.42, 0.042, -0.42], yaw: -HALF_PI, lift: 0.9, node: <Fan /> },
-  { at: [-0.35, 0.092, -0.02], laid: [RAM_X, 0.006, 0.32], lift: 0.6, node: <Drive /> },
-  { at: [0.15, 0.09, -0.02], laid: [SMALL_X, 0.005, 0.4], lift: 0.7, node: <Wifi /> },
-  { at: [-1.0, 0.11, 0.55], laid: [SMALL_X, 0.025, -0.66], lift: 1, node: <Speaker /> },
-  { at: [1.0, 0.11, 0.55], laid: [SMALL_X, 0.025, -0.46], lift: 0.7, node: <Speaker /> },
+// ── Where everything is: inside the open base, and on the mat around it ─────
+// The insides are laid out mirrored (the base is upside down), so the fan is at the back right.
+// Behind the base lie the screen and the cover; in front, the new fan, the screw tray and the screwdriver.
+const INSIDE: [V3, ReactNode][] = [
+  [[0.05, 0.105, 0.45], <Battery key="battery" />],
+  [[0.55, 0.093, -0.2], <Ram key="ram1" />],
+  [[0.55, 0.093, -0.45], <Ram key="ram2" />],
+  [[-0.35, 0.092, -0.02], <Drive key="drive" />],
+  [[0.15, 0.09, -0.02], <Wifi key="wifi" />],
+  [[-1.0, 0.11, 0.55], <Speaker key="left" />],
+  [[1.0, 0.11, 0.55], <Speaker key="right" />],
 ];
-const OLD = 1; // the RAM stick that gets swapped
-export const SPARE: V3 = [1.3, 0.007, 1.14]; // the new part on the mat; after the swap, the old one
-const SPARE_TAG: V3 = [SPARE[0] + 0.24, 0.02, SPARE[2] - 0.06];
-const TRAY: V3 = [0.15, 0, 1.16];
-const DRIVER_REST: V3 = [-0.5, 0.09, 1.16];
-const DRIVER_WAIT: V3 = [-1.8, 0.45, 0.95]; // held ready beside the laptop while something else moves
+/** The fan's place in the base, and where the two fans lie on the mat: the new one waiting in front, the broken one tossed to the side. */
+export const FAN_AT: V3 = [0.7, 0.11, -0.32];
+const SPARE: V3 = [-1.85, 0.042, 1.12];
+const OLD_AT: V3 = [1.95, 0.042, -0.02];
+const TRAY: V3 = [-0.35, 0, 1.25];
+const DRIVER_REST: V3 = [1.78, 0.09, 1.25];
+const DRIVER_IN: V3 = [-1.75, 0.45, 0.2]; // where it is picked up, by the first screw
+const DRIVER_WAIT: V3 = [1.75, 0.45, 0.2]; // held ready beside the laptop while something else moves
 /** A screw's place in the tray: the screen's two in the middle, the cover's eight around them. */
 const screwLaid = (n: number): V3 => {
   const r = n < 2 ? 0.07 : 0.185;
@@ -192,7 +192,6 @@ export const BOARD_Y = 0.075;
 
 /** Open = the cover has started to come off: the insides are seen. */
 const isOpen = (p: Play) => apart(p, T.cover) > 0;
-const stepOf = (p: Play) => (p.t > 0.5 ? p.to : p.from);
 const smooth = (u: number) => u * u * (3 - 2 * u);
 
 /**
@@ -207,16 +206,7 @@ function fly(g: THREE.Object3D, a: V3, b: V3, k: number, lift: number, yaw = 0, 
   g.rotation.set(0, yaw * e, Math.sin(u * Math.PI * 2) * (b[0] < a[0] ? 0.2 : -0.2));
 }
 
-/** A part between its place in the laptop and its place on the mat. A RAM stick first springs up out of its clips. */
-function carry(g: THREE.Object3D, part: Part, k: number) {
-  fly(g, part.at, part.laid, k, part.lift, part.yaw, part.clip ? 0.2 : 0);
-  if (!part.clip) return;
-  const up = 0.5 * slice(k, 0, 0.2) * (1 - slice(k, 0.3, 0.7));
-  g.rotation.x = up;
-  g.position.y += Math.sin(up) * 0.085;
-}
-
-/** The job done, the tools are put away (from `at` seconds into step 3): the laptop starts again on a clear mat. */
+/** The job done, the tools are put away (from `at` seconds into putting back): the laptop starts again on a clear mat. */
 const tidy = (p: Play, at: number) => (stepOf(p) === BACK ? 1 - ease(slice(ageOf(p, BACK), at, at + 0.16)) : 1);
 const EMPTY = T.hinge[1][2] - 0.12; // the last screws are leaving the tray
 /** Everything loose on the bench comes and goes with it, each thing on its own spot. `k`: its own share (the tools leave early). */
@@ -247,7 +237,7 @@ function LooseScrew({ path, win }: { path: V3[]; win: Win }) {
 }
 
 // The screwdriver's track. It skips from screw to screw like a stone on water: each screw it touches
-// spins out and jumps to the tray (step 2), or is driven home as it gets there (step 3).
+// spins out and jumps to the tray (taking apart), or is driven home as it gets there (putting back).
 const LYING = HALF_PI;
 /** Adds a run of screws to the track. Returns when it starts and ends turning: from just before the first screw to just after the last. */
 function run(keys: Key6[], paths: V3[][], wins: Win[], out: boolean, outward = false): [number, number] {
@@ -265,17 +255,24 @@ function run(keys: Key6[], paths: V3[][], wins: Win[], out: boolean, outward = f
 }
 const key = (t: number, [x, y, z]: V3, lean: number): Key6 => [t, x, y, z, lean, 0];
 const LAST = COVER_PATH[N_SCREWS - 1][0];
-const OUT_KEYS: Key6[] = [key(0.42, DRIVER_REST, LYING)];
+const OUT_KEYS: Key6[] = [key(0.42, DRIVER_IN, -0.3)];
 const OUT_RUNS = [run(OUT_KEYS, HINGE_PATH, T.hinge, true, true)];
-OUT_KEYS.push(key(1.14, DRIVER_WAIT, -0.3), key(T.screws[0][0] - 0.16, DRIVER_WAIT, -0.3));
+OUT_KEYS.push(key(1.14, DRIVER_WAIT, 0.3), key(T.screws[0][0] - 0.16, DRIVER_WAIT, 0.3));
 OUT_RUNS.push(run(OUT_KEYS, COVER_PATH, T.screws, true));
-OUT_KEYS.push(key(T.screws[N_SCREWS - 1][0] + 0.07, [LAST[0], LAST[1] + 0.1, LAST[2]], 0), key(T.screws[N_SCREWS - 1][0] + 0.45, DRIVER_REST, LYING));
-const IN_KEYS: Key6[] = [key(T.screws[0][2] - 0.05, DRIVER_REST, LYING)];
+OUT_KEYS.push(key(T.screws[N_SCREWS - 1][0] + 0.07, [LAST[0], LAST[1] + 0.1, LAST[2]], 0), key(T.screws[N_SCREWS - 1][0] + 0.5, DRIVER_REST, LYING));
+const DRIVER_BACK = T.screws[0][2] - 0.24; // putting back: when it is picked up again
+const IN_KEYS: Key6[] = [key(DRIVER_BACK + 0.14, DRIVER_REST, LYING)];
 const IN_RUNS = [run(IN_KEYS, COVER_PATH, T.screws, false)];
-IN_KEYS.push(key(T.flip[2] + 0.1, DRIVER_WAIT, -0.3), key(T.hinge[0][2] - 0.02, DRIVER_WAIT, -0.3));
+IN_KEYS.push(key(T.flip[2] + 0.1, DRIVER_WAIT, 0.3), key(T.hinge[0][2] - 0.02, DRIVER_WAIT, 0.3));
 IN_RUNS.push(run(IN_KEYS, HINGE_PATH, T.hinge, false, true));
 IN_KEYS.push(key(T.on + 0.3, DRIVER_REST, LYING));
 const SPIN = Math.PI * 7; // radians a second
+/** The screwdriver is on the mat only while it has work: put down for the photo, picked up again for the screws, put away at the end. */
+function driverShare(p: Play) {
+  if (p.to === PHOTO) return 1 - ease(slice(p.age, 0, 0.22));
+  if (stepOf(p) === PHOTO) return 0;
+  return stepOf(p) === BACK ? pop(slice(ageOf(p, BACK), DRIVER_BACK, DRIVER_BACK + 0.16), 1.2) * tidy(p, T.on) : 1;
+}
 
 const FLUTES = [0, 1, 2, 3, 4, 5];
 function Screwdriver() {
@@ -284,7 +281,7 @@ function Screwdriver() {
   return (
     <Act
       f={(g, p) => {
-        if (!loose(g, p, tidy(p, T.on))) return;
+        if (!loose(g, p, driverShare(p))) return;
         const back = stepOf(p) === BACK;
         const a = ageOf(p, back ? BACK : APART);
         track(back ? IN_KEYS : OUT_KEYS, a, tip);
@@ -320,7 +317,8 @@ function Tray() {
   );
 }
 
-const swapOf = (p: Play) => (p.to === BACK || p.from === BACK ? slice(ageOf(p, BACK), T.swap[0], T.swap[1]) : 0);
+/** How far the two fans are through changing places: only while putting back (like `apart`, by halves of a travel). */
+const swapOf = (p: Play) => ((p.from === p.to ? p.to : stepOf(p)) === BACK ? slice(ageOf(p, BACK), T.swap[0], T.swap[1]) : 0);
 /** The motherboard, dark, with the processor and a chip in clay, two ribbon cables and the two RAM slots. */
 function Board() {
   const { mats } = useClay();
@@ -331,8 +329,8 @@ function Board() {
       <Box size={[0.14, 0.012, 0.14]} position={[-0.2, 0.091, -0.56]} r={0.004} />
       <Box size={[0.08, 0.005, 0.22]} position={[0.45, 0.068, 0.15]} r={0.002} material={mats.shade.mid} />
       <Box size={[0.06, 0.005, 0.24]} position={[-0.4, 0.087, -0.62]} r={0.002} material={mats.shade.mid} />
-      {[1, 2].map((i) => (
-        <Box key={i} size={[0.6, 0.026, 0.03]} position={[PARTS[i].at[0], 0.096, PARTS[i].at[2] + 0.095]} r={0.006} material={mats.shade.mid} />
+      {[-0.2, -0.45].map((z) => (
+        <Box key={z} size={[0.6, 0.026, 0.03]} position={[0.55, 0.096, z + 0.095]} r={0.006} material={mats.shade.mid} />
       ))}
     </>
   );
@@ -373,98 +371,72 @@ function Staged({ children }: { children: ReactNode }) {
   return <>{list.slice(0, n)}</>;
 }
 
-const FAN = 3;
-/** Where the fan is inside the open base (the base's own space, upside down, y = 0 where it stands). */
-export const FAN_AT = PARTS[FAN].at;
-/**
- * The laptop as the teardown leaves it, standing still (the WiFixit step): upside down, the bottom
- * cover off, every part in its place, and the fan broken. Origin where it stands.
- */
-export function OpenLaptop() {
-  return (
-    <Staged>
-      <group position={[0, HB, 0]} rotation={[0, 0, Math.PI]}>
-        <Shell />
-      </group>
-      <Board />
-      <Posts />
-      {PARTS.map((part, i) => (
-        <group key={i} position={part.at}>
-          {i === FAN ? <Fan broken /> : part.node}
-          {i === FAN && <Crack />}
-        </group>
-      ))}
-    </Staged>
-  );
-}
-/** The bottom cover lying on the mat, outside up. Origin under its centre. */
-export function CoverOff() {
-  return (
-    <group position={[0, 0.035, 0]} rotation={[0, 0, Math.PI]}>
-      <Cover />
-    </group>
-  );
-}
-
-/** When part `i` has landed on the mat, in step 2. */
-const laidAt = (i: number) => T.parts[i][0] + T.parts[i][1] * 0.8;
-const over = ([x, y, z]: V3, dy: number, dz = 0): V3 => [x, y + dy, z + dz];
+/** Like `at`, for things that pop: gone at once when the story leaves step `i`. */
+const here = (p: Play, i: number) => (p.to === i ? 1 : p.from === i ? 1 - ease(slice(p.t, 0, 0.3)) : 0);
 
 /** The whole bench. Put it where the laptop stands on the mat. */
 export function Bench() {
   return (
     <Staged>
-      {/* Inside the base: the board, the processor, a chip, the cables and the screw posts */}
+      {/* Inside the base: the board, the processor, a chip, the cables, the screw posts and every part but the fan, all in their places */}
       <Act
         f={(g, p) => {
           if (loose(g, p)) g.visible = isOpen(p);
         }}
       >
-        <Board />
+        <group scale={[-1, 1, 1]}>
+          <Board />
+          {INSIDE.map(([at, node], i) => (
+            <group key={i} position={at}>
+              {node}
+            </group>
+          ))}
+        </group>
         <Posts />
       </Act>
 
-      {/* The parts: out one by one onto the mat, back in the reverse order */}
-      {PARTS.map((part, i) =>
-        i === OLD ? null : (
-          <Act
-            key={i}
-            f={(g, p) => {
-              const k = apart(p, T.parts[i]);
-              if (loose(g, p) && (g.visible = k > 0 || isOpen(p))) carry(g, part, k);
-            }}
-          >
-            {part.node}
-          </Act>
-        ),
-      )}
-      {/* The old RAM stick: out with the others, then it is tossed aside as the new one takes its place */}
+      {/* The broken fan: found as the cover comes off (it rattles), photographed where it is, then pulled out and tossed aside */}
       <Act
         f={(g, p) => {
-          const k = p.to === BACK || p.from === BACK ? 1 : apart(p, T.parts[OLD]);
-          if (!loose(g, p, tidy(p, EMPTY)) || !(g.visible = k > 0 || isOpen(p))) return;
-          const w = slice(swapOf(p), 0, 0.7);
-          if (w > 0) fly(g, PARTS[OLD].laid, SPARE, w, 0.35, -0.4);
-          else carry(g, PARTS[OLD], k);
+          const w = slice(swapOf(p), 0, 0.62);
+          if (!loose(g, p, tidy(p, EMPTY)) || !(g.visible = w > 0 || isOpen(p))) return;
+          fly(g, FAN_AT, OLD_AT, w, 0.75, 2.2);
+          if (w <= 0) g.rotation.y = 0.2 * ring(ageOf(p, APART) - T.cover[0] - 0.14, 5, 3) * at(p, APART);
         }}
       >
-        <Ram />
+        <group scale={[-1, 1, 1]}>
+          <Fan broken />
+          <Crack />
+        </group>
       </Act>
-      {/* The new one: it waits on the mat (it cannot keep still), jumps into the old one's place with a twirl, and goes in with the others */}
+      {/* The orange mark of the photo: a ring round the broken fan, from the moment the phone takes aim */}
+      <Act
+        position={[FAN_AT[0], 0.098, FAN_AT[2]]}
+        f={(g, p) => {
+          const a = ageOf(p, PHOTO);
+          const k = pop(slice(a, SHOT.aim, SHOT.aim + 0.3), 2) * (1 + 0.12 * Math.sin(slice(a, SHOT.flash, SHOT.flash + 0.3) * Math.PI)) * here(p, PHOTO);
+          if (loose(g, p, k)) g.rotation.y = a * 0.6;
+        }}
+      >
+        <Puck accent r={0.275} h={0.022} hole={0.238} segments={36} />
+      </Act>
+      {/* The new fan: it waits in front (it cannot keep still), jumps into the broken one's place with a twirl, and stays */}
       <Act
         f={(g, p, time) => {
-          const w = slice(swapOf(p), 0.3, 1);
-          const k = w >= 1 ? apart(p, T.parts[OLD]) : 1;
-          if (!loose(g, p) || !(g.visible = k > 0 || isOpen(p))) return;
-          if (w >= 1) return carry(g, PARTS[OLD], k);
-          fly(g, SPARE, PARTS[OLD].laid, w, 0.95, Math.PI * 2);
+          const w = slice(swapOf(p), 0.34, 1);
+          if (!loose(g, p) || !(g.visible = w < 1 || isOpen(p))) return;
+          fly(g, SPARE, FAN_AT, w, 1.05);
+          // It lies turned round on the mat, and comes round one and a half times on its way in.
+          g.rotation.y = Math.PI * 3 * (1 - smooth(slice(w, 0, 0.82)));
           if (w > 0) return;
           const hop = Math.max(0, Math.sin(time * 5.5)) ** 2 * slice(ageOf(p, APART), 0.9, 1.2) * at(p, APART);
           g.position.y += hop * 0.09;
-          g.rotation.y = Math.sin(time * 5.5 - 0.6) * 0.1 * hop;
+          g.rotation.y += Math.sin(time * 5.5 - 0.6) * 0.08 * hop;
         }}
       >
-        <Ram accent />
+        <group scale={[-1, 1, 1]}>
+          <Fan accent />
+        </group>
       </Act>
 
       {/* The cover: pried up at the front like a lid, then carried to the back of the mat */}
@@ -491,13 +463,13 @@ export function Bench() {
       <Tray />
       <Screwdriver />
 
-      {/* Labels: each part is named as it lands (step 2), and the swap (step 3) */}
-      <LiveTag at={over(PARTS[0].laid, 0.05, -0.75)} dx={0} dy={-18} on={on([APART], laidAt(0))}>Battery</LiveTag>
-      <LiveTag at={over(PARTS[3].laid, 0.02, -0.2)} dx={0} dy={-18} on={on([APART], laidAt(3))}>Fan</LiveTag>
-      <LiveTag at={over(PARTS[2].laid, 0.01, -0.09)} dx={0} dy={-18} on={on([APART], laidAt(2))}>RAM</LiveTag>
-      <LiveTag at={over(PARTS[6].laid, 0.03, -0.07)} dx={0} dy={-18} on={on([APART], laidAt(N_PARTS - 1))}>Speakers</LiveTag>
-      <LiveTag at={SPARE_TAG} dx={44} dy={-24} on={on([APART], 1)}>New part</LiveTag>
-      <LiveTag at={SPARE_TAG} dx={44} dy={-24} on={oldTag}>Old part</LiveTag>
+      {/* Labels: what is inside, once it is open; the problem, at the photo; the old part, once it is out */}
+      <LiveTag at={[-0.84, 0.11, -0.32]} dx={-74} dy={-10} on={on([APART], OPENED - 0.1)}>RAM</LiveTag>
+      <LiveTag at={[0.9, 0.13, -0.32]} dx={66} dy={-12} on={on([APART], OPENED)}>Fan</LiveTag>
+      <LiveTag at={[0.72, 0.15, 0.45]} dx={84} dy={18} on={on([APART], OPENED + 0.1)}>Battery</LiveTag>
+      <LiveTag at={[SPARE[0] - 0.2, 0.08, SPARE[2]]} dx={-44} dy={-22} on={on([APART], OPENED + 0.2)}>New part</LiveTag>
+      <LiveTag at={[FAN_AT[0] - 0.1, 0.14, FAN_AT[2] + 0.17]} dx={-30} dy={112} on={on([PHOTO], SHOT.aim + 0.25)}>Hardware problem</LiveTag>
+      <LiveTag at={[OLD_AT[0] + 0.1, 0.08, OLD_AT[2] - 0.15]} dx={34} dy={-34} on={oldTag}>Old part</LiveTag>
     </Staged>
   );
 }
@@ -510,5 +482,5 @@ function on(steps: number[], after: number) {
   };
 }
 /** "Old part": from the swap until the tools are put away. */
-const swapped = on([BACK], T.swap[1]);
+const swapped = on([BACK], T.swap[0] + (T.swap[1] - T.swap[0]) * 0.62);
 const oldTag = (p: Play) => swapped(p) * (1 - slice(ageOf(p, BACK), EMPTY - 0.15, EMPTY));

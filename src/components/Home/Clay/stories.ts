@@ -42,14 +42,14 @@ export const CLAY_STORIES: Record<string, ClayStep[]> = {
     { title: 'It comes in', text: 'A broken laptop arrives. Every one of them came by referral.' },
     {
       title: 'Taking it apart',
-      text: 'It is taken apart on the bench: the screen comes off, the laptop is turned over, then out come the screws, the cover and the parts.',
+      text: 'It is taken apart on the bench: the screen comes off, the laptop is turned over, then out come the screws and the cover.',
     },
+    { title: 'WiFixit', text: 'For hardware problems: take a photo of the problem, get the tutorial that fixes it.' },
     { title: 'Putting it back', text: 'The broken part is swapped for a new one and everything goes back in. The repairs paid for school.' },
     {
       title: 'Hindi to Portuguese',
       text: 'Some problems were software, and the only tutorials for them were in Hindi. At 11 I wrote a Python script that translates and dubs them into Portuguese.',
     },
-    { title: 'WiFixit', text: 'For hardware problems: take a photo of the problem, get the tutorial that fixes it.' },
     { title: '21 states', text: '121 laptops, sent to 21 states, all by referral.' },
   ],
 };

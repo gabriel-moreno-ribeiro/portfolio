@@ -239,8 +239,8 @@ const PIVOT: V3 = [0, 0.255, -0.79]; // the hinge
 export const OPEN = 1.88; // radians: how far the lid stands open
 const KEYS_X = 13;
 const KEYS_Z = 4;
-/** The cover's screws, in the base's own space (heads on the underside): along the back, then back along the front, the way the screwdriver goes. */
-export const COVER_SCREWS: V3[] = [1.08, 0.42, -0.42, -1.08].map((x): V3 => [x, 0.004, -0.7]).concat([-1.08, -0.42, 0.42, 1.08].map((x): V3 => [x, 0.004, 0.7]));
+/** The cover's screws, in the base's own space (heads on the underside): along the back, then back along the front, the way the screwdriver goes (it ends at the front right of the upturned base, by its place on the mat). */
+export const COVER_SCREWS: V3[] = [-1.08, -0.42, 0.42, 1.08].map((x): V3 => [x, 0.004, -0.7]).concat([1.08, 0.42, -0.42, -1.08].map((x): V3 => [x, 0.004, 0.7]));
 /** The screws that hold the screen, on the deck behind the keys (the head's centre). */
 export const HINGE_SCREWS: V3[] = [[-0.98, 0.221, -0.715], [0.98, 0.221, -0.715]];
 /** Where the screen lies while it is off, screen up (its hinge, in the laptop's space at the bench). */
