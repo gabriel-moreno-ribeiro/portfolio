@@ -16,7 +16,7 @@ const lerp = THREE.MathUtils.lerp;
 
 // ── Screens ─────────────────────────────────────────────────────────────────
 // What a screen can show, tone on tone like the rest of the clay. Drawn once per page.
-export const SCREEN = { off: 0, on: 1, hindi: 2, portuguese: 3, error: 4, viewfinder: 5, flash: 6, waiting: 7, terminal: 8 } as const;
+export const SCREEN = { off: 0, on: 1, hindi: 2, portuguese: 3, sad: 4, viewfinder: 5, flash: 6, waiting: 7, terminal: 8 } as const;
 let screens: THREE.CanvasTexture[] | undefined;
 function screenTextures() {
   if (screens) return screens;
@@ -36,28 +36,26 @@ function screenTextures() {
     g.roundRect(x, y, w, h, r);
     g.fill();
   };
-  const dialog = (g: CanvasRenderingContext2D, x: number, y: number, k: number) => {
-    rect(g, '#faf8f5', x, y, 180 * k, 118 * k, 8 * k);
-    g.strokeStyle = '#b2a89e';
-    g.lineWidth = 3 * k;
-    g.beginPath();
-    g.roundRect(x, y, 180 * k, 118 * k, 8 * k);
-    g.stroke();
-    g.lineWidth = 5 * k;
-    g.lineJoin = 'round';
+  // A face, as old computers had: glad (eyes shut in a smile) or sad (crossed eyes, mouth down).
+  const face = (g: CanvasRenderingContext2D, glad: boolean) => {
     g.strokeStyle = '#8f857b';
+    g.lineWidth = 9;
+    g.lineCap = 'round';
+    for (const x of [116, 204]) {
+      g.beginPath();
+      if (glad) g.arc(x, 82, 15, Math.PI * 1.1, Math.PI * 1.9);
+      else {
+        g.moveTo(x - 12, 62);
+        g.lineTo(x + 12, 86);
+        g.moveTo(x + 12, 62);
+        g.lineTo(x - 12, 86);
+      }
+      g.stroke();
+    }
     g.beginPath();
-    g.moveTo(x + 42 * k, y + 24 * k);
-    g.lineTo(x + 64 * k, y + 62 * k);
-    g.lineTo(x + 20 * k, y + 62 * k);
-    g.closePath();
+    if (glad) g.arc(160, 98, 40, Math.PI * 0.18, Math.PI * 0.82);
+    else g.arc(160, 158, 36, Math.PI * 1.22, Math.PI * 1.78);
     g.stroke();
-    g.fillStyle = '#8f857b';
-    g.fillRect(x + 40 * k, y + 36 * k, 4 * k, 14 * k);
-    g.fillRect(x + 40 * k, y + 54 * k, 4 * k, 4 * k);
-    g.fillStyle = '#d6cfc7';
-    [0, 1, 2].forEach((i) => g.fillRect(x + 78 * k, y + (28 + i * 14) * k, (80 - i * 18) * k, 6 * k));
-    rect(g, '#d6cfc7', x + 106 * k, y + 84 * k, 58 * k, 20 * k, 5 * k);
   };
   // A tutorial video: the frame, a laptop in it, the progress bar and a subtitle line.
   const video = (subtitle: (g: CanvasRenderingContext2D) => void) =>
@@ -89,21 +87,16 @@ function screenTextures() {
       g.lineTo(-30, 200);
       g.fill();
     }),
-    // On: a desktop with two windows.
+    // On: it works again, and it is glad to. A desktop bar under a face.
     draw(320, 200, (g) => {
-      g.fillStyle = '#ece7e1';
+      g.fillStyle = '#f1ece6';
       g.fillRect(0, 0, 320, 200);
       rect(g, '#d6cfc7', 0, 180, 320, 20, 0);
-      rect(g, '#faf8f5', 34, 30, 150, 104);
-      rect(g, '#d6cfc7', 34, 30, 150, 16, 6);
-      rect(g, '#faf8f5', 150, 70, 136, 92);
-      rect(g, '#d6cfc7', 150, 70, 136, 16, 6);
-      g.fillStyle = '#ddd6ce';
-      [0, 1, 2, 3].forEach((i) => g.fillRect(162, 98 + i * 14, 100 - i * 14, 6));
       g.fillStyle = '#f0732d';
       g.beginPath();
       g.arc(16, 190, 6, 0, Math.PI * 2);
       g.fill();
+      face(g, true);
     }),
     // The tutorial with Hindi subtitles: a line across the top of the letters, strokes hanging from it.
     video((g) => {
@@ -122,11 +115,11 @@ function screenTextures() {
       g.fillStyle = '#f0732d';
       [10, 18, 26, 14, 8].forEach((h, i) => rect(g, '#f0732d', 262 + i * 7, 40 - h / 2, 4, h, 2));
     }),
-    // A software problem: an error dialog.
+    // Broken: it tries to start and can only pull a face.
     draw(320, 200, (g) => {
-      g.fillStyle = '#e4ded7';
+      g.fillStyle = '#d2cbc3';
       g.fillRect(0, 0, 320, 200);
-      dialog(g, 70, 40, 1);
+      face(g, false);
     }),
     // The phone's camera, pointed at the problem: the broken fan, cracked.
     draw(160, 290, (g) => {
@@ -179,6 +172,12 @@ function screenTextures() {
     draw(160, 290, (g) => {
       g.fillStyle = '#ece7e1';
       g.fillRect(0, 0, 160, 290);
+      g.fillStyle = '#b3aaa0';
+      for (const x of [56, 80, 104]) {
+        g.beginPath();
+        g.arc(x, 145, 7, 0, Math.PI * 2);
+        g.fill();
+      }
     }),
     // The terminal's screen.
     draw(16, 16, (g) => {
@@ -240,14 +239,15 @@ const PIVOT: V3 = [0, 0.255, -0.79]; // the hinge
 export const OPEN = 1.88; // radians: how far the lid stands open
 const KEYS_X = 13;
 const KEYS_Z = 4;
-/** The cover's screws, in the base's own space (heads on the underside). */
-export const COVER_SCREWS: V3[] = [-1.08, -0.42, 0.42, 1.08].flatMap((x) => [-0.7, 0.7].map((z): V3 => [x, 0.004, z]));
+/** The cover's screws, in the base's own space (heads on the underside): along the back, then back along the front, the way the screwdriver goes. */
+export const COVER_SCREWS: V3[] = [1.08, 0.42, -0.42, -1.08].map((x): V3 => [x, 0.004, -0.7]).concat([-1.08, -0.42, 0.42, 1.08].map((x): V3 => [x, 0.004, 0.7]));
 /** The screws that hold the screen, on the deck behind the keys (the head's centre). */
 export const HINGE_SCREWS: V3[] = [[-0.98, 0.221, -0.715], [0.98, 0.221, -0.715]];
 /** Where the screen lies while it is off, screen up (its hinge, in the laptop's space at the bench). */
-export const DISPLAY_ASIDE: V3 = [-1.35, 0.06, -1.26];
+export const DISPLAY_ASIDE: V3 = [-1.42, 0.06, -1.2];
 /** Where a point on the screen is (x across, z from the hinge, 0.21 to 1.39), in the laptop's own space, lid open. */
 export const onScreen = (x: number, z: number): V3 => [x, PIVOT[1] + z * Math.sin(OPEN), PIVOT[2] + z * Math.cos(OPEN)];
+const smooth = (u: number) => u * u * (3 - 2 * u);
 
 function Keyboard() {
   const { mats } = useClay();
@@ -280,7 +280,26 @@ export function ScrewShape() {
   );
 }
 
-/** The bottom cover, in the base's space: a plate with vents and four feet. */
+// An empty screw hole: a dark dot, hidden under the screw's head until the screw is out.
+const HOLE = new THREE.CylinderGeometry(0.027, 0.027, 0.004, 12);
+function Holes({ at }: { at: V3[] }) {
+  const { mats } = useClay();
+  const lay = (m: THREE.InstancedMesh | null) => {
+    if (!m) return;
+    const o = new THREE.Object3D();
+    at.forEach((p, k) => {
+      o.position.set(p[0], p[1], p[2]);
+      o.updateMatrix();
+      m.setMatrixAt(k, o.matrix);
+    });
+    m.instanceMatrix.needsUpdate = true;
+  };
+  return <instancedMesh ref={lay} args={[HOLE, mats.shade.dark, at.length]} />;
+}
+const COVER_HOLES = COVER_SCREWS.map(([x, , z]): V3 => [x, -0.0005, z]);
+const HINGE_HOLES = HINGE_SCREWS.map(([x, , z]): V3 => [x, DECK + 0.0065, z]);
+
+/** The bottom cover, in the base's space: a plate with vents, four feet and its eight screw holes. */
 export function Cover() {
   const { mats } = useClay();
   return (
@@ -290,12 +309,14 @@ export function Cover() {
         <Box key={z} size={[0.9, 0.006, 0.05]} position={[0.3, 0.001, z - 0.25]} r={0.003} material={mats.shade.board} />
       ))}
       {[-0.95, 0.95].flatMap((x) => [-0.5, 0.5].map((z) => <Box key={`${x}${z}`} size={[0.2, 0.008, 0.08]} position={[x, 0.0, z]} r={0.004} material={mats.shade.mid} />))}
+      <Holes at={COVER_HOLES} />
     </group>
   );
 }
 
-/** The screen: the lid with its bezel and the screen set back inside it, and the hinge. Origin at the hinge. */
+/** The screen: the lid with its bezel and the screen set back inside it, the hinge and the camera. Origin at the hinge. */
 function Display({ mat }: { mat: THREE.Material }) {
+  const { mats } = useClay();
   return (
     <>
       <Puck r={0.045} h={1.7} segments={20} position={[0, 0, 0.02]} rotation={[0, 0, HALF_PI]} />
@@ -304,6 +325,7 @@ function Display({ mat }: { mat: THREE.Material }) {
       <Box size={[W - 0.08, 0.012, 0.18]} position={[0, -0.006, 0.12]} r={0.005} />
       <Box size={[0.16, 0.012, 1.18]} position={[1.07, -0.006, 0.8]} r={0.005} />
       <Box size={[0.16, 0.012, 1.18]} position={[-1.07, -0.006, 0.8]} r={0.005} />
+      <Puck r={0.02} h={0.004} segments={12} position={[0, -0.0125, 1.49]} material={mats.shade.dark} />
       <mesh position={[0, -0.001, 0.8]} rotation={[HALF_PI, 0, 0]} material={mat}>
         <planeGeometry args={[1.98, 1.18]} />
       </mesh>
@@ -311,6 +333,7 @@ function Display({ mat }: { mat: THREE.Material }) {
   );
 }
 
+const PORTS: [number, number, number][] = [[-1, -0.42, 0.16], [-1, -0.18, 0.16], [-1, 0.1, 0.24], [1, -0.4, 0.2], [1, -0.1, 0.1]];
 /**
  * The laptop. `lid`: how open (0..1 of OPEN). `screen`: which picture. `flip`: 0 upright, 1 upside
  * down. `detached`: 0 the screen is on its hinge, 1 it lies aside. `cover` and `screw`: how far the
@@ -326,6 +349,7 @@ export function Laptop({ lid, screen, glow, flip, detached, cover, screw, hinge 
   screw: (p: Play, k: number) => number;
   hinge: (p: Play, k: number) => number;
 }) {
+  const { mats } = useClay();
   const mat = useScreen(screen, glow);
   const shell = useRef<THREE.Group>(null);
   const screws = useRef<(THREE.Group | null)[]>([]);
@@ -335,9 +359,10 @@ export function Laptop({ lid, screen, glow, flip, detached, cover, screw, hinge 
       <Act
         f={(g, p) => {
           const f = flip(p);
-          // Turned over in the air, high enough that its corners clear the mat.
-          g.position.set(0, HB / 2 + Math.sin(f * Math.PI) * 1.25, 0);
-          g.rotation.set(0, 0, Math.PI * ease(f));
+          // Turned over in the air, high enough that its corners clear the mat. It rocks back before
+          // it goes, and comes down a little past flat.
+          g.position.set(0, HB / 2 + Math.sin(f * Math.PI) * 1.2, 0);
+          g.rotation.set(0, 0, Math.PI * settle(f, 1.4) - 0.16 * bump(slice(f, 0, 0.3)));
           if (shell.current) shell.current.visible = cover(p) <= 0;
           screws.current.forEach((s, k) => s && (s.visible = screw(p, k) <= 0));
           hinges.current.forEach((s, k) => s && (s.visible = hinge(p, k) <= 0));
@@ -360,10 +385,17 @@ export function Laptop({ lid, screen, glow, flip, detached, cover, screw, hinge 
           <Box size={[W, 0.04, D]} position={[0, DECK - 0.02, 0]} r={0.02} />
           <Keyboard />
           <Box size={[0.8, 0.025, 0.12]} position={[0.02, DECK + 0.0125, 0.03]} r={0.01} />
-          <Box size={[0.74, 0.008, 0.4]} position={[0, DECK + 0.004, 0.52]} r={0.004} />
+          {/* The trackpad and its button line; the ports on the sides; the notch that opens the lid */}
+          <Box size={[0.74, 0.012, 0.42]} position={[0, DECK + 0.004, 0.5]} r={0.005} />
+          <Box size={[0.66, 0.004, 0.012]} position={[0, DECK + 0.0095, 0.62]} r={0.002} material={mats.shade.mid} />
+          {PORTS.map(([side, z, w]) => (
+            <Box key={`${side}${z}`} size={[0.012, 0.042, w]} position={[side * (W / 2 + 0.001), 0.1, z]} r={0.004} material={mats.shade.dark} />
+          ))}
+          <Box size={[0.46, 0.022, 0.012]} position={[0, 0.165, D / 2 + 0.001]} r={0.004} material={mats.shade.mid} />
           {HINGE_SCREWS.map(([x, , z]) => (
             <Box key={x} size={[0.2, 0.008, 0.11]} position={[x, DECK + 0.002, z]} r={0.004} />
           ))}
+          <Holes at={HINGE_HOLES} />
         </group>
       </Act>
       {HINGE_SCREWS.map((s, k) => (
@@ -371,19 +403,25 @@ export function Laptop({ lid, screen, glow, flip, detached, cover, screw, hinge 
           <ScrewShape />
         </group>
       ))}
-      {/* The screen: on its hinge, or lifted off and laid aside, screen up */}
+      {/* The screen: on its hinge, or pulled up out of it with a wiggle, carried over and laid down, screen up */}
       <Act
         f={(g, p) => {
           const d = detached(p);
-          const open = -OPEN * (d > 0 ? 1 : lid(p));
           if (d <= 0) {
-            g.position.set(...PIVOT);
-            g.rotation.set(open, 0, 0);
+            g.position.set(PIVOT[0], PIVOT[1], PIVOT[2]);
+            g.rotation.set(-OPEN * lid(p), 0, 0);
             return;
           }
-          const e = ease(d);
-          g.position.set(lerp(PIVOT[0], DISPLAY_ASIDE[0], e), lerp(PIVOT[1], DISPLAY_ASIDE[1], e) + bump(d) * 0.45, lerp(PIVOT[2], DISPLAY_ASIDE[2], e));
-          g.rotation.set(lerp(open, -Math.PI, ease(slice(d, 0.25, 1))), 0, 0);
+          const u = slice(d, 0.22, 0.86);
+          const e = smooth(u);
+          const pull = ease(slice(d, 0, 0.26)) * 0.18 * (1 - e);
+          g.position.set(
+            lerp(PIVOT[0], DISPLAY_ASIDE[0], e),
+            lerp(PIVOT[1], DISPLAY_ASIDE[1], e) + Math.sin(u * Math.PI) * 0.5 + pull * Math.sin(OPEN),
+            lerp(PIVOT[2], DISPLAY_ASIDE[2], e) + pull * Math.cos(OPEN),
+          );
+          // Its far edge lands last, and bounces once.
+          g.rotation.set(lerp(-OPEN, -Math.PI, smooth(slice(d, 0.3, 0.88))) + 0.08 * bump(slice(d, 0.88, 1)), 0.07 * Math.sin(slice(d, 0, 0.3) * Math.PI * 3) * (1 - slice(d, 0, 0.3)), 0);
         }}
       >
         <Display mat={mat} />
@@ -535,8 +573,8 @@ export function Phone({ screen, glow, children }: { screen: (p: Play) => number;
   );
 }
 
-/** What comes back: a repair guide for the part. A small drawing of the fan, then numbered steps. Faces +Z, the size of the phone's screen. */
-export function TutorialCard() {
+/** What comes back: a repair guide for the part. A small drawing of the fan, then numbered steps, ticked in one by one (`step`: how much of step `i` is there). Faces +Z, the size of the phone's screen. */
+export function TutorialCard({ step }: { step: (p: Play, i: number) => number }) {
   return (
     <group>
       <Box size={[0.54, 0.98, 0.022]} r={0.03} />
@@ -548,11 +586,19 @@ export function TutorialCard() {
         ))}
       </group>
       {[0, 1, 2].map((i) => (
-        <group key={i} position={[0, 0.05 - i * 0.18, 0.015]}>
+        <Act
+          key={i}
+          position={[0, 0.05 - i * 0.18, 0.015]}
+          f={(g, p) => {
+            const k = step(p, i);
+            g.visible = k > 0.001;
+            g.scale.setScalar(Math.max(k, 1e-4));
+          }}
+        >
           <Puck accent r={0.04} h={0.02} segments={16} position={[-0.17, 0, 0]} rotation={[HALF_PI, 0, 0]} />
           <Box size={[0.26, 0.032, 0.012]} position={[0.07, 0.026, 0]} r={0.006} />
           <Box size={[0.2 - i * 0.04, 0.032, 0.012]} position={[0.04 - i * 0.02, -0.03, 0]} r={0.006} />
-        </group>
+        </Act>
       ))}
     </group>
   );
@@ -632,7 +678,7 @@ function miniLaptopGeometry() {
 }
 
 /** When the laptop for reached state `k` (0 = nearest to Salvador) lands, seconds into the step. */
-export const landAt = (k: number) => 1.3 + k * 0.09;
+export const landAt = (k: number) => 0.98 + k * 0.068;
 export const SALVADOR_AT = toWorld(SALVADOR, H_BASE);
 const MAP_STEP = 5; // the story's last step
 
@@ -748,6 +794,9 @@ function MapBody({ geos }: { geos: MapGeos }) {
         f={(g, p) => {
           const u = p.to === MAP_STEP ? (p.from === MAP_STEP ? 1 : pop(slice(p.t, 0.8, 1))) : 1 - ease(slice(p.t, 0, 0.3));
           g.scale.setScalar(Math.max(u, 1e-4));
+          // It pumps while the laptops leave it.
+          const a = ageOf(p, MAP_STEP);
+          g.scale.y *= 1 + 0.28 * Math.abs(Math.sin(a * 11)) * slice(a, landAt(0) - 0.35, landAt(0) - 0.2) * (1 - slice(a, landAt(REACHED.length - 1) - 0.3, landAt(REACHED.length - 1)));
           g.visible = at(p, MAP_STEP) > 0.001;
         }}
       >

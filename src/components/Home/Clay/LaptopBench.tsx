@@ -4,34 +4,47 @@
 import { Line } from '@react-three/drei';
 import { Children, useEffect, useMemo, useState, type ReactNode } from 'react';
 import * as THREE from 'three';
-import { Act, ageOf, Box, bump, ease, Puck, Rod, settle, slice, Ticks, useClay, type Play, type V3 } from './kit';
-import { COVER_SCREWS, Cover, HB, HINGE_SCREWS, LiveTag, ScrewShape } from './LaptopParts';
-import { apart, APART, BACK, benchScale, driverKeys, N_PARTS, T, track, type Key5 } from './teardown';
+import { Act, ageOf, at, Box, ease, Puck, Rod, Slab, slice, Ticks, useClay, type Play, type V3 } from './kit';
+import { COVER_SCREWS, Cover, D, HB, HINGE_SCREWS, LiveTag, ScrewShape } from './LaptopParts';
+import { apart, APART, BACK, benchScale, N_PARTS, N_SCREWS, T, track, TURN, type Key6, type Win } from './teardown';
 
+const HALF_PI = Math.PI / 2;
 const lerp = THREE.MathUtils.lerp;
 const HIDE = 1e-4;
 
-/** The repair mat: thin, with a raised rim. Origin at the top centre. */
-export const MAT: V3 = [6.4, 0.03, 4.9];
-export const MAT_CENTER: V3 = [0, 0, -0.5]; // in the bench's space
+/** The repair mat: thin, with round corners and a ruler printed along its front edge. Origin at the top centre. */
+export const MAT: V3 = [5.7, 0.03, 4.4];
+export const MAT_CENTER: V3 = [0, 0, -0.74]; // in the bench's space
+const MAT_TICK: V3 = [0.012, 0.004, 0.06];
 export function Mat({ size = MAT }: { size?: V3 }) {
   const { mats } = useClay();
   const [w, h, d] = size;
+  const shape = useMemo(() => {
+    const r = 0.2;
+    const s = new THREE.Shape();
+    s.moveTo(-w / 2 + r, -d / 2);
+    s.lineTo(w / 2 - r, -d / 2);
+    s.quadraticCurveTo(w / 2, -d / 2, w / 2, -d / 2 + r);
+    s.lineTo(w / 2, d / 2 - r);
+    s.quadraticCurveTo(w / 2, d / 2, w / 2 - r, d / 2);
+    s.lineTo(-w / 2 + r, d / 2);
+    s.quadraticCurveTo(-w / 2, d / 2, -w / 2, d / 2 - r);
+    s.lineTo(-w / 2, -d / 2 + r);
+    s.quadraticCurveTo(-w / 2, -d / 2, -w / 2 + r, -d / 2);
+    return s;
+  }, [w, d]);
   // A cutting mat: clearly darker than the clay, so every part has a silhouette on it, with a faint grid.
-  const mat = mats.shade.mat;
   const grid = useMemo(() => {
     const pts: V3[] = [];
-    for (let x = -w / 2 + 0.3; x < w / 2 - 0.1; x += 0.5) pts.push([x, 0.002, -d / 2 + 0.12], [x, 0.002, d / 2 - 0.12]);
-    for (let z = -d / 2 + 0.3; z < d / 2 - 0.1; z += 0.5) pts.push([-w / 2 + 0.12, 0.002, z], [w / 2 - 0.12, 0.002, z]);
+    for (let x = -w / 2 + 0.45; x < w / 2 - 0.3; x += 0.5) pts.push([x, 0.002, -d / 2 + 0.2], [x, 0.002, d / 2 - 0.2]);
+    for (let z = -d / 2 + 0.3; z < d / 2 - 0.25; z += 0.5) pts.push([-w / 2 + 0.2, 0.002, z], [w / 2 - 0.2, 0.002, z]);
     return pts;
   }, [w, d]);
+  const rule = useMemo<[V3, V3]>(() => [[-w / 2 + 0.45, 0.001, d / 2 - 0.09], [w / 2 - 0.45, 0.001, d / 2 - 0.09]], [w, d]);
   return (
     <group>
-      <Box size={[w, h, d]} position={[0, -h / 2, 0]} r={0.012} material={mat} />
-      <Box size={[w, 0.02, 0.06]} position={[0, 0.01, d / 2 - 0.03]} r={0.008} material={mat} />
-      <Box size={[w, 0.02, 0.06]} position={[0, 0.01, -d / 2 + 0.03]} r={0.008} material={mat} />
-      <Box size={[0.06, 0.02, d - 0.12]} position={[w / 2 - 0.03, 0.01, 0]} r={0.008} material={mat} />
-      <Box size={[0.06, 0.02, d - 0.12]} position={[-w / 2 + 0.03, 0.01, 0]} r={0.008} material={mat} />
+      <Slab shape={shape} depth={h - 0.016} bevel={0.008} rotation={[-HALF_PI, 0, 0]} position={[0, 0.008 - h, 0]} material={mats.shade.mat} />
+      <Ticks n={Math.round((w - 0.9) / 0.1) + 1} a={rule[0]} b={rule[1]} size={MAT_TICK} major={5} grow={2} along={2} />
       <group userData={{ overlay: true }}>
         <Line points={grid} segments color={mats.clay.color} lineWidth={0.7} transparent opacity={0.28} layers={1} />
       </group>
@@ -145,62 +158,91 @@ export function Crack() {
 }
 
 // ── Where every part is: inside the open base, and laid out on the mat ──────
-interface Part { name: string; at: V3; laid: V3; node: ReactNode }
-// Removed in this order (the battery first), put back in the reverse order.
+// Laid out like a tidy bench: the screen and the cover behind the base, the big parts in a column on
+// its left, the small ones in two on its right, the tools in front.
+interface Part { at: V3; laid: V3; yaw?: number; lift: number; clip?: boolean; node: ReactNode }
+// Removed in this order (the battery first, as it should be), put back in the reverse order.
+const RAM_X = 1.86;
+const SMALL_X = 2.5;
 export const PARTS: Part[] = [
-  { name: 'battery', at: [0.05, 0.105, 0.45], laid: [-2.15, 0.04, 1.4], node: <Battery /> },
-  { name: 'speaker', at: [-1.0, 0.11, 0.55], laid: [2.2, 0.025, -0.3], node: <Speaker /> },
-  { name: 'speaker', at: [1.0, 0.11, 0.55], laid: [2.2, 0.025, -0.6], node: <Speaker /> },
-  { name: 'drive', at: [-0.35, 0.092, -0.02], laid: [2.2, 0.006, 0.55], node: <Drive /> },
-  { name: 'wifi', at: [0.15, 0.09, -0.02], laid: [2.2, 0.005, 0.25], node: <Wifi /> },
-  { name: 'ram', at: [0.55, 0.093, -0.45], laid: [0.9, 0.007, 1.58], node: <Ram /> },
-  { name: 'ram', at: [0.55, 0.093, -0.2], laid: [0.9, 0.007, 1.28], node: <Ram /> },
-  { name: 'fan', at: [-0.7, 0.11, -0.32], laid: [-0.7, 0.042, 1.5], node: <Fan /> },
+  { at: [0.05, 0.105, 0.45], laid: [-1.72, 0.04, 0], yaw: HALF_PI, lift: 0.85, node: <Battery /> },
+  { at: [0.55, 0.093, -0.2], laid: [RAM_X, 0.007, -0.4], lift: 0.6, clip: true, node: <Ram /> },
+  { at: [0.55, 0.093, -0.45], laid: [RAM_X, 0.007, -0.64], lift: 0.75, clip: true, node: <Ram /> },
+  { at: [-0.7, 0.11, -0.32], laid: [-2.42, 0.042, -0.42], yaw: -HALF_PI, lift: 0.9, node: <Fan /> },
+  { at: [-0.35, 0.092, -0.02], laid: [RAM_X, 0.006, 0.32], lift: 0.6, node: <Drive /> },
+  { at: [0.15, 0.09, -0.02], laid: [SMALL_X, 0.005, 0.4], lift: 0.7, node: <Wifi /> },
+  { at: [-1.0, 0.11, 0.55], laid: [SMALL_X, 0.025, -0.66], lift: 1, node: <Speaker /> },
+  { at: [1.0, 0.11, 0.55], laid: [SMALL_X, 0.025, -0.46], lift: 0.7, node: <Speaker /> },
 ];
-const OLD = 6; // the RAM stick that gets swapped
-export const WAITING: V3 = [2.2, 0.007, 1.3]; // the new part on the mat; after the swap, the old one
-const DRIVER_REST: V3 = [-1.65, 0.085, 0.35];
-/** A screw's place on the mat: the cover's in a row in front of the cover, the screen's in front of the screen. */
-const coverScrewLaid = (k: number): V3 => [0.35 + k * 0.26, 0.008, -1.03];
-const hingeScrewLaid = (k: number): V3 => [-1.0 + k * 0.26, 0.008, -1.03];
-/** A cover screw upside down: its place in the base, seen from above. */
-const coverScrewAt = (k: number): V3 => [-COVER_SCREWS[k][0], HB - COVER_SCREWS[k][1], COVER_SCREWS[k][2]];
+const OLD = 1; // the RAM stick that gets swapped
+export const SPARE: V3 = [1.3, 0.007, 1.14]; // the new part on the mat; after the swap, the old one
+const SPARE_TAG: V3 = [SPARE[0] + 0.24, 0.02, SPARE[2] - 0.06];
+const TRAY: V3 = [0.15, 0, 1.16];
+const DRIVER_REST: V3 = [-0.5, 0.09, 1.16];
+const DRIVER_WAIT: V3 = [-1.8, 0.45, 0.95]; // held ready beside the laptop while something else moves
+/** A screw's place in the tray: the screen's two in the middle, the cover's eight around them. */
+const screwLaid = (n: number): V3 => {
+  const r = n < 2 ? 0.07 : 0.185;
+  const a = n < 2 ? n * Math.PI + 0.5 : (n - 2) * (Math.PI / 4) + 0.2;
+  return [TRAY[0] + Math.cos(a) * r, 0.03, TRAY[2] + Math.sin(a) * r];
+};
+const RISE = 0.035; // how far a screw backs out of its hole
+/** Each screw: in its hole, backed out of it, and in the tray. Upside down, a cover screw's place in the base is mirrored. */
+const HINGE_PATH = HINGE_SCREWS.map((s, k): V3[] => [s, [s[0], s[1] + RISE, s[2]], screwLaid(k)]);
+const COVER_PATH = COVER_SCREWS.map(([x, y, z], k): V3[] => [[-x, HB - y, z], [-x, HB - y + RISE, z], screwLaid(k + 2)]);
 const COVER_AT: V3 = [0, HB - 0.0175, 0];
-const COVER_LAID: V3 = [1.35, 0.0175, -2.05];
+const COVER_LAID: V3 = [1.42, 0.0175, -2.0];
 export const BOARD_Y = 0.075;
 
 /** Open = the cover has started to come off: the insides are seen. */
 const isOpen = (p: Play) => apart(p, T.cover) > 0;
+const stepOf = (p: Play) => (p.t > 0.5 ? p.to : p.from);
+const smooth = (u: number) => u * u * (3 - 2 * u);
 
-/** Moves `g` from `a` (in place) to `b` (on the mat) as `k` goes 0 to 1, in an arc, settling as it lands. */
-function lay(g: THREE.Group, a: V3, b: V3, k: number, lift: number) {
-  const e = settle(k, 0.5);
-  g.position.set(lerp(a[0], b[0], e), lerp(a[1], b[1], ease(k)) + bump(k) * lift, lerp(a[2], b[2], e));
+/**
+ * Carries `g` from `a` to `b` as `k` goes 0 to 1: up and over in an arc, tipping the way it goes,
+ * with a small bounce where it lands. `yaw`: the turn it ends with. `from`: the flight starts there in `k`.
+ */
+function fly(g: THREE.Object3D, a: V3, b: V3, k: number, lift: number, yaw = 0, from = 0) {
+  const u = slice(k, from, 0.82);
+  const e = smooth(u);
+  const land = slice(k, 0.82, 1);
+  g.position.set(lerp(a[0], b[0], e), lerp(a[1], b[1], e) + Math.sin(u * Math.PI) * lift + Math.sin(land * Math.PI) * lift * 0.09, lerp(a[2], b[2], e));
+  g.rotation.set(0, yaw * e, Math.sin(u * Math.PI * 2) * (b[0] < a[0] ? 0.2 : -0.2));
 }
 
-/** A screw's move: the first quarter turns it out of its hole, the rest carries it to the mat. */
-function screwAt(g: THREE.Group, a: V3, b: V3, k: number) {
-  if (k < 0.25) {
-    const u = k / 0.25;
-    g.position.set(a[0], a[1] + 0.035 * u, a[2]);
-    g.rotation.set(0, u * Math.PI * 4, 0);
-  } else {
-    const u = (k - 0.25) / 0.75;
-    lay(g, [a[0], a[1] + 0.035, a[2]], b, u, 0.35);
-    g.rotation.set(0, Math.PI * 4, 0);
-  }
+/** A part between its place in the laptop and its place on the mat. A RAM stick first springs up out of its clips. */
+function carry(g: THREE.Object3D, part: Part, k: number) {
+  fly(g, part.at, part.laid, k, part.lift, part.yaw, part.clip ? 0.2 : 0);
+  if (!part.clip) return;
+  const up = 0.5 * slice(k, 0, 0.2) * (1 - slice(k, 0.3, 0.7));
+  g.rotation.x = up;
+  g.position.y += Math.sin(up) * 0.085;
 }
 
-function LooseScrew({ from, to, win }: { from: V3; to: V3; win: Parameters<typeof apart>[1] }) {
+/** The job done, the tools are put away (from `at` seconds into step 3): the laptop starts again on a clear mat. */
+const tidy = (p: Play, at: number) => (stepOf(p) === BACK ? 1 - ease(slice(ageOf(p, BACK), at, at + 0.16)) : 1);
+const EMPTY = T.hinge[1][2] - 0.12; // the last screws are leaving the tray
+/** Everything loose on the bench comes and goes with it, each thing on its own spot. `k`: its own share (the tools leave early). */
+function loose(g: THREE.Object3D, p: Play, k = 1) {
+  const s = benchScale(p) * k;
+  g.visible = s > 0.001;
+  g.scale.setScalar(Math.max(s, HIDE));
+  return g.visible;
+}
+
+/** A screw's move: first it is turned out of its hole, then it jumps to the tray. */
+function LooseScrew({ path, win }: { path: V3[]; win: Win }) {
   return (
     <Act
       f={(g, p) => {
         const k = apart(p, win);
-        const s = benchScale(p);
-        g.visible = k > 0 && s > 0.001;
-        if (!g.visible) return;
-        screwAt(g, from, to, k);
-        g.scale.setScalar(Math.max(k >= 1 ? s : 1, HIDE));
+        if (!loose(g, p) || !(g.visible = k > 0)) return;
+        if (k < TURN) {
+          const u = k / TURN;
+          g.position.set(path[0][0], lerp(path[0][1], path[1][1], u), path[0][2]);
+          g.rotation.set(0, u * Math.PI * 4, 0);
+        } else fly(g, path[1], path[2], (k - TURN) / (1 - TURN), 0.4);
       }}
     >
       <ScrewShape />
@@ -208,48 +250,82 @@ function LooseScrew({ from, to, win }: { from: V3; to: V3; win: Parameters<typeo
   );
 }
 
-// The screwdriver's runs: the screen's two screws and the cover's eight, out in step 2 and in in step 3.
-const hingeTops = HINGE_SCREWS.map(([x, y, z]): V3 => [x, y + 0.006, z]);
-const coverTops = COVER_SCREWS.map((_, k): V3 => {
-  const [x, y, z] = coverScrewAt(k);
-  return [x, y + 0.006, z];
-});
-const OUT_RUNS = [driverKeys(DRIVER_REST, hingeTops, T.hinge, true, 0), driverKeys(DRIVER_REST, coverTops, T.screws, true, 0)];
-const IN_RUNS = [driverKeys(DRIVER_REST, coverTops, T.screws, false, 1), driverKeys(DRIVER_REST, hingeTops, T.hinge, false, 1)];
-const OUT_KEYS: Key5[] = OUT_RUNS.flatMap((r) => r.keys);
-const IN_KEYS: Key5[] = IN_RUNS.flatMap((r) => r.keys);
-const OUT_TURNS = OUT_RUNS.flatMap((r) => r.turns);
-const IN_TURNS = IN_RUNS.flatMap((r) => r.turns);
+// The screwdriver's track. It skips from screw to screw like a stone on water: each screw it touches
+// spins out and jumps to the tray (step 2), or is driven home as it gets there (step 3).
+const LYING = HALF_PI;
+/** Adds a run of screws to the track. Returns when it starts and ends turning: from just before the first screw to just after the last. */
+function run(keys: Key6[], paths: V3[][], wins: Win[], out: boolean, outward = false): [number, number] {
+  const first = keys.length;
+  paths.forEach(([hole, up], i) => {
+    const [a, , b, e] = wins[i];
+    const prev = keys[keys.length - 1];
+    const far = Math.hypot(hole[0] - prev[1], hole[2] - prev[3]);
+    // It leans back from the way it is going; at the screen's screws it leans out, clear of the screen.
+    const lean = outward ? (hole[0] < 0 ? 0.42 : -0.42) : i === 0 ? 0 : Math.sign(hole[0] - prev[1]) * 0.22;
+    const top = (out ? hole : up)[1] + 0.006;
+    keys.push([out ? a : b + e * (1 - TURN), hole[0], top, hole[2], lean, i === 0 ? 0 : Math.min(0.3, 0.06 + far * 0.1)]);
+  });
+  return [keys[first][0] - 0.1, keys[keys.length - 1][0] + 0.12];
+}
+const key = (t: number, [x, y, z]: V3, lean: number): Key6 => [t, x, y, z, lean, 0];
+const LAST = COVER_PATH[N_SCREWS - 1][0];
+const OUT_KEYS: Key6[] = [key(0.42, DRIVER_REST, LYING)];
+const OUT_RUNS = [run(OUT_KEYS, HINGE_PATH, T.hinge, true, true)];
+OUT_KEYS.push(key(1.14, DRIVER_WAIT, -0.3), key(T.screws[0][0] - 0.16, DRIVER_WAIT, -0.3));
+OUT_RUNS.push(run(OUT_KEYS, COVER_PATH, T.screws, true));
+OUT_KEYS.push(key(T.screws[N_SCREWS - 1][0] + 0.07, [LAST[0], LAST[1] + 0.1, LAST[2]], 0), key(T.screws[N_SCREWS - 1][0] + 0.45, DRIVER_REST, LYING));
+const IN_KEYS: Key6[] = [key(T.screws[0][2] - 0.05, DRIVER_REST, LYING)];
+const IN_RUNS = [run(IN_KEYS, COVER_PATH, T.screws, false)];
+IN_KEYS.push(key(T.flip[2] + 0.1, DRIVER_WAIT, -0.3), key(T.hinge[0][2] - 0.02, DRIVER_WAIT, -0.3));
+IN_RUNS.push(run(IN_KEYS, HINGE_PATH, T.hinge, false, true));
+IN_KEYS.push(key(T.on + 0.3, DRIVER_REST, LYING));
+const SPIN = Math.PI * 7; // radians a second
 
+const FLUTES = [0, 1, 2, 3, 4, 5];
 function Screwdriver() {
+  const { mats } = useClay();
   const tip = useMemo(() => [0, 0, 0, 0], []);
   return (
     <Act
       f={(g, p) => {
-        const s = benchScale(p);
-        g.visible = s > 0.001;
-        if (!g.visible) return;
-        const back = (p.t > 0.5 ? p.to : p.from) === BACK;
-        const a = back ? ageOf(p, BACK) : ageOf(p, APART);
+        if (!loose(g, p, tidy(p, T.on))) return;
+        const back = stepOf(p) === BACK;
+        const a = ageOf(p, back ? BACK : APART);
         track(back ? IN_KEYS : OUT_KEYS, a, tip);
-        const turns = back ? IN_TURNS : OUT_TURNS;
+        const runs = back ? IN_RUNS : OUT_RUNS;
         let spin = 0;
-        for (let i = 0; i < turns.length; i++) spin += slice(a, turns[i][0], turns[i][1]);
+        for (let i = 0; i < runs.length; i++) spin += THREE.MathUtils.clamp(a, runs[i][0], runs[i][1]) - runs[i][0];
         g.position.set(tip[0], tip[1], tip[2]);
-        g.rotation.set(0, spin * Math.PI * 3 * (back ? -1 : 1), tip[3]);
-        g.scale.setScalar(Math.max(s, HIDE));
+        // It turns about its own shaft, however it leans.
+        g.rotation.order = 'ZYX';
+        g.rotation.set(0, spin * SPIN * (back ? -1 : 1), tip[3]);
       }}
     >
-      <Puck r={0.012} h={0.06} segments={8} position={[0, 0.03, 0]} />
-      <Puck r={0.022} h={0.5} segments={10} position={[0, 0.3, 0]} />
-      <Puck r={0.05} h={0.08} bevel={0.02} segments={16} position={[0, 0.57, 0]} />
-      <Puck r={0.085} h={0.4} bevel={0.04} segments={10} position={[0, 0.81, 0]} />
+      <Puck r={0.012} h={0.06} segments={8} position={[0, 0.03, 0]} material={mats.shade.dark} />
+      <Puck r={0.022} h={0.46} segments={10} position={[0, 0.28, 0]} material={mats.shade.mid} />
+      <Puck r={0.05} h={0.08} bevel={0.02} segments={16} position={[0, 0.55, 0]} />
+      <Puck r={0.085} h={0.42} bevel={0.04} segments={18} position={[0, 0.8, 0]} />
+      {/* Flutes on the handle: without them nobody sees it turn */}
+      {FLUTES.map((i) => (
+        <Box key={i} size={[0.026, 0.3, 0.02]} r={0.008} position={[Math.sin((i * Math.PI) / 3) * 0.082, 0.8, Math.cos((i * Math.PI) / 3) * 0.082]} rotation={[0, (i * Math.PI) / 3, 0]} material={mats.shade.mid} />
+      ))}
+    </Act>
+  );
+}
+
+/** A small dish for the screws, so none rolls away. */
+function Tray() {
+  const { mats } = useClay();
+  return (
+    <Act position={TRAY} f={(g, p) => void loose(g, p, tidy(p, EMPTY))}>
+      <Puck r={0.3} h={0.016} segments={32} position={[0, 0.008, 0]} material={mats.shade.mid} />
+      <Puck r={0.3} h={0.06} hole={0.265} segments={32} position={[0, 0.03, 0]} />
     </Act>
   );
 }
 
 const swapOf = (p: Play) => (p.to === BACK || p.from === BACK ? slice(ageOf(p, BACK), T.swap[0], T.swap[1]) : 0);
-/** The motherboard, dark, with the processor and a chip in clay, and two ribbon cables. */
+/** The motherboard, dark, with the processor and a chip in clay, two ribbon cables and the two RAM slots. */
 function Board() {
   const { mats } = useClay();
   return (
@@ -259,6 +335,9 @@ function Board() {
       <Box size={[0.14, 0.012, 0.14]} position={[-0.2, 0.091, -0.56]} r={0.004} />
       <Box size={[0.08, 0.005, 0.22]} position={[0.45, 0.068, 0.15]} r={0.002} material={mats.shade.mid} />
       <Box size={[0.06, 0.005, 0.24]} position={[-0.4, 0.087, -0.62]} r={0.002} material={mats.shade.mid} />
+      {[1, 2].map((i) => (
+        <Box key={i} size={[0.6, 0.026, 0.03]} position={[PARTS[i].at[0], 0.096, PARTS[i].at[2] + 0.095]} r={0.006} material={mats.shade.mid} />
+      ))}
     </>
   );
 }
@@ -267,12 +346,12 @@ function Board() {
 function Posts() {
   const { mats } = useClay();
   const geo = useMemo(() => new THREE.CylinderGeometry(0.035, 0.035, 0.13, 14), []);
+  useEffect(() => () => geo.dispose(), [geo]);
   const lay = (m: THREE.InstancedMesh | null) => {
     if (!m) return;
     const o = new THREE.Object3D();
-    COVER_SCREWS.forEach((_, k) => {
-      const [x, , z] = coverScrewAt(k);
-      o.position.set(x, 0.065 + 0.065, z);
+    COVER_PATH.forEach(([hole], k) => {
+      o.position.set(hole[0], 0.065 + 0.065, hole[2]);
       o.updateMatrix();
       m.setMatrixAt(k, o.matrix);
     });
@@ -298,12 +377,20 @@ function Staged({ children }: { children: ReactNode }) {
   return <>{list.slice(0, n)}</>;
 }
 
+/** When part `i` has landed on the mat, in step 2. */
+const laidAt = (i: number) => T.parts[i][0] + T.parts[i][1] * 0.8;
+const over = ([x, y, z]: V3, dy: number, dz = 0): V3 => [x, y + dy, z + dz];
+
 /** The whole bench. Put it where the laptop stands on the mat. */
 export function Bench() {
   return (
     <Staged>
       {/* Inside the base: the board, the processor, a chip, the cables and the screw posts */}
-      <Act f={(g, p) => void (g.visible = isOpen(p))}>
+      <Act
+        f={(g, p) => {
+          if (loose(g, p)) g.visible = isOpen(p);
+        }}
+      >
         <Board />
         <Posts />
       </Act>
@@ -315,74 +402,73 @@ export function Bench() {
             key={i}
             f={(g, p) => {
               const k = apart(p, T.parts[i]);
-              g.visible = (k > 0 || isOpen(p)) && benchScale(p) > 0.001;
-              if (g.visible) lay(g, part.at, part.laid, k, 0.7);
+              if (loose(g, p) && (g.visible = k > 0 || isOpen(p))) carry(g, part, k);
             }}
           >
             {part.node}
           </Act>
         ),
       )}
-      {/* The old RAM stick: out with the others, then it trades places with the new one and stays on the mat */}
+      {/* The old RAM stick: out with the others, then it is tossed aside as the new one takes its place */}
       <Act
         f={(g, p) => {
           const k = p.to === BACK || p.from === BACK ? 1 : apart(p, T.parts[OLD]);
-          const s = benchScale(p);
-          g.visible = (k > 0 || isOpen(p)) && s > 0.001;
-          if (!g.visible) return;
-          const w = swapOf(p);
-          if (w > 0) lay(g, PARTS[OLD].laid, WAITING, w, 0.45);
-          else lay(g, PARTS[OLD].at, PARTS[OLD].laid, k, 0.7);
-          g.scale.setScalar(Math.max(s, HIDE));
+          if (!loose(g, p, tidy(p, EMPTY)) || !(g.visible = k > 0 || isOpen(p))) return;
+          const w = slice(swapOf(p), 0, 0.7);
+          if (w > 0) fly(g, PARTS[OLD].laid, SPARE, w, 0.35, -0.4);
+          else carry(g, PARTS[OLD], k);
         }}
       >
         <Ram />
       </Act>
-      {/* The new one: waits on the mat, takes the old one's place in the row, and goes in with the others */}
+      {/* The new one: it waits on the mat (it cannot keep still), jumps into the old one's place with a twirl, and goes in with the others */}
       <Act
-        f={(g, p) => {
-          const s = benchScale(p);
-          const w = swapOf(p);
+        f={(g, p, time) => {
+          const w = slice(swapOf(p), 0.3, 1);
           const k = w >= 1 ? apart(p, T.parts[OLD]) : 1;
-          g.visible = s > 0.001 && (k > 0 || isOpen(p));
-          if (!g.visible) return;
-          if (w < 1) lay(g, WAITING, PARTS[OLD].laid, w, 0.45);
-          else lay(g, PARTS[OLD].at, PARTS[OLD].laid, k, 0.7);
-          g.scale.setScalar(Math.max(k >= 1 && w <= 0 ? s : 1, HIDE));
+          if (!loose(g, p) || !(g.visible = k > 0 || isOpen(p))) return;
+          if (w >= 1) return carry(g, PARTS[OLD], k);
+          fly(g, SPARE, PARTS[OLD].laid, w, 0.95, Math.PI * 2);
+          if (w > 0) return;
+          const hop = Math.max(0, Math.sin(time * 5.5)) ** 2 * slice(ageOf(p, APART), 0.9, 1.2) * at(p, APART);
+          g.position.y += hop * 0.09;
+          g.rotation.y = Math.sin(time * 5.5 - 0.6) * 0.1 * hop;
         }}
       >
         <Ram accent />
       </Act>
 
-      {/* The cover and the screws, loose */}
+      {/* The cover: pried up at the front like a lid, then carried to the back of the mat */}
       <Act
         f={(g, p) => {
           const k = apart(p, T.cover);
-          g.visible = k > 0 && benchScale(p) > 0.001;
-          if (!g.visible) return;
-          lay(g, COVER_AT, COVER_LAID, k, 0.8);
-          g.rotation.set(0, 0, Math.PI - bump(k) * 0.12);
+          if (!loose(g, p) || !(g.visible = k > 0)) return;
+          const pry = Math.sin(slice(k, 0, 0.6) * Math.PI) * 0.42;
+          fly(g, COVER_AT, COVER_LAID, k, 0.7, 0, 0.16);
+          g.position.y += Math.sin(pry) * (D / 2);
+          g.rotation.set(-pry, 0, Math.PI + g.rotation.z);
         }}
       >
         <group position={[0, -0.0175, 0]}>
           <Cover />
         </group>
       </Act>
-      {COVER_SCREWS.map((_, k) => (
-        <LooseScrew key={k} from={coverScrewAt(k)} to={coverScrewLaid(k)} win={T.screws[k]} />
+      {COVER_PATH.map((path, k) => (
+        <LooseScrew key={k} path={path} win={T.screws[k]} />
       ))}
-      {HINGE_SCREWS.map((s, k) => (
-        <LooseScrew key={k} from={s} to={hingeScrewLaid(k)} win={T.hinge[k]} />
+      {HINGE_PATH.map((path, k) => (
+        <LooseScrew key={k} path={path} win={T.hinge[k]} />
       ))}
+      <Tray />
       <Screwdriver />
 
-      {/* Labels, once everything is laid out (step 2), and the swap (step 3) */}
-      <LiveTag at={[PARTS[0].laid[0], 0.09, PARTS[0].laid[2] + 0.12]} dx={0} dy={36} on={on([APART], T.parts[N_PARTS - 1][0] + 0.5)}>Battery</LiveTag>
-      <LiveTag at={[PARTS[7].laid[0], 0.06, PARTS[7].laid[2] + 0.1]} dx={0} dy={34} on={on([APART], T.parts[N_PARTS - 1][0] + 0.5)}>Fan</LiveTag>
-      <LiveTag at={[PARTS[5].laid[0], 0.02, PARTS[5].laid[2] + 0.06]} dx={0} dy={34} on={on([APART], T.parts[N_PARTS - 1][0] + 0.5)}>RAM</LiveTag>
-      <LiveTag at={[PARTS[1].laid[0] + 0.17, 0.05, PARTS[1].laid[2] - 0.15]} dx={46} dy={0} on={on([APART], T.parts[N_PARTS - 1][0] + 0.5)}>Speakers</LiveTag>
-      <LiveTag at={[WAITING[0], 0.02, WAITING[2] + 0.06]} dx={0} dy={34} on={on([APART], 1)}>New part</LiveTag>
-      <LiveTag at={[WAITING[0], 0.02, WAITING[2] + 0.06]} dx={0} dy={34} on={on([BACK], T.swap[1] + 0.1)}>Old part</LiveTag>
+      {/* Labels: each part is named as it lands (step 2), and the swap (step 3) */}
+      <LiveTag at={over(PARTS[0].laid, 0.05, -0.75)} dx={0} dy={-18} on={on([APART], laidAt(0))}>Battery</LiveTag>
+      <LiveTag at={over(PARTS[3].laid, 0.02, -0.2)} dx={0} dy={-18} on={on([APART], laidAt(3))}>Fan</LiveTag>
+      <LiveTag at={over(PARTS[2].laid, 0.01, -0.09)} dx={0} dy={-18} on={on([APART], laidAt(2))}>RAM</LiveTag>
+      <LiveTag at={over(PARTS[6].laid, 0.03, -0.07)} dx={0} dy={-18} on={on([APART], laidAt(N_PARTS - 1))}>Speakers</LiveTag>
+      <LiveTag at={SPARE_TAG} dx={44} dy={-24} on={on([APART], 1)}>New part</LiveTag>
+      <LiveTag at={SPARE_TAG} dx={44} dy={-24} on={oldTag}>Old part</LiveTag>
     </Staged>
   );
 }
@@ -391,6 +477,9 @@ export function Bench() {
 function on(steps: number[], after: number) {
   return (p: Play) => {
     const here = steps.includes(p.to) ? (steps.includes(p.from) ? 1 : slice(p.t, 0.8, 1)) : steps.includes(p.from) ? 1 - slice(p.t, 0, 0.15) : 0;
-    return here * (steps.includes(p.to) ? slice(p.age, after, after + 0.2) : 1);
+    return here * slice(steps.includes(p.to) ? p.age : p.was, after, after + 0.2);
   };
 }
+/** "Old part": from the swap until the tools are put away. */
+const swapped = on([BACK], T.swap[1]);
+const oldTag = (p: Play) => swapped(p) * (1 - slice(ageOf(p, BACK), EMPTY - 0.15, EMPTY));

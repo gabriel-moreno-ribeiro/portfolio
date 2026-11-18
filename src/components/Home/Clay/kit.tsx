@@ -76,7 +76,8 @@ export function shown(p: Play, on: number[], after = 0) {
   const a = on.includes(p.from);
   const b = on.includes(p.to);
   if (b) return (a ? 1 : slice(p.t, 0.8, 1)) * (after ? slice(p.age, after, after + 0.2) : 1);
-  return a ? 1 - slice(p.t, 0, 0.15) : 0;
+  // Leaving, only what had already appeared fades out (a step left early by hand must not flash its late labels).
+  return a ? (1 - slice(p.t, 0, 0.15)) * (after ? slice(p.was, after, after + 0.2) : 1) : 0;
 }
 
 // ── Step-keyed transforms ────────────────────────────────────────────────────
