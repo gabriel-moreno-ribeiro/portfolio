@@ -12,7 +12,7 @@ const FEATURES = [
   {
     icon: "🤖",
     title: "The robot copies you",
-    desc: "Turn, tilt or lean in, and it does the same",
+    desc: "Blink, smile, open your mouth or tilt your head, and it does the same",
   },
   {
     icon: "👋",

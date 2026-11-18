@@ -10,13 +10,20 @@ export interface HandPosition {
 }
 
 // What the camera adds to the head's yaw (x) and pitch (y): how far it tilts sideways
-// (radians), where the face sits in the frame (-1..1) and how close it is (1 = usual).
+// (radians), where the face sits in the frame (-1..1), how close it is (1 = usual), and the face.
 export interface HeadPose {
   x: number;
   y: number;
   roll?: number;
   shift?: number;
   near?: number;
+  // The face, each 0..1: mouth open, smiling, eyebrows raised, and each eye closed
+  // (left and right as they appear on screen, like a mirror).
+  mouth?: number;
+  smile?: number;
+  brow?: number;
+  blinkL?: number;
+  blinkR?: number;
 }
 
 // A trick the hero robot plays back when the camera sees the matching gesture.

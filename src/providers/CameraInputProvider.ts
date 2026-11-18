@@ -32,7 +32,7 @@ async function loadModels(onProgress: (progress: number) => void) {
   const face = await FaceLandmarker.createFromOptions(filesetResolver, {
     baseOptions: { modelAssetBuffer: faceModel, delegate: "GPU" },
     runningMode: "VIDEO",
-    outputFaceBlendshapes: false,
+    outputFaceBlendshapes: true, // mouth, smile, eyebrows and blinks for the robot
     outputFacialTransformationMatrixes: false,
     numFaces: 1,
   });
@@ -107,6 +107,23 @@ function extractHeadPoseFromLandmarks(
   const near = Math.max(0.9, Math.min(1.18, 1 + (faceWidth - 0.16) * 1.6));
 
   return { x: normalizedX, y: normalizedY, roll, shift, near };
+}
+
+// The face, from MediaPipe's blendshape scores (each 0..1). Scores never quite reach 0 or 1,
+// and a smile half closes the eyes, so each one gets a floor and a ceiling.
+const span = (v: number, from: number, to: number) => Math.max(0, Math.min(1, (v - from) / (to - from)));
+function readExpression(categories: { categoryName: string; score: number }[] | undefined): Partial<HeadPose> {
+  if (!categories) return {};
+  const score: Record<string, number> = {};
+  for (const c of categories) score[c.categoryName] = c.score;
+  return {
+    mouth: span(score.jawOpen ?? 0, 0.1, 0.55),
+    smile: span(((score.mouthSmileLeft ?? 0) + (score.mouthSmileRight ?? 0)) / 2, 0.35, 0.8),
+    brow: span(score.browInnerUp ?? 0, 0.35, 0.8),
+    // Mirror: the visitor's left eye is the one on the left of the screen.
+    blinkL: span(score.eyeBlinkLeft ?? 0, 0.4, 0.65),
+    blinkR: span(score.eyeBlinkRight ?? 0, 0.4, 0.65),
+  };
 }
 
 function countExtendedFingers(landmarks: any[]): number {
@@ -411,6 +428,9 @@ function fingersUp(lm: any[]): boolean[] {
 
 /** Which trick, if any, the hands in this frame ask for. Exported so it can be exercised without a camera. */
 export function readRobotMove(hands: any[][], now: number): RobotMove | null {
+  // A hand that left the picture starts from scratch when it comes back: a fist held
+  // earlier must not turn the next open hand into a jump.
+  for (let i = hands.length; i < 2; i++) gestureStates[i] = makeGestureState();
   const asked: RobotMove[] = [];
   const open = hands.map((lm) => fingersUp(lm).filter(Boolean).length >= 4);
 
@@ -449,16 +469,22 @@ export function readRobotMove(hands: any[][], now: number): RobotMove | null {
       g.peace = 0;
     }
 
-    // Thumb out and pointing up (y grows downwards), the other four curled.
-    const thumbUp = thumb && !index && !middle && !ring && !pinky && lm[4].y < lm[0].y - palm * 0.9;
+    // Thumbs up, told apart from a plain fist (whose thumb often pokes out too): the fist
+    // lies on its side (knuckles stacked, not side by side), and the thumb stands clear of
+    // the index knuckle and is the highest point of the hand (y grows downwards).
+    const curled = !index && !middle && !ring && !pinky;
+    const sideways = Math.abs(lm[5].y - lm[17].y) > Math.abs(lm[5].x - lm[17].x);
+    const clear = Math.hypot(lm[4].x - lm[5].x, lm[4].y - lm[5].y) > palm * 0.55;
+    const highest = [5, 6, 9, 10, 13, 14, 17, 18].every((k) => lm[4].y < lm[k].y - palm * 0.2);
+    const thumbUp = curled && thumb && sideways && clear && highest;
     g.thumb = thumbUp ? g.thumb + 1 : 0;
-    if (g.thumb >= HOLD_FRAMES) {
+    if (g.thumb >= HOLD_FRAMES * 1.5) {
       asked.push("nod");
       g.thumb = 0;
     }
 
     // A closed hand that then opens.
-    const closed = !index && !middle && !ring && !pinky && !thumbUp;
+    const closed = curled && !thumbUp;
     if (closed) g.fist++;
     else if (open[i]) {
       if (g.fist >= HOLD_FRAMES) asked.push("jump");
@@ -501,7 +527,7 @@ function processFrame() {
       ) {
         latestFaceLandmarks = faceResult.faceLandmarks[0];
         const pose = extractHeadPoseFromLandmarks(faceResult.faceLandmarks[0]);
-        store.setHeadPosition(pose);
+        store.setHeadPosition({ ...pose, ...readExpression(faceResult.faceBlendshapes?.[0]?.categories) });
       }
     } catch {
       // Skip frame on error
@@ -564,6 +590,7 @@ function processFrame() {
       } else {
         store.setHandPositions([]);
         latestHandLandmarks = null;
+        readRobotMove([], performance.now());
         // Reset gesture states when hands disappear
         for (const ps of pinchStates) {
           if (ps.isScrolling && Math.abs(ps.velocity) > MOMENTUM_MIN) {

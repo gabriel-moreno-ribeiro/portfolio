@@ -1,6 +1,7 @@
 import { OrbitControls, useGLTF } from "@react-three/drei";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import * as THREE from "three";
 import { usePageVisible } from "../../lib/motion";
 import { useInputSourceStore } from "../../store/inputSourceStore";
 
@@ -39,14 +40,57 @@ function moveOffsets(kind, p) {
 }
 const clamp = (v, lim) => Math.max(-lim, Math.min(lim, v));
 
+// The face. The GLB's eyes are one small glowing mesh (Object_8) on a black screen; the
+// robot has no mouth, so one is added on that screen, in the eyes' material.
+const EYE_Y = 0.537; // centre of the eyes, in that mesh's own coordinates
+const EYE_X = 0.19;
+const MOUTH = { y: 0.2, z: 0.918, width: 0.15, height: 0.17 };
+
+function useFace(scene) {
+  return useMemo(() => {
+    const eyes = scene.getObjectByName("Object_8");
+    if (!eyes) return null;
+    const position = eyes.geometry.attributes.position;
+    const rest = position.array.slice();
+    // An oval that opens with the jaw, and a curved line for a smile with the mouth shut.
+    const open = new THREE.Mesh(new THREE.CircleGeometry(1, 28), eyes.material);
+    const smile = new THREE.Mesh(new THREE.TorusGeometry(0.17, 0.018, 8, 20, Math.PI * 0.6), eyes.material);
+    smile.geometry.rotateZ(Math.PI * 1.2).translate(0, 0.17, 0); // the arc hangs downwards and grows from its lowest point
+    open.position.set(0, MOUTH.y, MOUTH.z);
+    smile.position.set(0, MOUTH.y - 0.04, MOUTH.z);
+    open.visible = smile.visible = false;
+    eyes.add(open, smile);
+
+    return (f) => {
+      // Each eye squashes towards its own centre to close, and grows with raised eyebrows.
+      for (let i = 0; i < position.count; i++) {
+        const x = rest[i * 3];
+        const left = x < 0;
+        const grow = 1 + f.brow * 0.3;
+        const lid = Math.max(0.08, 1 - (left ? f.blinkL : f.blinkR)) * grow;
+        const cx = left ? -EYE_X : EYE_X;
+        position.setX(i, cx + (x - cx) * grow);
+        position.setY(i, EYE_Y + (rest[i * 3 + 1] - EYE_Y) * lid);
+      }
+      position.needsUpdate = true;
+
+      open.visible = f.mouth > 0.03;
+      open.scale.set(MOUTH.width * (0.7 + 0.5 * f.smile), MOUTH.height * f.mouth, 1);
+      smile.visible = f.smile > 0.03 && !open.visible;
+      smile.scale.setScalar(f.smile);
+    };
+  }, [scene]);
+}
+
 function Model({ onReady, ...props }) {
   const { scene } = useGLTF("/assets/3d/robot.glb");
   const group = useRef();
+  const drawFace = useFace(scene);
   const lastInput = useRef(0);
   const wokeAt = useRef(-Infinity);
   const baseY = useRef(props.position?.[1] ?? 0);
   // Where the head tracking has the robot; the tricks are added on top of this each frame.
-  const pose = useRef({ rx: 0, ry: 0, rz: 0, x: 0, y: props.position?.[1] ?? 0, s: 1 });
+  const pose = useRef({ rx: 0, ry: 0, rz: 0, x: 0, y: props.position?.[1] ?? 0, s: 1, mouth: 0, smile: 0, brow: 0, blinkL: 0, blinkR: 0 });
   const invalidate = useThree((s) => s.invalidate);
   const frameloop = useThree((s) => s.frameloop);
   // Back from a hidden tab or from off screen: settle (or keep bobbing) without waiting for input
@@ -105,11 +149,18 @@ function Model({ onReady, ...props }) {
       x: asleep ? 0 : (head.shift ?? 0) * 0.55,
       s: asleep ? 1 : head.near ?? 1,
       y: baseY.current + (asleep ? Math.sin((t * 2 * Math.PI) / BOB_PERIOD_S) * 0.04 : 0),
+      // The face (camera only). Asleep, the eyes close.
+      mouth: asleep ? 0 : head.mouth ?? 0,
+      smile: asleep ? 0 : head.smile ?? 0,
+      brow: asleep ? 0 : head.brow ?? 0,
+      blinkL: asleep ? 1 : head.blinkL ?? 0,
+      blinkR: asleep ? 1 : head.blinkR ?? 0,
     };
     const damp = asleep ? 0.03 : startle > 0 ? 0.35 : 0.2;
     let settling = false;
     for (const k in target) {
-      b[k] += (target[k] - b[k]) * (k === "y" ? 0.05 : damp);
+      // A blink is over in a tenth of a second: the eyelids follow much faster than the body.
+      b[k] += (target[k] - b[k]) * (k === "y" ? 0.05 : k.startsWith("blink") ? (asleep ? 0.05 : 0.6) : damp);
       if (Math.abs(target[k] - b[k]) > 0.0005) settling = true;
     }
 
@@ -120,6 +171,7 @@ function Model({ onReady, ...props }) {
     g.position.x = b.x;
     g.position.y = b.y + (m.y ?? 0);
     g.scale.set(b.s * (1 - stretch / 2), b.s * (1 + stretch), b.s * (1 - stretch / 2));
+    drawFace?.(b);
 
     // Keep rendering while anything is still settling (or while it bobs in its sleep)
     if (asleep || startle > 0 || settling || p < 1) invalidate();

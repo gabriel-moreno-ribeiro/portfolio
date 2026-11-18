@@ -10,8 +10,8 @@ import DraggableWindow from "../WindowManager/DraggableWindow";
 const gestures = [
   {
     icon: "🤖",
-    title: "Move your head",
-    desc: "The robot turns, tilts and leans with you",
+    title: "Use your face",
+    desc: "The robot turns, tilts, blinks, smiles and opens its mouth with you",
   },
   {
     icon: "👋",

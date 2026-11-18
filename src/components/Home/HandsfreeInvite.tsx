@@ -34,7 +34,8 @@ export default function HandsfreeInvite() {
 
   return (
     <div className="hero-invite is-on">
-      <strong>I copy your head. Now try:</strong>
+      <strong>I copy your face</strong>
+      <span>Blink, smile, open your mouth, tilt your head. And with your hands:</span>
       <ul>
         {TRICKS.map((t) => (
           // The key changes with every new trick, so the highlight replays each time.

@@ -85,6 +85,9 @@
     ul { margin: 2px 0 0; padding: 0; list-style: none; display: grid; gap: 2px; }
     li { color: var(--fg-muted); border-radius: 6px; }
     li.is-hit { color: var(--fg); font-weight: 600; animation: hero-invite-hit 0.5s ease-out; }
+
+    // The first bubble waits for the robot to arrive; the list of gestures does not.
+    &.is-on { animation-delay: 0s; }
   }
 
   button.hero-invite {
