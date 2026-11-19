@@ -183,10 +183,15 @@ export const projects: Project[] = [
         body: ['21 states, all by referral.'],
       },
     ],
-    // PLACEHOLDER (owner): photos to come. Drop them in public/work/laptops/ (01.webp, 02.webp, …,
-    // plus sm/ and thumbs/ copies like the other projects), list them here and remove photosToCome.
-    gallery: [],
-    photosToCome: 3,
+    // PLACEHOLDER (owner): these four files came out of Gemini and their own metadata marks them as
+    // AI-generated (originals in qa/originals/laptops/). Before this goes to production the owner has
+    // to say what they are: real photos that were only restored, or images made by AI, which then
+    // need a visible label and cannot be shown as photos.
+    gallery: ['01.webp', '02.webp', '03.webp', '04.webp'],
+    focus: {
+      '01.webp': '35% 30%', // the boy stands on the left
+      '02.webp': '60% 30%', // face at the top right, hands in the middle
+    },
   },
 ];
 

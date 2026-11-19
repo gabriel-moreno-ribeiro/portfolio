@@ -26,6 +26,7 @@ const DIMS: Record<string, [number, number]> = {
   'hibeex/01': [1200, 800], 'hibeex/02': [1200, 1600], 'hibeex/03': [1200, 800], 'hibeex/04': [1200, 800],
   'candela/01': [1600, 1195], 'candela/02': [1600, 893], 'candela/03': [1600, 1600], 'candela/04': [1600, 1600],
   'candela/05': [1600, 1195], 'candela/06': [1600, 1195], 'candela/07': [1600, 1195], 'candela/08': [1600, 1195],
+  'laptops/01': [1600, 1195], 'laptops/02': [1600, 1195], 'laptops/03': [1600, 1195], 'laptops/04': [1600, 1195],
 };
 const dims = (slug: string, file: string) => {
   const d = DIMS[`${slug}/${file.replace(/\.webp$/, '')}`];
