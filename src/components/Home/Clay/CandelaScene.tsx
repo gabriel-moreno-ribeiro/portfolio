@@ -1,6 +1,6 @@
 // Projeto Candela in five steps, with the kit in every one of them: the wooden box opens; what is
 // inside is laid out on the desk; three of the experiments run, one after the other, the camera on each;
-// then a hand holds a small magnifying glass up to the kit, the camera goes through it to the 28 schools its kits went to, and goes
+// then a hand holds a small magnifying glass up to the kit, the camera goes through it to the 28 schools its kits went to; the glass then goes
 // into one school to show the students: 3,392 reached, and those who fail physics from 30% to 10%.
 import { useEffect } from 'react';
 import * as THREE from 'three';
@@ -58,7 +58,7 @@ const peek = (rise: number, when: number, k: number) => (g: THREE.Group, p: Play
 const boxAct = (g: THREE.Group, p: Play) => {
   const a0 = ageOf(p, 0);
   const a3 = ageOf(p, REACH) - ENTER; // the kits go once the camera is through the glass
-  const a4 = ageOf(p, RESULT);
+  const a4 = ageOf(p, RESULT) - ENTER;
   const squat = (0.08 * bump(slice(a0, 0.02, 0.22)) - 0.06 * bump(slice(a0, 0.2, 0.5)) + 0.07 * bump(slice(a0, DUCK, DUCK + 1))) * at(p, 0);
   const recoil = p.to === 1 ? 0.16 * bump(slice(p.age, 0.02, 0.32)) : 0;
   const pump = 0.11 * Math.abs(Math.sin(a3 * Math.PI * 4)) * slice(a3, 0.85, 0.95) * (1 - slice(a3, 2.3, 2.6)) * at(p, REACH);
@@ -103,6 +103,9 @@ const AT_INCLINE = { pos: [1.55, 2.9, 2.85] as V3, look: [1.3, 0.7, -1.9] as V3 
 const AT_STAND = { pos: [3.9, 3.1, 8.9] as V3, look: [3.5, 1.5, 1.15] as V3 };
 const FAR = { pos: [-0.9, 13.1, 12.3] as V3, look: [-0.9, 0.35, 2.0] as V3 };
 const FIELD = { pos: [-0.6, 9.2, 7.75] as V3, look: [-0.6, 0.1, 0.55] as V3 };
+const CLASS = { pos: [-0.6, 8.5, 8.95] as V3, look: [-0.6, 0.5, 0.75] as V3 };
+// DIVE_LEN behind CLASS on its own line of sight, turned to the chosen school at the back of the field.
+const FAR_SCHOOL = { pos: [-0.6, 12.7, 13.25] as V3, look: [-0.95, 0.35, -1.55] as V3 };
 const CAMERA: Shot[] = [
   { pos: [0.4, 3.75, 8.9], look: [0, 1.5, 0.25], to: { pos: [0.3, 3.9, 9.2], look: [0, 1.5, 0.1] }, over: [0, 0.9] },
   { pos: [0, 8.1, 9.9], look: [0, 0.85, 0.5], to: { pos: [0, 7.9, 9.6], look: [0, 0.85, 0.5] }, over: [0.6, 2.6] },
@@ -131,8 +134,18 @@ const CAMERA: Shot[] = [
       { at: DIVE[1] + 2.4, pos: [-0.6, 9.0, 7.6], look: FIELD.look },
     ],
   },
-  // The students: on the middle of the field (a little to its right, for the labels on that side).
-  { pos: [-0.6, 8.5, 8.95], look: [-0.6, 0.5, 0.75], to: { pos: [-0.6, 8.3, 8.75], look: [-0.6, 0.5, 0.75] }, over: [0.6, 2.2] },
+  // The students: from far off again, on the one school the glass is held up to, then through the glass
+  // to the middle of the field (a little to its right, for the labels on that side).
+  {
+    pos: FAR_SCHOOL.pos,
+    look: FAR_SCHOOL.look,
+    path: [
+      { at: 0, ...FAR_SCHOOL },
+      { at: DIVE[0], ...FAR_SCHOOL },
+      { at: DIVE[1], ...CLASS },
+      { at: DIVE[1] + 1.6, pos: [-0.6, 8.3, 8.75], look: CLASS.look },
+    ],
+  },
 ];
 
 export default function CandelaScene() {
@@ -232,8 +245,8 @@ export default function CandelaScene() {
         {`${SCHOOLS} schools`}
       </TagWhen>
       <Students />
-      <TagWhen at={kidAt(0, 1.0)} dx={-16} dy={-50} on={(p) => shown(p, [RESULT], 0.55)} text={(p) => `${counted(p)} students`}>3,392 students</TagWhen>
-      <TagWhen at={kidAt(25, 1.25)} dx={78} dy={-62} on={(p) => shown(p, [RESULT], 1.2)} text={(p) => (ageOf(p, RESULT) < TURN + 0.35 ? 'Failed physics · 30%' : 'Failed physics · 30% → 10%')}>
+      <TagWhen at={kidAt(0, 1.0)} dx={-16} dy={-50} on={(p) => shown(p, [RESULT], ENTER + 0.55)} text={(p) => `${counted(p)} students`}>3,392 students</TagWhen>
+      <TagWhen at={kidAt(25, 1.25)} dx={78} dy={-62} on={(p) => shown(p, [RESULT], ENTER + 1.2)} text={(p) => (ageOf(p, RESULT) - ENTER < TURN + 0.35 ? 'Failed physics · 30%' : 'Failed physics · 30% → 10%')}>
         {'Failed physics · 30% → 10%'}
       </TagWhen>
     </>

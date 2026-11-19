@@ -166,7 +166,7 @@ export default function MedalsShowcase() {
       </div>
 
       <div className="medals-showcase__body">
-        <h3>28 Olympiad Medals</h3>
+        <h3 className="sr-only">28 Olympiad Medals</h3>
         <div className="medal-sort" role="group" aria-label="Group the medals by">
           <span aria-hidden="true">Group by</span>
           {MODES.map((o) => (

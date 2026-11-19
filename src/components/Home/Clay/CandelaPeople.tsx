@@ -27,14 +27,15 @@ export const RESULT = 4; // the step of the students
 
 // ── The magnifying glass ────────────────────────────────────────────────────
 // A small one, in a hand. It comes in from the lower right and stops between the camera and the kit;
-// then the camera goes through the ring, and the round field opens around the kit.
-/** Seconds into the schools' step: the glass is held still, and the camera's dive through it. */
+// then the camera goes through the ring, and the round field opens around the kit. It does the same
+// at the students' step, held up to one school: through it, the school grows and its students come out.
+/** Seconds into either step: the glass is held still, and the camera's dive through it. */
 const LOUPE_SET = 1.15;
 export const DIVE: [number, number] = [1.5, 2.5];
-/** How far the camera travels in the dive (CandelaScene: from FAR to FIELD). */
+/** How far the camera travels in the dive (CandelaScene: from FAR to FIELD, and from FAR_SCHOOL to CLASS). */
 export const DIVE_LEN = 6;
 const LOUPE_AHEAD = 4.4; // how far in front of the camera the glass is held before the dive
-/** The ring has left the frame: from here on the kits may go. */
+/** The ring has left the frame: from here on the kits may go (and, at the next step, the students come out). */
 export const ENTER = 1.9;
 const TILT = 0.7; // the handle points down and to the right
 export function Loupe() {
@@ -56,7 +57,7 @@ export function Loupe() {
   useFrame(({ camera, clock }) => {
     const o = g.current;
     if (!o) return;
-    const a = play.to === REACH ? play.age : 0;
+    const a = play.to === REACH || play.to === RESULT ? play.age : 0;
     const ahead = LOUPE_AHEAD - DIVE_LEN * ease(slice(a, DIVE[0], DIVE[1]));
     o.visible = a > 0.5 && ahead > 0.45;
     if (!o.visible) return;
@@ -234,13 +235,17 @@ export function Schools() {
         // Coming back from inside the school: the big one goes first.
         if (chosen && p.from === RESULT && p.t < 0.35) [x, z, k] = [FOCUS_AT[0], FOCUS_AT[1], BIG_K * (1 - ease(p.t / 0.35))];
       } else if (p.from === REACH && p.to === RESULT) {
-        // Into one school: it comes to the middle and grows, the others slide away from it as they go.
-        const zoom = ease(slice(p.t, 0.1, 0.8));
+        // Into one school, once the camera is through the glass held up to it: it comes to the middle
+        // and grows, the others slide away from it as they go.
+        const t = slice(p.age, ENTER - 0.1, ENTER + 0.6);
+        const zoom = ease(slice(t, 0.1, 0.8));
         if (chosen) [x, z, k] = [lerp(s.x, FOCUS_AT[0], zoom), lerp(s.z, FOCUS_AT[1], zoom), lerp(SCHOOL_K, BIG_K, zoom) * up];
-        else [x, z, k] = [s.x + (s.x - SPOTS[FOCUS].x) * 0.5 * zoom, s.z + (s.z - SPOTS[FOCUS].z) * 0.5 * zoom, SCHOOL_K * up * (1 - ease(slice(p.t, 0.05, 0.5)))];
+        else [x, z, k] = [s.x + (s.x - SPOTS[FOCUS].x) * 0.5 * zoom, s.z + (s.z - SPOTS[FOCUS].z) * 0.5 * zoom, SCHOOL_K * up * (1 - ease(slice(t, 0.05, 0.5)))];
       } else if (p.from === REACH) k = SCHOOL_K * up * (1 - ease(slice(p.t, 0, 0.4)));
       else if (chosen) [x, z, k] = [FOCUS_AT[0], FOCUS_AT[1], BIG_K * (p.to === RESULT ? (p.from === RESULT ? 1 : pop(slice(p.t, 0.5, 0.9))) : 1 - ease(slice(p.t, 0, 0.4)))];
-      o.position.set(LENS[0] + x, GLASS, LENS[2] + z);
+      // The school the glass is held up to gives a hop: that is the one.
+      const hop = chosen && p.to === RESULT && p.from === REACH ? 0.3 * Math.sin(slice(p.age, LOUPE_SET, LOUPE_SET + 0.35) * Math.PI) : 0;
+      o.position.set(LENS[0] + x, GLASS + hop, LENS[2] + z);
       o.rotation.set(0, chosen ? 0 : s.yaw, 0);
       o.scale.setScalar(Math.max(k, HIDE));
       o.updateMatrix();
@@ -269,8 +274,8 @@ export function Schools() {
 
 // ── 3,392 students; those who fail physics, from 30% to 10% ─────────────────
 export const STUDENTS = 3392;
-export const COUNT: [number, number] = [0.55, 1.75]; // seconds into the step over which the count runs
-export const TURN = 2.0; // the kit does its work: most of those who failed now pass
+export const COUNT: [number, number] = [0.55, 1.75]; // seconds after ENTER over which the count runs
+export const TURN = 2.0; // (after ENTER) the kit does its work: most of those who failed now pass
 // Thirty students in front of their school, with the kit in the middle of the front row. Nine of them
 // fail (9 in 30 is 30%); after the kit three still do (10%).
 const row = (n: number) => Array.from({ length: n }, (_, i) => (i - (n - 1) / 2) * 0.56);
@@ -346,7 +351,7 @@ export function Students() {
     b.visible = s.visible = f.visible = x.visible = v.visible = here > 0.001;
     if (!b.visible) return;
     const arriving = play.to === RESULT;
-    const age = ageOf(play, RESULT);
+    const age = ageOf(play, RESULT) - ENTER; // they come out once the camera is through the glass
     const time = clock.elapsedTime;
     let repaint = false;
     for (let i = 0; i < KIDS.length; i++) {
@@ -401,6 +406,6 @@ export function Students() {
   );
 }
 /** The count of students reached, `p` into the story, as it reads on its label. */
-export const counted = (p: Play) => Math.round(STUDENTS * ease(slice(ageOf(p, RESULT), COUNT[0], COUNT[1]))).toLocaleString('en-US');
+export const counted = (p: Play) => Math.round(STUDENTS * ease(slice(ageOf(p, RESULT) - ENTER, COUNT[0], COUNT[1]))).toLocaleString('en-US');
 /** Where a student stands, in the world: for the labels. */
 export const kidAt = (i: number, y = 0): V3 => onLens(KIDS[i].x, KIDS[i].z, y);

@@ -103,7 +103,9 @@ $scroll: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width
 }
 
 // ── Copy and numbers ────────────────────────────────────────────────────────
+// As tall as the portrait beside it: the tray takes what is left and spreads its rows over it.
 .medals-showcase__body {
+  align-self: stretch;
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -200,7 +202,12 @@ $scroll: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width
   }
 }
 
-.medal-stage { position: relative; }
+.medal-stage {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
 
 // After a regroup the labels fade in while the medals travel.
 .medal-tray.is-regrouped h4 { animation: medal-label-in 0.5s 0.15s $ease-out backwards; }
@@ -239,8 +246,10 @@ $scroll: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width
 .medal-tray {
   display: grid;
   grid-template-columns: repeat(7, minmax(0, 1fr));
+  flex: 1;
+  align-content: space-between;
   gap: 8px 0; // the photos carry their own margin
-  margin: 4px 0 0;
+  margin: 0;
   padding: 8px 8px 10px;
   list-style: none;
   border-radius: 12px;
