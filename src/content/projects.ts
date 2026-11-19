@@ -70,6 +70,7 @@ export const projects: Project[] = [
         heading: 'Where it is',
         body: [
           'One of 6 startups in the Canastra Ventures AI Residency. I am building it.',
+          'In November 2026 we got the LALA Start award, 1 of 10 in all of Latin America.',
         ],
       },
       {

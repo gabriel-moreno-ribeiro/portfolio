@@ -28,6 +28,14 @@ export type Mention = {
 export const mentions: Mention[] = [
   {
     kind: 'program',
+    date: 'Nov 2026',
+    year: 2026,
+    outlet: 'Latin American Leadership Academy',
+    title: 'HIBEEX gets the LALA Start award',
+    summary: '1 of 10 awarded in all of Latin America, after a Demo Day pitch to a jury in São Paulo.',
+  },
+  {
+    kind: 'program',
     date: '2026',
     year: 2026,
     outlet: 'Canastra Ventures',
