@@ -5,7 +5,7 @@
 // the Python script and comes back in Portuguese, and 121 laptops go to 21 states. Facts: src/content/onePager.ts.
 // Between steps, what leaves goes first and what arrives comes after, so nothing passes through anything.
 import * as THREE from 'three';
-import { Act, ageOf, Arrow, at, Box, bump, ease, Morph, pop, Rig, ring, settle, slice, spring, Tag, useClay, wins, type Play, type Shot, type V3, type Wins } from './kit';
+import { Act, ageOf, Arrow, at, bump, ease, Morph, pop, Rig, ring, settle, slice, spring, Tag, wins, type Play, type Shot, type V3, type Wins } from './kit';
 import { Bench, FAN_AT, Mat, MAT, MAT_CENTER } from './LaptopBench';
 import {
   BrazilMap,
@@ -22,6 +22,7 @@ import {
   SALVADOR_AT,
   SCREEN,
   showOn,
+  SubtitleChip,
   Terminal,
   toWorld,
   TutorialCard,
@@ -48,14 +49,14 @@ const io = (on: number[], table: Record<string, [number, number]> = {}, arrive: 
 const here = (p: Play, i: number) => (p.to === i ? (p.from === i ? 1 : p.t) : p.from === i ? 1 - ease(slice(p.t, 0, 0.3)) : 0);
 
 // ── Where things are ─────────────────────────────────────────────────────────
-const CARTON_AT: V3 = [-1.7, 0, -0.35];
+const CARTON_AT: V3 = [-1.15, 0, -1.0];
 const CARTON_YAW = 0.2;
 const BENCH: V3 = [0, MAT[1], -0.15];
 const MAT_POSE = { p: [BENCH[0] + MAT_CENTER[0], 0, BENCH[2] + MAT_CENTER[2]] as V3 };
 const TUTORIAL_AT: V3 = [-1.6, 0, 0.3];
 /** The laptop at each step: position and turn about Y. */
 const SPOT: { p: V3; yaw: number }[] = [
-  { p: [1.4, 0, 0.55], yaw: -0.2 }, // out of the carton
+  { p: [0.95, 0, 1.55], yaw: -0.2 }, // out of the carton, set down in front of it
   { p: BENCH, yaw: 0 }, // taken apart on the mat
   { p: BENCH, yaw: 0 }, // photographed, open
   { p: BENCH, yaw: 0 }, // put back together
@@ -67,7 +68,7 @@ const TERMINAL_YAW = -0.35;
 const WAVE_AT: V3 = [0.25, 0, 1.2];
 // The photo: a hand holds a phone over the open laptop, the screen up towards us and the camera on
 // its back looking down at the broken fan.
-const HOLD_AT: V3 = [2.25, 0.82, 1.3]; // the bottom of the phone
+const HOLD_AT: V3 = [2.05, 0.82, 1.3]; // the bottom of the phone
 const HOLD_K = 1.25;
 const HOLD = new THREE.Euler(-0.95, 0.75, 0, 'YXZ'); // tipped back, turned towards the fan
 
@@ -111,7 +112,8 @@ function laptopAt(step: number, age: number, o: Pose) {
   const e = settle(u, 0.5);
   o.x = lerp(CARTON_AT[0], s.p[0], e);
   o.z = lerp(CARTON_AT[2], s.p[2], e);
-  o.y = lerp(0.08 + 1.35 * up, s.p[1], ease(u)) + 0.3 * bump(u) + 0.07 * bump(slice(age, OVER[1], OVER[1] + 0.2));
+  // It stays up until it is clear of the carton's front wall and flap, and only then comes down.
+  o.y = lerp(0.08 + 1.35 * up, s.p[1], ease(slice(u, 0.45, 1))) + 0.3 * bump(u) + 0.07 * bump(slice(age, OVER[1], OVER[1] + 0.2));
   o.yaw = lerp(CARTON_YAW, s.yaw, ease(u));
   o.tilt = bump(u) * 0.12;
 }
@@ -201,27 +203,6 @@ const chipAct = (a: V3, b: V3, win: [number, number]) => (g: THREE.Group, p: Pla
   g.rotation.set(-0.15, 0, Math.sin(u * Math.PI * 2) * (b[0] > a[0] ? -0.22 : 0.22));
   g.scale.setScalar(s);
 };
-const STROKES = [-0.24, -0.17, -0.08, 0.01, 0.1, 0.17, 0.25];
-/** A line of subtitle: Hindi (a line across the top, strokes hanging from it) or Portuguese (plain words, in orange). */
-function Subtitle({ portuguese }: { portuguese?: boolean }) {
-  const { mats } = useClay();
-  return (
-    <group>
-      <Box accent={portuguese} size={[0.7, 0.19, 0.04]} r={0.018} />
-      {portuguese
-        ? [[-0.2, 0.2], [0.03, 0.16], [0.23, 0.14]].map(([x, w]) => <Box key={x} size={[w, 0.05, 0.012]} position={[x, 0, 0.022]} r={0.005} />)
-        : (
-          <>
-            <Box size={[0.58, 0.014, 0.012]} position={[0, 0.045, 0.022]} r={0.004} material={mats.shade.dark} />
-            {STROKES.map((x, i) => (
-              <Box key={x} size={[0.016, 0.05 + (i % 3) * 0.018, 0.012]} position={[x, 0.02 - (i % 3) * 0.009, 0.022]} r={0.004} material={mats.shade.dark} />
-            ))}
-          </>
-        )}
-    </group>
-  );
-}
-
 // ── 3 · WiFixit ──────────────────────────────────────────────────────────────
 // The laptop lies open as the teardown left it, its fan broken. A hand comes in with a phone, holds
 // it over the laptop, the thumb goes to the button and presses, the flash fires, the phone thinks,
@@ -282,10 +263,10 @@ const landed = (p: Play) => {
 // the same moved over to make room for the hand, and the laptop alone as it is closed and starts.
 const NEAR = { pos: [0.2, 4.5, 6.0] as V3, look: [0, 0.3, -0.6] as V3 };
 const OVER_IT = { pos: [0, 5.2, 4.3] as V3, look: [0, 0.05, -0.32] as V3 };
-const OPEN = { pos: [0, 5.6, 5.5] as V3, look: [0, 0.1, -0.72] as V3 };
-const MID = { pos: [0, 5.6, 5.1] as V3, look: [0, 0.3, -0.6] as V3 };
+const OPEN = { pos: [-0.35, 5.6, 5.5] as V3, look: [-0.35, 0.1, -0.72] as V3 };
+const MID = { pos: [-0.15, 6.1, 5.9] as V3, look: [-0.15, 0.6, -0.75] as V3 };
 const CAMERA: Shot[] = [
-  { pos: [0, 4.2, 9.2], look: [-0.25, 0.7, 0.1], to: { pos: [0.3, 3.7, 8.4], look: [-0.1, 0.65, 0.1] }, over: [0.7, 2.4] },
+  { pos: [-0.1, 3.9, 8.6], look: [-0.35, 0.75, 0.3], to: { pos: [0.2, 3.6, 8.0], look: [-0.2, 0.68, 0.42] }, over: [0.7, 2.4] },
   {
     pos: NEAR.pos,
     look: NEAR.look,
@@ -297,7 +278,7 @@ const CAMERA: Shot[] = [
       { at: OPENED + 0.3, ...OPEN },
     ],
   },
-  { pos: [0.4, 5.6, 6.4], look: [0.38, 0.2, -0.62], to: { pos: [0.45, 5.35, 6.15], look: [0.42, 0.25, -0.6] }, over: [SHOT.aim, 2.4] },
+  { pos: [0, 5.6, 6.2], look: [0, 0.2, -0.62], to: { pos: [0.05, 5.35, 5.95], look: [0.03, 0.25, -0.6] }, over: [SHOT.aim, 2.4] },
   {
     pos: OPEN.pos,
     look: OPEN.look,
@@ -309,8 +290,8 @@ const CAMERA: Shot[] = [
       { at: T.on + 0.1, pos: [0.15, 2.8, 5.0], look: [0, 0.82, -0.5] },
     ],
   },
-  { pos: [0, 3.8, 8.7], look: [0, 0.8, 0.2], to: { pos: [0, 3.6, 8.2], look: [0, 0.8, 0.2] }, over: [0.5, 2.3] },
-  { pos: [0.3, 7.9, 8.4], look: [0.15, 0, 0.15], to: { pos: [0.3, 7.5, 7.9], look: [0.15, 0, 0.15] }, over: [0.5, 2.6] },
+  { pos: [0, 3.6, 8.1], look: [0, 0.8, 0.2], to: { pos: [0, 3.4, 7.6], look: [0, 0.78, 0.2] }, over: [0.5, 2.3] },
+  { pos: [0.25, 7.2, 7.3], look: [0.15, 0, -0.05], to: { pos: [0.25, 6.9, 6.95], look: [0.15, 0, -0.05] }, over: [0.5, 2.6] },
 ];
 
 export default function LaptopScene() {
@@ -323,7 +304,7 @@ export default function LaptopScene() {
         <Act f={cartonAct}>
           <Carton flap={flapOf} />
         </Act>
-        <Tag at={[0.85, 0.85, 1]} dx={30} dy={-46} on={[0]} after={FLAPS}>By referral</Tag>
+        <Tag at={[-0.9, 0.8, 1]} dx={-26} dy={-52} on={[0]} after={FLAPS}>By referral</Tag>
       </Morph>
 
       {/* 1 to 5 · the laptop */}
@@ -351,8 +332,8 @@ export default function LaptopScene() {
             <TutorialCard step={tickOf} />
           </Act>
           <Hand thumb={thumbOf} />
-          <Tag at={[0.3, 1.0, 0.05]} dx={52} dy={-20} on={[PHOTO]} after={SHOT.guide[1]}>Tutorial</Tag>
-          <Tag at={[0.34, 0.5, 0.05]} dx={56} dy={14} on={[PHOTO]} after={SHOT.in[1]}>WiFixit</Tag>
+          <Tag at={[0.3, 0.95, 0.05]} dx={54} dy={-6} on={[PHOTO]} after={SHOT.guide[1]}>Tutorial</Tag>
+          <Tag at={[0.34, 0.5, 0.05]} dx={50} dy={16} on={[PHOTO]} after={SHOT.in[1]}>WiFixit</Tag>
         </Phone>
       </Act>
       {VIEW.map((v, i) => (
@@ -370,10 +351,10 @@ export default function LaptopScene() {
       <Arrow a={SCREEN_RIGHT} b={TERM_LEFT} lift={0.45} on={[HINDI]} after={SEND[0]} />
       <Arrow a={TERM_LOW} b={SCREEN_LOW} lift={-0.15} on={[HINDI]} after={RETURN[0]} />
       <Act f={chipAct(SUBTITLE, TERM_SCREEN, SEND)}>
-        <Subtitle />
+        <SubtitleChip />
       </Act>
       <Act f={chipAct(TERM_SCREEN, SUBTITLE, RETURN)}>
-        <Subtitle portuguese />
+        <SubtitleChip portuguese />
       </Act>
       <Act position={WAVE_AT} f={waveAct}>
         <Wave on={(p) => slice(ageOf(p, HINDI), SWAP, SWAP + 0.3) * at(p, HINDI)} />

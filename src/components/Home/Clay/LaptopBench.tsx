@@ -4,8 +4,8 @@
 import { Line } from '@react-three/drei';
 import { Children, useEffect, useMemo, useState, type ReactNode } from 'react';
 import * as THREE from 'three';
-import { Act, ageOf, at, Box, ease, pop, Puck, ring, Rod, Slab, slice, Ticks, useClay, type Play, type V3 } from './kit';
-import { COVER_SCREWS, Cover, D, HB, HINGE_SCREWS, LiveTag, ScrewShape } from './LaptopParts';
+import { Act, ageOf, at, ease, pop, Puck, ring, Slab, slice, Ticks, useClay, type Play, type V3 } from './kit';
+import { box, COVER_SCREWS, Cover, D, HB, HINGE_SCREWS, LiveTag, Lump, puck, rod, Screws, type Piece, type Tone } from './LaptopParts';
 import { apart, APART, BACK, benchScale, N_SCREWS, OPENED, PHOTO, SHOT, stepOf, T, track, TURN, type Key6, type Win } from './teardown';
 
 const HALF_PI = Math.PI / 2;
@@ -13,8 +13,8 @@ const lerp = THREE.MathUtils.lerp;
 const HIDE = 1e-4;
 
 /** The repair mat: thin, with round corners and a ruler printed along its front edge. Origin at the top centre. */
-export const MAT: V3 = [5.7, 0.03, 4.56];
-export const MAT_CENTER: V3 = [0, 0, -0.66]; // in the bench's space
+export const MAT: V3 = [5.44, 0.03, 4.56];
+export const MAT_CENTER: V3 = [-0.42, 0, -0.66]; // in the bench's space
 const MAT_TICK: V3 = [0.012, 0.004, 0.06];
 export function Mat({ size = MAT }: { size?: V3 }) {
   const { mats } = useClay();
@@ -53,98 +53,58 @@ export function Mat({ size = MAT }: { size?: V3 }) {
 }
 
 // ── The parts, each with its silhouette, its tone and one detail that names it ─
+// Each is a list of pieces at `o` (see "Lumps" in LaptopParts): what is inside the base is merged into one model.
+const at3 = (o: V3, [x, y, z]: V3): V3 => [o[0] + x, o[1] + y, o[2] + z];
 /** Mid grey, with three cells. */
-function Battery() {
-  const { mats } = useClay();
-  return (
-    <group>
-      <Box size={[1.5, 0.08, 0.4]} r={0.02} material={mats.shade.mid} />
-      {[-0.49, 0, 0.49].map((x) => (
-        <Box key={x} size={[0.44, 0.01, 0.32]} position={[x, 0.044, 0]} r={0.008} />
-      ))}
-      <Box size={[0.12, 0.03, 0.06]} position={[0.42, 0.01, -0.22]} r={0.008} material={mats.shade.dark} />
-    </group>
-  );
-}
+const battery = (o: V3): Piece[] => [
+  box([1.5, 0.08, 0.4], o, { r: 0.02, tone: 'mid' }),
+  ...[-0.49, 0, 0.49].map((x) => box([0.44, 0.01, 0.32], at3(o, [x, 0.044, 0]))),
+  box([0.12, 0.03, 0.06], at3(o, [0.42, 0.01, -0.22]), { tone: 'dark' }),
+];
 /** Mid grey, with a dark grille. */
-function Speaker() {
-  const { mats } = useClay();
-  return (
-    <group>
-      <Box size={[0.32, 0.05, 0.13]} r={0.02} material={mats.shade.mid} />
-      {[-0.036, -0.012, 0.012, 0.036].map((z) => (
-        <Box key={z} size={[0.22, 0.006, 0.012]} position={[0, 0.027, z]} r={0.003} material={mats.shade.dark} />
-      ))}
-    </group>
-  );
-}
+const speaker = (o: V3): Piece[] => [box([0.32, 0.05, 0.13], o, { r: 0.02, tone: 'mid' }), ...[-0.036, -0.012, 0.012, 0.036].map((z) => box([0.22, 0.006, 0.012], at3(o, [0, 0.027, z]), { tone: 'dark' }))];
 /** A dark board with light chips and orange contacts. */
-function Drive() {
-  const { mats } = useClay();
-  return (
-    <group>
-      <Box size={[0.48, 0.012, 0.15]} r={0.005} material={mats.shade.board} />
-      <Box size={[0.14, 0.012, 0.1]} position={[-0.08, 0.01, 0]} r={0.004} />
-      <Box size={[0.1, 0.012, 0.1]} position={[0.1, 0.01, 0]} r={0.004} />
-      <Box accent size={[0.03, 0.006, 0.12]} position={[0.22, 0.007, 0]} r={0.002} />
-    </group>
-  );
-}
-const LEADS = [-1, 1].map((s) => new THREE.CatmullRomCurve3([new THREE.Vector3(s * 0.04, 0.012, -0.05), new THREE.Vector3(s * 0.07, 0.03, -0.2), new THREE.Vector3(s * 0.12, 0.02, -0.34)]));
+const drive = (o: V3): Piece[] => [
+  box([0.48, 0.012, 0.15], o, { tone: 'board' }),
+  box([0.14, 0.012, 0.1], at3(o, [-0.08, 0.01, 0])),
+  box([0.1, 0.012, 0.1], at3(o, [0.1, 0.01, 0])),
+  box([0.03, 0.006, 0.12], at3(o, [0.22, 0.007, 0]), { tone: 'accent' }),
+];
 /** A small dark card with its two antenna wires. */
-function Wifi() {
-  const { mats } = useClay();
-  return (
-    <group>
-      <Box size={[0.17, 0.01, 0.16]} r={0.004} material={mats.shade.board} />
-      {LEADS.map((path, i) => (
-        <group key={i}>
-          <Puck r={0.022} h={0.014} segments={10} position={[i ? 0.04 : -0.04, 0.009, -0.05]} />
-          <Rod path={path} r={0.009} segments={12} material={mats.shade.dark} />
-        </group>
-      ))}
-    </group>
-  );
-}
+const wifi = (o: V3): Piece[] => [
+  box([0.17, 0.01, 0.16], o, { tone: 'board' }),
+  ...[-1, 1].flatMap((s) => [
+    puck(0.022, 0.014, at3(o, [s * 0.04, 0.009, -0.05]), { segments: 8 }),
+    rod(new THREE.CatmullRomCurve3([new THREE.Vector3(o[0] + s * 0.04, o[1] + 0.012, o[2] - 0.05), new THREE.Vector3(o[0] + s * 0.07, o[1] + 0.03, o[2] - 0.2), new THREE.Vector3(o[0] + s * 0.12, o[1] + 0.02, o[2] - 0.34)]), 0.009, 8, 'dark'),
+  ]),
+];
 /** A dark stick with light chips and orange contacts along one edge. */
-function Ram() {
-  const { mats } = useClay();
-  return (
-    <group>
-      <Box size={[0.56, 0.014, 0.17]} r={0.005} material={mats.shade.board} />
-      {[-0.18, -0.06, 0.06, 0.18].map((x) => (
-        <Box key={x} size={[0.09, 0.01, 0.07]} position={[x, 0.01, -0.01]} r={0.003} />
-      ))}
-      <Box accent size={[0.5, 0.006, 0.026]} position={[0, 0.008, 0.07]} r={0.002} />
-    </group>
-  );
-}
+const ram = (o: V3): Piece[] => [
+  box([0.56, 0.014, 0.17], o, { tone: 'board' }),
+  ...[-0.18, -0.06, 0.06, 0.18].map((x) => box([0.09, 0.01, 0.07], at3(o, [x, 0.01, -0.01]))),
+  box([0.5, 0.006, 0.026], at3(o, [0, 0.008, 0.07]), { tone: 'accent' }),
+];
 const PIPE = new THREE.CatmullRomCurve3([new THREE.Vector3(0.14, -0.006, 0), new THREE.Vector3(0.45, -0.012, -0.02), new THREE.Vector3(0.8, -0.012, -0.03)]);
 const PIPE_FINS = new THREE.CatmullRomCurve3([new THREE.Vector3(0, -0.01, -0.16), new THREE.Vector3(0, -0.01, -0.33)]);
-const FIN: V3 = [0.012, 0.06, 0.1];
 /**
  * The fan, dark blades in a light ring, with its heat pipe: to a plate that sits on the processor, and
  * to the fins at the vent. `broken`: two blades are gone (the crack is drawn over it, see `Crack`).
- * `accent`: the new one, in orange.
+ * `fresh`: the new one, in orange.
  */
-function Fan({ broken, accent }: { broken?: boolean; accent?: boolean }) {
-  const { mats } = useClay();
-  return (
-    <group>
-      <Puck accent={accent} r={0.19} h={0.05} hole={0.165} segments={28} />
-      <Puck r={0.19} h={0.008} segments={28} position={[0, -0.021, 0]} material={mats.shade.board} />
-      <Puck accent={accent} r={0.05} h={0.04} segments={16} />
-      {Array.from({ length: broken ? 5 : 7 }, (_, i) => (
-        <Box key={i} size={[0.11, 0.01, 0.05]} r={0.004} material={mats.shade.dark} position={[Math.cos((i * Math.PI * 2) / 7) * 0.1, 0, Math.sin((i * Math.PI * 2) / 7) * 0.1]} rotation={[0.4, (-i * Math.PI * 2) / 7, 0]} />
-      ))}
-      <Rod accent={accent} path={PIPE} r={0.022} segments={20} />
-      <Box accent={accent} size={[0.24, 0.012, 0.24]} position={[0.8, -0.008, -0.03]} r={0.006} />
-      <Rod accent={accent} path={PIPE_FINS} r={0.022} segments={8} />
-      <Box size={[0.36, 0.012, 0.11]} position={[0, -0.036, -0.36]} r={0.004} material={mats.shade.board} />
-      <Ticks n={10} a={[-0.16, -0.01, -0.36]} b={[0.16, -0.01, -0.36]} size={FIN} major={99} along={0} />
-    </group>
-  );
-}
+const fan = (broken: boolean, fresh: boolean) => (): Piece[] => {
+  const tone: Tone = fresh ? 'accent' : 'clay';
+  return [
+    puck(0.19, 0.05, undefined, { hole: 0.165, segments: 24, tone }),
+    puck(0.19, 0.008, [0, -0.021, 0], { segments: 24, tone: 'board' }),
+    puck(0.05, 0.04, undefined, { segments: 12, tone }),
+    ...Array.from({ length: broken ? 5 : 7 }, (_, i) => box([0.11, 0.01, 0.05], [Math.cos((i * Math.PI * 2) / 7) * 0.1, 0, Math.sin((i * Math.PI * 2) / 7) * 0.1], { rot: [0.4, (-i * Math.PI * 2) / 7, 0], tone: 'dark' })),
+    rod(PIPE, 0.022, 12, tone),
+    box([0.24, 0.012, 0.24], [0.8, -0.008, -0.03], { tone }),
+    rod(PIPE_FINS, 0.022, 4, tone),
+    box([0.36, 0.012, 0.11], [0, -0.036, -0.36], { tone: 'board' }),
+    ...Array.from({ length: 10 }, (_, i) => box([0.012, 0.06, 0.1], [-0.16 + (i * 0.32) / 9, -0.01, -0.36])),
+  ];
+};
 // The crack on the broken fan: a zigzag across the housing, drawn over the clay.
 const CRACK: V3[] = [[-0.16, 0.03, -0.08], [-0.08, 0.03, -0.02], [-0.1, 0.03, 0.04], [-0.01, 0.03, 0.08], [0.05, 0.03, 0.06], [0.13, 0.03, 0.12]];
 function Crack() {
@@ -158,22 +118,31 @@ function Crack() {
 
 // ── Where everything is: inside the open base, and on the mat around it ─────
 // The insides are laid out mirrored (the base is upside down), so the fan is at the back right.
-// Behind the base lie the screen and the cover; in front, the new fan, the screw tray and the screwdriver.
-const INSIDE: [V3, ReactNode][] = [
-  [[0.05, 0.105, 0.45], <Battery key="battery" />],
-  [[0.55, 0.093, -0.2], <Ram key="ram1" />],
-  [[0.55, 0.093, -0.45], <Ram key="ram2" />],
-  [[-0.35, 0.092, -0.02], <Drive key="drive" />],
-  [[0.15, 0.09, -0.02], <Wifi key="wifi" />],
-  [[-1.0, 0.11, 0.55], <Speaker key="left" />],
-  [[1.0, 0.11, 0.55], <Speaker key="right" />],
+// The screen lies behind the base and the cover on its left (the right is kept clear for the hand
+// with the phone); in front, the new fan, the screw tray and the screwdriver.
+export const BOARD_Y = 0.075;
+/** Everything inside the base but the fan, in one model: the motherboard (the processor and a chip in clay, two ribbon cables, the two RAM slots) and every part in its place. */
+const insidePieces = (): Piece[] => [
+  box([1.9, 0.02, 0.8], [-0.1, BOARD_Y, -0.3], { tone: 'board' }),
+  box([0.22, 0.014, 0.22], [0.1, 0.092, -0.35]),
+  box([0.14, 0.012, 0.14], [-0.2, 0.091, -0.56]),
+  box([0.08, 0.005, 0.22], [0.45, 0.068, 0.15], { tone: 'mid' }),
+  box([0.06, 0.005, 0.24], [-0.4, 0.087, -0.62], { tone: 'mid' }),
+  ...[-0.2, -0.45].map((z) => box([0.6, 0.026, 0.03], [0.55, 0.096, z + 0.095], { tone: 'mid' })),
+  ...battery([0.05, 0.105, 0.45]),
+  ...ram([0.55, 0.093, -0.2]),
+  ...ram([0.55, 0.093, -0.45]),
+  ...drive([-0.35, 0.092, -0.02]),
+  ...wifi([0.15, 0.09, -0.02]),
+  ...speaker([-1.0, 0.11, 0.55]),
+  ...speaker([1.0, 0.11, 0.55]),
 ];
 /** The fan's place in the base, and where the two fans lie on the mat: the new one waiting in front, the broken one tossed to the side. */
 export const FAN_AT: V3 = [0.7, 0.11, -0.32];
-const SPARE: V3 = [-1.85, 0.042, 1.12];
-const OLD_AT: V3 = [1.95, 0.042, -0.02];
-const TRAY: V3 = [-0.35, 0, 1.25];
-const DRIVER_REST: V3 = [1.78, 0.09, 1.25];
+const SPARE: V3 = [-0.95, 0.042, 1.08];
+const OLD_AT: V3 = [1.75, 0.042, -0.05];
+const TRAY: V3 = [0.5, 0, 1.25];
+const DRIVER_REST: V3 = [2.0, 0.09, 1.25];
 const DRIVER_IN: V3 = [-1.75, 0.45, 0.2]; // where it is picked up, by the first screw
 const DRIVER_WAIT: V3 = [1.75, 0.45, 0.2]; // held ready beside the laptop while something else moves
 /** A screw's place in the tray: the screen's two in the middle, the cover's eight around them. */
@@ -187,9 +156,7 @@ const RISE = 0.035; // how far a screw backs out of its hole
 const HINGE_PATH = HINGE_SCREWS.map((s, k): V3[] => [s, [s[0], s[1] + RISE, s[2]], screwLaid(k)]);
 const COVER_PATH = COVER_SCREWS.map(([x, y, z], k): V3[] => [[-x, HB - y, z], [-x, HB - y + RISE, z], screwLaid(k + 2)]);
 const COVER_AT: V3 = [0, HB - 0.0175, 0];
-const COVER_LAID: V3 = [1.42, 0.0175, -2.0];
-export const BOARD_Y = 0.075;
-
+const COVER_LAID: V3 = [-2.15, 0.0175, -0.15]; // turned a quarter, beside the base
 /** Open = the cover has started to come off: the insides are seen. */
 const isOpen = (p: Play) => apart(p, T.cover) > 0;
 const smooth = (u: number) => u * u * (3 - 2 * u);
@@ -217,23 +184,21 @@ function loose(g: THREE.Object3D, p: Play, k = 1) {
   return g.visible;
 }
 
-/** A screw's move: first it is turned out of its hole, then it jumps to the tray. */
-function LooseScrew({ path, win }: { path: V3[]; win: Win }) {
-  return (
-    <Act
-      f={(g, p) => {
-        const k = apart(p, win);
-        if (!loose(g, p) || !(g.visible = k > 0)) return;
-        if (k < TURN) {
-          const u = k / TURN;
-          g.position.set(path[0][0], lerp(path[0][1], path[1][1], u), path[0][2]);
-          g.rotation.set(0, u * Math.PI * 4, 0);
-        } else fly(g, path[1], path[2], (k - TURN) / (1 - TURN), 0.4);
-      }}
-    >
-      <ScrewShape />
-    </Act>
-  );
+// The ten loose screws (the screen's two, then the cover's eight): each is turned out of its hole, then jumps to the tray.
+const SCREW_PATHS = [...HINGE_PATH, ...COVER_PATH];
+const SCREW_WINS = [...T.hinge, ...T.screws];
+function placeScrew(k: number, o: THREE.Object3D, p: Play) {
+  const a = apart(p, SCREW_WINS[k]);
+  const s = benchScale(p);
+  if (a <= 0 || s <= 0.001) return false;
+  const path = SCREW_PATHS[k];
+  if (a < TURN) {
+    const u = a / TURN;
+    o.position.set(path[0][0], lerp(path[0][1], path[1][1], u), path[0][2]);
+    o.rotation.set(0, u * Math.PI * 4, 0);
+  } else fly(o, path[1], path[2], (a - TURN) / (1 - TURN), 0.4);
+  o.scale.setScalar(s);
+  return true;
 }
 
 // The screwdriver's track. It skips from screw to screw like a stone on water: each screw it touches
@@ -274,9 +239,15 @@ function driverShare(p: Play) {
   return stepOf(p) === BACK ? pop(slice(ageOf(p, BACK), DRIVER_BACK, DRIVER_BACK + 0.16), 1.2) * tidy(p, T.on) : 1;
 }
 
-const FLUTES = [0, 1, 2, 3, 4, 5];
+// The screwdriver, tip at the origin. Flutes on the handle: without them nobody sees it turn.
+const driverPieces = (): Piece[] => [
+  puck(0.012, 0.06, [0, 0.03, 0], { segments: 6, tone: 'dark' }),
+  puck(0.022, 0.46, [0, 0.28, 0], { segments: 8, tone: 'mid' }),
+  puck(0.05, 0.08, [0, 0.55, 0], { bevel: 0.02, segments: 12 }),
+  puck(0.085, 0.42, [0, 0.8, 0], { bevel: 0.04, segments: 14 }),
+  ...[0, 1, 2, 3, 4, 5].map((i) => box([0.026, 0.3, 0.02], [Math.sin((i * Math.PI) / 3) * 0.082, 0.8, Math.cos((i * Math.PI) / 3) * 0.082], { rot: [0, (i * Math.PI) / 3, 0], tone: 'mid' })),
+];
 function Screwdriver() {
-  const { mats } = useClay();
   const tip = useMemo(() => [0, 0, 0, 0], []);
   return (
     <Act
@@ -294,48 +265,23 @@ function Screwdriver() {
         g.rotation.set(0, spin * SPIN * (back ? -1 : 1), tip[3]);
       }}
     >
-      <Puck r={0.012} h={0.06} segments={8} position={[0, 0.03, 0]} material={mats.shade.dark} />
-      <Puck r={0.022} h={0.46} segments={10} position={[0, 0.28, 0]} material={mats.shade.mid} />
-      <Puck r={0.05} h={0.08} bevel={0.02} segments={16} position={[0, 0.55, 0]} />
-      <Puck r={0.085} h={0.42} bevel={0.04} segments={18} position={[0, 0.8, 0]} />
-      {/* Flutes on the handle: without them nobody sees it turn */}
-      {FLUTES.map((i) => (
-        <Box key={i} size={[0.026, 0.3, 0.02]} r={0.008} position={[Math.sin((i * Math.PI) / 3) * 0.082, 0.8, Math.cos((i * Math.PI) / 3) * 0.082]} rotation={[0, (i * Math.PI) / 3, 0]} material={mats.shade.mid} />
-      ))}
+      <Lump id="driver" pieces={driverPieces} />
     </Act>
   );
 }
 
 /** A small dish for the screws, so none rolls away. */
+const trayPieces = (): Piece[] => [puck(0.3, 0.016, [0, 0.008, 0], { segments: 28, tone: 'mid' }), puck(0.3, 0.06, [0, 0.03, 0], { hole: 0.265, segments: 28 })];
 function Tray() {
-  const { mats } = useClay();
   return (
     <Act position={TRAY} f={(g, p) => void loose(g, p, tidy(p, EMPTY))}>
-      <Puck r={0.3} h={0.016} segments={32} position={[0, 0.008, 0]} material={mats.shade.mid} />
-      <Puck r={0.3} h={0.06} hole={0.265} segments={32} position={[0, 0.03, 0]} />
+      <Lump id="tray" pieces={trayPieces} />
     </Act>
   );
 }
 
 /** How far the two fans are through changing places: only while putting back (like `apart`, by halves of a travel). */
 const swapOf = (p: Play) => ((p.from === p.to ? p.to : stepOf(p)) === BACK ? slice(ageOf(p, BACK), T.swap[0], T.swap[1]) : 0);
-/** The motherboard, dark, with the processor and a chip in clay, two ribbon cables and the two RAM slots. */
-function Board() {
-  const { mats } = useClay();
-  return (
-    <>
-      <Box size={[1.9, 0.02, 0.8]} position={[-0.1, BOARD_Y, -0.3]} r={0.006} material={mats.shade.board} />
-      <Box size={[0.22, 0.014, 0.22]} position={[0.1, 0.092, -0.35]} r={0.005} />
-      <Box size={[0.14, 0.012, 0.14]} position={[-0.2, 0.091, -0.56]} r={0.004} />
-      <Box size={[0.08, 0.005, 0.22]} position={[0.45, 0.068, 0.15]} r={0.002} material={mats.shade.mid} />
-      <Box size={[0.06, 0.005, 0.24]} position={[-0.4, 0.087, -0.62]} r={0.002} material={mats.shade.mid} />
-      {[-0.2, -0.45].map((z) => (
-        <Box key={z} size={[0.6, 0.026, 0.03]} position={[0.55, 0.096, z + 0.095]} r={0.006} material={mats.shade.mid} />
-      ))}
-    </>
-  );
-}
-
 /** The base's eight screw posts, seen inside once the cover is off. */
 function Posts() {
   const { mats } = useClay();
@@ -385,12 +331,7 @@ export function Bench() {
         }}
       >
         <group scale={[-1, 1, 1]}>
-          <Board />
-          {INSIDE.map(([at, node], i) => (
-            <group key={i} position={at}>
-              {node}
-            </group>
-          ))}
+          <Lump id="inside" pieces={insidePieces} />
         </group>
         <Posts />
       </Act>
@@ -405,7 +346,7 @@ export function Bench() {
         }}
       >
         <group scale={[-1, 1, 1]}>
-          <Fan broken />
+          <Lump id="fan-broken" pieces={fan(true, false)} />
           <Crack />
         </group>
       </Act>
@@ -435,7 +376,7 @@ export function Bench() {
         }}
       >
         <group scale={[-1, 1, 1]}>
-          <Fan accent />
+          <Lump id="fan-new" pieces={fan(false, true)} />
         </group>
       </Act>
 
@@ -445,30 +386,24 @@ export function Bench() {
           const k = apart(p, T.cover);
           if (!loose(g, p) || !(g.visible = k > 0)) return;
           const pry = Math.sin(slice(k, 0, 0.6) * Math.PI) * 0.42;
-          fly(g, COVER_AT, COVER_LAID, k, 0.7, 0, 0.16);
+          fly(g, COVER_AT, COVER_LAID, k, 0.7, HALF_PI, 0.16);
           g.position.y += Math.sin(pry) * (D / 2);
-          g.rotation.set(-pry, 0, Math.PI + g.rotation.z);
+          g.rotation.set(-pry, g.rotation.y, Math.PI + g.rotation.z);
         }}
       >
         <group position={[0, -0.0175, 0]}>
           <Cover />
         </group>
       </Act>
-      {COVER_PATH.map((path, k) => (
-        <LooseScrew key={k} path={path} win={T.screws[k]} />
-      ))}
-      {HINGE_PATH.map((path, k) => (
-        <LooseScrew key={k} path={path} win={T.hinge[k]} />
-      ))}
+      <Screws n={SCREW_PATHS.length} place={placeScrew} />
       <Tray />
       <Screwdriver />
 
       {/* Labels: what is inside, once it is open; the problem, at the photo; the old part, once it is out */}
-      <LiveTag at={[-0.84, 0.11, -0.32]} dx={-74} dy={-10} on={on([APART], OPENED - 0.1)}>RAM</LiveTag>
       <LiveTag at={[0.9, 0.13, -0.32]} dx={66} dy={-12} on={on([APART], OPENED)}>Fan</LiveTag>
       <LiveTag at={[0.72, 0.15, 0.45]} dx={84} dy={18} on={on([APART], OPENED + 0.1)}>Battery</LiveTag>
-      <LiveTag at={[SPARE[0] - 0.2, 0.08, SPARE[2]]} dx={-44} dy={-22} on={on([APART], OPENED + 0.2)}>New part</LiveTag>
-      <LiveTag at={[FAN_AT[0] - 0.1, 0.14, FAN_AT[2] + 0.17]} dx={-30} dy={112} on={on([PHOTO], SHOT.aim + 0.25)}>Hardware problem</LiveTag>
+      <LiveTag at={[SPARE[0] - 0.2, 0.08, SPARE[2] + 0.1]} dx={-46} dy={22} on={on([APART], OPENED + 0.2)}>New part</LiveTag>
+      <LiveTag at={[FAN_AT[0] - 0.1, 0.14, FAN_AT[2] + 0.17]} dx={86} dy={116} on={on([PHOTO], SHOT.aim + 0.25)}>Hardware problem</LiveTag>
       <LiveTag at={[OLD_AT[0] + 0.1, 0.08, OLD_AT[2] - 0.15]} dx={34} dy={-34} on={oldTag}>Old part</LiveTag>
     </Staged>
   );
