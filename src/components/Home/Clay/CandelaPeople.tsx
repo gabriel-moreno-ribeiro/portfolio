@@ -24,22 +24,23 @@ const merged = (parts: THREE.BufferGeometry[]) => {
 export const REACH = 3; // the step of the schools
 export const RESULT = 4; // the step of the students
 
-// ── The magnifying glass ────────────────────────────────────────────────────
-/** The middle of the glass, and the height its top is at: everything it shows stands on it. */
+// ── The round stand ─────────────────────────────────────────────────────────
+// It was drawn as a magnifying glass (rim, glint, handle); it read as a pan, so only the disc stays.
+/** The middle of the stand, and the height its top is at: everything it shows stands on it. */
 export const LENS: V3 = [-0.9, 0, 0.15];
 export const GLASS = 0.06;
 const RIM = 3; // radius
-const HANDLE = 0.38; // the way the handle points, radians from +X towards the camera
+const HANDLE = 0.38; // the way it slides in and out, radians from +X towards the camera
 /** A point on the glass (x to the right, z towards the camera, from its middle), in the world. */
 export const onLens = (x: number, z: number, y = 0): V3 => [LENS[0] + x, GLASS + y, LENS[2] + z];
-// It slides in along its handle, under the kit, and leaves the way it came. Between the two steps it only refocuses.
+// It slides in under the kit and leaves the way it came. Between the two steps it gives a little.
 const lensAct = (g: THREE.Group, p: Play) => {
   const here = p.to === REACH || p.to === RESULT;
   const was = p.from === REACH || p.from === RESULT;
   const k = here ? (was ? 1 : settle(slice(p.t, 0.2, 0.85), 0.5)) : was ? 1 - ease(slice(p.t, 0, 0.45)) : 0;
   g.visible = k > 0.001;
   const out = (1 - k) * 11;
-  // Going from the schools into one school, the rim gives: the glass refocuses.
+  // Going from the schools into one school, the stand gives.
   const focus = p.from === REACH && p.to === RESULT ? 0.035 * Math.sin(slice(p.t, 0.05, 0.6) * Math.PI) : 0;
   g.position.set(LENS[0] + Math.cos(HANDLE) * out, 0, LENS[2] + Math.sin(HANDLE) * out);
   g.scale.setScalar(1 - focus);
@@ -47,24 +48,9 @@ const lensAct = (g: THREE.Group, p: Play) => {
 
 export function Lens() {
   const { mats } = useClay();
-  const { wood } = useTones();
-  const { rim, glint } = useMemo(() => ({ rim: new THREE.TorusGeometry(RIM, 0.1, 8, 72).rotateX(HALF_PI), glint: new THREE.TorusGeometry(RIM - 0.4, 0.018, 4, 20, 0.55).rotateX(HALF_PI).rotateY(2.2) }), []);
-  useEffect(
-    () => () => {
-      rim.dispose();
-      glint.dispose();
-    },
-    [rim, glint],
-  );
   return (
     <Act f={lensAct}>
       <Puck r={RIM - 0.02} h={GLASS - 0.004} bevel={0.01} segments={64} position={[0, GLASS / 2, 0]} material={mats.shade.mid} />
-      <mesh geometry={rim} position={[0, 0.09, 0]} castShadow receiveShadow material={mats.shade.dark} />
-      <mesh geometry={glint} position={[0, GLASS + 0.004, 0]} material={mats.clay} />
-      <group rotation={[0, -HANDLE, 0]}>
-        <Puck r={0.14} h={0.5} bevel={0.03} segments={16} position={[RIM + 0.3, 0.12, 0]} rotation={[0, 0, HALF_PI]} material={mats.shade.dark} />
-        <Puck r={0.19} h={1.3} bevel={0.08} segments={20} position={[RIM + 1.15, 0.17, 0]} rotation={[0, 0, HALF_PI]} material={wood} />
-      </group>
     </Act>
   );
 }

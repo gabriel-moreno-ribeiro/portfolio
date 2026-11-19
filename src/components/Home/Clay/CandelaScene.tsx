@@ -1,6 +1,6 @@
 // Projeto Candela in five steps, with the kit in every one of them: the wooden box opens; what is
 // inside is laid out on the desk; three of the experiments run, one after the other, the camera on each;
-// then a magnifying glass slides in under the kit and shows the 28 schools its kits went to, and goes
+// then a round stand slides in under the kit and shows the 28 schools its kits went to, and goes
 // into one school to show the students: 3,392 reached, and those who fail physics from 30% to 10%.
 import { useEffect } from 'react';
 import * as THREE from 'three';
@@ -117,8 +117,9 @@ const CAMERA: Shot[] = [
       { at: ON_STAND, ...AT_STAND },
     ],
   },
-  { pos: [-0.15, 9.2, 7.75], look: [-0.15, 0.1, 0.55], to: { pos: [-0.15, 9.0, 7.6], look: [-0.15, 0.1, 0.55] }, over: [0.5, 2.6] },
-  { pos: [-0.15, 8.5, 8.95], look: [-0.15, 0.5, 0.75], to: { pos: [-0.15, 8.3, 8.75], look: [-0.15, 0.5, 0.75] }, over: [0.6, 2.2] },
+  // The last two look at the middle of the round stand (a little to its right, for the labels on that side).
+  { pos: [-0.6, 9.2, 7.75], look: [-0.6, 0.1, 0.55], to: { pos: [-0.6, 9.0, 7.6], look: [-0.6, 0.1, 0.55] }, over: [0.5, 2.6] },
+  { pos: [-0.6, 8.5, 8.95], look: [-0.6, 0.5, 0.75], to: { pos: [-0.6, 8.3, 8.75], look: [-0.6, 0.5, 0.75] }, over: [0.6, 2.2] },
 ];
 
 export default function CandelaScene() {
@@ -208,7 +209,7 @@ export default function CandelaScene() {
       <TagWhen at={[INCLINE[0] - 0.4, 1.05, INCLINE[2]]} dx={-30} dy={-40} on={during([LET_GO + 0.1, ON_INCLINE[1]])}>Inclined plane</TagWhen>
       <TagWhen at={[hang[0] + 0.15, hang[1] - 0.6, hang[2]]} dx={70} dy={-10} on={during([HUNG + 0.2, 99])}>{'Spring scale\n+ cylinder'}</TagWhen>
 
-      {/* The ending, under one magnifying glass: the 28 schools, then the students of one of them */}
+      {/* The ending, on one round stand: the 28 schools, then the students of one of them */}
       <Lens />
       <Schools />
       <TagWhen at={onLens(BAHIA_AT[0], BAHIA_AT[1], 0.6)} dx={-44} dy={-8} on={(p) => shown(p, [REACH], 1.2)}>{`Bahia · ${BAHIA}`}</TagWhen>
