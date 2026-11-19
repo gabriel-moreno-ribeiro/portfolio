@@ -339,6 +339,8 @@ export default function CanvasComponent({ onReady }) {
       data-drag-me={true}
       dpr={[1, 1.5]}
       frameloop={inView && pageVisible ? "demand" : "never"}
+      // The canvas would measure itself again whenever a scroll stops and reset its buffer; nothing here uses its position.
+      resize={{ scroll: false }}
       gl={{ alpha: true, antialias: true, powerPreference: "high-performance" }}
       style={{ background: "transparent" }}
     >

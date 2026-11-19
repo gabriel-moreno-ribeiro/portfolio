@@ -108,7 +108,7 @@ const BUDGET_MS = 21; // slower than ~48 fps on average and the pass goes
  * the occlusion pass first, then the pixel ratio, when the budget is missed.
  */
 function Renderer({ bg, onReady }: { bg: string; onReady: () => void }) {
-  const { gl, scene, camera, size, viewport, setDpr } = useThree();
+  const { gl, scene, camera, size, viewport, setDpr, invalidate } = useThree();
   const { play } = useClay();
   const pipe = useMemo(() => {
     const target = new THREE.WebGLRenderTarget(1, 1, { type: THREE.HalfFloatType, samples: 4 });
@@ -147,6 +147,26 @@ function Renderer({ bg, onReady }: { bg: string; onReady: () => void }) {
     [pipe],
   );
 
+  // The shaders compile in the background and the first frame waits for them; drawing straight
+  // away would freeze the page until the GPU had finished every one of them.
+  const compiled = useRef(false);
+  useEffect(() => {
+    let alive = true;
+    const done = () => {
+      if (!alive) return;
+      compiled.current = true;
+      invalidate();
+    };
+    // Compiled for the composer's buffer, where the scene is really drawn (other colour space than the canvas).
+    gl.setRenderTarget(pipe.composer.readBuffer);
+    const wait = gl.compileAsync(scene, camera);
+    gl.setRenderTarget(null);
+    wait.then(done, done);
+    return () => {
+      alive = false;
+    };
+  }, [gl, scene, camera, invalidate, pipe]);
+
   const watch = useRef({ frames: 0, sum: 0, ready: false, lowered: false });
   const draw = (withAO: boolean, dt = 0) => (withAO ? pipe.composer.render(dt) : gl.render(scene, camera));
 
@@ -175,6 +195,7 @@ function Renderer({ bg, onReady }: { bg: string; onReady: () => void }) {
   });
 
   useFrame((_, dt) => {
+    if (!compiled.current) return;
     draw(aoAffordable, dt);
     const w = watch.current;
     if (!w.ready) {
@@ -196,6 +217,28 @@ function Renderer({ bg, onReady }: { bg: string; onReady: () => void }) {
     }
     gl.domElement.dataset.degraded = aoAffordable ? '' : w.lowered ? 'ao+dpr' : 'ao';
   }, 1);
+  return null;
+}
+
+/**
+ * Asks for a frame at most 60 times a second while the stage is on screen. A 120 Hz screen
+ * would draw the whole scene twice as often for the same motion.
+ */
+function Pace({ active }: { active: boolean }) {
+  const invalidate = useThree((s) => s.invalidate);
+  useEffect(() => {
+    if (!active) return;
+    let raf = 0;
+    let last = 0;
+    const tick = (now: number) => {
+      raf = requestAnimationFrame(tick);
+      if (now - last < 10.5) return; // 60 Hz passes every frame, 120 Hz every other one
+      last = now;
+      invalidate();
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [active, invalidate]);
   return null;
 }
 
@@ -223,7 +266,10 @@ export default function ClayStage({ slug, target, active, dark, bg, onReady, onF
       flat
       shadows="variance"
       dpr={[1, 1.75]}
-      frameloop={active ? 'always' : 'demand'}
+      frameloop="demand"
+      // Without this the canvas measures itself again whenever a scroll stops, anywhere on the page, and
+      // redraws: its position changed, which nothing here uses (no pointer events).
+      resize={{ scroll: false }}
       camera={{ fov: 30, near: 0.5, far: 80, position: [0, 5.6, 12.4] }}
       gl={{ alpha: false, antialias: true, powerPreference: 'high-performance' }}
       onCreated={({ gl }) => {
@@ -233,6 +279,7 @@ export default function ClayStage({ slug, target, active, dark, bg, onReady, onF
       }}
     >
       <ClayCtx.Provider value={ctx}>
+        <Pace active={active} />
         <Clock play={play} target={want} />
         <Lights dark={dark} />
         <Scene />

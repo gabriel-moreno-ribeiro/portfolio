@@ -236,7 +236,7 @@ function GlobeCanvas({
         onPaintedRef.current(true);
       } else if (frames >= MAX_CHECKS) {
         dead = true;
-        globe?.toggle(false);
+        pace(false);
       }
     };
     const onLost = () => {
@@ -249,11 +249,14 @@ function GlobeCanvas({
     const doublePi = Math.PI * 2;
     const clampTheta = (t: number) => Math.max(-1.35, Math.min(1.35, t));
 
+    // Parked on a city, nothing moves: no frame is drawn until the city, the pointer or the size changes.
+    let still = false;
     foldDrag.current = () => {
       currentPhi += pointerMovement.current.x / 100;
       currentTheta = clampTheta(currentTheta + pointerMovement.current.y / 150);
       pointerMovement.current = { x: 0, y: 0 };
       pointerInteracting.current = null;
+      still = false; // released: the globe eases back to its city
     };
 
     const onMove = (e: PointerEvent) => {
@@ -273,6 +276,30 @@ function GlobeCanvas({
     window.addEventListener('pointercancel', onUp, { passive: true });
 
     let isInView = true;
+
+    // The globe draws when asked, at most 60 times a second: cobe on its own draws on every
+    // frame of the screen, twice as often on a 120 Hz one. The motion was tuned in frames of a
+    // 120 Hz screen, so each drawn frame moves by `k` of those and looks the same at any rate.
+    let raf = 0;
+    let last = 0;
+    let k = 1;
+    let seen = { phi: 0, theta: 0, scale: 0, focus: focusRef.current };
+    const ease = (a: number) => 1 - Math.pow(1 - a, k);
+    const tick = (now: number) => {
+      raf = requestAnimationFrame(tick);
+      if (now - last < 10.5) return;
+      if (still && pointerInteracting.current === null && focusRef.current === seen.focus) return void (last = now);
+      k = last ? Math.min(4, (now - last) / (1000 / 120)) : 1;
+      last = now;
+      globe?.toggle(true); // draws one frame; onRender turns it off again
+    };
+    const pace = (on: boolean) => {
+      cancelAnimationFrame(raf);
+      raf = 0;
+      last = 0;
+      if (on && !dead) raf = requestAnimationFrame(tick);
+      else globe?.toggle(false);
+    };
 
     const init = () => {
       const size = canvas.offsetWidth;
@@ -297,13 +324,14 @@ function GlobeCanvas({
         markers: CITIES.map((c) => ({ location: [c.lat, c.lon], size: 0.06 })),
         onRender: (state) => {
           if (!revealed && !dead && ++frames >= 3) queueMicrotask(check);
+          globe?.toggle(false); // one frame per request (see `tick`)
           const focus = focusRef.current;
           const dragX = pointerMovement.current.x / 100;
           const dragY = pointerMovement.current.y / 150;
 
           // Markers are set once at creation, never through `state`: cobe counts
           // markers passed here at half their number, so two of the four vanished.
-          currentScale += ((focus ? FOCUS_SCALE : 1) - currentScale) * 0.06;
+          currentScale += ((focus ? FOCUS_SCALE : 1) - currentScale) * ease(0.06);
           state.scale = currentScale;
 
           if (focus) {
@@ -311,11 +339,11 @@ function GlobeCanvas({
             const distPositive = (focusPhi - currentPhi + doublePi) % doublePi;
             const distNegative = (currentPhi - focusPhi + doublePi) % doublePi;
             if (distPositive < distNegative) {
-              currentPhi += distPositive * 0.08;
+              currentPhi += distPositive * ease(0.08);
             } else {
-              currentPhi -= distNegative * 0.08;
+              currentPhi -= distNegative * ease(0.08);
             }
-            currentTheta = currentTheta * 0.92 + focusTheta * 0.08;
+            currentTheta += (focusTheta - currentTheta) * ease(0.08);
           } else if (pointerInteracting.current === null) {
             const BASE_SPEED = 0.0132;
             const SLOW_RADIUS = 0.35;
@@ -329,9 +357,9 @@ function GlobeCanvas({
               if (d < minDist) minDist = d;
             }
             const speedMult = minDist < SLOW_RADIUS ? 0.2 + 0.8 * (minDist / SLOW_RADIUS) : 1;
-            currentPhi += BASE_SPEED * speedMult;
+            currentPhi += BASE_SPEED * speedMult * k;
             // Keep Brazil in view: gently pull theta back to ~0.12
-            currentTheta = currentTheta * 0.995 + 0.12 * 0.005;
+            currentTheta += (0.12 - currentTheta) * ease(0.005);
           }
 
           state.phi = currentPhi + dragX;
@@ -339,6 +367,8 @@ function GlobeCanvas({
           const w = canvas.offsetWidth || size;
           state.width = w * 2;
           state.height = w * 2;
+          still = revealed && Math.abs(state.phi - seen.phi) + Math.abs(state.theta - seen.theta) + Math.abs(currentScale - seen.scale) < 1e-5;
+          seen = { phi: state.phi, theta: state.theta, scale: currentScale, focus };
         },
       });
       } catch {
@@ -346,7 +376,7 @@ function GlobeCanvas({
         return;
       }
       // The observer may already have reported us off-screen before this ran
-      globe.toggle(isInView);
+      pace(isInView);
     };
 
     if (canvas.offsetWidth > 0) {
@@ -358,11 +388,14 @@ function GlobeCanvas({
       ro.observe(canvas);
     }
 
+    const onSize = new ResizeObserver(() => { still = false; });
+    onSize.observe(canvas);
+
     // cobe spins on its own rAF forever. Park it while the section is off-screen.
     const io = new IntersectionObserver(
       ([e]) => {
         isInView = e.isIntersecting;
-        if (!dead) globe?.toggle(isInView);
+        pace(isInView);
       },
       { threshold: 0 }
     );
@@ -370,6 +403,8 @@ function GlobeCanvas({
 
     return () => {
       io.disconnect();
+      onSize.disconnect();
+      cancelAnimationFrame(raf);
       window.removeEventListener('pointermove', onMove);
       window.removeEventListener('pointerup', onUp);
       window.removeEventListener('pointercancel', onUp);

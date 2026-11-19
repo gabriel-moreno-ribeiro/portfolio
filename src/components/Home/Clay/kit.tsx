@@ -329,7 +329,7 @@ export function Tag({ at: anchor, dx = 0, dy = -44, on, after, children }: { at:
     if (ref.current) ref.current.style.opacity = shown(play, on, after).toFixed(3);
   });
   return (
-    <Html position={anchor} zIndexRange={[4, 0]} style={{ pointerEvents: 'none' }}>
+    <Html position={anchor} zIndexRange={[4, 0]} wrapperClass="clay-html" style={{ pointerEvents: 'none' }}>
       <div ref={ref} className="clay-tag" style={{ opacity: 0 }} data-dx={dx} data-dy={dy}>
         <TagMark dx={dx} dy={dy}>{children}</TagMark>
       </div>

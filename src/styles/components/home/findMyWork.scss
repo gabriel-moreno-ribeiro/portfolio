@@ -325,6 +325,9 @@ $clay-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   }
 
   // Labels on the scene: real text pinned to a point, with a 1px leader.
+  // Labels follow the camera every frame: as layers they only move, they are not redrawn.
+  .clay-html { will-change: transform; }
+
   .clay-tag {
     position: absolute;
     left: 0;

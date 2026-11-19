@@ -334,7 +334,7 @@ export function LiveTag({ at: anchor, dx, dy, on, text, children }: { at: V3; dx
     if (span && t && span.textContent !== t) span.textContent = t;
   });
   return (
-    <Html position={anchor} zIndexRange={[4, 0]} style={{ pointerEvents: 'none' }}>
+    <Html position={anchor} zIndexRange={[4, 0]} wrapperClass="clay-html" style={{ pointerEvents: 'none' }}>
       <div ref={ref} className="clay-tag" style={{ opacity: 0 }} data-dx={dx} data-dy={dy}>
         <TagMark dx={dx} dy={dy}>{children}</TagMark>
       </div>
