@@ -627,7 +627,7 @@ export function ClothingRailHero({
     }
     const lag = clamp(-(s.vswing[i] ?? 0) * 0.018, -5, 5);
     const dr = drapes.current[i];
-    if (dr) dr.style.setProperty("--drape", `${lag.toFixed(3)}deg`);
+    if (dr) dr.style.transform = `skewX(${lag.toFixed(3)}deg)`;
     const shadow = shadows.current[i];
     if (shadow) shadow.style.transform = `translate3d(${(w * 0.05).toFixed(1)}px, ${(h * 0.035).toFixed(1)}px, 0) scaleX(${Math.max(0.12, Math.abs(Math.cos((angle * Math.PI) / 180))).toFixed(3)})`;
     const tag = tags.current[i];
@@ -979,8 +979,9 @@ export function ClothingRailHero({
               onClick={(event) => { const pending = pendingOpen.current; pendingOpen.current = -1; if (event.detail === 0 || pending === i) open(i); }}
             >
               <span ref={(node) => { swings.current[i] = node; }} className="absolute inset-x-0 top-0" style={{ height: h, transformOrigin: `50% ${(HOOK_TOP / VB_H) * 100}%` }}>
-                <span aria-hidden="true" className="pointer-events-none absolute inset-0" style={{ filter: `blur(${Math.max(3, h * 0.022).toFixed(1)}px)` }}>
-                  <span ref={(node) => { shadows.current[i] = node; }} className={`absolute block bg-black opacity-[0.16] dark:opacity-60 ${item.image ? photoBox : "inset-0"}`} style={{ WebkitMask: `${mask} top center / contain no-repeat`, mask: `${mask} top center / contain no-repeat` }} />
+                {/* The transform goes on the blurred box, not inside it: the blur is drawn once and then only moved. */}
+                <span ref={(node) => { shadows.current[i] = node; }} aria-hidden="true" className="pointer-events-none absolute inset-0 will-change-transform" style={{ filter: `blur(${Math.max(3, h * 0.022).toFixed(1)}px)` }}>
+                  <span className={`absolute block bg-black opacity-[0.16] dark:opacity-60 ${item.image ? photoBox : "inset-0"}`} style={{ WebkitMask: `${mask} top center / contain no-repeat`, mask: `${mask} top center / contain no-repeat` }} />
                 </span>
                 {(item.sideImage || !item.image) && (
                   <span ref={(node) => { sides.current[i] = node; }} data-face="side" className="absolute inset-0" style={{ transform: `perspective(${PERSPECTIVE}px) rotateY(0deg)` }}>
@@ -992,7 +993,7 @@ export function ClothingRailHero({
                   {(["front", "back"] as const).map((side) => (
                     <span key={side} data-face={side} className="absolute inset-0 [backface-visibility:hidden]" style={{ transform: side === "back" ? "rotateY(180deg)" : undefined, ["--garment-color" as string]: color, ["--garment-under" as string]: mix(color, -0.42) }}>
                       <Hanger uid={uid} side={side} kind={item.image ? null : kind} material={hanger} />
-                      <span ref={side === "front" ? (node) => { drapes.current[i] = node; } : undefined} data-drape className="absolute inset-0 origin-top [transform:skewX(var(--drape,0deg))]" style={side === "back" ? { transform: "skewX(calc(var(--drape, 0deg) * -1))" } : undefined}>
+                      <span ref={side === "front" ? (node) => { drapes.current[i] = node; } : undefined} data-drape className="absolute inset-0 origin-top will-change-transform">
                         {item.image
                           ? <Photo src={(side === "back" ? item.backImage : undefined) ?? item.image} alt="" full={hanger === "none"} />
                           : <Fabric uid={uid} kind={kind} side={side} color={color} trim={trim} print={item.print} />}
