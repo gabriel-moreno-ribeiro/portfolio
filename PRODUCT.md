@@ -63,7 +63,7 @@ not only claimed.
 ## Evidence on Hand
 
 - Projects: HIBEEX, Projeto Candela (`src/content/projects.ts`).
-- Numbers (`src/data/numbers.json`): 28 olympiad medals (19 gold, 5 international), 3,392 students
+- Numbers (`src/data/numbers.json`): 28 olympiad medals (19 gold), 3,392 students
   reached, 38 olympiads, 28 public schools, 6 startups in the Canastra AI Residency, SAT 1570 of
   1600, 0.7% acceptance rate at Fundação Estudar, 121 laptops, 21 states.
 - Research papers with covers and PDFs (`src/components/Home/Research.tsx`, `public/research/`).

@@ -20,13 +20,12 @@ export interface Medal {
 }
 
 const MSF = 'Mathématiques sans Frontières';
-const MSF_FULL = 'Olimpíada Internacional Mathématiques sans Frontières';
 const OBFEP_FULL = 'Olimpíada Brasileira de Física das Escolas Públicas';
 
 const ALL: Medal[] = [
   { num: '01', name: 'OBQ Júnior', fullName: 'Olimpíada Brasileira de Química Júnior', year: '2022', subject: 'chemistry' },
-  { num: '02', name: MSF, fullName: MSF_FULL, year: '2022', tier: 'Gold medal, regional champion', subject: 'math' },
-  { num: '03', name: MSF, fullName: MSF_FULL, year: '2023', tier: 'Gold medal, regional champion', subject: 'math' },
+  { num: '02', name: MSF, year: '2022', tier: 'Gold medal, regional champion', subject: 'math' },
+  { num: '03', name: MSF, year: '2023', tier: 'Gold medal, regional champion', subject: 'math' },
   { num: '04', name: 'Canguru de Matemática', fullName: 'Canguru de Matemática Brasil', year: '2024', subject: 'math' },
   { num: '05', name: 'OBQ Júnior', fullName: 'Olimpíada Brasileira de Química Júnior', year: '2022', subject: 'chemistry' },
   { num: '06', name: 'Mandacaru', subject: 'math' },
@@ -35,7 +34,7 @@ const ALL: Medal[] = [
   { num: '08', name: 'OBQ', fullName: 'Olimpíada Brasileira de Química', year: '2024', subject: 'chemistry' },
   { num: '09', name: 'OBFEP', fullName: OBFEP_FULL, subject: 'physics' },
   { num: '10', name: 'OBA', fullName: 'Olimpíada Brasileira de Astronomia e Astronáutica', year: '2021', tier: 'Gold medal', subject: 'astronomy' },
-  { num: '11', name: MSF, fullName: MSF_FULL, year: '2021', tier: 'Gold medal, national champion', subject: 'math' },
+  { num: '11', name: MSF, year: '2021', tier: 'Gold medal, national champion', subject: 'math' },
   { num: '12', name: 'OBMEP', year: '2024', subject: 'math' },
   { num: '13', name: 'ONNEQ', fullName: 'Olimpíada Norte-Nordeste de Química', subject: 'chemistry' },
   { num: '14', name: 'OBFEP', fullName: OBFEP_FULL, subject: 'physics' },
@@ -48,11 +47,11 @@ const ALL: Medal[] = [
   { num: '21', name: 'Olimpíada Nacional de Ciências', year: '2022', subject: 'science' },
   { num: '22', name: 'Canguru de Matemática', subject: 'math' },
   { num: '23', name: 'OBFEP', fullName: OBFEP_FULL, subject: 'physics' },
-  { num: '24', name: MSF, fullName: MSF_FULL, year: '2022', tier: 'Gold medal, national champion', subject: 'math' },
+  { num: '24', name: MSF, year: '2022', tier: 'Gold medal, national champion', subject: 'math' },
   { num: '25', name: 'OMPBA', subject: 'math' },
   { num: '26', name: 'Canguru de Matemática', year: '2023', subject: 'math' },
   { num: '27', name: 'OBBiotec', fullName: 'Olimpíada Brasileira de Biotecnologia', year: '2023', subject: 'biology' },
-  { num: '28', name: MSF, fullName: MSF_FULL, year: '2023', tier: 'Gold medal, national champion', subject: 'math' },
+  { num: '28', name: MSF, year: '2023', tier: 'Gold medal, national champion', subject: 'math' },
 ];
 
 // Order on the wall (row by row around the photo), set by hand so the look-alike

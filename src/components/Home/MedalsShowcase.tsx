@@ -158,10 +158,6 @@ export default function MedalsShowcase() {
             <dd>19</dd>
             <dt>gold</dt>
           </div>
-          <div>
-            <dd>5</dd>
-            <dt>international</dt>
-          </div>
         </dl>
       </div>
 

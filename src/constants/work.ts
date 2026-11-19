@@ -124,7 +124,7 @@ export const work = [
       },
       modalData: {
         title: "Academic Olympiad Achievements",
-        desc: "28 medals in 38 olympiads: 19 gold, 5 international. Math, physics, chemistry, biology and astronomy. 1st of 10,000+ at IFT-UNESP. SAT 1570/1600, 99th+ percentile. Gold at ONNEQ, silver at OBMEP, bronze at OBQ.",
+        desc: "28 medals in 38 olympiads, 19 gold. Math, physics, chemistry, biology and astronomy. 1st of 10,000+ at IFT-UNESP. SAT 1570/1600, 99th+ percentile. Gold at ONNEQ, silver at OBMEP, bronze at OBQ.",
         infoHeading: "Highlights",
         infoArr: [
           "19 Gold Medals",
