@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { FiArrowLeft, FiArrowUpRight } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
-import Navbar from '../components/Navbar/Navbar';
 import PostEmbed from '../components/News/PostEmbed';
 import Footer from '../components/Shared/Footer';
 import { mentions, type Mention } from '../data/news';
@@ -129,7 +128,6 @@ function News() {
 
   return (
     <main className="news" id="main-content">
-      <div className="page-nav"><Navbar /></div>
 
       <Reveal className="news__header">
         <p className="news__back">

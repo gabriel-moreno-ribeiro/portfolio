@@ -3,7 +3,6 @@
 import { FiArrowLeft } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import DesmosSketches from '../components/Home/DesmosSketches';
-import Navbar from '../components/Navbar/Navbar';
 import Footer from '../components/Shared/Footer';
 import { useDocumentHead } from '../hooks/useDocumentHead';
 
@@ -17,7 +16,6 @@ export default function SketchesPage() {
 
   return (
     <main className="sketches-page" id="main-content">
-      <div className="page-nav"><Navbar /></div>
       <Link to="/" className="page-back"><FiArrowLeft aria-hidden="true" /> Home</Link>
       <DesmosSketches />
       <Footer />

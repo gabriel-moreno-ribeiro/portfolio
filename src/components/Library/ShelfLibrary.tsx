@@ -4,7 +4,6 @@ import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { FiArrowLeft, FiArrowRight, FiArrowUpRight } from "react-icons/fi";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import Navbar from "../Navbar/Navbar";
 import { useReducedMotion } from "../../lib/motion";
 import { useThemeStore } from "../../store/themeStore";
 import type { Book } from "../../types/book";
@@ -291,10 +290,6 @@ export default function ShelfLibrary() {
       {/* Fades the scene under the caption, so the words sit on a calm field
           instead of on spines and wood */}
       <div className="library__veil" aria-hidden="true" />
-
-      <div className="library__nav">
-        <Navbar />
-      </div>
 
       {/* Open book: the crumb's place holds the way back (the panel has one too;
           Escape and a click beside the book work as well) */}

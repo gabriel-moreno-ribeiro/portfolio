@@ -3,7 +3,6 @@ import { useLocation } from "react-router-dom";
 import Hero from "../components/Home/Hero";
 import MomentsStrip from "../components/Home/MomentsStrip";
 import SectionRail from "../components/Home/SectionRail";
-import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Shared/Footer";
 import useIsMobile from "../hooks/useIsMobile";
 import { useVisible } from "../lib/motion";
@@ -224,7 +223,6 @@ function Home() {
     <main className="home-wrapper" id="main-content">
       <SectionRail sections={SECTIONS} />
 
-      <Navbar />
       <Hero />
       <MomentsStrip />
       <LazySection id="background" label="Where I come from" eager={mountAll}>

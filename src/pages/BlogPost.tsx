@@ -1,7 +1,6 @@
 import { FiArrowLeft } from 'react-icons/fi';
 import { Link, useParams } from 'react-router-dom';
 import Markdown from '../components/Blog/Markdown';
-import Navbar from '../components/Navbar/Navbar';
 import Footer from '../components/Shared/Footer';
 import { formatDate, posts } from '../content/blog';
 import { useDocumentHead } from '../hooks/useDocumentHead';
@@ -24,7 +23,6 @@ function BlogPost() {
 
   return (
     <main className="page-wrapper" id="main-content">
-      <div className="page-nav"><Navbar /></div>
       <article className="page-content blog-post">
         <Link to="/blog" className="page-back"><FiArrowLeft aria-hidden="true" /> Blog</Link>
         <header className="blog-post__header">

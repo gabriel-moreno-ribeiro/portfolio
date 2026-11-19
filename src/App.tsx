@@ -3,6 +3,7 @@ import { motion, useReducedMotion } from "motion/react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import DarkModeButton from "./components/Shared/DarkModeButton";
 import HandsfreeButton from "./components/Shared/HandsfreeButton";
+import Navbar from "./components/Navbar/Navbar";
 import BackToTop from "./components/Shared/BackToTop";
 import EasterEggs from "./components/Shared/EasterEggs";
 import HorizontalScroller from "./components/Shared/HorizontalScroller";
@@ -103,6 +104,8 @@ function AppContent() {
 
   return (
     <div className="app">
+      {/* One nav for every page, outside the part that changes: it stays put while the pages come and go. */}
+      <div className="page-nav"><Navbar /></div>
       {isHome && (
         <Suspense fallback={null}>
           <HeroSlideshow />

@@ -4,7 +4,6 @@ import { createPortal } from 'react-dom';
 import { FiArrowLeft, FiArrowUpRight, FiChevronLeft, FiChevronRight, FiX } from 'react-icons/fi';
 import { lazy, Suspense } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import Navbar from '../components/Navbar/Navbar';
 import Footer from '../components/Shared/Footer';
 import { Project, projectBySlug, projects } from '../content/projects';
 import { useDialog } from '../hooks/useDialog';
@@ -131,7 +130,6 @@ function ProjectPage() {
 
   return (
     <main className="project" id="main-content">
-      <div className="page-nav"><Navbar /></div>
 
       <motion.header className="project__header" {...rise(0.08)}>
         <p className="project__eyebrow">

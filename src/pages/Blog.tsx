@@ -1,6 +1,5 @@
 import { FiArrowLeft, FiArrowRight, FiEdit3 } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
-import Navbar from '../components/Navbar/Navbar';
 import Footer from '../components/Shared/Footer';
 import { formatDate, posts } from '../content/blog';
 import { useDocumentHead } from '../hooks/useDocumentHead';
@@ -17,7 +16,6 @@ function Blog() {
 
   return (
     <main className="page-wrapper" id="main-content">
-      <div className="page-nav"><Navbar /></div>
       <div className="page-content">
         <Link to="/" className="page-back"><FiArrowLeft aria-hidden="true" /> Home</Link>
         <h1 className="page-title">Blog</h1>

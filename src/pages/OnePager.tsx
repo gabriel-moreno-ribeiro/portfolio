@@ -10,7 +10,6 @@ import { motion } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 import { FiArrowLeft, FiDownload, FiMapPin } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
-import Navbar from '../components/Navbar/Navbar';
 import HibeexMark from '../components/OnePager/HibeexMark';
 import Footer from '../components/Shared/Footer';
 import {
@@ -100,7 +99,6 @@ function OnePager() {
 
   return (
     <main className="op" id="main-content">
-      <div className="page-nav"><Navbar /></div>
 
       <article className="op__page">
         <div className="op__top">

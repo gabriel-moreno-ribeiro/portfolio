@@ -2,7 +2,6 @@ import { motion } from 'motion/react';
 import { useCallback, useEffect, useState } from 'react';
 import { FiArrowLeft, FiArrowUpRight, FiCheck, FiLink } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
-import Navbar from '../components/Navbar/Navbar';
 import Footer from '../components/Shared/Footer';
 import GlassFolder, { type ArtPreset } from '../components/ui/glass-folder-cards';
 import { fileGroups, filePath, fileUrl, type FileEntry } from '../content/files';
@@ -57,7 +56,6 @@ function FilesPage() {
 
   return (
     <main className="files" id="main-content">
-      <div className="page-nav"><Navbar /></div>
 
       <motion.header className="files__header" {...rise(0.08)}>
         <p className="files__eyebrow">

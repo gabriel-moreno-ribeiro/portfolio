@@ -106,20 +106,6 @@ body:has(.library) { padding-block: 0; }
 }
 .library--ready .library__canvas { opacity: 1; }
 
-// ── Site navbar (fixed pill, centered by this flex row) ──────────────────────
-.library__nav {
-  position: absolute;
-  z-index: 30;
-  top: 0;
-  right: 0;
-  left: 0;
-  display: flex;
-  justify-content: center;
-  pointer-events: none;
-
-  > * { pointer-events: auto; }
-
-}
 
 // ── Top-left crumb: Home, the page name, All books ──────────────────────────
 .library__eyebrow {
