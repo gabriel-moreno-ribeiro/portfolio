@@ -20,7 +20,7 @@ const curve = (pts: V3[]) => new THREE.CatmullRomCurve3(pts.map((p) => new THREE
 // per vertex (the road of the track). `inst` is for everything drawn as instances (printed marks, the
 // box's joints, flags, small kits, the students) and takes its colour per instance: a material shared by
 // instanced and plain meshes makes three.js look its program up again at every switch, every frame.
-export interface Tones { wood: THREE.MeshStandardMaterial; toned: THREE.MeshStandardMaterial; inst: THREE.MeshStandardMaterial; grain: THREE.Color }
+export interface Tones { wood: THREE.MeshStandardMaterial; toned: THREE.MeshStandardMaterial; built: THREE.MeshStandardMaterial; inst: THREE.MeshStandardMaterial; grain: THREE.Color }
 const TONES = new WeakMap<Mats, Tones>();
 export function tonesOf(mats: Mats, dark: boolean): Tones {
   let t = TONES.get(mats);
@@ -31,13 +31,14 @@ export function tonesOf(mats: Mats, dark: boolean): Tones {
     toned.vertexColors = true;
     const inst = mats.clay.clone();
     inst.color.set('#ffffff');
-    TONES.set(mats, (t = { wood, toned, inst, grain: wood.color.clone().multiplyScalar(0.84) }));
+    // `built`: tones per vertex like `toned`, for the instanced schools only.
+    TONES.set(mats, (t = { wood, toned, built: toned.clone(), inst, grain: wood.color.clone().multiplyScalar(0.84) }));
   }
   return t;
 }
 export const disposeTones = (mats: Mats) => {
   const t = TONES.get(mats);
-  if (t) [t.wood, t.toned, t.inst].forEach((m) => m.dispose());
+  if (t) [t.wood, t.toned, t.built, t.inst].forEach((m) => m.dispose());
   TONES.delete(mats);
 };
 export function useTones() {

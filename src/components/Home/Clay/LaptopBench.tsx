@@ -139,10 +139,10 @@ const insidePieces = (): Piece[] => [
 ];
 /** The fan's place in the base, and where the two fans lie on the mat: the new one waiting in front, the broken one tossed to the side. */
 export const FAN_AT: V3 = [0.7, 0.11, -0.32];
-const SPARE: V3 = [-0.95, 0.042, 1.08];
+const SPARE: V3 = [-0.7, 0.042, 1.08];
 const OLD_AT: V3 = [1.75, 0.042, -0.05];
-const TRAY: V3 = [0.5, 0, 1.25];
-const DRIVER_REST: V3 = [2.0, 0.09, 1.25];
+const TRAY: V3 = [0.78, 0, 1.25];
+const DRIVER_REST: V3 = [2.26, 0.09, 1.25];
 const DRIVER_IN: V3 = [-1.75, 0.45, 0.2]; // where it is picked up, by the first screw
 const DRIVER_WAIT: V3 = [1.75, 0.45, 0.2]; // held ready beside the laptop while something else moves
 /** A screw's place in the tray: the screen's two in the middle, the cover's eight around them. */
@@ -243,9 +243,9 @@ function driverShare(p: Play) {
 const driverPieces = (): Piece[] => [
   puck(0.012, 0.06, [0, 0.03, 0], { segments: 6, tone: 'dark' }),
   puck(0.022, 0.46, [0, 0.28, 0], { segments: 8, tone: 'mid' }),
-  puck(0.05, 0.08, [0, 0.55, 0], { bevel: 0.02, segments: 12 }),
-  puck(0.085, 0.42, [0, 0.8, 0], { bevel: 0.04, segments: 14 }),
-  ...[0, 1, 2, 3, 4, 5].map((i) => box([0.026, 0.3, 0.02], [Math.sin((i * Math.PI) / 3) * 0.082, 0.8, Math.cos((i * Math.PI) / 3) * 0.082], { rot: [0, (i * Math.PI) / 3, 0], tone: 'mid' })),
+  puck(0.05, 0.08, [0, 0.55, 0], { bevel: 0.02, segments: 12, tone: 'dark' }),
+  puck(0.085, 0.42, [0, 0.8, 0], { bevel: 0.04, segments: 14, tone: 'accent' }),
+  ...[0, 1, 2, 3, 4, 5].map((i) => box([0.026, 0.3, 0.02], [Math.sin((i * Math.PI) / 3) * 0.082, 0.8, Math.cos((i * Math.PI) / 3) * 0.082], { rot: [0, (i * Math.PI) / 3, 0], tone: 'dark' })),
 ];
 function Screwdriver() {
   const tip = useMemo(() => [0, 0, 0, 0], []);
@@ -271,7 +271,7 @@ function Screwdriver() {
 }
 
 /** A small dish for the screws, so none rolls away. */
-const trayPieces = (): Piece[] => [puck(0.3, 0.016, [0, 0.008, 0], { segments: 28, tone: 'mid' }), puck(0.3, 0.06, [0, 0.03, 0], { hole: 0.265, segments: 28 })];
+const trayPieces = (): Piece[] => [puck(0.3, 0.016, [0, 0.008, 0], { segments: 20, tone: 'dark' }), puck(0.3, 0.06, [0, 0.03, 0], { hole: 0.265, segments: 20, tone: 'mid' })];
 function Tray() {
   return (
     <Act position={TRAY} f={(g, p) => void loose(g, p, tidy(p, EMPTY))}>
@@ -402,8 +402,8 @@ export function Bench() {
       {/* Labels: what is inside, once it is open; the problem, at the photo; the old part, once it is out */}
       <LiveTag at={[0.9, 0.13, -0.32]} dx={66} dy={-12} on={on([APART], OPENED)}>Fan</LiveTag>
       <LiveTag at={[0.72, 0.15, 0.45]} dx={84} dy={18} on={on([APART], OPENED + 0.1)}>Battery</LiveTag>
-      <LiveTag at={[SPARE[0] - 0.2, 0.08, SPARE[2] + 0.1]} dx={-46} dy={22} on={on([APART], OPENED + 0.2)}>New part</LiveTag>
-      <LiveTag at={[FAN_AT[0] - 0.1, 0.14, FAN_AT[2] + 0.17]} dx={86} dy={116} on={on([PHOTO], SHOT.aim + 0.25)}>Hardware problem</LiveTag>
+      <LiveTag at={[SPARE[0] - 0.2, 0.08, SPARE[2] + 0.1]} dx={-52} dy={20} on={on([APART], OPENED + 0.2)}>New part</LiveTag>
+      <LiveTag at={[FAN_AT[0] - 0.1, 0.14, FAN_AT[2] + 0.17]} dx={104} dy={112} on={on([PHOTO], SHOT.aim + 0.25)}>{'Hardware\nproblem'}</LiveTag>
       <LiveTag at={[OLD_AT[0] + 0.1, 0.08, OLD_AT[2] - 0.15]} dx={34} dy={-34} on={oldTag}>Old part</LiveTag>
     </Staged>
   );

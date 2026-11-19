@@ -7,6 +7,7 @@
 import * as THREE from 'three';
 import { Act, ageOf, Arrow, at, bump, ease, Morph, pop, Rig, ring, settle, slice, spring, Tag, wins, type Play, type Shot, type V3, type Wins } from './kit';
 import { Bench, FAN_AT, Mat, MAT, MAT_CENTER } from './LaptopBench';
+import { Desk, DESK_H } from './LaptopDesk';
 import {
   BrazilMap,
   Carton,
@@ -49,14 +50,17 @@ const io = (on: number[], table: Record<string, [number, number]> = {}, arrive: 
 const here = (p: Play, i: number) => (p.to === i ? (p.from === i ? 1 : p.t) : p.from === i ? 1 - ease(slice(p.t, 0, 0.3)) : 0);
 
 // ── Where things are ─────────────────────────────────────────────────────────
-const CARTON_AT: V3 = [-1.15, 0, -1.0];
+const CARTON_AT: V3 = [-1.15, 0, -1.75];
 const CARTON_YAW = 0.2;
 const BENCH: V3 = [0, MAT[1], -0.15];
+// The map lies on the desk, in front of what stands at its back.
+const MAP_AT: V3 = [0.1, 0, 0.35];
+const MAP_SCALE = 0.85;
 const MAT_POSE = { p: [BENCH[0] + MAT_CENTER[0], 0, BENCH[2] + MAT_CENTER[2]] as V3 };
 const TUTORIAL_AT: V3 = [-1.6, 0, 0.3];
 /** The laptop at each step: position and turn about Y. */
 const SPOT: { p: V3; yaw: number }[] = [
-  { p: [0.95, 0, 1.55], yaw: -0.2 }, // out of the carton, set down in front of it
+  { p: [0.95, 0, 0.8], yaw: -0.2 }, // out of the carton, set down in front of it
   { p: BENCH, yaw: 0 }, // taken apart on the mat
   { p: BENCH, yaw: 0 }, // photographed, open
   { p: BENCH, yaw: 0 }, // put back together
@@ -265,8 +269,8 @@ const NEAR = { pos: [0.2, 4.5, 6.0] as V3, look: [0, 0.3, -0.6] as V3 };
 const OVER_IT = { pos: [0, 5.2, 4.3] as V3, look: [0, 0.05, -0.32] as V3 };
 const OPEN = { pos: [-0.35, 5.6, 5.5] as V3, look: [-0.35, 0.1, -0.72] as V3 };
 const MID = { pos: [-0.15, 6.1, 5.9] as V3, look: [-0.15, 0.6, -0.75] as V3 };
-const CAMERA: Shot[] = [
-  { pos: [-0.1, 3.9, 8.6], look: [-0.35, 0.75, 0.3], to: { pos: [0.2, 3.6, 8.0], look: [-0.2, 0.68, 0.42] }, over: [0.7, 2.4] },
+const SHOTS: Shot[] = [
+  { pos: [-0.1, 3.9, 7.85], look: [-0.35, 0.75, -0.45], to: { pos: [0.2, 3.6, 7.25], look: [-0.2, 0.68, -0.33] }, over: [0.7, 2.4] },
   {
     pos: NEAR.pos,
     look: NEAR.look,
@@ -291,13 +295,23 @@ const CAMERA: Shot[] = [
     ],
   },
   { pos: [0, 3.6, 8.1], look: [0, 0.8, 0.2], to: { pos: [0, 3.4, 7.6], look: [0, 0.78, 0.2] }, over: [0.5, 2.3] },
-  { pos: [0.25, 7.2, 7.3], look: [0.15, 0, -0.05], to: { pos: [0.25, 6.9, 6.95], look: [0.15, 0, -0.05] }, over: [0.5, 2.6] },
+  { pos: [0.2, 6.3, 6.7], look: [0.1, 0, 0.25], to: { pos: [0.2, 5.95, 6.3], look: [0.1, 0, 0.25] }, over: [0.5, 2.6] },
 ];
+// Everything stands on the desk, which stands on the page: the cameras go up with it.
+const up = ([x, y, z]: V3): V3 => [x, y + DESK_H, z];
+const CAMERA: Shot[] = SHOTS.map((c) => ({
+  ...c,
+  pos: up(c.pos),
+  look: up(c.look),
+  to: c.to && { pos: up(c.to.pos), look: up(c.to.look) },
+  path: c.path?.map((f) => ({ at: f.at, pos: up(f.pos), look: up(f.look) })),
+}));
 
 export default function LaptopScene() {
   return (
-    <>
+    <group position={[0, DESK_H, 0]}>
       <Rig k={CAMERA} />
+      <Desk />
 
       {/* 1 · the carton: it comes back with the loop (closed, the laptop inside), and folds away as the laptop goes to the bench */}
       <Morph k={[{ p: CARTON_AT, r: [0, CARTON_YAW, 0] }, null, null, null, null, null]} win={io([0], { '0>1': [0, 0.35], '5>0': [0.3, 0.85] }, [0.45, 1])} bounce={0.12}>
@@ -315,8 +329,8 @@ export default function LaptopScene() {
         <Tag at={onScreen(0, 1.42)} dx={0} dy={-22} on={[HINDI]}>Hindi tutorial</Tag>
       </Act>
 
-      {/* 2 to 4 · the bench: the mat, the insides, the tools, every loose piece */}
-      <Morph k={[null, MAT_POSE, MAT_POSE, MAT_POSE, null, null]} win={io([APART, PHOTO, BACK], { '0>1': [0.1, 0.55], '3>4': [0.2, 0.5] }, [0.3, 0.65])}>
+      {/* 1 to 5 · the mat on the desk; 2 to 4 · the bench: the insides, the tools, every loose piece */}
+      <Morph k={[MAT_POSE, MAT_POSE, MAT_POSE, MAT_POSE, MAT_POSE, null]} win={io([0, APART, PHOTO, BACK, HINDI], {}, [0.2, 0.55])}>
         <group position={[0, MAT[1], 0]}>
           <Mat />
         </group>
@@ -361,10 +375,12 @@ export default function LaptopScene() {
         <Tag at={[0.6, 0.2, 0]} dx={40} dy={30} on={[HINDI]} after={SWAP + 0.25}>Portuguese dub</Tag>
       </Act>
 
-      {/* 6 · 121 laptops, 21 states: one laptop after another from Salvador; each state turns orange as its laptop lands */}
-      <BrazilMap />
-      <Tag at={[SALVADOR_AT[0], H_BASE + 0.25, SALVADOR_AT[2]]} dx={56} dy={34} on={[MAP]} after={0.6}>{'Salvador\n121 laptops'}</Tag>
-      <LiveTag at={toWorld([52, 196])} dx={0} dy={0} on={showOn([MAP], landAt(0))} text={(p) => (landed(p) === 1 ? '1 state' : `${landed(p)} states`)}>21 states</LiveTag>
-    </>
+      {/* 6 · 121 laptops, 21 states: one boxed laptop after another from Salvador; each state turns orange as its box lands */}
+      <group position={MAP_AT} scale={MAP_SCALE}>
+        <BrazilMap />
+        <Tag at={[SALVADOR_AT[0], H_BASE + 0.25, SALVADOR_AT[2]]} dx={56} dy={34} on={[MAP]} after={0.6}>{'Salvador\n121 laptops'}</Tag>
+        <LiveTag at={toWorld([52, 196])} dx={0} dy={0} on={showOn([MAP], landAt(0))} text={(p) => (landed(p) === 1 ? '1 state' : `${landed(p)} states`)}>21 states</LiveTag>
+      </group>
+    </group>
   );
 }

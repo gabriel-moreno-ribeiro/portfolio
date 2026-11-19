@@ -1,11 +1,12 @@
 // Projeto Candela in five steps, with the kit in every one of them: the wooden box opens; what is
 // inside is laid out on the desk; three of the experiments run, one after the other, the camera on each;
-// kits leave the box for 28 schools in Bahia and Ceará; and next to it a class before and a class after.
+// then a magnifying glass slides in under the kit and shows the 28 schools its kits went to, and goes
+// into one school to show the students: 3,392 reached, and those who fail physics from 30% to 10%.
 import { useEffect } from 'react';
 import * as THREE from 'three';
-import { AFTER, CLASS_X, Classes, onMap, REACH, Reach, reached, RESULT, SCHOOLS } from './CandelaPeople';
+import { BAHIA, BAHIA_AT, CEARA, CEARA_AT, counted, kidAt, KIT_ON_LENS, Lens, onLens, REACH, reached, RESULT, Schools, SCHOOLS, Students, TURN } from './CandelaPeople';
 import { Caliper, CAR_GO, Cylinder, Desk, DESK, disposeTones, DROP_X, HANG, HUNG, Incline, KitBox, LET_GO, Lid, LID_OPEN, lidOpen, PULLEY_Y, Riding, SpringScale, Stand, Stopwatch, TagWhen, Tape, TimingHand, Track, Weights } from './CandelaParts';
-import { Act, ageOf, Arrow, at, bump, ease, Morph, Puck, Rig, settle, shown, slice, spring, Tag, useClay, wins, type Play, type Pose, type Shot, type V3 } from './kit';
+import { Act, ageOf, at, bump, ease, Morph, Puck, Rig, settle, shown, slice, spring, Tag, useClay, wins, type Play, type Pose, type Shot, type V3 } from './kit';
 
 const HALF_PI = Math.PI / 2;
 
@@ -21,8 +22,8 @@ const BOX: Pose[] = [
   { p: [0, 0, 0.3], r: [0, -0.36, 0], s: 1.25 }, // the hero: it opens
   { p: [0, DESK, -1.15], s: 0.78 }, // open at the back of the desk, what was inside laid out in front of it
   { p: [-3.55, DESK, -2.3], r: [0, 0.35, 0], s: 0.7 }, // closed, at the back, while the experiments run
-  { p: [2.7, 0, 2.3], r: [0, -0.3, 0], s: 0.58 }, // by the map: kits leave it for the schools
-  { p: [0, 0, 0.75], r: [0, -0.18, 0], s: 0.5 }, // between the class before and the class after
+  { p: onLens(KIT_ON_LENS[0], KIT_ON_LENS[1]), r: [0, -0.12, 0], s: 0.42 }, // on the glass: kits leave it for the schools
+  { p: onLens(KIT_ON_LENS[0], KIT_ON_LENS[1]), r: [0, -0.12, 0], s: 0.42 }, // still there, in front of the students
 ];
 const HERO_YAW = BOX[0]!.r![1];
 /** Back in the box at step `i`: gone, where the box stands. */
@@ -53,21 +54,20 @@ const peek = (rise: number, when: number, k: number) => (g: THREE.Group, p: Play
   g.position.y = ((rise * spring(a - when, 2.3, 5) * (1 - 0.6 * bump(slice(a, DUCK, DUCK + 1))) + 0.035 * Math.sin(time * 5 + when * 20) * slice(a, when + 0.4, when + 0.8)) * at(p, 0)) / k;
 };
 
-const KIT = 0.7; // seconds into the result when the kit does its work
-/** The kit box has a body: it squats before the lid flies open, recoils when the parts spring out, pumps while it sends kits out, and gives a jump between the two classes. */
+/** The kit box has a body: it squats before the lid flies open, recoils when the parts spring out, pumps while it sends kits out, and gives a jump when it turns the class round. */
 const boxAct = (g: THREE.Group, p: Play) => {
   const a0 = ageOf(p, 0);
   const a3 = ageOf(p, REACH);
   const a4 = ageOf(p, RESULT);
   const squat = (0.08 * bump(slice(a0, 0.02, 0.22)) - 0.06 * bump(slice(a0, 0.2, 0.5)) + 0.07 * bump(slice(a0, DUCK, DUCK + 1))) * at(p, 0);
   const recoil = p.to === 1 ? 0.16 * bump(slice(p.age, 0.02, 0.32)) : 0;
-  const pump = 0.11 * Math.abs(Math.sin(a3 * Math.PI * 4)) * slice(a3, 0.55, 0.65) * (1 - slice(a3, 2.2, 2.5)) * at(p, REACH);
-  const jump = bump(slice(a4, KIT, KIT + 0.45)) * at(p, RESULT);
-  g.scale.y = 1 - squat - recoil - pump - 0.1 * bump(slice(a4, KIT - 0.15, KIT + 0.05)) * at(p, RESULT) + 0.08 * jump;
-  g.position.y = 0.3 * jump;
+  const pump = 0.11 * Math.abs(Math.sin(a3 * Math.PI * 4)) * slice(a3, 0.85, 0.95) * (1 - slice(a3, 2.3, 2.6)) * at(p, REACH);
+  const jump = bump(slice(a4, TURN - 0.05, TURN + 0.4)) * at(p, RESULT);
+  g.scale.y = 1 - squat - recoil - pump - 0.12 * bump(slice(a4, TURN - 0.2, TURN)) * at(p, RESULT) + 0.08 * jump;
+  g.position.y = 0.35 * jump;
 };
-// The lid: it springs open at the first step, stands open while what was inside is laid out, and is shut after.
-const lidOf = (p: Play) => lidOpen(ageOf(p, 0)) * at(p, 0) + LID_OPEN * at(p, 1);
+// The lid: it springs open at the first step, stands open while what was inside is laid out, and opens again on the glass to let the kits out.
+const lidOf = (p: Play) => lidOpen(ageOf(p, 0)) * at(p, 0) + LID_OPEN * at(p, 1) + LID_OPEN * spring(ageOf(p, REACH) - 0.72, 1.7, 4.5) * at(p, REACH);
 
 // ── The experiments, on the desk ─────────────────────────────────────────────
 const EXPERIMENTS = 2;
@@ -117,8 +117,8 @@ const CAMERA: Shot[] = [
       { at: ON_STAND, ...AT_STAND },
     ],
   },
-  { pos: [0.1, 8.9, 8.7], look: [0.1, 0, 0.55], to: { pos: [0.1, 8.6, 8.4], look: [0.1, 0, 0.55] }, over: [0.5, 2.6] },
-  { pos: [0, 4.8, 8.9], look: [0, 0.7, 0.45], to: { pos: [0, 4.45, 8.15], look: [0, 0.7, 0.45] }, over: [0.6, 2.2] },
+  { pos: [-0.15, 9.2, 7.75], look: [-0.15, 0.1, 0.55], to: { pos: [-0.15, 9.0, 7.6], look: [-0.15, 0.1, 0.55] }, over: [0.5, 2.6] },
+  { pos: [-0.15, 8.5, 8.95], look: [-0.15, 0.5, 0.75], to: { pos: [-0.15, 8.3, 8.75], look: [-0.15, 0.5, 0.75] }, over: [0.6, 2.2] },
 ];
 
 export default function CandelaScene() {
@@ -127,7 +127,6 @@ export default function CandelaScene() {
   const hang = place(STAND, STAND_YAW, HANG, STAND_K);
   const foot = place(STAND, STAND_YAW, [HANG[0], 0.09, HANG[2]], STAND_K);
   const mass: V3 = [INCLINE[0] + DROP_X * INCLINE_K, INCLINE[1] + (PULLEY_Y - 0.22) * INCLINE_K - 0.74 * WEIGHTS_K, INCLINE[2]];
-  const source: V3 = [BOX[REACH]!.p![0], 0.6, BOX[REACH]!.p![2]];
   return (
     <>
       <Rig k={CAMERA} />
@@ -209,20 +208,19 @@ export default function CandelaScene() {
       <TagWhen at={[INCLINE[0] - 0.4, 1.05, INCLINE[2]]} dx={-30} dy={-40} on={during([LET_GO + 0.1, ON_INCLINE[1]])}>Inclined plane</TagWhen>
       <TagWhen at={[hang[0] + 0.15, hang[1] - 0.6, hang[2]]} dx={70} dy={-10} on={during([HUNG + 0.2, 99])}>{'Spring scale\n+ cylinder'}</TagWhen>
 
-      {/* 28 schools: kits leave the box for Bahia and Ceará */}
-      <Reach from={source} />
-      <TagWhen at={onMap(185, 88, 0.15)} dx={48} dy={-8} on={(p) => shown(p, [REACH], 0.5)}>Bahia</TagWhen>
-      <TagWhen at={onMap(185, 49, 0.15)} dx={44} dy={-22} on={(p) => shown(p, [REACH], 0.7)}>Ceará</TagWhen>
-      <TagWhen at={[BOX[REACH]!.p![0], 0.05, BOX[REACH]!.p![2] + 0.7]} dx={0} dy={14} on={(p) => shown(p, [REACH], 1.05)} text={(p) => (reached(p) === 1 ? '1 school' : `${reached(p)} schools`)}>
+      {/* The ending, under one magnifying glass: the 28 schools, then the students of one of them */}
+      <Lens />
+      <Schools />
+      <TagWhen at={onLens(BAHIA_AT[0], BAHIA_AT[1], 0.6)} dx={-44} dy={-8} on={(p) => shown(p, [REACH], 1.2)}>{`Bahia · ${BAHIA}`}</TagWhen>
+      <TagWhen at={onLens(CEARA_AT[0], CEARA_AT[1], 0.6)} dx={30} dy={-30} on={(p) => shown(p, [REACH], 1.6)}>{`Ceará · ${CEARA}`}</TagWhen>
+      <TagWhen at={onLens(-1.75, 2.35, 0.05)} dx={-34} dy={30} on={(p) => shown(p, [REACH], 1.05)} text={(p) => (reached(p) === 1 ? '1 school' : `${reached(p)} schools`)}>
         {`${SCHOOLS} schools`}
       </TagWhen>
-
-      {/* The result: the class before the kit, the kit, the class after it */}
-      <Classes />
-      <Arrow a={[-0.8, 1.2, 0.75]} b={[0.8, 1.2, 0.75]} lift={0.6} on={[RESULT]} after={KIT + 0.1} />
-      <Tag at={[-CLASS_X, 1.75, -0.05]} dx={0} dy={-12} on={[RESULT]} after={0.5}>Before · 30%</Tag>
-      <Tag at={[CLASS_X, 1.75, -0.05]} dx={0} dy={-12} on={[RESULT]} after={AFTER + 0.5}>After · 10%</Tag>
-      <Tag at={[0, 0.05, 1.5]} dx={0} dy={14} on={[RESULT]} after={AFTER + 0.3}>3,392 students</Tag>
+      <Students />
+      <TagWhen at={kidAt(0, 1.0)} dx={-16} dy={-50} on={(p) => shown(p, [RESULT], 0.55)} text={(p) => `${counted(p)} students`}>3,392 students</TagWhen>
+      <TagWhen at={kidAt(25, 1.25)} dx={78} dy={-62} on={(p) => shown(p, [RESULT], 1.2)} text={(p) => (ageOf(p, RESULT) < TURN + 0.35 ? 'Failed physics · 30%' : 'Failed physics · 30% → 10%')}>
+        {'Failed physics · 30% → 10%'}
+      </TagWhen>
     </>
   );
 }

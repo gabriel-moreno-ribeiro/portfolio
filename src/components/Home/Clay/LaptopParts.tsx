@@ -17,12 +17,26 @@ const lerp = THREE.MathUtils.lerp;
 // ── Lumps ───────────────────────────────────────────────────────────────────
 // Every mesh is drawn again in each pass of a frame (colour, occlusion, shadow, contact shadow), so a
 // model made of one mesh per box costs four or five draw calls per box. A model that does not move
-// inside itself is therefore one mesh per tone of clay: its pieces are merged once, the first time it
-// is drawn. Small and flat pieces are plain boxes (nobody sees their edges); only the big ones are
-// rounded, with few segments.
-export type Tone = 'clay' | 'accent' | 'mid' | 'board' | 'dark';
-const TONES: Tone[] = ['clay', 'accent', 'mid', 'board', 'dark'];
-const toneOf = (mats: Mats, t: Tone) => (t === 'clay' ? mats.clay : t === 'accent' ? mats.accent : mats.shade[t]);
+// inside itself is therefore ONE mesh: its pieces are merged once, the first time it is drawn, and the
+// tone of each piece is painted into its vertices. Small and flat pieces are plain boxes (nobody sees
+// their edges); only the big ones are rounded, with few segments.
+export type Tone = 'clay' | 'accent' | 'mid' | 'board' | 'dark' | 'kraft' | 'desk';
+/** The one material of every lump: the colour is in the vertices. */
+export const PAINT = new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.95, metalness: 0 });
+// Cardboard is the tone this story adds to the clay; the desk is a shade of the clay itself.
+const KRAFT = [new THREE.Color('#dcb886'), new THREE.Color('#a9865c')];
+function toneColor(mats: Mats, dark: boolean, t: Tone, out: THREE.Color) {
+  if (t === 'kraft') return out.copy(KRAFT[dark ? 1 : 0]);
+  if (t === 'desk') return out.copy(mats.clay.color).multiplyScalar(dark ? 0.74 : 0.86);
+  return out.copy(t === 'clay' ? mats.clay.color : t === 'accent' ? mats.accent.color : mats.shade[t].color);
+}
+function paint(geo: THREE.BufferGeometry, c: THREE.Color) {
+  const n = geo.attributes.position.count;
+  const a = new Float32Array(n * 3);
+  for (let i = 0; i < n; i++) a.set([c.r, c.g, c.b], i * 3);
+  geo.setAttribute('color', new THREE.BufferAttribute(a, 3));
+  return geo;
+}
 export interface Piece { geo: THREE.BufferGeometry; tone: Tone; p?: V3; r?: V3 }
 interface Opt { tone?: Tone; rot?: V3; r?: number }
 const rounded = ([w, h, d]: V3, r: number) => new RoundedBoxGeometry(w, h, d, 2, Math.min(r, Math.min(w, h, d) / 2 - 0.001));
@@ -35,58 +49,47 @@ export const puck = (r: number, h: number, p?: V3, { tone = 'clay', rot, bevel, 
   p,
   r: rot,
 });
+/** A plain cylinder, axis along Y: for small things, where a puck's rounded rims would not be seen. */
+export const cyl = (r: number, h: number, p?: V3, { tone = 'clay', rot, segments = 8 }: Opt & { segments?: number } = {}): Piece => ({ geo: new THREE.CylinderGeometry(r, r, h, segments).toNonIndexed(), tone, p, r: rot });
 /** A round rod along a path. */
 export const rod = (path: THREE.Curve<THREE.Vector3>, r: number, segments: number, tone: Tone = 'clay'): Piece => ({ geo: new THREE.TubeGeometry(path, segments, r, 6).toNonIndexed(), tone });
-type Lumped = Partial<Record<Tone, THREE.BufferGeometry>>;
-const lumps = new Map<string, Lumped>();
-function lump(id: string, pieces: () => Piece[]): Lumped {
-  let out = lumps.get(id);
+const lumps = new Map<string, THREE.BufferGeometry>();
+/** The pieces merged into one painted geometry. Cached by name and theme (the tones differ between themes). */
+export function lump(id: string, pieces: () => Piece[], mats: Mats, dark: boolean) {
+  const key = `${id}/${dark ? 1 : 0}`;
+  let out = lumps.get(key);
   if (out) return out;
-  const by: Partial<Record<Tone, THREE.BufferGeometry[]>> = {};
   const m = new THREE.Matrix4();
   const q = new THREE.Quaternion();
   const e = new THREE.Euler();
   const v = new THREE.Vector3();
   const one = new THREE.Vector3(1, 1, 1);
-  for (const { geo, tone, p, r } of pieces()) {
+  const c = new THREE.Color();
+  const list = pieces().map(({ geo, tone, p, r }) => {
     if (p || r) geo.applyMatrix4(m.compose(v.set(p?.[0] ?? 0, p?.[1] ?? 0, p?.[2] ?? 0), q.setFromEuler(e.set(r?.[0] ?? 0, r?.[1] ?? 0, r?.[2] ?? 0)), one));
-    (by[tone] ??= []).push(geo);
-  }
-  out = {};
-  for (const t of TONES) {
-    const list = by[t];
-    if (!list) continue;
-    out[t] = mergeGeometries(list)!;
-    list.forEach((g) => g.dispose());
-  }
-  lumps.set(id, out);
+    return paint(geo, toneColor(mats, dark, tone, c));
+  });
+  out = mergeGeometries(list)!;
+  list.forEach((g) => g.dispose());
+  lumps.set(key, out);
   return out;
 }
-/** A model in one mesh per tone. `id` names it: its pieces are merged once per page. */
+/** A model in one mesh. `id` names it: its pieces are merged once per page and theme. */
 export function Lump({ id, pieces }: { id: string; pieces: () => Piece[] }) {
-  const { mats } = useClay();
-  const geos = lump(id, pieces);
-  return (
-    <>
-      {TONES.map((t) => geos[t] && <mesh key={t} geometry={geos[t]} material={toneOf(mats, t)} castShadow receiveShadow />)}
-    </>
-  );
+  const { mats, dark } = useClay();
+  return <mesh geometry={lump(id, pieces, mats, dark)} material={PAINT} castShadow receiveShadow />;
 }
 // A single box that moves on its own (a flap, a line of code, a thumb): cheap like the pieces of a lump.
-const boxes = new Map<string, THREE.BufferGeometry>();
 export function Bx({ size, r, tone = 'clay', ...props }: { size: V3; r?: number; tone?: Tone } & Omit<ThreeElements['mesh'], 'args' | 'ref'>) {
-  const { mats } = useClay();
-  const key = `${size},${r}`;
-  let geo = boxes.get(key);
-  if (!geo) boxes.set(key, (geo = r ? rounded(size, r) : new THREE.BoxGeometry(...size)));
-  return <mesh geometry={geo} material={toneOf(mats, tone)} castShadow receiveShadow {...props} />;
+  const { mats, dark } = useClay();
+  return <mesh geometry={lump(`bx:${size},${r},${tone}`, () => [box(size, undefined, { r, tone })], mats, dark)} material={PAINT} castShadow receiveShadow {...props} />;
 }
 
 // ── Screens ─────────────────────────────────────────────────────────────────
 // What a screen can show, tone on tone like the rest of the clay. Drawn once per page.
 export const SCREEN = { off: 0, on: 1, hindi: 2, portuguese: 3, sad: 4, viewfinder: 5, flash: 6, waiting: 7, terminal: 8 } as const;
-// The subtitle of the tutorial, as every Hindi tutorial opens ("hello, friends"), and the same in Portuguese.
-const HINDI = 'नमस्ते दोस्तों';
+// The subtitle of the tutorial ("hey guys", the owner's wording), and the same in Portuguese.
+const HINDI = 'अरे दोस्तों';
 const PORTUGUESE = 'Olá, pessoal';
 const DEVANAGARI = '"Kohinoor Devanagari", "Devanagari Sangam MN", "Nirmala UI", "Noto Sans Devanagari", Mangal, sans-serif';
 const LATIN = 'ui-sans-serif, system-ui, "Helvetica Neue", Arial, sans-serif';
@@ -193,13 +196,38 @@ function screenTextures() {
       rect(g, '#c4bcb3', 18, 14, 284, 150);
       g.strokeStyle = '#ada399';
       g.lineWidth = 5;
-      g.strokeRect(100, 44, 120, 58);
+      g.strokeRect(124, 44, 120, 58);
       g.beginPath();
-      g.moveTo(88, 112);
-      g.lineTo(232, 112);
+      g.moveTo(112, 110);
+      g.lineTo(256, 110);
       g.stroke();
-      rect(g, '#b3aaa0', 18, 172, 284, 6, 3);
-      rect(g, '#f0732d', 18, 172, 150, 6, 3);
+      // Whoever made the tutorial, talking to the camera beside the laptop.
+      rect(g, '#8f857b', 34, 76, 56, 44, 16);
+      g.fillStyle = '#ece7e1';
+      g.beginPath();
+      g.arc(62, 58, 19, 0, Math.PI * 2);
+      g.fill();
+      g.fillStyle = '#5f564e';
+      g.beginPath();
+      g.arc(62, 54, 19, Math.PI, Math.PI * 2);
+      g.fill();
+      g.fillRect(54, 58, 4, 5);
+      g.fillRect(66, 58, 4, 5);
+      g.strokeStyle = '#5f564e';
+      g.lineWidth = 2.5;
+      g.beginPath();
+      g.arc(62, 63, 7, Math.PI * 0.2, Math.PI * 0.8);
+      g.stroke();
+      // The player: play mark, progress, time.
+      g.fillStyle = '#8f857b';
+      g.beginPath();
+      g.moveTo(20, 168);
+      g.lineTo(20, 182);
+      g.lineTo(31, 175);
+      g.fill();
+      rect(g, '#b3aaa0', 38, 172, 226, 6, 3);
+      rect(g, '#f0732d', 38, 172, 120, 6, 3);
+      rect(g, '#8f857b', 272, 171, 28, 8, 3);
       rect(g, '#faf8f5', 44, 118, 232, 38, 7);
       subtitle(g, portuguese, 160, 137, 23, '#5f564e');
       // The dub: the sound, in orange.
@@ -381,37 +409,27 @@ function Keyboard() {
     }
     m.instanceMatrix.needsUpdate = true;
   };
-  return <instancedMesh ref={lay} args={[geo, mats.clay, KEYS_X * KEYS_Z]} castShadow receiveShadow />;
+  return <instancedMesh ref={lay} args={[geo, mats.shade.dark, KEYS_X * KEYS_Z]} castShadow receiveShadow />;
 }
 
 // A screw, head up: the head with its cross, the thread under it. Origin at the head's centre.
-let screwGeos: { body: THREE.BufferGeometry; cross: THREE.BufferGeometry } | undefined;
-function screwGeometries() {
-  if (!screwGeos) {
-    const g = lump('screw', () => [
-      puck(0.045, 0.016, undefined, { bevel: 0.006, segments: 12 }),
-      puck(0.013, 0.07, [0, -0.042, 0], { segments: 6 }),
-      box([0.05, 0.006, 0.01], [0, 0.007, 0], { tone: 'dark' }),
-      box([0.01, 0.006, 0.05], [0, 0.007, 0], { tone: 'dark' }),
-    ]);
-    screwGeos = { body: g.clay!, cross: g.dark! };
-  }
-  return screwGeos;
-}
+const screwPieces = (): Piece[] => [
+  cyl(0.045, 0.016, undefined, { segments: 10, tone: 'mid' }),
+  cyl(0.013, 0.07, [0, -0.042, 0], { segments: 6, tone: 'mid' }),
+  box([0.05, 0.006, 0.01], [0, 0.007, 0], { tone: 'dark' }),
+  box([0.01, 0.006, 0.05], [0, 0.007, 0], { tone: 'dark' }),
+];
 /**
- * `n` screws in two meshes (heads and threads; the crosses), however many there are. `place(k, o, p)`
- * puts screw `k` (position, rotation, scale on `o`) and says whether it is there at all.
+ * `n` screws in one mesh, however many there are. `place(k, o, p)` puts screw `k` (position,
+ * rotation, scale on `o`) and says whether it is there at all.
  */
 export function Screws({ n, place }: { n: number; place: (k: number, o: THREE.Object3D, p: Play) => boolean }) {
-  const { play, mats } = useClay();
-  const body = useRef<THREE.InstancedMesh>(null);
-  const cross = useRef<THREE.InstancedMesh>(null);
+  const { play, mats, dark } = useClay();
+  const ref = useRef<THREE.InstancedMesh>(null);
   const o = useMemo(() => new THREE.Object3D(), []);
-  const geos = screwGeometries();
   useFrame(() => {
-    const a = body.current;
-    const b = cross.current;
-    if (!a || !b) return;
+    const a = ref.current;
+    if (!a) return;
     let any = false;
     for (let k = 0; k < n; k++) {
       o.position.set(0, 0, 0);
@@ -422,17 +440,11 @@ export function Screws({ n, place }: { n: number; place: (k: number, o: THREE.Ob
       any ||= there;
       o.updateMatrix();
       a.setMatrixAt(k, o.matrix);
-      b.setMatrixAt(k, o.matrix);
     }
-    a.visible = b.visible = any;
-    if (any) a.instanceMatrix.needsUpdate = b.instanceMatrix.needsUpdate = true;
+    a.visible = any;
+    if (any) a.instanceMatrix.needsUpdate = true;
   });
-  return (
-    <>
-      <instancedMesh ref={body} args={[geos.body, mats.clay, n]} castShadow receiveShadow frustumCulled={false} />
-      <instancedMesh ref={cross} args={[geos.cross, mats.shade.dark, n]} frustumCulled={false} />
-    </>
-  );
+  return <instancedMesh ref={ref} args={[lump('screw', screwPieces, mats, dark), PAINT, n]} castShadow receiveShadow frustumCulled={false} />;
 }
 
 // An empty screw hole: a dark dot, hidden under the screw's head until the screw is out.
@@ -458,7 +470,10 @@ const HINGE_HOLES = HINGE_SCREWS.map(([x, , z]): V3 => [x, DECK + 0.0065, z]);
 const coverPieces = (): Piece[] => [
   box([W, 0.035, D], [0, 0.0175, 0], { r: 0.03 }),
   ...[-0.3, -0.15, 0, 0.15, 0.3].map((z) => box([0.9, 0.006, 0.05], [0.3, 0.001, z - 0.25], { tone: 'board' })),
-  ...[-0.95, 0.95].flatMap((x) => [-0.5, 0.5].map((z) => box([0.2, 0.008, 0.08], [x, 0, z], { tone: 'mid' }))),
+  ...[-0.95, 0.95].flatMap((x) => [-0.5, 0.5].map((z) => box([0.2, 0.01, 0.08], [x, -0.001, z], { tone: 'dark' }))),
+  // The label with the model and serial number
+  box([0.5, 0.004, 0.3], [-0.55, 0, 0.3], { tone: 'mid' }),
+  ...[0, 1, 2].map((i) => box([0.36 - i * 0.08, 0.004, 0.03], [-0.55 + i * 0.04, -0.002, 0.22 + i * 0.07], { tone: 'dark' })),
 ];
 export function Cover() {
   return (
@@ -471,13 +486,16 @@ export function Cover() {
 
 /** The screen: the lid with its bezel and the screen set back inside it, the hinge and the camera. Origin at the hinge. */
 const displayPieces = (): Piece[] => [
-  puck(0.045, 1.7, [0, 0, 0.02], { segments: 14, rot: [0, 0, HALF_PI] }),
+  puck(0.045, 1.7, [0, 0, 0.02], { segments: 14, rot: [0, 0, HALF_PI], tone: 'dark' }),
   box([W, 0.055, D - 0.02], [0, 0.0275, 0.79], { r: 0.03 }),
-  box([W - 0.08, 0.012, 0.16], [0, -0.006, 1.49]),
-  box([W - 0.08, 0.012, 0.18], [0, -0.006, 0.12]),
-  box([0.16, 0.012, 1.18], [1.07, -0.006, 0.8]),
-  box([0.16, 0.012, 1.18], [-1.07, -0.006, 0.8]),
-  puck(0.02, 0.004, [0, -0.0125, 1.49], { segments: 10, tone: 'dark' }),
+  box([W - 0.08, 0.012, 0.16], [0, -0.006, 1.49], { tone: 'dark' }),
+  box([W - 0.08, 0.012, 0.18], [0, -0.006, 0.12], { tone: 'dark' }),
+  box([0.16, 0.012, 1.18], [1.07, -0.006, 0.8], { tone: 'dark' }),
+  box([0.16, 0.012, 1.18], [-1.07, -0.006, 0.8], { tone: 'dark' }),
+  cyl(0.02, 0.004, [0, -0.0125, 1.49], { segments: 10, tone: 'mid' }),
+  // A sticker on the lid, as every laptop that has been somewhere has
+  box([0.34, 0.004, 0.34], [0.7, 0.056, 1.15], { tone: 'accent' }),
+  box([0.5, 0.004, 0.16], [-0.6, 0.056, 0.5], { tone: 'mid' }),
 ];
 function Display({ mat }: { mat: THREE.Material }) {
   return (
@@ -499,10 +517,15 @@ const shellPieces = (): Piece[] => [
   box([0.05, 0.14, D - 0.1], [W / 2 - 0.025, 0.105, 0], { r: 0.02 }),
   box([0.05, 0.14, D - 0.1], [-W / 2 + 0.025, 0.105, 0], { r: 0.02 }),
   box([W, 0.04, D], [0, DECK - 0.02, 0], { r: 0.02 }),
-  box([0.8, 0.025, 0.12], [0.02, DECK + 0.0125, 0.03], { r: 0.01 }),
-  // The trackpad and its button line; the ports on the sides; the notch that opens the lid; the hinge tabs
-  box([0.74, 0.012, 0.42], [0, DECK + 0.004, 0.5]),
-  box([0.66, 0.004, 0.012], [0, DECK + 0.0095, 0.62], { tone: 'mid' }),
+  box([0.8, 0.025, 0.12], [0.02, DECK + 0.0125, 0.03], { r: 0.01, tone: 'dark' }),
+  // The trackpad and its button line; two stickers on the palm rest; the status lights; the ports on
+  // the sides; the notch that opens the lid; the hinge tabs
+  box([0.74, 0.012, 0.42], [0, DECK + 0.004, 0.5], { tone: 'mid' }),
+  box([0.66, 0.004, 0.012], [0, DECK + 0.0095, 0.62], { tone: 'dark' }),
+  box([0.2, 0.004, 0.14], [0.86, DECK + 0.002, 0.56], { tone: 'accent' }),
+  box([0.14, 0.004, 0.14], [0.62, DECK + 0.002, 0.56], { tone: 'dark' }),
+  box([0.05, 0.02, 0.012], [-0.95, 0.165, D / 2 + 0.001], { tone: 'accent' }),
+  box([0.05, 0.02, 0.012], [-0.85, 0.165, D / 2 + 0.001], { tone: 'dark' }),
   ...PORTS.map(([side, z, w]) => box([0.012, 0.042, w], [side * (W / 2 + 0.001), 0.1, z], { tone: 'dark' })),
   box([0.46, 0.022, 0.012], [0, 0.165, D / 2 + 0.001], { tone: 'mid' }),
   ...HINGE_SCREWS.map(([x, , z]) => box([0.2, 0.008, 0.11], [x, DECK + 0.002, z])),
@@ -600,17 +623,21 @@ export function Laptop({ lid, screen, glow, flip, detached, cover, screw, hinge 
 export const CARTON: V3 = [2.9, 1, 2];
 const [CW, CH, CD] = CARTON;
 const cartonPieces = (): Piece[] => [
-  box([CW, 0.06, CD], [0, 0.03, 0], { r: 0.02 }),
-  box([CW, CH, 0.06], [0, CH / 2, CD / 2 - 0.03], { r: 0.02 }),
-  box([CW, CH, 0.06], [0, CH / 2, -CD / 2 + 0.03], { r: 0.02 }),
-  box([0.06, CH, CD - 0.12], [CW / 2 - 0.03, CH / 2, 0], { r: 0.02 }),
-  box([0.06, CH, CD - 0.12], [-CW / 2 + 0.03, CH / 2, 0], { r: 0.02 }),
-  // The shipping label
-  box([0.8, 0.5, 0.02], [0.85, 0.55, CD / 2 + 0.005]),
-  ...[0, 1, 2].map((i) => box([0.6 - i * 0.14, 0.05, 0.016], [0.82 - i * 0.07, 0.68 - i * 0.12, CD / 2 + 0.02])),
+  box([CW, 0.06, CD], [0, 0.03, 0], { r: 0.02, tone: 'kraft' }),
+  box([CW, CH, 0.06], [0, CH / 2, CD / 2 - 0.03], { r: 0.02, tone: 'kraft' }),
+  box([CW, CH, 0.06], [0, CH / 2, -CD / 2 + 0.03], { r: 0.02, tone: 'kraft' }),
+  box([0.06, CH, CD - 0.12], [CW / 2 - 0.03, CH / 2, 0], { r: 0.02, tone: 'kraft' }),
+  box([0.06, CH, CD - 0.12], [-CW / 2 + 0.03, CH / 2, 0], { r: 0.02, tone: 'kraft' }),
+  // The shipping label: the address, a bar code
+  box([0.86, 0.56, 0.02], [0.85, 0.52, CD / 2 + 0.005]),
+  ...[0, 1, 2].map((i) => box([0.6 - i * 0.14, 0.04, 0.016], [0.8 - i * 0.07, 0.7 - i * 0.09, CD / 2 + 0.012], { tone: 'dark' })),
+  ...[0, 1, 2, 3, 4, 5, 6, 7].map((i) => box([i % 3 ? 0.022 : 0.04, 0.13, 0.016], [0.56 + i * 0.075, 0.37, CD / 2 + 0.012], { tone: 'dark' })),
+  // "This side up", twice, and the tape that goes down the front
+  ...[-0.95, -0.6].flatMap((x) => [box([0.05, 0.3, 0.016], [x, 0.36, CD / 2 + 0.006], { tone: 'dark' }), box([0.16, 0.05, 0.016], [x, 0.5, CD / 2 + 0.006], { tone: 'dark', rot: [0, 0, 0.78] }), box([0.16, 0.05, 0.016], [x, 0.5, CD / 2 + 0.006], { tone: 'dark', rot: [0, 0, -0.78] })]),
+  box([0.34, 0.26, 0.012], [0, CH - 0.13, CD / 2 + 0.004], { tone: 'accent' }),
 ];
 // A long flap: the board and half of the tape.
-const flapPieces = (z: number) => (): Piece[] => [box([CW - 0.04, 0.04, CD / 2], [0, 0.02, z], { r: 0.015 }), box([0.34, 0.012, CD / 2 - 0.01], [0, 0.046, z], { tone: 'accent' })];
+const flapPieces = (z: number) => (): Piece[] => [box([CW - 0.04, 0.04, CD / 2], [0, 0.02, z], { r: 0.015, tone: 'kraft' }), box([0.34, 0.012, CD / 2 - 0.01], [0, 0.046, z], { tone: 'accent' })];
 export function Carton({ flap }: { flap: (p: Play, k: number) => number }) {
   const hinge = (k: number, axis: 'x' | 'z', sign: number, pos: V3, children: ReactNode) => (
     <Act position={pos} f={(g, p) => void (g.rotation[axis] = sign * flap(p, k))}>
@@ -623,8 +650,8 @@ export function Carton({ flap }: { flap: (p: Play, k: number) => number }) {
       {/* Front and back flaps first (the tape splits between them), then the two short ones */}
       {hinge(0, 'x', 1, [0, CH, CD / 2], <Lump id="flap-front" pieces={flapPieces(-CD / 4)} />)}
       {hinge(1, 'x', -1, [0, CH, -CD / 2], <Lump id="flap-back" pieces={flapPieces(CD / 4)} />)}
-      {hinge(2, 'z', 1, [-CW / 2, CH, 0], <Bx size={[0.5, 0.03, CD - 0.1]} position={[0.25, -0.02, 0]} r={0.012} />)}
-      {hinge(3, 'z', -1, [CW / 2, CH, 0], <Bx size={[0.5, 0.03, CD - 0.1]} position={[-0.25, -0.02, 0]} r={0.012} />)}
+      {hinge(2, 'z', 1, [-CW / 2, CH, 0], <Bx tone="kraft" size={[0.5, 0.03, CD - 0.1]} position={[0.25, -0.02, 0]} r={0.012} />)}
+      {hinge(3, 'z', -1, [CW / 2, CH, 0], <Bx tone="kraft" size={[0.5, 0.03, CD - 0.1]} position={[-0.25, -0.02, 0]} r={0.012} />)}
     </group>
   );
 }
@@ -668,8 +695,8 @@ export function Terminal({ typed }: { typed: (p: Play) => number }) {
 }
 // The foot, the neck, the monitor with its three dots, and the prompt.
 const terminalPieces = (): Piece[] => [
-  box([1.1, 0.07, 0.6], [0, 0.035, 0], { r: 0.03 }),
-  box([0.16, 0.22, 0.1], [0, 0.18, -0.05], { r: 0.03 }),
+  box([1.1, 0.07, 0.6], [0, 0.035, 0], { r: 0.03, tone: 'dark' }),
+  box([0.16, 0.22, 0.1], [0, 0.18, -0.05], { r: 0.03, tone: 'dark' }),
   box([1.9, 1.3, 0.12], [0, 0.98, -0.05], { r: 0.06 }),
   ...[0, 1, 2].map((i) => puck(0.024, 0.02, [-0.82 + i * 0.07, 1.54, 0.01], { segments: 10, rot: [HALF_PI, 0, 0] })),
   box([0.1, 0.03, 0.02], [-0.74, 1.31, 0.02], { rot: [0, 0, -0.6] }),
@@ -711,7 +738,7 @@ export function Wave({ on }: { on: (p: Play) => number }) {
 // Origin at the bottom centre of the phone, screen towards +Z, its length along +Y.
 export const PHONE_SCREEN: V3 = [0, 0.68, 0.04];
 export const PHONE_LENS: V3 = [-0.18, 1.12, -0.05];
-const phonePieces = (): Piece[] => [box([0.66, 1.28, 0.07], [0, 0.66, 0], { r: 0.08 }), puck(0.065, 0.03, PHONE_LENS, { segments: 14, rot: [HALF_PI, 0, 0] })];
+const phonePieces = (): Piece[] => [box([0.66, 1.28, 0.07], [0, 0.66, 0], { r: 0.08, tone: 'dark' }), puck(0.065, 0.03, PHONE_LENS, { segments: 14, rot: [HALF_PI, 0, 0], tone: 'mid' })];
 export function Phone({ screen, glow, children }: { screen: (p: Play) => number; glow: (p: Play) => number; children?: ReactNode }) {
   const mat = useScreen(screen, glow);
   return (
@@ -854,15 +881,13 @@ function buildMap(): Promise<MapGeos> {
   return building;
 }
 
-/** A laptop the size of a state's pin, open, in one geometry. */
-function miniLaptopGeometry() {
-  const base = new RoundedBoxGeometry(0.3, 0.036, 0.2, 1, 0.012).translate(0, 0.018, 0);
-  const lid = new RoundedBoxGeometry(0.3, 0.2, 0.02, 1, 0.01).translate(0, 0.1, 0).rotateX(-0.25).translate(0, 0.036, -0.1);
-  const g = mergeGeometries([base, lid])!;
-  base.dispose();
-  lid.dispose();
-  return g;
-}
+/** What flies to each state: a laptop boxed up, taped and labelled. Origin under its centre. */
+const parcelPieces = (): Piece[] => [
+  box([0.32, 0.18, 0.24], [0, 0.09, 0], { r: 0.012, tone: 'kraft' }),
+  box([0.07, 0.004, 0.242], [0, 0.181, 0], { tone: 'accent' }),
+  box([0.07, 0.12, 0.004], [0, 0.12, 0.121], { tone: 'accent' }),
+  box([0.1, 0.07, 0.004], [0.09, 0.07, 0.121]),
+];
 
 const DOT = new THREE.SphereGeometry(0.024, 6, 4);
 /** When the laptop for reached state `k` (0 = nearest to Salvador) lands, seconds into the step. */
@@ -887,8 +912,8 @@ function MapBody({ geos }: { geos: MapGeos }) {
   const caps = useRef<(THREE.Mesh | null)[]>([]);
   const fleet = useRef<THREE.InstancedMesh>(null);
   const { base, caps: capGeos } = geos;
-  const mini = useMemo(miniLaptopGeometry, []);
-  useEffect(() => () => mini.dispose(), [mini]);
+  const { dark } = useClay();
+  const mini = lump('parcel', parcelPieces, mats, dark);
   const ends = useMemo(() => REACHED.map((s) => new THREE.Vector3(...toWorld(s.c, H_BASE + H_CAP))), []);
   // The small coastal states get a smaller laptop, so they do not pile up on each other.
   const sizes = useMemo(() => REACHED.map((s) => {
@@ -1007,7 +1032,7 @@ function MapBody({ geos }: { geos: MapGeos }) {
           <mesh key={REACHED[k].uf} ref={(m) => void (caps.current[k] = m)} geometry={geo} material={mats.accent} castShadow receiveShadow />
         ))}
       </group>
-      <instancedMesh ref={fleet} args={[mini, mats.clay, REACHED.length]} castShadow frustumCulled={false} />
+      <instancedMesh ref={fleet} args={[mini, PAINT, REACHED.length]} castShadow frustumCulled={false} />
       <instancedMesh ref={trail} args={[DOT, mats.ink, dots.length]} frustumCulled={false} layers={1} userData={OVERLAY} />
       {/* Salvador: a pin */}
       <Act
