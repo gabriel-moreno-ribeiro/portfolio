@@ -200,7 +200,7 @@ function Hero() {
           <RankedStats />
         </motion.div>
       </div>
-      {/* Below the proof, in the flow at every width: it no longer competes with the name. */}
+      {/* Last in the hero: spotifyCard.scss pins it to the top right on desktop and leaves it here, below the proof, otherwise. */}
       <div className="hero-now">
         <SpotifyCard />
       </div>

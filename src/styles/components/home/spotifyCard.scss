@@ -117,15 +117,17 @@
   100% { transform: scaleY(0.14); }
 }
 
-// In the hero: pinned to the right at desktop widths, in the flow below the buttons otherwise
+// In the hero: pinned to the top right on desktop, in the flow below the proof otherwise
 .hero-section .spotify-card {
   margin: 28px auto 0;
 }
 
-@media screen and (min-width: 1200px) {
+// Top right wherever it clears the name, which it sits above. On a short window (hero.scss, 800px
+// and under) the name moves up under it, so there it stays in the flow.
+@media screen and (min-width: 1000px) and (min-height: 801px) {
   .hero-section .spotify-card {
     position: absolute;
-    top: 96px;
+    top: 84px;
     right: 24px;
     margin: 0;
   }
