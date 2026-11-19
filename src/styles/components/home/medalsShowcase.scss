@@ -1,7 +1,7 @@
 // ── Medals showcase (Cool Things) ───────────────────────────────────────────
-// A stretch of wall: Gabriel's portrait in a gilded frame and, beside it, the
-// medals themselves, grouped by subject under a small label in that subject's
-// (muted, earthy) colour. Hovering a medal lifts it off the wall.
+// Gabriel's portrait in a gilded frame over a brass plate with the numbers and,
+// beside it, the medals in a 7 x 4 tray, each group starting under a small label
+// in that subject's (muted, earthy) colour. Hovering a medal lifts it off the tray.
 $ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 $orange: #f0732d;
 
@@ -21,7 +21,7 @@ $subjects: (
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
   gap: 24px 36px;
-  align-items: center;
+  align-items: start;
   padding: 28px 32px;
   background: linear-gradient(180deg, #fbf6ef 0%, #f4ebdf 100%);
 }
@@ -39,7 +39,9 @@ $subjects: (
 // ── Portrait ────────────────────────────────────────────────────────────────
 .medals-showcase__portrait {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
 }
 
 // Carved gold moulding, a row of beads, a cream mat and a thin gold lip.
@@ -71,7 +73,7 @@ $scroll: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width
 
   img {
     display: block;
-    width: 240px;
+    width: 264px;
     height: auto;
     aspect-ratio: 3 / 4;
   }
@@ -108,36 +110,60 @@ $scroll: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width
   min-width: 0;
 }
 
+// The brass plate under the frame: as wide as the frame, never wider.
 .find-my-work .medals-showcase__stats {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 28px;
+  position: relative;
+  box-sizing: border-box;
+  width: 0;
+  min-width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   margin: 0;
-  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  padding: 11px 16px 10px;
+  border-radius: 3px;
+  background: linear-gradient(135deg, #f3dfa6 0%, #d9b566 50%, #f0d590 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(80, 50, 15, 0.45),
+    inset 1px 2px 0 rgba(255, 244, 200, 0.7),
+    2px 6px 8px rgba(40, 24, 8, 0.25);
+  color: #3a2408; // 7:1 or more anywhere on the brass, in both themes
+
+  // The two screws.
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    top: calc(50% - 2.5px);
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #fff2c6, #8a5a22 70%);
+  }
+
+  &::before { left: 6px; }
+  &::after { right: 6px; }
 
   div {
     display: flex;
-    align-items: baseline;
-    gap: 7px;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
   }
 
   dd {
     margin: 0;
-    font-size: 26px;
-    font-weight: 700;
-    line-height: 1;
-    color: var(--accent-hero); // 26px bold: 3:1 on the card (--primary-orange was 2.6)
+    font: 700 24px/1 ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    text-shadow: 0 1px 0 rgba(255, 244, 200, 0.6);
   }
 
   dt {
-    font-size: 13px;
-    color: var(--fg-muted);
+    font: 600 10px/1.1 "DM Sans", sans-serif;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
   }
 }
 
 // ── The wall ────────────────────────────────────────────────────────────────
-// Groups flow left to right and wrap, so the big math group takes a row of its
-// own and the small ones share one.
 // The sort control: three real buttons, the pressed one inked in.
 .medal-sort {
   display: flex;
@@ -174,29 +200,10 @@ $scroll: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width
   }
 }
 
-// Every grouping shares one grid cell, so the stage is always as tall as the tallest.
-.medal-stage {
-  --medal: 60px;
-  position: relative;
-  display: grid;
-  align-items: start;
-
-  > .medal-wall { grid-area: 1 / 1; }
-}
-
-.medal-wall--ghost {
-  visibility: hidden;
-  pointer-events: none;
-
-  i {
-    display: block;
-    width: calc(var(--medal) + 6px);
-    height: calc(var(--medal) + 6px);
-  }
-}
+.medal-stage { position: relative; }
 
 // After a regroup the labels fade in while the medals travel.
-.medal-wall.is-regrouped h4 { animation: medal-label-in 0.5s 0.15s $ease-out backwards; }
+.medal-tray.is-regrouped h4 { animation: medal-label-in 0.5s 0.15s $ease-out backwards; }
 @keyframes medal-label-in { from { opacity: 0; } }
 
 // Name tag under the medal, in the ink of the site's other tooltips. It is
@@ -227,58 +234,56 @@ $scroll: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width
   em { opacity: 0.8; }
 }
 
-.medal-wall {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 18px 36px;
-  margin-top: 4px;
-}
+// 28 medals, 7 x 4. Every cell keeps a slot on top for a label, so the tray is
+// the same height however the medals are grouped.
+.medal-tray {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 8px 0; // the photos carry their own margin
+  margin: 4px 0 0;
+  padding: 8px 8px 10px;
+  list-style: none;
+  border-radius: 12px;
+  background: rgba(122, 76, 28, 0.07);
+  box-shadow: inset 0 1px 3px rgba(60, 35, 10, 0.22), inset 0 0 0 1px rgba(60, 35, 10, 0.06);
 
-.medal-group {
-  h4 {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin: 0 0 8px;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--subject, var(--fg-muted));
-
-    // A short rule after the name, the colour's only other appearance.
-    &::after {
-      content: "";
-      flex: 0 0 18px;
-      height: 1px;
-      background: currentColor;
-      opacity: 0.6;
-    }
+  li {
+    position: relative;
+    padding-top: 16px;
   }
 
-  ul {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
+  // The label of a group sits over its first medal and may run over the next ones.
+  h4 {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    z-index: 1;
     margin: 0;
-    padding: 0;
-    list-style: none;
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: var(--subject, var(--fg-muted));
+    pointer-events: none;
   }
 
   button {
     position: relative;
     display: block;
-    padding: 3px;
+    width: 100%;
+    padding: 0;
     border: 0;
     background: transparent;
     cursor: zoom-in;
     transition: transform 0.45s $ease-out;
 
-    // Picked up off the wall.
+    // Picked up off the tray.
     &:hover,
     &:focus-visible {
       transform: translateY(-6px) scale(1.12) rotate(-3deg);
-      z-index: 1;
+      z-index: 2;
 
       img { filter: drop-shadow(0 14px 12px rgba(40, 24, 8, 0.38)) drop-shadow(0 2px 2px rgba(40, 24, 8, 0.3)); }
     }
@@ -288,33 +293,38 @@ $scroll: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width
       outline-offset: 2px;
       border-radius: 8px;
     }
-
   }
 
   img {
     display: block;
-    width: var(--medal);
-    height: var(--medal);
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
     filter: drop-shadow(0 5px 5px rgba(40, 24, 8, 0.32)) drop-shadow(0 1px 1px rgba(40, 24, 8, 0.28));
     transition: filter 0.45s $ease-out;
   }
 }
 
-@each $id, $pair in $subjects {
-  .medal-group.is-#{$id} { --subject: #{nth($pair, 1)}; }
-  [data-theme="dark"] .medal-group.is-#{$id} { --subject: #{nth($pair, 2)}; }
+[data-theme="dark"] .medal-tray {
+  background: rgba(0, 0, 0, 0.24);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 244, 200, 0.05);
 }
 
-.medal-group.is-gold { --subject: #7e672b; }
-[data-theme="dark"] .medal-group.is-gold { --subject: #d6bd7a; }
+@each $id, $pair in $subjects {
+  .medal-tray .is-#{$id} { --subject: #{nth($pair, 1)}; }
+  [data-theme="dark"] .medal-tray .is-#{$id} { --subject: #{nth($pair, 2)}; }
+}
+
+.medal-tray .is-gold { --subject: #7e672b; }
+[data-theme="dark"] .medal-tray .is-gold { --subject: #d6bd7a; }
 
 @media (prefers-reduced-motion: reduce) {
-  .medal-wall.is-regrouped h4,
+  .medal-tray.is-regrouped h4,
   .medal-tip { animation: none; }
 
   .gold-frame,
-  .medal-group button,
-  .medal-group img { transition: none; }
+  .medal-tray button,
+  .medal-tray img { transition: none; }
 }
 
 // Tablet: the portrait sits above the medals.
@@ -327,7 +337,7 @@ $scroll: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width
   .medals-showcase__body { width: 100%; }
 }
 
-// Phone: a slimmer frame, smaller hooks.
+// Phone: a slimmer frame, the tray turned to 4 x 7.
 @media screen and (max-width: 600px) {
   .find-my-work .medals-showcase { padding: 22px 18px; }
 
@@ -338,12 +348,16 @@ $scroll: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width
 
   .gold-frame__mat { padding: 15px; }
 
-  .medal-stage { --medal: 48px; }
-  .medal-wall { gap: 14px 24px; }
+  .medal-tray {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    padding: 8px 6px 10px;
+  }
+
   .medal-sort button { min-height: 36px; }
 
   .find-my-work .medals-showcase__stats {
-    gap: 8px 20px;
-    dd { font-size: 22px; }
+    padding: 10px 12px 9px;
+    dd { font-size: 20px; }
+    dt { font-size: 9.5px; letter-spacing: 0; }
   }
 }

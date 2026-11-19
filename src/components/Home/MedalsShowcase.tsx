@@ -1,6 +1,6 @@
-// The medals on the home page: Gabriel's portrait in a gilded frame and, beside
-// it, every photographed medal on the wall, grouped by subject under a small
-// label. Anything on the wall opens large in the viewer.
+// The medals on the home page: Gabriel's portrait in a gilded frame over a brass
+// plate with the numbers and, beside it, every photographed medal in a tray,
+// each group starting under a small label. Anything here opens large in the viewer.
 import { lazy, Suspense, useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { animate } from "motion/react";
 import { medals, type Medal, type Subject } from "../../content/medals";
@@ -117,7 +117,7 @@ export default function MedalsShowcase() {
   useEffect(() => {
     if (!tip) return;
     const away = (e: PointerEvent) => {
-      if (!(e.target as Element).closest?.(".medal-group button")) setTip(null);
+      if (!(e.target as Element).closest?.(".medal-tray button")) setTip(null);
     };
     document.addEventListener("pointerdown", away);
     return () => document.removeEventListener("pointerdown", away);
@@ -133,7 +133,7 @@ export default function MedalsShowcase() {
                 <img
                   src="/work/medals/framed-480.webp"
                   srcSet="/work/medals/framed-480.webp 480w, /work/medals/framed-960.webp 960w"
-                  sizes="(max-width: 600px) 190px, 240px"
+                  sizes="(max-width: 600px) 190px, 264px"
                   alt={PHOTO_ALT}
                   width={480}
                   height={640}
@@ -144,14 +144,7 @@ export default function MedalsShowcase() {
             </span>
           </span>
         </button>
-      </div>
-
-      <div className="medals-showcase__body">
-        <h3>28 Olympiad Medals</h3>
-        <p>
-          Math, physics, chemistry, biology and astronomy. 5 golds at Mathématiques sans Frontières, an
-          international olympiad. Gold at ONNEQ, 1st at OBAQ.
-        </p>
+        {/* The brass plate under the frame. */}
         <dl className="medals-showcase__stats">
           <div>
             <dd>{shown && !reduced ? <Counter value={28} /> : 28}</dd>
@@ -170,7 +163,10 @@ export default function MedalsShowcase() {
             <dt>international</dt>
           </div>
         </dl>
+      </div>
 
+      <div className="medals-showcase__body">
+        <h3>28 Olympiad Medals</h3>
         <div className="medal-sort" role="group" aria-label="Group the medals by">
           <span aria-hidden="true">Group by</span>
           {MODES.map((o) => (
@@ -181,8 +177,8 @@ export default function MedalsShowcase() {
         </div>
         <p className="sr-only" aria-live="polite">{said}</p>
 
-        {/* Every grouping is laid out in the same cell; only the current one
-            shows. The box is as tall as the tallest, so regrouping never moves the page. */}
+        {/* One tray for all 28 (7 x 4, or 4 x 7 on a phone): every grouping fills
+            the same cells, so regrouping never moves the page. */}
         <div
           ref={stage}
           className="medal-stage"
@@ -193,61 +189,43 @@ export default function MedalsShowcase() {
             }
           }}
         >
-          {MODES.filter((o) => o.id !== mode).map((o) => (
-            <div key={o.id} className="medal-wall medal-wall--ghost" aria-hidden="true">
-              {GROUPS[o.id].map((g) => (
-                <div key={g.id} className="medal-group">
-                  <h4>{g.label}</h4>
-                  <ul>
-                    {g.items.map(({ m }) => (
-                      <li key={m.num}><i /></li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          ))}
-
-          <div className={`medal-wall${said ? " is-regrouped" : ""}`}>
-            {GROUPS[mode].map((g) => (
-              <section key={`${mode}-${g.id}`} className={`medal-group is-${g.id}`} aria-label={g.label}>
-                <h4>{g.label}</h4>
-                <ul>
-                  {g.items.map(({ m, i }) => (
-                    <li key={m.num} data-num={m.num}>
-                      <button
-                        type="button"
-                        aria-label={`${label(m)}. Open large`}
-                        aria-describedby={tip?.m === m ? "medal-tip" : undefined}
-                        onPointerDown={(e) => { touch.current = e.pointerType === "touch"; }}
-                        onPointerEnter={(e) => { if (e.pointerType === "mouse") showTip(m, e.currentTarget); }}
-                        onPointerLeave={(e) => { if (e.pointerType === "mouse") setTip(null); }}
-                        onFocus={(e) => { if (e.currentTarget.matches(":focus-visible")) showTip(m, e.currentTarget); }}
-                        onBlur={() => setTip(null)}
-                        onClick={(e) => {
-                          // Touch: the first tap names the medal, the second opens it. (detail 0 is the keyboard.)
-                          if (touch.current && e.detail !== 0 && tip?.m !== m) return showTip(m, e.currentTarget);
-                          setTip(null);
-                          setOpen(i + 1);
-                        }}
-                      >
-                        <img
-                          src={`/work/medals/wall/xs/${m.num}.webp`}
-                          srcSet={`/work/medals/wall/xs/${m.num}.webp 144w, /work/medals/wall/sm/${m.num}.webp 280w`}
-                          sizes="72px"
-                          alt=""
-                          width={144}
-                          height={144}
-                          loading="lazy"
-                          decoding="async"
-                        />
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            ))}
-          </div>
+          <ul className={`medal-tray${said ? " is-regrouped" : ""}`}>
+            {GROUPS[mode].flatMap((g) =>
+              g.items.map(({ m, i }, n) => (
+                // Keyed by mode: a regroup hangs fresh medals, so the glide never starts from a stale transform.
+                <li key={`${mode}-${m.num}`} data-num={m.num}>
+                  {n === 0 && <h4 className={`is-${g.id}`}>{g.label}</h4>}
+                  <button
+                    type="button"
+                    aria-label={`${label(m)}. Open large`}
+                    aria-describedby={tip?.m === m ? "medal-tip" : undefined}
+                    onPointerDown={(e) => { touch.current = e.pointerType === "touch"; }}
+                    onPointerEnter={(e) => { if (e.pointerType === "mouse") showTip(m, e.currentTarget); }}
+                    onPointerLeave={(e) => { if (e.pointerType === "mouse") setTip(null); }}
+                    onFocus={(e) => { if (e.currentTarget.matches(":focus-visible")) showTip(m, e.currentTarget); }}
+                    onBlur={() => setTip(null)}
+                    onClick={(e) => {
+                      // Touch: the first tap names the medal, the second opens it. (detail 0 is the keyboard.)
+                      if (touch.current && e.detail !== 0 && tip?.m !== m) return showTip(m, e.currentTarget);
+                      setTip(null);
+                      setOpen(i + 1);
+                    }}
+                  >
+                    <img
+                      src={`/work/medals/wall/xs/${m.num}.webp`}
+                      srcSet={`/work/medals/wall/xs/${m.num}.webp 144w, /work/medals/wall/sm/${m.num}.webp 280w`}
+                      sizes="72px" // the 144w file is sharp enough in an ~80px cell at 2x; 280w is for 3x phones
+                      alt=""
+                      width={144}
+                      height={144}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </button>
+                </li>
+              )),
+            )}
+          </ul>
 
           {tip && (
             <div
