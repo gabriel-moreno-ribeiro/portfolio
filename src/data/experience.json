@@ -35,14 +35,14 @@
     "id": "estudar",
     "order": 3,
     "org": "Fundação Estudar",
-    "role": "PREP Fellow",
+    "role": "PREP Program",
     "start": "2025-01",
     "end": "2026-04",
     "periodLabel": "January 2025 to April 2026",
     "city": "",
     "_placeholder": true,
     "bullets": [
-      "About 70 fellows picked from **10,000+ applicants**, a 0.7% acceptance rate.",
+      "About 70 people picked from **10,000+ applicants**, a 0.7% acceptance rate.",
       "Brazil's program for students applying to universities abroad."
     ]
   },
@@ -50,7 +50,7 @@
     "id": "fintech-rct",
     "order": 4,
     "org": "Fintech Savings RCT",
-    "role": "Research Fellow in Economics, Fundação Estudar",
+    "role": "Research in Economics, Fundação Estudar",
     "start": "2025",
     "end": "2025",
     "periodLabel": "2025",

@@ -35,14 +35,14 @@ Gabriel Moreno Ribeiro is 18 and Brazilian. He grew up between Salvador, Bahia, 
 ## Research
 
 - The Steady-State Hypothesis (Instituto Principia, Escola de Talentos, 2023 to 2026, advisor Prof. Juliano Alves Bonacin): a 150-page monograph on when the steady-state approximation in chemical kinetics holds and how much it misses, from ozone photolysis to ammonia synthesis, with simulations and data from the SABIO-RK database. PDF: https://gabrielmr.com/research/chemical-kinetics/paper.pdf
-- Fintech savings RCT (Fundação Estudar research fellowship, 2025, mentored by Aaron Litvin, Ph.D., Harvard): randomized controlled trial with 208 public-school students; any of the three budgeting tools raised reported saving by 52 pp over the control group.
+- Fintech savings RCT (research with Fundação Estudar, 2025, mentored by Aaron Litvin, Ph.D., Harvard): randomized controlled trial with 208 public-school students; any of the three budgeting tools raised reported saving by 52 pp over the control group.
 - Projeto Candela paper: https://gabrielmr.com/research/projeto-candela/paper.pdf
 
 ## Honors
 
 - 28 olympiad medals across 38 science olympiads (math, physics, chemistry, biology, astronomy). 5 golds at Mathématiques sans Frontières (international). Gold at ONNEQ, 1st at OBAQ, gold at the Biotechnology Olympiad and ONC.
 - SAT 1570/1600 (Reading and Writing 770, Math 800), above the 99th percentile. Score report: https://gabrielmr.com/files/sat-score-report.pdf
-- Fundação Estudar PREP fellow: about 70 picked from 10,000+ applicants (0.7%).
+- Fundação Estudar PREP program: one of about 70 picked from 10,000+ applicants (0.7%).
 - Instituto Principia Escola de Talentos: 1 of 14 picked nationally.
 - Colégio Militar de Salvador: admitted at 10, one of 30 from 2,500+ applicants, perfect score in math.
 - Insper: 1st place admission, Computer Engineering.

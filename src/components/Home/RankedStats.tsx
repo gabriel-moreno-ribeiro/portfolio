@@ -20,8 +20,8 @@ function RankedStats() {
   const num = (id: string) => numbers.find((n) => n.id === id)?.value ?? 0;
 
   const stats = [
-    // experience.json (estudar): "About 70 fellows picked from 10,000+ applicants"
-    { n: 70, prefix: '~', of: 'of 10,000+', label: 'Fundação Estudar fellows' },
+    // experience.json (estudar): "About 70 people picked from 10,000+ applicants"
+    { n: 70, prefix: '~', of: 'of 10,000+', label: 'Fundação Estudar' },
     // numbers.json (startups) + projects.ts: "One of 6 startups in the Canastra Ventures AI Residency"
     { n: 1, of: `of ${num('startups')}`, label: 'startups in the Canastra AI Residency' },
     // numbers.json (sat): 1570, "SAT / 1600"; llms.txt: "above the 99th percentile"
