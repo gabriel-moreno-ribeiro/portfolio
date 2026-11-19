@@ -162,8 +162,11 @@ function Renderer({ bg, onReady }: { bg: string; onReady: () => void }) {
     const wait = gl.compileAsync(scene, camera);
     gl.setRenderTarget(null);
     wait.then(done, done);
+    // The wait never ends if a material is thrown away meanwhile (a theme switch): draw anyway.
+    const late = setTimeout(done, 1500);
     return () => {
       alive = false;
+      clearTimeout(late);
     };
   }, [gl, scene, camera, invalidate, pipe]);
 
