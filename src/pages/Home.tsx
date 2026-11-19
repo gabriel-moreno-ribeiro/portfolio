@@ -1,4 +1,4 @@
-import { lazy, Suspense, useCallback, useEffect, useRef, useState, type ReactNode } from "react";
+import { lazy, startTransition, Suspense, useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { useLocation } from "react-router-dom";
 import Hero from "../components/Home/Hero";
 import MomentsStrip from "../components/Home/MomentsStrip";
@@ -88,6 +88,20 @@ function Home() {
     const idle = window.requestIdleCallback ?? ((cb: () => void) => window.setTimeout(cb, 2000));
     const id = idle(() => { import('../components/Home/Clay/ClayStage').catch(() => {}); });
     return () => (window.cancelIdleCallback ?? window.clearTimeout)(id);
+  }, []);
+  // Cool Things is the heaviest section to mount, and its turn used to come just as the wardrobe
+  // rail above it reached the screen: the rail stuttered on a first visit. It now mounts in idle
+  // time once the page has loaded, as a transition, so the work is cut into slices that never block.
+  const [workWarm, setWorkWarm] = useState(false);
+  useEffect(() => {
+    const idle = window.requestIdleCallback ?? ((cb: () => void) => window.setTimeout(cb, 2000));
+    let id = 0;
+    const warm = () => { id = idle(() => { import('../components/Home/FindMyWork').then(() => startTransition(() => setWorkWarm(true))).catch(() => {}); }); };
+    if (document.readyState === 'complete') warm(); else window.addEventListener('load', warm, { once: true });
+    return () => {
+      window.removeEventListener('load', warm);
+      (window.cancelIdleCallback ?? window.clearTimeout)(id);
+    };
   }, []);
   const location = useLocation();
   // Everything mounts at once for a deep link, the first keypress (so Tab
@@ -219,7 +233,7 @@ function Home() {
       <LazySection id="wardrobe" label="What I wore, growing up" eager={mountAll}>
         <Wardrobe id="wardrobe" />
       </LazySection>
-      <LazySection id="work" label="Cool things" eager={mountAll}>
+      <LazySection id="work" label="Cool things" eager={mountAll || workWarm}>
         <FindMyWork />
       </LazySection>
       <LazySection id="research" label="Research" eager={mountAll}>
