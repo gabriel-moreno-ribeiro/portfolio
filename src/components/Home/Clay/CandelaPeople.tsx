@@ -1,4 +1,5 @@
-// The ending, under one magnifying glass. It slides in under the kit and shows where the kits went:
+// The ending, through a magnifying glass. A hand holds a small one up to the kit, the camera goes
+// through it, and the round field it shows is where the kits went:
 // 28 schools, 17 in Bahia and 11 in Ceará. Then it goes into one of the schools and shows who was
 // reached: its students come out, the count runs to 3,392, and those who failed physics (a cross over
 // their heads) go from 9 in 30 to 3 in 30 once the kit is in class: the 30% and the 10% of the story.
@@ -7,7 +8,7 @@ import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js';
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
-import { useTones } from './CandelaParts';
+import { TimingHand, useTones } from './CandelaParts';
 import { Act, ageOf, at, ease, pop, Puck, settle, slice, spring, useClay, type Mats, type Play, type V3 } from './kit';
 
 const HALF_PI = Math.PI / 2;
@@ -24,28 +25,82 @@ const merged = (parts: THREE.BufferGeometry[]) => {
 export const REACH = 3; // the step of the schools
 export const RESULT = 4; // the step of the students
 
-// ── The round stand ─────────────────────────────────────────────────────────
-// It was drawn as a magnifying glass (rim, glint, handle); it read as a pan, so only the disc stays.
-/** The middle of the stand, and the height its top is at: everything it shows stands on it. */
+// ── The magnifying glass ────────────────────────────────────────────────────
+// A small one, in a hand. It comes in from the lower right and stops between the camera and the kit;
+// then the camera goes through the ring, and the round field opens around the kit.
+/** Seconds into the schools' step: the glass is held still, and the camera's dive through it. */
+const LOUPE_SET = 1.15;
+export const DIVE: [number, number] = [1.5, 2.5];
+/** How far the camera travels in the dive (CandelaScene: from FAR to FIELD). */
+export const DIVE_LEN = 6;
+const LOUPE_AHEAD = 4.4; // how far in front of the camera the glass is held before the dive
+/** The ring has left the frame: from here on the kits may go. */
+export const ENTER = 1.9;
+const TILT = 0.7; // the handle points down and to the right
+export function Loupe() {
+  const { play, mats } = useClay();
+  const { wood } = useTones();
+  const g = useRef<THREE.Group>(null);
+  const { rim, glint } = useMemo(() => ({ rim: new THREE.TorusGeometry(0.5, 0.045, 10, 64), glint: new THREE.TorusGeometry(0.39, 0.012, 4, 20, 0.6).rotateZ(1.9) }), []);
+  useEffect(
+    () => () => {
+      rim.dispose();
+      glint.dispose();
+    },
+    [rim, glint],
+  );
+  // It is held far above the floor: its shadow down there would be a stray blot.
+  useLayoutEffect(() => void g.current?.traverse((o) => void (o.castShadow = false)), []);
+  const v = useMemo(() => new THREE.Vector3(), []);
+  // Hung on the camera's own axis every frame, so the camera goes through the middle of the ring whatever its sway.
+  useFrame(({ camera, clock }) => {
+    const o = g.current;
+    if (!o) return;
+    const a = play.to === REACH ? play.age : 0;
+    const ahead = LOUPE_AHEAD - DIVE_LEN * ease(slice(a, DIVE[0], DIVE[1]));
+    o.visible = a > 0.5 && ahead > 0.45;
+    if (!o.visible) return;
+    // In along its own handle, from outside the frame; held, it is never quite still.
+    const out = (1 - settle(slice(a, 0.55, LOUPE_SET), 0.6)) * 3.4;
+    const t = clock.elapsedTime;
+    o.quaternion.copy(camera.quaternion);
+    o.position.copy(camera.position).add(v.set(Math.sin(TILT) * out + Math.sin(t * 1.7) * 0.012, -Math.cos(TILT) * out + Math.sin(t * 2.3) * 0.012, -ahead).applyQuaternion(camera.quaternion));
+  });
+  return (
+    <group ref={g} visible={false}>
+      <group rotation={[0, 0, TILT]}>
+        <mesh geometry={rim} material={mats.shade.dark} />
+        <mesh geometry={glint} position={[0, 0, 0.02]} material={mats.clay} />
+        <Puck r={0.06} h={0.3} bevel={0.02} segments={16} position={[0, -0.66, 0]} material={mats.shade.dark} />
+        <Puck r={0.085} h={1.1} bevel={0.04} segments={20} position={[0, -1.3, 0]} material={wood} />
+        <group position={[0, -1.3, 0.1]}>
+          <TimingHand />
+        </group>
+      </group>
+    </group>
+  );
+}
+
+// ── The round field the glass shows ─────────────────────────────────────────
+/** The middle of the field, and the height its top is at: everything it shows stands on it. */
 export const LENS: V3 = [-0.9, 0, 0.15];
 export const GLASS = 0.06;
 const RIM = 3; // radius
-const HANDLE = 0.38; // the way it slides in and out, radians from +X towards the camera
-/** A point on the glass (x to the right, z towards the camera, from its middle), in the world. */
+/** A point on the field (x to the right, z towards the camera, from its middle), in the world. */
 export const onLens = (x: number, z: number, y = 0): V3 => [LENS[0] + x, GLASS + y, LENS[2] + z];
-// It slides in under the kit and leaves the way it came. Between the two steps it gives a little.
+// It opens around the kit as the camera comes through the glass, and closes on the spot when the story leaves.
 const lensAct = (g: THREE.Group, p: Play) => {
   const here = p.to === REACH || p.to === RESULT;
   const was = p.from === REACH || p.from === RESULT;
-  const k = here ? (was ? 1 : settle(slice(p.t, 0.2, 0.85), 0.5)) : was ? 1 - ease(slice(p.t, 0, 0.45)) : 0;
+  const open = p.to === REACH ? (p.from === RESULT ? 1 : ease(slice(p.age, ENTER - 0.15, ENTER + 0.5))) : was ? 1 : settle(slice(p.t, 0.2, 0.85), 0.5);
+  const k = here ? open : was ? 1 - ease(slice(p.t, 0, 0.45)) : 0;
   g.visible = k > 0.001;
-  const out = (1 - k) * 11;
-  // Going from the schools into one school, the stand gives.
+  // Going from the schools into one school, the field gives.
   const focus = p.from === REACH && p.to === RESULT ? 0.035 * Math.sin(slice(p.t, 0.05, 0.6) * Math.PI) : 0;
-  g.position.set(LENS[0] + Math.cos(HANDLE) * out, 0, LENS[2] + Math.sin(HANDLE) * out);
-  g.scale.setScalar(1 - focus);
+  // It opens out from under the kit, not from its own middle.
+  g.position.set(LENS[0] + KIT_ON_LENS[0] * (1 - k), 0, LENS[2] + KIT_ON_LENS[1] * (1 - k));
+  g.scale.set(k * (1 - focus), 1, k * (1 - focus));
 };
-
 export function Lens() {
   const { mats } = useClay();
   return (
@@ -87,8 +142,8 @@ const FOCUS_AT: [number, number] = [0, -1.7];
 // Kits leave the box for the nearest schools first.
 const ORDER = SPOTS.map((_, i) => i).sort((a, b) => Math.hypot(SPOTS[a].x - KIT_ON_LENS[0], SPOTS[a].z - KIT_ON_LENS[1]) - Math.hypot(SPOTS[b].x - KIT_ON_LENS[0], SPOTS[b].z - KIT_ON_LENS[1]));
 const RANK = SPOTS.map((_, i) => ORDER.indexOf(i));
-/** When the kit for the `n`-th school lands, seconds into the step. */
-export const landAt = (n: number) => 1.05 + n * 0.05;
+/** When the kit for the `n`-th school lands, seconds into the step (the camera is through the glass by ENTER). */
+export const landAt = (n: number) => ENTER + 1.05 + n * 0.05;
 /** How many schools have their kit, `p` into the story. */
 export const reached = (p: Play, from = 0, to = SCHOOLS) => {
   if (p.to !== REACH && p.from !== REACH) return 0;
@@ -164,7 +219,8 @@ export function Schools() {
     m.visible = on;
     b.visible = on && (p.to === REACH || p.from === REACH);
     if (!on) return;
-    const a3 = ageOf(p, REACH);
+    // Leaving the schools' step early (a click on the next one), every kit has landed: nothing is left in the air.
+    const a3 = p.from === REACH && p.to !== REACH ? 99 : ageOf(p, REACH);
     for (let i = 0; i < SCHOOLS; i++) {
       const s = SPOTS[i];
       const land = landAt(RANK[i]);

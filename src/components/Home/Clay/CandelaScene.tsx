@@ -1,10 +1,10 @@
 // Projeto Candela in five steps, with the kit in every one of them: the wooden box opens; what is
 // inside is laid out on the desk; three of the experiments run, one after the other, the camera on each;
-// then a round stand slides in under the kit and shows the 28 schools its kits went to, and goes
+// then a hand holds a small magnifying glass up to the kit, the camera goes through it to the 28 schools its kits went to, and goes
 // into one school to show the students: 3,392 reached, and those who fail physics from 30% to 10%.
 import { useEffect } from 'react';
 import * as THREE from 'three';
-import { BAHIA, BAHIA_AT, CEARA, CEARA_AT, counted, kidAt, KIT_ON_LENS, Lens, onLens, REACH, reached, RESULT, Schools, SCHOOLS, Students, TURN } from './CandelaPeople';
+import { BAHIA, BAHIA_AT, CEARA, CEARA_AT, counted, DIVE, ENTER, kidAt, KIT_ON_LENS, Lens, Loupe, onLens, REACH, reached, RESULT, Schools, SCHOOLS, Students, TURN } from './CandelaPeople';
 import { Caliper, CAR_GO, Cylinder, Desk, DESK, disposeTones, DROP_X, HANG, HUNG, Incline, KitBox, LET_GO, Lid, LID_OPEN, lidOpen, PULLEY_Y, Riding, SpringScale, Stand, Stopwatch, TagWhen, Tape, TimingHand, Track, Weights } from './CandelaParts';
 import { Act, ageOf, at, bump, ease, Morph, Puck, Rig, settle, shown, slice, spring, Tag, useClay, wins, type Play, type Pose, type Shot, type V3 } from './kit';
 
@@ -57,7 +57,7 @@ const peek = (rise: number, when: number, k: number) => (g: THREE.Group, p: Play
 /** The kit box has a body: it squats before the lid flies open, recoils when the parts spring out, pumps while it sends kits out, and gives a jump when it turns the class round. */
 const boxAct = (g: THREE.Group, p: Play) => {
   const a0 = ageOf(p, 0);
-  const a3 = ageOf(p, REACH);
+  const a3 = ageOf(p, REACH) - ENTER; // the kits go once the camera is through the glass
   const a4 = ageOf(p, RESULT);
   const squat = (0.08 * bump(slice(a0, 0.02, 0.22)) - 0.06 * bump(slice(a0, 0.2, 0.5)) + 0.07 * bump(slice(a0, DUCK, DUCK + 1))) * at(p, 0);
   const recoil = p.to === 1 ? 0.16 * bump(slice(p.age, 0.02, 0.32)) : 0;
@@ -67,7 +67,7 @@ const boxAct = (g: THREE.Group, p: Play) => {
   g.position.y = 0.35 * jump;
 };
 // The lid: it springs open at the first step, stands open while what was inside is laid out, and opens again on the glass to let the kits out.
-const lidOf = (p: Play) => lidOpen(ageOf(p, 0)) * at(p, 0) + LID_OPEN * at(p, 1) + LID_OPEN * spring(ageOf(p, REACH) - 0.72, 1.7, 4.5) * at(p, REACH);
+const lidOf = (p: Play) => lidOpen(ageOf(p, 0)) * at(p, 0) + LID_OPEN * at(p, 1) + LID_OPEN * spring(ageOf(p, REACH) - ENTER - 0.72, 1.7, 4.5) * at(p, REACH);
 
 // ── The experiments, on the desk ─────────────────────────────────────────────
 const EXPERIMENTS = 2;
@@ -101,6 +101,8 @@ const WIDE = { pos: [0, 7.6, 11] as V3, look: [0, 0.4, 0.3] as V3 };
 const AT_TRACK = { pos: [-1.6, 5.35, 7.0] as V3, look: [-1.6, 0.2, 2.35] as V3 };
 const AT_INCLINE = { pos: [1.55, 2.9, 2.85] as V3, look: [1.3, 0.7, -1.9] as V3 };
 const AT_STAND = { pos: [3.9, 3.1, 8.9] as V3, look: [3.5, 1.5, 1.15] as V3 };
+const FAR = { pos: [-0.9, 13.1, 12.3] as V3, look: [-0.9, 0.35, 2.0] as V3 };
+const FIELD = { pos: [-0.6, 9.2, 7.75] as V3, look: [-0.6, 0.1, 0.55] as V3 };
 const CAMERA: Shot[] = [
   { pos: [0.4, 3.75, 8.9], look: [0, 1.5, 0.25], to: { pos: [0.3, 3.9, 9.2], look: [0, 1.5, 0.1] }, over: [0, 0.9] },
   { pos: [0, 8.1, 9.9], look: [0, 0.85, 0.5], to: { pos: [0, 7.9, 9.6], look: [0, 0.85, 0.5] }, over: [0.6, 2.6] },
@@ -117,8 +119,19 @@ const CAMERA: Shot[] = [
       { at: ON_STAND, ...AT_STAND },
     ],
   },
-  // The last two look at the middle of the round stand (a little to its right, for the labels on that side).
-  { pos: [-0.6, 9.2, 7.75], look: [-0.6, 0.1, 0.55], to: { pos: [-0.6, 9.0, 7.6], look: [-0.6, 0.1, 0.55] }, over: [0.5, 2.6] },
+  // The schools: from far off, on the kit (it sits in the middle of the glass the hand holds up), then
+  // through the glass to the round field. FAR to FIELD is DIVE_LEN long.
+  {
+    pos: FAR.pos,
+    look: FAR.look,
+    path: [
+      { at: 0, ...FAR },
+      { at: DIVE[0], ...FAR },
+      { at: DIVE[1], ...FIELD },
+      { at: DIVE[1] + 2.4, pos: [-0.6, 9.0, 7.6], look: FIELD.look },
+    ],
+  },
+  // The students: on the middle of the field (a little to its right, for the labels on that side).
   { pos: [-0.6, 8.5, 8.95], look: [-0.6, 0.5, 0.75], to: { pos: [-0.6, 8.3, 8.75], look: [-0.6, 0.5, 0.75] }, over: [0.6, 2.2] },
 ];
 
@@ -209,12 +222,13 @@ export default function CandelaScene() {
       <TagWhen at={[INCLINE[0] - 0.4, 1.05, INCLINE[2]]} dx={-30} dy={-40} on={during([LET_GO + 0.1, ON_INCLINE[1]])}>Inclined plane</TagWhen>
       <TagWhen at={[hang[0] + 0.15, hang[1] - 0.6, hang[2]]} dx={70} dy={-10} on={during([HUNG + 0.2, 99])}>{'Spring scale\n+ cylinder'}</TagWhen>
 
-      {/* The ending, on one round stand: the 28 schools, then the students of one of them */}
+      {/* The ending, through the magnifying glass: the 28 schools, then the students of one of them */}
+      <Loupe />
       <Lens />
       <Schools />
-      <TagWhen at={onLens(BAHIA_AT[0], BAHIA_AT[1], 0.6)} dx={-44} dy={-8} on={(p) => shown(p, [REACH], 1.2)}>{`Bahia · ${BAHIA}`}</TagWhen>
-      <TagWhen at={onLens(CEARA_AT[0], CEARA_AT[1], 0.6)} dx={30} dy={-30} on={(p) => shown(p, [REACH], 1.6)}>{`Ceará · ${CEARA}`}</TagWhen>
-      <TagWhen at={onLens(-1.75, 2.35, 0.05)} dx={-34} dy={30} on={(p) => shown(p, [REACH], 1.05)} text={(p) => (reached(p) === 1 ? '1 school' : `${reached(p)} schools`)}>
+      <TagWhen at={onLens(BAHIA_AT[0], BAHIA_AT[1], 0.6)} dx={-44} dy={-8} on={(p) => shown(p, [REACH], ENTER + 1.2)}>{`Bahia · ${BAHIA}`}</TagWhen>
+      <TagWhen at={onLens(CEARA_AT[0], CEARA_AT[1], 0.6)} dx={30} dy={-30} on={(p) => shown(p, [REACH], ENTER + 1.6)}>{`Ceará · ${CEARA}`}</TagWhen>
+      <TagWhen at={onLens(-1.75, 2.35, 0.05)} dx={-34} dy={30} on={(p) => shown(p, [REACH], ENTER + 1.05)} text={(p) => (reached(p) === 1 ? '1 school' : `${reached(p)} schools`)}>
         {`${SCHOOLS} schools`}
       </TagWhen>
       <Students />
