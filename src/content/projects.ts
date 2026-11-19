@@ -183,10 +183,8 @@ export const projects: Project[] = [
         body: ['21 states, all by referral.'],
       },
     ],
-    // PLACEHOLDER (owner): these four files came out of Gemini and their own metadata marks them as
-    // AI-generated (originals in qa/originals/laptops/). Before this goes to production the owner has
-    // to say what they are: real photos that were only restored, or images made by AI, which then
-    // need a visible label and cannot be shown as photos.
+    // The owner's own photos, restored with AI (he confirmed it on 2026-11-19). The files came out of
+    // Gemini, so the pixels still carry its invisible mark; originals in qa/originals/laptops/.
     gallery: ['01.webp', '02.webp', '03.webp', '04.webp'],
     focus: {
       '01.webp': '35% 30%', // the boy stands on the left
