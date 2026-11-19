@@ -32,7 +32,19 @@ $hf-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
     border-radius: 50%;
     background: var(--accent-decor);
   }
-  &__group { margin-top: 10px; }
+  &__group { margin-top: 10px; font-size: 12px; }
+
+  // The gestures' heading: the title on the left, the way out on the right.
+  &__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 12px 16px;
+
+    > div { display: flex; flex-direction: column; gap: 10px; }
+    .btn { padding: 8px 22px; font-size: 15px; }
+  }
 
   &__title {
     margin: 0;
@@ -69,32 +81,40 @@ $hf-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
     span { font-size: 13px; line-height: 1.4; color: var(--fg-muted); }
   }
 
-  // The gestures: a two-column legend, the sign and what it does.
+  // The gestures: one tile each, the sign drawn large, then its name and what it does.
   &__legend {
     margin: 0;
     padding: 0;
     list-style: none;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    column-gap: 24px;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 8px;
 
     li {
       display: flex;
       align-items: center;
-      gap: 8px;
-      padding: 9px 0;
-      border-top: 1px solid var(--border);
-      font-size: 13px;
+      gap: 12px;
+      min-height: 64px;
+      box-sizing: border-box;
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      font-size: 14px;
       line-height: 1.3;
       color: var(--fg-muted);
+    }
+    strong {
+      display: block;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--fg);
     }
   }
   &__sign {
     display: inline-flex;
     flex-shrink: 0;
     gap: 2px;
-    width: 42px;
-    font-size: 19px;
+    font-size: 30px;
     color: var(--fg);
   }
   li[data-move='cheer'] svg:first-child { transform: scaleX(-1); } // a left and a right hand
@@ -147,7 +167,21 @@ $hf-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
     padding: 20px 18px 18px;
 
     &__title { font-size: 22px; }
-    &__legend { grid-template-columns: 1fr; }
+    // Two narrow columns, the sign over its name, so all nine fit on one screen.
+    &__legend {
+      grid-template-columns: 1fr 1fr;
+
+      li {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+        min-height: 0;
+        padding: 10px 12px;
+        font-size: 13px;
+      }
+      strong { font-size: 14px; }
+    }
+    &__sign { font-size: 26px; }
   }
 }
 
