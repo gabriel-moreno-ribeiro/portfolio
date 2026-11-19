@@ -76,7 +76,7 @@ export const validators = [
 export const year = [
   { name: 'Canastra AI Residency', text: '1 of 6 startups in Brazil. Teodoro and I are the youngest founders in the program’s history.' },
   { name: 'European Innovation Academy, London', text: '1 of 10 in the world, from 5,000+ applicants.' },
-  { name: 'Latitud Fellowship', text: 'top 20%. Also LALA Start, Claude for Startups and AWS for Startups.' },
+  { name: 'Latitud Fellowship selection process', text: 'top 20%. Also LALA Start, Claude for Startups and AWS for Startups.' },
 ];
 
 export const build = [

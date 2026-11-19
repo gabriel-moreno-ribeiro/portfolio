@@ -153,17 +153,17 @@ export const work = [
     },
     {
       cardData: {
-        title: "BRASA & Latitud Fellow",
+        title: "BRASA & Latitud",
         url: null,
         imgUrl: null,
       },
       modalData: {
-        title: "BRASA & Latitud Fellowship",
-        desc: "Picked for BRASA from 1,000+ candidates, and for the Latitud Fellowship for founders building in Latin America.",
+        title: "BRASA & Latitud",
+        desc: "Picked for BRASA from 1,000+ candidates. Top 20% in the selection process of the Latitud Fellowship, for founders building in Latin America.",
         infoHeading: "Programs",
         infoArr: [
           "BRASA Selected",
-          "Latitud Fellow",
+          "Latitud selection: top 20%",
           "YC Startup School",
           "Entrepreneurship",
         ],
