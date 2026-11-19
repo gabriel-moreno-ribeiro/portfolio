@@ -50,8 +50,9 @@ const io = (on: number[], table: Record<string, [number, number]> = {}, arrive: 
 const here = (p: Play, i: number) => (p.to === i ? (p.from === i ? 1 : p.t) : p.from === i ? 1 - ease(slice(p.t, 0, 0.3)) : 0);
 
 // ── Where things are ─────────────────────────────────────────────────────────
-const CARTON_AT: V3 = [-1.15, 0, -1.75];
-const CARTON_YAW = 0.2;
+// Left of the laptop's lid and turned a little towards it: the open front flap ends before the lid starts.
+const CARTON_AT: V3 = [-1.45, 0, -1.9];
+const CARTON_YAW = -0.15;
 const BENCH: V3 = [0, MAT[1], -0.15];
 // The map lies on the desk, in front of what stands at its back.
 const MAP_AT: V3 = [0.1, 0, 0.35];
