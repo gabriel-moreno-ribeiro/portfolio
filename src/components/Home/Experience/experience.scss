@@ -22,12 +22,14 @@ $exp-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   --exp-tail: 120px;
   // Respiro acima da parada a que cada manobra chega (ver `featureAt` em geometry.ts): é onde
   // ela acontece, e a rolagem que o carro tem para percorrê-la sem correr.
-  --exp-room-esses: 190px;
+  // Each is close to the least its manoeuvre needs: below 140 the chicane turns into a plain bend,
+  // and below 800 the serra loses the shortcut sign (under 560, the serra itself).
+  --exp-room-esses: 140px;
   --exp-room-switchback: 830px;
   --exp-room-river: 84px;
-  --exp-room-roundabout: 630px;
-  --exp-room-tunnel: 340px;
-  --exp-room-clover: 520px;
+  --exp-room-roundabout: 340px;
+  --exp-room-tunnel: 200px;
+  --exp-room-clover: 320px;
   // Onde o trilho do odômetro começa: abaixo do título.
   --exp-odo-top: 180px;
   // Cards alternam de lado e a estrada serpenteia entre eles. 56px = vão de 32px até a borda
